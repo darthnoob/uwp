@@ -1,0 +1,27 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Resources"
+    xmlns:converters="using:MegaApp.Converters"
+    xmlns:selectors="using:MegaApp.Classes"
+    xmlns:system="using:System">
+
+    <!-- Resource dictionary entries should be defined here. -->
+
+    <!-- APP THEME OVERRIDES -->
+
+    <!-- COLOR DEFINITIONS -->
+    <Color x:Key="MegaRedColor">#D90007</Color>
+    <SolidColorBrush x:Key="MegaRedSolidColorBrush" Color="{StaticResource MegaRedColor}"/>
+
+    <system:Double x:Key="InformationFontSize">14</system:Double>
+
+    <!-- CONVERTERS -->
+    <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter"/>
+    
+    <!-- TEMPLATES -->
+    <DataTemplate x:Key="MegaPageHeaderLogo">
+        <Image Source="ms-appx:///Assets/StoreLogo.png" Width="50"/>
+    </DataTemplate>
+
+</ResourceDictionary>

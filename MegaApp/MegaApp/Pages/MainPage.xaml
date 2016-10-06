@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="MegaApp.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="84"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="HeaderGrid" Margin="0,-6,0,0" DataContext="{Binding ActiveFolderView}">
+            <!--<Button x:Name="BtnHamburger" HorizontalAlignment="Left" VerticalAlignment="Center" Width="48" Height="48" Margin="12,0,0,0">
+                <Path Stretch="UniformToFill" Fill="{ThemeResource ApplicationForegroundThemeBrush}" Data="{Binding LocalizedVisualResources.HamburgerPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="24" Height="20"/>
+            </Button>-->
+            <!--<StackPanel Margin="0,0,24,24" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Button x:Name="BtnGoToTop" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
+                    <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToTopPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,2"/>
+                </Button>
+                <Button x:Name="BtnGoToBottom" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
+                    <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToBottomPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,-2"/>
+                </Button>
+                <Button x:Name="BtnChangeView" Command="{Binding ChangeViewCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Visibility="{Binding HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <Path Stretch="UniformToFill" Data="{Binding NextViewButtonPathData}" Width="22" Height="22"/>
+                </Button>
+                <Button x:Name="BtnChangeViewDisabled" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" IsEnabled="False" Visibility="{Binding HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                    <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.LargeThumbnailViewPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="22" Height="22"/>
+                </Button>
+            </StackPanel>-->
+        </Grid>
+        <Grid Grid.Row="1">
+            <Pivot x:Name="MainPivot" SelectionChanged="OnPivotSelectionChanged" Margin="0">
+                <PivotItem x:Name="CloudDrivePivot" Header="{Binding UI_CloudDriveName, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
+                    <Grid x:Name="CloudDriveRoot" Background="Transparent" Margin="0,0,12,0">                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Margin="0">
+                            <Grid Margin="24,0,12,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="16"/>
+                                    <RowDefinition Height="24"/>
+                                </Grid.RowDefinitions>
+                                <!--<ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedSolidColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                                <!--<userControls:BreadCrumb x:Name="CloudDriveBreadCrumb" ItemsSource="{Binding CloudDrive.BreadCrumbs}" ItemsSourceType="{Binding CloudDrive.Type}"  Margin="0,0,6,0" Grid.Row="1" Grid.Column="0" />-->
+                                <!--<TextBlock Text="{Binding CloudDrive.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" FontSize="{StaticResource InformationFontSize}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                                <!--<TextBlock Text="{Binding CloudDrive.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" FontSize="{StaticResource InformationFontSize}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
+                            </Grid>
+                        </StackPanel>
+                        <Grid x:Name="CloudDriveContentPanel" Grid.Row="1" Margin="12,0,0,0">
+                            <ListBox 
+                                x:Name="LstCloudDrive" 	                                
+            					DataContext="{Binding CloudDrive}"								
+            					ItemsSource="{Binding ChildNodes}"
+                                Tapped="OnCloudDriveItemTap"
+            					ItemTemplateSelector="{Binding NodeTemplateSelector}"             					
+            					Loaded="OnListLoaded">
+                            </ListBox>
+                        </Grid>                        
+                    </Grid>
+                </PivotItem>
+                <PivotItem x:Name="RubbishBinPivot" Header="{Binding UI_RubbishBinName, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
+
+                </PivotItem>
+            </Pivot>
+        </Grid>
+
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom">
+            <AppBarButton Icon="Cancel" Label="Logout" Click="OnLogoutClick"/>            
+        </CommandBar>
+    </Grid>
+</Page>

@@ -1,0 +1,10 @@
+*.opendb
+*.db
+MegaApp/.vs/
+MegaApp/ARM/
+*.user
+MegaApp/MegaApp/MegaApp_TemporaryKey.pfx
+MegaApp/MegaApp/project.lock.json
+MegaApp/MegaApp/bin/
+MegaApp/MegaApp/obj/
+MegaApp/x64/

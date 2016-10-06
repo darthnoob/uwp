@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AM_AccountNotConfirmed" xml:space="preserve">
+    <value>Your account has not been confirmed yet.</value>
+    <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
+  </data>
+  <data name="AM_AgreeTermsOfService" xml:space="preserve">
+    <value>You must agree with our Terms of Service</value>
+    <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
+  </data>
+  <data name="AM_ConfirmNeeded" xml:space="preserve">
+    <value>Check your e-mail and click the link to login and confirm your account</value>
+    <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an e-mail with a link to confirm account.</comment>
+  </data>
+  <data name="AM_ConfirmNeeded_Title" xml:space="preserve">
+    <value>Confirmation needed</value>
+    <comment>Title of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an e-mail with a link to confirm account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CopyFileFailed" xml:space="preserve">
+    <value>Failed to copy the selected file: [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to copy a file failed by a non specific cause.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_CopyFileFailed_Title" xml:space="preserve">
+    <value>Error copying file</value>
+    <comment>Title of the dialog displayed when the process/request to copy a file failed by a non specific cause - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
+    <value>You don't have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?Please try to save/copy the file to the your device's internal memory instead.</value>
+    <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
+  </data>
+  <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
+    <value>Unauthorized access</value>
+    <comment>Title of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CreateAccountFailed" xml:space="preserve">
+    <value>MEGA Cloud Drive account creation failed. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the creation of a MEGA account failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_CreateAccountFailed_Title" xml:space="preserve">
+    <value>Account creation failed</value>
+    <comment>Title of the dialog displayed when the creation of a MEGA account failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DeleteNodeFailed" xml:space="preserve">
+    <value>Failed to delete item. Please try again [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to delete a node failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_DeleteNodeFailed_Title" xml:space="preserve">
+    <value>Deletion failed</value>
+    <comment>Title of the dialog displayed when the process/request to delete a node failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DeleteSettingsFailed" xml:space="preserve">
+    <value>Failed to delete settings. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the process to delete settings failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_DeleteSettingsFailed_Title" xml:space="preserve">
+    <value>Error deleting settings</value>
+    <comment>Title of the dialog displayed when the process to delete settings failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_EmailAlreadyRegistered" xml:space="preserve">
+    <value>This e-mail address has already registered an account with MEGA.</value>
+    <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
+  </data>
+  <data name="AM_FileNotFound" xml:space="preserve">
+    <value>Could not find the selected file</value>
+    <comment>Message of the dialog displayed when a user try to open a file that can't be found and the process failed.</comment>
+  </data>
+  <data name="AM_FileNotFound_Title" xml:space="preserve">
+    <value>File not found</value>
+    <comment>Title of the dialog displayed when a user try to open a file that can't be found and the process failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_InvalidLink" xml:space="preserve">
+    <value>Invalid link</value>
+    <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>
+  </data>
+  <data name="AM_LoadSettingsFailed" xml:space="preserve">
+    <value>Failed to load settings. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the process to load settings failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_LoadSettingsFailed_Title" xml:space="preserve">
+    <value>Error loading settings</value>
+    <comment>Title of the dialog displayed when the process to load settings failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LoggedOut" xml:space="preserve">
+    <value>You have successfully logged out</value>
+    <comment>Message of the dialog displayed when a user logged out successfully.</comment>
+  </data>
+  <data name="AM_LoggedOut_Title" xml:space="preserve">
+    <value>Logged out</value>
+    <comment>Title of the dialog displayed when a user logged out successfully - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LoginFailed" xml:space="preserve">
+    <value>MEGA Cloud Drive login failed. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails. 
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_LoginFailed_Title" xml:space="preserve">
+    <value>Login failed</value>
+    <comment>Title of the dialog displayed when the login to the MEGA cloud service api fails - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LogoutFailed" xml:space="preserve">
+    <value>Failed to logout. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the logout to the MEGA cloud service api fails. 
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_LogoutFailed_Title" xml:space="preserve">
+    <value>Logout failed</value>
+    <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MalformedEmail" xml:space="preserve">
+    <value>Malformed e-mail. Please try again.</value>
+    <comment>Message of the dialog displayed when the user types a malformed email address.</comment>
+  </data>
+  <data name="AM_NewSignUpInvalidLink" xml:space="preserve">
+    <value>The link you are using for a new signup is not valid.</value>
+    <comment>Message of the warning dialog shown when the user tries to make a new sign up using an invalid link (#newsignup).</comment>
+  </data>
+  <data name="AM_NoInternetConnectionMessage" xml:space="preserve">
+    <value>You cannot perform this action. Please connect to the Internet and try again.</value>
+    <comment>Message of the dialog displayed when the user is trying to perform any online action without an active Internet connection.</comment>
+  </data>
+  <data name="AM_OpenFileFailed" xml:space="preserve">
+    <value>Failed to open the selected file</value>
+    <comment>Message of the dialog displayed when the process to open a file failed.</comment>
+  </data>
+  <data name="AM_OpenFileFailed_Title" xml:space="preserve">
+    <value>File failed to open</value>
+    <comment>Title of the dialog displayed when the process to open a file failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
+    <value>Passwords do not match. Please try again.</value>
+    <comment>Message of the dialog displayed when a user are trying to create a MEGA account and the introduced passwords don't match.</comment>
+  </data>
+  <data name="AM_RequiredFieldsCreateAccount" xml:space="preserve">
+    <value>Please fill in your name, e-mail address and password</value>
+    <comment>Message of the dialog displayed when required fields for create account are not filled in.</comment>
+  </data>
+  <data name="AM_RequiredFieldsLogin" xml:space="preserve">
+    <value>Please fill in your e-mail address and your MEGA password.</value>
+    <comment>Message of the dialog displayed when required fields for login are not filled in.</comment>
+  </data>
+  <data name="AM_RequiredFields_Title" xml:space="preserve">
+    <value>Fill in required fields</value>
+    <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SaveSettingsFailed" xml:space="preserve">
+    <value>Failed to save settings. Please, try again [{0}]</value>
+    <comment>Message of the dialog displayed when the process to save settings failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_SaveSettingsFailed_Title" xml:space="preserve">
+    <value>Error saving settings</value>
+    <comment>Title of the dialog displayed when the process to save settings failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SelectFileFailed" xml:space="preserve">
+    <value>Failed to select file(s). Please, try again [{0}]</value>
+    <comment>Message of the dialog displayed when the process to select files failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_SelectFileFailed_Title" xml:space="preserve">
+    <value>File selection failed</value>
+    <comment>Title of the dialog displayed when the process to select files failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_TooManyFailedLoginAttempts" xml:space="preserve">
+    <value>You have attempted to log in too many times. Please wait until {0} and try again.</value>
+    <comment>Message of the dialog shown when the user is trying to login and has made several failed attempts.
+Preserve the {0} code because is for include the exact time until the user has to wait.</comment>
+  </data>
+  <data name="AM_UserNotOnline" xml:space="preserve">
+    <value>You are not logged into MEGA. Please re-login.</value>
+    <comment>Message of the dialog displayed when the user is online and is trying to do any operation that requires connection.</comment>
+  </data>
+  <data name="AM_UserNotOnline_Title" xml:space="preserve">
+    <value>Not online</value>
+    <comment>Title of the dialog displayed when the user is online and is trying to do any operation that requires connection - (String as short as possible).</comment>
+  </data>
+  <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
+    <value>Incorrect e-mail address or password. Please try again.</value>
+    <comment>Message of the dialog displayed when a user is trying to login with an e-mail that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
+  </data>
+</root>

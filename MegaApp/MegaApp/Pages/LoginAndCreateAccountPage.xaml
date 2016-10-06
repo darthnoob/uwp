@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="MegaApp.Pages.LoginAndCreateAccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="84"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ContentPresenter ContentTemplate="{StaticResource MegaPageHeaderLogo}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        
+        <!--Pivot Control-->
+        <Pivot x:Name="Pivot_LoginAndCreateAccount" Grid.Row="1">
+            <!--Pivot item one-->
+            <PivotItem x:Name="PivotItem_Login" Header="{Binding LoginViewModel.UI_Login, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
+                <ScrollViewer x:Name="ContentPanel_Login" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="StackLogin" VerticalAlignment="Top">
+                        <TextBox x:Name="TxtEmail_Login" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding LoginViewModel.UI_EmailWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding LoginViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
+                        <PasswordBox x:Name="TxtPassword_Login" Margin="0,0,0,12" PlaceholderText="{Binding LoginViewModel.UI_PasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding LoginViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" TabIndex="1"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+            <!--Pivot item two-->
+            <PivotItem x:Name="PivotItem_CreateAccount" Header="{Binding CreateAccountViewModel.UI_CreateAccount, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
+                <ScrollViewer x:Name="ContentPanel_CreateAccount" Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="StackCreateAccount" VerticalAlignment="Top">
+                        <TextBox x:Name="TxtFirstName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_FirstNameWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.FirstName, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
+                        <TextBox x:Name="TxtLastName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_LastNameWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.LastName, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="0"/>
+                        <TextBox x:Name="TxtEmail_CreateAccount" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_EmailWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="1" InputScope="EmailNameOrAddress"/>
+                        <PasswordBox x:Name="TxtPassword_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.UI_PasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="2"/>
+                        <PasswordBox x:Name="TxtPasswordReType_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.UI_ConfirmPasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.ConfirmPassword, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="3"/>
+                        <StackPanel x:Name="StackTermOfUse" Orientation="Horizontal">
+                            <CheckBox x:Name="CheckTermsOfUse" Margin="0,0,-90,0" VerticalAlignment="Center" IsEnabled="{Binding CreateAccountViewModel.ControlState}" IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay}" TabIndex="4"/>
+                            <RichTextBlock x:Name="TermsOfUseAgreement" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Paragraph>
+                                    <Run Text="{Binding CreateAccountViewModel.UI_AgreeCreateAccount}" FontFamily="Portable User Interface"/>
+                                    <Hyperlink x:Name="LinkTermsOfService" NavigateUri="{Binding CreateAccountViewModel.AR_TermsOfServiceUri}" FontFamily="Portable User Interface">
+                                        <Run Text="{Binding CreateAccountViewModel.UI_TermsOfService}" Foreground="{StaticResource MegaRedSolidColorBrush}" FontFamily="Portable User Interface"/>
+                                    </Hyperlink>
+                                </Paragraph>
+                            </RichTextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom">
+            <AppBarButton Icon="Accept" Label="Accept" Click="OnAcceptClick"/>
+            <AppBarButton Icon="Cancel" Label="Cancel" Click="OnCancelClick"/>
+        </CommandBar>
+    </Grid>    
+</Page>
