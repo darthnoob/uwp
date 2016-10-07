@@ -4,16 +4,8 @@
 //DEBUG and MAX are reserved for Debug builds
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Windows;
 using mega;
-using MegaApp.Resources;
-using MegaApp.Services;
 
 namespace MegaApp.MegaApi
 {

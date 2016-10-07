@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using mega;
+﻿using mega;
 using MegaApp.Classes;
 
-namespace MegaApp.Models
+namespace MegaApp.ViewModels
 {
     public class MainPageViewModel : BaseSdkViewModel
     {

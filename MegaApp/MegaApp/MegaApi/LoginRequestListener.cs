@@ -5,25 +5,23 @@ using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Models;
-using MegaApp.Pages;
 using MegaApp.Services;
+using MegaApp.ViewModels;
+using MegaApp.Views;
 
 namespace MegaApp.MegaApi
 {
     class LoginRequestListener : BaseRequestListener
     {
         private readonly LoginViewModel _loginViewModel;
-        private readonly LoginAndCreateAccountPage _loginAndCreateAccountPage;
 
         // Timer for ignore the received API_EAGAIN (-3) during login
         private DispatcherTimer timerAPI_EAGAIN;
         private bool isFirstAPI_EAGAIN;
 
-        public LoginRequestListener(LoginViewModel loginViewModel, LoginAndCreateAccountPage loginAndCreateAccountPage = null)
+        public LoginRequestListener(LoginViewModel loginViewModel)
         {
             _loginViewModel = loginViewModel;
-            _loginAndCreateAccountPage = loginAndCreateAccountPage;
 
             timerAPI_EAGAIN = new DispatcherTimer();
             timerAPI_EAGAIN.Tick += timerTickAPI_EAGAIN;

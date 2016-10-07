@@ -4,21 +4,19 @@ using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
-using MegaApp.Pages;
 using MegaApp.Services;
+using MegaApp.Views;
 
-namespace MegaApp.Models
-{    
-    class CreateAccountViewModel : BaseSdkViewModel 
+namespace MegaApp.ViewModels
+{
+    public class CreateAccountViewModel : BaseSdkViewModel 
     {
         private readonly MegaSDK _megaSdk;
-        private readonly LoginAndCreateAccountPage _loginPage;
-
-        public CreateAccountViewModel(MegaSDK megaSdk, LoginAndCreateAccountPage loginPage)
+     
+        public CreateAccountViewModel(MegaSDK megaSdk)
             : base(megaSdk)
         {
             this._megaSdk = megaSdk;
-            this._loginPage = loginPage;
             this.ControlState = true;
         }
 
@@ -28,14 +26,14 @@ namespace MegaApp.Models
         {
             if (CheckInputParameters())
             {
-                if (ValidationService.IsValidEmail(Email))
+                if (ValidationService.IsValidEmail(this.Email))
                 {
                     if (CheckPassword())
                     {
-                        if (TermOfService)
+                        if (this.TermOfService)
                         {
-                            this._megaSdk.createAccount(Email, Password, FirstName, LastName,
-                                new CreateAccountRequestListener(this, _loginPage));
+                            this._megaSdk.createAccount(this.Email, this.Password, this.FirstName, this.LastName,
+                                new CreateAccountRequestListener(this));
                         }
                         else
                         {
@@ -94,21 +92,28 @@ namespace MegaApp.Models
         {
             //Because lastname is not an obligatory parameter, if the lastname field is null or empty,
             //force it to be an empty string to avoid "ArgumentNullException" when call the createAccount method.
-            if (String.IsNullOrWhiteSpace(LastName))
-                LastName = String.Empty;
+            if (String.IsNullOrWhiteSpace(this.LastName))
+                this.LastName = String.Empty;
 
-            return !String.IsNullOrEmpty(Email) && !String.IsNullOrEmpty(FirstName) && 
-                !String.IsNullOrEmpty(Password) && !String.IsNullOrEmpty(ConfirmPassword);
+            return !String.IsNullOrEmpty(this.Email) && !String.IsNullOrEmpty(this.FirstName) && 
+                !String.IsNullOrEmpty(this.Password) && !String.IsNullOrEmpty(this.ConfirmPassword);
         }
 
         private bool CheckPassword()
         {
-            return Password.Equals(ConfirmPassword);
+            return this.Password.Equals(this.ConfirmPassword);
         }
 
         #endregion
 
         #region Properties
+
+        private bool _isReadOnly;
+        public bool IsReadOnly
+        {
+            get { return _isReadOnly; }
+            set { SetField(ref _isReadOnly, value); }
+        }
 
         public string NewSignUpCode { get; set; }
 

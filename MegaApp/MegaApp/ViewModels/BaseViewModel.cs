@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+
 //using System.Windows.Threading;
 //using Microsoft.Phone.Reactive;
 
-namespace MegaApp.Models
+namespace MegaApp.ViewModels
 {
+    /// <summary>
+    /// Base class of all the viewmodels. Implements INotifyPropertyChanged to inform
+    /// the UI of changes to properties. 
+    /// </summary>
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         protected BaseViewModel()
@@ -20,34 +19,12 @@ namespace MegaApp.Models
             this.ControlState = true;
             this.IsBusy = false;
         }
-
-        #region Protected Methods
-
-        /// <summary>
-        /// Invoke the code/action on the UI Thread. If not on UI thread, dispatch to UI with the Dispatcher
-        /// </summary>
-        /// <param name="action">Action to invoke on the user interface thread</param>
-        protected static async void OnUiThread(Action action)
-        {
-            // If no action then do nothing and return
-            if(action == null) return;
-
-            if(CoreApplication.MainView.CoreWindow.Dispatcher.HasThreadAccess)
-            {
-                // We are already on UI thread. Just invoke the action
-                action.Invoke();
-            }
-            else
-            {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                    CoreDispatcherPriority.Normal, () => action.Invoke());
-            }
-        }
-
-        #endregion
-
+        
         #region Properties
 
+        /// <summary>
+        /// State of the controls attached to this viewmodel
+        /// </summary>
         private bool _controlState;
         public bool ControlState
         {
@@ -55,6 +32,9 @@ namespace MegaApp.Models
             set { SetField(ref _controlState, value); }
         }
 
+        /// <summary>
+        /// is the viewmodel busy processing data
+        /// </summary>
         private bool _isBusy;
         public bool IsBusy
         {
@@ -77,6 +57,14 @@ namespace MegaApp.Models
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;
             field = value;
             OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected bool SetField<T>(T currentValue, T newValue, Action doSet, [CallerMemberName] string property = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(currentValue, newValue)) return false;
+            doSet.Invoke();
+            OnPropertyChanged(property);
             return true;
         }
 

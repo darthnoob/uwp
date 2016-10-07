@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Containers;
 using MegaApp.MegaApi;
-using MegaApp.Pages;
 using MegaApp.Resources;
 using MegaApp.Services;
+using MegaApp.ViewModels;
+using MegaApp.Views;
 
 namespace MegaApp
 {
@@ -93,6 +85,9 @@ namespace MegaApp
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+
+                // Add rootFrame as mainframe to navigation service
+                NavigateService.MainFrame = rootFrame;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

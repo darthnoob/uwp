@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using Windows.Storage;
-using Windows.UI.ViewManagement;
 using mega;
-using MegaApp.Classes;
-//using MegaApp.Database;
 using MegaApp.Enums;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
-using MegaApp.Resources;
-using MegaApp.Services;
+//using MegaApp.Database;
 
-namespace MegaApp.Models
+namespace MegaApp.ViewModels
 {
     public class TransferObjectModel : BaseSdkViewModel//, MTransferListenerInterface
     {
