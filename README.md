@@ -16,7 +16,7 @@ This document will guide you to build the application on a Windows machine with 
 2. Download the required third party libraries from this link: 
 https://mega.nz/#!d0ETSL4T!UaCbxtjPLCy5NsQpait7qnH7JZICF1hC2e-hcJM8u8o
 
-3. Uncompress that file into `windowsphone\MegaSDK\bindings\wp8`
+3. Uncompress that file into `uwp\MegaSDK\bindings\wp8`
 
 4. Open Microsoft Visual Studio and open the solution file `uwp\MegaApp\MegaApp.sln`
 
@@ -25,3 +25,6 @@ https://mega.nz/#!d0ETSL4T!UaCbxtjPLCy5NsQpait7qnH7JZICF1hC2e-hcJM8u8o
 6. Build the project.
 
 7. Enjoy!
+
+If you want to build the third party dependencies by yourself, you can download the source code from this link:
+https://mega.nz/#!JxVnwTKR!RvNh-dTGmVShoeHigqQHrQGVEZg73LDmRqYw1rJ0of8
