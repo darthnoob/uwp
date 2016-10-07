@@ -25,3 +25,6 @@ https://mega.nz/#!d0ETSL4T!UaCbxtjPLCy5NsQpait7qnH7JZICF1hC2e-hcJM8u8o
 6. Build the project.
 
 7. Enjoy!
+
+If you want to build the third party dependencies by yourself, you can download the source code from this link:
+https://mega.nz/#!JxVnwTKR!RvNh-dTGmVShoeHigqQHrQGVEZg73LDmRqYw1rJ0of8
