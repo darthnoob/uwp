@@ -4,22 +4,18 @@ using Windows.UI.Core;
 using mega;
 using MegaApp.Enums;
 using MegaApp.Classes;
-using MegaApp.Models;
-using MegaApp.Pages;
-using MegaApp.Resources;
-using MegaApp.Services;
+using MegaApp.ViewModels;
+using MegaApp.Views;
 
 namespace MegaApp.MegaApi
 {
     class CreateAccountRequestListener : BaseRequestListener
     {
         private readonly CreateAccountViewModel _createAccountViewModel;
-        private readonly LoginAndCreateAccountPage _loginPage;
 
-        public CreateAccountRequestListener(CreateAccountViewModel createAccountViewModel, LoginAndCreateAccountPage loginPage)
+        public CreateAccountRequestListener(CreateAccountViewModel createAccountViewModel)
         {
             _createAccountViewModel = createAccountViewModel;
-            _loginPage = loginPage;
         }
 
         #region Base Properties
@@ -114,9 +110,9 @@ namespace MegaApp.MegaApi
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             _createAccountViewModel.Email = request.getEmail();
-
+                           
                             if (!String.IsNullOrWhiteSpace(_createAccountViewModel.Email))
-                                this._loginPage.SetStatusTxtEmailCreateAccount(true);
+                                _createAccountViewModel.IsReadOnly = true;
                         });
                         break;
 

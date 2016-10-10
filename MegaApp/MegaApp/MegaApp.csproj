@@ -127,22 +127,28 @@
     <Compile Include="Interfaces\IApplicationBar.cs" />
     <Compile Include="Interfaces\IBaseNode.cs" />
     <Compile Include="Interfaces\IMegaNode.cs" />
+    <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
-    <Compile Include="Models\BaseSDKViewModel.cs" />
-    <Compile Include="Models\BaseViewModel.cs" />
-    <Compile Include="Models\CreateAccountViewModel.cs" />
-    <Compile Include="Models\LoginViewModel.cs" />
-    <Compile Include="Models\MainPageViewModel.cs" />
-    <Compile Include="Models\TransferObjectModel.cs" />
-    <Compile Include="Pages\LoginAndCreateAccountPage.xaml.cs">
+    <Compile Include="Services\NavigateService.cs" />
+    <Compile Include="UserControls\PageEx.cs" />
+    <Compile Include="ViewModels\BaseNavigableViewModel.cs" />
+    <Compile Include="ViewModels\BasePageViewModel.cs" />
+    <Compile Include="ViewModels\BaseSDKViewModel.cs" />
+    <Compile Include="ViewModels\BaseUiViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CreateAccountViewModel.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\TransferObjectModel.cs" />
+    <Compile Include="Views\LoginAndCreateAccountPage.xaml.cs">
       <DependentUpon>LoginAndCreateAccountPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPage.xaml.cs">
+    <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,11 +182,11 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Pages\LoginAndCreateAccountPage.xaml">
+    <Page Include="Views\LoginAndCreateAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,7 +200,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserControls\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj">

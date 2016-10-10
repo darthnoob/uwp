@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
 using MegaApp.Enums;
-using MegaApp.Models;
+using MegaApp.ViewModels;
 
 namespace MegaApp.Classes
 {

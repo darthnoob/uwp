@@ -1,25 +1,22 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
-using MegaApp.Pages;
 using MegaApp.Services;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-using System.Threading.Tasks;
 
-namespace MegaApp.Models
+namespace MegaApp.ViewModels
 {
-    class LoginViewModel : BaseSdkViewModel
+    public class LoginViewModel : BaseSdkViewModel
     {
         private readonly MegaSDK _megaSdk;
-        private readonly LoginAndCreateAccountPage _loginAndCreateAccountPage;
 
-        public LoginViewModel(MegaSDK megaSdk, LoginAndCreateAccountPage loginAndCreateAccountPage = null)
+        public LoginViewModel(MegaSDK megaSdk)
             :base(megaSdk)
         {
             this._megaSdk = megaSdk;
-            this._loginAndCreateAccountPage = loginAndCreateAccountPage;
             this.ControlState = true;
         }
 
@@ -28,14 +25,14 @@ namespace MegaApp.Models
         public async void DoLogin()
         {
             if (await CheckInputParameters())
-                this._megaSdk.login(Email, Password, new LoginRequestListener(this, _loginAndCreateAccountPage));
+                this._megaSdk.login(this.Email, this.Password, new LoginRequestListener(this));
             //else if (_loginAndCreateAccountPage != null)
             //    Deployment.Current.Dispatcher.BeginInvoke(() => _loginPage.SetApplicationBar(true));
         }
 
         private async Task<bool> CheckInputParameters()
         {
-            if (String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Password))
+            if (String.IsNullOrEmpty(this.Email) || String.IsNullOrEmpty(this.Password))
             {
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
@@ -49,7 +46,7 @@ namespace MegaApp.Models
                 return false;
             }
             
-            if(!ValidationService.IsValidEmail(Email))
+            if(!ValidationService.IsValidEmail(this.Email))
             {
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {

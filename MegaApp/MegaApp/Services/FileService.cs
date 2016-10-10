@@ -7,7 +7,6 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Core;
 using MegaApp.Classes;
-using MegaApp.Resources;
 
 namespace MegaApp.Services
 {

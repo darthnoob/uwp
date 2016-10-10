@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Pages;
-using MegaApp.Resources;
 using MegaApp.Services;
-
+using MegaApp.Views;
 using IApplicationBar = MegaApp.Interfaces.IApplicationBar;
-using Windows.UI.Xaml;
 
-namespace MegaApp.Models
+namespace MegaApp.ViewModels
 {
-    public abstract class BaseSdkViewModel : BaseViewModel, IApplicationBar
+    public abstract class BaseSdkViewModel : BasePageViewModel, IApplicationBar
     {
         protected BaseSdkViewModel(MegaSDK megaSdk)
         {
