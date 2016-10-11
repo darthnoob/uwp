@@ -24,7 +24,7 @@ namespace MegaApp.MegaApi
 
         protected override string ProgressMessage
         {
-            get { return App.ResourceLoaders.ProgressMessages.GetString("PM_Logout"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_Logout"); }
         }
 
         protected override bool ShowProgressMessage
@@ -34,12 +34,12 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LogoutFailed"); }
+            get { return ResourceService.AppMessages.GetString("AM_LogoutFailed"); }
         }
 
         protected override string ErrorMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LogoutFailed_Title"); }
+            get { return ResourceService.AppMessages.GetString("AM_LogoutFailed_Title"); }
         }
 
         protected override bool ShowErrorMessage
@@ -49,12 +49,12 @@ namespace MegaApp.MegaApi
 
         protected override string SuccessMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoggedOut"); }
+            get { return ResourceService.AppMessages.GetString("AM_LoggedOut"); }
         }
 
         protected override string SuccessMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoggedOut_Title"); }
+            get { return ResourceService.AppMessages.GetString("AM_LoggedOut_Title"); }
         }
 
         protected override bool ShowSuccesMessage

@@ -25,8 +25,8 @@ namespace MegaApp.Services
                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         new CustomMessageDialog(
-                            App.ResourceLoaders.UiResources.GetString("UI_NoInternetConnection"),
-                            App.ResourceLoaders.AppMessages.GetString("AM_NoInternetConnectionMessage"),
+                            ResourceService.UiResources.GetString("UI_NoInternetConnection"),
+                            ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
                             App.AppInformation,
                             MessageDialogButtons.Ok).ShowDialogAsync();
                     });
@@ -39,9 +39,9 @@ namespace MegaApp.Services
         }
 
         // Code to detect if the IP has changed and refresh all open connections on this case
-        public static void CheckChangesIP()
+        public static void CheckChangesIp()
         {
-            List<string> ipAddresses = null;
+            List<string> ipAddresses;
 
             // Find the IP of all network devices
             try
@@ -60,7 +60,7 @@ namespace MegaApp.Services
             catch (ArgumentException) { return; }
 
             // If no network device is connected, do nothing
-            if ((ipAddresses == null) || (ipAddresses.Count < 1))
+            if ((ipAddresses.Count < 1))
             {
                 App.IpAddress = null;
                 return;
@@ -69,7 +69,7 @@ namespace MegaApp.Services
             // If the primary IP has changed
             if (ipAddresses[0] != App.IpAddress)
             {
-                App.MegaSdk.reconnect();        // Refresh all open connections
+                SdkService.MegaSdk.reconnect(); // Refresh all open connections
                 App.IpAddress = ipAddresses[0]; // Storage the new primary IP address
             }
         }

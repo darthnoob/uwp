@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Windows.UI.Xaml.Controls;
@@ -18,7 +19,11 @@ namespace MegaApp.Services
         public static NavigateService Instance => _instance ?? (_instance = new NavigateService());
         // App rootFrame to navigate
         public static Frame MainFrame { get; set; }
-        
+
+        public static IList<Type> PageExTypes { get; set; }
+
+        public static IList<Type> TypeList { get; set; }
+
         private static Frame GetFrame(Frame baseFrame = null)
         {
             return baseFrame ?? MainFrame;
@@ -42,17 +47,25 @@ namespace MegaApp.Services
         /// <returns>Type of the view that implements the specified viewmodel</returns>
         public static Type GetViewType(BasePageViewModel viewModel)
         {
-            var assembly = viewModel.GetType().GetTypeInfo().Assembly;
-            var baseTypes = assembly.GetTypes().ToList().Where(t => t.GetTypeInfo().BaseType != null &&
-                t.GetTypeInfo().BaseType.GetTypeInfo().IsGenericType &&
-                t.GetTypeInfo().BaseType.GetGenericTypeDefinition() == typeof(PageEx<>) &&
-                t.GetTypeInfo().BaseType.GenericTypeArguments[0] == viewModel.GetType());
-
-            foreach (var baseType in baseTypes)
+            if (TypeList == null)
             {
-                var t = assembly.GetTypes().ToList().First(ty => ty.GetTypeInfo().BaseType != null &&
-                                                                 ty.GetTypeInfo().BaseType == baseType);
-                return t;
+                var assembly = viewModel.GetType().GetTypeInfo().Assembly;
+                TypeList = assembly.GetTypes().ToList();
+            }
+            
+            if (PageExTypes == null)
+            {
+                PageExTypes = TypeList.Where(t => t.GetTypeInfo().BaseType != null &&
+                    t.GetTypeInfo().BaseType.GetTypeInfo().IsGenericType &&
+                    t.GetTypeInfo().BaseType.GetGenericTypeDefinition() == typeof(PageEx<>) &&
+                    t.GetTypeInfo().BaseType.GenericTypeArguments[0] == viewModel.GetType()).ToList();
+            }
+
+            foreach (var pageExType in PageExTypes)
+            {
+                var viewType = TypeList.First(t => t.GetTypeInfo().BaseType != null &&
+                    t.GetTypeInfo().BaseType == pageExType);
+                return viewType;
             }
 
             return null;

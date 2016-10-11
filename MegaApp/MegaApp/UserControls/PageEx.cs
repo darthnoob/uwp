@@ -13,10 +13,14 @@ namespace MegaApp.UserControls
     {
         public PageEx()
         {
+            // Create the viewmodel and bind it to the page main datacontext
             this.ViewModel = (T)Activator.CreateInstance(typeof(T));
             this.DataContext = this.ViewModel;
         }
 
+        /// <summary>
+        /// Current view-model binded to the datacontext
+        /// </summary>
         public T ViewModel { get; }
     }
 }

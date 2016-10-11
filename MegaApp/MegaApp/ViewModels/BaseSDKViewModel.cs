@@ -14,9 +14,9 @@ namespace MegaApp.ViewModels
 {
     public abstract class BaseSdkViewModel : BasePageViewModel, IApplicationBar
     {
-        protected BaseSdkViewModel(MegaSDK megaSdk)
+        protected BaseSdkViewModel()
         {
-            this.MegaSdk = megaSdk;
+            this.MegaSdk = SdkService.MegaSdk;
         }
 
         #region Methods
@@ -35,7 +35,7 @@ namespace MegaApp.ViewModels
         {
             if (! await NetworkService.IsNetworkAvailable(showMessageDialog)) return false;
 
-            bool isOnline = Convert.ToBoolean(App.MegaSdk.isLoggedIn());
+            bool isOnline = Convert.ToBoolean(this.MegaSdk.isLoggedIn());
             if (!isOnline)
             {
                 if (showMessageDialog)
@@ -43,8 +43,8 @@ namespace MegaApp.ViewModels
                     OnUiThread(() =>
                     {
                         var customMessageDialog = new CustomMessageDialog(
-                            App.ResourceLoaders.AppMessages.GetString("AM_UserNotOnline_Title"),
-                            App.ResourceLoaders.AppMessages.GetString("AM_UserNotOnline"),
+                            ResourceService.AppMessages.GetString("AM_UserNotOnline_Title"),
+                            ResourceService.AppMessages.GetString("AM_UserNotOnline"),
                             App.AppInformation,
                             MessageDialogButtons.Ok);
 
@@ -98,7 +98,10 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public MegaSDK MegaSdk { get; private set; }
+        /// <summary>
+        /// Instance of a MegaSDK class
+        /// </summary>
+        public MegaSDK MegaSdk { get; }
 
         #endregion
     }

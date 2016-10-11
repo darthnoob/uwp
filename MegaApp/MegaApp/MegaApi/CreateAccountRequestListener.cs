@@ -4,6 +4,7 @@ using Windows.UI.Core;
 using mega;
 using MegaApp.Enums;
 using MegaApp.Classes;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 using MegaApp.Views;
 
@@ -22,7 +23,7 @@ namespace MegaApp.MegaApi
 
         protected override string ProgressMessage
         {
-            get { return App.ResourceLoaders.ProgressMessages.GetString("PM_CreateAccount"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_CreateAccount"); }
         }
 
         protected override bool ShowProgressMessage
@@ -32,12 +33,12 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed"); }
+            get { return ResourceService.AppMessages.GetString("AM_CreateAccountFailed"); }
         }
 
         protected override string ErrorMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title").ToUpper(); }
+            get { return ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title").ToUpper(); }
         }
 
         protected override bool ShowErrorMessage
@@ -47,12 +48,12 @@ namespace MegaApp.MegaApi
 
         protected override string SuccessMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_ConfirmNeeded"); }
+            get { return ResourceService.AppMessages.GetString("AM_ConfirmNeeded"); }
         }
 
         protected override string SuccessMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_ConfirmNeeded_Title").ToUpper(); }
+            get { return ResourceService.AppMessages.GetString("AM_ConfirmNeeded_Title").ToUpper(); }
         }
 
         protected override bool ShowSuccesMessage
@@ -111,7 +112,7 @@ namespace MegaApp.MegaApi
                         {
                             _createAccountViewModel.Email = request.getEmail();
                            
-                            if (!String.IsNullOrWhiteSpace(_createAccountViewModel.Email))
+                            if (!string.IsNullOrWhiteSpace(_createAccountViewModel.Email))
                                 _createAccountViewModel.IsReadOnly = true;
                         });
                         break;
@@ -120,8 +121,8 @@ namespace MegaApp.MegaApi
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                         {
                             new CustomMessageDialog(
-                                App.ResourceLoaders.AppMessages.GetString("AM_InvalidLink"),
-                                App.ResourceLoaders.AppMessages.GetString("AM_NewSignUpInvalidLink"),
+                                ResourceService.AppMessages.GetString("AM_InvalidLink"),
+                                ResourceService.AppMessages.GetString("AM_NewSignUpInvalidLink"),
                                 App.AppInformation,
                                 MessageDialogButtons.Ok).ShowDialogAsync();
                         });
@@ -146,7 +147,7 @@ namespace MegaApp.MegaApi
                         {
                             new CustomMessageDialog(
                                 ErrorMessageTitle,
-                                App.ResourceLoaders.AppMessages.GetString("AM_EmailAlreadyRegistered"),
+                                ResourceService.AppMessages.GetString("AM_EmailAlreadyRegistered"),
                                 App.AppInformation,
                                 MessageDialogButtons.Ok).ShowDialogAsync();
                         });

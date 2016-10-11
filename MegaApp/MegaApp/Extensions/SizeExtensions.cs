@@ -13,7 +13,7 @@ namespace MegaApp.Extensions
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
-            return String.Format("{0:n2} {1}", adjustedSize, SizeSuffixesBytes[mag]);
+            return string.Format("{0:n2} {1}", adjustedSize, SizeSuffixesBytes[mag]);
         }
 
         public static ulong ToReadableSize(this UInt64 value)
@@ -42,7 +42,7 @@ namespace MegaApp.Extensions
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
-            return String.Format("{0:n2} {1}/s", adjustedSize, SizeSuffixesBytes[mag]);
+            return string.Format("{0:n2} {1}/s", adjustedSize, SizeSuffixesBytes[mag]);
         }
 
         public static ulong FromKBToBytes (this UInt64 value)

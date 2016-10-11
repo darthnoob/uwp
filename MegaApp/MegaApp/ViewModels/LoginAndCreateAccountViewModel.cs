@@ -1,19 +1,16 @@
 ﻿using System.Collections;
-using MegaApp.ViewModels;
-using MegaApp.Views;
 
-namespace MegaApp.Containers
+namespace MegaApp.ViewModels
 {
-    public class LoginAndCreateAccountViewModelContainer : BaseSdkViewModel
+    public class LoginAndCreateAccountViewModel : BaseSdkViewModel
     {
         public LoginViewModel LoginViewModel { get; private set; }
         public CreateAccountViewModel CreateAccountViewModel { get; private set; }
 
-        public LoginAndCreateAccountViewModelContainer()
-            :base(App.MegaSdk)
+        public LoginAndCreateAccountViewModel()
         {
-            LoginViewModel = new LoginViewModel(App.MegaSdk);
-            CreateAccountViewModel = new CreateAccountViewModel(App.MegaSdk);
+            this.LoginViewModel = new LoginViewModel();
+            this.CreateAccountViewModel = new CreateAccountViewModel();
         }
 
         public void ChangeMenu(IList iconButtons, IList menuItems)

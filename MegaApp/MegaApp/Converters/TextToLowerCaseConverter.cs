@@ -7,7 +7,7 @@ namespace MegaApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (!(value is string)) return String.Empty;
+            if (!(value is string)) return string.Empty;
 
             return ((string)value).ToLower();
         }

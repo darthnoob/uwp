@@ -95,7 +95,7 @@ namespace MegaApp.MegaApi
                     {
                         new CustomMessageDialog(
                             ErrorMessageTitle,
-                            String.Format(ErrorMessage, e.getErrorString()),
+                            string.Format(ErrorMessage, e.getErrorString()),
                             App.AppInformation,
                             MessageDialogButtons.Ok).ShowDialogAsync();
                     });

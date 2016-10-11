@@ -1,13 +1,13 @@
 ﻿using Windows.UI.Xaml;
-using MegaApp.Containers;
 using MegaApp.Services;
 using MegaApp.UserControls;
+using MegaApp.ViewModels;
 
 namespace MegaApp.Views
 {
     // Helper class to define the viewmodel of this page
     // XAML cannot use generic in it's declaration.
-    public class BaseLoginAndCreateAccountPage : PageEx<LoginAndCreateAccountViewModelContainer> {}
+    public class BaseLoginAndCreateAccountPage : PageEx<LoginAndCreateAccountViewModel> {}
    
     public sealed partial class LoginAndCreateAccountPage : BaseLoginAndCreateAccountPage
     {

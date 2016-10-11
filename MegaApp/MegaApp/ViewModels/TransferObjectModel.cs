@@ -9,7 +9,6 @@ namespace MegaApp.ViewModels
     public class TransferObjectModel : BaseSdkViewModel//, MTransferListenerInterface
     {
         public TransferObjectModel(MegaSDK megaSdk, IMegaNode selectedNode, TransferType transferType, string filePath) 
-            :base(megaSdk)
         {
             //switch (transferType)
             //{

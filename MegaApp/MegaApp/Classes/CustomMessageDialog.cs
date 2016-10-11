@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Popups;
+using MegaApp.Services;
 
 namespace MegaApp.Classes
 {
@@ -46,7 +47,7 @@ namespace MegaApp.Classes
             DialogWindow = new MessageDialog(_message, _title);
 
             // Add commands and set their callbacks
-            DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"), 
+            DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"), 
                 new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
 
             // Set the command that will be invoked by default
@@ -76,25 +77,25 @@ namespace MegaApp.Classes
             switch (dialogButtons)
             {
                 case MessageDialogButtons.Ok:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 0;
                     break;
 
                 case MessageDialogButtons.OkCancel:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Cancel"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Cancel"),
                         new UICommandInvokedHandler(this.OnCancelOrNoButtonTapped), 1));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 1;
                     break;
 
                 case MessageDialogButtons.YesNo:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Yes"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Yes"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_No"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_No"),
                         new UICommandInvokedHandler(this.OnCancelOrNoButtonTapped), 1));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 1;
