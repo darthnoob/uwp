@@ -7,6 +7,9 @@ namespace MegaApp.Services
 {
     public static class SdkService
     {
+        /// <summary>
+        /// Main MegaSDK instance of the app
+        /// </summary>
         private static MegaSDK _megaSdk;
         public static MegaSDK MegaSdk
         {
@@ -18,6 +21,9 @@ namespace MegaApp.Services
             }
         }
 
+        /// <summary>
+        /// MegaSDK instance for the folder links management
+        /// </summary>
         private static MegaSDK _megaSdkFolderLinks;
         private static MegaSDK MegaSdkFolderLinks
         {
@@ -29,6 +35,9 @@ namespace MegaApp.Services
             }
         }
 
+        /// <summary>
+        /// Initialize all the SDK parameters
+        /// </summary>
         public static void InitializeSdkParams()
         {
             //The next line enables a custom logger, if this function is not used OutputDebugString() is called
@@ -50,6 +59,10 @@ namespace MegaApp.Services
             MegaSDK.setStatsID(AppService.GetDeviceID());
         }
 
+        /// <summary>
+        /// Create a MegaSDK instance
+        /// </summary>
+        /// <returns>The new MegaSDK instance</returns>
         private static MegaSDK CreateSdk()
         {
             // Get an instance of the object that allow recover the local device information.

@@ -22,21 +22,6 @@ namespace MegaApp
         public static string IpAddress { get; set; }
 
         /// <summary>
-        /// Provides easy access to the resources strings
-        /// </summary>
-        //public static ResourceService ResourceService { get; private set; }
-
-        /// <summary>
-        /// Main MegaSDK instance of the app
-        /// </summary>
-        //public static MegaSDK MegaSdk { get; set; }
-
-        /// <summary>
-        /// MegaSDK instance for the folder links management
-        /// </summary>
-        //public static MegaSDK MegaSdkFolderLinks { get; set; }
-
-        /// <summary>
         /// Provides easy access to usefull links information
         /// </summary>
         public static LinkInformation LinkInformation { get; set; }
@@ -143,43 +128,9 @@ namespace MegaApp
             // Initialize the application information
             AppInformation = new AppInformation();
 
-            // Initialize the resource loaders
-            //ResourceService = new ResourceService();
-
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();
-
-            //The next line enables a custom logger, if this function is not used OutputDebugString() is called
-            //in the native library and log messages are only readable with the native debugger attached.
-            //The default behavior of MegaLogger() is to print logs using Debug.WriteLine() but it could
-            //be used to sends log to a file, for example.
-            //MegaSDK.setLoggerObject(new MegaLogger());
-
-            //You can select the maximum output level for debug messages.
-            //By default FATAL, ERROR, WARNING and INFO will be enabled
-            //DEBUG and MAX can only be enabled in Debug builds, they are ignored in Release builds
-            //MegaSDK.setLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
-
-            //You can send messages to the logger using MEGASDK.log(), those messages will be received
-            //in the active logger
-            //MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
-
-            // Set the ID for statistics
-            //MegaSDK.setStatsID(AppService.GetDeviceID());
-
-            //// Get an instance of the object that allow recover the local device information.
-            //EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
-
-            //// Initialize the main MegaSDK instance
-            //MegaSdk = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-            //    AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-            //    ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
-
-            //// Initialize the MegaSDK instance for Folder Links
-            //MegaSdkFolderLinks = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-            //    AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-            //    ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
-
+            
             // Ensure we don't initialize again
             ApplicationInitialized = true;
         }

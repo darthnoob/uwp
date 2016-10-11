@@ -35,11 +35,10 @@ namespace MegaApp.ViewModels
                             {
                                 //_loginPage.SetApplicationBar(true)
                                 new CustomMessageDialog(
-                                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                        ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
-                                        App.AppInformation,
-                                        MessageDialogButtons.Ok)
-                                    .ShowDialogAsync();
+                                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                    ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
+                                    App.AppInformation,
+                                    MessageDialogButtons.Ok).ShowDialogAsync();
                             });
                         }
                     }
@@ -49,11 +48,10 @@ namespace MegaApp.ViewModels
                         {
                             //_loginPage.SetApplicationBar(true)
                             new CustomMessageDialog(
-                                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                    ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
-                                    App.AppInformation,
-                                    MessageDialogButtons.Ok)
-                                .ShowDialogAsync();
+                                ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
+                                App.AppInformation,
+                                MessageDialogButtons.Ok).ShowDialogAsync();
                         });
                     }
                 }
