@@ -1,18 +1,11 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using mega;
 using MegaApp.Classes;
-using MegaApp.Containers;
-using MegaApp.MegaApi;
-using MegaApp.Resources;
 using MegaApp.Services;
-using MegaApp.ViewModels;
 using MegaApp.Views;
 
 namespace MegaApp
@@ -26,22 +19,22 @@ namespace MegaApp
         /// Provides easy access to usefull application information
         /// </summary>
         public static AppInformation AppInformation { get; private set; }
-        public static String IpAddress { get; set; }
+        public static string IpAddress { get; set; }
 
         /// <summary>
         /// Provides easy access to the resources strings
         /// </summary>
-        public static ResourceLoaders ResourceLoaders { get; private set; }
+        //public static ResourceService ResourceService { get; private set; }
 
         /// <summary>
         /// Main MegaSDK instance of the app
         /// </summary>
-        public static MegaSDK MegaSdk { get; set; }
+        //public static MegaSDK MegaSdk { get; set; }
 
         /// <summary>
         /// MegaSDK instance for the folder links management
         /// </summary>
-        public static MegaSDK MegaSdkFolderLinks { get; set; }
+        //public static MegaSDK MegaSdkFolderLinks { get; set; }
 
         /// <summary>
         /// Provides easy access to usefull links information
@@ -151,38 +144,41 @@ namespace MegaApp
             AppInformation = new AppInformation();
 
             // Initialize the resource loaders
-            ResourceLoaders = new ResourceLoaders();
+            //ResourceService = new ResourceService();
+
+            // Initialize SDK parameters
+            SdkService.InitializeSdkParams();
 
             //The next line enables a custom logger, if this function is not used OutputDebugString() is called
             //in the native library and log messages are only readable with the native debugger attached.
             //The default behavior of MegaLogger() is to print logs using Debug.WriteLine() but it could
             //be used to sends log to a file, for example.
-            MegaSDK.setLoggerObject(new MegaLogger());
+            //MegaSDK.setLoggerObject(new MegaLogger());
 
             //You can select the maximum output level for debug messages.
             //By default FATAL, ERROR, WARNING and INFO will be enabled
             //DEBUG and MAX can only be enabled in Debug builds, they are ignored in Release builds
-            MegaSDK.setLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
+            //MegaSDK.setLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
 
             //You can send messages to the logger using MEGASDK.log(), those messages will be received
             //in the active logger
-            MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
+            //MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
 
             // Set the ID for statistics
-            MegaSDK.setStatsID(AppService.GetDeviceID());
+            //MegaSDK.setStatsID(AppService.GetDeviceID());
 
-            // Get an instance of the object that allow recover the local device information.
-            EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
+            //// Get an instance of the object that allow recover the local device information.
+            //EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
 
-            // Initialize the main MegaSDK instance
-            MegaSdk = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-                AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-                ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
+            //// Initialize the main MegaSDK instance
+            //MegaSdk = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
+            //    AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
+            //    ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
 
-            // Initialize the MegaSDK instance for Folder Links
-            MegaSdkFolderLinks = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-                AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-                ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
+            //// Initialize the MegaSDK instance for Folder Links
+            //MegaSdkFolderLinks = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
+            //    AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
+            //    ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
 
             // Ensure we don't initialize again
             ApplicationInitialized = true;

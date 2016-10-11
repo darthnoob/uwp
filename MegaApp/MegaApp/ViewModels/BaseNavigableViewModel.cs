@@ -11,25 +11,20 @@ namespace MegaApp.ViewModels
             this.Navigation = NavigateService.Instance;
         }
 
-        public void Navigate(BasePageViewModel viewModel)
+        public async void Navigate(BasePageViewModel viewModel)
         {
-            if(viewModel == null)
-                throw new ArgumentNullException(nameof(viewModel));
+            if(viewModel == null) throw new ArgumentNullException(nameof(viewModel));
 
             var pageType = NavigateService.GetViewType(viewModel);
-            if (pageType == null) return;
+            if (pageType == null) throw new ArgumentException("Viewmodel is not bound to a view");
 
-            this.OnUiThread(() => this.Navigation.Navigate(pageType));
+            await this.OnUiThread(() => this.Navigation.Navigate(pageType));
         }
 
         /// <summary>
         /// Navigation interface to navigate views
         /// </summary>
-        private INavigate _navigation;
-        public INavigate Navigation
-        {
-            get { return _navigation; }
-            set { SetField(ref _navigation, value); }
-        }
+        public INavigate Navigation { get; }
+       
     }
 }

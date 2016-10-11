@@ -9,22 +9,19 @@ using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
-    {
-        private readonly MainPageViewModel _mainPageViewModel;
+    // Helper class to define the viewmodel of this page
+    // XAML cannot use generic in it's declaration.
+    public class BaseMainPage : PageEx<MainPageViewModel> { }
 
+    public sealed partial class MainPage : BaseMainPage
+    {
         public MainPage()
         {
-            _mainPageViewModel = new MainPageViewModel(App.MegaSdk, App.AppInformation);
-            this.DataContext = _mainPageViewModel;
-
             InitializeComponent();
         }
 
@@ -42,7 +39,7 @@ namespace MegaApp.Views
 
         private async Task<bool> CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
         {
-            bool isAlreadyOnline = Convert.ToBoolean(App.MegaSdk.isLoggedIn());
+            bool isAlreadyOnline = Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn());
             if (!isAlreadyOnline)
             {
                 if (! await SettingsService.HasValidSession())
@@ -115,7 +112,7 @@ namespace MegaApp.Views
         {
             if (! await NetworkService.IsNetworkAvailable(true)) return;
 
-            App.MegaSdk.logout(new LogOutRequestListener());
+            SdkService.MegaSdk.logout(new LogOutRequestListener());
         }
     }
 }

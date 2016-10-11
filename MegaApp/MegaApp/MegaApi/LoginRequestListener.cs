@@ -42,7 +42,7 @@ namespace MegaApp.MegaApi
 
         protected override string ProgressMessage
         {
-            get { return App.ResourceLoaders.ProgressMessages.GetString("PM_Login"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_Login"); }
         }
 
         protected override bool ShowProgressMessage
@@ -52,12 +52,12 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoginFailed"); }
+            get { return ResourceService.AppMessages.GetString("AM_LoginFailed"); }
         }
 
         protected override string ErrorMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoginFailed_Title").ToUpper(); }
+            get { return ResourceService.AppMessages.GetString("AM_LoginFailed_Title").ToUpper(); }
         }
 
         protected override bool ShowErrorMessage
@@ -129,20 +129,20 @@ namespace MegaApp.MegaApi
                 {
                     case MErrorType.API_ENOENT: // E-mail unassociated with a MEGA account or Wrong password
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            new CustomMessageDialog(ErrorMessageTitle, App.ResourceLoaders.AppMessages.GetString("AM_WrongEmailPasswordLogin"),
+                            new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin"),
                                 App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
                         return;
 
                     case MErrorType.API_ETOOMANY: // Too many failed login attempts. Wait one hour.
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                             new CustomMessageDialog(ErrorMessageTitle,
-                                String.Format(App.ResourceLoaders.AppMessages.GetString("AM_TooManyFailedLoginAttempts"), DateTime.Now.AddHours(1).ToString("HH:mm:ss")),
+                                string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"), DateTime.Now.AddHours(1).ToString("HH:mm:ss")),
                                 App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
                         return;
 
                     case MErrorType.API_EINCOMPLETE: // Account not confirmed
                         await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            new CustomMessageDialog(ErrorMessageTitle, App.ResourceLoaders.AppMessages.GetString("AM_AccountNotConfirmed"),
+                            new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_AccountNotConfirmed"),
                                 App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
                         return;
 

@@ -1,22 +1,16 @@
 ﻿using System;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
     public class CreateAccountViewModel : BaseSdkViewModel 
     {
-        private readonly MegaSDK _megaSdk;
-     
-        public CreateAccountViewModel(MegaSDK megaSdk)
-            : base(megaSdk)
+        public CreateAccountViewModel()
         {
-            this._megaSdk = megaSdk;
             this.ControlState = true;
         }
 
@@ -32,43 +26,45 @@ namespace MegaApp.ViewModels
                     {
                         if (this.TermOfService)
                         {
-                            this._megaSdk.createAccount(this.Email, this.Password, this.FirstName, this.LastName,
+                            this.MegaSdk.createAccount(this.Email, this.Password, this.FirstName, this.LastName,
                                 new CreateAccountRequestListener(this));
                         }
                         else
                         {
-                            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                            await this.OnUiThread(() =>
                             {
                                 //_loginPage.SetApplicationBar(true)
                                 new CustomMessageDialog(
-                                    App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                    App.ResourceLoaders.AppMessages.GetString("AM_AgreeTermsOfService"),
-                                    App.AppInformation,
-                                    MessageDialogButtons.Ok).ShowDialogAsync();
-                            });                            
+                                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                        ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
+                                        App.AppInformation,
+                                        MessageDialogButtons.Ok)
+                                    .ShowDialogAsync();
+                            });
                         }
                     }
                     else
                     {
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        await this.OnUiThread(() =>
                         {
                             //_loginPage.SetApplicationBar(true)
                             new CustomMessageDialog(
-                                App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                App.ResourceLoaders.AppMessages.GetString("AM_PasswordsDoNotMatch"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
+                                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                    ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
+                                    App.AppInformation,
+                                    MessageDialogButtons.Ok)
+                                .ShowDialogAsync();
                         });
                     }
                 }
-                else 
+                else
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    await this.OnUiThread(() =>
                     {
                         //_loginPage.SetApplicationBar(true)
                         new CustomMessageDialog(
-                            App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                            App.ResourceLoaders.AppMessages.GetString("AM_MalformedEmail"),
+                            ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_MalformedEmail"),
                             App.AppInformation,
                             MessageDialogButtons.Ok).ShowDialogAsync();
                     });
@@ -76,12 +72,12 @@ namespace MegaApp.ViewModels
             }
             else
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await this.OnUiThread(() =>
                 {
                     //_loginPage.SetApplicationBar(true)
                     new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                        App.ResourceLoaders.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
+                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
                         App.AppInformation,
                         MessageDialogButtons.Ok).ShowDialogAsync();
                 });
@@ -92,11 +88,11 @@ namespace MegaApp.ViewModels
         {
             //Because lastname is not an obligatory parameter, if the lastname field is null or empty,
             //force it to be an empty string to avoid "ArgumentNullException" when call the createAccount method.
-            if (String.IsNullOrWhiteSpace(this.LastName))
-                this.LastName = String.Empty;
+            if (string.IsNullOrWhiteSpace(this.LastName))
+                this.LastName = string.Empty;
 
-            return !String.IsNullOrEmpty(this.Email) && !String.IsNullOrEmpty(this.FirstName) && 
-                !String.IsNullOrEmpty(this.Password) && !String.IsNullOrEmpty(this.ConfirmPassword);
+            return !string.IsNullOrEmpty(this.Email) && !string.IsNullOrEmpty(this.FirstName) && 
+                !string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(this.ConfirmPassword);
         }
 
         private bool CheckPassword()
@@ -134,20 +130,20 @@ namespace MegaApp.ViewModels
 
         #region AppResources
 
-        public Uri AR_TermsOfServiceUri { get { return new Uri(App.ResourceLoaders.AppResources.GetString("AR_TermsOfServiceUri")); } }
+        public Uri AR_TermsOfServiceUri { get { return new Uri(ResourceService.AppResources.GetString("AR_TermsOfServiceUri")); } }
 
         #endregion
 
         #region UiResources
 
-        public string UI_CreateAccount { get { return App.ResourceLoaders.UiResources.GetString("UI_CreateAccount"); } }
-        public string UI_FirstNameWatermark { get { return App.ResourceLoaders.UiResources.GetString("UI_FirstNameWatermark"); } }
-        public string UI_LastNameWatermark { get { return App.ResourceLoaders.UiResources.GetString("UI_LastNameWatermark"); } }
-        public string UI_EmailWatermark { get { return App.ResourceLoaders.UiResources.GetString("UI_EmailWatermark"); } }
-        public string UI_PasswordWatermark { get { return App.ResourceLoaders.UiResources.GetString("UI_PasswordWatermark"); } }
-        public string UI_ConfirmPasswordWatermark { get { return App.ResourceLoaders.UiResources.GetString("UI_ConfirmPasswordWatermark"); } }
-        public string UI_AgreeCreateAccount { get { return App.ResourceLoaders.UiResources.GetString("UI_AgreeCreateAccount"); } }
-        public string UI_TermsOfService { get { return App.ResourceLoaders.UiResources.GetString("UI_TermsOfService"); } }
+        public string UI_CreateAccount { get { return ResourceService.UiResources.GetString("UI_CreateAccount"); } }
+        public string UI_FirstNameWatermark { get { return ResourceService.UiResources.GetString("UI_FirstNameWatermark"); } }
+        public string UI_LastNameWatermark { get { return ResourceService.UiResources.GetString("UI_LastNameWatermark"); } }
+        public string UI_EmailWatermark { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
+        public string UI_PasswordWatermark { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
+        public string UI_ConfirmPasswordWatermark { get { return ResourceService.UiResources.GetString("UI_ConfirmPasswordWatermark"); } }
+        public string UI_AgreeCreateAccount { get { return ResourceService.UiResources.GetString("UI_AgreeCreateAccount"); } }
+        public string UI_TermsOfService { get { return ResourceService.UiResources.GetString("UI_TermsOfService"); } }
 
         #endregion
     }
