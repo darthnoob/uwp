@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
+﻿using System.Threading.Tasks;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;

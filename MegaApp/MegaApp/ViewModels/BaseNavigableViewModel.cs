@@ -11,11 +11,11 @@ namespace MegaApp.ViewModels
             this.Navigation = NavigateService.Instance;
         }
 
-        public async void Navigate(BasePageViewModel viewModel)
+        public async void Navigate(Type viewModelType)
         {
-            if(viewModel == null) throw new ArgumentNullException(nameof(viewModel));
+            if(viewModelType == null) throw new ArgumentNullException(nameof(viewModelType));
 
-            var pageType = NavigateService.GetViewType(viewModel);
+            var pageType = NavigateService.GetViewType(viewModelType);
             if (pageType == null) throw new ArgumentException("Viewmodel is not bound to a view");
 
             await this.OnUiThread(() => this.Navigation.Navigate(pageType));

@@ -1,6 +1,4 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;

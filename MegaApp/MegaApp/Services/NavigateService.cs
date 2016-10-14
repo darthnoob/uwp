@@ -43,13 +43,13 @@ namespace MegaApp.Services
         /// <summary>
         /// Get the view which implements the BasePageViewModel by reflection
         /// </summary>
-        /// <param name="viewModel">The BasePageViewModel that must be implemented</param>
+        /// <param name="viewModelType">The viewmodel type that must be implemented</param>
         /// <returns>Type of the view that implements the specified viewmodel</returns>
-        public static Type GetViewType(BasePageViewModel viewModel)
+        public static Type GetViewType(Type viewModelType)
         {
             if (TypeList == null)
             {
-                var assembly = viewModel.GetType().GetTypeInfo().Assembly;
+                var assembly = viewModelType.GetTypeInfo().Assembly;
                 TypeList = assembly.GetTypes().ToList();
             }
             
@@ -57,18 +57,16 @@ namespace MegaApp.Services
             {
                 PageExTypes = TypeList.Where(t => t.GetTypeInfo().BaseType != null &&
                     t.GetTypeInfo().BaseType.GetTypeInfo().IsGenericType &&
-                    t.GetTypeInfo().BaseType.GetGenericTypeDefinition() == typeof(PageEx<>) &&
-                    t.GetTypeInfo().BaseType.GenericTypeArguments[0] == viewModel.GetType()).ToList();
+                    t.GetTypeInfo().BaseType.GetGenericTypeDefinition() == typeof(PageEx<>)).ToList();
             }
 
-            foreach (var pageExType in PageExTypes)
-            {
-                var viewType = TypeList.First(t => t.GetTypeInfo().BaseType != null &&
-                    t.GetTypeInfo().BaseType == pageExType);
-                return viewType;
-            }
+            var baseViewType = PageExTypes.First(t => t.GetTypeInfo().BaseType != null &&
+                    t.GetTypeInfo().BaseType.GenericTypeArguments[0] == viewModelType);
 
-            return null;
+            var viewType = TypeList.FirstOrDefault(t => t.GetTypeInfo().BaseType != null &&
+                    t.GetTypeInfo().BaseType == baseViewType);
+
+            return viewType;
         }
     }
 }
