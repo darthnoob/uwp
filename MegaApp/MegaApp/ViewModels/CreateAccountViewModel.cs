@@ -1,6 +1,4 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -128,20 +126,20 @@ namespace MegaApp.ViewModels
 
         #region AppResources
 
-        public Uri AR_TermsOfServiceUri { get { return new Uri(ResourceService.AppResources.GetString("AR_TermsOfServiceUri")); } }
+        public Uri TermsOfServiceUri { get { return new Uri(ResourceService.AppResources.GetString("AR_TermsOfServiceUri")); } }
 
         #endregion
 
         #region UiResources
 
-        public string UI_CreateAccount { get { return ResourceService.UiResources.GetString("UI_CreateAccount"); } }
-        public string UI_FirstNameWatermark { get { return ResourceService.UiResources.GetString("UI_FirstNameWatermark"); } }
-        public string UI_LastNameWatermark { get { return ResourceService.UiResources.GetString("UI_LastNameWatermark"); } }
-        public string UI_EmailWatermark { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
-        public string UI_PasswordWatermark { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
-        public string UI_ConfirmPasswordWatermark { get { return ResourceService.UiResources.GetString("UI_ConfirmPasswordWatermark"); } }
-        public string UI_AgreeCreateAccount { get { return ResourceService.UiResources.GetString("UI_AgreeCreateAccount"); } }
-        public string UI_TermsOfService { get { return ResourceService.UiResources.GetString("UI_TermsOfService"); } }
+        public string AgreeCreateAccountText { get { return ResourceService.UiResources.GetString("UI_AgreeCreateAccount"); } }
+        public string CreateAccountText { get { return ResourceService.UiResources.GetString("UI_CreateAccount"); } }
+        public string ConfirmPasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_ConfirmPasswordWatermark"); } }
+        public string EmailWatermarkText { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
+        public string FirstNameWatermarkText { get { return ResourceService.UiResources.GetString("UI_FirstNameWatermark"); } }
+        public string LastNameWatermarkText { get { return ResourceService.UiResources.GetString("UI_LastNameWatermark"); } }
+        public string PasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
+        public string TermsOfServiceText { get { return ResourceService.UiResources.GetString("UI_TermsOfService"); } }
 
         #endregion
     }

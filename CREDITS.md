@@ -1,6 +1,16 @@
 ## CREDITS
 <p>Here is the list of the external libraries used by the Windows Phone Client. We thank them all for their contributions:</p>
 
+#### UWP Community Toolkit
+<p>https://github.com/Microsoft/UWPCommunityToolkit</p>
+<p>Copyright (c) .NET Foundation and Contributors. All rights reserved.</p>
+###### Description:
+<p>A collection of helper functions, custom controls, and app services. It simplifies and demonstrates common developer tasks building UWP apps for Windows 10</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md</p>
+<hr>
+
 #### MEGA C++ SDK
 <p>https://github.com/meganz/sdk</p>
 <p>© 2013-2016 by Mega Limited, Auckland, New Zealand</p>
