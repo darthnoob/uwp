@@ -1,7 +1,7 @@
-﻿using MegaApp.UserControls;
+﻿using MegaApp.MegaApi;
+using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MegaApp.Views
 {
@@ -13,6 +13,13 @@ namespace MegaApp.Views
         public SettingsPage()
         {
             this.InitializeComponent();
+        }
+
+        private async void OnLogoutClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!await NetworkService.IsNetworkAvailable(true)) return;
+
+            SdkService.MegaSdk.logout(new LogOutRequestListener());
         }
     }
 }

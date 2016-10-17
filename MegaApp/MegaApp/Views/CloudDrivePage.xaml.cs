@@ -1,7 +1,7 @@
-﻿using MegaApp.UserControls;
+﻿using Windows.UI.Xaml.Navigation;
+using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace MegaApp.Views
 {
@@ -14,6 +14,21 @@ namespace MegaApp.Views
         public CloudDrivePage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            //_mainPageViewModel.Deinitialize(App.GlobalDriveListener);
+            base.OnNavigatedFrom(e);
+        }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // Need to check it always and no only in StartupMode, 
+            // because this is the first page loaded
+            if (!await AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
         }
     }
 }

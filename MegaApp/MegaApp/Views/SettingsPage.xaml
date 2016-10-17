@@ -8,6 +8,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom">
+            <AppBarButton Icon="Cancel" Label="Logout" Click="OnLogoutClick"/>
+        </CommandBar>    
     </Grid>
 </views:BaseSettingsPage>
