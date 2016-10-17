@@ -18,30 +18,30 @@
         <!--Pivot Control-->
         <Pivot x:Name="Pivot_LoginAndCreateAccount" Grid.Row="1">
             <!--Pivot item one-->
-            <PivotItem x:Name="PivotItem_Login" Header="{Binding LoginViewModel.UI_Login, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
+            <PivotItem x:Name="PivotItem_Login" Header="{Binding LoginViewModel.LoginText, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
                 <ScrollViewer x:Name="ContentPanel_Login" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="StackLogin" VerticalAlignment="Top">
-                        <TextBox x:Name="TxtEmail_Login" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding LoginViewModel.UI_EmailWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding LoginViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
-                        <PasswordBox x:Name="TxtPassword_Login" Margin="0,0,0,12" PlaceholderText="{Binding LoginViewModel.UI_PasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding LoginViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" TabIndex="1"/>
+                        <TextBox x:Name="TxtEmail_Login" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding LoginViewModel.EmailWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding LoginViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
+                        <PasswordBox x:Name="TxtPassword_Login" Margin="0,0,0,12" PlaceholderText="{Binding LoginViewModel.PasswordWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding LoginViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" TabIndex="1"/>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
             <!--Pivot item two-->
-            <PivotItem x:Name="PivotItem_CreateAccount" Header="{Binding CreateAccountViewModel.UI_CreateAccount, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
+            <PivotItem x:Name="PivotItem_CreateAccount" Header="{Binding CreateAccountViewModel.CreateAccountText, Converter={StaticResource TextToLowerCaseConverter}}" Margin="12,4,12,0">
                 <ScrollViewer x:Name="ContentPanel_CreateAccount" Grid.Row="1" VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="StackCreateAccount" VerticalAlignment="Top">
-                        <TextBox x:Name="TxtFirstName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_FirstNameWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.FirstName, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
-                        <TextBox x:Name="TxtLastName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_LastNameWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.LastName, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="0"/>
-                        <TextBox x:Name="TxtEmail_CreateAccount" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.UI_EmailWatermark, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="1" IsReadOnly="{Binding CreateAccountViewModel.IsReadOnly}" InputScope="EmailNameOrAddress"/>
-                        <PasswordBox x:Name="TxtPassword_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.UI_PasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="2"/>
-                        <PasswordBox x:Name="TxtPasswordReType_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.UI_ConfirmPasswordWatermark, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.ConfirmPassword, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="3"/>
+                        <TextBox x:Name="TxtFirstName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.FirstNameWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.FirstName, Mode=TwoWay}" IsEnabled="{Binding LoginViewModel.ControlState}" InputScope="EmailNameOrAddress" TabIndex="0"/>
+                        <TextBox x:Name="TxtLastName" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.LastNameWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.LastName, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="0"/>
+                        <TextBox x:Name="TxtEmail_CreateAccount" Margin="0,0,0,12" TextWrapping="NoWrap" PlaceholderText="{Binding CreateAccountViewModel.EmailWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" Text="{Binding CreateAccountViewModel.Email, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="1" IsReadOnly="{Binding CreateAccountViewModel.IsReadOnly}" InputScope="EmailNameOrAddress"/>
+                        <PasswordBox x:Name="TxtPassword_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.PasswordWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.Password, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="2"/>
+                        <PasswordBox x:Name="TxtPasswordReType_CreateAccount" Margin="0,0,0,12" PlaceholderText="{Binding CreateAccountViewModel.ConfirmPasswordWatermarkText, Converter={StaticResource TextToLowerCaseConverter}}" PasswordRevealMode="Peek" Password="{Binding CreateAccountViewModel.ConfirmPassword, Mode=TwoWay}" IsEnabled="{Binding CreateAccountViewModel.ControlState}" TabIndex="3"/>
                         <StackPanel x:Name="StackTermOfUse" Orientation="Horizontal">
                             <CheckBox x:Name="CheckTermsOfUse" Margin="0,0,-90,0" VerticalAlignment="Center" IsEnabled="{Binding CreateAccountViewModel.ControlState}" IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay}" TabIndex="4"/>
                             <RichTextBlock x:Name="TermsOfUseAgreement" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Paragraph>
-                                    <Run Text="{Binding CreateAccountViewModel.UI_AgreeCreateAccount}" FontFamily="Portable User Interface"/>
-                                    <Hyperlink x:Name="LinkTermsOfService" NavigateUri="{Binding CreateAccountViewModel.AR_TermsOfServiceUri}" FontFamily="Portable User Interface">
-                                        <Run Text="{Binding CreateAccountViewModel.UI_TermsOfService}" Foreground="{StaticResource MegaRedSolidColorBrush}" FontFamily="Portable User Interface"/>
+                                    <Run Text="{Binding CreateAccountViewModel.AgreeCreateAccountText}" FontFamily="Portable User Interface"/>
+                                    <Hyperlink x:Name="LinkTermsOfService" NavigateUri="{Binding CreateAccountViewModel.TermsOfServiceUri}" FontFamily="Portable User Interface">
+                                        <Run Text="{Binding CreateAccountViewModel.TermsOfServiceText}" Foreground="{StaticResource MegaRedSolidColorBrush}" FontFamily="Portable User Interface"/>
                                     </Hyperlink>
                                 </Paragraph>
                             </RichTextBlock>

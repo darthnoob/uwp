@@ -72,11 +72,11 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region UI Strings Resources
+        #region UiResources
 
-        public string UI_Login { get { return ResourceService.UiResources.GetString("UI_Login"); } }
-        public string UI_EmailWatermark { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
-        public string UI_PasswordWatermark { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
+        public string EmailWatermarkText { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
+        public string LoginText { get { return ResourceService.UiResources.GetString("UI_Login"); } }
+        public string PasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
 
         #endregion
     }
