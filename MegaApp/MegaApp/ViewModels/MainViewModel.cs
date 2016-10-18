@@ -36,7 +36,7 @@ namespace MegaApp.ViewModels
                 if (_selectedItem == null) return; // exit else both item lists will be set to null
                 this.SelectedOptionItem = null;
                 // Navigate to destination with targetviewmodel type
-                Navigate(_selectedItem.TargetViewModel);
+                NavigateTo(_selectedItem.TargetViewModel);
             }
         }
 
@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels
                 if (_selectedOptionItem == null) return; // exit else both item lists will be set to null
                 this.SelectedItem = null;
                 // Navigate to destination with targetviewmodel type
-                Navigate(_selectedOptionItem.TargetViewModel);
+                NavigateTo(_selectedOptionItem.TargetViewModel);
             }
         }
 

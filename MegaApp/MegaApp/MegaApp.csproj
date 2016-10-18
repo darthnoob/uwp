@@ -103,7 +103,11 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
+    <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\TransferQueu.cs" />
+    <Compile Include="Enums\NavigationActionType.cs" />
+    <Compile Include="Enums\NavigationParamType.cs" />
+    <Compile Include="Interfaces\INavigationObject.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
     <Compile Include="UserControls\MenuItem.cs" />
     <Compile Include="ViewModels\CloudDriveViewModel.cs" />
