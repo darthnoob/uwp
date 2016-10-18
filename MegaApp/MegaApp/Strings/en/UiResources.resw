@@ -145,6 +145,11 @@
     <value>Your first name</value>
     <comment>Watermark label for the user's first name field when create account - (String as short as possible).</comment>
   </data>
+  <data name="UI_ImportLinkBorderText" xml:space="preserve">
+    <value>Import to {0}</value>
+    <comment>Label for the dialog shown when a user are trying to import a MEGA link - (String as short as possible).
+Preserve the {0} code because is for include the name of the destination folder in runtime.</comment>
+  </data>
   <data name="UI_LastNameWatermark" xml:space="preserve">
     <value>Your last name</value>
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
@@ -152,6 +157,14 @@
   <data name="UI_Login" xml:space="preserve">
     <value>Login</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MultipleFiles" xml:space="preserve">
+    <value>files</value>
+    <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MultipleFolders" xml:space="preserve">
+    <value>folders</value>
+    <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
     <value>No</value>
@@ -161,9 +174,17 @@
     <value>No internet connection</value>
     <comment>Label for the background of an empty state when no internet connection - (String as short as possible).</comment>
   </data>
+  <data name="UI_Off" xml:space="preserve">
+    <value>Off</value>
+    <comment>Label for any 'Off' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_Ok" xml:space="preserve">
     <value>Ok</value>
     <comment>Label for any 'Ok' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_On" xml:space="preserve">
+    <value>On</value>
+    <comment>Label for any 'On' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PasswordWatermark" xml:space="preserve">
     <value>Your password</value>
@@ -172,6 +193,14 @@
   <data name="UI_RubbishBinName" xml:space="preserve">
     <value>Rubbish bin</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SingleFile" xml:space="preserve">
+    <value>file</value>
+    <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SingleFolder" xml:space="preserve">
+    <value>folder</value>
+    <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
     <value>Terms of service</value>

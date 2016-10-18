@@ -25,7 +25,7 @@ namespace MegaApp.Services
         /// MegaSDK instance for the folder links management
         /// </summary>
         private static MegaSDK _megaSdkFolderLinks;
-        private static MegaSDK MegaSdkFolderLinks
+        public static MegaSDK MegaSdkFolderLinks
         {
             get
             {

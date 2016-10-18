@@ -49,13 +49,15 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-        </Pivot>
+        </Pivot>        
+    </Grid>
 
-        <CommandBar Grid.Row="1" VerticalAlignment="Bottom">
+    <Page.BottomAppBar>
+        <CommandBar Grid.Row="1">
             <AppBarButton Icon="Accept" Label="Accept" Click="OnAcceptClick"/>
             <AppBarButton Icon="Cancel" Label="Cancel" Click="OnCancelClick"/>
         </CommandBar>
-    </Grid>    
+    </Page.BottomAppBar>
 </views:BaseLoginAndCreateAccountPage>
 
 

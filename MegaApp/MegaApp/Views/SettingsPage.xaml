@@ -7,9 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <CommandBar Grid.Row="1" VerticalAlignment="Bottom">
-            <AppBarButton Icon="Cancel" Label="Logout" Click="OnLogoutClick"/>
-        </CommandBar>    
+    <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
     </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Cancel" Label="Logout" Click="OnLogoutClick"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </views:BaseSettingsPage>

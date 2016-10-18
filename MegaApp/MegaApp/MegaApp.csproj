@@ -90,6 +90,7 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <PRIResource Include="Strings\en\VisualResources.resw" />
     <PRIResource Include="Strings\en\UiResources.resw" />
     <PRIResource Include="Strings\en\SettingsResources.resw" />
     <PRIResource Include="Strings\en\ProgressMessages.resw" />
@@ -103,11 +104,10 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
+    <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\TransferQueu.cs" />
-    <Compile Include="UserControls\HamburgerMenuEx.cs" />
-    <Compile Include="UserControls\MenuItem.cs" />
-    <Compile Include="ViewModels\CloudDriveViewModel.cs" />
-    <Compile Include="ViewModels\LoginAndCreateAccountViewModel.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
@@ -133,22 +133,35 @@
     <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />
+    <Compile Include="Services\NodeService.cs" />
+    <Compile Include="Services\UiService.cs" />
+    <Compile Include="UserControls\HamburgerMenuEx.cs" />
+    <Compile Include="UserControls\MenuItem.cs" />
     <Compile Include="UserControls\PageEx.cs" />
     <Compile Include="ViewModels\BaseNavigableViewModel.cs" />
     <Compile Include="ViewModels\BasePageViewModel.cs" />
     <Compile Include="ViewModels\BaseSdkViewModel.cs" />
     <Compile Include="ViewModels\BaseUiViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CloudDriveViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
+    <Compile Include="ViewModels\FileNodeViewModel.cs" />
+    <Compile Include="ViewModels\FolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\FolderViewModel.cs" />
+    <Compile Include="ViewModels\ImageNodeViewModel.cs" />
+    <Compile Include="ViewModels\LoginAndCreateAccountViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>

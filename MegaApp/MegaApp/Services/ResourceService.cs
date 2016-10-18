@@ -16,5 +16,7 @@ namespace MegaApp.Services
         public static ResourceLoader SettingsResources { get; } = ResourceLoader.GetForViewIndependentUse("SettingsResources");
 
         public static ResourceLoader UiResources { get; } = ResourceLoader.GetForViewIndependentUse("UiResources");
+
+        public static ResourceLoader VisualResources { get; } = ResourceLoader.GetForViewIndependentUse("VisualResources");
     }
 }
