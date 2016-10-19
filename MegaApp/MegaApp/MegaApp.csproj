@@ -104,11 +104,12 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
-    <Compile Include="Classes\NodeTemplateSelector.cs" />
+    <Compile Include="Classes\NavigationObject.cs" />
+	<Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\TransferQueu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
-    <Compile Include="Converters\TextToLowerCaseConverter.cs" />
+    <Compile Include="Converters\TextToLowerCaseConverter.cs" />	
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -119,7 +120,9 @@
     <Compile Include="Enums\LinkAction.cs" />
     <Compile Include="Enums\MediaType.cs" />
     <Compile Include="Enums\MenuType.cs" />
-    <Compile Include="Enums\NavigationParameter.cs" />
+    <Compile Include="Enums\NavigationActionType.cs" />
+	<Compile Include="Enums\NavigationParameter.cs" />
+	<Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
     <Compile Include="Enums\TransferStatus.cs" />
@@ -131,6 +134,7 @@
     <Compile Include="Interfaces\IBaseNode.cs" />
     <Compile Include="Interfaces\IMegaNode.cs" />
     <Compile Include="Interfaces\INavigate.cs" />
+	<Compile Include="Interfaces\INavigationObject.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
