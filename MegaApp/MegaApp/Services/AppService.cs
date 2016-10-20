@@ -2,10 +2,6 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
-using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -47,18 +43,6 @@ namespace MegaApp.Services
         public static string GetAppUserAgent()
         {
             return string.Format("MEGA_UWP/{0}", GetAppVersion());
-        }
-
-        public static string GetDeviceID()
-        {
-            HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
-            IBuffer hardwareId = token.Id;
-
-            HashAlgorithmProvider hasher = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer hashed = hasher.HashData(hardwareId);
-
-            string hashedString = CryptographicBuffer.EncodeToHexString(hashed);
-            return hashedString;
         }
 
         public static void LogoutActions()

@@ -114,6 +114,7 @@
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
+    <Compile Include="Enums\DeviceFormFactorType.cs" />
     <Compile Include="Enums\DriveDisplayMode.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
+    <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />
