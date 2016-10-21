@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:MegaApp.Views"
-    mc:Ignorable="d">
+    xmlns:viewModels="using:MegaApp.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:LoginAndCreateAccountViewModel}">
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -53,7 +55,7 @@
     </Grid>
 
     <Page.BottomAppBar>
-        <CommandBar Grid.Row="1">
+        <CommandBar>
             <AppBarButton Icon="Accept" Label="Accept" Click="OnAcceptClick"/>
             <AppBarButton Icon="Cancel" Label="Cancel" Click="OnCancelClick"/>
         </CommandBar>

@@ -7,6 +7,7 @@ using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels;
+using MegaApp.Classes;
 
 namespace MegaApp.MegaApi
 {
@@ -99,7 +100,7 @@ namespace MegaApp.MegaApi
             get { throw new NotImplementedException(); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
             get { throw new NotImplementedException(); }
         }

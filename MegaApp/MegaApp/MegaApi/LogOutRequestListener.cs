@@ -1,8 +1,9 @@
 ﻿using System;
 using mega;
-using MegaApp.Enums;
+using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -77,9 +78,9 @@ namespace MegaApp.MegaApi
             get { return typeof(LoginAndCreateAccountPage); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
-            get { return NavigationParameter.Normal; }
+            get { return NavigationObject.Create(typeof(CloudDriveViewModel)); }
         }
 
         #region Override Methods

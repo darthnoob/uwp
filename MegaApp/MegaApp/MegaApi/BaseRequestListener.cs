@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 
 namespace MegaApp.MegaApi
 {
@@ -24,8 +23,8 @@ namespace MegaApp.MegaApi
         abstract protected bool NavigateOnSucces { get; }
         abstract protected bool ActionOnSucces { get; }
         abstract protected Type NavigateToPage { get; }
-        abstract protected NavigationParameter NavigationParameter { get; }
-        
+        abstract protected NavigationObject NavigationObject { get; }
+
         #endregion
 
         #region MRequestListenerInterface
@@ -58,7 +57,7 @@ namespace MegaApp.MegaApi
                 if (NavigateOnSucces)
                 {
                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        (Window.Current.Content as Frame).Navigate(NavigateToPage));
+                        (Window.Current.Content as Frame).Navigate(NavigateToPage, NavigationObject));
                 }
             }
             else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 

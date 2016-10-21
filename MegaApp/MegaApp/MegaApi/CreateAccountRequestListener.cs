@@ -2,7 +2,6 @@
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using mega;
-using MegaApp.Enums;
 using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.ViewModels;
@@ -77,9 +76,9 @@ namespace MegaApp.MegaApi
             get { return typeof(LoginAndCreateAccountPage); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
-            get { return NavigationParameter.CreateAccount; }
+            get { return NavigationObject.Create(typeof(CreateAccountViewModel)); }
         }
 
         #endregion

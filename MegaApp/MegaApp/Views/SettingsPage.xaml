@@ -8,12 +8,14 @@
     mc:Ignorable="d">
 
     <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         
-    </Grid>
-
-    <Page.BottomAppBar>
+        
         <CommandBar Grid.Row="1">
             <AppBarButton Icon="Cancel" Label="Logout" Click="OnLogoutClick"/>
         </CommandBar>
-    </Page.BottomAppBar>
+    </Grid>
 </views:BaseSettingsPage>

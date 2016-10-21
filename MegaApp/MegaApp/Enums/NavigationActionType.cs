@@ -3,5 +3,6 @@
     public enum NavigationActionType
     {
         Default,
+        Login
     }
 }

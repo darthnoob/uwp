@@ -5,13 +5,14 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using mega;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
-using MegaApp.Classes;
 
 namespace MegaApp.ViewModels
 {
@@ -243,6 +244,33 @@ namespace MegaApp.ViewModels
             //this.LoadChildNodes();
         }
 
+        public void OnChildNodeTapped(IMegaNode node)
+        {
+            switch (node.Type)
+            {
+                case MNodeType.TYPE_UNKNOWN:
+                    break;
+                case MNodeType.TYPE_FILE:
+                    // If the user is moving nodes don't process the file node
+                    if (CurrentDisplayMode != DriveDisplayMode.CopyOrMoveItem)
+                        ProcessFileNode(node);
+                    break;
+                case MNodeType.TYPE_FOLDER:
+                    // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
+                    if ((CurrentDisplayMode == DriveDisplayMode.CopyOrMoveItem) && (IsSelectedNode(node))) return;
+                    BrowseToFolder(node);
+                    break;
+                case MNodeType.TYPE_ROOT:
+                    break;
+                case MNodeType.TYPE_INCOMING:
+                    break;
+                case MNodeType.TYPE_RUBBISH:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         /// <summary>
         /// Check if a node is in the selected nodes group for move, copy or any other action.
         /// </summary>        
@@ -267,6 +295,48 @@ namespace MegaApp.ViewModels
             }
 
             return false;
+        }
+
+        public bool CanGoFolderUp()
+        {
+            MNode parentNode = this.MegaSdk.getParentNode(this.FolderRootNode.OriginalMNode);
+            if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
+                return false;
+
+            return true;
+        }
+
+        public virtual bool GoFolderUp()
+        {
+            if (this.FolderRootNode == null) return false;
+            
+            MNode parentNode = this.MegaSdk.getParentNode(this.FolderRootNode.OriginalMNode);
+            if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
+                return false;
+
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this.Type, ChildNodes);
+
+            LoadChildNodes();
+
+            return true;
+        }
+
+        public void BrowseToFolder(IMegaNode node)
+        {
+            if (node == null) return;
+
+            // Show the back button in desktop and tablet applications
+            // Back button in mobile applications is automatic in the nav bar on screen
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+            this.FolderRootNode = node;
+
+            LoadChildNodes();
+        }
+
+        public void ProcessFileNode(IMegaNode node)
+        {
+
         }
 
         public void SetProgressIndication(bool onOff, string busyText = null)

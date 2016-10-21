@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MegaApp.Enums;
 using MegaApp.UserControls;
 
 namespace MegaApp.ViewModels
@@ -15,8 +16,12 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Initialize the viewmodel
         /// </summary>
-        public void Initialize()
+        /// <param name="navActionType">Navigation action used to arrive to the MainPage</param>
+        public void Initialize(NavigationActionType navActionType = NavigationActionType.Default)
         {
+            // Set the navigation action used to arrive to the MainPage
+            this.NavActionType = navActionType;
+
             // Set the default menu item to home/first item
             this.SelectedItem = this.MenuItems.FirstOrDefault();
         }
@@ -36,7 +41,7 @@ namespace MegaApp.ViewModels
                 if (_selectedItem == null) return; // exit else both item lists will be set to null
                 this.SelectedOptionItem = null;
                 // Navigate to destination with targetviewmodel type
-                NavigateTo(_selectedItem.TargetViewModel);
+                NavigateTo(_selectedItem.TargetViewModel, this.NavActionType);
             }
         }
 
@@ -53,7 +58,7 @@ namespace MegaApp.ViewModels
                 if (_selectedOptionItem == null) return; // exit else both item lists will be set to null
                 this.SelectedItem = null;
                 // Navigate to destination with targetviewmodel type
-                NavigateTo(_selectedOptionItem.TargetViewModel);
+                NavigateTo(_selectedOptionItem.TargetViewModel, this.NavActionType);
             }
         }
 
@@ -77,6 +82,11 @@ namespace MegaApp.ViewModels
         /// List of option menu items
         /// </summary>
         public IList<MenuItem> OptionItems { get; }
+
+        /// <summary>
+        /// Navigation action used to arrive to the MainPage
+        /// </summary>
+        private NavigationActionType NavActionType { get; set; }
 
         #endregion
     }

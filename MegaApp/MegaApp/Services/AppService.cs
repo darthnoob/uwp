@@ -6,7 +6,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.Enums;
 using MegaApp.Views;
 
 namespace MegaApp.Services
@@ -18,7 +17,7 @@ namespace MegaApp.Services
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !await SettingsService.HasValidSession())
             {
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>                    
-                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage), NavigationParameter.Normal));
+                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
 
                 return false;
             }

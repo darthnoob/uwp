@@ -95,9 +95,9 @@ namespace MegaApp.MegaApi
             get { return (typeof(MainPage)); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
-            get { return NavigationParameter.Login; }
+            get { return NavigationObject.Create(typeof(LoginViewModel), NavigationActionType.Login); }
         }
 
         #endregion

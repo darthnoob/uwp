@@ -5,7 +5,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.Views;
 using IApplicationBar = MegaApp.Interfaces.IApplicationBar;
@@ -49,7 +48,7 @@ namespace MegaApp.ViewModels
                             MessageDialogButtons.Ok);
 
                         customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                            (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage), NavigationParameter.Normal);
+                            (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage));
 
                         customMessageDialog.ShowDialogAsync();
                     });
@@ -57,7 +56,7 @@ namespace MegaApp.ViewModels
                 else
                 {
                     OnUiThread(() =>
-                        (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage), NavigationParameter.Normal));
+                        (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
                 }
             }
 
