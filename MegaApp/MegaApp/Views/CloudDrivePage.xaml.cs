@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using GoedWare.Controls.Breadcrumb;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -154,6 +155,22 @@ namespace MegaApp.Views
         private void OnListLoaded(object sender, RoutedEventArgs e)
         {
 
-        }        
+        }
+
+        private void OnHomeSelected(object sender, EventArgs e)
+        {
+            if(((BreadcrumbControl)sender).Equals(CloudDriveBreadCrumb))
+                ViewModel.CloudDrive.BrowseToHome();
+            else if (((BreadcrumbControl)sender).Equals(RubbishBinBreadCrumb))
+                ViewModel.RubbishBin.BrowseToHome();
+        }
+
+        private void OnItemSelected(object sender, BreadcrumbEventArgs e)
+        {
+            if (((BreadcrumbControl)sender).Equals(CloudDriveBreadCrumb))
+                ViewModel.CloudDrive.BrowseToFolder((IMegaNode)e.Item);
+            else if (((BreadcrumbControl)sender).Equals(RubbishBinBreadCrumb))
+                ViewModel.RubbishBin.BrowseToFolder((IMegaNode)e.Item);
+        }
     }
 }

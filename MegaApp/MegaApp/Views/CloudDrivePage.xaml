@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:breadcrumb="using:GoedWare.Controls.Breadcrumb"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
@@ -51,7 +52,16 @@
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
                                     <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedSolidColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <!--<userControls:BreadCrumb x:Name="CloudDriveBreadCrumb" ItemsSource="{Binding CloudDrive.BreadCrumbs}" ItemsSourceType="{Binding CloudDrive.Type}"  Margin="0,0,6,0" Grid.Row="1" Grid.Column="0" />-->
+                                    <breadcrumb:BreadcrumbControl 
+                                        x:Name="CloudDriveBreadCrumb"
+                                        Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
+                                        DisplayMemberPath="Name"
+                                        HomeSelected="OnHomeSelected"
+                                        HomeText="Home"
+                                        ItemSelected="OnItemSelected"
+                                        Seperator=">"
+                                        ItemsSource="{Binding CloudDrive.BreadCrumbs}"
+                                        OverFlow="..."/>
                                     <TextBlock Text="{Binding CloudDrive.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <TextBlock Text="{Binding CloudDrive.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>
@@ -88,7 +98,16 @@
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
                                     <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedSolidColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <!--<userControls:BreadCrumb x:Name="RubbishBinBreadCrumb" ItemsSource="{Binding RubbishBin.BreadCrumbs}" ItemsSourceType="{Binding RubbishBin.Type}" Margin="0,0,6,0" Grid.Row="1" Grid.Column="0" />-->
+                                    <breadcrumb:BreadcrumbControl 
+                                        x:Name="RubbishBinBreadCrumb"
+                                        Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
+                                        DisplayMemberPath="Name"
+                                        HomeSelected="OnHomeSelected"
+                                        HomeText="Home"
+                                        ItemSelected="OnItemSelected"
+                                        Seperator=">"
+                                        ItemsSource="{Binding RubbishBin.BreadCrumbs}"
+                                        OverFlow="..."/>
                                     <TextBlock Text="{Binding RubbishBin.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <TextBlock Text="{Binding RubbishBin.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>

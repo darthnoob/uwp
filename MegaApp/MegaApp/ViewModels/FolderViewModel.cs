@@ -23,16 +23,15 @@ namespace MegaApp.ViewModels
     {
         public FolderViewModel(ContainerType containerType) : base()
         {
-            this.Type = containerType;
+            Type = containerType;
 
-            this.FolderRootNode = null;
-            this.IsBusy = false;
-            this.BusyText = null;
-            this.ChildNodes = new ObservableCollection<IMegaNode>();
-            this.BreadCrumbs = new ObservableCollection<IBaseNode>();
-            this.BreadCrumbs.CollectionChanged += BreadCrumbs_CollectionChanged;
-            this.SelectedNodes = new List<IMegaNode>();
-            this.IsMultiSelectActive = false;
+            FolderRootNode = null;
+            IsBusy = false;
+            BusyText = null;
+            ChildNodes = new ObservableCollection<IMegaNode>();
+            BreadCrumbs = new ObservableCollection<IBaseNode>();
+            SelectedNodes = new List<IMegaNode>();
+            IsMultiSelectActive = false;
 
             //this.RemoveItemCommand = new DelegateCommand(this.RemoveItem);
             //this.RenameItemCommand = new DelegateCommand(this.RenameItem);
@@ -44,7 +43,8 @@ namespace MegaApp.ViewModels
             //this.MultiSelectCommand = new DelegateCommand(this.MultiSelect);
             //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
-            this.ChildNodes.CollectionChanged += ChildNodes_CollectionChanged;
+            ChildNodes.CollectionChanged += ChildNodes_CollectionChanged;
+            BreadCrumbs.CollectionChanged += BreadCrumbs_CollectionChanged;
 
             SetViewDefaults();
 
@@ -53,22 +53,22 @@ namespace MegaApp.ViewModels
             switch (containerType)
             {
                 case ContainerType.CloudDrive:
-                    this.CurrentDisplayMode = DriveDisplayMode.CloudDrive;
+                    CurrentDisplayMode = DriveDisplayMode.CloudDrive;
                     break;
                 case ContainerType.RubbishBin:
-                    this.CurrentDisplayMode = DriveDisplayMode.RubbishBin;
+                    CurrentDisplayMode = DriveDisplayMode.RubbishBin;
                     break;
                 case ContainerType.InShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.InShares;
+                    CurrentDisplayMode = DriveDisplayMode.InShares;
                     break;
                 case ContainerType.OutShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.OutShares;
+                    CurrentDisplayMode = DriveDisplayMode.OutShares;
                     break;
                 case ContainerType.ContactInShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.ContactInShares;
+                    CurrentDisplayMode = DriveDisplayMode.ContactInShares;
                     break;
                 case ContainerType.FolderLink:
-                    this.CurrentDisplayMode = DriveDisplayMode.FolderLink;
+                    CurrentDisplayMode = DriveDisplayMode.FolderLink;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("containerType");
@@ -127,7 +127,7 @@ namespace MegaApp.ViewModels
 
             await OnUiThread(() =>
             {
-                this.ChildNodes.Clear();
+                ChildNodes.Clear();
             });
         }
 
@@ -137,7 +137,7 @@ namespace MegaApp.ViewModels
         public async void LoadChildNodes()
         {
             // User must be online to perform this operation
-            if ((this.Type != ContainerType.FolderLink) && !(await IsUserOnline()))
+            if ((Type != ContainerType.FolderLink) && !(await IsUserOnline()))
                 return;
 
             // First cancel any other loading task that is busy
@@ -163,7 +163,7 @@ namespace MegaApp.ViewModels
             //SetEmptyContentTemplate(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
-            MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+            MNodeList childList = NodeService.GetChildren(MegaSdk, FolderRootNode);
 
             if (childList == null)
             {
@@ -187,7 +187,7 @@ namespace MegaApp.ViewModels
             //SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            await OnUiThread(BuildBreadCrumbs);
+            await OnUiThread(() => BuildBreadCrumbs());
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -212,7 +212,7 @@ namespace MegaApp.ViewModels
         /// </summary>
         public void CancelLoad()
         {
-            if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
+            if (LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
                 LoadingCancelTokenSource.Cancel();
         }
 
@@ -299,7 +299,7 @@ namespace MegaApp.ViewModels
 
         public bool CanGoFolderUp()
         {
-            MNode parentNode = this.MegaSdk.getParentNode(this.FolderRootNode.OriginalMNode);
+            MNode parentNode = MegaSdk.getParentNode(FolderRootNode.OriginalMNode);
             if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
                 return false;
 
@@ -308,17 +308,40 @@ namespace MegaApp.ViewModels
 
         public virtual bool GoFolderUp()
         {
-            if (this.FolderRootNode == null) return false;
+            if (FolderRootNode == null) return false;
             
-            MNode parentNode = this.MegaSdk.getParentNode(this.FolderRootNode.OriginalMNode);
+            MNode parentNode = MegaSdk.getParentNode(FolderRootNode.OriginalMNode);
             if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
                 return false;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this.Type, ChildNodes);
+            FolderRootNode = NodeService.CreateNew(MegaSdk, App.AppInformation, parentNode, Type, ChildNodes);
 
             LoadChildNodes();
 
             return true;
+        }
+
+        public virtual void BrowseToHome()
+        {
+            if (FolderRootNode == null) return;
+
+            MNode homeNode = null;
+
+            switch (Type)
+            {
+                case ContainerType.CloudDrive:
+                    homeNode = MegaSdk.getRootNode();
+                    break;
+                case ContainerType.RubbishBin:
+                    homeNode = MegaSdk.getRubbishNode();
+                    break;
+            }
+
+            if (homeNode == null) return;
+
+            FolderRootNode = NodeService.CreateNew(MegaSdk, App.AppInformation, homeNode, Type, ChildNodes);
+
+            LoadChildNodes();
         }
 
         public void BrowseToFolder(IMegaNode node)
@@ -329,7 +352,7 @@ namespace MegaApp.ViewModels
             // Back button in mobile applications is automatic in the nav bar on screen
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 
-            this.FolderRootNode = node;
+            FolderRootNode = node;
 
             LoadChildNodes();
         }
@@ -339,12 +362,12 @@ namespace MegaApp.ViewModels
 
         }
 
-        public void SetProgressIndication(bool onOff, string busyText = null)
+        public async void SetProgressIndication(bool onOff, string busyText = null)
         {
-            OnUiThread(() =>
+            await OnUiThread(() =>
             {
-                this.IsBusy = onOff;
-                this.BusyText = busyText;
+                IsBusy = onOff;
+                BusyText = busyText;
             });
         }
 
@@ -368,7 +391,7 @@ namespace MegaApp.ViewModels
                 // To avoid pass null values to CreateNew
                 if (childList.get(i) == null) continue;
 
-                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this.Type, ChildNodes);
+                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), Type, ChildNodes);
 
                 // If node creation failed for some reason, continue with the rest and leave this one
                 if (node == null) continue;
@@ -474,13 +497,13 @@ namespace MegaApp.ViewModels
 
         private void CreateLoadCancelOption()
         {
-            if (this.LoadingCancelTokenSource != null)
+            if (LoadingCancelTokenSource != null)
             {
-                this.LoadingCancelTokenSource.Dispose();
-                this.LoadingCancelTokenSource = null;
+                LoadingCancelTokenSource.Dispose();
+                LoadingCancelTokenSource = null;
             }
-            this.LoadingCancelTokenSource = new CancellationTokenSource();
-            this.LoadingCancelToken = LoadingCancelTokenSource.Token;
+            LoadingCancelTokenSource = new CancellationTokenSource();
+            LoadingCancelToken = LoadingCancelTokenSource.Token;
         }
 
         private void SetViewDefaults()
@@ -490,44 +513,43 @@ namespace MegaApp.ViewModels
             //    Orientation = Orientation.Vertical
             //};
 
-            this.NodeTemplateSelector = new NodeTemplateSelector()
+            NodeTemplateSelector = new NodeTemplateSelector()
             {
                 FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListFileItemContent"],
                 FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListFolderItemContent"]
             };
 
-            this.ViewMode = ViewMode.ListView;
+            ViewMode = ViewMode.ListView;
             //this.NextViewButtonPathData = VisualResources.LargeThumbnailViewPathData;
             //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["DefaultCheckBoxStyle"];
         }
 
         public void BuildBreadCrumbs()
         {
-            this.BreadCrumbs.Clear();
+            BreadCrumbs.Clear();
 
             // Top root nodes have no breadcrumbs
-            if (this.FolderRootNode == null ||
-                this.FolderRootNode.Type == MNodeType.TYPE_ROOT ||
+            if (FolderRootNode == null ||
+                FolderRootNode.Type == MNodeType.TYPE_ROOT ||
                 FolderRootNode.Type == MNodeType.TYPE_RUBBISH) return;
 
-            this.BreadCrumbs.Add((IBaseNode)this.FolderRootNode);
+            BreadCrumbs.Add(FolderRootNode);
 
-            MNode parentNode = FolderRootNode.OriginalMNode;
-            parentNode = SdkService.MegaSdk.getParentNode(parentNode);
+            MNode parentNode = MegaSdk.getParentNode(FolderRootNode.OriginalMNode);
             while ((parentNode != null) && (parentNode.getType() != MNodeType.TYPE_ROOT) &&
                 (parentNode.getType() != MNodeType.TYPE_RUBBISH))
             {
-                this.BreadCrumbs.Insert(0, (IBaseNode)NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, this.Type));
-                parentNode = SdkService.MegaSdk.getParentNode(parentNode);
+                BreadCrumbs.Insert(0, NodeService.CreateNew(MegaSdk, App.AppInformation, parentNode, Type));
+                parentNode = MegaSdk.getParentNode(parentNode);
             }
         }
 
         void BreadCrumbs_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (this.FolderRootNode == null) return;
+            if (FolderRootNode == null) return;
 
-            String folderName = String.Empty;
-            switch (this.FolderRootNode.Type)
+            string folderName = string.Empty;
+            switch (FolderRootNode.Type)
             {
                 case MNodeType.TYPE_ROOT:
                     folderName = ResourceService.UiResources.GetString("UI_CloudDriveName");
@@ -538,18 +560,23 @@ namespace MegaApp.ViewModels
                     break;
 
                 case MNodeType.TYPE_FOLDER:
-                    folderName = this.FolderRootNode.Name;
+                    folderName = FolderRootNode.Name;
                     break;
             }
 
-            this.ImportLinkBorderText = String.Format(ResourceService.UiResources.GetString("UI_ImportLinkBorderText"), folderName);
+            ImportLinkBorderText = string.Format(ResourceService.UiResources.GetString("UI_ImportLinkBorderText"), folderName);
         }
 
         #endregion
 
         #region IBreadCrumb
 
-        public ObservableCollection<IBaseNode> BreadCrumbs { get; private set; }
+        private ObservableCollection<IBaseNode> _breadCrumbs;
+        public ObservableCollection<IBaseNode> BreadCrumbs
+        {
+            get { return _breadCrumbs; }
+            set { SetField(ref _breadCrumbs, value); }
+        }
 
         #endregion
 
