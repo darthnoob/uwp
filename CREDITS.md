@@ -11,6 +11,17 @@
 <p>https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md</p>
 <hr>
 
+#### UWP Breadcrumb Control
+<p>https://github.com/goedware/UWP-Breadcrumb-Control</p>
+<p>Copyright (c) 2016 C. Goedegebuure</p>
+###### Description:
+<p>Create a Breadcrumb control for your Universal Windows Platform (UWP) app in just a few minutes. 
+This library allows to generate a breadcrumb for your UWP app with less effort, it's fully customizable.</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/goedware/UWP-Breadcrumb-Control/blob/master/LICENSE</p>
+<hr>
+
 #### MEGA C++ SDK
 <p>https://github.com/meganz/sdk</p>
 <p>© 2013-2016 by Mega Limited, Auckland, New Zealand</p>
