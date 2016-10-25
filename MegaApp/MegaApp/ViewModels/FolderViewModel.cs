@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -221,27 +223,27 @@ namespace MegaApp.ViewModels
         /// </summary>
         public void Refresh()
         {
-            //FileService.ClearFiles(
-            // NodeService.GetFiles(this.ChildNodes,
-            //    Path.Combine(ApplicationData.Current.LocalFolder.Path,
-            //    AppResources.ThumbnailsDirectory)));
+            FileService.ClearFiles(
+             NodeService.GetFiles(ChildNodes,
+                Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"))));
 
-            //if (this.FolderRootNode == null)
-            //{
-            //    switch (this.Type)
-            //    {
-            //        case ContainerType.RubbishBin:
-            //            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, this.AppInformation, this.MegaSdk.getRubbishNode(), this.Type);
-            //            break;
+            if (FolderRootNode == null)
+            {
+                switch (Type)
+                {
+                    case ContainerType.RubbishBin:
+                        this.FolderRootNode = NodeService.CreateNew(MegaSdk, App.AppInformation, MegaSdk.getRubbishNode(), Type);
+                        break;
 
-            //        case ContainerType.CloudDrive:
-            //        case ContainerType.FolderLink:
-            //            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, this.AppInformation, this.MegaSdk.getRootNode(), this.Type);
-            //            break;
-            //    }
-            //}
+                    case ContainerType.CloudDrive:
+                    case ContainerType.FolderLink:
+                        this.FolderRootNode = NodeService.CreateNew(MegaSdk, App.AppInformation, MegaSdk.getRootNode(), Type);
+                        break;
+                }
+            }
 
-            //this.LoadChildNodes();
+            LoadChildNodes();
         }
 
         public void OnChildNodeTapped(IMegaNode node)
@@ -662,7 +664,7 @@ namespace MegaApp.ViewModels
             private set
             {
                 SetField(ref _busyText, value);
-                HasBusyText = !String.IsNullOrEmpty(_busyText) && !String.IsNullOrWhiteSpace(_busyText);
+                HasBusyText = !string.IsNullOrEmpty(_busyText) && !string.IsNullOrWhiteSpace(_busyText);
             }
         }
 

@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection)
         {
-            this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
+            DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
         }
     }
 }

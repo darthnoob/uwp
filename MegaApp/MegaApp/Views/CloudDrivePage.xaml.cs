@@ -159,18 +159,22 @@ namespace MegaApp.Views
 
         private void OnHomeSelected(object sender, EventArgs e)
         {
-            if(((BreadcrumbControl)sender).Equals(CloudDriveBreadCrumb))
-                ViewModel.CloudDrive.BrowseToHome();
-            else if (((BreadcrumbControl)sender).Equals(RubbishBinBreadCrumb))
-                ViewModel.RubbishBin.BrowseToHome();
+            ViewModel.ActiveFolderView.BrowseToHome();
         }
 
         private void OnItemSelected(object sender, BreadcrumbEventArgs e)
         {
-            if (((BreadcrumbControl)sender).Equals(CloudDriveBreadCrumb))
-                ViewModel.CloudDrive.BrowseToFolder((IMegaNode)e.Item);
-            else if (((BreadcrumbControl)sender).Equals(RubbishBinBreadCrumb))
-                ViewModel.RubbishBin.BrowseToFolder((IMegaNode)e.Item);
+            ViewModel.ActiveFolderView.BrowseToFolder((IMegaNode)e.Item);
+        }
+
+        private async void OnRefreshClick(object sender, RoutedEventArgs e)
+        {
+            if (!await NetworkService.IsNetworkAvailable(true)) return;
+
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            ViewModel.ActiveFolderView.Refresh();
         }
     }
 }

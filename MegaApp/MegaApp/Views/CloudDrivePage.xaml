@@ -11,6 +11,11 @@
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
         <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="84"/>
@@ -130,5 +135,9 @@
                 </Pivot>
             </Grid>
         </Grid>
+
+        <CommandBar Grid.Row="1">
+            <AppBarButton Icon="Refresh" Label="Refresh" Click="OnRefreshClick"/>
+        </CommandBar>
     </Grid>
 </views:BaseCloudDrivePage>

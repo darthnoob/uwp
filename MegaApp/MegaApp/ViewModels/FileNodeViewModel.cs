@@ -2,6 +2,7 @@
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
@@ -12,7 +13,7 @@ namespace MegaApp.ViewModels
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection)
         {
-            
+            Information = Size.ToStringAndSuffix();
         }
     }
 }
