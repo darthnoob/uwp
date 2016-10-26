@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.Phone.UI.Input;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -8,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using GoedWare.Controls.Breadcrumb;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -57,8 +59,28 @@ namespace MegaApp.Views
                     break;
 
                 case NavigationActionType.Default:
+                default:
+                    Load();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Method to load properly the content of the Cloud Drive and the Rubbish Bin
+        /// </summary>
+        private async void Load()
+        {
+            // If user has an active and online session but is not logged in, resume the session
+            if (await AppService.CheckActiveAndOnlineSession() && !Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
+                SdkService.MegaSdk.fastLogin(await SettingsService.LoadSetting<string>(
+                    ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
+                    new FastLoginRequestListener(ViewModel));
+            // If the user's nodes haven't been retrieved, do it
+            else if (!App.AppInformation.HasFetchedNodes)
+                ViewModel.FetchNodes();
+            // In other case load them
+            else
+                ViewModel.LoadFolders();
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs args)

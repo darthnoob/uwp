@@ -12,6 +12,11 @@ namespace MegaApp.Services
 {
     class AppService
     {
+        /// <summary>
+        /// Check if the user has an active and online session
+        /// </summary>
+        /// <param name="navigationMode">Type of navigation that is taking place </param>
+        /// <returns>True if the user has an active and online session or false in other case</returns>
         public static async Task<bool> CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
         {
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !await SettingsService.HasValidSession())
@@ -25,6 +30,10 @@ namespace MegaApp.Services
             return true;
         }
 
+        /// <summary>
+        /// Get the app version number
+        /// </summary>
+        /// <returns>App version number</returns>
         public static string GetAppVersion()
         {
             return string.Format("{0}.{1}.{2}.{3}",
@@ -34,16 +43,27 @@ namespace MegaApp.Services
                 Package.Current.Id.Version.Revision);
         }
 
+        /// <summary>
+        /// Get the MegaSDK version 
+        /// </summary>
+        /// <returns>MegaSDK version</returns>
         public static string GetMegaSDK_Version()
         {
             return string.Format("970e65b");
         }
 
+        /// <summary>
+        /// Get the app user agent
+        /// </summary>
+        /// <returns>App user agent</returns>
         public static string GetAppUserAgent()
         {
             return string.Format("MEGA_UWP/{0}", GetAppVersion());
         }
 
+        /// <summary>
+        /// Method that executes the actions needed for a logout
+        /// </summary>
         public static void LogoutActions()
         {
             //// Disable the "camera upload" service if is enabled
