@@ -122,8 +122,7 @@ namespace MegaApp.Classes
         /// <param name="command">Command that was invoked</param>
         protected virtual void OnOkOrYesButtonTapped(IUICommand command)
         {
-            if (OkOrYesButtonTapped != null)
-                OkOrYesButtonTapped(this, new EventArgs());
+            OkOrYesButtonTapped?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -132,8 +131,7 @@ namespace MegaApp.Classes
         /// <param name="command">Command that was invoked</param>
         protected virtual void OnCancelOrNoButtonTapped(IUICommand command)
         {
-            if (CancelOrNoButtonTapped != null)
-                CancelOrNoButtonTapped(this, new EventArgs());
+            CancelOrNoButtonTapped?.Invoke(this, new EventArgs());
         }
 
         #endregion

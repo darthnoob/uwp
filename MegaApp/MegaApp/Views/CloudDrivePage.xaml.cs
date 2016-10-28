@@ -148,10 +148,16 @@ namespace MegaApp.Views
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((PivotItem)(sender as Pivot).SelectedItem).Equals(CloudDrivePivot))
+            {
+                AddFolderButton.Visibility = Visibility.Visible;
                 ViewModel.ActiveFolderView = ((CloudDriveViewModel)DataContext).CloudDrive;
+            }                
 
             if (((PivotItem)(sender as Pivot).SelectedItem).Equals(RubbishBinPivot))
-                ViewModel.ActiveFolderView = ((CloudDriveViewModel)DataContext).RubbishBin;                
+            {
+                AddFolderButton.Visibility = Visibility.Collapsed;
+                ViewModel.ActiveFolderView = ((CloudDriveViewModel)DataContext).RubbishBin;
+            }
         }
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
@@ -197,6 +203,18 @@ namespace MegaApp.Views
             SdkService.MegaSdk.retryPendingConnections();
 
             ViewModel.ActiveFolderView.Refresh();
+        }
+
+        private async void OnAddFolderClick(object sender, RoutedEventArgs e)
+        {
+            if (!await NetworkService.IsNetworkAvailable(true)) return;
+
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            // Only allow add folder on the Cloud Drive section
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                ViewModel.CloudDrive.AddFolder();
         }
     }
 }

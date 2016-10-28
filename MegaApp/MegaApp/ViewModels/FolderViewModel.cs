@@ -14,6 +14,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
@@ -244,6 +245,40 @@ namespace MegaApp.ViewModels
             }
 
             LoadChildNodes();
+        }
+
+        public async void AddFolder()
+        {
+            if (!await IsUserOnline()) return;
+
+            // Only 1 CustomInputDialog should be open at the same time.
+            if (App.AppInformation.PickerOrAsyncDialogIsOpen) return;
+
+            var inputDialog = new CustomInputDialog(
+                ResourceService.UiResources.GetString("UI_AddFolder"),
+                ResourceService.UiResources.GetString("UI_CreateFolder"),
+                App.AppInformation);
+
+            inputDialog.OkButtonTapped += (sender, args) =>
+            {
+                if (FolderRootNode == null)
+                {
+                    OnUiThread(() =>
+                    {
+                        new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialogAsync();
+                    });
+
+                    return;
+                }
+
+                MegaSdk.createFolder(args.InputText, FolderRootNode.OriginalMNode,
+                     new CreateFolderRequestListener());
+            };
+            inputDialog.ShowDialogAsync();
         }
 
         public void OnChildNodeTapped(IMegaNode node)

@@ -121,6 +121,10 @@
     <value>Creating account...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
+  <data name="PM_CreateFolder" xml:space="preserve">
+    <value>Creating folder...</value>
+    <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
+  </data>
   <data name="PM_FastLogin" xml:space="preserve">
     <value>Resuming session...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
