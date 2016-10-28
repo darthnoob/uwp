@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
+﻿using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.System.Profile;
@@ -14,7 +9,7 @@ namespace MegaApp.Services
 {
     class DeviceService
     {
-        public static string GetDeviceID()
+        public static string GetDeviceId()
         {
             HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
             IBuffer hardwareId = token.Id;

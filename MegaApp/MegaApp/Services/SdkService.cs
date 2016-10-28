@@ -56,7 +56,7 @@ namespace MegaApp.Services
             MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
 
             // Set the ID for statistics
-            MegaSDK.setStatsID(DeviceService.GetDeviceID());
+            MegaSDK.setStatsID(DeviceService.GetDeviceId());
         }
 
         /// <summary>

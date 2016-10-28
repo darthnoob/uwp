@@ -5,7 +5,6 @@ using System.Reflection;
 using Windows.UI.Xaml.Controls;
 using MegaApp.Interfaces;
 using MegaApp.UserControls;
-using MegaApp.ViewModels;
 using INavigate = MegaApp.Interfaces.INavigate;
 
 namespace MegaApp.Services
