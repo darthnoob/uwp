@@ -89,6 +89,8 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
+        public string BreadcrumbHomeMegaIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon"); } }
+        public string BreadcrumbHomeRubbishBinIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon"); } }
         public string EmptyCloudDrivePathData { get { return ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData"); } }
         public string EmptyFolderPathData { get { return ResourceService.VisualResources.GetString("VR_EmptyFolderPathData"); } }
         public string FolderLoadingPathData { get { return ResourceService.VisualResources.GetString("VR_FolderLoadingPathData"); } }
