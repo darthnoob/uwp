@@ -30,13 +30,13 @@ namespace MegaApp.ViewModels
         {
             if (this.CloudDrive != null)
             {
-                //OnUiThread(() => this.CloudDrive.SetEmptyContentTemplate(true));
+                OnUiThread(() => this.CloudDrive.SetEmptyContentTemplate(true));
                 this.CloudDrive.CancelLoad();
             }
 
             if (this.RubbishBin != null)
             {
-                //OnUiThread(() => this.RubbishBin.SetEmptyContentTemplate(true));
+                OnUiThread(() => this.RubbishBin.SetEmptyContentTemplate(true));
                 this.RubbishBin.CancelLoad();
             }
 
