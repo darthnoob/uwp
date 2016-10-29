@@ -111,10 +111,16 @@ namespace MegaApp.Views
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                AddFolderButton.Visibility = Visibility.Visible;
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
+            }
 
             if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                AddFolderButton.Visibility = Visibility.Collapsed;
                 this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
+            }                
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
@@ -144,7 +150,7 @@ namespace MegaApp.Views
 
         }
 
-        private void OnRefreshClick(object sender, RoutedEventArgs e)
+        private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();

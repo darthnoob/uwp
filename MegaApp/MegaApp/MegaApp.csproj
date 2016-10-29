@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AppInformation.cs" />
+    <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Interfaces\INavigationObject.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />

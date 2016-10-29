@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="UI_AddFolder" xml:space="preserve">
+    <value>Add folder</value>
+    <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
     <value>I agree with the</value>
     <comment>Text placed just before a link labeled 'Term of Service' into the 'create account' page.</comment>
@@ -137,9 +141,33 @@
     <value>Create account</value>
     <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CreateFolder" xml:space="preserve">
+    <value>Folder name:</value>
+    <comment>Text to show when a user wants to create a new folder to type the name for the new folder.</comment>
+  </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
     <value>Your e-mail address</value>
     <comment>Watermark label for the e-mail address field when create/confirm account and login - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyCloudDrive" xml:space="preserve">
+    <value>No files in your cloud drive</value>
+    <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyFolder" xml:space="preserve">
+    <value>Empty folder</value>
+    <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyOffline" xml:space="preserve">
+    <value>No items saved for offline</value>
+    <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyRubbishBin" xml:space="preserve">
+    <value>Empty rubbish bin</value>
+    <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptySharedFolders" xml:space="preserve">
+    <value>No shared folders</value>
+    <comment>Label for the background of an empty shared folders page - (String as short as possible).</comment>
   </data>
   <data name="UI_FirstNameWatermark" xml:space="preserve">
     <value>Your first name</value>
@@ -159,11 +187,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
-    <value>files</value>
+    <value>Files</value>
     <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFolders" xml:space="preserve">
-    <value>folders</value>
+    <value>Folders</value>
     <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
@@ -195,11 +223,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFile" xml:space="preserve">
-    <value>file</value>
+    <value>File</value>
     <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFolder" xml:space="preserve">
-    <value>folder</value>
+    <value>Folder</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">

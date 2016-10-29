@@ -32,6 +32,31 @@
         </Border>        
     </DataTemplate>
 
+    <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
+        <Grid>
+            <Path x:Name="BreadcrumbHomeMegaIcon" Height="14" Width="14" Data="{Binding BreadcrumbHomeMegaIcon}" Stretch="UniformToFill">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                </Path.Fill>
+            </Path>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BreadcrumbHomeRubbishBinTemplate">
+        <Grid>
+            <Path x:Name="BreadcrumbHomeRubbishBinIcon" Height="14" Width="14" Data="{Binding BreadcrumbHomeRubbishBinIcon}" Stretch="UniformToFill">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                </Path.Fill>
+            </Path>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="BreadcrumbItemTemplate">
+        <Grid>
+            <TextBlock Text="{Binding Name}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+        </Grid>
+    </DataTemplate>
 
     <DataTemplate x:Key="MegaNodeListFileItemContent">
         <Border Margin="-24,1,0,1" BorderThickness="2,2,2,2" Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">

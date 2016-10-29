@@ -28,10 +28,10 @@ namespace MegaApp.ViewModels
 
         public void FetchNodes()
         {
-            //OnUiThread(() => this.CloudDrive.SetEmptyContentTemplate(true));
+            OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
             this.CloudDrive?.CancelLoad();
 
-            //OnUiThread(() => this.RubbishBin.SetEmptyContentTemplate(true));
+            OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
             this.RubbishBin?.CancelLoad();
 
             var fetchNodesRequestListener = new FetchNodesRequestListener(this);
@@ -83,6 +83,8 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
+        public string BreadcrumbHomeMegaIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon"); } }
+        public string BreadcrumbHomeRubbishBinIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon"); } }
         public string EmptyCloudDrivePathData { get { return ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData"); } }
         public string EmptyFolderPathData { get { return ResourceService.VisualResources.GetString("VR_EmptyFolderPathData"); } }
         public string FolderLoadingPathData { get { return ResourceService.VisualResources.GetString("VR_FolderLoadingPathData"); } }

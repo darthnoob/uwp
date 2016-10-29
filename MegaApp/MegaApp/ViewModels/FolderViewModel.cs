@@ -16,6 +16,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
@@ -39,6 +40,7 @@ namespace MegaApp.ViewModels
             this.SelectedNodes = new List<IMegaNode>();
             this.IsMultiSelectActive = false;
 
+            this.AddFolderCommand = new RelayCommand(AddFolder);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
@@ -57,7 +59,7 @@ namespace MegaApp.ViewModels
 
             SetViewDefaults();
 
-            //SetEmptyContentTemplate(true);
+            SetEmptyContentTemplate(true);
 
             switch (containerType)
             {
@@ -91,6 +93,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
+        public ICommand AddFolderCommand { get;}
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
         public ICommand RefreshCommand { get; }
@@ -173,7 +176,7 @@ namespace MegaApp.ViewModels
             SetProgressIndication(true);
 
             // Process is started so we can set the empty content template to loading already
-            //SetEmptyContentTemplate(true);
+            SetEmptyContentTemplate(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
@@ -187,7 +190,7 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
                         App.AppInformation,
                         MessageDialogButtons.Ok).ShowDialogAsync();
-                    //SetEmptyContentTemplate(false);
+                    SetEmptyContentTemplate(false);
                 });
 
                 return;
@@ -259,6 +262,40 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
+        public async void AddFolder()
+        {
+            if (!await IsUserOnline()) return;
+
+            // Only 1 CustomInputDialog should be open at the same time.
+            if (App.AppInformation.PickerOrAsyncDialogIsOpen) return;
+
+            var inputDialog = new CustomInputDialog(
+                ResourceService.UiResources.GetString("UI_AddFolder"),
+                ResourceService.UiResources.GetString("UI_CreateFolder"),
+                App.AppInformation);
+
+            inputDialog.OkButtonTapped += (sender, args) =>
+            {
+                if (FolderRootNode == null)
+                {
+                    OnUiThread(() =>
+                    {
+                        new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialogAsync();
+                    });
+
+                    return;
+                }
+
+                MegaSdk.createFolder(args.InputText, FolderRootNode.OriginalMNode,
+                     new CreateFolderRequestListener());
+            };
+            inputDialog.ShowDialogAsync();
+        }
+
         public void OnChildNodeTapped(IMegaNode node)
         {
             switch (node.Type)
@@ -310,6 +347,81 @@ namespace MegaApp.ViewModels
             }
 
             return false;
+        }
+
+        public void SetEmptyContentTemplate(bool isLoading)
+        {
+            if (isLoading)
+            {
+                OnUiThread(() =>
+                {
+                    //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListLoadingContent"];
+                    EmptyInformationText = "";
+                });
+            }
+            else
+            {
+                switch (Type)
+                {
+                    case ContainerType.CloudDrive:
+                    case ContainerType.RubbishBin:
+                        var megaRoot = MegaSdk.getRootNode();
+                        var megaRubbishBin = MegaSdk.getRubbishNode();
+                        if (FolderRootNode != null && megaRoot != null && FolderRootNode.Base64Handle.Equals(megaRoot.getBase64Handle()))
+                        {
+                            OnUiThread(() =>
+                            {
+                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListCloudDriveEmptyContent"];
+                                EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyCloudDrive").ToLower();
+                            });
+                        }
+                        else if (this.FolderRootNode != null && megaRubbishBin != null && this.FolderRootNode.Base64Handle.Equals(megaRubbishBin.getBase64Handle()))
+                        {
+                            OnUiThread(() =>
+                            {
+                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
+                                EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyRubbishBin").ToLower();
+                            });
+                        }
+                        else
+                        {
+                            OnUiThread(() =>
+                            {
+                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
+                                EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
+                            });
+                        }
+                        break;
+
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
+                        OnUiThread(() =>
+                        {
+                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaSharedFoldersListEmptyContent"];
+                            EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
+                        });
+                        break;
+
+                    case ContainerType.ContactInShares:
+                        break;
+
+                    case ContainerType.Offline:
+                        OnUiThread(() =>
+                        {
+                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
+                            EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyOffline").ToLower();
+                        });
+                        break;
+
+                    case ContainerType.FolderLink:
+                        OnUiThread(() =>
+                        {
+                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
+                            EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
+                        });
+                        break;
+                }
+            }
         }
 
         public bool CanGoFolderUp()
@@ -482,7 +594,7 @@ namespace MegaApp.ViewModels
                 SetProgressIndication(false);
 
                 // Set empty content to folder instead of loading view
-                //SetEmptyContentTemplate(false);
+                SetEmptyContentTemplate(false);
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))

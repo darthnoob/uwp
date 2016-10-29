@@ -61,9 +61,10 @@
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                         DisplayMemberPath="Name"
-                                        HomeText="Home"
                                         HomeCommand="{Binding CloudDrive.HomeSelectedCommand}"
-                                        ItemCommand="{Binding CloudDrive.ItemSelectedCommand}"
+                                        ItemCommand="{Binding CloudDrive.ItemSelectedCommand}"                                        
+                                        HomeTemplate="{StaticResource BreadcrumbHomeMegaTemplate}"
+                                        ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
                                         Seperator=">"
                                         ItemsSource="{Binding CloudDrive.BreadCrumbs}"
                                         OverFlow="..."/>
@@ -107,9 +108,10 @@
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                         DisplayMemberPath="Name"
-                                        HomeText="Home"
                                         HomeCommand="{Binding RubbishBin.HomeSelectedCommand}"
                                         ItemCommand="{Binding RubbishBin.ItemSelectedCommand}"
+                                        HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
+                                        ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
                                         Seperator=">"
                                         ItemsSource="{Binding RubbishBin.BreadCrumbs}"
                                         OverFlow="..."/>
@@ -138,10 +140,17 @@
 
         <CommandBar Grid.Row="1">
             <AppBarButton 
+                x:Name="AddFolderButton"
+                Icon="NewFolder" 
+                Label="Add folder" 
+                Command="{Binding ActiveFolderView.AddFolderCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton
+                x:Name="RefreshButton"
                 Icon="Refresh" 
                 Label="Refresh" 
                 Command="{Binding ActiveFolderView.RefreshCommand}"
-                Click="OnRefreshClick"/>
+                Click="OnButtonClick"/>
         </CommandBar>
     </Grid>
 </views:BaseCloudDrivePage>
