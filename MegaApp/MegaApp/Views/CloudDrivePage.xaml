@@ -145,6 +145,12 @@
                 Label="Add folder" 
                 Command="{Binding ActiveFolderView.AddFolderCommand}"
                 Click="OnButtonClick"/>
+            <AppBarButton 
+                x:Name="CleanRubbishBinButton"
+                Icon="Delete" 
+                Label="Empty Rubbish Bin" 
+                Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
+                Click="OnButtonClick"/>
             <AppBarButton
                 x:Name="RefreshButton"
                 Icon="Refresh" 

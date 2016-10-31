@@ -41,6 +41,7 @@ namespace MegaApp.ViewModels
             this.IsMultiSelectActive = false;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
+            this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
@@ -93,7 +94,8 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand AddFolderCommand { get;}
+        public ICommand AddFolderCommand { get; }
+        public ICommand CleanRubbishBinCommand { get; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
         public ICommand RefreshCommand { get; }
@@ -294,6 +296,24 @@ namespace MegaApp.ViewModels
                      new CreateFolderRequestListener());
             };
             inputDialog.ShowDialogAsync();
+        }
+
+        public void CleanRubbishBin()
+        {
+            if (this.Type != ContainerType.RubbishBin || this.ChildNodes.Count < 1) return;
+
+            var customMessageDialog = new CustomMessageDialog(
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"),
+                App.AppInformation,
+                MessageDialogButtons.OkCancel);
+
+            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            {
+                MegaSdk.cleanRubbishBin(new CleanRubbishBinRequestListener());
+            };
+
+            customMessageDialog.ShowDialogAsync();
         }
 
         public void OnChildNodeTapped(IMegaNode node)

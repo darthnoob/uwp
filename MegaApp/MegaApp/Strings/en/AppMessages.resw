@@ -125,6 +125,22 @@
     <value>You must agree with our Terms of Service</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
+  <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
+    <value>Failed to clean the rubbish bin. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
+  </data>
+  <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
+    <value>Are you sure you want to permanently delete all files from the rubbish bin?</value>
+    <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
+  </data>
+  <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
+    <value>The rubbish bin has been cleaned successfully.</value>
+    <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
+  </data>
+  <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
+    <value>Empty rubbish bin</value>
+    <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
+  </data>
   <data name="AM_ConfirmNeeded" xml:space="preserve">
     <value>Check your e-mail and click the link to login and confirm your account</value>
     <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an e-mail with a link to confirm account.</comment>

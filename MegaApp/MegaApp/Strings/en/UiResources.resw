@@ -129,6 +129,10 @@
     <value>Cancel</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CleanRubbishBin" xml:space="preserve">
+    <value>Empty rubbish bin</value>
+    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+  </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>

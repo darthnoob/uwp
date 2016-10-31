@@ -139,6 +139,7 @@
     <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="Interfaces\INavigationObject.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
+    <Compile Include="MegaApi\CleanRubbishBinRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
