@@ -28,17 +28,11 @@ namespace MegaApp.ViewModels
 
         public void FetchNodes()
         {
-            if (this.CloudDrive != null)
-            {
-                OnUiThread(() => this.CloudDrive.SetEmptyContentTemplate(true));
-                this.CloudDrive.CancelLoad();
-            }
+            OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
+            this.CloudDrive?.CancelLoad();
 
-            if (this.RubbishBin != null)
-            {
-                OnUiThread(() => this.RubbishBin.SetEmptyContentTemplate(true));
-                this.RubbishBin.CancelLoad();
-            }
+            OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
+            this.RubbishBin?.CancelLoad();
 
             var fetchNodesRequestListener = new FetchNodesRequestListener(this);
             this.MegaSdk.fetchNodes(fetchNodesRequestListener);

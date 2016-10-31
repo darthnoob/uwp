@@ -61,10 +61,10 @@
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                         DisplayMemberPath="Name"
-                                        HomeSelected="OnHomeSelected"
+                                        HomeCommand="{Binding CloudDrive.HomeSelectedCommand}"
+                                        ItemCommand="{Binding CloudDrive.ItemSelectedCommand}"                                        
                                         HomeTemplate="{StaticResource BreadcrumbHomeMegaTemplate}"
                                         ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-                                        ItemSelected="OnItemSelected"
                                         Seperator=">"
                                         ItemsSource="{Binding CloudDrive.BreadCrumbs}"
                                         OverFlow="..."/>
@@ -108,10 +108,10 @@
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                         DisplayMemberPath="Name"
-                                        HomeSelected="OnHomeSelected"
+                                        HomeCommand="{Binding RubbishBin.HomeSelectedCommand}"
+                                        ItemCommand="{Binding RubbishBin.ItemSelectedCommand}"
                                         HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
                                         ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-                                        ItemSelected="OnItemSelected"
                                         Seperator=">"
                                         ItemsSource="{Binding RubbishBin.BreadCrumbs}"
                                         OverFlow="..."/>
@@ -138,9 +138,26 @@
             </Grid>
         </Grid>
 
-        <CommandBar x:Name="CommandBar" Grid.Row="1">
-            <AppBarButton x:Name="AddFolderButton" Icon="NewFolder" Label="Add folder" Click="OnAddFolderClick"/>
-            <AppBarButton x:Name="RefreshButton" Icon="Refresh" Label="Refresh" Click="OnRefreshClick"/>            
+        <CommandBar Grid.Row="1">
+            <AppBarButton 
+                x:Name="AddFolderButton"
+                Icon="NewFolder" 
+                Label="Add folder" 
+                Command="{Binding ActiveFolderView.AddFolderCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton
+                x:Name="RefreshButton"
+                Icon="Refresh" 
+                Label="Refresh" 
+                Command="{Binding ActiveFolderView.RefreshCommand}"
+                Click="OnButtonClick"/>
         </CommandBar>
     </Grid>
 </views:BaseCloudDrivePage>
+
+
+
+
+
+
+

@@ -105,7 +105,7 @@ namespace MegaApp.Classes
         /// </summary>
         public async void ShowDialogAsync()
         {
-            var result = await DialogWindow.ShowAsync();
+            await DialogWindow.ShowAsync();
         }
 
         #endregion

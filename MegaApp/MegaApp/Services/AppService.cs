@@ -92,5 +92,12 @@ namespace MegaApp.Services
             // Delete the User Data
             //App.UserData = null;
         }
+
+        public static void SetAppViewBackButtonVisibility(bool isVisible)
+        {
+            var computedVisible = isVisible || NavigateService.MainFrame.CanGoBack;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+               computedVisible ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+        }
     }
 }

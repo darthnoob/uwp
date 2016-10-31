@@ -107,6 +107,7 @@
     <Compile Include="Classes\LinkInformation.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\NodeTemplateSelector.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueu.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
     <Compile Include="Services\UiService.cs" />
+    <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
     <Compile Include="UserControls\MenuItem.cs" />
     <Compile Include="UserControls\PageEx.cs" />

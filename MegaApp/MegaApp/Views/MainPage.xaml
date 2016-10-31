@@ -44,7 +44,7 @@
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
             PaneBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
             Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
-            <Frame Name="ContentFrame"/>
+            <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
     </Grid>
     

@@ -5,10 +5,10 @@ using MegaApp.ViewModels;
 namespace MegaApp.UserControls
 {
     /// <summary>
-    /// Page extension that implements a view-model
+    /// Typed Page extension that implements a view-model
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class PageEx<T> : Page
+    public class PageEx<T> : PageEx
         where T:BasePageViewModel, new()
     {
         public PageEx()
@@ -23,4 +23,15 @@ namespace MegaApp.UserControls
         /// </summary>
         public T ViewModel { get; }
     }
+
+    /// <summary>
+    /// Page extension
+    /// </summary>
+    public class PageEx : Page
+    {
+        public virtual bool CanGoBack => false;
+
+        public virtual void GoBack() {}
+    }
+
 }

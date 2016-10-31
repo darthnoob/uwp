@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Windows.Phone.UI.Input;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using GoedWare.Controls.Breadcrumb;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -25,20 +21,44 @@ namespace MegaApp.Views
         public CloudDrivePage()
         {
             InitializeComponent();
+        }
 
-            if(DeviceService.GetDeviceType() == DeviceFormFactorType.Phone)
-                HardwareButtons.BackPressed += HardwareButtons_BackPressed;
+        public override bool CanGoBack
+        {
+            get
+            {
+                bool canGoFolderUp = false;
+                if (this.ViewModel?.ActiveFolderView != null)
+                    canGoFolderUp = this.ViewModel.ActiveFolderView.CanGoFolderUp();
+                return canGoFolderUp || MainPivot.SelectedIndex != 0;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (this.ViewModel.ActiveFolderView.CanGoFolderUp())
+            {
+                this.ViewModel.ActiveFolderView.GoFolderUp();
+            }
+            else
+            {
+                if (MainPivot.SelectedIndex > 0) MainPivot.SelectedIndex--;
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            //_mainPageViewModel.Deinitialize(App.GlobalDriveListener);            
+            this.ViewModel.CloudDrive.FolderNavigatedTo -= OnFolderNavigatedTo;
+            this.ViewModel.RubbishBin.FolderNavigatedTo -= OnFolderNavigatedTo;
             base.OnNavigatedFrom(e);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
+            this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;
 
             NavigationActionType navActionType = NavigateService.GetNavigationObject(e.Parameter).Action;
 
@@ -55,7 +75,7 @@ namespace MegaApp.Views
             switch(navActionType)
             {
                 case NavigationActionType.Login:
-                    ViewModel.FetchNodes();
+                    this.ViewModel.FetchNodes();
                     break;
 
                 case NavigationActionType.Default:
@@ -63,6 +83,11 @@ namespace MegaApp.Views
                     Load();
                     break;
             }
+        }
+
+        private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
+        {
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
         /// <summary>
@@ -74,90 +99,30 @@ namespace MegaApp.Views
             if (await AppService.CheckActiveAndOnlineSession() && !Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
                 SdkService.MegaSdk.fastLogin(await SettingsService.LoadSetting<string>(
                     ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
-                    new FastLoginRequestListener(ViewModel));
+                    new FastLoginRequestListener(this.ViewModel));
             // If the user's nodes haven't been retrieved, do it
             else if (!App.AppInformation.HasFetchedNodes)
-                ViewModel.FetchNodes();
+                this.ViewModel.FetchNodes();
             // In other case load them
             else
-                ViewModel.LoadFolders();
+                this.ViewModel.LoadFolders();
         }
-
-        private void OnBackRequested(object sender, BackRequestedEventArgs args)
-        {
-            args.Handled = ProcessBackRequest(args.Handled);
-        }
-
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
-        {
-            e.Handled = ProcessBackRequest(e.Handled);
-        }
-
-        public bool ProcessBackRequest(bool isHandled)
-        {
-            // Check if we can go a folder up in the selected pivot view
-            isHandled = CheckAndGoFolderUp(isHandled);
-
-            // If no folder up action, but we are not in the cloud drive section
-            // first slide to cloud drive before exiting the application
-            isHandled = CheckPivotInView(isHandled);
-
-            return isHandled;
-        }
-
-        private bool CheckAndGoFolderUp(bool isHandled)
-        {
-            try
-            {
-                if (isHandled) return true;
-
-                if(MainPivot.SelectedItem != null && ViewModel != null)
-                {
-                    if ((MainPivot.SelectedItem as PivotItem).Equals(CloudDrivePivot) && ViewModel.CloudDrive != null)
-                        return ViewModel.CloudDrive.GoFolderUp();
-
-                    if ((MainPivot.SelectedItem as PivotItem).Equals(RubbishBinPivot) && ViewModel.RubbishBin != null)
-                        return ViewModel.RubbishBin.GoFolderUp();
-                }
-
-                return false;
-            }
-            catch (Exception) { return false; }
-        }
-
-        private bool CheckPivotInView(bool isHandled)
-        {
-            try
-            {
-                if (isHandled) return true;
-
-                if (MainPivot.SelectedItem != null && ViewModel != null)
-                {
-                    if ((MainPivot.SelectedItem as PivotItem).Equals(CloudDrivePivot) && ViewModel.CloudDrive != null)
-                        return false;
-
-                    MainPivot.SelectedItem = CloudDrivePivot;
-                    return true;
-                }
-
-                return false;
-            }
-            catch (Exception) { return false; }
-        }
-
+       
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((PivotItem)(sender as Pivot).SelectedItem).Equals(CloudDrivePivot))
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
             {
                 AddFolderButton.Visibility = Visibility.Visible;
-                ViewModel.ActiveFolderView = ((CloudDriveViewModel)DataContext).CloudDrive;
-            }                
+                this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
+            }
 
-            if (((PivotItem)(sender as Pivot).SelectedItem).Equals(RubbishBinPivot))
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
             {
                 AddFolderButton.Visibility = Visibility.Collapsed;
-                ViewModel.ActiveFolderView = ((CloudDriveViewModel)DataContext).RubbishBin;
-            }
+                this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
+            }                
+
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
@@ -176,7 +141,7 @@ namespace MegaApp.Views
             if (itemTapped != null)
             {
                 LstCloudDrive.SelectedItem = null;
-                ViewModel.ActiveFolderView.OnChildNodeTapped((IMegaNode)itemTapped);
+                this.ViewModel.ActiveFolderView.OnChildNodeTapped((IMegaNode)itemTapped);
             }
         }
 
@@ -185,36 +150,10 @@ namespace MegaApp.Views
 
         }
 
-        private void OnHomeSelected(object sender, EventArgs e)
+        private void OnButtonClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.ActiveFolderView.BrowseToHome();
-        }
-
-        private void OnItemSelected(object sender, BreadcrumbEventArgs e)
-        {
-            ViewModel.ActiveFolderView.BrowseToFolder((IMegaNode)e.Item);
-        }
-
-        private async void OnRefreshClick(object sender, RoutedEventArgs e)
-        {
-            if (!await NetworkService.IsNetworkAvailable(true)) return;
-
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
-
-            ViewModel.ActiveFolderView.Refresh();
-        }
-
-        private async void OnAddFolderClick(object sender, RoutedEventArgs e)
-        {
-            if (!await NetworkService.IsNetworkAvailable(true)) return;
-
-            // Needed on every UI interaction
-            SdkService.MegaSdk.retryPendingConnections();
-
-            // Only allow add folder on the Cloud Drive section
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                ViewModel.CloudDrive.AddFolder();
         }
     }
 }
