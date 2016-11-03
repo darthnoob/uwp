@@ -103,9 +103,9 @@ namespace MegaApp.Classes
         /// <summary>
         /// Display the CustomInputDialog on screen with the specified parameter from the constructor
         /// </summary>
-        public async void ShowDialogAsync()
+        public void ShowDialog()
         {
-            await DialogWindow.ShowAsync();
+            UiService.OnUiThread(async () => await DialogWindow.ShowAsync());
         }
 
         #endregion

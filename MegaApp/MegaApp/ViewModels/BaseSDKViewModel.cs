@@ -13,6 +13,8 @@ namespace MegaApp.ViewModels
 {
     public abstract class BaseSdkViewModel : BasePageViewModel, IApplicationBar
     {
+        private static bool isMessageVisible = false;
+
         protected BaseSdkViewModel()
         {
             this.MegaSdk = SdkService.MegaSdk;
@@ -30,16 +32,16 @@ namespace MegaApp.ViewModels
         /// <para>Default value is false.</para>
         /// </param>
         /// <returns>True if the user is online. False in other case.</returns>
-        public async Task<bool> IsUserOnline(bool showMessageDialog = false)
+        public bool IsUserOnline(bool showMessageDialog = false)
         {
-            if (! await NetworkService.IsNetworkAvailable(showMessageDialog)) return false;
+            if (!NetworkService.IsNetworkAvailable(showMessageDialog)) return false;
 
             bool isOnline = Convert.ToBoolean(this.MegaSdk.isLoggedIn());
             if (!isOnline)
             {
                 if (showMessageDialog)
                 {
-                    OnUiThread(() =>
+                    if (!isMessageVisible)
                     {
                         var customMessageDialog = new CustomMessageDialog(
                             ResourceService.AppMessages.GetString("AM_UserNotOnline_Title"),
@@ -48,10 +50,14 @@ namespace MegaApp.ViewModels
                             MessageDialogButtons.Ok);
 
                         customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                            (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage));
+                        {
+                            isMessageVisible = false;
+                            OnUiThread(() => (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                        };
 
-                        customMessageDialog.ShowDialogAsync();
-                    });
+                        customMessageDialog.ShowDialog();
+                        isMessageVisible = true;
+                    }
                 }
                 else
                 {

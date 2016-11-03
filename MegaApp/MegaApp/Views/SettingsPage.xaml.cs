@@ -1,4 +1,5 @@
-﻿using MegaApp.MegaApi;
+﻿using Windows.UI.Xaml;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -15,9 +16,9 @@ namespace MegaApp.Views
             this.InitializeComponent();
         }
 
-        private async void OnLogoutClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void OnLogoutClick(object sender, RoutedEventArgs e)
         {
-            if (!await NetworkService.IsNetworkAvailable(true)) return;
+            if (!NetworkService.IsNetworkAvailable(true)) return;
 
             SdkService.MegaSdk.logout(new LogOutRequestListener());
         }

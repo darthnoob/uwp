@@ -41,7 +41,7 @@ namespace MegaApp.Services
             }
         }
 
-        public async static void DeleteFile(string path)
+        public static void DeleteFile(string path)
         {
             try
             {
@@ -50,14 +50,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
         }
 
@@ -99,26 +96,20 @@ namespace MegaApp.Services
             }
             catch (UnauthorizedAccessException) 
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_CopyFileUnauthorizedAccessException_Title"),
-                        ResourceService.AppMessages.GetString("AM_CopyFileUnauthorizedAccessException"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_CopyFileUnauthorizedAccessException_Title"),
+                    ResourceService.AppMessages.GetString("AM_CopyFileUnauthorizedAccessException"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
                 return false;
             }
             catch (Exception e) 
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_CopyFileFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_CopyFileFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_CopyFileFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_CopyFileFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
                 return false;
             }
 
@@ -144,33 +135,26 @@ namespace MegaApp.Services
                 if (file != null)
                     return await Windows.System.Launcher.LaunchFileAsync(file);
 
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_FileNotFound_Title"),
-                        ResourceService.AppMessages.GetString("AM_FileNotFound"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });                
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_FileNotFound_Title"),
+                    ResourceService.AppMessages.GetString("AM_FileNotFound"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
 
                 return false;
             }
             catch (Exception)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_OpenFileFailed"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
-                
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_OpenFileFailed"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();                
                 return false;
             }            
         }
 
-        public static async void SelectMultipleFiles()
+        public static void SelectMultipleFiles()
         {
             try
             {
@@ -187,14 +171,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
         }
 

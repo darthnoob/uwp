@@ -16,9 +16,9 @@ namespace MegaApp.Views
             InitializeComponent();            
         }
 
-        private async void OnAcceptClick(object sender, RoutedEventArgs e)
+        private void OnAcceptClick(object sender, RoutedEventArgs e)
         {
-            if (! await NetworkService.IsNetworkAvailable(true)) return;
+            if (!NetworkService.IsNetworkAvailable(true)) return;
 
             // To not allow cancel a request to login or 
             // create account once that is started

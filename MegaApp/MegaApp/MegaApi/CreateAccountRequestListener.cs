@@ -91,9 +91,9 @@ namespace MegaApp.MegaApi
                 base.onRequestStart(api, request);
         }
 
-        public async override void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 //ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
                 //ProgressService.SetProgressIndicator(false);
@@ -107,7 +107,7 @@ namespace MegaApp.MegaApi
                 switch(e.getErrorCode())
                 {
                     case MErrorType.API_OK: // Valid and operative #newsignup link
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        UiService.OnUiThread(() =>
                         {
                             _createAccountViewModel.Email = request.getEmail();
                            
@@ -117,14 +117,11 @@ namespace MegaApp.MegaApi
                         break;
 
                     case MErrorType.API_EARGS: // Invalid #newsignup link
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            new CustomMessageDialog(
-                                ResourceService.AppMessages.GetString("AM_InvalidLink"),
-                                ResourceService.AppMessages.GetString("AM_NewSignUpInvalidLink"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
-                        });
+                        new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_InvalidLink"),
+                            ResourceService.AppMessages.GetString("AM_NewSignUpInvalidLink"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
                         break;
 
                     default: // Default error processing
@@ -142,14 +139,11 @@ namespace MegaApp.MegaApi
                         break;
 
                     case MErrorType.API_EEXIST: // Email already registered
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            new CustomMessageDialog(
-                                ErrorMessageTitle,
-                                ResourceService.AppMessages.GetString("AM_EmailAlreadyRegistered"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
-                        });
+                        new CustomMessageDialog(
+                            ErrorMessageTitle,
+                            ResourceService.AppMessages.GetString("AM_EmailAlreadyRegistered"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
                         break;
 
                     default: // Default error processing

@@ -53,7 +53,7 @@ namespace MegaApp.Views
             base.OnNavigatedFrom(e);
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -64,9 +64,9 @@ namespace MegaApp.Views
 
             // Need to check it always and no only in StartupMode, 
             // because this is the first page loaded
-            if (!await AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
+            if (!AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
 
-            if (!await NetworkService.IsNetworkAvailable())
+            if (!NetworkService.IsNetworkAvailable())
             {
                 //UpdateGUI(false);
                 return;
@@ -93,11 +93,11 @@ namespace MegaApp.Views
         /// <summary>
         /// Method to load properly the content of the Cloud Drive and the Rubbish Bin
         /// </summary>
-        private async void Load()
+        private void Load()
         {
             // If user has an active and online session but is not logged in, resume the session
-            if (await AppService.CheckActiveAndOnlineSession() && !Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
-                SdkService.MegaSdk.fastLogin(await SettingsService.LoadSetting<string>(
+            if (AppService.CheckActiveAndOnlineSession() && !Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
+                SdkService.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
                     ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
                     new FastLoginRequestListener(this.ViewModel));
             // If the user's nodes haven't been retrieved, do it

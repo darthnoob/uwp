@@ -34,9 +34,9 @@ namespace MegaApp.MegaApi
         }
 
         // Method which is call when the timer event is triggered
-        private async void timerTickAPI_EAGAIN(object sender, object e)
+        private void timerTickAPI_EAGAIN(object sender, object e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 timerAPI_EAGAIN.Stop();
                 //ProgressService.SetProgressIndicator(true, ProgressMessages.PM_ServersTooBusy);
@@ -123,7 +123,7 @@ namespace MegaApp.MegaApi
             //    FetchNodesFolderLink(api, request);
         }
 
-        private async void FetchNodesCloudDrivePage(MegaSDK api, MRequest request)
+        private void FetchNodesCloudDrivePage(MegaSDK api, MRequest request)
         {
             App.AppInformation.HasFetchedNodes = true;
 
@@ -176,7 +176,7 @@ namespace MegaApp.MegaApi
                     NodeService.CreateNew(api, App.AppInformation, api.getRubbishNode(), ContainerType.RubbishBin);
 
                 var autoResetEvent = new AutoResetEvent(false);
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                UiService.OnUiThread(() =>
                 {
                     _cloudDriveViewModel.CloudDrive.FolderRootNode = cloudDriveRootNode;
                     _cloudDriveViewModel.RubbishBin.FolderRootNode = rubbishBinRootNode;
@@ -185,7 +185,7 @@ namespace MegaApp.MegaApi
                 autoResetEvent.WaitOne();
             //}
 
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 _cloudDriveViewModel.LoadFolders();
                 //_mainPageViewModel.GetAccountDetails();
@@ -197,7 +197,7 @@ namespace MegaApp.MegaApi
             });
 
             // KEEP ALWAYS AT THE END OF THE METHOD, AFTER THE "LoadForlders" call
-            //await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //UiService.OnUiThread(() =>
             //{
             //    // If is a newly activated account, navigates to the upgrade account page
             //    if (App.AppInformation.IsNewlyActivatedAccount)
@@ -210,10 +210,9 @@ namespace MegaApp.MegaApi
             //});
         }
 
-        public async override void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => 
-                timerAPI_EAGAIN.Stop());
+            UiService.OnUiThread(() => timerAPI_EAGAIN.Stop());
 
             // If is a folder link fetch nodes
             //if (_folderLinkViewModel != null)
@@ -222,11 +221,11 @@ namespace MegaApp.MegaApi
                 base.onRequestFinish(api, request, e);
         }
 
-        public async override void onRequestStart(MegaSDK api, MRequest request)
+        public override void onRequestStart(MegaSDK api, MRequest request)
         {
             this.isFirstAPI_EAGAIN = true;
 
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 // Disable MainPage appbar buttons
                 //if (_mainPageViewModel != null) _mainPageViewModel.SetCommandStatus(false);
@@ -236,22 +235,21 @@ namespace MegaApp.MegaApi
             });
         }
 
-        public async override void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
+        public override void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
             // Starts the timer when receives the first API_EAGAIN (-3)
             if (e.getErrorCode() == MErrorType.API_EAGAIN && this.isFirstAPI_EAGAIN)
             {
                 this.isFirstAPI_EAGAIN = false;
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => 
-                    timerAPI_EAGAIN.Start());
+                UiService.OnUiThread(() => timerAPI_EAGAIN.Start());
             }
 
             base.onRequestTemporaryError(api, request, e);
         }
 
-        public async override void onRequestUpdate(MegaSDK api, MRequest request)
+        public override void onRequestUpdate(MegaSDK api, MRequest request)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 //ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
                 //ProgressService.SetProgressIndicator(true, String.Format(ProgressMessages.FetchingNodes,
@@ -260,7 +258,7 @@ namespace MegaApp.MegaApi
 
             //if (AppMemoryController.IsThresholdExceeded(75UL.FromMBToBytes()))
             //{
-            //    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            //    UiService.OnUiThread(() =>
             //    {
             //        new CustomMessageDialog(
             //            App.ResourceLoaders.AppMessages.GetString("AM_MemoryLimitError_Title"),

@@ -158,7 +158,7 @@ namespace MegaApp.ViewModels
         public async void LoadChildNodes()
         {
             // User must be online to perform this operation
-            if ((this.Type != ContainerType.FolderLink) && !(await IsUserOnline()))
+            if ((this.Type != ContainerType.FolderLink) && !IsUserOnline())
                 return;
 
             // First cancel any other loading task that is busy
@@ -167,14 +167,11 @@ namespace MegaApp.ViewModels
             // FolderRootNode should not be null
             if (this.FolderRootNode == null)
             {
-                OnUiThread(() =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
                 return;
             }
 
@@ -188,15 +185,13 @@ namespace MegaApp.ViewModels
 
             if (childList == null)
             {
-                OnUiThread(() =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                    SetEmptyContentTemplate(false);
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
+
+                SetEmptyContentTemplate(false);
 
                 return;
             }
@@ -240,9 +235,9 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Refresh the current folder. Delete cached thumbnails and reload the nodes
         /// </summary>
-        public async void Refresh()
+        public void Refresh()
         {
-            if (!await NetworkService.IsNetworkAvailable(true)) return;
+            if (!NetworkService.IsNetworkAvailable(true)) return;
 
             FileService.ClearFiles(
                 NodeService.GetFiles(this.ChildNodes,
@@ -267,9 +262,9 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
-        public async void AddFolder()
+        public void AddFolder()
         {
-            if (!await IsUserOnline()) return;
+            if (!IsUserOnline()) return;
 
             // Only 1 CustomInputDialog should be open at the same time.
             if (App.AppInformation.PickerOrAsyncDialogIsOpen) return;
@@ -283,14 +278,11 @@ namespace MegaApp.ViewModels
             {
                 if (FolderRootNode == null)
                 {
-                    OnUiThread(() =>
-                    {
-                        new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_CreateFolderFailed"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                    new CustomMessageDialog(
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed"),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
 
                     return;
                 }
@@ -298,7 +290,7 @@ namespace MegaApp.ViewModels
                 MegaSdk.createFolder(args.InputText, FolderRootNode.OriginalMNode,
                      new CreateFolderRequestListener());
             };
-            inputDialog.ShowDialogAsync();
+            inputDialog.ShowDialog();
         }
 
         public void CleanRubbishBin()
@@ -316,7 +308,7 @@ namespace MegaApp.ViewModels
                 MegaSdk.cleanRubbishBin(new CleanRubbishBinRequestListener());
             };
 
-            customMessageDialog.ShowDialogAsync();
+            customMessageDialog.ShowDialog();
         }
 
         public void OnChildNodeTapped(IMegaNode node)

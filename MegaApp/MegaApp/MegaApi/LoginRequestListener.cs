@@ -29,9 +29,9 @@ namespace MegaApp.MegaApi
         }
 
         // Method which is call when the timer event is triggered
-        private async void timerTickAPI_EAGAIN(object sender, object e)
+        private void timerTickAPI_EAGAIN(object sender, object e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 timerAPI_EAGAIN.Stop();
                 //ProgressService.SetProgressIndicator(true, ProgressMessages.PM_ServersTooBusy);
@@ -104,9 +104,9 @@ namespace MegaApp.MegaApi
 
         #region MRequestListenerInterface
 
-        public async override void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 //ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
                 //ProgressService.SetProgressIndicator(false);
@@ -128,22 +128,19 @@ namespace MegaApp.MegaApi
                 switch (e.getErrorCode())
                 {
                     case MErrorType.API_ENOENT: // E-mail unassociated with a MEGA account or Wrong password
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin"),
-                                App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
+                        new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin"),
+                            App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;
 
                     case MErrorType.API_ETOOMANY: // Too many failed login attempts. Wait one hour.
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            new CustomMessageDialog(ErrorMessageTitle,
-                                string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"), DateTime.Now.AddHours(1).ToString("HH:mm:ss")),
-                                App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
+                        new CustomMessageDialog(ErrorMessageTitle,
+                            string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"), DateTime.Now.AddHours(1).ToString("HH:mm:ss")),
+                            App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;
 
                     case MErrorType.API_EINCOMPLETE: // Account not confirmed
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                            new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_AccountNotConfirmed"),
-                                App.AppInformation, MessageDialogButtons.Ok).ShowDialogAsync());
+                        new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_AccountNotConfirmed"),
+                            App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;
 
                     case MErrorType.API_EBLOCKED: // Account blocked
@@ -161,13 +158,13 @@ namespace MegaApp.MegaApi
             base.onRequestStart(api, request);
         }
 
-        public async override void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
+        public override void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
             // Starts the timer when receives the first API_EAGAIN (-3)
             if (e.getErrorCode() == MErrorType.API_EAGAIN && this.isFirstAPI_EAGAIN)
             {
                 this.isFirstAPI_EAGAIN = false;
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => timerAPI_EAGAIN.Start());
+                UiService.OnUiThread(() => timerAPI_EAGAIN.Start());
             }
 
             base.onRequestTemporaryError(api, request, e);

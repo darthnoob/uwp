@@ -109,9 +109,9 @@ namespace MegaApp.Classes
         /// <summary>
         /// Display the CustomMessageDialog on screen with the specified parameter from the constructor
         /// </summary>
-        public async void ShowDialogAsync()
+        public void ShowDialog()
         {
-            await DialogWindow.ShowAsync();
+            UiService.OnUiThread(async () => await DialogWindow.ShowAsync());
         }
 
         #region Virtual Methods

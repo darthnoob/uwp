@@ -19,13 +19,11 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="navigationMode">Type of navigation that is taking place </param>
         /// <returns>True if the user has an active and online session or false in other case</returns>
-        public static async Task<bool> CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
+        public static bool CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
         {
-            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !await SettingsService.HasValidSession())
+            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !SettingsService.HasValidSession())
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>                    
-                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
-
+                UiService.OnUiThread(() => (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
                 return false;
             }
 

@@ -26,28 +26,22 @@ namespace MegaApp.ViewModels
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
-                OnUiThread(() =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_RequiredFields_Title"),
-                        ResourceService.AppMessages.GetString("AM_RequiredFieldsLogin"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_RequiredFields_Title"),
+                    ResourceService.AppMessages.GetString("AM_RequiredFieldsLogin"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
                 
                 return false;
             }
             
             if(!ValidationService.IsValidEmail(this.Email))
             {
-                OnUiThread(() =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_LoginFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_MalformedEmail"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoginFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_MalformedEmail"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
 
                 return false;
             }

@@ -60,7 +60,7 @@ namespace MegaApp.Services
             Directory.CreateDirectory(path);            
         }
         
-        public static async void DeleteFolder(string path, bool recursive = false)
+        public static void DeleteFolder(string path, bool recursive = false)
         {
             try
             {
@@ -69,14 +69,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                        String.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
+                    String.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
         }
 
@@ -90,7 +87,7 @@ namespace MegaApp.Services
             return false;
         }        
 
-        public static async void Clear(string path)
+        public static void Clear(string path)
         {
             try
             {
@@ -108,14 +105,11 @@ namespace MegaApp.Services
             }
             catch (IOException e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                        String.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
+                    String.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
         }
     }    

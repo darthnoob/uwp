@@ -15,7 +15,7 @@ namespace MegaApp.Services
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
 
-        public static async void SaveSetting<T>(string key, T value)
+        public static void SaveSetting<T>(string key, T value)
         {
             try
             {
@@ -25,14 +25,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -72,7 +69,7 @@ namespace MegaApp.Services
         //    }
         //}
 
-        public static async Task<T> LoadSetting<T>(string key, T defaultValue)
+        public static T LoadSetting<T>(string key, T defaultValue)
         {
             var returnValue = defaultValue;
 
@@ -85,14 +82,11 @@ namespace MegaApp.Services
             }
             catch(Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -139,12 +133,12 @@ namespace MegaApp.Services
         //    return returnValue;
         //}
 
-        public static Task<T> LoadSetting<T>(string key)
+        public static T LoadSetting<T>(string key)
         {
             return LoadSetting(key, default(T));
         }
 
-        public static async void DeleteSetting(string key)
+        public static void DeleteSetting(string key)
         {
             try
             {
@@ -156,14 +150,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -171,7 +162,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async void DeleteFileSetting(string key)
+        public static void DeleteFileSetting(string key)
         {
             try
             {
@@ -195,14 +186,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -210,7 +198,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async void SaveSettingToFile<T>(string key, T value)
+        public static void SaveSettingToFile<T>(string key, T value)
         {
             try
             {
@@ -231,14 +219,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -266,14 +251,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -283,11 +265,11 @@ namespace MegaApp.Services
             return returnValue;
         }
 
-        public async static Task<bool> HasValidSession()
+        public static bool HasValidSession()
         {
             try
             {
-                if (await LoadSetting<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession")) != null)
+                if (LoadSetting<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession")) != null)
                     return true;
                 else
                     return false;

@@ -83,9 +83,9 @@ namespace MegaApp.MegaApi
 
         #region Override Methods
 
-        protected async override void OnSuccesAction(MegaSDK api, MRequest request)
+        protected override void OnSuccesAction(MegaSDK api, MRequest request)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 _node.IsDefaultImage = false;
                 _node.ThumbnailImageUri = new Uri(request.getFile());
