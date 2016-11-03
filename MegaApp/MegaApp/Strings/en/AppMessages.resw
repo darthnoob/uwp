@@ -229,6 +229,15 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>File not found</value>
     <comment>Title of the dialog displayed when a user try to open a file that can't be found and the process failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_GetThumbnailFailed" xml:space="preserve">
+    <value>Failed to retrieve thumbnail [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to get a image thumbnail failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_GetThumbnailFailed_Title" xml:space="preserve">
+    <value>Getting thumbnail failed</value>
+    <comment>Title of the dialog displayed when the process/request to get a image thumbnail failed - (String as short as possible).</comment>
+  </data>
   <data name="AM_InvalidLink" xml:space="preserve">
     <value>Invalid link</value>
     <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>

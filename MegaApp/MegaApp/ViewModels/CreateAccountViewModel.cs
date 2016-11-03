@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async void CreateAccount()
+        public void CreateAccount()
         {
             if (CheckInputParameters())
             {
@@ -29,7 +29,7 @@ namespace MegaApp.ViewModels
                         }
                         else
                         {
-                            await this.OnUiThread(() =>
+                            OnUiThread(() =>
                             {
                                 //_loginPage.SetApplicationBar(true)
                                 new CustomMessageDialog(
@@ -42,7 +42,7 @@ namespace MegaApp.ViewModels
                     }
                     else
                     {
-                        await this.OnUiThread(() =>
+                        OnUiThread(() =>
                         {
                             //_loginPage.SetApplicationBar(true)
                             new CustomMessageDialog(
@@ -55,7 +55,7 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    await this.OnUiThread(() =>
+                    OnUiThread(() =>
                     {
                         //_loginPage.SetApplicationBar(true)
                         new CustomMessageDialog(
@@ -68,7 +68,7 @@ namespace MegaApp.ViewModels
             }
             else
             {
-                await this.OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     //_loginPage.SetApplicationBar(true)
                     new CustomMessageDialog(

@@ -89,6 +89,12 @@ namespace MegaApp.ViewModels
 
         void ChildNodes_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            if(e.NewItems != null)
+            {
+                foreach (var node in e.NewItems)
+                    (node as NodeViewModel)?.SetThumbnailImage();
+            }
+
             OnPropertyChanged("HasChildNodesBinding");
         }
 
@@ -139,14 +145,11 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public async void ClearChildNodes()
+        public void ClearChildNodes()
         {
             if (this.ChildNodes == null || !this.ChildNodes.Any()) return;
 
-            await OnUiThread(() =>
-            {
-                this.ChildNodes.Clear();
-            });
+            OnUiThread(() => this.ChildNodes.Clear());
         }
 
         /// <summary>
@@ -164,7 +167,7 @@ namespace MegaApp.ViewModels
             // FolderRootNode should not be null
             if (this.FolderRootNode == null)
             {
-                await OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     new CustomMessageDialog(
                         ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
@@ -185,7 +188,7 @@ namespace MegaApp.ViewModels
 
             if (childList == null)
             {
-                await OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     new CustomMessageDialog(
                         ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
@@ -205,7 +208,7 @@ namespace MegaApp.ViewModels
             //SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            await OnUiThread(() => BuildBreadCrumbs());
+            OnUiThread(() => BuildBreadCrumbs());
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -242,7 +245,7 @@ namespace MegaApp.ViewModels
             if (!await NetworkService.IsNetworkAvailable(true)) return;
 
             FileService.ClearFiles(
-             NodeService.GetFiles(this.ChildNodes,
+                NodeService.GetFiles(this.ChildNodes,
                 Path.Combine(ApplicationData.Current.LocalFolder.Path,
                 ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"))));
 
@@ -518,16 +521,16 @@ namespace MegaApp.ViewModels
 
         }
 
-        public async void SetProgressIndication(bool onOff, string busyText = null)
+        public void SetProgressIndication(bool onOff, string busyText = null)
         {
-            await OnUiThread(() =>
+            OnUiThread(() =>
             {
                 this.IsBusy = onOff;
                 this.BusyText = busyText;
             });
         }
 
-        private async void CreateChildren(MNodeList childList, int listSize)
+        private void CreateChildren(MNodeList childList, int listSize)
         {
             // Set the parameters for the performance for the different view types of a folder
             int viewportItemCount, backgroundItemCount;
@@ -573,7 +576,7 @@ namespace MegaApp.ViewModels
                 if (i == viewportItemCount)
                 {
                     var waitHandleViewportNodes = new AutoResetEvent(false);
-                    await OnUiThread(() =>
+                    OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -592,7 +595,7 @@ namespace MegaApp.ViewModels
 
                 // Add the rest of the items in the background to the list
                 var waitHandleBackgroundNodes = new AutoResetEvent(false);
-                await OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -608,7 +611,7 @@ namespace MegaApp.ViewModels
 
             // Add any nodes that are left over
             var waitHandleRestNodes = new AutoResetEvent(false);
-            await OnUiThread(() =>
+            OnUiThread(() =>
             {
                 // Show the user that processing the childnodes is done
                 SetProgressIndication(false);
@@ -625,7 +628,7 @@ namespace MegaApp.ViewModels
             });
             waitHandleRestNodes.WaitOne();
 
-            await OnUiThread(() => OnPropertyChanged("HasChildNodesBinding"));
+            OnUiThread(() => OnPropertyChanged("HasChildNodesBinding"));
         }
 
         private void InitializePerformanceParameters(out int viewportItemCount, out int backgroundItemCount)

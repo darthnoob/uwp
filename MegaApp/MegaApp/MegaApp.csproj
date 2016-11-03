@@ -144,11 +144,13 @@
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
+    <Compile Include="MegaApi\GetThumbnailRequestListener.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="Services\DeviceService.cs" />
+    <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />

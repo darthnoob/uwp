@@ -14,26 +14,25 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async void DoLogin()
+        public void DoLogin()
         {
-            if (await CheckInputParameters())
+            if (CheckInputParameters())
                 this.MegaSdk.login(this.Email, this.Password, new LoginRequestListener(this));
             //else if (_loginAndCreateAccountPage != null)
             //    Deployment.Current.Dispatcher.BeginInvoke(() => _loginPage.SetApplicationBar(true));
         }
 
-        private async Task<bool> CheckInputParameters()
+        private bool CheckInputParameters()
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
-                await this.OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_RequiredFields_Title"),
-                            ResourceService.AppMessages.GetString("AM_RequiredFieldsLogin"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok)
-                        .ShowDialogAsync();
+                        ResourceService.AppMessages.GetString("AM_RequiredFields_Title"),
+                        ResourceService.AppMessages.GetString("AM_RequiredFieldsLogin"),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialogAsync();
                 });
                 
                 return false;
@@ -41,14 +40,13 @@ namespace MegaApp.ViewModels
             
             if(!ValidationService.IsValidEmail(this.Email))
             {
-                await this.OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_LoginFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_MalformedEmail"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok)
-                        .ShowDialogAsync();
+                        ResourceService.AppMessages.GetString("AM_LoginFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MalformedEmail"),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialogAsync();
                 });
 
                 return false;

@@ -77,7 +77,7 @@
                             <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
                         </Path.Fill>
                     </Path>
-                    <!--<Image HorizontalAlignment="Center" Canvas.ZIndex="1" VerticalAlignment="Center" Width="64" Height="64" Stretch="UniformToFill" Margin="0,0,12,0" Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image HorizontalAlignment="Center" Canvas.ZIndex="1" VerticalAlignment="Center" Width="64" Height="64" Stretch="UniformToFill" Margin="0,0,12,0" Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Image.Source>
                             <BitmapImage 
         					UriSource="{Binding ThumbnailImageUri}"
@@ -88,10 +88,10 @@
                     </Image>
                     <Border Margin="0,0,12,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" BorderThickness="2" Canvas.ZIndex="1" Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Border.BorderBrush>
-                            <SolidColorBrush Color="{StaticResource PhoneForegroundColor}"/>
+                            <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
                         </Border.BorderBrush>
                     </Border>
-                    <Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="White" StrokeThickness="2" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <!--<Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="White" StrokeThickness="2" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Ellipse.Fill>
                             <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
                         </Ellipse.Fill>

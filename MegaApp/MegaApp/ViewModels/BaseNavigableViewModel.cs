@@ -20,7 +20,7 @@ namespace MegaApp.ViewModels
         /// <param name="viewModelType">Type of viewmodel to navigate to</param>
         /// <param name="action">Optional navigation action parameter</param>
         /// <param name="parameters">Optional navigation data parameters</param>
-        public async void NavigateTo(Type viewModelType, 
+        public void NavigateTo(Type viewModelType, 
                                      NavigationActionType action = NavigationActionType.Default,
                                      IDictionary<NavigationParamType, object> parameters = null)
         {
@@ -30,7 +30,7 @@ namespace MegaApp.ViewModels
             if (pageType == null) throw new ArgumentException("Viewmodel is not bound to a view");
 
             var navObj = NavigationObject.Create(this.GetType(), action, parameters);
-            await this.OnUiThread(() => this.Navigation.Navigate(pageType, navObj));
+            OnUiThread(() => this.Navigation.Navigate(pageType, navObj));
         }
 
         /// <summary>

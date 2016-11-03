@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Storage;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
@@ -38,16 +41,29 @@ namespace MegaApp.ViewModels
 
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
-            //if (FileService.FileExists(ThumbnailPath))
-            //{
-            //    this.IsDefaultImage = false;
-            //    this.ThumbnailImageUri = new Uri(ThumbnailPath);
-            //}
-            //else
-            //{
+            if (FileService.FileExists(ThumbnailPath))
+            {
+                this.IsDefaultImage = false;
+                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+            }
+            else
+            {
                 this.IsDefaultImage = true;
                 this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-            //}
+            }
+        }
+
+        private void GetThumbnail()
+        {
+            if (FileService.FileExists(ThumbnailPath))
+            {
+                this.IsDefaultImage = false;
+                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+            }
+            else if (Convert.ToBoolean(MegaSdk.isLoggedIn()) || ParentContainerType == ContainerType.FolderLink)
+            {
+                this.MegaSdk.getThumbnail(OriginalMNode, ThumbnailPath, new GetThumbnailRequestListener(this));
+            }
         }
 
         /// <summary>
@@ -70,7 +86,15 @@ namespace MegaApp.ViewModels
 
         public string ModificationTime { get; private set; }
 
-        public string ThumbnailPath { get; }
+        public string ThumbnailPath
+        {
+            get
+            {
+                return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), 
+                    this.OriginalMNode.getBase64Handle());
+            }
+        }
 
         private string _information;
         public string Information
@@ -98,7 +122,12 @@ namespace MegaApp.ViewModels
 
         public bool IsDefaultImage { get; set; }
 
-        public Uri ThumbnailImageUri { get; set; }
+        private Uri _thumbnailImageUri;
+        public Uri ThumbnailImageUri
+        {
+            get { return _thumbnailImageUri; }
+            set { SetField(ref _thumbnailImageUri, value); }
+        }
 
         private string _defaultImagePathData;
         public string DefaultImagePathData
@@ -174,7 +203,14 @@ namespace MegaApp.ViewModels
 
         public void SetThumbnailImage()
         {
+            if (this.Type == MNodeType.TYPE_FOLDER) return;
 
+            if (this.ThumbnailImageUri != null && !IsDefaultImage) return;
+
+            if (this.IsImage || this.OriginalMNode.hasThumbnail())
+            {
+                GetThumbnail();
+            }
         }
 
         public void Open()
