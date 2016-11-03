@@ -5,7 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
+using MegaApp.Services;
 
 namespace MegaApp.MegaApi
 {
@@ -24,13 +24,13 @@ namespace MegaApp.MegaApi
         abstract protected bool NavigateOnSucces { get; }
         abstract protected bool ActionOnSucces { get; }
         abstract protected Type NavigateToPage { get; }
-        abstract protected NavigationParameter NavigationParameter { get; }
-        
+        abstract protected NavigationObject NavigationObject { get; }
+
         #endregion
 
         #region MRequestListenerInterface
 
-        public async virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             //Deployment.Current.Dispatcher.BeginInvoke(() =>
             //{
@@ -42,24 +42,18 @@ namespace MegaApp.MegaApi
             {
                 if (ShowSuccesMessage)
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        new CustomMessageDialog(
-                            SuccessMessageTitle,
-                            SuccessMessage,
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                    new CustomMessageDialog(
+                        SuccessMessageTitle,
+                        SuccessMessage,
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
 
                 if (ActionOnSucces)
                     OnSuccesAction(api, request);
 
                 if (NavigateOnSucces)
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        (Window.Current.Content as Frame).Navigate(NavigateToPage));
-                }
+                    UiService.OnUiThread(() => (Window.Current.Content as Frame).Navigate(NavigateToPage, NavigationObject));
             }
             else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 
             {
@@ -90,15 +84,12 @@ namespace MegaApp.MegaApi
             else if (e.getErrorCode() != MErrorType.API_EINCOMPLETE)
             {
                 if (ShowErrorMessage)
-                {                    
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        new CustomMessageDialog(
-                            ErrorMessageTitle,
-                            string.Format(ErrorMessage, e.getErrorString()),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                {
+                    new CustomMessageDialog(
+                        ErrorMessageTitle,
+                        string.Format(ErrorMessage, e.getErrorString()),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
             }           
         }

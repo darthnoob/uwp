@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async void CreateAccount()
+        public void CreateAccount()
         {
             if (CheckInputParameters())
             {
@@ -29,54 +29,38 @@ namespace MegaApp.ViewModels
                         }
                         else
                         {
-                            await this.OnUiThread(() =>
-                            {
-                                //_loginPage.SetApplicationBar(true)
-                                new CustomMessageDialog(
-                                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                    ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
-                                    App.AppInformation,
-                                    MessageDialogButtons.Ok).ShowDialogAsync();
-                            });
+                            new CustomMessageDialog(
+                                ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
+                                App.AppInformation,
+                                MessageDialogButtons.Ok).ShowDialog();
                         }
                     }
                     else
                     {
-                        await this.OnUiThread(() =>
-                        {
-                            //_loginPage.SetApplicationBar(true)
-                            new CustomMessageDialog(
-                                ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
-                        });
+                        new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
                     }
                 }
                 else
                 {
-                    await this.OnUiThread(() =>
-                    {
-                        //_loginPage.SetApplicationBar(true)
-                        new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_MalformedEmail"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                    new CustomMessageDialog(
+                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MalformedEmail"),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
             }
             else
             {
-                await this.OnUiThread(() =>
-                {
-                    //_loginPage.SetApplicationBar(true)
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }            
         }        
 

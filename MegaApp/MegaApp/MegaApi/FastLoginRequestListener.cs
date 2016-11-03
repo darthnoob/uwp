@@ -4,24 +4,22 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels;
-using MegaApp.Views;
 
 namespace MegaApp.MegaApi
 {
-    class LoginRequestListener : BaseRequestListener
+    class FastLoginRequestListener: BaseRequestListener
     {
-        private readonly LoginViewModel _loginViewModel;
+        private readonly CloudDriveViewModel _cloudDriveViewModel;
 
         // Timer for ignore the received API_EAGAIN (-3) during login
         private DispatcherTimer timerAPI_EAGAIN;
         private bool isFirstAPI_EAGAIN;
-
-        public LoginRequestListener(LoginViewModel loginViewModel)
+        
+        public FastLoginRequestListener(CloudDriveViewModel cloudDriveViewModel)
         {
-            _loginViewModel = loginViewModel;
+            _cloudDriveViewModel = cloudDriveViewModel;
 
             timerAPI_EAGAIN = new DispatcherTimer();
             timerAPI_EAGAIN.Tick += timerTickAPI_EAGAIN;
@@ -34,15 +32,15 @@ namespace MegaApp.MegaApi
             UiService.OnUiThread(() =>
             {
                 timerAPI_EAGAIN.Stop();
-                //ProgressService.SetProgressIndicator(true, ProgressMessages.PM_ServersTooBusy);
+                //ProgressService.SetProgressIndicator(true, ProgressMessages.ServersTooBusy);
             });
         }
 
-        #region  Base Properties
+        #region Base Properties
 
         protected override string ProgressMessage
         {
-            get { return ResourceService.ProgressMessages.GetString("PM_Login"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_FastLogin"); }
         }
 
         protected override bool ShowProgressMessage
@@ -82,7 +80,7 @@ namespace MegaApp.MegaApi
 
         protected override bool NavigateOnSucces
         {
-            get { return true; }
+            get { return false; }
         }
 
         protected override bool ActionOnSucces
@@ -92,39 +90,24 @@ namespace MegaApp.MegaApi
 
         protected override Type NavigateToPage
         {
-            get { return (typeof(MainPage)); }
+            get { throw new NotImplementedException(); }
         }
 
         protected override NavigationObject NavigationObject
         {
-            get { return NavigationObject.Create(typeof(LoginViewModel), NavigationActionType.Login); }
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
 
-        #region MRequestListenerInterface
+        #region Override Methods
 
         public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            UiService.OnUiThread(() =>
+            UiService.OnUiThread(() => timerAPI_EAGAIN.Stop());
+
+            if (e.getErrorCode() != MErrorType.API_OK)
             {
-                //ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
-                //ProgressService.SetProgressIndicator(false);
-
-                _loginViewModel.ControlState = true;
-
-                timerAPI_EAGAIN.Stop();                
-            });            
-
-            if (e.getErrorCode() == MErrorType.API_OK)
-            {
-                _loginViewModel.SessionKey = api.dumpSession();
-            }
-            else
-            {
-                //if (_loginAndCreateAccountPage != null)
-                //    Deployment.Current.Dispatcher.BeginInvoke(() => _loginAndCreateAccountPage.SetApplicationBar(true));
-
                 switch (e.getErrorCode())
                 {
                     case MErrorType.API_ENOENT: // E-mail unassociated with a MEGA account or Wrong password
@@ -132,8 +115,8 @@ namespace MegaApp.MegaApi
                             App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;
 
-                    case MErrorType.API_ETOOMANY: // Too many failed login attempts. Wait one hour.
-                        new CustomMessageDialog(ErrorMessageTitle,
+                    case MErrorType.API_ETOOMANY: // Too many failed login attempts
+                        new CustomMessageDialog(ErrorMessageTitle, 
                             string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"), DateTime.Now.AddHours(1).ToString("HH:mm:ss")),
                             App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;
@@ -154,33 +137,32 @@ namespace MegaApp.MegaApi
 
         public override void onRequestStart(MegaSDK api, MRequest request)
         {
-            this.isFirstAPI_EAGAIN = true;
+            isFirstAPI_EAGAIN = true;
             base.onRequestStart(api, request);
         }
 
         public override void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
             // Starts the timer when receives the first API_EAGAIN (-3)
-            if (e.getErrorCode() == MErrorType.API_EAGAIN && this.isFirstAPI_EAGAIN)
+            if (e.getErrorCode() == MErrorType.API_EAGAIN && isFirstAPI_EAGAIN)
             {
-                this.isFirstAPI_EAGAIN = false;
+                isFirstAPI_EAGAIN = false;
                 UiService.OnUiThread(() => timerAPI_EAGAIN.Start());
             }
 
             base.onRequestTemporaryError(api, request, e);
         }
 
-        #endregion
-
-        #region Override Methods
-
         protected override void OnSuccesAction(MegaSDK api, MRequest request)
         {
-            SettingsService.SaveMegaLoginData(_loginViewModel.Email, 
-                _loginViewModel.SessionKey);
+            UiService.OnUiThread(() =>
+            {
+                //_cloudDriveViewModel.GetAccountDetails();
+                _cloudDriveViewModel.FetchNodes();
 
-            //// Validate product subscription license on background thread
-            //Task.Run(() => LicenseService.ValidateLicenses());
+                // Validate product subscription license on background thread
+                //Task.Run(() => LicenseService.ValidateLicenses());
+            });
         }
 
         #endregion

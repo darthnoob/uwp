@@ -2,6 +2,8 @@
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -26,7 +28,9 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
-            this.ViewModel.Initialize();
+
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            this.ViewModel.Initialize(navObj?.Action ?? NavigationActionType.Default);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -38,6 +42,17 @@ namespace MegaApp.Views
 
         private void OnBackRequested(object sender, BackRequestedEventArgs args)
         {
+            if (ContentFrame.ContentPage != null && 
+                ContentFrame.ContentPage.CanGoBack)
+            {
+                ContentFrame.ContentPage.GoBack();
+                AppService.SetAppViewBackButtonVisibility(
+                    ContentFrame.ContentPage.CanGoBack ||
+                    ContentFrame.CanGoBack);
+                args.Handled = true;
+                return;
+            };
+
             // Navigate back if possible, and if the event has not already been handled
             if (!ContentFrame.CanGoBack) return;
             args.Handled = true;
@@ -48,8 +63,7 @@ namespace MegaApp.Views
         {
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
-               this.ContentFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+            AppService.SetAppViewBackButtonVisibility(ContentFrame.CanGoBack);
 
             // Set current content viewmodel as property of the main page
             // Could be handy in the future
@@ -62,5 +76,6 @@ namespace MegaApp.Views
             this.ViewModel.SelectedOptionItem = this.ViewModel.OptionItems.FirstOrDefault(
                 m => NavigateService.GetViewType(m.TargetViewModel) == ContentFrame.CurrentSourcePageType);
         }
+        
     }
 }

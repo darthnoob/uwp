@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -21,5 +22,11 @@ namespace MegaApp.ViewModels
             //    new[] { UiResources.Accept, UiResources.Cancel },
             //    null);
         }
+
+        #region VisualResources
+
+        public string MegaIconPathData { get { return ResourceService.VisualResources.GetString("VR_MegaIconPathData"); } }        
+
+        #endregion
     }
 }

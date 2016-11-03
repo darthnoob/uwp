@@ -125,6 +125,22 @@
     <value>You must agree with our Terms of Service</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
+  <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
+    <value>Failed to clean the rubbish bin. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
+  </data>
+  <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
+    <value>Are you sure you want to permanently delete all files from the rubbish bin?</value>
+    <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
+  </data>
+  <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
+    <value>The rubbish bin has been cleaned successfully.</value>
+    <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
+  </data>
+  <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
+    <value>Empty rubbish bin</value>
+    <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
+  </data>
   <data name="AM_ConfirmNeeded" xml:space="preserve">
     <value>Check your e-mail and click the link to login and confirm your account</value>
     <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an e-mail with a link to confirm account.</comment>
@@ -159,6 +175,22 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>Account creation failed</value>
     <comment>Title of the dialog displayed when the creation of a MEGA account failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_CreateFolderFailed" xml:space="preserve">
+    <value>Failed to create folder</value>
+    <comment>Message of the dialog displayed when the creation of a folder failed.</comment>
+  </data>
+  <data name="AM_CreateFolderFailed_Title" xml:space="preserve">
+    <value>Folder creation failed</value>
+    <comment>Title of the dialog displayed when the creation of a folder failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CreateFolderSuccess" xml:space="preserve">
+    <value>Folder created successfully</value>
+    <comment>Message of the dialog displayed when create a folder successfully.</comment>
+  </data>
+  <data name="AM_CreateFolderSuccess_Title" xml:space="preserve">
+    <value>Folder created</value>
+    <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
+  </data>
   <data name="AM_DeleteNodeFailed" xml:space="preserve">
     <value>Failed to delete item. Please try again [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to delete a node failed.
@@ -181,6 +213,14 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>This e-mail address has already registered an account with MEGA.</value>
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
+  <data name="AM_FetchingNodesFailed" xml:space="preserve">
+    <value>Could not retrieve files and folders from MEGA. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
+  </data>
+  <data name="AM_FetchingNodesFailed_Title" xml:space="preserve">
+    <value>Fetching data failed</value>
+    <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed - (String as short as possible).</comment>
+  </data>
   <data name="AM_FileNotFound" xml:space="preserve">
     <value>Could not find the selected file</value>
     <comment>Message of the dialog displayed when a user try to open a file that can't be found and the process failed.</comment>
@@ -189,9 +229,26 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>File not found</value>
     <comment>Title of the dialog displayed when a user try to open a file that can't be found and the process failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_GetThumbnailFailed" xml:space="preserve">
+    <value>Failed to retrieve thumbnail [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to get a image thumbnail failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_GetThumbnailFailed_Title" xml:space="preserve">
+    <value>Getting thumbnail failed</value>
+    <comment>Title of the dialog displayed when the process/request to get a image thumbnail failed - (String as short as possible).</comment>
+  </data>
   <data name="AM_InvalidLink" xml:space="preserve">
     <value>Invalid link</value>
     <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>
+  </data>
+  <data name="AM_LoadNodesFailed" xml:space="preserve">
+    <value>Could not load files and folders from MEGA. Please try again or click on refresh.</value>
+    <comment>Message of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service.</comment>
+  </data>
+  <data name="AM_LoadNodesFailed_Title" xml:space="preserve">
+    <value>Failed to load</value>
+    <comment>Title of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service - (String as short as possible).</comment>
   </data>
   <data name="AM_LoadSettingsFailed" xml:space="preserve">
     <value>Failed to load settings. Please try again. [{0}]</value>
@@ -231,6 +288,14 @@ Preserve the [{0}] code because is for include the error code or the error messa
   <data name="AM_MalformedEmail" xml:space="preserve">
     <value>Malformed e-mail. Please try again.</value>
     <comment>Message of the dialog displayed when the user types a malformed email address.</comment>
+  </data>
+  <data name="AM_MemoryLimitError" xml:space="preserve">
+    <value>Not enough free memory space to complete this operation. The app will shut down now</value>
+    <comment>Message of the dialog displayed when the app exceeds the memory limit quota of the device.</comment>
+  </data>
+  <data name="AM_MemoryLimitError_Title" xml:space="preserve">
+    <value>Memory Limit</value>
+    <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_NewSignUpInvalidLink" xml:space="preserve">
     <value>The link you are using for a new signup is not valid.</value>

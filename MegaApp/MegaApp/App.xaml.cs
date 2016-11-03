@@ -168,7 +168,10 @@ namespace MegaApp
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();
-            
+
+            // Initialize Folders
+            AppService.InitializeAppFolders();
+
             // Ensure we don't initialize again
             ApplicationInitialized = true;
         }

@@ -16,20 +16,17 @@ namespace MegaApp.Services
         /// </summary>        
         /// <param name="showMessageDialog">Boolean parameter to indicate if show a message if no Intenert connection</param>
         /// <returns>True if there is an available network connection., False in other case.</returns>
-        public static async Task<bool> IsNetworkAvailable(bool showMessageDialog = false)
+        public static bool IsNetworkAvailable(bool showMessageDialog = false)
         {
             if (!NetworkInterface.GetIsNetworkAvailable())
             {
                 if (showMessageDialog)
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        new CustomMessageDialog(
-                            ResourceService.UiResources.GetString("UI_NoInternetConnection"),
-                            ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                    new CustomMessageDialog(
+                        ResourceService.UiResources.GetString("UI_NoInternetConnection"),
+                        ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
 
                 return false;
