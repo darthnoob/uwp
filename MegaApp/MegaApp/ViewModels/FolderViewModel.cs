@@ -45,8 +45,9 @@ namespace MegaApp.ViewModels
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
+            this.RenameItemCommand = new RelayCommand(this.RenameItem);
+
             //this.RemoveItemCommand = new DelegateCommand(this.RemoveItem);
-            //this.RenameItemCommand = new DelegateCommand(this.RenameItem);
             //this.DownloadItemCommand = new DelegateCommand(this.DownloadItem);
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);
@@ -105,10 +106,10 @@ namespace MegaApp.ViewModels
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
         public ICommand RefreshCommand { get; }
+        public ICommand RenameItemCommand { get; private set; }
 
         //public ICommand ChangeViewCommand { get; private set; }
         //public ICommand GetLinkCommand { get; private set; }
-        //public ICommand RenameItemCommand { get; private set; }
         //public ICommand RemoveItemCommand { get; private set; }
         //public ICommand DownloadItemCommand { get; private set; }
         //public ICommand ImportItemCommand { get; private set; }
@@ -235,7 +236,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Refresh the current folder. Delete cached thumbnails and reload the nodes
         /// </summary>
-        public void Refresh()
+        private void Refresh()
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
 
@@ -262,7 +263,7 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
-        public void AddFolder()
+        private void AddFolder()
         {
             if (!IsUserOnline()) return;
 
@@ -293,7 +294,7 @@ namespace MegaApp.ViewModels
             inputDialog.ShowDialog();
         }
 
-        public void CleanRubbishBin()
+        private void CleanRubbishBin()
         {
             if (this.Type != ContainerType.RubbishBin || this.ChildNodes.Count < 1) return;
 
@@ -309,6 +310,11 @@ namespace MegaApp.ViewModels
             };
 
             customMessageDialog.ShowDialog();
+        }
+
+        private void RenameItem()
+        {
+            FocusedNode.Rename();
         }
 
         public void OnChildNodeTapped(IMegaNode node)

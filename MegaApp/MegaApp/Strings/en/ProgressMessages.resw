@@ -146,6 +146,10 @@ Preserve the [{0}] code because is for include current number of fetched nodes.<
     <value>Logging out...</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
+  <data name="PM_RenameNode" xml:space="preserve">
+    <value>Renaming...</value>
+    <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
+  </data>
   <data name="PM_ServersTooBusy" xml:space="preserve">
     <value>Servers too busy. Please wait…</value>
     <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>

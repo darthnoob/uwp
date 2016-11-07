@@ -142,6 +142,31 @@ namespace MegaApp.ViewModels
 
         public NodeActionResult Rename()
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            // Only 1 CustomInputDialog should be open at the same time.
+            if (App.AppInformation.PickerOrAsyncDialogIsOpen) return NodeActionResult.Cancelled;
+
+            var settings = new CustomInputDialogSettings()
+            {
+                DefaultText = this.Name,
+                SelectDefaultText = true,
+                IgnoreExtensionInSelection = true,
+            };
+
+            var inputDialog = new CustomInputDialog(
+                ResourceService.UiResources.GetString("UI_Rename"), 
+                ResourceService.UiResources.GetString("UI_RenameItem"), 
+                App.AppInformation, settings);
+
+            inputDialog.OkButtonTapped += (sender, args) =>
+            {
+                MegaSdk.renameNode(OriginalMNode, args.InputText, new RenameNodeRequestListener(this));
+            };
+
+            inputDialog.ShowDialog();
+
             return NodeActionResult.IsBusy;
         }
                 

@@ -9,6 +9,8 @@ using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
+using Windows.Foundation;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MegaApp.Views
 {
@@ -158,6 +160,50 @@ namespace MegaApp.Views
         {
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
+        }
+
+        private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));            
+        }
+
+        private void OnHolding(object sender, HoldingRoutedEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));
+        }
+
+        private bool OpenFlyoutMenu(ListView listView, FrameworkElement listViewItem, Point position)
+        {
+            SdkService.MegaSdk.retryPendingConnections();
+
+            try
+            {
+                if (ViewModel?.ActiveFolderView != null)
+                {
+                    // If the user is moving nodes, don't show the contextual menu
+                    if (ViewModel.ActiveFolderView.CurrentDisplayMode == DriveDisplayMode.CopyOrMoveItem)
+                        return true;
+
+                    // We don't want to open the menu if the focused element is not a list view item.
+                    // If the list view is empty listViewItem will be null.
+                    if (!(listViewItem?.DataContext is IMegaNode))
+                        return true;
+
+                    MenuFlyout menuFlyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(listView);
+                    menuFlyout.ShowAt(listView, position);
+                    
+                    ViewModel.ActiveFolderView.FocusedNode = listViewItem.DataContext as IMegaNode;
+                }
+                else
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception) { return true; }
         }
     }
 }

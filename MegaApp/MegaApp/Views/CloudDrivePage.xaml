@@ -81,7 +81,16 @@
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded">
+                                    Loaded="OnListLoaded"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout x:Name="CloudDriveMenuFlyout">
+                                            <MenuFlyout.Items>
+                                                <MenuFlyoutItem Text="Rename" Command="{Binding RenameItemCommand}"/>
+                                            </MenuFlyout.Items>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </ListView>
                             </Grid>
                         </Grid>
@@ -129,7 +138,16 @@
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded">
+                                    Loaded="OnListLoaded"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout x:Name="RubbishBinMenuFlyout">
+                                            <MenuFlyout.Items>
+                                                <MenuFlyoutItem Text="Rename" Command="{Binding RenameItemCommand}"/>
+                                            </MenuFlyout.Items>
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
                                 </ListView>                                
                             </Grid>
                         </Grid>

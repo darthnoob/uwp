@@ -222,6 +222,14 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Your password</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
+  <data name="UI_Rename" xml:space="preserve">
+    <value>Rename</value>
+    <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RenameItem" xml:space="preserve">
+    <value>Type a new name:</value>
+    <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
+  </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
     <value>Rubbish bin</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
