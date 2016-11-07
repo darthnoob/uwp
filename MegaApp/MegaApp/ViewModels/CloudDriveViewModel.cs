@@ -11,6 +11,18 @@ namespace MegaApp.ViewModels
             InitializeModel();
         }
 
+        /// <summary>
+        /// Initialize the view model
+        /// </summary>
+        private void InitializeModel()
+        {
+            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
+            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
+
+            // The Cloud Drive is always the first active folder on initalization
+            this.ActiveFolderView = this.CloudDrive;
+        }
+
         #region Public Methods
 
         /// <summary>
@@ -19,8 +31,8 @@ namespace MegaApp.ViewModels
         /// <param name="globalListener">Global notifications listener</param>
         public void Initialize(GlobalListener globalListener)
         {
-            globalListener.Folders.Add(this.CloudDrive);
-            globalListener.Folders.Add(this.RubbishBin);
+            globalListener?.Folders?.Add(this.CloudDrive);
+            globalListener?.Folders?.Add(this.RubbishBin);
         }
 
         /// <summary>
@@ -29,23 +41,37 @@ namespace MegaApp.ViewModels
         /// <param name="globalListener">Global notifications listener</param>
         public void Deinitialize(GlobalListener globalListener)
         {
-            globalListener.Folders.Remove(this.CloudDrive);
-            globalListener.Folders.Remove(this.RubbishBin);
+            globalListener?.Folders?.Remove(this.CloudDrive);
+            globalListener?.Folders?.Remove(this.RubbishBin);
         }
 
+        /// <summary>
+        /// Load folders of the view model
+        /// </summary>
         public void LoadFolders()
         {
-            if (this.CloudDrive.FolderRootNode == null)
-                this.CloudDrive.FolderRootNode = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+            if (this.CloudDrive?.FolderRootNode == null)
+            {
+                this.CloudDrive.FolderRootNode = 
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
+                    SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+            }
 
             this.CloudDrive.LoadChildNodes();
 
-            if (this.RubbishBin.FolderRootNode == null)
-                this.RubbishBin.FolderRootNode = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+            if (this.RubbishBin?.FolderRootNode == null)
+            {
+                this.RubbishBin.FolderRootNode = 
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
+                    SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+            }
 
             this.RubbishBin.LoadChildNodes();
         }
 
+        /// <summary>
+        /// Load all content trees: nodes, shares, contacts
+        /// </summary>
         public void FetchNodes()
         {
             OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
@@ -56,15 +82,6 @@ namespace MegaApp.ViewModels
 
             var fetchNodesRequestListener = new FetchNodesRequestListener(this);
             this.MegaSdk.fetchNodes(fetchNodesRequestListener);
-        }
-
-        private void InitializeModel()
-        {
-            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
-            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
-
-            // The Cloud Drive is always the first active folder on initalization
-            this.ActiveFolderView = this.CloudDrive;
         }
 
         #endregion
