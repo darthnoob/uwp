@@ -145,6 +145,7 @@
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListener.cs" />
+    <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />

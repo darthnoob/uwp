@@ -52,12 +52,17 @@ namespace MegaApp.Views
         {
             this.ViewModel.CloudDrive.FolderNavigatedTo -= OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo -= OnFolderNavigatedTo;
+
+            this.ViewModel.Deinitialize(App.GlobalListener);
+
             base.OnNavigatedFrom(e);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            this.ViewModel.Initialize(App.GlobalListener);
 
             this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;

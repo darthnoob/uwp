@@ -13,6 +13,26 @@ namespace MegaApp.ViewModels
 
         #region Public Methods
 
+        /// <summary>
+        /// Add folders to global listener to receive notifications
+        /// </summary>
+        /// <param name="globalListener">Global notifications listener</param>
+        public void Initialize(GlobalListener globalListener)
+        {
+            globalListener.Folders.Add(this.CloudDrive);
+            globalListener.Folders.Add(this.RubbishBin);
+        }
+
+        /// <summary>
+        /// Remove folders from global listener
+        /// </summary>
+        /// <param name="globalListener">Global notifications listener</param>
+        public void Deinitialize(GlobalListener globalListener)
+        {
+            globalListener.Folders.Remove(this.CloudDrive);
+            globalListener.Folders.Remove(this.RubbishBin);
+        }
+
         public void LoadFolders()
         {
             if (this.CloudDrive.FolderRootNode == null)
