@@ -88,8 +88,8 @@
                                         <MenuFlyout x:Name="CloudDriveMenuFlyout">
                                             <MenuFlyout.Items>
                                                 <MenuFlyoutItem Text="Rename" Command="{Binding RenameItemCommand}"/>
-                                                <MenuFlyoutItem Text="Remove" Command="{Binding RemoveItemCommand}"/>
-                                            </MenuFlyout.Items>
+                                                <MenuFlyoutItem Text="Move to rubbish bin" Command="{Binding MoveItemToRubbishBinCommand}"/>
+                                            </MenuFlyout.Items>                                            
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
                                 </ListView>

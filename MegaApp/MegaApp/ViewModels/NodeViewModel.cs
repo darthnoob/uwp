@@ -185,7 +185,7 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
+        public async Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;
@@ -209,7 +209,7 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public async Task<NodeActionResult> DeleteAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
+        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;

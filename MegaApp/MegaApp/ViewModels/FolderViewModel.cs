@@ -42,6 +42,7 @@ namespace MegaApp.ViewModels
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.MoveItemToRubbishBinCommand = new RelayCommand(this.MoveItemToRubbishBin);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
@@ -105,6 +106,7 @@ namespace MegaApp.ViewModels
         public ICommand CleanRubbishBinCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; private set; }
         public ICommand ItemSelectedCommand { get; private set; }
+        public ICommand MoveItemToRubbishBinCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
         public ICommand RemoveItemCommand { get; private set; }
         public ICommand RenameItemCommand { get; private set; }
@@ -312,18 +314,14 @@ namespace MegaApp.ViewModels
             customMessageDialog.ShowDialog();
         }
 
+        private void MoveItemToRubbishBin()
+        {
+            FocusedNode?.MoveToRubbishBinAsync();
+        }
+
         private void RemoveItem()
         {
-            switch(this.Type)
-            {
-                case ContainerType.CloudDrive:
-                    FocusedNode?.RemoveAsync();
-                    break;
-
-                case ContainerType.RubbishBin:
-                    FocusedNode?.DeleteAsync();
-                    break;
-            }
+            FocusedNode?.RemoveAsync();
         }
 
         private void RenameItem()

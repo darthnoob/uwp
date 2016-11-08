@@ -36,12 +36,12 @@ namespace MegaApp.Interfaces
         NodeActionResult Copy(IMegaNode newParentNode);
 
         /// <summary>
-        /// Remove the node from the cloud drive to the rubbish bin
+        /// Move the node to the rubbish bin
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <param name="waitEventRequest"></param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
+        Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
 
         /// <summary>
         /// Delete the node permanently
@@ -49,7 +49,7 @@ namespace MegaApp.Interfaces
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <param name="waitEventRequest"></param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> DeleteAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
+        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
 
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 

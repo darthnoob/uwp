@@ -1,6 +1,8 @@
 ﻿using System;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
@@ -9,8 +11,6 @@ using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using Windows.Foundation;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MegaApp.Views
 {
