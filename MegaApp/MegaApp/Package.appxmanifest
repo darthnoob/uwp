@@ -24,18 +24,11 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="mega">
-            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
-        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" EntryPoint="CameraUploadService.CameraUploadTask">
+          <BackgroundTasks>
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
         <uap:Extension Category="windows.fileTypeAssociation">
           <uap:FileTypeAssociation Name="megafile">
             <uap:DisplayName>MEGA files</uap:DisplayName>
@@ -61,6 +54,18 @@
               <uap:FileType ContentType="application/x-zip-compressed">.zip</uap:FileType>
             </uap:SupportedFileTypes>
           </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileOpenPicker">
+          <uap:FileOpenPicker>
+            <uap:SupportedFileTypes>
+              <uap:SupportsAnyFileType />
+            </uap:SupportedFileTypes>
+          </uap:FileOpenPicker>
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mega">
+            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
+          </uap:Protocol>
         </uap:Extension>
       </Extensions>
     </Application>

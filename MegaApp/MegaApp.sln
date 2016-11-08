@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 14 for Windows
+# Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaApp", "MegaApp\MegaApp.csproj", "{5A14727B-7CC9-4277-ABE1-3DE8ECC44D1C}"
@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaApp", "MegaApp\MegaApp.
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mega", "..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj", "{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraUploadService", "CameraUploadService\CameraUploadService.csproj", "{1066416A-5980-437E-A249-6D84C25EB10E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,22 @@ Global
 		{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}.Release|x64.Build.0 = Release|x64
 		{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}.Release|x86.ActiveCfg = Release|Win32
 		{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}.Release|x86.Build.0 = Release|Win32
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|ARM.Build.0 = Debug|ARM
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|x64.ActiveCfg = Debug|x64
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|x64.Build.0 = Debug|x64
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|x86.ActiveCfg = Debug|x86
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Debug|x86.Build.0 = Debug|x86
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|ARM.ActiveCfg = Release|ARM
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|ARM.Build.0 = Release|ARM
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|x64.ActiveCfg = Release|x64
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|x64.Build.0 = Release|x64
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|x86.ActiveCfg = Release|x86
+		{1066416A-5980-437E-A249-6D84C25EB10E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
