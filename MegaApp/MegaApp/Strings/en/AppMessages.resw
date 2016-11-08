@@ -297,6 +297,31 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>Memory Limit</value>
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
+  <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
+    <value>Failed to move item to rubbish bin. Please try again</value>
+    <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinFailed_Title" xml:space="preserve">
+    <value>Move to rubbish bin failed</value>
+    <comment>Title of the dialog displayed when the process/request to move nodes to the rubbish bin failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinQuestion" xml:space="preserve">
+    <value>Are you sure you want to move '{0}' to the rubbish bin?</value>
+    <comment>Message of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement.
+Preserve the {0} code because is for include the name of the node to be moved in runtime.</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinQuestion_Title" xml:space="preserve">
+    <value>Move to rubbish bin?</value>
+    <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
+    <value>Item successfully moved to the rubbish bin</value>
+    <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinSuccess_Title" xml:space="preserve">
+    <value>Item moved</value>
+    <comment>Title of the dialog displayed when move successfully one single node to the rubbish bin - (String as short as possible).</comment>
+  </data>
   <data name="AM_NewSignUpInvalidLink" xml:space="preserve">
     <value>The link you are using for a new signup is not valid.</value>
     <comment>Message of the warning dialog shown when the user tries to make a new sign up using an invalid link (#newsignup).</comment>
@@ -316,6 +341,31 @@ Preserve the [{0}] code because is for include the error code or the error messa
   <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
     <value>Passwords do not match. Please try again.</value>
     <comment>Message of the dialog displayed when a user are trying to create a MEGA account and the introduced passwords don't match.</comment>
+  </data>
+  <data name="AM_RemoveItemQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove '{0}'?</value>
+    <comment>Message of the dialog displayed when a user want to remove definitely an itemfrom the rubbish bin, asking for confirmation to do it.
+Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveItemQuestion_Title" xml:space="preserve">
+    <value>Remove?</value>
+    <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveNodeFailed" xml:space="preserve">
+    <value>Failed to remove item</value>
+    <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.</comment>
+  </data>
+  <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">
+    <value>Remove failed</value>
+    <comment>Title of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveNodeSuccess" xml:space="preserve">
+    <value>Item successfully removed</value>
+    <comment>Message of the dialog displayed when remove successfully a node definitely from the rubbish bin.</comment>
+  </data>
+  <data name="AM_RemoveNodeSuccess_Title" xml:space="preserve">
+    <value>Item removed</value>
+    <comment>Title of the dialog displayed when remove successfully a node definitely from the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_RenameNodeFailed" xml:space="preserve">
     <value>Renaming item failed</value>

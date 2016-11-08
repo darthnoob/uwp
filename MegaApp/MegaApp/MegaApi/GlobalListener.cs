@@ -25,7 +25,7 @@ namespace MegaApp.MegaApi
 
         #region MGlobalListenerInterface
 
-        public void onNodesUpdate(MegaSDK api, MNodeList nodes)
+        public async void onNodesUpdate(MegaSDK api, MNodeList nodes)
         {
             // Exit methods when node list is incorrect
             if (nodes == null || nodes.size() < 1) return;
@@ -60,17 +60,14 @@ namespace MegaApp.MegaApi
                                 // Needed because we are in a foreach loop to prevent the use of the wrong 
                                 // local variable in the dispatcher code.
                                 var currentFolder = folder;
-                                UiService.OnUiThread(() =>
+                                await UiService.OnUiThread(() =>
                                 {
                                     try
                                     {
                                         currentFolder.ChildNodes.Remove(nodeToRemoveFromView);
                                         ((FolderNodeViewModel) currentFolder.FolderRootNode).SetFolderInfo();
                                     }
-                                    catch (Exception)
-                                    {
-                                        // Dummy catch, surpress possible exception
-                                    }
+                                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                 });
                                 
                                 isProcessed = true;
@@ -94,18 +91,15 @@ namespace MegaApp.MegaApi
                                     // If parent folder is found, process the update action
                                     if (nodeToUpdateInView != null)
                                     {
-                                        UiService.OnUiThread(() =>
+                                        await UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
                                                 nodeToUpdateInView.Update(parentNode, folder.Type);
                                                 var folderNode = nodeToUpdateInView as FolderNodeViewModel;
-                                                if (folderNode != null) folderNode.SetFolderInfo();
+                                                folderNode?.SetFolderInfo();
                                             }
-                                            catch (Exception)
-                                            {
-                                                // Dummy catch, surpress possible exception
-                                            }
+                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                         });
                                     }
                                 }
@@ -143,7 +137,7 @@ namespace MegaApp.MegaApi
                                     // Needed because we are in a foreach loop to prevent the use of the wrong 
                                     // local variable in the dispatcher code.
                                     var currentFolder = folder;
-                                    UiService.OnUiThread(() =>
+                                    await UiService.OnUiThread(() =>
                                     {
                                         try
                                         {
@@ -151,26 +145,17 @@ namespace MegaApp.MegaApi
                                             ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                             UpdateFolders(currentFolder);
                                         }
-                                        catch (Exception)
-                                        {
-                                            // Dummy catch, surpress possible exception
-                                        }
+                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                     });
                                     
                                 }
                                 // Node is updated with new data. Update node in current view
                                 else
                                 {
-                                    UiService.OnUiThread(() =>
+                                    await UiService.OnUiThread(() =>
                                     {
-                                        try
-                                        {
-                                            nodeToUpdateInView.Update(megaNode, folder.Type);
-                                        }
-                                        catch (Exception)
-                                        {
-                                            // Dummy catch, surpress possible exception
-                                        }
+                                        try { nodeToUpdateInView.Update(megaNode, folder.Type); }
+                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                     });
                                     isProcessed = true;
                                     break;
@@ -193,8 +178,7 @@ namespace MegaApp.MegaApi
                                     // Retrieve the index from the SDK
                                     // Substract -1 to get a valid list index
                                     int insertIndex = api.getIndex(megaNode,
-                                        UiService.GetSortOrder(parentNode.getBase64Handle(),
-                                            parentNode.getName())) - 1;
+                                        UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
 
                                     // If the insert position is higher than the ChilNodes size insert in the last position
                                     if (insertIndex >= folder.ChildNodes.Count())
@@ -202,7 +186,7 @@ namespace MegaApp.MegaApi
                                         // Needed because we are in a foreach loop to prevent the use of the wrong 
                                         // local variable in the dispatcher code.
                                         var currentFolder = folder;
-                                        UiService.OnUiThread(() =>
+                                        await UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
@@ -212,10 +196,7 @@ namespace MegaApp.MegaApi
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                                 UpdateFolders(currentFolder);
                                             }
-                                            catch (Exception)
-                                            {
-                                                // Dummy catch, surpress possible exception
-                                            }
+                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                         });
                                     }
                                     // Insert the node at a specific position
@@ -228,7 +209,7 @@ namespace MegaApp.MegaApi
                                         // Needed because we are in a foreach loop to prevent the use of the wrong 
                                         // local variable in the dispatcher code.
                                         var currentFolder = folder;
-                                        UiService.OnUiThread(() =>
+                                        await UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
@@ -238,10 +219,7 @@ namespace MegaApp.MegaApi
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                                 UpdateFolders(currentFolder);
                                             }
-                                            catch (Exception)
-                                            {
-                                                // Dummy catch, surpress possible exception
-                                            }
+                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                         });
                                     }
                                       
@@ -254,7 +232,7 @@ namespace MegaApp.MegaApi
 
                                 if (nodeToUpdateInView != null)
                                 {
-                                    UiService.OnUiThread(() =>
+                                    await UiService.OnUiThread(() =>
                                     {
                                         try
                                         {
@@ -262,10 +240,7 @@ namespace MegaApp.MegaApi
                                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                                             if (folderNode != null) folderNode.SetFolderInfo();
                                         }
-                                        catch (Exception)
-                                        {
-                                            // Dummy catch, surpress possible exception
-                                        }
+                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                     });
                                     break;
                                 }
@@ -273,26 +248,17 @@ namespace MegaApp.MegaApi
                                 // Unconditional scenarios
                                 // Move/delete/add actions in subfolders
                                 var localFolder = folder;
-                                UiService.OnUiThread(() =>
+                                await UiService.OnUiThread(() =>
                                 {
-                                    try
-                                    {
-                                        UpdateFolders(localFolder);
-                                    }
-                                    catch (Exception)
-                                    {
-                                        // Dummy catch, surpress possible exception
-                                    }
+                                    try { UpdateFolders(localFolder); }
+                                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                 });
                             }
                         }
                     }
                 }                
             }
-            catch (Exception)
-            {
-                // Dummy catch, surpress possible exception 
-            }
+            catch (Exception) { /* Dummy catch, surpress possible exception */ }
         }
 
         public void onReloadNeeded(MegaSDK api)

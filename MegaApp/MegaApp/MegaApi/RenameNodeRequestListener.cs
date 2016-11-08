@@ -19,7 +19,7 @@ namespace MegaApp.MegaApi
 
         protected override string ProgressMessage
         {
-            get { return ResourceService.ProgressMessages.GetString("PM_RenameNode"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_Rename"); }
         }
 
         protected override bool ShowProgressMessage

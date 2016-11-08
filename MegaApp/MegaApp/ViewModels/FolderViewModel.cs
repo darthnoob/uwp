@@ -45,9 +45,9 @@ namespace MegaApp.ViewModels
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
-            this.RenameItemCommand = new RelayCommand(this.RenameItem);
+            this.RemoveItemCommand = new RelayCommand(this.RemoveItem);
+            this.RenameItemCommand = new RelayCommand(this.RenameItem);            
 
-            //this.RemoveItemCommand = new DelegateCommand(this.RemoveItem);
             //this.DownloadItemCommand = new DelegateCommand(this.DownloadItem);
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);
@@ -101,16 +101,16 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand AddFolderCommand { get; }
-        public ICommand CleanRubbishBinCommand { get; }
-        public ICommand HomeSelectedCommand { get; }
-        public ICommand ItemSelectedCommand { get; }
-        public ICommand RefreshCommand { get; }
+        public ICommand AddFolderCommand { get; private set; }
+        public ICommand CleanRubbishBinCommand { get; private set; }
+        public ICommand HomeSelectedCommand { get; private set; }
+        public ICommand ItemSelectedCommand { get; private set; }
+        public ICommand RefreshCommand { get; private set; }
+        public ICommand RemoveItemCommand { get; private set; }
         public ICommand RenameItemCommand { get; private set; }
-
+        
         //public ICommand ChangeViewCommand { get; private set; }
-        //public ICommand GetLinkCommand { get; private set; }
-        //public ICommand RemoveItemCommand { get; private set; }
+        //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand DownloadItemCommand { get; private set; }
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }
@@ -312,10 +312,24 @@ namespace MegaApp.ViewModels
             customMessageDialog.ShowDialog();
         }
 
+        private void RemoveItem()
+        {
+            switch(this.Type)
+            {
+                case ContainerType.CloudDrive:
+                    FocusedNode?.RemoveAsync();
+                    break;
+
+                case ContainerType.RubbishBin:
+                    FocusedNode?.DeleteAsync();
+                    break;
+            }
+        }
+
         private void RenameItem()
         {
-            FocusedNode.Rename();
-        }
+            FocusedNode?.Rename();
+        }        
 
         public void OnChildNodeTapped(IMegaNode node)
         {
@@ -528,7 +542,7 @@ namespace MegaApp.ViewModels
             });
         }
 
-        private void CreateChildren(MNodeList childList, int listSize)
+        private async void CreateChildren(MNodeList childList, int listSize)
         {
             // Set the parameters for the performance for the different view types of a folder
             int viewportItemCount, backgroundItemCount;
@@ -573,17 +587,12 @@ namespace MegaApp.ViewModels
                 // First add the viewport items to show some data to the user will still loading
                 if (i == viewportItemCount)
                 {
-                    var waitHandleViewportNodes = new AutoResetEvent(false);
-                    OnUiThread(() =>
+                    await OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                        {
                             this.ChildNodes.Add(megaNode);
-                        }
-                        waitHandleViewportNodes.Set();
                     });
-                    waitHandleViewportNodes.WaitOne();
 
                     helperList.Clear();
                     continue;
@@ -592,24 +601,18 @@ namespace MegaApp.ViewModels
                 if (helperList.Count != backgroundItemCount || i <= viewportItemCount) continue;
 
                 // Add the rest of the items in the background to the list
-                var waitHandleBackgroundNodes = new AutoResetEvent(false);
-                OnUiThread(() =>
+                await OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                    {
                         this.ChildNodes.Add(megaNode);
-                    }
-                    waitHandleBackgroundNodes.Set();
                 });
-                waitHandleBackgroundNodes.WaitOne();
 
                 helperList.Clear();
             }
 
             // Add any nodes that are left over
-            var waitHandleRestNodes = new AutoResetEvent(false);
-            OnUiThread(() =>
+            await OnUiThread(() =>
             {
                 // Show the user that processing the childnodes is done
                 SetProgressIndication(false);
@@ -619,12 +622,8 @@ namespace MegaApp.ViewModels
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                {
-                    this.ChildNodes.Add(megaNode);
-                }
-                waitHandleRestNodes.Set();
-            });
-            waitHandleRestNodes.WaitOne();
+                    this.ChildNodes.Add(megaNode);                
+            });            
 
             OnUiThread(() => OnPropertyChanged("HasChildNodesBinding"));
         }

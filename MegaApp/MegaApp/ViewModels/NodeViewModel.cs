@@ -185,13 +185,51 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiRemove, AutoResetEvent waitEventRequest = null)
+        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+
+            if (!isMultiSelect)
+            {
+                var result = await new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name),
+                    App.AppInformation,
+                    MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+                if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
+            }
+
+            this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(),
+                new RemoveNodeRequestListener(this, isMultiSelect, waitEventRequest));
+
             return NodeActionResult.IsBusy;
         }
 
-        public async Task<NodeActionResult> DeleteAsync()
+        public async Task<NodeActionResult> DeleteAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+
+            if (!isMultiSelect)
+            {
+                var result = await new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name),
+                    App.AppInformation,
+                    MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+                if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
+            }
+
+            this.MegaSdk.remove(this.OriginalMNode, 
+                new DeleteNodeRequestListener(this, isMultiSelect, waitEventRequest));
+
             return NodeActionResult.IsBusy;
         }
 
