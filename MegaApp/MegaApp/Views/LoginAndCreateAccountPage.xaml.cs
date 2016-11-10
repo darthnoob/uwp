@@ -19,23 +19,11 @@ namespace MegaApp.Views
         private void OnAcceptClick(object sender, RoutedEventArgs e)
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
-
-            // To not allow cancel a request to login or 
-            // create account once that is started
-            //SetApplicationBar(false);
-
-            //if (_loginAndCreateAccountViewModelContainer == null)
-            //    _loginAndCreateAccountViewModelContainer = new LoginAndCreateAccountViewModelContainer(this);
-
-            if (Pivot_LoginAndCreateAccount.SelectedItem == PivotItem_Login)
-                this.ViewModel.LoginViewModel.DoLogin();
-            else if (Pivot_LoginAndCreateAccount.SelectedItem == PivotItem_CreateAccount)
-                this.ViewModel.CreateAccountViewModel.CreateAccount();
-        }
-
-        private void OnCancelClick(object sender, RoutedEventArgs e)
-        {
-
+                        
+            if (Pivot_LoginAndCreateAccount?.SelectedItem == PivotItem_Login)
+                this.ViewModel?.LoginViewModel?.DoLogin();
+            else if (Pivot_LoginAndCreateAccount?.SelectedItem == PivotItem_CreateAccount)
+                this.ViewModel?.CreateAccountViewModel?.CreateAccount();
         }
     }
 }

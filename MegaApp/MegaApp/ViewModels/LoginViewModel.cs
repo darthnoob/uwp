@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using MegaApp.Classes;
+﻿using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {

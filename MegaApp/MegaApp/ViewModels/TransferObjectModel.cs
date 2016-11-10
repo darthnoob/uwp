@@ -286,7 +286,7 @@ namespace MegaApp.ViewModels
         //            {
         //                TransferedBytes = TotalBytes;
         //                TransferButtonIcon = new Uri("/Assets/Images/completed transfers.Screen-WXGA.png", UriKind.Relative);
-        //                TransferButtonForegroundColor = (SolidColorBrush)Application.Current.Resources["MegaRedSolidColorBrush"];
+        //                TransferButtonForegroundColor = (SolidColorBrush)Application.Current.Resources["MegaRedColor"];
         //            });                    
 
         //            switch(Type)

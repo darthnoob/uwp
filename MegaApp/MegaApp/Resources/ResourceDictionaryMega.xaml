@@ -9,10 +9,6 @@
 
     <!-- APP THEME OVERRIDES -->
 
-    <!-- COLOR DEFINITIONS -->
-    <Color x:Key="MegaRedColor">#D90007</Color>
-    <SolidColorBrush x:Key="MegaRedSolidColorBrush" Color="{StaticResource MegaRedColor}"/>
-
     <!-- CONVERTERS -->
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter"/>
@@ -23,13 +19,16 @@
     
     <!-- TEMPLATES -->
     <DataTemplate x:Key="MegaPageHeaderLogo">
-        <Border Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Path Data="{Binding MegaIconPathData}" Height="52" Width="52" HorizontalAlignment="Center" Stretch="UniformToFill" Margin="0,-32,0,0" VerticalAlignment="Center" FlowDirection="LeftToRight" StrokeThickness="0">
-                <Path.Fill>
-                    <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
-                </Path.Fill>
-            </Path>
+        <Border Background="{StaticResource MegaAppBackground}" Height="44" Width="44">
+            <Path Data="{Binding MegaIconPathData}" Height="24" Width="24" StrokeThickness="0"
+                  Stretch="UniformToFill" Fill="{StaticResource MegaHeaderIconColor}" FlowDirection="LeftToRight"/>
         </Border>        
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaPivoHeaderTemplate">
+        <Grid>
+            <TextBlock Text="{Binding}" FontFamily="Segoe UI" FontSize="24" />
+        </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
@@ -159,5 +158,5 @@
             </Grid>
         </Border>
     </DataTemplate>
-
+    
 </ResourceDictionary>
