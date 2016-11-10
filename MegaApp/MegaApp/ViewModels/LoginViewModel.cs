@@ -1,7 +1,6 @@
 ﻿using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -27,8 +26,8 @@ namespace MegaApp.ViewModels
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
                 new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_RequiredFields_Title"),
-                    ResourceService.AppMessages.GetString("AM_RequiredFieldsLogin"),
+                    LoginText,
+                    ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"),
                     App.AppInformation,
                     MessageDialogButtons.Ok).ShowDialog();
                 
@@ -38,7 +37,7 @@ namespace MegaApp.ViewModels
             if(!ValidationService.IsValidEmail(this.Email))
             {
                 new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_LoginFailed_Title"),
+                    LoginText,
                     ResourceService.AppMessages.GetString("AM_MalformedEmail"),
                     App.AppInformation,
                     MessageDialogButtons.Ok).ShowDialog();

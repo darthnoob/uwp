@@ -22,7 +22,7 @@
         <!--Pivot Control-->
         <Pivot x:Name="Pivot_LoginAndCreateAccount" Grid.Row="1" HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" Margin="8,6,8,0">
             <!--Pivot item one-->
-            <PivotItem x:Name="PivotItem_Login" Header="{Binding LoginViewModel.LoginText}" Margin="12,0" FontSize="24">
+            <PivotItem x:Name="PivotItem_Login" Header="{Binding LoginViewModel.LoginText}" Margin="12,0">
                 <ScrollViewer x:Name="ContentPanel_Login" Grid.Row="1" Margin="0,18,0,0" VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="StackLogin" VerticalAlignment="Top">
                         <TextBox x:Name="TxtEmail_Login" Height="40" Margin="0,0,0,8" Style="{StaticResource MegaTextBoxStyle}" TextWrapping="NoWrap" 
@@ -35,7 +35,7 @@
                 </ScrollViewer>
             </PivotItem>
             <!--Pivot item two-->
-            <PivotItem x:Name="PivotItem_CreateAccount" Header="{Binding CreateAccountViewModel.CreateAccountText}" Margin="12,0" FontSize="24">
+            <PivotItem x:Name="PivotItem_CreateAccount" Header="{Binding CreateAccountViewModel.CreateAccountText}" Margin="12,0">
                 <ScrollViewer x:Name="ContentPanel_CreateAccount" Grid.Row="1" Margin="0,18,0,0" VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="StackCreateAccount" VerticalAlignment="Top">
                         <TextBox x:Name="TxtFirstName" Height="40" Margin="0,0,0,8" Style="{StaticResource MegaTextBoxStyle}" TextWrapping="NoWrap" 

@@ -30,7 +30,7 @@ namespace MegaApp.ViewModels
                         else
                         {
                             new CustomMessageDialog(
-                                ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                                CreateAccountText,
                                 ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
                                 App.AppInformation,
                                 MessageDialogButtons.Ok).ShowDialog();
@@ -39,7 +39,7 @@ namespace MegaApp.ViewModels
                     else
                     {
                         new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                            CreateAccountText,
                             ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
                             App.AppInformation,
                             MessageDialogButtons.Ok).ShowDialog();
@@ -48,7 +48,7 @@ namespace MegaApp.ViewModels
                 else
                 {
                     new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
+                        CreateAccountText,
                         ResourceService.AppMessages.GetString("AM_MalformedEmail"),
                         App.AppInformation,
                         MessageDialogButtons.Ok).ShowDialog();
@@ -57,8 +57,8 @@ namespace MegaApp.ViewModels
             else
             {
                 new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
+                    CreateAccountText,
+                    ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"),
                     App.AppInformation,
                     MessageDialogButtons.Ok).ShowDialog();
             }            
