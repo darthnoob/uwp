@@ -34,17 +34,16 @@ namespace MegaApp.Views
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
             this.ViewModel.Initialize(navObj?.Action ?? NavigationActionType.Default);
-
-            var result = await BackgroundExecutionManager.RequestAccessAsync();
-            if (result != BackgroundAccessStatus.Denied)
+            
+            if (await TaskService.RequestBackgroundAccessAsync())
             {
                 TaskService.UnregisterBackgroundTask(
-                    "CameraUploadService.CameraUploadTask",
-                    "CameraUploadTask");
+                    TaskService.CameraUploadTaskEntryPoint,
+                    TaskService.CameraUploadTaskName);
                 TaskService.RegisterBackgroundTask(
-                    "CameraUploadService.CameraUploadTask",
-                    "CameraUploadTask",
-                    new TimeTrigger(15, false),
+                    TaskService.CameraUploadTaskEntryPoint,
+                    TaskService.CameraUploadTaskName,
+                    new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
                     null);
             }
         }

@@ -13,11 +13,13 @@ namespace CameraUploadService.MegaApi
         // Event raised so that the task agent can abort itself on Quoata exceeded
         public event EventHandler QuotaExceeded;
 
-        private TaskCompletionSource<bool> _tcs;
+        private TaskCompletionSource<string> _tcs;
+        private string _dateSetting;
 
-        public async Task<bool> ExecuteAsync(Action action)
+        public async Task<string> ExecuteAsync(Action action, string dateSetting)
         {
-            _tcs = new TaskCompletionSource<bool>();
+            _dateSetting = dateSetting;
+            _tcs = new TaskCompletionSource<string>();
 
             action.Invoke();
 
@@ -37,13 +39,13 @@ namespace CameraUploadService.MegaApi
         public async void onTransferFinish(MegaSDK api, MTransfer transfer, MError e)
         {
             _timer?.Dispose();
-
+          
             if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {
                 //Stop the Camera Upload Service
                 //LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (API_EOVERQUOTA)");
                 OnQuotaExceeded(EventArgs.Empty);
-                _tcs.TrySetResult(false);
+                _tcs.TrySetResult(e.getErrorString());
                 return;
             }
 
@@ -53,12 +55,9 @@ namespace CameraUploadService.MegaApi
                 {
                     ulong mtime = api.getNodeByHandle(transfer.getNodeHandle()).getModificationTime();
                     var fileDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(mtime));
-                    await SettingsService.SaveSettingToFileAsync("LastUploadDate", fileDate.ToLocalTime());
+                    await SettingsService.SaveSettingToFileAsync(_dateSetting, fileDate.ToLocalTime());
 
-                    // If file upload succeeded. Clear the error information for a clean sheet.
-                    //ErrorProcessingService.Clear();
-
-                    _tcs.TrySetResult(true);
+                    _tcs.TrySetResult(null);
                 }
                 else
                 {
@@ -72,21 +71,17 @@ namespace CameraUploadService.MegaApi
                         case MErrorType.API_EWRITE:
                             {
                                 //LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.getErrorString());
-                                //ErrorProcessingService.ProcessFileError(transfer.getFileName());
+                                _tcs.TrySetResult(e.getErrorString());
                                 break;
                             }
                     }
-                    _tcs.TrySetResult(false);
+                    _tcs.TrySetResult(null);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _tcs.TrySetResult(false);
+                _tcs.TrySetResult(ex.Message);
                 // Setting could not be saved. Just continue the run
-            }
-            finally
-            {
-                // Start a new upload action
             }
         }
 
