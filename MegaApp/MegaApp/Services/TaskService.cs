@@ -8,7 +8,7 @@ namespace MegaApp.Services
 {
     public static class TaskService
     {
-        public const string CameraUploadTaskEntryPoint = "CameraUploadService.CameraUploadTask";
+        public const string CameraUploadTaskEntryPoint = "BackgroundTaskService.CameraUploadTask";
         public const string CameraUploadTaskName = "CameraUploadTask";
         public const int CameraUploadTaskTimeTrigger = 15;
 

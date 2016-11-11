@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using mega;
 
-namespace CameraUploadService.MegaApi
+namespace BackgroundTaskService.MegaApi
 {
     internal class MegaInputStream : MInputStream
     {

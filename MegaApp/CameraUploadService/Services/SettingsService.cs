@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace CameraUploadService.Services
+namespace BackgroundTaskService.Services
 {
     internal static class SettingsService
     {

@@ -1,6 +1,6 @@
 ﻿using Windows.ApplicationModel.Resources;
 
-namespace CameraUploadService.Services
+namespace BackgroundTaskService.Services
 {
     /// <summary>
     /// Provides access to string resources.

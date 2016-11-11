@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using CameraUploadService.Services;
+using BackgroundTaskService.Services;
 using mega;
 
-namespace CameraUploadService.MegaApi
+namespace BackgroundTaskService.MegaApi
 {
     internal class MegaTransferListener : MTransferListenerInterface
     {
@@ -43,7 +43,7 @@ namespace CameraUploadService.MegaApi
             if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {
                 //Stop the Camera Upload Service
-                //LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (API_EOVERQUOTA)");
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (API_EOVERQUOTA)");
                 OnQuotaExceeded(EventArgs.Empty);
                 _tcs.TrySetResult(e.getErrorString());
                 return;

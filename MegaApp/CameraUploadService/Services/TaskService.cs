@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
 
-namespace CameraUploadService.Services
+namespace BackgroundTaskService.Services
 {
     /// <summary>
     /// Class that handles Task logic

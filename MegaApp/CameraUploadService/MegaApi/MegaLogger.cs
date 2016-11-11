@@ -6,7 +6,7 @@
 using System.Diagnostics;
 using mega;
 
-namespace CameraUploadService.MegaApi
+namespace BackgroundTaskService.MegaApi
 {
     internal class MegaLogger : MLoggerInterface
     {

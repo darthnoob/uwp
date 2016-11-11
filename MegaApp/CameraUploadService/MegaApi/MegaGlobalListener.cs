@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using mega;
 
-namespace CameraUploadService.MegaApi
+namespace BackgroundTaskService.MegaApi
 {
     class MegaGlobalListener: MGlobalListenerInterface
     {

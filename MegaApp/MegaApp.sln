@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaApp", "MegaApp\MegaApp.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mega", "..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj", "{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraUploadService", "CameraUploadService\CameraUploadService.csproj", "{1066416A-5980-437E-A249-6D84C25EB10E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundTaskService", "CameraUploadService\BackgroundTaskService.csproj", "{1066416A-5980-437E-A249-6D84C25EB10E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

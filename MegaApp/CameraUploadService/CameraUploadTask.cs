@@ -3,10 +3,11 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
-using CameraUploadService.MegaApi;
-using CameraUploadService.Services;
+using BackgroundTaskService.MegaApi;
+using BackgroundTaskService.Services;
+using mega;
 
-namespace CameraUploadService
+namespace BackgroundTaskService
 {
     public sealed class CameraUploadTask : IBackgroundTask
     {
@@ -19,6 +20,9 @@ namespace CameraUploadService
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();
+
+            // Enable a custom logger
+            LogService.SetLoggerObject(new MegaLogger());
 
             SdkService.InitializeSdkParams();
 
@@ -40,7 +44,11 @@ namespace CameraUploadService
                         TaskService.ImageDateSetting);
                     foreach (var storageFile in fileToUpload)
                     {
-                        if(await ErrorHandlingService.SkipFile(storageFile.Name)) continue;
+                        // Skip the current file if it has failed more than the max error count
+                        if(await ErrorHandlingService.SkipFile(
+                            storageFile.Name,
+                            ErrorHandlingService.ImageErrorFileSetting, 
+                            ErrorHandlingService.ImageErrorCountSetting)) continue;
 
                         // Calculate time for fingerprint check and upload
                         ulong mtime = TaskService.CalculateMtime(storageFile.DateCreated.DateTime);
@@ -55,12 +63,22 @@ namespace CameraUploadService
                                     continue;
                                 }
                                 await SdkService.UploadAsync(storageFile, fs, cameraUploadRootNode, mtime);
+                                // No error, clear error storage
                                 await ErrorHandlingService.ClearAsync();
                             }
                         }
-                        catch (Exception)
+                        catch (OutOfMemoryException e)
                         {
-                            await ErrorHandlingService.SetFileErrorAsync(storageFile.Name);
+                            // Something went wrong (could be memory limit)
+                            // Just finish this run and try again next time
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Out of memory while uploading", e);
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error uploading item", e);
+                            await ErrorHandlingService.SetFileErrorAsync(storageFile.Name, 
+                                ErrorHandlingService.ImageErrorFileSetting, ErrorHandlingService.ImageErrorCountSetting);
                         }
                     }
                 }
@@ -97,8 +115,9 @@ namespace CameraUploadService
                 var login = new MegaRequestListener<bool>();
                 return await login.ExecuteAsync(() => SdkService.MegaSdk.fastLogin(sessionToken, login));
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error uploading item", e);
                 return false;
             }
         }

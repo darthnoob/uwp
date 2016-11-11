@@ -7,10 +7,10 @@ using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.Profile;
-using CameraUploadService.MegaApi;
+using BackgroundTaskService.MegaApi;
 using mega;
 
-namespace CameraUploadService.Services
+namespace BackgroundTaskService.Services
 {
     internal static class SdkService
     {

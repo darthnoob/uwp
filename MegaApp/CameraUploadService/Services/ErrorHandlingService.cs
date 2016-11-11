@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace CameraUploadService.Services
+namespace BackgroundTaskService.Services
 {
     internal static class ErrorHandlingService
     {
-        public const string ImageErrorSetting = "ImageErrorFileName";
+        public const string ImageErrorFileSetting = "ImageErrorFileName";
         public const string ImageErrorCountSetting = "ImageErrorCount";
         public const int MaxFileUploadErrors = 10;
         
@@ -18,27 +15,27 @@ namespace CameraUploadService.Services
         /// </summary>
         /// <param name="fileName">The file that failed</param>
         /// <returns>Number of current errors</returns>
-        public static async Task<int> SetFileErrorAsync(string fileName)
+        public static async Task<int> SetFileErrorAsync(string fileName, string fileSetting, string countSetting)
         {
             try
             {
                 // Load filename last error
-                var lastErrorFileName = await SettingsService.LoadSettingFromFileAsync<string>("ErrorFileName");
+                var lastErrorFileName = await SettingsService.LoadSettingFromFileAsync<string>(fileSetting);
 
                 // Check if it is the same file that has an error again
                 if (!string.IsNullOrEmpty(lastErrorFileName) &&
                     lastErrorFileName.Equals(fileName))
                 {
                     // If the same file, add to the error count, save and return
-                    var count = await SettingsService.LoadSettingFromFileAsync<int>("FileErrorCount");
+                    var count = await SettingsService.LoadSettingFromFileAsync<int>(countSetting);
                     count++;
                     await SettingsService.SaveSettingToFileAsync("FileErrorCount", count);
                     return count;
                 }
 
                 // New file error. Save the name and set the error count to one.
-                await SettingsService.SaveSettingToFileAsync("ErrorFileName", fileName);
-                await SettingsService.SaveSettingToFileAsync("FileErrorCount", 1);
+                await SettingsService.SaveSettingToFileAsync(fileSetting, fileName);
+                await SettingsService.SaveSettingToFileAsync(countSetting, 1);
                 return 1;
             }
             catch (Exception)
@@ -48,12 +45,12 @@ namespace CameraUploadService.Services
             }
         }
 
-        public static async Task<bool> SkipFile(string fileName)
+        public static async Task<bool> SkipFile(string fileName, string fileSetting, string countSetting)
         {
-            var lastErrorFileName = await SettingsService.LoadSettingFromFileAsync<string>("ErrorFileName");
+            var lastErrorFileName = await SettingsService.LoadSettingFromFileAsync<string>(fileSetting);
             if (string.IsNullOrEmpty(lastErrorFileName) || !lastErrorFileName.Equals(fileName)) return false;
 
-            var count = await SettingsService.LoadSettingFromFileAsync<int>("FileErrorCount");
+            var count = await SettingsService.LoadSettingFromFileAsync<int>(countSetting);
             return count >= (MaxFileUploadErrors - 1);
         }
        
