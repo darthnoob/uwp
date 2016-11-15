@@ -121,6 +121,10 @@
     <value>Clearing the rubbish bin...</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
+  <data name="PM_ConfirmAccount" xml:space="preserve">
+    <value>Confirming account...</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
   <data name="PM_CreateAccount" xml:space="preserve">
     <value>Creating account...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>

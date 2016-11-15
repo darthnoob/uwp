@@ -78,13 +78,19 @@ namespace MegaApp
         /// Handle protocol activations.
         /// </summary>
         /// <param name="e">Details about the activate request and process.</param>
-        protected override void OnActivated(IActivatedEventArgs e)
+        protected override async void OnActivated(IActivatedEventArgs e)
         {
             if (e.Kind == ActivationKind.Protocol)
             {
                 ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
                 // TODO: Handle URI activation
                 // The received URI is eventArgs.Uri.AbsoluteUri
+
+                // Initialize the links information
+                if (LinkInformation == null)
+                    LinkInformation = new LinkInformation();
+
+                LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
 
                 Frame rootFrame = CreateRootFrame();
 
@@ -100,6 +106,10 @@ namespace MegaApp
 
                 // Ensure the current window is active
                 Window.Current.Activate();
+
+                // Check session and special navigation
+                if (await AppService.CheckActiveAndOnlineSession())
+                    await AppService.CheckSpecialNavigation();
             }
         }
 
@@ -164,7 +174,12 @@ namespace MegaApp
             if (ApplicationInitialized) return;
 
             // Initialize the application information
-            AppInformation = new AppInformation();
+            if(AppInformation == null)
+                AppInformation = new AppInformation();
+
+            // Initialize the links information
+            if (LinkInformation == null)
+                LinkInformation = new LinkInformation();
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();

@@ -322,10 +322,6 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>Empty fields. Please fill out all fields and try again.</value>
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
-  <data name="AM_RequiredFields_Title" xml:space="preserve">
-    <value>Fill in required fields</value>
-    <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
-  </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
     <value>Failed to save settings. Please, try again [{0}]</value>
     <comment>Message of the dialog displayed when the process to save settings failed.
@@ -360,5 +356,34 @@ Preserve the {0} code because is for include the exact time until the user has t
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
     <value>Incorrect email and/or password. Please try again.</value>
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
+  </data>
+  <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
+    <value>The account is already confirmed. You can now login.</value>
+    <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
+  </data>
+  <data name="AM_ConfirmAccountFailed" xml:space="preserve">
+    <value>Failed to confirm account. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_ConfirmAccountSucces" xml:space="preserve">
+    <value>Your account has been created, confirmed and activated. You will be logged in automatically.</value>
+    <comment>Message of the dialog displayed when confirm a MEGA account succesfully.</comment>
+  </data>
+  <data name="AM_IncompleteConfirmationLink" xml:space="preserve">
+    <value>The account confirmation link that you are using is incomplete. Please check the link length and be sure that you have copied the entire link then try again.</value>
+    <comment>Message of the dialog displayed when a user try to confirm a MEGA account but the confirm link is incomplete because it has less characters than it should (probably because the user hasn't copied and pasted the entire link).</comment>
+  </data>
+  <data name="AM_WrongPassword" xml:space="preserve">
+    <value>The typed password is incorrect</value>
+    <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
+  </data>
+  <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
+    <value>If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?</value>
+    <comment>Message of the warning dialog shown when you try to confirm an account but you are logged in with another one.</comment>
+  </data>
+  <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
+    <value>You are logged in with another account</value>
+    <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
 </root>

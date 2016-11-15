@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -14,6 +15,13 @@ namespace MegaApp.Views
         public LoginAndCreateAccountPage()
         {
             InitializeComponent();            
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);            
+
+            AppService.SetAppViewBackButtonVisibility(false);
         }
 
         private void OnAcceptClick(object sender, RoutedEventArgs e)

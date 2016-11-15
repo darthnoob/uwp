@@ -137,9 +137,21 @@
     <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ConfirmAccount" xml:space="preserve">
+    <value>Confirm account</value>
+    <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
     <value>Confirm your password</value>
     <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmYourAccount" xml:space="preserve">
+    <value>Enter your password to finish creating your account.</value>
+    <comment>Text for the confirmation page with the instructions to follow.</comment>
+  </data>
+  <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
+    <value>Confirm your account</value>
+    <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
     <value>Create account</value>

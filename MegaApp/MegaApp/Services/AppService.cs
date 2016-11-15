@@ -1,14 +1,16 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Views;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
@@ -19,15 +21,85 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="navigationMode">Type of navigation that is taking place </param>
         /// <returns>True if the user has an active and online session or false in other case</returns>
-        public static bool CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
+        public static async Task<bool> CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
         {
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !SettingsService.HasValidSession())
             {
-                UiService.OnUiThread(() => (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                if(!await CheckSpecialNavigation(false))
+                {
+                    UiService.OnUiThread(() => 
+                        (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                }
+                
                 return false;
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Checks if need to navigate to a page depending on the current state or the active link.
+        /// </summary>
+        /// <param name="hasActiveAndOnlineSession">
+        /// Bool value that indicates if the user has an active and online session.
+        /// </param>
+        /// <returns>True if navigates or false in other case.</returns>
+        public static async Task<bool> CheckSpecialNavigation(bool hasActiveAndOnlineSession = true)
+        {
+            if (App.LinkInformation?.ActiveLink != null)
+            {
+                if ((App.LinkInformation.ActiveLink.Contains("#newsignup")) || 
+                    App.LinkInformation.ActiveLink.Contains("#confirm"))
+                {
+                    if(hasActiveAndOnlineSession)
+                    {
+                        var customMessageDialog = new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
+                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
+                            App.AppInformation,
+                            MessageDialogButtons.YesNo);
+
+                        var dialogResult = await customMessageDialog.ShowDialogAsync();
+                        if(dialogResult == MessageDialogResult.OkYes)
+                        {
+                            // First need to log out of the current account
+                            var waitHandleLogout = new AutoResetEvent(false);
+                            SdkService.MegaSdk.logout(new LogOutRequestListener(false, waitHandleLogout));
+                            waitHandleLogout.WaitOne();
+
+                            return SpecialNavigation();
+                        }
+                    }
+                    else
+                    {
+                        return SpecialNavigation();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Navigates to the corresponding page depending on the current state or the active link.
+        /// </summary>
+        /// <returns>TRUE if navigates or FALSE in other case.</returns>
+        private static bool SpecialNavigation()
+        {
+            if (App.LinkInformation.ActiveLink.Contains("#newsignup"))
+            {
+                UiService.OnUiThread(() =>
+                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                return true;
+            }
+            else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
+            {
+                UiService.OnUiThread(() =>
+                    (Window.Current.Content as Frame).Navigate(typeof(ConfirmAccountPage)));
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
