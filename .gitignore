@@ -8,5 +8,5 @@ MegaApp/MegaApp/project.lock.json
 MegaApp/MegaApp/bin/
 MegaApp/MegaApp/obj/
 MegaApp/x64/
-/MegaApp/CameraUploadService/bin/x64/Debug
-/MegaApp/CameraUploadService/obj/x64/Debug
+/MegaApp/CameraUploadService/bin/
+/MegaApp/CameraUploadService/obj/
