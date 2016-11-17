@@ -132,6 +132,7 @@
     <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\ViewMode.cs" />
+    <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />
     <Compile Include="Interfaces\IBaseNode.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\UiService.cs" />
     <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
@@ -252,6 +254,10 @@
     <ProjectReference Include="..\..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj">
       <Project>{c7220f72-e8d8-472c-91ba-f3e43bceb6d9}</Project>
       <Name>mega</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackgroundTaskService\BackgroundTaskService.csproj">
+      <Project>{1066416a-5980-437e-a249-6d84c25eb10e}</Project>
+      <Name>BackgroundTaskService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
