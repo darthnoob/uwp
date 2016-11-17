@@ -1,10 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
+# Visual Studio Express 14 for Windows
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaApp", "MegaApp\MegaApp.csproj", "{5A14727B-7CC9-4277-ABE1-3DE8ECC44D1C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{1066416A-5980-437E-A249-6D84C25EB10E} = {1066416A-5980-437E-A249-6D84C25EB10E}
 		{C7220F72-E8D8-472C-91BA-F3E43BCEB6D9} = {C7220F72-E8D8-472C-91BA-F3E43BCEB6D9}
 	EndProjectSection
 EndProject
