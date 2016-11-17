@@ -255,7 +255,7 @@
       <Project>{c7220f72-e8d8-472c-91ba-f3e43bceb6d9}</Project>
       <Name>mega</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CameraUploadService\BackgroundTaskService.csproj">
+    <ProjectReference Include="..\BackgroundTaskService\BackgroundTaskService.csproj">
       <Project>{1066416a-5980-437e-a249-6d84c25eb10e}</Project>
       <Name>BackgroundTaskService</Name>
     </ProjectReference>

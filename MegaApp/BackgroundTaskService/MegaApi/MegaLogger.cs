@@ -48,7 +48,7 @@ namespace BackgroundTaskService.MegaApi
                 message += " (" + source + ")"; 
             }
 
-            Debug.WriteLine("{0}{1}{2}", time, logLevelString, message);
+            Debug.WriteLine("{0}{1}BACKGROUND TASK SERVICE - {2}", time, logLevelString, message);
         }
     }
 }

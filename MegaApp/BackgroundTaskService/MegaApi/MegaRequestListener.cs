@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BackgroundTaskService.Services;
 using mega;
 
 namespace BackgroundTaskService.MegaApi
@@ -33,6 +34,7 @@ namespace BackgroundTaskService.MegaApi
                 }
                 default:
                 {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error Request Listener: " +  e.getErrorString());
                     if (typeof(T) == typeof(bool)) _tcs.TrySetResult((T)Convert.ChangeType(false, typeof(T)));
                     break;
                 }

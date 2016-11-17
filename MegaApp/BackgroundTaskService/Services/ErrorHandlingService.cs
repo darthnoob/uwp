@@ -8,12 +8,14 @@ namespace BackgroundTaskService.Services
         public const string ImageErrorFileSetting = "ImageErrorFileName";
         public const string ImageErrorCountSetting = "ImageErrorCount";
         public const int MaxFileUploadErrors = 10;
-        
+
 
         /// <summary>
         /// Save the filename and error count of that specific file
         /// </summary>
         /// <param name="fileName">The file that failed</param>
+        /// <param name="fileSetting">File to save the name of the file that failed</param>
+        /// <param name="countSetting">File to save the error count of the file that failed</param>
         /// <returns>Number of current errors</returns>
         public static async Task<int> SetFileErrorAsync(string fileName, string fileSetting, string countSetting)
         {
@@ -29,7 +31,7 @@ namespace BackgroundTaskService.Services
                     // If the same file, add to the error count, save and return
                     var count = await SettingsService.LoadSettingFromFileAsync<int>(countSetting);
                     count++;
-                    await SettingsService.SaveSettingToFileAsync("FileErrorCount", count);
+                    await SettingsService.SaveSettingToFileAsync(countSetting, count);
                     return count;
                 }
 
@@ -45,7 +47,14 @@ namespace BackgroundTaskService.Services
             }
         }
 
-        public static async Task<bool> SkipFile(string fileName, string fileSetting, string countSetting)
+        /// <summary>
+        /// Check if need to skip the file because of to many errors
+        /// </summary>
+        /// <param name="fileName">The file to check for errors</param>
+        /// <param name="fileSetting">File to load the name of the file that failed</param>
+        /// <param name="countSetting">File to load the error count of the file that failed</param>
+        /// <returns></returns>
+        public static async Task<bool> SkipFileAsync(string fileName, string fileSetting, string countSetting)
         {
             var lastErrorFileName = await SettingsService.LoadSettingFromFileAsync<string>(fileSetting);
             if (string.IsNullOrEmpty(lastErrorFileName) || !lastErrorFileName.Equals(fileName)) return false;
@@ -53,14 +62,16 @@ namespace BackgroundTaskService.Services
             var count = await SettingsService.LoadSettingFromFileAsync<int>(countSetting);
             return count >= (MaxFileUploadErrors - 1);
         }
-       
+
         /// <summary>
         /// Clear filename and error count for error processing
         /// </summary>
-        public static async Task ClearAsync()
+        /// <param name="fileSetting">File to clear the name</param>
+        /// <param name="countSetting">File to clear the error count of the file that failed</param>
+        public static async Task ClearAsync(string fileSetting, string countSetting)
         {
-            await SettingsService.SaveSettingToFileAsync("ErrorFileName", string.Empty);
-            await SettingsService.SaveSettingToFileAsync("FileErrorCount", 0);
+            await SettingsService.SaveSettingToFileAsync(fileSetting, string.Empty);
+            await SettingsService.SaveSettingToFileAsync(countSetting, 0);
         }
     }
 }

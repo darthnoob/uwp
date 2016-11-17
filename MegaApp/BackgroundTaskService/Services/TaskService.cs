@@ -21,7 +21,7 @@ namespace BackgroundTaskService.Services
         /// <param name="folder">StorageFolder to check for available files</param>
         /// <param name="dateSetting">Name of the date setting to load from settings</param>
         /// <returns>Available files for upload</returns>
-        public static async Task<IList<StorageFile>> GetAvailableUpload(StorageFolder folder, string dateSetting)
+        public static async Task<IList<StorageFile>> GetAvailableUploadAsync(StorageFolder folder, string dateSetting)
         {
             var lastUploadDate = await SettingsService.LoadSettingFromFileAsync<DateTime>(dateSetting);
             var files = await folder.GetFilesAsync(CommonFileQuery.OrderByDate);

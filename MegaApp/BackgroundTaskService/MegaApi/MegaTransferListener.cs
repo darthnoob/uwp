@@ -70,7 +70,7 @@ namespace BackgroundTaskService.MegaApi
                         case MErrorType.API_EREAD:
                         case MErrorType.API_EWRITE:
                             {
-                                //LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.getErrorString());
+                                // Error will be loggend by caller
                                 _tcs.TrySetResult(e.getErrorString());
                                 break;
                             }

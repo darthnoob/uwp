@@ -38,14 +38,20 @@ namespace BackgroundTaskService
                     await megaGlobalListener.ExecuteAsync(() => SdkService.MegaSdk.enableTransferResumption());
 
                     var cameraUploadRootNode = await SdkService.GetCameraUploadRootNodeAsync();
-                    if (cameraUploadRootNode == null) return;
+                    if (cameraUploadRootNode == null)
+                    {
+                        // No camera upload node found or created
+                        // Just finish this run and try again next time
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "No Camera Uploads folder detected/created");
+                        return;
+                    }
 
-                    var fileToUpload = await TaskService.GetAvailableUpload(KnownFolders.PicturesLibrary,
+                    var fileToUpload = await TaskService.GetAvailableUploadAsync(KnownFolders.PicturesLibrary,
                         TaskService.ImageDateSetting);
                     foreach (var storageFile in fileToUpload)
                     {
                         // Skip the current file if it has failed more than the max error count
-                        if(await ErrorHandlingService.SkipFile(
+                        if(await ErrorHandlingService.SkipFileAsync(
                             storageFile.Name,
                             ErrorHandlingService.ImageErrorFileSetting, 
                             ErrorHandlingService.ImageErrorCountSetting)) continue;
@@ -64,7 +70,8 @@ namespace BackgroundTaskService
                                 }
                                 await SdkService.UploadAsync(storageFile, fs, cameraUploadRootNode, mtime);
                                 // No error, clear error storage
-                                await ErrorHandlingService.ClearAsync();
+                                await ErrorHandlingService.ClearAsync(ErrorHandlingService.ImageErrorFileSetting,
+                                    ErrorHandlingService.ImageErrorCountSetting);
                             }
                         }
                         catch (OutOfMemoryException e)
@@ -82,6 +89,14 @@ namespace BackgroundTaskService
                         }
                     }
                 }
+                else
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Failed to fetch nodes");
+                }
+            }
+            else
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Failed to login");
             }
             
             _deferral.Complete();
@@ -117,7 +132,7 @@ namespace BackgroundTaskService
             }
             catch (Exception e)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error uploading item", e);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error logging in", e);
                 return false;
             }
         }
