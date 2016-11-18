@@ -1,4 +1,7 @@
-﻿using MegaApp.Classes;
+﻿using System;
+using System.Threading.Tasks;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -13,44 +16,80 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public void DoLogin()
+        public async void LoginAsync()
         {
-            if (CheckInputParameters())
-                this.MegaSdk.login(this.Email, this.Password, new LoginRequestListener(this));
-            //else if (_loginAndCreateAccountPage != null)
-            //    Deployment.Current.Dispatcher.BeginInvoke(() => _loginPage.SetApplicationBar(true));
+            if (!await CheckInputParametersAsync()) return;
+
+            var login = new LoginRequestListenerAsync();
+            LoginResult result;
+            try
+            {
+                this.IsBusy = true;
+                result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
+            }
+            catch (BlockedAccountException)
+            {
+                // Do nothing, app is already logging out
+                return;
+            }
+            finally
+            {
+                this.IsBusy = false;
+            }
+           
+            // Set default error content
+            var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
+            switch (result)
+            {
+                case LoginResult.Success:
+                    {
+                        SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+                        return;
+                    }
+                case LoginResult.UnassociatedEmailOrWrongPassword:
+                    {
+                        errorContent = ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin");
+                        break;
+                    }
+                case LoginResult.TooManyLoginAttempts:
+                    {
+                        // Too many failed login attempts. Wait one hour.
+                        errorContent = string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"),
+                            DateTime.Now.AddHours(1).ToString("HH:mm:ss"));
+                        break;
+                    }
+                case LoginResult.AccountNotConfirmed:
+                    {
+                        errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
+                        break;
+                    }
+                case LoginResult.Unknown:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // Show error message
+            await DialogService.ShowAlertAsync(this.LoginText, errorContent);
         }
 
-        private bool CheckInputParameters()
+        private async Task<bool> CheckInputParametersAsync()
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
-                new CustomMessageDialog(
-                    LoginText,
-                    ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
-                
+                await DialogService.ShowAlertAsync(this.LoginText,
+                    ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 return false;
             }
             
             if(!ValidationService.IsValidEmail(this.Email))
             {
-                new CustomMessageDialog(
-                    LoginText,
-                    ResourceService.AppMessages.GetString("AM_MalformedEmail"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
-
+                await DialogService.ShowAlertAsync(this.LoginText,
+                   ResourceService.AppMessages.GetString("AM_MalformedEmail"));
                 return false;
             }
 
             return true;
-        }
-
-        private static void SaveLoginData(string email, string session)
-        {
-            SettingsService.SaveMegaLoginData(email, session);
         }
         
         #endregion
@@ -65,9 +104,9 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string EmailWatermarkText { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
-        public string LoginText { get { return ResourceService.UiResources.GetString("UI_Login"); } }
-        public string PasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
+        public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
+        public string LoginText => ResourceService.UiResources.GetString("UI_Login");
+        public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
 
         #endregion
     }

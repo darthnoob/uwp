@@ -17,12 +17,8 @@ namespace MegaApp.Views
 
     public sealed partial class ConfirmAccountPage : BaseConfirmAccountPage
     {
-        private readonly ConfirmAccountViewModel _confirmAccountViewModel;
         public ConfirmAccountPage()
         {
-            _confirmAccountViewModel = new ConfirmAccountViewModel();
-            this.DataContext = _confirmAccountViewModel;
-
             InitializeComponent();
         }
 
@@ -44,9 +40,9 @@ namespace MegaApp.Views
 
             if (App.LinkInformation.ActiveLink.Contains("#confirm"))
             {
-                _confirmAccountViewModel.ConfirmLink = App.LinkInformation.ActiveLink;
-                SdkService.MegaSdk.querySignupLink(_confirmAccountViewModel.ConfirmLink,
-                    new ConfirmAccountRequestListener(_confirmAccountViewModel));
+                this.ViewModel.ConfirmLink = App.LinkInformation.ActiveLink;
+                SdkService.MegaSdk.querySignupLink(this.ViewModel.ConfirmLink,
+                    new ConfirmAccountRequestListener(this.ViewModel));
 
                 App.LinkInformation.Reset();
             }

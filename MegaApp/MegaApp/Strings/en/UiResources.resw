@@ -137,6 +137,10 @@
     <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_ConfirmAccount" xml:space="preserve">
     <value>Confirm account</value>
     <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>

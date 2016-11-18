@@ -8,3 +8,7 @@ MegaApp/MegaApp/project.lock.json
 MegaApp/MegaApp/bin/
 MegaApp/MegaApp/obj/
 MegaApp/x64/
+/MegaApp/BackgroundTaskService/bin/x64/Debug
+/MegaApp/BackgroundTaskService/obj/x64/Debug
+/MegaApp/Debug/mega/mega.dll
+/MegaApp/Debug/mega

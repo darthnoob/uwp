@@ -14,18 +14,9 @@ namespace MegaApp.ViewModels
             this.CreateAccountViewModel = new CreateAccountViewModel();
         }
 
-        public void ChangeMenu(IList iconButtons, IList menuItems)
-        {
-            //this.TranslateAppBarItems(
-            //    iconButtons.Cast<ApplicationBarIconButton>().ToList(),
-            //    menuItems.Cast<ApplicationBarMenuItem>().ToList(),
-            //    new[] { UiResources.Accept, UiResources.Cancel },
-            //    null);
-        }
+        #region UiResources
 
-        #region VisualResources
-
-        public string MegaIconPathData { get { return ResourceService.VisualResources.GetString("VR_MegaIconPathData"); } }        
+        public string ConfirmText => ResourceService.UiResources.GetString("UI_Confirm");
 
         #endregion
     }

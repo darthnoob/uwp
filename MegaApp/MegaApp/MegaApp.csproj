@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AppInformation.cs" />
+    <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
@@ -116,11 +117,13 @@
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
+    <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
     <Compile Include="Enums\DriveDisplayMode.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
+    <Compile Include="Enums\LoginResult.cs" />
     <Compile Include="Enums\MediaType.cs" />
     <Compile Include="Enums\MenuType.cs" />
     <Compile Include="Enums\NavigationActionType.cs" />
@@ -138,19 +141,23 @@
     <Compile Include="Interfaces\IMegaNode.cs" />
     <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="Interfaces\INavigationObject.cs" />
+    <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListener.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
+    <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListener.cs" />
+    <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="Services\DeviceService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\NavigateService.cs" />

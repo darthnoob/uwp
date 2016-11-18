@@ -27,11 +27,14 @@ namespace MegaApp.Views
         private void OnAcceptClick(object sender, RoutedEventArgs e)
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
-                        
-            if (Pivot_LoginAndCreateAccount?.SelectedItem == PivotItem_Login)
-                this.ViewModel?.LoginViewModel?.DoLogin();
-            else if (Pivot_LoginAndCreateAccount?.SelectedItem == PivotItem_CreateAccount)
-                this.ViewModel?.CreateAccountViewModel?.CreateAccount();
+
+            if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
+            {
+                this.ViewModel?.LoginViewModel?.LoginAsync();
+                return;
+            }
+            // Else it is always create account
+           this.ViewModel?.CreateAccountViewModel?.CreateAccount();
         }
     }
 }
