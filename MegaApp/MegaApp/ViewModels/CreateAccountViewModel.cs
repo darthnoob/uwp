@@ -27,11 +27,22 @@ namespace MegaApp.ViewModels
                         if (this.TermOfService)
                         {
                             var createAccount = new CreateAccountRequestListenerAsync();
-                            var result = await createAccount.ExecuteAsync(() =>
+                            CreateAccountResult result;
+                            try
                             {
-                                this.MegaSdk.createAccount(
-                                    this.Email, this.Password, this.FirstName, this.LastName, createAccount);
-                            });
+                                this.IsBusy = true;
+                                this.ControlState = false;
+                                result = await createAccount.ExecuteAsync(() =>
+                                {
+                                    this.MegaSdk.createAccount(
+                                        this.Email, this.Password, this.FirstName, this.LastName, createAccount);
+                                });
+                            }
+                            finally
+                            {
+                                this.IsBusy = false;
+                                this.ControlState = true;
+                            }
 
                             switch (result)
                             {
@@ -139,6 +150,13 @@ namespace MegaApp.ViewModels
         public string LastNameWatermarkText => ResourceService.UiResources.GetString("UI_LastNameWatermark");
         public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
         public string TermsOfServiceText => ResourceService.UiResources.GetString("UI_TermsOfService");
+
+        #endregion
+
+        #region ProgressMessages
+
+        public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountHeader");
+        public string ProgressSubHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountSubHeader");
 
         #endregion
     }

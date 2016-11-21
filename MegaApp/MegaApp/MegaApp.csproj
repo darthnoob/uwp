@@ -131,6 +131,7 @@
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
+    <Compile Include="Enums\RelativeAlignment.cs" />
     <Compile Include="Enums\TransferStatus.cs" />
     <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Services\UriService.cs" />
     <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
+    <Compile Include="UserControls\ProgressPanel.cs" />
     <Compile Include="UserControls\MenuItem.cs" />
     <Compile Include="UserControls\PageEx.cs" />
     <Compile Include="ViewModels\BaseNavigableViewModel.cs" />
@@ -234,6 +236,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\ThemeDictionariesMega.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

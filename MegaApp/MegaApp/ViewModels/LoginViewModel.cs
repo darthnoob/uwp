@@ -24,7 +24,9 @@ namespace MegaApp.ViewModels
             LoginResult result;
             try
             {
+                this.ControlState = false;
                 this.IsBusy = true;
+                
                 result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
             }
             catch (BlockedAccountException)
@@ -34,6 +36,7 @@ namespace MegaApp.ViewModels
             }
             finally
             {
+                this.ControlState = true;
                 this.IsBusy = false;
             }
            
@@ -44,6 +47,7 @@ namespace MegaApp.ViewModels
                 case LoginResult.Success:
                     {
                         SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+                        this.NavigateTo(typeof(CloudDriveViewModel), NavigationActionType.Login);
                         return;
                     }
                 case LoginResult.UnassociatedEmailOrWrongPassword:
@@ -107,6 +111,13 @@ namespace MegaApp.ViewModels
         public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
         public string LoginText => ResourceService.UiResources.GetString("UI_Login");
         public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
+
+        #endregion
+
+        #region ProgressMessages
+       
+        public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_LoginHeader");
+        public string ProgressSubHeaderText => ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
         #endregion
     }

@@ -29,9 +29,9 @@
     
     <!-- TEMPLATES -->
     <DataTemplate x:Key="MegaPageHeaderLogo">
-        <Border Background="{StaticResource MegaAppBackground}" Height="44" Width="44">
+        <Border Background="{StaticResource MegaAppBackgroundBrush}" Height="44" Width="44">
             <Path Data="{StaticResource MegaIconVector}" Height="24" Width="24" StrokeThickness="0"
-                  Stretch="UniformToFill" Fill="{StaticResource MegaHeaderIconColor}" FlowDirection="LeftToRight"/>
+                  Stretch="UniformToFill" Fill="{StaticResource MegaHeaderIconColorBrush}" FlowDirection="LeftToRight"/>
         </Border>        
     </DataTemplate>
 

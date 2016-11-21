@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Services;
 using MegaApp.UserControls;
@@ -35,6 +36,17 @@ namespace MegaApp.Views
             }
             // Else it is always create account
            this.ViewModel?.CreateAccountViewModel?.CreateAccount();
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
+            {
+                this.ViewModel.ActiveViewModel = this.ViewModel.LoginViewModel;
+                return;
+            }
+            // Else it is always create account
+            this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
         }
     }
 }

@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:userControls="using:MegaApp.UserControls"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:LoginAndCreateAccountViewModel}">
 
@@ -13,9 +14,39 @@
         <Thickness x:Key="ScrollViewerMargin">0,18,0,0</Thickness>
         <Thickness x:Key="PivotItemMargin">12,0</Thickness>
     </Page.Resources>
-    
+
     <Grid 
-        Background="{StaticResource MegaAppBackground}">
+        Background="{StaticResource MegaAppBackgroundBrush}">
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProgressPanelControl.Padding" Value="16, 18, 0, 16" />
+                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Below" />
+                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Top" />
+                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="24" />
+                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="16" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProgressPanelControl.Padding" Value="178, 18, 0, 16" />
+                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Right" />
+                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="44" />
+                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="18" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource MegaPageHeaderLogoRowHeight}"/>
             <RowDefinition Height="*"/>
@@ -27,13 +58,14 @@
             Grid.Row="0" 
             VerticalAlignment="Center" 
             HorizontalAlignment="Left"/>
-       
+
         <Pivot 
             x:Name="PivotLoginAndCreateAccount" 
             Grid.Row="1" 
             Margin="8,6,8,0"
+            SelectionChanged="OnSelectionChanged"
             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
-           
+
             <PivotItem 
                 x:Name="PivotItemLogin" 
                 Header="{Binding LoginViewModel.LoginText, Mode=OneTime}" 
@@ -63,7 +95,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-     
+
             <PivotItem 
                 x:Name="PivotItemCreateAccount" 
                 Header="{Binding CreateAccountViewModel.CreateAccountText, Mode=OneTime}" 
@@ -138,7 +170,7 @@
                                             NavigateUri="{Binding CreateAccountViewModel.TermsOfServiceUri, Mode=OneTime}">
                                             <Run 
                                                 Text="{Binding CreateAccountViewModel.TermsOfServiceText, Converter={StaticResource TextToLowerCaseConverter}, Mode=OneTime}" 
-                                                Foreground="{StaticResource MegaRedColor}"/>
+                                                Foreground="{StaticResource MegaRedColorBrush}"/>
                                         </Hyperlink>
                                     </Paragraph>
                                 </RichTextBlock>
@@ -147,7 +179,25 @@
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
-        </Pivot>        
+        </Pivot>
+
+       
+        <userControls:ProgressPanel
+            Grid.Row="1"
+            x:Name="ProgressPanelControl"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HeaderText="{Binding Path=ActiveViewModel.ProgressHeaderText}"
+            SubHeaderText="{Binding Path=ActiveViewModel.ProgressSubHeaderText}"
+            IsVisible="{Binding ActiveViewModel.IsBusy}"
+            SubHeaderMargin="0, 14, 0 , 0">
+            <userControls:ProgressPanel.SubHeaderForeground>
+                <SolidColorBrush 
+                    Color="{ThemeResource MegaAppForeground}" 
+                    Opacity="0.6"/>
+            </userControls:ProgressPanel.SubHeaderForeground>
+        </userControls:ProgressPanel>
+        
     </Grid>
 
     <Page.BottomAppBar>
@@ -156,6 +206,7 @@
             <AppBarButton 
                 Icon="Accept" 
                 Label="{Binding ConfirmText, Mode=OneTime}" 
+                IsEnabled="{Binding ActiveViewModel.ControlState}"
                 Click="OnAcceptClick"/>
         </CommandBar>
     </Page.BottomAppBar>

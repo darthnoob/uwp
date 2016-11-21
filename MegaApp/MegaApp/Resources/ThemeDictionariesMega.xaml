@@ -7,8 +7,8 @@
 
     <!-- STYLES -->
     <Style x:Key="MegaCommandBarStyle" TargetType="CommandBar">
-        <Setter Property="Background" Value="{StaticResource MegaAppBarBackground}" />
-        <Setter Property="Foreground" Value="{StaticResource MegaAppBarForeground}"/>
+        <Setter Property="Background" Value="{StaticResource MegaAppBarBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource MegaAppBarForegroundBrush}"/>
     </Style>
     
     <Style x:Key="MegaCheckBoxStyle" TargetType="CheckBox">
@@ -37,7 +37,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -49,7 +49,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Storyboard.TargetName="NormalRectangle"
                                                          Storyboard.TargetProperty="StrokeThickness"
@@ -77,7 +77,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Storyboard.TargetName="NormalRectangle"
                                                          Storyboard.TargetProperty="StrokeThickness"
@@ -85,7 +85,7 @@
                                                          Duration="0" />
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Storyboard.TargetName="CheckGlyph"
                                                          Storyboard.TargetProperty="Opacity"
@@ -97,11 +97,11 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Fill">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Storyboard.TargetName="CheckGlyph"
                                                          Storyboard.TargetProperty="Opacity"
@@ -117,7 +117,7 @@
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimation Storyboard.TargetName="NormalRectangle"
                                                          Storyboard.TargetProperty="StrokeThickness"
@@ -157,7 +157,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Fill">
@@ -181,7 +181,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Stroke">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColor}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MegaRedColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
                                                                        Storyboard.TargetProperty="Fill">
@@ -262,7 +262,7 @@
                         <Grid VerticalAlignment="Top" Height="32">
                             <Rectangle x:Name="NormalRectangle"
                                        Fill="Transparent"
-                                       Stroke="{StaticResource MegaRedColor}"
+                                       Stroke="{StaticResource MegaRedColorBrush}"
                                        StrokeThickness="1"
                                        UseLayoutRounding="False"
                                        Height="20"
@@ -294,7 +294,7 @@
         <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
         <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-        <Setter Property="Background" Value="{StaticResource MegaPasswordBoxBackground}" />
+        <Setter Property="Background" Value="{StaticResource MegaPasswordBoxBackgroundBrush}" />
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
@@ -523,7 +523,7 @@
         <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />
         <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
-        <Setter Property="Background" Value="{StaticResource MegaTextBoxBackground}" />
+        <Setter Property="Background" Value="{StaticResource MegaTextBoxBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource SystemControlHighlightAccentBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -758,26 +758,32 @@
     <ResourceDictionary.ThemeDictionaries>        
         <!-- COLOR PALETTE FOR THE DARK THEME -->
         <ResourceDictionary x:Key="Dark">
-            <SolidColorBrush x:Key="MegaRedColor" Color="#EB4444"/>
-            <SolidColorBrush x:Key="MegaAppBackground" Color="#030303"/>
-            <SolidColorBrush x:Key="MegaAppForeground" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaAppBarBackground" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaAppBarForeground" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaHeaderIconColor" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaTextBoxBackground" Color="#222222"/>
-            <SolidColorBrush x:Key="MegaPasswordBoxBackground" Color="#222222"/>
+            <Color x:Key="MegaRedColor">#EB4444</Color>
+            <Color x:Key="MegaAppBackground">#030303</Color>
+            <Color x:Key="MegaAppForeground">#FFFFFF</Color>
+            <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
+            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
+            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
+            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="#111111"/>
+            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222"/>
+            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222"/>
         </ResourceDictionary>
 
         <!-- COLOR PALETTE FOR THE LIGHT THEME -->
         <ResourceDictionary x:Key="Light">
-            <SolidColorBrush x:Key="MegaRedColor" Color="#EB4444"/>
-            <SolidColorBrush x:Key="MegaAppBackground" Color="#F7F7F7"/>
-            <SolidColorBrush x:Key="MegaAppForeground" Color="#000000"/>
-            <SolidColorBrush x:Key="MegaAppBarBackground" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaAppBarForeground" Color="#000000"/>
-            <SolidColorBrush x:Key="MegaHeaderIconColor" Color="#333333"/>
-            <SolidColorBrush x:Key="MegaTextBoxBackground" Color="#EAEAEA"/>
-            <SolidColorBrush x:Key="MegaPasswordBoxBackground" Color="#EAEAEA"/>
+            <Color x:Key="MegaRedColor">#EB4444</Color>
+            <Color x:Key="MegaAppBackground">#F7F7F7</Color>
+            <Color x:Key="MegaAppForeground">#000000</Color>
+            <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
+            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
+            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
+            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="#000000"/>
+            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333"/>
+            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA"/>
+            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA"/>
         </ResourceDictionary>        
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
