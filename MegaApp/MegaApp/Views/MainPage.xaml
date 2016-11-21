@@ -7,8 +7,10 @@
     xmlns:views="using:MegaApp.Views"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
+    xmlns:triggers="using:WindowsStateTriggers"
+    mc:Ignorable="d"    
+    d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+    SizeChanged="OnSizeChanged">
 
     <Page.Resources>
         <DataTemplate 
@@ -24,16 +26,40 @@
                     Content="{x:Bind Icon}"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.AccessibilityView="Raw"/>
-                <TextBlock 
-                    Grid.Column="1" 
-                    Text="{x:Bind Label}" 
-                    FontSize="16" 
-                    VerticalAlignment="Center"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    Grid.Column="1"
+                    Margin="9,5,9,6">
+                    <TextBlock
+                        Text="{x:Bind Label}" 
+                        FontSize="16" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock
+                        Text="{x:Bind SubLabel}" 
+                        FontSize="12" 
+                        VerticalAlignment="Center"
+                        Opacity="0.6"/>
+                </StackPanel>                
             </Grid>
         </DataTemplate>
     </Page.Resources>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup >
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>                        
+                        <Setter 
+                            Target="HamburgerMenuControl.DisplayMode" 
+                            Value="CompactOverlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <userControls:HamburgerMenuEx
             x:Name="HamburgerMenuControl"
             ItemsSource="{Binding MenuItems}"
@@ -43,7 +69,8 @@
             ItemTemplate="{StaticResource MenuItemTemplate}"
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
             PaneBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+            Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
+            DisplayMode="Overlay">
             <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
     </Grid>

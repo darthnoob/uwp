@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Windows.ApplicationModel.Background;
-using Windows.System.Power;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
@@ -24,6 +25,21 @@ namespace MegaApp.Views
             InitializeComponent();
             // Set the main navigation frame object to the HamburgerMenu ContentFrame
             NavigateService.MainFrame = this.ContentFrame;
+        }
+
+        private void SetHamburgerMenuWidth()
+        {
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                HamburgerMenuControl.OpenPaneLength = (bounds.Width/5 >= 273) ? (bounds.Width/5) : 273;
+            else
+                HamburgerMenuControl.OpenPaneLength = bounds.Width;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            SetHamburgerMenuWidth();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -91,6 +107,5 @@ namespace MegaApp.Views
             this.ViewModel.SelectedOptionItem = this.ViewModel.OptionItems.FirstOrDefault(
                 m => NavigateService.GetViewType(m.TargetViewModel) == ContentFrame.CurrentSourcePageType);
         }
-        
     }
 }
