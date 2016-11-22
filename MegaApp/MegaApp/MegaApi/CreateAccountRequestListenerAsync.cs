@@ -1,12 +1,5 @@
-﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-using mega;
-using MegaApp.Classes;
+﻿using mega;
 using MegaApp.Enums;
-using MegaApp.Services;
-using MegaApp.ViewModels;
-using MegaApp.Views;
 
 namespace MegaApp.MegaApi
 {

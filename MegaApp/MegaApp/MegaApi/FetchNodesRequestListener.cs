@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;

@@ -2,7 +2,6 @@
 using mega;
 using MegaApp.Enums;
 using System;
-using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 

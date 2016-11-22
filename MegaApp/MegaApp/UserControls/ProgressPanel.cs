@@ -3,7 +3,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using MegaApp.Enums;
-using MegaApp.Views;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 namespace MegaApp.UserControls

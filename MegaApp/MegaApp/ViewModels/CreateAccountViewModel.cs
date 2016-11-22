@@ -1,5 +1,4 @@
 ﻿using System;
-using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -17,7 +16,7 @@ namespace MegaApp.ViewModels
 
         public async void CreateAccount()
         {
-            string messageContent = null;
+            string messageContent;
             if (CheckInputParameters())
             {
                 if (ValidationService.IsValidEmail(this.Email))
@@ -35,7 +34,11 @@ namespace MegaApp.ViewModels
                                 result = await createAccount.ExecuteAsync(() =>
                                 {
                                     this.MegaSdk.createAccount(
-                                        this.Email, this.Password, this.FirstName, this.LastName, createAccount);
+                                        this.Email, 
+                                        this.Password, 
+                                        this.FirstName, 
+                                        this.LastName, 
+                                        createAccount);
                                 });
                             }
                             finally

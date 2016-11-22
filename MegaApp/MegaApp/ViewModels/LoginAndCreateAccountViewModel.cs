@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using MegaApp.Services;
+﻿using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
