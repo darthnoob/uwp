@@ -6,12 +6,10 @@ MegaApp/.vs/
 MegaApp/ARM/
 MegaApp/BackgroundTaskService/bin/
 MegaApp/BackgroundTaskService/obj/
+MegaApp/BackgroundTaskService/project.lock.json
+MegaApp/Debug/
 MegaApp/MegaApp/MegaApp_TemporaryKey.pfx
 MegaApp/MegaApp/project.lock.json
 MegaApp/MegaApp/bin/
 MegaApp/MegaApp/obj/
 MegaApp/x64/
-/MegaApp/BackgroundTaskService/bin/
-/MegaApp/BackgroundTaskService/obj/
-/MegaApp/Debug/mega/mega.dll
-/MegaApp/Debug/mega
