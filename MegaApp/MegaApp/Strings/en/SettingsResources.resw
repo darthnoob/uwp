@@ -159,7 +159,7 @@
   </data>
   <data name="SR_UserMegaEmailAddress" xml:space="preserve">
     <value>{92C84A5F-1387-4A44-AFE8-C44154B264D1}</value>
-    <comment>Resource key to store the MEGA e-mail address of the user - (NO-TRANSLATION).</comment>
+    <comment>Resource key to store the MEGA email address of the user - (NO-TRANSLATION).</comment>
   </data>
   <data name="SR_UserMegaSession" xml:space="preserve">
     <value>{85DBF3E5-51E8-40BB-968C-8857B4FC6EF4}</value>

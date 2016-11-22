@@ -30,6 +30,7 @@ namespace MegaApp.Views
         {
             base.OnNavigatedTo(e);
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
+            
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Networking.Connectivity;
-using Windows.UI.Core;
 using MegaApp.Classes;
 
 namespace MegaApp.Services

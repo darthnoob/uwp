@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using MegaApp.Classes;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 
 namespace MegaApp.Services
 {

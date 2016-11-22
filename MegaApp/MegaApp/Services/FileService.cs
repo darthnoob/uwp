@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
-using Windows.UI.Core;
 using MegaApp.Classes;
 
 namespace MegaApp.Services
