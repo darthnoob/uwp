@@ -1,6 +1,4 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
@@ -110,7 +108,7 @@ namespace MegaApp.MegaApi
             {
                 switch (e.getErrorCode())
                 {
-                    case MErrorType.API_ENOENT: // E-mail unassociated with a MEGA account or Wrong password
+                    case MErrorType.API_ENOENT: // Email unassociated with a MEGA account or Wrong password
                         new CustomMessageDialog(ErrorMessageTitle, ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin"),
                             App.AppInformation, MessageDialogButtons.Ok).ShowDialog();
                         return;

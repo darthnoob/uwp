@@ -121,8 +121,16 @@
     <value>Clearing the rubbish bin...</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
-  <data name="PM_CreateAccount" xml:space="preserve">
+  <data name="PM_ConfirmAccount" xml:space="preserve">
+    <value>Confirming account...</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_CreateAccountHeader" xml:space="preserve">
     <value>Creating account...</value>
+    <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_CreateAccountSubHeader" xml:space="preserve">
+    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -138,8 +146,12 @@
     <comment>Progress indicator message when loading nodes from MEGA web service - (String as short as possible).
 Preserve the [{0}] code because is for include current number of fetched nodes.</comment>
   </data>
-  <data name="PM_Login" xml:space="preserve">
+  <data name="PM_LoginHeader" xml:space="preserve">
     <value>Logging in...</value>
+    <comment>Progress indicator message when logging in - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoginSubHeader" xml:space="preserve">
+    <value>Please wait while we log you into your account.</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">

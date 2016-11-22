@@ -38,7 +38,7 @@
                 </StackPanel>-->
             </Grid>
             <Grid Grid.Row="1">
-                <Pivot x:Name="MainPivot" SelectionChanged="OnPivotSelectionChanged" Margin="0">
+                <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" SelectionChanged="OnPivotSelectionChanged" Margin="0">
                     <PivotItem x:Name="CloudDrivePivot" Header="{Binding CloudDriveNameText, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
                         <Grid x:Name="CloudDriveRoot" Background="Transparent" Margin="0,0,12,0">
                             <Grid.RowDefinitions>
@@ -56,7 +56,7 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedSolidColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -103,7 +103,7 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedSolidColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"

@@ -1,4 +1,6 @@
 ﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -16,26 +18,36 @@ namespace MegaApp.Views
             InitializeComponent();            
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);            
+
+            // Do not allow user to go back to any previous page
+            NavigateService.CoreFrame.BackStack.Clear();
+        }
+
         private void OnAcceptClick(object sender, RoutedEventArgs e)
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
 
-            // To not allow cancel a request to login or 
-            // create account once that is started
-            //SetApplicationBar(false);
-
-            //if (_loginAndCreateAccountViewModelContainer == null)
-            //    _loginAndCreateAccountViewModelContainer = new LoginAndCreateAccountViewModelContainer(this);
-
-            if (Pivot_LoginAndCreateAccount.SelectedItem == PivotItem_Login)
-                this.ViewModel.LoginViewModel.DoLogin();
-            else if (Pivot_LoginAndCreateAccount.SelectedItem == PivotItem_CreateAccount)
-                this.ViewModel.CreateAccountViewModel.CreateAccount();
+            if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
+            {
+                this.ViewModel?.LoginViewModel?.LoginAsync();
+                return;
+            }
+            // Else it is always create account
+           this.ViewModel?.CreateAccountViewModel?.CreateAccount();
         }
 
-        private void OnCancelClick(object sender, RoutedEventArgs e)
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
+            {
+                this.ViewModel.ActiveViewModel = this.ViewModel.LoginViewModel;
+                return;
+            }
+            // Else it is always create account
+            this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
         }
     }
 }

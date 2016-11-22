@@ -1,31 +1,30 @@
-﻿using System.Collections;
-using MegaApp.Services;
+﻿using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
     public class LoginAndCreateAccountViewModel : BaseSdkViewModel
     {
-        public LoginViewModel LoginViewModel { get; private set; }
-        public CreateAccountViewModel CreateAccountViewModel { get; private set; }
+        public LoginViewModel LoginViewModel { get; }
+        public CreateAccountViewModel CreateAccountViewModel { get; }
 
         public LoginAndCreateAccountViewModel()
         {
             this.LoginViewModel = new LoginViewModel();
             this.CreateAccountViewModel = new CreateAccountViewModel();
+            this.ActiveViewModel = this.LoginViewModel;
         }
 
-        public void ChangeMenu(IList iconButtons, IList menuItems)
+
+        private BaseSdkViewModel _activeViewModel;
+        public BaseSdkViewModel ActiveViewModel
         {
-            //this.TranslateAppBarItems(
-            //    iconButtons.Cast<ApplicationBarIconButton>().ToList(),
-            //    menuItems.Cast<ApplicationBarMenuItem>().ToList(),
-            //    new[] { UiResources.Accept, UiResources.Cancel },
-            //    null);
+            get { return _activeViewModel; }
+            set { SetField(ref _activeViewModel, value); }
         }
 
-        #region VisualResources
+        #region UiResources
 
-        public string MegaIconPathData { get { return ResourceService.VisualResources.GetString("VR_MegaIconPathData"); } }        
+        public string ConfirmText => ResourceService.UiResources.GetString("UI_Confirm");
 
         #endregion
     }
