@@ -69,11 +69,11 @@ namespace MegaApp.UserControls
 
         #region Ui_Resources
 
-        private static string CameraUploadsText { get { return ResourceService.UiResources.GetString("UI_CameraUploads"); } }
-        private static string CloudDriveText { get { return ResourceService.UiResources.GetString("UI_CloudDriveName"); } }
-        private static string MyAccountText { get { return ResourceService.UiResources.GetString("UI_MyAccount"); } }
-        private static string RubbishBinText { get { return ResourceService.UiResources.GetString("UI_RubbishBinName"); } }
-        private static string SettingsText { get { return ResourceService.UiResources.GetString("UI_Settings"); } }
+        private static string CameraUploadsText => ResourceService.UiResources.GetString("UI_CameraUploads");
+        private static string CloudDriveText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
+        private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
 
         #endregion
     }
