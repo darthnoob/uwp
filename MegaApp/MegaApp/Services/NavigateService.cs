@@ -17,47 +17,50 @@ namespace MegaApp.Services
         private static NavigateService _instance;
         // Singleton instance
         public static NavigateService Instance => _instance ?? (_instance = new NavigateService());
-        // App rootFrame to navigate
+        
+        // App rootFrame to navigate 
         public static Frame MainFrame { get; set; }
+
+        public static Frame CoreFrame { get; set; }
 
         public static IList<Type> PageExTypes { get; set; }
 
         public static IList<Type> TypeList { get; set; }
 
-        private static Frame GetFrame(Frame baseFrame = null)
+        private static Frame GetFrame(bool useCoreFrame)
         {
-            return baseFrame ?? MainFrame;
+            return useCoreFrame ? CoreFrame : MainFrame;
         }
 
         /// <summary>
         /// NavigateTo to the specified view
         /// </summary>
         /// <param name="viewType">Type of the view to navigate</param>
+        /// <param name="useCoreFrame">Use the app core rootframe or use the app hamburger mainframe</param>
         /// <param name="navObj">Optional object with navigation parameters and information</param>
-        /// <param name="baseFrame">Optional frame to navigate from</param>
         /// <returns>True if navigation succeeded, else False</returns>
-        public bool Navigate(Type viewType, INavigationObject navObj = null, Frame baseFrame = null)
+        public bool Navigate(Type viewType, bool useCoreFrame = false, INavigationObject navObj = null)
         {
-            return GetFrame(baseFrame).Navigate(viewType, navObj);
+            return GetFrame(useCoreFrame).Navigate(viewType, navObj);
         }
 
         /// <summary>
         /// NavigateTo backwards in backstack if possible
         /// </summary>
-        /// <param name="baseFrame">Optional frame to navigate from</param>
-        public void GoBack(Frame baseFrame = null)
+        /// <param name="useCoreFrame">Use the app core rootframe or use the app hamburger mainframe</param>
+        public void GoBack(bool useCoreFrame = false)
         {
-            var navigateFrame = GetFrame(baseFrame);
+            var navigateFrame = GetFrame(useCoreFrame);
             if(navigateFrame.CanGoBack) navigateFrame.GoBack();
         }
 
         /// <summary>
         /// NavigateTo forwards in forward stack if possible
         /// </summary>
-        /// <param name="baseFrame">Optional frame to navigate from</param>
-        public void GoForward(Frame baseFrame = null)
+        /// <param name="useCoreFrame">Use the app core rootframe or use the app hamburger mainframe</param>
+        public void GoForward(bool useCoreFrame = false)
         {
-            var navigateFrame = GetFrame(baseFrame);
+            var navigateFrame = GetFrame(useCoreFrame);
             if (navigateFrame.CanGoForward) navigateFrame.GoForward();
         }
 

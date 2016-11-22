@@ -4,6 +4,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -47,7 +48,11 @@ namespace MegaApp.ViewModels
                 case LoginResult.Success:
                     {
                         SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
-                        this.NavigateTo(typeof(CloudDriveViewModel), NavigationActionType.Login);
+                        // Navigate to the main page to load the main application for the user
+                        NavigateService.Instance.Navigate(
+                            typeof(MainPage), 
+                            true,
+                            NavigationObject.Create(this.GetType(), NavigationActionType.Login));
                         return;
                     }
                 case LoginResult.UnassociatedEmailOrWrongPassword:

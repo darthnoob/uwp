@@ -1,4 +1,6 @@
 ﻿using System;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -77,14 +79,13 @@ namespace MegaApp.Views
                 case NavigationActionType.Login:
                     this.ViewModel.FetchNodes();
                     break;
-
-                case NavigationActionType.Default:
+                
                 default:
                     Load();
                     break;
             }
 
-            AppService.CheckSpecialNavigation();
+            await AppService.CheckSpecialNavigation();
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)

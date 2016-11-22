@@ -27,8 +27,10 @@ namespace MegaApp.Services
             {
                 if(!await CheckSpecialNavigation(false))
                 {
-                    UiService.OnUiThread(() => 
-                        (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true);
+                    });
                 }
                 
                 return false;

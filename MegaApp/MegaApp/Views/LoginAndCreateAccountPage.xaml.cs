@@ -22,7 +22,8 @@ namespace MegaApp.Views
         {
             base.OnNavigatedTo(e);            
 
-            AppService.SetAppViewBackButtonVisibility(false);
+            // Do not allow user to go back to any previous page
+            NavigateService.CoreFrame.BackStack.Clear();
         }
 
         private void OnAcceptClick(object sender, RoutedEventArgs e)

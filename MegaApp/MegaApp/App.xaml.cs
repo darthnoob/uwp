@@ -129,7 +129,7 @@ namespace MegaApp
                 rootFrame = new Frame();
 
                 // Add rootFrame as mainframe to navigation service
-                NavigateService.MainFrame = rootFrame;
+                NavigateService.CoreFrame = rootFrame;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
