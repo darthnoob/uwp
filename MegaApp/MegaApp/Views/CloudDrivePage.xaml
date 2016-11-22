@@ -10,13 +10,13 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{StaticResource MegaAppBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid x:Name="LayoutRoot" Background="{StaticResource MegaAppBackgroundBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="84"/>
                 <RowDefinition/>
@@ -75,7 +75,7 @@
                             <Grid x:Name="CloudDriveContentPanel" Grid.Row="1" Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstCloudDrive"
-                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
@@ -123,7 +123,7 @@
                             <Grid x:Name="RubbishBinContentPanel" Grid.Row="1" Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstRubbishBin"
-                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
@@ -138,7 +138,9 @@
             </Grid>
         </Grid>
 
-        <CommandBar Grid.Row="1">
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
                 x:Name="AddFolderButton"
                 Icon="NewFolder" 

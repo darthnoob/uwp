@@ -157,7 +157,7 @@
                             Style="{StaticResource MegaCheckBoxStyle}" 
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}" 
                             IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay}" 
-                            TabIndex="4" >
+                            TabIndex="5" >
                             <CheckBox.Content>
                                 <RichTextBlock 
                                     TextWrapping="Wrap" 

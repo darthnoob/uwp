@@ -37,7 +37,7 @@
 
     <DataTemplate x:Key="MegaPivoHeaderTemplate">
         <Grid>
-            <TextBlock Text="{Binding}" FontFamily="Segoe UI" FontSize="24" />
+            <TextBlock Text="{Binding}" FontFamily="Segoe UI" FontSize="24" FontWeight="Normal"/>
         </Grid>
     </DataTemplate>
 

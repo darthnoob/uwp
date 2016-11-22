@@ -43,8 +43,8 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{StaticResource MegaHamburgerMenuBackgroundBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup >
                 <VisualState x:Name="Desktop">
@@ -68,9 +68,11 @@
             SelectedOptionItem="{Binding SelectedOptionItem, Mode=TwoWay}"
             ItemTemplate="{StaticResource MenuItemTemplate}"
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-            PaneBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Foreground="{ThemeResource ApplicationForegroundThemeBrush}"
-            DisplayMode="Overlay">
+            PaneBackground="{StaticResource MegaHamburgerMenuBackgroundBrush}"
+            Foreground="{StaticResource MegaHamburgerMenuForegroundBrush}"
+            DisplayMode="Overlay"
+            ItemClick="OnHamburgerMenuControlItemClick"
+            OptionsItemClick="OnHamburgerMenuControlItemClick">
             <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
     </Grid>
