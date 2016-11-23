@@ -59,7 +59,7 @@ namespace MegaApp.Views
             if (args.Handled) return;
 
             App.LinkInformation.Reset();
-            (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage));
+            NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true);            
 
             args.Handled = true;
         }

@@ -51,7 +51,7 @@ namespace MegaApp.ViewModels
                         customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
                         {
                             isMessageVisible = false;
-                            OnUiThread(() => (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                            OnUiThread(() => NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                         };
 
                         customMessageDialog.ShowDialog();
@@ -60,8 +60,7 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    OnUiThread(() =>
-                        (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                    OnUiThread(() => NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));                    
                 }
             }
 

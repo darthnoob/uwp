@@ -91,13 +91,13 @@ namespace MegaApp.Services
             if (App.LinkInformation.ActiveLink.Contains("#newsignup"))
             {
                 UiService.OnUiThread(() =>
-                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                 return true;
             }
             else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
             {
                 UiService.OnUiThread(() =>
-                    (Window.Current.Content as Frame).Navigate(typeof(ConfirmAccountPage)));
+                    NavigateService.Instance.Navigate(typeof(ConfirmAccountPage), true));
                 return true;
             }
 
