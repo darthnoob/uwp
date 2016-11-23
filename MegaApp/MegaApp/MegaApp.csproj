@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Classes\AppInformation.cs" />
+    <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
@@ -116,11 +117,13 @@
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
+    <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
     <Compile Include="Enums\DriveDisplayMode.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
+    <Compile Include="Enums\LoginResult.cs" />
     <Compile Include="Enums\MediaType.cs" />
     <Compile Include="Enums\MenuType.cs" />
     <Compile Include="Enums\NavigationActionType.cs" />
@@ -128,18 +131,23 @@
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
+    <Compile Include="Enums\RelativeAlignment.cs" />
     <Compile Include="Enums\TransferStatus.cs" />
     <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\ViewMode.cs" />
+    <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />
     <Compile Include="Interfaces\IBaseNode.cs" />
     <Compile Include="Interfaces\IMegaNode.cs" />
     <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="Interfaces\INavigationObject.cs" />
+    <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListener.cs" />
+    <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
+    <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\DeleteNodeRequestListener.cs" />
@@ -147,6 +155,7 @@
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListener.cs" />
     <Compile Include="MegaApi\GlobalListener.cs" />
+    <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
@@ -154,14 +163,18 @@
     <Compile Include="MegaApi\RemoveNodeRequestListener.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListener.cs" />
     <Compile Include="Services\DeviceService.cs" />
+    <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
+    <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\UiService.cs" />
+    <Compile Include="Services\UriService.cs" />
     <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
+    <Compile Include="UserControls\ProgressPanel.cs" />
     <Compile Include="UserControls\MenuItem.cs" />
     <Compile Include="UserControls\PageEx.cs" />
     <Compile Include="ViewModels\BaseNavigableViewModel.cs" />
@@ -170,6 +183,7 @@
     <Compile Include="ViewModels\BaseUiViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CloudDriveViewModel.cs" />
+    <Compile Include="ViewModels\ConfirmAccountViewModel.cs" />
     <Compile Include="ViewModels\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\FileNodeViewModel.cs" />
     <Compile Include="ViewModels\FolderNodeViewModel.cs" />
@@ -183,6 +197,9 @@
     <Compile Include="ViewModels\TransferObjectModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmAccountPage.xaml.cs">
+      <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginAndCreateAccountPage.xaml.cs">
       <DependentUpon>LoginAndCreateAccountPage.xaml</DependentUpon>
@@ -224,7 +241,21 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Resources\ThemeDictionariesMega.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="Views\CloudDrivePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,6 +287,10 @@
     <ProjectReference Include="..\..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj">
       <Project>{c7220f72-e8d8-472c-91ba-f3e43bceb6d9}</Project>
       <Name>mega</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BackgroundTaskService\BackgroundTaskService.csproj">
+      <Project>{1066416a-5980-437e-a249-6d84c25eb10e}</Project>
+      <Name>BackgroundTaskService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

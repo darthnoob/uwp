@@ -68,16 +68,9 @@ namespace MegaApp.Services
             // If no action defined then do nothing and return to save time
             if (action == null) return;
 
-            if (CoreApplication.MainView.CoreWindow.Dispatcher.HasThreadAccess)
-            {
-                // We are already on UI thread. Just invoke the action
-                action.Invoke();
-            }
-            else
-            {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                    CoreDispatcherPriority.Normal, action.Invoke);
-            }
+            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                CoreDispatcherPriority.Normal, 
+                action.Invoke);
         }
     }
 }

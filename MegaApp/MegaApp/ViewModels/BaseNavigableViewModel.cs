@@ -30,7 +30,7 @@ namespace MegaApp.ViewModels
             if (pageType == null) throw new ArgumentException("Viewmodel is not bound to a view");
 
             var navObj = NavigationObject.Create(this.GetType(), action, parameters);
-            OnUiThread(() => this.Navigation.Navigate(pageType, navObj));
+            OnUiThread(() => this.Navigation.Navigate(pageType, false, navObj));
         }
 
         /// <summary>

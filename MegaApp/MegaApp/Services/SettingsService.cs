@@ -3,9 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
-using Windows.UI.Core;
 using MegaApp.Classes;
 
 namespace MegaApp.Services

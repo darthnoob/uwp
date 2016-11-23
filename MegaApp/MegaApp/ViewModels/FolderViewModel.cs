@@ -585,7 +585,7 @@ namespace MegaApp.ViewModels
                 // First add the viewport items to show some data to the user will still loading
                 if (i == viewportItemCount)
                 {
-                    await OnUiThread(() =>
+                    OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -599,7 +599,7 @@ namespace MegaApp.ViewModels
                 if (helperList.Count != backgroundItemCount || i <= viewportItemCount) continue;
 
                 // Add the rest of the items in the background to the list
-                await OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -610,7 +610,7 @@ namespace MegaApp.ViewModels
             }
 
             // Add any nodes that are left over
-            await OnUiThread(() =>
+            OnUiThread(() =>
             {
                 // Show the user that processing the childnodes is done
                 SetProgressIndication(false);

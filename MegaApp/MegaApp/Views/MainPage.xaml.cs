@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Windows.ApplicationModel.Background;
+using Windows.System.Power;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -23,14 +26,27 @@ namespace MegaApp.Views
             NavigateService.MainFrame = this.ContentFrame;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
+            
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
             this.ViewModel.Initialize(navObj?.Action ?? NavigationActionType.Default);
+            
+            if (await TaskService.RequestBackgroundAccessAsync())
+            {
+                TaskService.UnregisterBackgroundTask(
+                    TaskService.CameraUploadTaskEntryPoint,
+                    TaskService.CameraUploadTaskName);
+                TaskService.RegisterBackgroundTask(
+                    TaskService.CameraUploadTaskEntryPoint,
+                    TaskService.CameraUploadTaskName,
+                    new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
+                    null);
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

@@ -1,11 +1,11 @@
 ﻿using System;
-using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    public class CreateAccountViewModel : BaseSdkViewModel 
+    public class CreateAccountViewModel : BaseSdkViewModel
     {
         public CreateAccountViewModel()
         {
@@ -14,8 +14,9 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public void CreateAccount()
+        public async void CreateAccount()
         {
+            string messageContent;
             if (CheckInputParameters())
             {
                 if (ValidationService.IsValidEmail(this.Email))
@@ -24,44 +25,72 @@ namespace MegaApp.ViewModels
                     {
                         if (this.TermOfService)
                         {
-                            this.MegaSdk.createAccount(this.Email, this.Password, this.FirstName, this.LastName,
-                                new CreateAccountRequestListener(this));
+                            var createAccount = new CreateAccountRequestListenerAsync();
+                            CreateAccountResult result;
+                            try
+                            {
+                                this.IsBusy = true;
+                                this.ControlState = false;
+                                result = await createAccount.ExecuteAsync(() =>
+                                {
+                                    this.MegaSdk.createAccount(
+                                        this.Email, 
+                                        this.Password, 
+                                        this.FirstName, 
+                                        this.LastName, 
+                                        createAccount);
+                                });
+                            }
+                            finally
+                            {
+                                this.IsBusy = false;
+                                this.ControlState = true;
+                            }
+
+                            switch (result)
+                            {
+                                case CreateAccountResult.Success:
+                                    {
+                                        await DialogService.ShowAlertAsync(ResourceService.AppMessages.GetString("AM_ConfirmEmail_Title"),
+                                            string.Format(ResourceService.AppMessages.GetString("AM_ConfirmEmail"), this.Email));
+                                        return;
+                                    }
+                                case CreateAccountResult.AlreadyExists:
+                                    {
+                                        messageContent = ResourceService.AppMessages.GetString("AM_EmailAlreadyRegistered");
+                                        break;
+                                    }
+                                case CreateAccountResult.Unknown:
+                                    {
+                                        messageContent = ResourceService.AppMessages.GetString("AM_CreateAccountFailed");
+                                        break;
+                                    }
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
                         }
                         else
                         {
-                            new CustomMessageDialog(
-                                ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                                ResourceService.AppMessages.GetString("AM_AgreeTermsOfService"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialog();
+                            messageContent = ResourceService.AppMessages.GetString("AM_AgreeTermsOfService");
+                           
                         }
                     }
                     else
                     {
-                        new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialog();
+                        messageContent = ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch");
                     }
                 }
                 else
                 {
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_MalformedEmail"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
+                    messageContent = ResourceService.AppMessages.GetString("AM_MalformedEmail");
                 }
             }
             else
             {
-                new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_RequiredFieldsCreateAccount"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
-            }            
+                messageContent = ResourceService.AppMessages.GetString("AM_EmptyRequiredFields");
+            }    
+            if(string.IsNullOrEmpty(messageContent)) return;
+            await DialogService.ShowAlertAsync(this.CreateAccountText, messageContent);
         }        
 
         private bool CheckInputParameters()
@@ -110,20 +139,27 @@ namespace MegaApp.ViewModels
 
         #region AppResources
 
-        public Uri TermsOfServiceUri { get { return new Uri(ResourceService.AppResources.GetString("AR_TermsOfServiceUri")); } }
+        public Uri TermsOfServiceUri => new Uri(ResourceService.AppResources.GetString("AR_TermsOfServiceUri"));
 
         #endregion
 
         #region UiResources
 
-        public string AgreeCreateAccountText { get { return ResourceService.UiResources.GetString("UI_AgreeCreateAccount"); } }
-        public string CreateAccountText { get { return ResourceService.UiResources.GetString("UI_CreateAccount"); } }
-        public string ConfirmPasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_ConfirmPasswordWatermark"); } }
-        public string EmailWatermarkText { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
-        public string FirstNameWatermarkText { get { return ResourceService.UiResources.GetString("UI_FirstNameWatermark"); } }
-        public string LastNameWatermarkText { get { return ResourceService.UiResources.GetString("UI_LastNameWatermark"); } }
-        public string PasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
-        public string TermsOfServiceText { get { return ResourceService.UiResources.GetString("UI_TermsOfService"); } }
+        public string AgreeCreateAccountText => ResourceService.UiResources.GetString("UI_AgreeCreateAccount");
+        public string CreateAccountText => ResourceService.UiResources.GetString("UI_CreateAccount");
+        public string ConfirmPasswordWatermarkText => ResourceService.UiResources.GetString("UI_ConfirmPasswordWatermark");
+        public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
+        public string FirstNameWatermarkText => ResourceService.UiResources.GetString("UI_FirstNameWatermark");
+        public string LastNameWatermarkText => ResourceService.UiResources.GetString("UI_LastNameWatermark");
+        public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
+        public string TermsOfServiceText => ResourceService.UiResources.GetString("UI_TermsOfService");
+
+        #endregion
+
+        #region ProgressMessages
+
+        public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountHeader");
+        public string ProgressSubHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountSubHeader");
 
         #endregion
     }

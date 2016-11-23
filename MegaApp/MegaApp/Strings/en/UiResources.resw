@@ -137,9 +137,25 @@
     <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Confirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmAccount" xml:space="preserve">
+    <value>Confirm account</value>
+    <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
     <value>Confirm your password</value>
     <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmYourAccount" xml:space="preserve">
+    <value>Enter your password to finish creating your account.</value>
+    <comment>Text for the confirmation page with the instructions to follow.</comment>
+  </data>
+  <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
+    <value>Confirm your account</value>
+    <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
     <value>Create account</value>
@@ -150,8 +166,8 @@
     <comment>Text to show when a user wants to create a new folder to type the name for the new folder.</comment>
   </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
-    <value>Your e-mail address</value>
-    <comment>Watermark label for the e-mail address field when create/confirm account and login - (String as short as possible).</comment>
+    <value>Enter your email</value>
+    <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
     <value>No files in your cloud drive</value>
@@ -174,7 +190,7 @@
     <comment>Label for the background of an empty shared folders page - (String as short as possible).</comment>
   </data>
   <data name="UI_FirstNameWatermark" xml:space="preserve">
-    <value>Your first name</value>
+    <value>First name</value>
     <comment>Watermark label for the user's first name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportLinkBorderText" xml:space="preserve">
@@ -183,7 +199,7 @@
 Preserve the {0} code because is for include the name of the destination folder in runtime.</comment>
   </data>
   <data name="UI_LastNameWatermark" xml:space="preserve">
-    <value>Your last name</value>
+    <value>Last name</value>
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
@@ -219,7 +235,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'On' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PasswordWatermark" xml:space="preserve">
-    <value>Your password</value>
+    <value>Enter your password</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_Rename" xml:space="preserve">

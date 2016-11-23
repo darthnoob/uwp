@@ -61,6 +61,70 @@ namespace MegaApp
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+            Frame rootFrame = CreateRootFrame();
+
+            if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                //TODO: Load state from previously suspended application
+            }
+
+            if (e.PrelaunchActivated == false)
+            {
+                // When the navigation stack isn't restored navigate to the first page, configuring 
+                // the new page by passing required information as a navigation parameter
+                if (rootFrame.Content == null)
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+                // Ensure the current window is active
+                Window.Current.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Handle protocol activations.
+        /// </summary>
+        /// <param name="e">Details about the activate request and process.</param>
+        protected override async void OnActivated(IActivatedEventArgs e)
+        {
+            if (e.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
+                // TODO: Handle URI activation
+                // The received URI is eventArgs.Uri.AbsoluteUri
+
+                // Initialize the links information
+                if (LinkInformation == null)
+                    LinkInformation = new LinkInformation();
+
+                LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+
+                Frame rootFrame = CreateRootFrame();
+
+                if (eventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
+
+                // When the navigation stack isn't restored navigate to the first page, configuring 
+                // the new page by passing required information as a navigation parameter
+                if (rootFrame.Content == null)
+                    rootFrame.Navigate(typeof(MainPage), eventArgs);
+
+                // Ensure the current window is active
+                Window.Current.Activate();
+
+                // Check session and special navigation
+                if (await AppService.CheckActiveAndOnlineSession())
+                    await AppService.CheckSpecialNavigation();
+            }
+        }
+
+        /// <summary>
+        /// Get the current root frame or create a new one if not exists
+        /// </summary>
+        /// <returns>The app root frame</returns>
+        private Frame CreateRootFrame()
+        {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -71,31 +135,15 @@ namespace MegaApp
                 rootFrame = new Frame();
 
                 // Add rootFrame as mainframe to navigation service
-                NavigateService.MainFrame = rootFrame;
+                NavigateService.CoreFrame = rootFrame;
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
+            return rootFrame;
         }
 
         /// <summary>
@@ -132,7 +180,12 @@ namespace MegaApp
             if (ApplicationInitialized) return;
 
             // Initialize the application information
-            AppInformation = new AppInformation();
+            if(AppInformation == null)
+                AppInformation = new AppInformation();
+
+            // Initialize the links information
+            if (LinkInformation == null)
+                LinkInformation = new LinkInformation();
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();

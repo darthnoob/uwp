@@ -1,11 +1,8 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.ViewModels;
-using MegaApp.Views;
 
 namespace MegaApp.MegaApi
 {
@@ -37,7 +34,7 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessageTitle
         {
-            get { return ResourceService.AppMessages.GetString("AM_CreateAccountFailed_Title").ToUpper(); }
+            get { return ResourceService.UiResources.GetString("UI_CreateAccount"); }
         }
 
         protected override bool ShowErrorMessage
@@ -47,22 +44,26 @@ namespace MegaApp.MegaApi
 
         protected override string SuccessMessage
         {
-            get { return ResourceService.AppMessages.GetString("AM_ConfirmNeeded"); }
+            get
+            {
+                return string.Format(ResourceService.AppMessages.GetString("AM_ConfirmEmail"), 
+                    _createAccountViewModel.Email);
+            }
         }
 
         protected override string SuccessMessageTitle
         {
-            get { return ResourceService.AppMessages.GetString("AM_ConfirmNeeded_Title").ToUpper(); }
+            get { return ResourceService.AppMessages.GetString("AM_ConfirmEmail_Title"); }
         }
 
         protected override bool ShowSuccesMessage
         {
-            get { return false; } //Shown when navigates to the "InitTourPage"
+            get { return true; }
         }
 
         protected override bool NavigateOnSucces
         {
-            get { return true; }
+            get { return false; }
         }
 
         protected override bool ActionOnSucces
@@ -72,13 +73,12 @@ namespace MegaApp.MegaApi
 
         protected override Type NavigateToPage
         {
-            //get { return typeof(InitTourPage); }
-            get { return typeof(LoginAndCreateAccountPage); }
+            get { throw new NotImplementedException(); }
         }
 
         protected override NavigationObject NavigationObject
         {
-            get { return NavigationObject.Create(typeof(CreateAccountViewModel)); }
+            get { throw new NotImplementedException(); }
         }
 
         #endregion

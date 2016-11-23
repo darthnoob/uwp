@@ -19,7 +19,7 @@ namespace MegaApp.Classes
 
         #region Controls
 
-        protected MessageDialog DialogWindow { get; set; }        
+        protected MessageDialog DialogWindow { get; set; }
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace MegaApp.Classes
             DialogWindow = new MessageDialog(_message, _title);
 
             // Add commands and set their callbacks
-            DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"), 
+            DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                 new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
 
             // Set the command that will be invoked by default
@@ -74,7 +74,7 @@ namespace MegaApp.Classes
             _appInformation = appInformation;
 
             DialogWindow = new MessageDialog(_message, _title);
-            
+
             // Create buttons defined in the constructor
             switch (dialogButtons)
             {

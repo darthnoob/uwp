@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Services;
@@ -10,6 +11,7 @@ namespace MegaApp.MegaApi
     class LogOutRequestListener: BaseRequestListener
     {
         private readonly bool _navigateOnSucces;
+        private readonly AutoResetEvent _waitEventRequest;
 
         /// <summary>
         /// LogOutRequestListener constructor
@@ -17,10 +19,14 @@ namespace MegaApp.MegaApi
         /// <param name="navigateOnSucces">
         /// Boolean value to allow the developer decide if the app should go to the
         /// "InitTourPage" after logout or no. The default value is TRUE.
-        /// </param>        
-        public LogOutRequestListener(bool navigateOnSucces = true)
+        /// </param>
+        /// <param name="waitEventRequest">
+        /// Event to notify to the caller method that the request has finished
+        /// </param>
+        public LogOutRequestListener(bool navigateOnSucces = true, AutoResetEvent waitEventRequest = null)
         {
             _navigateOnSucces = navigateOnSucces;
+            _waitEventRequest = waitEventRequest;
         }
 
         protected override string ProgressMessage
@@ -87,6 +93,7 @@ namespace MegaApp.MegaApi
 
         protected override void OnSuccesAction(MegaSDK api, MRequest request)
         {
+            _waitEventRequest?.Set();
             AppService.LogoutActions();
         }
 
