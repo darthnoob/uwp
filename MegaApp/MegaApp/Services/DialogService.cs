@@ -9,7 +9,7 @@ namespace MegaApp.Services
         public static async Task ShowAlertAsync(string title, string content)
         {
             var dialog = new MessageDialog(content, title);
-            await dialog.ShowAsync();
+            await UiService.OnUiThread(async() => await dialog.ShowAsync());
         }
     }
 }

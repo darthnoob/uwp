@@ -16,12 +16,13 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <Grid x:Name="LayoutRoot" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="84"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid x:Name="HeaderGrid" Margin="0,-6,0,0" DataContext="{Binding ActiveFolderView}">                
+            <Grid Margin="0,-6,0,0" 
+                  DataContext="{Binding ActiveFolderView}">                
                 <!--<StackPanel Margin="0,0,24,24" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                     <Button x:Name="BtnGoToTop" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
                         <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToTopPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,2"/>
@@ -38,15 +39,23 @@
                 </StackPanel>-->
             </Grid>
             <Grid Grid.Row="1">
-                <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" SelectionChanged="OnPivotSelectionChanged" Margin="0">
-                    <PivotItem x:Name="CloudDrivePivot" Header="{Binding CloudDriveNameText, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
-                        <Grid x:Name="CloudDriveRoot" Background="Transparent" Margin="0,0,12,0">
+                <Pivot x:Name="MainPivot"
+                       HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" 
+                       SelectionChanged="OnPivotSelectionChanged">
+                    <PivotItem 
+                        x:Name="CloudDrivePivot" 
+                        Header="{Binding CloudDriveNameText}" 
+                        CacheMode="{x:Null}" 
+                        Margin="0,-10,0,0">
+                        <Grid x:Name="CloudDriveRoot" 
+                              Background="Transparent" 
+                              Margin="0,0,12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0">
+                            <StackPanel Grid.Row="0">
                                 <Grid Margin="24,0,12,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -56,7 +65,13 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar 
+                                        VerticalAlignment="Center" 
+                                        IsIndeterminate="True" 
+                                        Foreground="{StaticResource MegaRedColorBrush}" 
+                                        Height="8" 
+                                        Grid.ColumnSpan="2" 
+                                        Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -68,11 +83,30 @@
                                         Seperator=">"
                                         ItemsSource="{Binding CloudDrive.BreadCrumbs}"
                                         OverFlow="..."/>
-                                    <TextBlock Text="{Binding CloudDrive.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <TextBlock Text="{Binding CloudDrive.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding CloudDrive.EmptyInformationText}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center"                                         
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding CloudDrive.FolderRootNode.Information}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center"                                         
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
-                            <Grid x:Name="CloudDriveContentPanel" Grid.Row="1" Margin="12,0,0,0">
+                            <Grid 
+                                x:Name="CloudDriveContentPanel" 
+                                Grid.Row="1" 
+                                Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstCloudDrive"
                                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -87,8 +121,12 @@
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout x:Name="CloudDriveMenuFlyout">
                                             <MenuFlyout.Items>
-                                                <MenuFlyoutItem Text="Rename" Command="{Binding RenameItemCommand}"/>
-                                                <MenuFlyoutItem Text="Move to rubbish bin" Command="{Binding MoveItemToRubbishBinCommand}"/>
+                                                <MenuFlyoutItem 
+                                                    Text="{Binding RenameText}" 
+                                                    Command="{Binding RenameItemCommand}"/>
+                                                <MenuFlyoutItem 
+                                                    Text="{Binding MoveToRubbishBinText}" 
+                                                    Command="{Binding MoveItemToRubbishBinCommand}"/>
                                             </MenuFlyout.Items>                                            
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
@@ -96,14 +134,21 @@
                             </Grid>
                         </Grid>
                     </PivotItem>
-                    <PivotItem x:Name="RubbishBinPivot" Header="{Binding RubbishBinNameText, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
-                        <Grid x:Name="RubbishBinRoot" Background="Transparent" Margin="0,0,12,0">                            
+                    <PivotItem 
+                        x:Name="RubbishBinPivot" 
+                        Header="{Binding RubbishBinNameText}" 
+                        CacheMode="{x:Null}" 
+                        Margin="0,-10,0,0">
+                        <Grid 
+                            x:Name="RubbishBinRoot" 
+                            Background="Transparent" 
+                            Margin="0,0,12,0">                            
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0">
+                            <StackPanel Grid.Row="0">
                                 <Grid Margin="24,0,12,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -113,7 +158,13 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar 
+                                        VerticalAlignment="Center" 
+                                        IsIndeterminate="True" 
+                                        Foreground="{StaticResource MegaRedColorBrush}" 
+                                        Height="8" 
+                                        Grid.ColumnSpan="2" 
+                                        Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -125,12 +176,31 @@
                                         Seperator=">"
                                         ItemsSource="{Binding RubbishBin.BreadCrumbs}"
                                         OverFlow="..."/>
-                                    <TextBlock Text="{Binding RubbishBin.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <TextBlock Text="{Binding RubbishBin.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding RubbishBin.EmptyInformationText}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center" 
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding RubbishBin.FolderRootNode.Information}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center" 
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
 
-                            <Grid x:Name="RubbishBinContentPanel" Grid.Row="1" Margin="12,0,0,0">
+                            <Grid 
+                                x:Name="RubbishBinContentPanel" 
+                                Grid.Row="1" 
+                                Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstRubbishBin"
                                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -145,8 +215,12 @@
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout x:Name="RubbishBinMenuFlyout">
                                             <MenuFlyout.Items>
-                                                <MenuFlyoutItem Text="Rename" Command="{Binding RenameItemCommand}"/>
-                                                <MenuFlyoutItem Text="Remove" Command="{Binding RemoveItemCommand}"/>
+                                                <MenuFlyoutItem 
+                                                    Text="{Binding RenameText}"
+                                                    Command="{Binding RenameItemCommand}"/>
+                                                <MenuFlyoutItem 
+                                                    Text="{Binding RemoveText}" 
+                                                    Command="{Binding RemoveItemCommand}"/>
                                             </MenuFlyout.Items>
                                         </MenuFlyout>
                                     </FlyoutBase.AttachedFlyout>
@@ -162,28 +236,25 @@
             <AppBarButton 
                 x:Name="AddFolderButton"
                 Icon="NewFolder" 
-                Label="Add folder" 
+                Label="{Binding AddFolderText}" 
                 Command="{Binding ActiveFolderView.AddFolderCommand}"
                 Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="CleanRubbishBinButton"
                 Icon="Delete" 
-                Label="Empty Rubbish Bin" 
+                Label="{Binding EmptyRubbishBinText}" 
                 Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
                 Click="OnButtonClick"/>
-            <AppBarButton
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
                 x:Name="RefreshButton"
                 Icon="Refresh" 
-                Label="Refresh" 
+                Label="{Binding RefreshText}" 
                 Command="{Binding ActiveFolderView.RefreshCommand}"
                 Click="OnButtonClick"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 </views:BaseCloudDrivePage>
-
-
-
-
-
-
-
+    

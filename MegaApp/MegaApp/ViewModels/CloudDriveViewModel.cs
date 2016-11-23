@@ -113,18 +113,24 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string CloudDriveNameText { get { return ResourceService.UiResources.GetString("UI_CloudDriveName"); } }
-        public string RubbishBinNameText { get { return ResourceService.UiResources.GetString("UI_RubbishBinName"); } }
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_AddFolder");
+        public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
+        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
 
         #endregion
 
         #region VisualResources
 
-        public string BreadcrumbHomeMegaIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon"); } }
-        public string BreadcrumbHomeRubbishBinIcon { get { return ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon"); } }
-        public string EmptyCloudDrivePathData { get { return ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData"); } }
-        public string EmptyFolderPathData { get { return ResourceService.VisualResources.GetString("VR_EmptyFolderPathData"); } }
-        public string FolderLoadingPathData { get { return ResourceService.VisualResources.GetString("VR_FolderLoadingPathData"); } }
+        public string BreadcrumbHomeMegaIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon");
+        public string BreadcrumbHomeRubbishBinIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon");
+        public string EmptyCloudDrivePathData => ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData");
+        public string EmptyFolderPathData => ResourceService.VisualResources.GetString("VR_EmptyFolderPathData");
+        public string FolderLoadingPathData => ResourceService.VisualResources.GetString("VR_FolderLoadingPathData");
 
         #endregion
     }

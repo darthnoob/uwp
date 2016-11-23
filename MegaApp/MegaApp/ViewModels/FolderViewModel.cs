@@ -252,12 +252,14 @@ namespace MegaApp.ViewModels
                 switch (this.Type)
                 {
                     case ContainerType.RubbishBin:
-                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, this.MegaSdk.getRubbishNode(), this.Type);
+                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
+                            App.AppInformation, this.MegaSdk.getRubbishNode(), this.Type);
                         break;
 
                     case ContainerType.CloudDrive:
                     case ContainerType.FolderLink:
-                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, this.MegaSdk.getRootNode(), this.Type);
+                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
+                            App.AppInformation, this.MegaSdk.getRootNode(), this.Type);
                         break;
                 }
             }
@@ -273,8 +275,8 @@ namespace MegaApp.ViewModels
             if (App.AppInformation.PickerOrAsyncDialogIsOpen) return;
 
             var inputDialog = new CustomInputDialog(
-                ResourceService.UiResources.GetString("UI_AddFolder"),
                 ResourceService.UiResources.GetString("UI_CreateFolder"),
+                ResourceService.UiResources.GetString("UI_TypeFolderName"),
                 App.AppInformation);
 
             inputDialog.OkButtonTapped += (sender, args) =>

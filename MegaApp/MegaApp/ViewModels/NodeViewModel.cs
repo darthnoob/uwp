@@ -162,7 +162,7 @@ namespace MegaApp.ViewModels
 
             var inputDialog = new CustomInputDialog(
                 ResourceService.UiResources.GetString("UI_Rename"), 
-                ResourceService.UiResources.GetString("UI_RenameItem"), 
+                ResourceService.UiResources.GetString("UI_TypeNewName"), 
                 App.AppInformation, settings);
 
             inputDialog.OkButtonTapped += (sender, args) =>
