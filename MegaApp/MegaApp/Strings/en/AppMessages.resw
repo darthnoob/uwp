@@ -160,7 +160,8 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to copy a file failed by a non specific cause - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
-    <value>You don't have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?Please try to save/copy the file to the your device's internal memory instead.</value>
+    <value>You don't have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?
+Please try to save/copy the file to the your device's internal memory instead.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
@@ -455,5 +456,93 @@ Preserve the [{0}] code because is for include the error code or the error messa
   <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
     <value>You are logged in with another account</value>
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DownloadNodeFailed" xml:space="preserve">
+    <value>Failed to download file. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to download a node failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_DownloadNodeFailed_Title" xml:space="preserve">
+    <value>Download failed</value>
+    <comment>Title of the dialog displayed when the process/request to download a node failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_OverquotaAlert" xml:space="preserve">
+    <value>Operation not allowed, you will exceed the storage limit of your account. Do you want to upgrade your account?</value>
+    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
+    <value>Overquota Alert!</value>
+    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
+    <value>Failed to prepare file: {0} for upload</value>
+    <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_PrepareFileForUploadFailed_Title" xml:space="preserve">
+    <value>Error preparing file</value>
+    <comment>Title of the dialog displayed when the process to prepare a file for upload failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PrepareFilesForUploadFailed" xml:space="preserve">
+    <value>Failed to prepare file(s) for upload. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to prepare a file(s) for upload failed.</comment>
+  </data>
+  <data name="AM_PrepareFilesForUploadFailed_Title" xml:space="preserve">
+    <value>Error preparing file(s)</value>
+    <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_UploadNodeFailed" xml:space="preserve">
+    <value>Failed to upload file. Please try again. [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to upload a node failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_UploadNodeFailed_Title" xml:space="preserve">
+    <value>Upload failed</value>
+    <comment>Title of the dialog displayed when the process/request to upload a node failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SelectFolderFailed" xml:space="preserve">
+    <value>Failed to select folder. Please, try again or select another folder: [{0}]</value>
+    <comment>Message of the dialog displayed when the process to select a folder failed.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_SelectFolderFailed_Title" xml:space="preserve">
+    <value>Select folder failed</value>
+    <comment>Title of the dialog displayed when the process to select a folder failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DowloadPathUnauthorizedAccess" xml:space="preserve">
+    <value>You don't have access to the selected download path. Please select a different download path and try again.</value>
+    <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder.</comment>
+  </data>
+  <data name="AM_DowloadPathUnauthorizedAccess_Title" xml:space="preserve">
+    <value>Unauthorized access</value>
+    <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
+  </data>
+  <data name="AM_DownloadNodeFailedNoErrorCode" xml:space="preserve">
+    <value>Failed to download the file. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to download a node failed.</comment>
+  </data>
+  <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
+    <value>You don't have access to the path '{0}'. Please select another one and try again.</value>
+    <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
+Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
+  </data>
+  <data name="AM_InvalidFileName" xml:space="preserve">
+    <value>The name of the file '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <comment>Message of the dialog displayed in cases that a file name is not valid or has illegal characters.
+Preserve the '{0}' code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_InvalidFolderNameOrPath" xml:space="preserve">
+    <value>The name or path of the folder '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <comment>Message of the dialog displayed in cases that a folder name or path is not valid or has illegal characters.
+Preserve the '{0}' code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_PathTooLong" xml:space="preserve">
+    <value>The path of the file/folder '{0}' is too long. Please change it and try again.</value>
+    <comment>Message of the dialog displayed in cases that the file/folder path is too long.
+Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
+  </data>
+  <data name="AM_SelectFolderFailedNoErrorCode" xml:space="preserve">
+    <value>Failed to select the folder. Please try again or select another folder.</value>
+    <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
 </root>

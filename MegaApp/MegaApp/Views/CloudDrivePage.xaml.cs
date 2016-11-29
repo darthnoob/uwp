@@ -120,7 +120,7 @@ namespace MegaApp.Views
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
             {
-                AddFolderButton.Visibility = Visibility.Visible;
+                AddFolderButton.Visibility = UploadButton.Visibility = Visibility.Visible;                
                 CleanRubbishBinButton.Visibility = Visibility.Collapsed;
 
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
@@ -128,7 +128,7 @@ namespace MegaApp.Views
 
             if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
             {
-                AddFolderButton.Visibility = Visibility.Collapsed;
+                AddFolderButton.Visibility = UploadButton.Visibility = Visibility.Collapsed;
                 CleanRubbishBinButton.Visibility = Visibility.Visible;
 
                 this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;

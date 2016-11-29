@@ -117,10 +117,9 @@ namespace MegaApp.ViewModels
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
-        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
-        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
-        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
 
         #endregion
 

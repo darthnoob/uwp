@@ -4,6 +4,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Interfaces;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -14,6 +15,28 @@ namespace MegaApp.ViewModels
             : base(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection)
         {
             Information = Size.ToStringAndSuffix();
+            Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);
         }
+
+        #region Override Methods
+
+        public override async void Open()
+        {
+            await FileService.OpenFile(LocalDownloadPath);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void SetFile()
+        {
+            if (!FileService.FileExists(LocalDownloadPath))
+                Transfer.StartTransfer();
+            else
+                DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
+        }
+
+        #endregion
     }
 }

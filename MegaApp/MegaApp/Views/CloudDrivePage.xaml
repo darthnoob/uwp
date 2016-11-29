@@ -122,6 +122,9 @@
                                         <MenuFlyout x:Name="CloudDriveMenuFlyout">
                                             <MenuFlyout.Items>
                                                 <MenuFlyoutItem 
+                                                    Text="{Binding DownloadText}"
+                                                    Command="{Binding DownloadItemCommand}"/>
+                                                <MenuFlyoutItem 
                                                     Text="{Binding RenameText}" 
                                                     Command="{Binding RenameItemCommand}"/>
                                                 <MenuFlyoutItem 
@@ -216,6 +219,9 @@
                                         <MenuFlyout x:Name="RubbishBinMenuFlyout">
                                             <MenuFlyout.Items>
                                                 <MenuFlyoutItem 
+                                                    Text="{Binding DownloadText}"
+                                                    Command="{Binding DownloadItemCommand}"/>
+                                                <MenuFlyoutItem 
                                                     Text="{Binding RenameText}"
                                                     Command="{Binding RenameItemCommand}"/>
                                                 <MenuFlyoutItem 
@@ -233,6 +239,12 @@
         </Grid>
 
         <CommandBar Grid.Row="1">
+            <AppBarButton 
+                x:Name="UploadButton"
+                Icon="Upload" 
+                Label="{Binding UploadText}" 
+                Command="{Binding ActiveFolderView.UploadCommand}"
+                Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="AddFolderButton"
                 Icon="NewFolder" 

@@ -42,14 +42,15 @@ namespace MegaApp.ViewModels
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.DownloadItemCommand = new RelayCommand(DownloadItem);
             this.MoveItemToRubbishBinCommand = new RelayCommand(this.MoveItemToRubbishBin);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveItemCommand = new RelayCommand(this.RemoveItem);
-            this.RenameItemCommand = new RelayCommand(this.RenameItem);            
+            this.RenameItemCommand = new RelayCommand(this.RenameItem);
+            this.UploadCommand = new RelayCommand(this.Upload);
 
-            //this.DownloadItemCommand = new DelegateCommand(this.DownloadItem);
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);
             //this.ChangeViewCommand = new DelegateCommand(this.ChangeView);
@@ -104,16 +105,17 @@ namespace MegaApp.ViewModels
 
         public ICommand AddFolderCommand { get; private set; }
         public ICommand CleanRubbishBinCommand { get; private set; }
+        public ICommand DownloadItemCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; private set; }
         public ICommand ItemSelectedCommand { get; private set; }
         public ICommand MoveItemToRubbishBinCommand { get; private set; }
         public ICommand RefreshCommand { get; private set; }
         public ICommand RemoveItemCommand { get; private set; }
         public ICommand RenameItemCommand { get; private set; }
-        
+        public ICommand UploadCommand { get; private set; }
+
         //public ICommand ChangeViewCommand { get; private set; }
         //public ICommand GetLinkCommand { get; private set; }        
-        //public ICommand DownloadItemCommand { get; private set; }
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }
         //public ICommand MultiSelectCommand { get; set; }
@@ -316,6 +318,11 @@ namespace MegaApp.ViewModels
             customMessageDialog.ShowDialog();
         }
 
+        private void DownloadItem()
+        {
+            FocusedNode?.Download(TransferService.MegaTransfers);
+        }
+
         private void MoveItemToRubbishBin()
         {
             FocusedNode?.MoveToRubbishBinAsync();
@@ -329,7 +336,60 @@ namespace MegaApp.ViewModels
         private void RenameItem()
         {
             FocusedNode?.Rename();
-        }        
+        }
+
+        private async void Upload()
+        {
+            // Set upload directory only once for speed improvement and if not exists, create dir
+            var uploadDir = AppService.GetUploadDirectoryPath(true);
+
+            bool exceptionCatched = false;
+            try
+            {
+                var pickedFiles = await FileService.SelectMultipleFiles();
+                foreach (StorageFile file in pickedFiles)
+                {
+                    if (file == null) continue; // To avoid null references
+
+                    try
+                    {
+                        string tempUploadFilePath = Path.Combine(uploadDir, file.Name);
+                        using (var fs = new FileStream(tempUploadFilePath, FileMode.Create))
+                        {
+                            // Set buffersize to avoid copy failure of large files
+                            var stream = await file.OpenStreamForReadAsync();                            
+                            await stream.CopyToAsync(fs, 8192);
+                            await fs.FlushAsync();
+                        }
+
+                        var uploadTransfer = new TransferObjectModel(FolderRootNode, 
+                            TransferType.Upload, tempUploadFilePath);
+
+                        TransferService.MegaTransfers.Add(uploadTransfer);                        
+                        uploadTransfer.StartTransfer();
+                    }
+                    catch (Exception)
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
+                        exceptionCatched = true;
+                    }
+                }
+            }            
+            catch (Exception)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_PrepareFilesForUploadFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_PrepareFilesForUploadFailed"));
+                exceptionCatched = true;
+            }
+            finally
+            {
+                //if(!exceptionCatched)
+                    //NavigateService.NavigateTo(typeof(TransferPage), NavigationParameter.Normal);
+            }
+        }
 
         public void OnChildNodeTapped(IMegaNode node)
         {
@@ -844,6 +904,13 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        
+        #region UiResources
+
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+
+        #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -15,9 +14,16 @@ namespace MegaApp.ViewModels
             : base(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection)
         {
             SetFolderInfo();
+            Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);
 
             this.IsDefaultImage = true;
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_default");
+
+            if (megaSdk.isShared(megaNode))
+                this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_shared");
+
+            if (!megaNode.getName().ToLower().Equals("camera uploads")) return;
+            this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_photo");
         }
 
         #region Public Methods
@@ -29,7 +35,7 @@ namespace MegaApp.ViewModels
 
             OnUiThread(() =>
             {
-                this.Information = String.Format("{0} {1} | {2} {3}",
+                this.Information = string.Format("{0} {1} | {2} {3}",
                     childFolders, childFolders == 1 ? ResourceService.UiResources.GetString("UI_SingleFolder").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower(),
                     childFiles, childFiles == 1 ? ResourceService.UiResources.GetString("UI_SingleFile").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower());
             });

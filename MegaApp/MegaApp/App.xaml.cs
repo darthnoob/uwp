@@ -194,6 +194,9 @@ namespace MegaApp
             GlobalListener = new GlobalListener(AppInformation);
             SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
+            // Add a global transfer listener to process all transfers.            
+            SdkService.MegaSdk.addTransferListener(TransferService.GlobalTransferListener);
+
             // Initialize Folders
             AppService.InitializeAppFolders();
 

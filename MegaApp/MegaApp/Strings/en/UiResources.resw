@@ -165,6 +165,10 @@
     <value>Create folder</value>
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Download" xml:space="preserve">
+    <value>Download</value>
+    <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
     <value>Enter your email</value>
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
@@ -246,6 +250,10 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Refresh</value>
     <comment>Label for any 'Refresh' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Remove" xml:space="preserve">
+    <value>Remove</value>
+    <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_Rename" xml:space="preserve">
     <value>Rename</value>
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -273,6 +281,10 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_TypeNewName" xml:space="preserve">
     <value>Type a new name:</value>
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
+  </data>
+  <data name="UI_Upload" xml:space="preserve">
+    <value>Upload</value>
+    <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Yes" xml:space="preserve">
     <value>Yes</value>

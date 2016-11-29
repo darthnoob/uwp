@@ -6,9 +6,9 @@ using MegaApp.ViewModels;
 
 namespace MegaApp.Classes
 {
-    public class TransferQueu: ObservableCollection<TransferObjectModel>
+    public class TransferQueue: ObservableCollection<TransferObjectModel>
     {
-        public TransferQueu()
+        public TransferQueue()
         {
             QueuePaused = true;
 
@@ -23,77 +23,82 @@ namespace MegaApp.Classes
         {
             base.OnCollectionChanged(e);
 
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch(e.Action)
             {
-                foreach (var item in e.NewItems)
-                {
-                    var transferObject = (TransferObjectModel) item;
-
-                    switch (transferObject.Type)
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var item in e.NewItems)
                     {
-                        case TransferType.Download:
-                            DownloadSort(transferObject);
-                            break;
-                        case TransferType.Upload:
-                            UploadSort(transferObject);
-                            break;
-                    }
-                }
-            }
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    var transferObject = (TransferObjectModel)item;
+                        var transferObject = (TransferObjectModel)item;
+                        switch (transferObject.Type)
+                        {
+                            case TransferType.Download:
+                                DownloadSort(transferObject);
+                                break;
 
-                    switch (transferObject.Type)
-                    {
-                        case TransferType.Download:
-                            Downloads.Remove(transferObject);
-                            break;
-                        case TransferType.Upload:
-                            Uploads.Remove(transferObject);
-                            break;
+                            case TransferType.Upload:
+                                UploadSort(transferObject);
+                                break;
+                        }
                     }
-                }
+                    break;
+
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                    {
+                        var transferObject = (TransferObjectModel)item;
+                        switch (transferObject.Type)
+                        {
+                            case TransferType.Download:
+                                Downloads.Remove(transferObject);
+                                break;
+
+                            case TransferType.Upload:
+                                Uploads.Remove(transferObject);
+                                break;
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
 
         private void DownloadsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch (e.Action)
             {
-                foreach (var item in e.NewItems)
-                {
-                    ((TransferObjectModel)item).PropertyChanged += DownloadsOnPropertyChanged;
-                }
-            }
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var item in e.NewItems)
+                        ((TransferObjectModel)item).PropertyChanged += DownloadsOnPropertyChanged;
+                    break;
 
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    ((TransferObjectModel)item).PropertyChanged -= DownloadsOnPropertyChanged;
-                }
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                        ((TransferObjectModel)item).PropertyChanged -= DownloadsOnPropertyChanged;
+                    break;
+
+                default:
+                    break;
             }
         }
 
         private void UploadsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            switch (e.Action)
             {
-                foreach (var item in e.NewItems)
-                {
-                    ((TransferObjectModel)item).PropertyChanged += UploadsOnPropertyChanged;
-                }
-            }
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var item in e.NewItems)
+                        ((TransferObjectModel)item).PropertyChanged += UploadsOnPropertyChanged;
+                    break;
 
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                foreach (var item in e.OldItems)
-                {
-                    ((TransferObjectModel)item).PropertyChanged -= UploadsOnPropertyChanged;
-                }
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                        ((TransferObjectModel)item).PropertyChanged -= UploadsOnPropertyChanged;
+                    break;
+
+                default:
+                    break;
             }
         }       
 

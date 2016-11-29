@@ -53,7 +53,7 @@ namespace MegaApp.Services
 
             //You can send messages to the logger using MEGASDK.log(), those messages will be received
             //in the active logger
-            MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
 
             // Set the ID for statistics
             MegaSDK.setStatsID(DeviceService.GetDeviceId());

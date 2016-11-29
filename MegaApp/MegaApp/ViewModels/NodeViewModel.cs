@@ -11,6 +11,8 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MegaApp.ViewModels
 {
@@ -28,28 +30,28 @@ namespace MegaApp.ViewModels
             Update(megaNode, parentContainerType);
             SetDefaultValues();
 
-            this.ParentCollection = parentCollection;
-            this.ChildCollection = childCollection;
+            ParentCollection = parentCollection;
+            ChildCollection = childCollection;
         }
 
         #region Private Methods
 
         private void SetDefaultValues()
         {
-            this.IsMultiSelected = false;
-            this.DisplayMode = NodeDisplayMode.Normal;
+            IsMultiSelected = false;
+            DisplayMode = NodeDisplayMode.Normal;
 
-            if (this.Type == MNodeType.TYPE_FOLDER) return;
+            if (Type == MNodeType.TYPE_FOLDER) return;
 
             if (FileService.FileExists(ThumbnailPath))
             {
-                this.IsDefaultImage = false;
-                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+                IsDefaultImage = false;
+                ThumbnailImageUri = new Uri(ThumbnailPath);
             }
             else
             {
-                this.IsDefaultImage = true;
-                this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
+                IsDefaultImage = true;
+                DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
             }
         }
 
@@ -57,12 +59,12 @@ namespace MegaApp.ViewModels
         {
             if (FileService.FileExists(ThumbnailPath))
             {
-                this.IsDefaultImage = false;
-                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+                IsDefaultImage = false;
+                ThumbnailImageUri = new Uri(ThumbnailPath);
             }
             else if (Convert.ToBoolean(MegaSdk.isLoggedIn()) || ParentContainerType == ContainerType.FolderLink)
             {
-                this.MegaSdk.getThumbnail(OriginalMNode, ThumbnailPath, new GetThumbnailRequestListener(this));
+                MegaSdk.getThumbnail(OriginalMNode, ThumbnailPath, new GetThumbnailRequestListener(this));
             }
         }
 
@@ -96,8 +98,8 @@ namespace MegaApp.ViewModels
             get
             {
                 return Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), 
-                    this.OriginalMNode.getBase64Handle());
+                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"),
+                    OriginalMNode.getBase64Handle());
             }
         }
 
@@ -119,13 +121,26 @@ namespace MegaApp.ViewModels
             set { SetField(ref _sizeText, value); }
         }
 
-        public bool IsMultiSelected { get; set; }
+        private bool _isMultiSelected;
+        public bool IsMultiSelected
+        {
+            get { return _isMultiSelected; }
+            set { SetField(ref _isMultiSelected, value); }
+        }
 
-        public bool IsFolder { get; }
+        public bool IsFolder
+        {
+            get { return Type == MNodeType.TYPE_FOLDER ? true : false; }
+        }
 
-        public bool IsImage { get; }
+        public bool IsImage => ImageService.IsImage(Name);
 
-        public bool IsDefaultImage { get; set; }
+        private bool _IsDefaultImage;
+        public bool IsDefaultImage
+        {
+            get { return _IsDefaultImage; }
+            set { SetField(ref _IsDefaultImage, value); }
+        }
 
         private Uri _thumbnailImageUri;
         public Uri ThumbnailImageUri
@@ -155,7 +170,7 @@ namespace MegaApp.ViewModels
 
             var settings = new CustomInputDialogSettings()
             {
-                DefaultText = this.Name,
+                DefaultText = Name,
                 SelectDefaultText = true,
                 IgnoreExtensionInSelection = true,
             };
@@ -190,20 +205,20 @@ namespace MegaApp.ViewModels
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;
 
-            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+            if (OriginalMNode == null) return NodeActionResult.Failed;
 
             if (!isMultiSelect)
             {
                 var result = await new CustomMessageDialog(
                     ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), Name),
                     App.AppInformation,
                     MessageDialogButtons.OkCancel).ShowDialogAsync();
 
                 if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
             }
 
-            this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(),
+            MegaSdk.moveNode(OriginalMNode, MegaSdk.getRubbishNode(),
                 new RemoveNodeRequestListener(this, isMultiSelect, waitEventRequest));
 
             return NodeActionResult.IsBusy;
@@ -214,20 +229,20 @@ namespace MegaApp.ViewModels
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;
 
-            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+            if (OriginalMNode == null) return NodeActionResult.Failed;
 
             if (!isMultiSelect)
             {
                 var result = await new CustomMessageDialog(
                     ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), Name),
                     App.AppInformation,
                     MessageDialogButtons.OkCancel).ShowDialogAsync();
 
                 if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
             }
 
-            this.MegaSdk.remove(this.OriginalMNode, 
+            MegaSdk.remove(OriginalMNode, 
                 new DeleteNodeRequestListener(this, isMultiSelect, waitEventRequest));
 
             return NodeActionResult.IsBusy;
@@ -238,52 +253,79 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public void Download(TransferQueu transferQueu, string downloadPath = null)
+        public async void Download(TransferQueue transferQueue)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
 
+            var downloadFolder = await FolderService.SelectFolder();
+            if (downloadFolder != null)
+            {
+                // Extra check to try avoid null values
+                if (string.IsNullOrWhiteSpace(downloadFolder.Path))
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_SelectFolderFailedNoErrorCode"));
+                    return;
+                }
+
+                // Check for illegal characters in the download path
+                if (FolderService.HasIllegalChars(downloadFolder.Path))
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_InvalidFolderNameOrPath"), downloadFolder.Path));
+                    return;
+                }
+
+                Transfer.ExternalDownloadPath = downloadFolder.Path;
+                transferQueue.Add(Transfer);                
+                Transfer.StartTransfer();
+            }
         }
 
         public void Update(MNode megaNode, ContainerType parentContainerType)
         {
             OriginalMNode = megaNode;
-            this.Handle = megaNode.getHandle();
-            this.Base64Handle = megaNode.getBase64Handle();
-            this.Type = megaNode.getType();
-            this.ParentContainerType = parentContainerType;
-            this.Name = megaNode.getName();
-            this.Size = MegaSdk.getSize(megaNode);
-            this.SizeText = this.Size.ToStringAndSuffix();
-            this.IsExported = megaNode.isExported();
-            this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
+            Handle = megaNode.getHandle();
+            Base64Handle = megaNode.getBase64Handle();
+            Type = megaNode.getType();
+            ParentContainerType = parentContainerType;
+            Name = megaNode.getName();
+            Size = MegaSdk.getSize(megaNode);
+            SizeText = Size.ToStringAndSuffix();
+            IsExported = megaNode.isExported();
+            CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
 
-            if (this.Type == MNodeType.TYPE_FILE)
-                this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
+            if (Type == MNodeType.TYPE_FILE)
+                ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
             else
-                this.ModificationTime = this.CreationTime;
+                ModificationTime = CreationTime;
 
-            //if (!App.MegaSdk.isInShare(megaNode) && this.ParentContainerType != ContainerType.PublicLink &&
-            //    this.ParentContainerType != ContainerType.InShares && this.ParentContainerType != ContainerType.ContactInShares &&
-            //    this.ParentContainerType != ContainerType.FolderLink)
+            //if (!App.MegaSdk.isInShare(megaNode) && ParentContainerType != ContainerType.PublicLink &&
+            //    ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
+            //    ParentContainerType != ContainerType.FolderLink)
             //    CheckAndUpdateSFO(megaNode);
-            this.IsAvailableOffline = false;
-            this.IsSelectedForOffline = false;
+            IsAvailableOffline = false;
+            IsSelectedForOffline = false;
         }
 
         public void SetThumbnailImage()
         {
-            if (this.Type == MNodeType.TYPE_FOLDER) return;
+            if (Type == MNodeType.TYPE_FOLDER) return;
 
-            if (this.ThumbnailImageUri != null && !IsDefaultImage) return;
+            if (ThumbnailImageUri != null && !IsDefaultImage) return;
 
-            if (this.IsImage || this.OriginalMNode.hasThumbnail())
+            if (IsImage || OriginalMNode.hasThumbnail())
             {
                 GetThumbnail();
             }
         }
 
-        public void Open()
+        public virtual void Open()
         {
-
+            throw new NotImplementedException();
         }
 
         public ulong Handle { get; set; }
@@ -310,24 +352,18 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private String _isSelectedForOfflineText;
-        public String IsSelectedForOfflineText
+        private string _isSelectedForOfflineText;
+        public string IsSelectedForOfflineText
         {
             get { return _isSelectedForOfflineText; }
-            set
-            {
-                SetField(ref _isSelectedForOfflineText, value);
-            }
+            set { SetField(ref _isSelectedForOfflineText, value); }
         }
 
         private bool _isAvailableOffline;
         public bool IsAvailableOffline
         {
             get { return _isAvailableOffline; }
-            set
-            {
-                SetField(ref _isAvailableOffline, value);
-            }
+            set { SetField(ref _isAvailableOffline, value); }
         }
 
         private bool _isExported;
@@ -340,6 +376,13 @@ namespace MegaApp.ViewModels
         public TransferObjectModel Transfer { get; set; }
 
         public MNode OriginalMNode { get; private set; }
+
+        #endregion
+
+        #region Properties
+
+        public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
+            ResourceService.AppResources.GetString("AR_DownloadsDirectory"), Name);
 
         #endregion
     }
