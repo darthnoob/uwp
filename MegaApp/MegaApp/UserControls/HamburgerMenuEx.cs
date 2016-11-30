@@ -152,8 +152,11 @@ namespace MegaApp.UserControls
         {
             if (e.NewSize.Width >= this.VisualStateWideMinWidth)
             {
-                this.DisplayMode = SplitViewDisplayMode.Inline;
-                this.IsPaneOpen = true;
+                this.DisplayMode = SplitViewDisplayMode.CompactInline;
+                if(e.PreviousSize.Width < this.VisualStateWideMinWidth)
+                    this.IsPaneOpen = true;
+                else
+                    this.IsPaneOpen = this.IsPaneOpen & true;
                 return;
             }
             if (e.NewSize.Width >= this.VisualStateNormalMinWidth)
