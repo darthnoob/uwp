@@ -602,7 +602,7 @@ namespace MegaApp.ViewModels
             });
         }
 
-        private async void CreateChildren(MNodeList childList, int listSize)
+        private async Task CreateChildren(MNodeList childList, int listSize)
         {
             // Set the parameters for the performance for the different view types of a folder
             int viewportItemCount, backgroundItemCount;
@@ -647,7 +647,7 @@ namespace MegaApp.ViewModels
                 // First add the viewport items to show some data to the user will still loading
                 if (i == viewportItemCount)
                 {
-                    OnUiThread(() =>
+                    await OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -661,7 +661,7 @@ namespace MegaApp.ViewModels
                 if (helperList.Count != backgroundItemCount || i <= viewportItemCount) continue;
 
                 // Add the rest of the items in the background to the list
-                OnUiThread(() =>
+                await OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -672,7 +672,7 @@ namespace MegaApp.ViewModels
             }
 
             // Add any nodes that are left over
-            OnUiThread(() =>
+            await OnUiThread(() =>
             {
                 // Show the user that processing the childnodes is done
                 SetProgressIndication(false);
@@ -682,10 +682,10 @@ namespace MegaApp.ViewModels
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                    this.ChildNodes.Add(megaNode);                
-            });            
+                    this.ChildNodes.Add(megaNode);
 
-            OnUiThread(() => OnPropertyChanged("HasChildNodesBinding"));
+                OnPropertyChanged("HasChildNodesBinding");
+            });
         }
 
         private void InitializePerformanceParameters(out int viewportItemCount, out int backgroundItemCount)

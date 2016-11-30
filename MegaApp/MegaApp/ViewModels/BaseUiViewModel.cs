@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Core;
 using MegaApp.Services;
 
@@ -15,12 +16,12 @@ namespace MegaApp.ViewModels
         /// </summary>
         /// <param name="action">Action to invoke on the user interface thread</param>
         /// <param name="priority">The priority of the dispatcher</param>
-        public void OnUiThread(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        public async Task OnUiThread(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             // If no action defined then do nothing and return to save time
             if (action == null) return;
 
-            UiService.OnUiThread(action);
+            await UiService.OnUiThread(action);
         }
     }
 }
