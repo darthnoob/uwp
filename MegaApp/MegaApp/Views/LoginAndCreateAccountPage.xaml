@@ -91,6 +91,7 @@
                             PlaceholderText="{Binding LoginViewModel.PasswordWatermarkText, Mode=OneTime}" 
                             Password="{Binding LoginViewModel.Password, Mode=TwoWay}" 
                             IsEnabled="{Binding LoginViewModel.ControlState}" 
+                            KeyDown="OnPasswordKeyDown"
                             TabIndex="1"/>
                     </StackPanel>
                 </ScrollViewer>

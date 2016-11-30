@@ -26,20 +26,6 @@ namespace MegaApp.Views
             NavigateService.MainFrame = this.ContentFrame;
         }
 
-        private void SetHamburgerMenuWidth(double pageWidth)
-        {
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                HamburgerMenuControl.OpenPaneLength = (pageWidth/5 >= 273) ? (pageWidth/5) : 273;
-            else
-                HamburgerMenuControl.OpenPaneLength = pageWidth;
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Width != e.PreviousSize.Width)
-                SetHamburgerMenuWidth(e.NewSize.Width);
-        }
-
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -109,6 +95,8 @@ namespace MegaApp.Views
 
         private void OnHamburgerMenuControlItemClick(object sender, ItemClickEventArgs e)
         {
+            // If in inline mode, do not close the pane on item selection
+            if (this.HamburgerMenuControl.DisplayMode == SplitViewDisplayMode.Inline) return;
             HamburgerMenuControl.IsPaneOpen = false;
         }
     }

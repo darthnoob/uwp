@@ -7,12 +7,12 @@
     xmlns:views="using:MegaApp.Views"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
-    xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"    
-    d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
-    SizeChanged="OnSizeChanged">
+    d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
 
     <Page.Resources>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
         <DataTemplate 
             x:Key="MenuItemTemplate" 
             x:DataType="userControls:MenuItem">
@@ -28,8 +28,9 @@
                     AutomationProperties.AccessibilityView="Raw"/>
                 <StackPanel 
                     Orientation="Vertical"
+                    VerticalAlignment="Center"
                     Grid.Column="1"
-                    Margin="9,5,9,6">
+                    Margin="10,5,10,6">
                     <TextBlock
                         Text="{x:Bind Label}" 
                         FontSize="16" 
@@ -38,6 +39,7 @@
                         Text="{x:Bind SubLabel}" 
                         FontSize="12" 
                         VerticalAlignment="Center"
+                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}}"
                         Opacity="0.6"/>
                 </StackPanel>                
             </Grid>
@@ -45,21 +47,6 @@
     </Page.Resources>
 
     <Grid Background="{StaticResource MegaHamburgerMenuBackgroundBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup >
-                <VisualState x:Name="Desktop">
-                    <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>                        
-                        <Setter 
-                            Target="HamburgerMenuControl.DisplayMode" 
-                            Value="CompactOverlay"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        
         <userControls:HamburgerMenuEx
             x:Name="HamburgerMenuControl"
             ItemsSource="{Binding MenuItems}"
@@ -70,9 +57,11 @@
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
             PaneBackground="{StaticResource MegaHamburgerMenuBackgroundBrush}"
             Foreground="{StaticResource MegaHamburgerMenuForegroundBrush}"
-            DisplayMode="Overlay"
             ItemClick="OnHamburgerMenuControlItemClick"
-            OptionsItemClick="OnHamburgerMenuControlItemClick">
+            OptionsItemClick="OnHamburgerMenuControlItemClick"
+            VisualStateNarrowMinWidth="0"
+            VisualStateNormalMinWidth="600"
+            VisualStateWideMinWidth="1200">
             <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
     </Grid>
