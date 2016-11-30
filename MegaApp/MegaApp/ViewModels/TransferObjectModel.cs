@@ -164,6 +164,10 @@ namespace MegaApp.ViewModels
         {
             try
             {
+                // If transfer is child of a folder transfer, doesn't need to do anything 
+                // because the parent folder transfer will do the final required action.
+                if (Transfer.getFolderTransferTag() > 0) return true;
+
                 string defaultDownloadLocation = ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation");
                 ExternalDownloadPath = ExternalDownloadPath ?? SettingsService.LoadSetting<string>(defaultDownloadLocation, null);
                 if (ExternalDownloadPath == null) return false;
