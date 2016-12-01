@@ -1,5 +1,4 @@
-﻿using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.Storage;
+﻿using Windows.Storage;
 using mega;
 using MegaApp.MegaApi;
 
@@ -65,16 +64,10 @@ namespace MegaApp.Services
         /// <returns>The new MegaSDK instance</returns>
         private static MegaSDK CreateSdk()
         {
-            // Get an instance of the object that allow recover the local device information.
-            var deviceInfo = new EasClientDeviceInformation();
-
             // Initialize a MegaSDK instance
             return new MegaSDK(
                 "Z5dGhQhL",
-                string.Format("{0}/{1}/{2}",
-                    AppService.GetAppUserAgent(),
-                    deviceInfo.SystemManufacturer,
-                    deviceInfo.SystemProductName),
+                AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
         }
