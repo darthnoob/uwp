@@ -7,10 +7,12 @@
     xmlns:views="using:MegaApp.Views"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
-    mc:Ignorable="d"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"    
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
 
     <Page.Resources>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
         <DataTemplate 
             x:Key="MenuItemTemplate" 
             x:DataType="userControls:MenuItem">
@@ -24,16 +26,27 @@
                     Content="{x:Bind Icon}"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.AccessibilityView="Raw"/>
-                <TextBlock 
-                    Grid.Column="1" 
-                    Text="{x:Bind Label}" 
-                    FontSize="16" 
-                    VerticalAlignment="Center"/>
+                <StackPanel 
+                    Orientation="Vertical"
+                    VerticalAlignment="Center"
+                    Grid.Column="1"
+                    Margin="10,5,10,6">
+                    <TextBlock
+                        Text="{x:Bind Label}" 
+                        FontSize="16" 
+                        VerticalAlignment="Center"/>
+                    <TextBlock
+                        Text="{x:Bind SubLabel}" 
+                        FontSize="12" 
+                        VerticalAlignment="Center"
+                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}}"
+                        Opacity="0.6"/>
+                </StackPanel>                
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Background="{StaticResource MegaHamburgerMenuBackgroundBrush}">
         <userControls:HamburgerMenuEx
             x:Name="HamburgerMenuControl"
             ItemsSource="{Binding MenuItems}"
@@ -42,8 +55,13 @@
             SelectedOptionItem="{Binding SelectedOptionItem, Mode=TwoWay}"
             ItemTemplate="{StaticResource MenuItemTemplate}"
             OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-            PaneBackground="{ThemeResource SystemControlPageBackgroundChromeLowBrush}"
-            Foreground="{ThemeResource ApplicationForegroundThemeBrush}">
+            PaneBackground="{StaticResource MegaHamburgerMenuBackgroundBrush}"
+            Foreground="{StaticResource MegaHamburgerMenuForegroundBrush}"
+            ItemClick="OnHamburgerMenuControlItemClick"
+            OptionsItemClick="OnHamburgerMenuControlItemClick"
+            VisualStateNarrowMinWidth="0"
+            VisualStateNormalMinWidth="600"
+            VisualStateWideMinWidth="1200">
             <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
     </Grid>

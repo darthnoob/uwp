@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{StaticResource MegaAppBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -109,7 +109,7 @@
                                 Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstCloudDrive"
-                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
@@ -206,7 +206,7 @@
                                 Margin="12,0,0,0">
                                 <ListView
                                     x:Name="LstRubbishBin"
-                                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
@@ -238,7 +238,9 @@
             </Grid>
         </Grid>
 
-        <CommandBar Grid.Row="1">
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
                 x:Name="UploadButton"
                 Icon="Upload" 

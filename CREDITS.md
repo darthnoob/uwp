@@ -22,6 +22,16 @@ This library allows to generate a breadcrumb for your UWP app with less effort, 
 <p>https://github.com/goedware/UWP-Breadcrumb-Control/blob/master/LICENSE</p>
 <hr>
 
+#### WindowsStateTriggers
+<p>https://github.com/dotMorten/WindowsStateTriggers</p>
+<p>Copyright (c) Morten Nielsen</p>
+###### Description:
+<p>A collection of custom visual state triggers</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/dotMorten/WindowsStateTriggers/blob/master/LICENSE</p>
+<hr>
+
 #### MEGA C++ SDK
 <p>https://github.com/meganz/sdk</p>
 <p>© 2013-2016 by Mega Limited, Auckland, New Zealand</p>

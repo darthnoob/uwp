@@ -16,7 +16,7 @@
     </Page.Resources>
 
     <Grid 
-        Background="{StaticResource MegaAppBackgroundBrush}">
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup>
@@ -91,6 +91,7 @@
                             PlaceholderText="{Binding LoginViewModel.PasswordWatermarkText, Mode=OneTime}" 
                             Password="{Binding LoginViewModel.Password, Mode=TwoWay}" 
                             IsEnabled="{Binding LoginViewModel.ControlState}" 
+                            KeyDown="OnPasswordKeyDown"
                             TabIndex="1"/>
                     </StackPanel>
                 </ScrollViewer>
@@ -157,7 +158,7 @@
                             Style="{StaticResource MegaCheckBoxStyle}" 
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}" 
                             IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay}" 
-                            TabIndex="4" >
+                            TabIndex="5" >
                             <CheckBox.Content>
                                 <RichTextBlock 
                                     TextWrapping="Wrap" 

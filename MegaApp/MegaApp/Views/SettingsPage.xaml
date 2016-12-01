@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
-        <CommandBar 
+        <CommandBar
             Grid.Row="1"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 

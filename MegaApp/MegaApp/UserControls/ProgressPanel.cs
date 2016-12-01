@@ -12,7 +12,7 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the header text.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>The header text</value>
         public string HeaderText
         {
             get { return (string)GetValue(HeaderTextProperty); }
@@ -32,7 +32,7 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the sub header text.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>The sub header text</value>
         public string SubHeaderText
         {
             get { return (string)GetValue(SubHeaderTextProperty); }
@@ -52,7 +52,7 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the header font size.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>The header text font size</value>
         public double HeaderFontSize
         {
             get { return (double)GetValue(HeaderFontSizeProperty); }
@@ -72,7 +72,7 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the sub header font size.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>The sub header text font size</value>
         public double SubHeaderFontSize
         {
             get { return (double)GetValue(SubHeaderFontSizeProperty); }

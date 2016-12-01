@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Services;
 using MegaApp.UserControls;
@@ -48,6 +50,13 @@ namespace MegaApp.Views
             }
             // Else it is always create account
             this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
+        }
+
+        private void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key != VirtualKey.Enter) return;
+            // On enter in password box. Start the login process
+            this.ViewModel?.LoginViewModel?.LoginAsync();
         }
     }
 }

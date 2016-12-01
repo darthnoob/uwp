@@ -125,6 +125,10 @@
     <value>I agree with the</value>
     <comment>Text placed just before a link labeled 'Term of Service' into the 'create account' page.</comment>
   </data>
+  <data name="UI_CameraUploads" xml:space="preserve">
+    <value>Camera uploads</value>
+    <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_Cancel" xml:space="preserve">
     <value>Cancel</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
@@ -134,7 +138,7 @@
     <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Cloud Drive</value>
+    <value>Cloud drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -222,6 +226,10 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Folders</value>
     <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_MyAccount" xml:space="preserve">
+    <value>My account</value>
+    <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_No" xml:space="preserve">
     <value>No</value>
     <comment>Label for any 'No' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -261,6 +269,10 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_RubbishBinName" xml:space="preserve">
     <value>Rubbish bin</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Settings" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Label for any 'Settings' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFile" xml:space="preserve">
     <value>File</value>
