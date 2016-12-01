@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Windows.ApplicationModel.Background;
-using Windows.System.Power;
 using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
@@ -92,6 +92,12 @@ namespace MegaApp.Views
             this.ViewModel.SelectedOptionItem = this.ViewModel.OptionItems.FirstOrDefault(
                 m => NavigateService.GetViewType(m.TargetViewModel) == ContentFrame.CurrentSourcePageType);
         }
-        
+
+        private void OnHamburgerMenuControlItemClick(object sender, ItemClickEventArgs e)
+        {
+            // If in inline mode, do not close the pane on item selection
+            if (this.HamburgerMenuControl.DisplayMode == SplitViewDisplayMode.Inline) return;
+            HamburgerMenuControl.IsPaneOpen = false;
+        }
     }
 }

@@ -753,6 +753,50 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style x:Key="MenuItemContainerStyle" TargetType="ListViewItem">
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="TabNavigation" Value="Local"/>
+        <Setter Property="IsHoldingEnabled" Value="True"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="MinWidth" Value="{ThemeResource ListViewItemMinWidth}"/>
+        <Setter Property="MinHeight" Value="{ThemeResource ListViewItemMinHeight}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <ListViewItemPresenter 
+                        CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
+                        ContentMargin="{TemplateBinding Padding}" 
+                        CheckMode="Inline" 
+                        ContentTransitions="{TemplateBinding ContentTransitions}" 
+                        CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" 
+                        DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                        DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                        FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" 
+                        FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" 
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                        PointerOverForeground="{ThemeResource SystemControlForegroundBaseHighBrush}" 
+                        PressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" 
+                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                        PointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" 
+                        ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                        SelectedPressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" 
+                        SelectionCheckMarkVisualEnabled="True" 
+                        SelectedForeground="{ThemeResource MegaRedColorBrush}" 
+                        SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" 
+                        SelectedBackground="Transparent" 
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- COLOR PALETTES -->
     <ResourceDictionary.ThemeDictionaries>        
@@ -761,11 +805,16 @@
             <Color x:Key="MegaRedColor">#EB4444</Color>
             <Color x:Key="MegaAppBackground">#030303</Color>
             <Color x:Key="MegaAppForeground">#FFFFFF</Color>
+
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
+            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="#111111"/>
             <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#111111"/>
+            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222"/>
@@ -776,11 +825,16 @@
             <Color x:Key="MegaRedColor">#EB4444</Color>
             <Color x:Key="MegaAppBackground">#F7F7F7</Color>
             <Color x:Key="MegaAppForeground">#000000</Color>
+
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
+            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="#000000"/>
+            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#111111"/>
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA"/>

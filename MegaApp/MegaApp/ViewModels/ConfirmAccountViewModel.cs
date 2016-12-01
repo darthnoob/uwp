@@ -64,11 +64,11 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string EmailWatermarkText { get { return ResourceService.UiResources.GetString("UI_EmailWatermark"); } }
-        public string ConfirmAccountText { get { return ResourceService.UiResources.GetString("UI_ConfirmAccount"); } }
-        public string ConfirmYourAccountTitleText { get { return ResourceService.UiResources.GetString("UI_ConfirmYourAccountTitle"); } }
-        public string ConfirmYourAccountText { get { return ResourceService.UiResources.GetString("UI_ConfirmYourAccount"); } }
-        public string PasswordWatermarkText { get { return ResourceService.UiResources.GetString("UI_PasswordWatermark"); } }
+        public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
+        public string ConfirmAccountText => ResourceService.UiResources.GetString("UI_ConfirmAccount");
+        public string ConfirmYourAccountTitleText => ResourceService.UiResources.GetString("UI_ConfirmYourAccountTitle");
+        public string ConfirmYourAccountText => ResourceService.UiResources.GetString("UI_ConfirmYourAccount");
+        public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
 
         #endregion
 

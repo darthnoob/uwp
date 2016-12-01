@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Windows.UI.Xaml.Controls;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 
 namespace MegaApp.UserControls
@@ -21,6 +22,11 @@ namespace MegaApp.UserControls
         public string Label { get; set; }
 
         /// <summary>
+        /// Secondary label for the menu item
+        /// </summary>
+        public string SubLabel { get; set; }
+
+        /// <summary>
         /// Type of the viewmodel to navigate on selection
         /// </summary>
         public Type TargetViewModel { get; set; }
@@ -35,7 +41,8 @@ namespace MegaApp.UserControls
             {
                 new MenuItem()
                 {
-                    Label = "Cloud Drive",
+                    Label = CloudDriveText,
+                    SubLabel = CameraUploadsText + " & " + RubbishBinText,
                     Icon = new SymbolIcon(Symbol.Home),
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
@@ -52,11 +59,22 @@ namespace MegaApp.UserControls
             {
                 new MenuItem()
                 {
-                    Label = "Settings",
+                    Label = MyAccountText,
+                    SubLabel = "& " + SettingsText,
                     Icon = new SymbolIcon(Symbol.Setting),
                     TargetViewModel = typeof(SettingsViewModel)
                 },
             };
         }
+
+        #region Ui_Resources
+
+        private static string CameraUploadsText => ResourceService.UiResources.GetString("UI_CameraUploads");
+        private static string CloudDriveText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
+        private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
+
+        #endregion
     }
 }
