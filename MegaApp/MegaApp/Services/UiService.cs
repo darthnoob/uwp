@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
+using Windows.Foundation;
+using Windows.System.Threading;
+using Windows.UI.Core;
 using mega;
 using MegaApp.Enums;
-using System;
-using Windows.UI.Core;
-using Windows.ApplicationModel.Core;
-using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
@@ -67,10 +69,17 @@ namespace MegaApp.Services
         {
             // If no action defined then do nothing and return to save time
             if (action == null) return;
-
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                CoreDispatcherPriority.Normal, 
-                action.Invoke);
+            
+            // Start a task to wait for UI and avoid freeze the app
+            await Task.Factory.StartNew(() =>
+            {
+                IAsyncAction ThreadPoolWorkItem = ThreadPool.RunAsync(async(source) =>
+                {
+                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                        CoreDispatcherPriority.Normal,
+                        action.Invoke);
+                });
+            });
         }
     }
 }
