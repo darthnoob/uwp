@@ -118,6 +118,11 @@
                                     Loaded="OnListLoaded"
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout x:Name="CloudDriveMenuFlyout">
                                             <MenuFlyout.Items>
@@ -215,6 +220,11 @@
                                     Loaded="OnListLoaded"
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
                                     <FlyoutBase.AttachedFlyout>
                                         <MenuFlyout x:Name="RubbishBinMenuFlyout">
                                             <MenuFlyout.Items>
