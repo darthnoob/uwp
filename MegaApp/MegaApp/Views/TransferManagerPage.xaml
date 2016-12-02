@@ -27,24 +27,36 @@
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
                 SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem 
-                    x:Name="UploadsPivot"                     
-                    Header="{Binding UploadsText}"
-                    Margin="0,-10,0,0">
+                        x:Name="UploadsPivot"                     
+                        Header="{Binding UploadsText}"
+                        Margin="0,-10,0,0">
                         <ListView
-                        x:Name="LstUploads"
-                        Background="{StaticResource MegaAppBackgroundBrush}"
-                        ItemsSource="{Binding MegaTransfers.Uploads}"
-                        ItemTemplate="{StaticResource MegaTransferItemContent}"/>
+                            x:Name="LstUploads"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            ItemsSource="{Binding MegaTransfers.Uploads}"
+                            ItemTemplate="{StaticResource MegaTransferItemContent}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
                     </PivotItem>
                     <PivotItem 
-                    x:Name="DownloadsPivot"                     
-                    Header="{Binding DownloadsText}"
-                    Margin="0,-10,0,0">
+                        x:Name="DownloadsPivot"                     
+                        Header="{Binding DownloadsText}"
+                        Margin="0,-10,0,0">
                         <ListView
-                        x:Name="LstDownloads"
-                        Background="{StaticResource MegaAppBackgroundBrush}"
-                        ItemsSource="{Binding MegaTransfers.Downloads}"
-                        ItemTemplate="{StaticResource MegaTransferItemContent}"/>
+                            x:Name="LstDownloads"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            ItemsSource="{Binding MegaTransfers.Downloads}"
+                            ItemTemplate="{StaticResource MegaTransferItemContent}">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                        </ListView>
                     </PivotItem>
                 </Pivot>
             </Grid>
