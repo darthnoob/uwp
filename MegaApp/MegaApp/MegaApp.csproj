@@ -113,6 +113,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
+    <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="ViewModels\TransferManagerViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
@@ -219,6 +221,9 @@
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransferManagerPage.xaml.cs">
+      <DependentUpon>TransferManagerPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +281,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransferManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

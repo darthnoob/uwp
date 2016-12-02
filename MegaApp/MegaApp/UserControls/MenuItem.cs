@@ -46,6 +46,13 @@ namespace MegaApp.UserControls
                     Icon = new SymbolIcon(Symbol.Home),
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
+
+                new MenuItem()
+                {
+                    Label = TransferManagerText,                    
+                    Icon = new SymbolIcon(Symbol.Sort),
+                    TargetViewModel = typeof(TransferManagerViewModel)
+                },
             };
         }
         
@@ -74,6 +81,7 @@ namespace MegaApp.UserControls
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
+        private static string TransferManagerText => ResourceService.UiResources.GetString("UI_TransferManager");
 
         #endregion
     }

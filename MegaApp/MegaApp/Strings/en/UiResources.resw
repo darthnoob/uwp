@@ -173,6 +173,10 @@
     <value>Download</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Downloads" xml:space="preserve">
+    <value>Downloads</value>
+    <comment>Label for any 'Downloads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
     <value>Enter your email</value>
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
@@ -286,6 +290,62 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Terms of service</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Transfer" xml:space="preserve">
+    <value>Transfer</value>
+    <comment>Label for any 'Transfer' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferManager" xml:space="preserve">
+    <value>Transfer manager</value>
+    <comment>Label for any 'Transfer manager' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Transfers" xml:space="preserve">
+    <value>Transfers</value>
+    <comment>Label for any 'Transfers' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCanceled" xml:space="preserve">
+    <value>Canceled</value>
+    <comment>Label for the status of a canceled transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCanceling" xml:space="preserve">
+    <value>Canceling...</value>
+    <comment>Label for the status of a transfer when is being canceling - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusDownloaded" xml:space="preserve">
+    <value>Downloaded</value>
+    <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusDownloading" xml:space="preserve">
+    <value>Downloading...</value>
+    <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusError" xml:space="preserve">
+    <value>Error on transfer</value>
+    <comment>Label for the status of a failed  transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusNotStarted" xml:space="preserve">
+    <value>Ready</value>
+    <comment>Label for the status of a transfer when is ready but not started for some reason - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPaused" xml:space="preserve">
+    <value>Paused</value>
+    <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPausing" xml:space="preserve">
+    <value>Pausing...</value>
+    <comment>Label for the status of a transfer when is being pausing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusQueued" xml:space="preserve">
+    <value>Queued</value>
+    <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusUploaded" xml:space="preserve">
+    <value>uploaded</value>
+    <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusUploading" xml:space="preserve">
+    <value>Uploading...</value>
+    <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
+  </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
     <value>Folder name:</value>
     <comment>Text to show when a user wants to create a new folder to type the name for the new folder.</comment>
@@ -298,8 +358,24 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Upload</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Uploads" xml:space="preserve">
+    <value>Uploads</value>
+    <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_Yes" xml:space="preserve">
     <value>Yes</value>
     <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Pause" xml:space="preserve">
+    <value>Pause</value>
+    <comment>Label for any 'Pause' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PauseAll" xml:space="preserve">
+    <value>Pause all</value>
+    <comment>Label for any 'Pause all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Resume" xml:space="preserve">
+    <value>Resume</value>
+    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>
