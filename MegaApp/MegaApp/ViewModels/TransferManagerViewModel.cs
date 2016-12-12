@@ -1,12 +1,17 @@
-﻿using MegaApp.Classes;
-using MegaApp.Services;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using mega;
+using MegaApp.Classes;
+using MegaApp.Enums;
+using MegaApp.MegaApi;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
     public class TransferManagerViewModel : BasePageViewModel
     {
-        # region Methods
+        #region Methods
 
         /// <summary>
         /// Pause or resume all transfers.
@@ -16,9 +21,16 @@ namespace MegaApp.ViewModels
         /// - TRUE: pause.
         /// - FALSE: resume.
         /// </param>
-        public void PauseAll(bool pause)
+        public async Task PauseAll(bool pause)
         {
-            SdkService.MegaSdk.pauseTransfers(pause);
+            var pauseTransfers = new PauseTransfersRequestListenerAsync();
+            bool result = await pauseTransfers.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.pauseTransfers(pause, pauseTransfers);
+            });
+
+            if (result)
+                SetTransfersListStatus(MegaTransfers, pause);
         }
 
         /// <summary>
@@ -29,9 +41,17 @@ namespace MegaApp.ViewModels
         /// - TRUE: pause.
         /// - FALSE: resume.
         /// </param>
-        public void PauseDownloads(bool pause)
+        public async Task PauseDownloads(bool pause)
         {
-            SdkService.MegaSdk.pauseTransfersDirection(pause, (int)MTransferType.TYPE_DOWNLOAD);
+            var pauseDownloads = new PauseTransfersRequestListenerAsync();
+            bool result = await pauseDownloads.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.pauseTransfersDirection(pause, 
+                    (int)MTransferType.TYPE_DOWNLOAD, pauseDownloads);
+            });
+
+            if(result)
+                SetTransfersListStatus(MegaTransfers.Downloads, pause);
         }
 
         /// <summary>
@@ -42,9 +62,17 @@ namespace MegaApp.ViewModels
         /// - TRUE: pause.
         /// - FALSE: resume.
         /// </param>
-        public void PauseUploads(bool pause)
+        public async Task PauseUploads(bool pause)
         {
-            SdkService.MegaSdk.pauseTransfersDirection(pause, (int)MTransferType.TYPE_UPLOAD);
+            var pauseUploads = new PauseTransfersRequestListenerAsync();
+            bool result = await pauseUploads.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.pauseTransfersDirection(pause,
+                    (int)MTransferType.TYPE_UPLOAD, pauseUploads);
+            });
+
+            if (result)
+                SetTransfersListStatus(MegaTransfers.Uploads, pause);
         }
 
         /// <summary>
@@ -72,12 +100,51 @@ namespace MegaApp.ViewModels
             SdkService.MegaSdk.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
         }
 
-        #endregion Properties
+        /// <summary>
+        /// Sets the status of the transfers of a transfers list
+        /// </summary>
+        /// <param name="transfersList">The transfers list to set the status.</param>
+        /// <param name="paused">Boolean value which indicates is the queue of the list is paused or not.</param>
+        private void SetTransfersListStatus(ObservableCollection<TransferObjectModel> transfersList, bool paused)
+        {
+            var numTransfers = transfersList.Count;
+            for (int i = 0; i < numTransfers; i++)
+            {
+                var item = transfersList.ElementAt(i);
+                if (item == null) continue;
 
+                if (item.TransferedBytes < item.TotalBytes || item.TransferedBytes == 0)
+                {
+                    switch (item.Status)
+                    {
+                        case TransferStatus.Downloading:
+                        case TransferStatus.Uploading:
+                        case TransferStatus.Queued:
+                            if (paused)
+                                OnUiThread(() =>
+                                {
+                                    item.Status = TransferStatus.Paused;
+                                    item.TransferSpeed = string.Empty;
+                                });
+                            break;
+
+                        case TransferStatus.Paused:
+                            if (!paused)
+                                OnUiThread(() => item.Status = TransferStatus.Queued);
+                            break;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Properties
+
+        public bool AreDownloadsPaused => SdkService.MegaSdk.areTransfersPaused((int)MTransferType.TYPE_DOWNLOAD);
+        public bool AreUploadsPaused => SdkService.MegaSdk.areTransfersPaused((int)MTransferType.TYPE_UPLOAD);
         public TransferQueue MegaTransfers => TransferService.MegaTransfers;
-
-        #region
-
+        
         #endregion
 
         #region Ui_Resources

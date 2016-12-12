@@ -69,7 +69,7 @@
                 x:Name="PauseResumeButton"
                 Icon="Pause" 
                 Label="{Binding PauseText}" 
-                Click="OnPauseAllClick"/>
+                Click="OnPauseResumeClick"/>
         </CommandBar>
     </Grid>
 </views:BaseTransferManagerPage>
