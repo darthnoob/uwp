@@ -390,6 +390,22 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Cancel uploads</value>
     <comment>Label for any 'Cancel uploads' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CancelDownload" xml:space="preserve">
+    <value>Cancel download</value>
+    <comment>Label for any 'Cancel download' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelTransfer" xml:space="preserve">
+    <value>Cancel transfer</value>
+    <comment>Label for any 'Cancel transfer' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelTransfers" xml:space="preserve">
+    <value>Cancel transfers</value>
+    <comment>Label for any 'Cancel transfers' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelUpload" xml:space="preserve">
+    <value>Cancel upload</value>
+    <comment>Label for any 'Cancel upload' button, link, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_CleanUpTransfers" xml:space="preserve">
     <value>Clean up transfers</value>
     <comment>Label for any 'Clean up transfers' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>

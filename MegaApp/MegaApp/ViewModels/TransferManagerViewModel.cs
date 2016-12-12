@@ -99,24 +99,60 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Cancel only download transfers.
         /// </summary>
-        public void CancelDownloads()
+        public async void CancelDownloads()
         {
+            var result = await new CustomMessageDialog(
+                ResourceService.UiResources.GetString("UI_CancelDownloads"),
+                ResourceService.AppMessages.GetString("AM_CancelDownloadsQuestion"),
+                App.AppInformation,
+                MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+            if (result == MessageDialogResult.CancelNo) return;
+
             SdkService.MegaSdk.cancelTransfers((int)MTransferType.TYPE_DOWNLOAD);
         }
 
         /// <summary>
         /// Cancel only upload transfers.
         /// </summary>
-        public void CancelUploads()
+        public async void CancelUploads()
         {
+            var result = await new CustomMessageDialog(
+                ResourceService.UiResources.GetString("UI_CancelUploads"),
+                ResourceService.AppMessages.GetString("AM_CancelUploadsQuestion"),
+                App.AppInformation,
+                MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+            if (result == MessageDialogResult.CancelNo) return;
+
             SdkService.MegaSdk.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
         }
 
         /// <summary>
         /// Cancel the selected transfer of the list.
         /// </summary>
-        private void CancelTransfer()
+        private async void CancelTransfer()
         {
+            string title = string.Empty, message = string.Empty;
+            switch(FocusedTransfer.Transfer.getType())
+            {
+                case MTransferType.TYPE_DOWNLOAD:
+                    title = ResourceService.UiResources.GetString("UI_CancelDownload");
+                    message = ResourceService.AppMessages.GetString("AM_CancelSingleDownloadQuestion");
+                    break;
+
+                case MTransferType.TYPE_UPLOAD:
+                    title = ResourceService.UiResources.GetString("UI_CancelUpload");
+                    message = ResourceService.AppMessages.GetString("AM_CancelSingleUploadQuestion");
+                    break;
+            }
+
+            var result = await new CustomMessageDialog(
+                title, message, App.AppInformation,
+                MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+            if (result == MessageDialogResult.CancelNo) return;
+
             SdkService.MegaSdk.cancelTransfer(FocusedTransfer.Transfer);
         }
 

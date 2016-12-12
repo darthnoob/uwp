@@ -545,4 +545,20 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <value>Failed to select the folder. Please try again or select another folder.</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
+  <data name="AM_CancelDownloadsQuestion" xml:space="preserve">
+    <value>Are you sure you want to cancel all the pending downloads?</value>
+    <comment>Message of the dialog displayed when a user wants to cancel all the pending downloads.</comment>
+  </data>
+  <data name="AM_CancelSingleDownloadQuestion" xml:space="preserve">
+    <value>Are you sure you want to cancel the selected download?</value>
+    <comment>Message of the dialog displayed when a user wants to cancel a selected download.</comment>
+  </data>
+  <data name="AM_CancelSingleUploadQuestion" xml:space="preserve">
+    <value>Are you sure you want to cancel the selected upload?</value>
+    <comment>Message of the dialog displayed when a user wants to cancel a selected upload.</comment>
+  </data>
+  <data name="AM_CancelUploadsQuestion" xml:space="preserve">
+    <value>Are you sure you want to cancel all the pending uploads?</value>
+    <comment>Message of the dialog displayed when a user wants to cancel all the pending uploads.</comment>
+  </data>
 </root>
