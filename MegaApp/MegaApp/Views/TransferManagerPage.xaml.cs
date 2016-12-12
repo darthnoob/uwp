@@ -1,9 +1,14 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.Foundation;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
+using MegaApp.Enums;
 
 namespace MegaApp.Views
 {
@@ -40,19 +45,85 @@ namespace MegaApp.Views
             SetGUI();
         }
 
+        private void OnCancelClick(object sender, RoutedEventArgs e)
+        {
+            // If selected the pivotitem for the downloads
+            if (TransfersPivot.SelectedItem.Equals(DownloadsPivot))
+                ViewModel.CancelDownloads();
+            else // If selected the pivotitem for the uploads
+                ViewModel.CancelUploads();
+        }
+
         private void SetGUI()
         {
             bool arePaused;
 
             // If selected the pivotitem for the downloads
             if (TransfersPivot.SelectedItem.Equals(DownloadsPivot))
+            {
                 arePaused = ViewModel.AreDownloadsPaused;
+                this.CancelButton.Label = ViewModel.CancelDownloadsText;
+            }                
             else // If selected the pivotitem for the uploads
+            {
                 arePaused = ViewModel.AreUploadsPaused;
+                this.CancelButton.Label = ViewModel.CancelUploadsText;
+            }
 
             this.PauseResumeButton.Icon = arePaused ? new SymbolIcon(Symbol.Play) : new SymbolIcon(Symbol.Pause);
-            this.PauseResumeButton.Label = arePaused ?
-                ResourceService.UiResources.GetString("UI_Resume") : ResourceService.UiResources.GetString("UI_Pause");
+            this.PauseResumeButton.Label = arePaused ? ViewModel.ResumeText : ViewModel.PauseText;
+        }
+
+        private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));
+        }
+
+        private void OnHolding(object sender, HoldingRoutedEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));
+        }
+
+        private bool OpenFlyoutMenu(ListView listView, FrameworkElement listViewItem, Point position)
+        {
+            SdkService.MegaSdk.retryPendingConnections();
+
+            try
+            {
+                if (ViewModel != null)
+                {
+                    // We don't want to open the menu if the focused element is not a list view item.
+                    // If the list view is empty listViewItem will be null.
+                    if (!(listViewItem?.DataContext is TransferObjectModel))
+                        return true;
+
+                    // We don't want to open the menu if the focused element has already canceled,
+                    // downloaded, uploaded, etc.
+                    switch((listViewItem?.DataContext as TransferObjectModel).Status)
+                    {
+                        case TransferStatus.Error:
+                        case TransferStatus.Canceled:
+                        case TransferStatus.Canceling:
+                        case TransferStatus.Downloaded:
+                        case TransferStatus.Uploaded:
+                            return true;
+                    }
+
+                    MenuFlyout menuFlyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(listView);
+                    menuFlyout.ShowAt(listView, position);
+
+                    ViewModel.FocusedTransfer = listViewItem.DataContext as TransferObjectModel;
+                }
+                else
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception) { return true; }
         }
     }
 }

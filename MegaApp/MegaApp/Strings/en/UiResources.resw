@@ -378,4 +378,16 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Resume</value>
     <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CancelAll" xml:space="preserve">
+    <value>Cancel all</value>
+    <comment>Label for any 'Cancel all' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelDownloads" xml:space="preserve">
+    <value>Cancel downloads</value>
+    <comment>Label for any 'Cancel downloads' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelUploads" xml:space="preserve">
+    <value>Cancel uploads</value>
+    <comment>Label for any 'Cancel uploads' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -11,6 +12,17 @@ namespace MegaApp.ViewModels
 {
     public class TransferManagerViewModel : BasePageViewModel
     {
+        public TransferManagerViewModel()
+        {
+            this.CancelTransferCommand = new RelayCommand(CancelTransfer);
+        }
+
+        #region Commands
+
+        public ICommand CancelTransferCommand { get; private set; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -101,6 +113,14 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
+        /// Cancel the selected transfer of the list.
+        /// </summary>
+        private void CancelTransfer()
+        {
+            SdkService.MegaSdk.cancelTransfer(FocusedTransfer.Transfer);
+        }
+
+        /// <summary>
         /// Sets the status of the transfers of a transfers list
         /// </summary>
         /// <param name="transfersList">The transfers list to set the status.</param>
@@ -144,11 +164,15 @@ namespace MegaApp.ViewModels
         public bool AreDownloadsPaused => SdkService.MegaSdk.areTransfersPaused((int)MTransferType.TYPE_DOWNLOAD);
         public bool AreUploadsPaused => SdkService.MegaSdk.areTransfersPaused((int)MTransferType.TYPE_UPLOAD);
         public TransferQueue MegaTransfers => TransferService.MegaTransfers;
-        
+        public TransferObjectModel FocusedTransfer;
+
         #endregion
 
         #region Ui_Resources
 
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CancelDownloadsText => ResourceService.UiResources.GetString("UI_CancelDownloads");
+        public string CancelUploadsText => ResourceService.UiResources.GetString("UI_CancelUploads");
         public string DownloadsText => ResourceService.UiResources.GetString("UI_Downloads");
         public string PauseText => ResourceService.UiResources.GetString("UI_Pause");
         public string ResumeText => ResourceService.UiResources.GetString("UI_Resume");

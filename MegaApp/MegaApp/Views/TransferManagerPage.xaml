@@ -34,12 +34,23 @@
                             x:Name="LstUploads"
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             ItemsSource="{Binding MegaTransfers.Uploads}"
-                            ItemTemplate="{StaticResource MegaTransferItemContent}">
+                            ItemTemplate="{StaticResource MegaTransferItemContent}"
+                            RightTapped="OnRightTapped"
+                            Holding="OnHolding">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout x:Name="UploadsMenuFlyout">
+                                    <MenuFlyout.Items>
+                                        <MenuFlyoutItem
+                                            Text="{Binding CancelText}"
+                                            Command="{Binding CancelTransferCommand}"/>
+                                    </MenuFlyout.Items>
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
                         </ListView>
                     </PivotItem>
                     <PivotItem 
@@ -50,12 +61,23 @@
                             x:Name="LstDownloads"
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             ItemsSource="{Binding MegaTransfers.Downloads}"
-                            ItemTemplate="{StaticResource MegaTransferItemContent}">
+                            ItemTemplate="{StaticResource MegaTransferItemContent}"
+                            RightTapped="OnRightTapped"
+                            Holding="OnHolding">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="ListViewItem">
                                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                 </Style>
                             </ListView.ItemContainerStyle>
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout x:Name="DownloadsMenuFlyout">
+                                    <MenuFlyout.Items>
+                                        <MenuFlyoutItem
+                                            Text="{Binding CancelText}"
+                                            Command="{Binding CancelTransferCommand}"/>                                        
+                                    </MenuFlyout.Items>
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
                         </ListView>
                     </PivotItem>
                 </Pivot>
@@ -70,6 +92,13 @@
                 Icon="Pause" 
                 Label="{Binding PauseText}" 
                 Click="OnPauseResumeClick"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                x:Name="CancelButton"
+                Icon="Cancel"
+                Click="OnCancelClick"/>
+            </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 </views:BaseTransferManagerPage>

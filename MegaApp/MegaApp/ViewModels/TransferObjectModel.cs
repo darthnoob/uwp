@@ -52,8 +52,6 @@ namespace MegaApp.ViewModels
             ExternalDownloadPath = externalDownloadPath;
             Status = TransferStatus.NotStarted;
             SelectedNode = selectedNode;
-            CancelButtonState = true;
-            TransferButtonIcon = new Uri("/Assets/Images/cancel transfers.Screen-WXGA.png", UriKind.Relative);
             AutoLoadImageOnFinish = false;
             CancelTransferCommand = new RelayCommand(CancelTransfer);
             SetThumbnail();
@@ -223,27 +221,6 @@ namespace MegaApp.ViewModels
         public bool AutoLoadImageOnFinish { get; set; }
 
         public bool IsSaveForOfflineTransfer { get; set; }
-
-        private bool _cancelButtonState;
-        public bool CancelButtonState
-        {
-            get { return _cancelButtonState; }
-            set { SetField(ref _cancelButtonState, value); }
-        }
-
-        private Uri _transferButtonIcon;
-        public Uri TransferButtonIcon
-        {
-            get { return _transferButtonIcon; }
-            set { SetField(ref _transferButtonIcon, value); }
-        }
-
-        private SolidColorBrush _transferButtonForegroundColor;
-        public SolidColorBrush TransferButtonForegroundColor
-        {
-            get { return _transferButtonForegroundColor; }
-            set { SetField(ref _transferButtonForegroundColor, value); }
-        }
 
         private TransferStatus _transferStatus;
         public TransferStatus Status

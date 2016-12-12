@@ -41,21 +41,15 @@ namespace MegaApp.MegaApi
 
                     megaTransfer.TotalBytes = transfer.getTotalBytes();
                     megaTransfer.TransferedBytes = transfer.getTransferredBytes();
-                    megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
+                    megaTransfer.TransferSpeed = string.Empty;
                     megaTransfer.IsBusy = false;
-                    megaTransfer.CancelButtonState = false;
                 });
 
                 switch (e.getErrorCode())
                 {
                     case MErrorType.API_OK:
                         {
-                            UiService.OnUiThread(() =>
-                            {
-                                megaTransfer.TransferedBytes = megaTransfer.TotalBytes;
-                                megaTransfer.TransferButtonIcon = new Uri("/Assets/Images/completed transfers.Screen-WXGA.png", UriKind.Relative);
-                                megaTransfer.TransferButtonForegroundColor = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
-                            });
+                            UiService.OnUiThread(() => megaTransfer.TransferedBytes = megaTransfer.TotalBytes);
 
                             switch (megaTransfer.Type)
                             {
@@ -183,9 +177,6 @@ namespace MegaApp.MegaApi
             {
                 UiService.OnUiThread(() =>
                 {
-                    megaTransfer.CancelButtonState = true;
-                    megaTransfer.TransferButtonIcon = new Uri("/Assets/Images/cancel transfers.Screen-WXGA.png", UriKind.Relative);
-                    megaTransfer.TransferButtonForegroundColor = (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
                     megaTransfer.IsBusy = true;
                     megaTransfer.TotalBytes = transfer.getTotalBytes();
                     megaTransfer.TransferedBytes = transfer.getTransferredBytes();

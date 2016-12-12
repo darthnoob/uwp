@@ -93,13 +93,14 @@ namespace MegaApp.Services
 
                     megaTransfer.Transfer = transfer;
                     megaTransfer.Status = TransferStatus.Queued;
-                    megaTransfer.CancelButtonState = true;
-                    megaTransfer.TransferButtonIcon = new Uri("/Assets/Images/cancel transfers.Screen-WXGA.png", UriKind.Relative);
-                    megaTransfer.TransferButtonForegroundColor = (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
                     megaTransfer.IsBusy = true;
                     megaTransfer.TotalBytes = transfer.getTotalBytes();
                     megaTransfer.TransferedBytes = transfer.getTransferredBytes();
-                    megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
+
+                    if (!SdkService.MegaSdk.areTransfersPaused((int)transfer.getType()))
+                        megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
+                    else
+                        megaTransfer.TransferSpeed = string.Empty;
 
                     MegaTransfers.Add(megaTransfer);
                 });
