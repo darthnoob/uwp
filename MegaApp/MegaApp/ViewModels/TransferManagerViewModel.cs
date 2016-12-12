@@ -173,6 +173,7 @@ namespace MegaApp.ViewModels
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CancelDownloadsText => ResourceService.UiResources.GetString("UI_CancelDownloads");
         public string CancelUploadsText => ResourceService.UiResources.GetString("UI_CancelUploads");
+        public string CleanUpTransfersText => ResourceService.UiResources.GetString("UI_CleanUpTransfers");
         public string DownloadsText => ResourceService.UiResources.GetString("UI_Downloads");
         public string PauseText => ResourceService.UiResources.GetString("UI_Pause");
         public string ResumeText => ResourceService.UiResources.GetString("UI_Resume");

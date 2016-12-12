@@ -390,4 +390,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Cancel uploads</value>
     <comment>Label for any 'Cancel uploads' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CleanUpTransfers" xml:space="preserve">
+    <value>Clean up transfers</value>
+    <comment>Label for any 'Clean up transfers' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
+  </data>
 </root>

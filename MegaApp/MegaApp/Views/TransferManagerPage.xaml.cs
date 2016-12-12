@@ -54,6 +54,11 @@ namespace MegaApp.Views
                 ViewModel.CancelUploads();
         }
 
+        private void OnCleanUpTransfersClick(object sender, RoutedEventArgs e)
+        {
+            TransferService.UpdateMegaTransfersList(ViewModel.MegaTransfers);
+        }
+
         private void SetGUI()
         {
             bool arePaused;

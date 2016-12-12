@@ -95,9 +95,14 @@
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
-                x:Name="CancelButton"
-                Icon="Cancel"
-                Click="OnCancelClick"/>
+                    x:Name="CancelButton"
+                    Icon="Cancel"
+                    Click="OnCancelClick"/>
+                <AppBarButton
+                    x:Name="CleanUpButton"
+                    Icon="Clear"
+                    Label="{Binding CleanUpTransfersText}" 
+                    Click="OnCleanUpTransfersClick"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
