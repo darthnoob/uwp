@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
+using Windows.Foundation.Metadata;
 using Windows.System.Threading;
+using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using mega;
 using MegaApp.Enums;
 
@@ -80,6 +83,20 @@ namespace MegaApp.Services
                         action.Invoke);
                 });
             });
+        }
+
+        /// <summary>
+        /// Set the background color of the status bar if is present in the device.
+        /// </summary>
+        /// <param name="color">Background color for the status bar.</param>
+        public static void SetStatusBarBackground(Color color)
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusbar = StatusBar.GetForCurrentView();
+                statusbar.BackgroundColor = color;
+                statusbar.BackgroundOpacity = 1;
+            }
         }
     }
 }

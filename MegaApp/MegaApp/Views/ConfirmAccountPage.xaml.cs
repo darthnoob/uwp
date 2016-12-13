@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
+using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using Windows.UI.Core;
 
 namespace MegaApp.Views
 {
@@ -20,6 +20,8 @@ namespace MegaApp.Views
         public ConfirmAccountPage()
         {
             InitializeComponent();
+
+            UiService.SetStatusBarBackground((Color)Application.Current.Resources["MegaAppBackground"]);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

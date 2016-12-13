@@ -10,6 +10,7 @@ using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
+using Windows.UI;
 
 namespace MegaApp.Views
 {
@@ -22,6 +23,9 @@ namespace MegaApp.Views
         public MainPage()
         {
             InitializeComponent();
+
+            UiService.SetStatusBarBackground((Color)Application.Current.Resources["MegaAppBarBackground"]);
+
             // Set the main navigation frame object to the HamburgerMenu ContentFrame
             NavigateService.MainFrame = this.ContentFrame;
         }
