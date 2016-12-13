@@ -18,7 +18,9 @@
                 <RowDefinition Height="48"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Background="{StaticResource MegaAppBarBackgroundBrush}"/>
+            <Grid Background="{StaticResource MegaAppBarBackgroundBrush}">
+
+            </Grid>
         </Grid>
 
         <CommandBar
