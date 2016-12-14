@@ -140,27 +140,32 @@ namespace MegaApp.Views
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
             if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
-                ProcessItemTapped(((ListView)sender).SelectedItem);
+                ProcessItemTapped(sender);
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            ProcessItemTapped(((ListView)sender).SelectedItem);
+            ProcessItemTapped(sender);
         }
 
-        private void ProcessItemTapped(object itemTapped)
+        private void ProcessItemTapped(object sender)
         {
+            IMegaNode itemTapped = null;
+            if (sender is ListView)
+                itemTapped = ((ListView)sender).SelectedItem as IMegaNode;
+            if (sender is GridView)
+                itemTapped = ((GridView)sender).SelectedItem as IMegaNode;
+
             if (itemTapped != null)
             {
-                LstCloudDrive.SelectedItem = null;
-                this.ViewModel.ActiveFolderView.OnChildNodeTapped((IMegaNode)itemTapped);
+                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                    ListViewCloudDrive.SelectedItem = GridViewCloudDrive.SelectedItem = null;
+                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                    ListViewRubbishBin.SelectedItem = GridViewRubbishBin.SelectedItem = null;
+
+                this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
             }
-        }
-
-        private void OnListLoaded(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }        
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
@@ -170,17 +175,48 @@ namespace MegaApp.Views
 
         private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            ListView listView = (ListView)sender;
-            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));            
+            try
+            {
+                e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
+                    e.GetPosition(GetViewControlInUse(sender)));
+            }
+            catch (Exception) { }
         }
 
         private void OnHolding(object sender, HoldingRoutedEventArgs e)
         {
-            ListView listView = (ListView)sender;
-            e.Handled = OpenFlyoutMenu(listView, (FrameworkElement)e.OriginalSource, e.GetPosition(listView));
+            try
+            {
+                e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
+                    e.GetPosition(GetViewControlInUse(sender)));
+            }
+            catch (Exception) { }
         }
 
-        private bool OpenFlyoutMenu(ListView listView, FrameworkElement listViewItem, Point position)
+        /// <summary>
+        /// Converts the view control object in use to ListView or GridView
+        /// </summary>
+        /// <param name="obj">The view control object in use.</param>
+        /// <returns>The view control in use as ListView or GridView</returns>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        private UIElement GetViewControlInUse(object obj)
+        {
+            if (obj is ListView)
+                return obj as ListView;
+            if (obj is GridView)
+                return obj as GridView;
+
+            throw new ArgumentOutOfRangeException("Invalid view control");
+        }
+
+        /// <summary>
+        /// Opens the flyout menu (contextual menu).
+        /// </summary>
+        /// <param name="sender">The view control object in use.</param>
+        /// <param name="item">Item of the view control in use.</param>
+        /// <param name="position">Screen position of the item.</param>
+        /// <returns>Boolean value indicating if all went well.</returns>
+        private bool OpenFlyoutMenu(object sender, FrameworkElement item, Point position)
         {
             SdkService.MegaSdk.retryPendingConnections();
 
@@ -194,22 +230,27 @@ namespace MegaApp.Views
 
                     // We don't want to open the menu if the focused element is not a list view item.
                     // If the list view is empty listViewItem will be null.
-                    if (!(listViewItem?.DataContext is IMegaNode))
+                    if (!(item?.DataContext is IMegaNode))
                         return true;
 
-                    MenuFlyout menuFlyout = (MenuFlyout)FlyoutBase.GetAttachedFlyout(listView);
-                    menuFlyout.ShowAt(listView, position);
+                    MenuFlyout menuFlyout = null;
+                    if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                        menuFlyout = this.Resources["CloudDriveMenuFlyout"] as MenuFlyout;
+                    if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                        menuFlyout = this.Resources["RubbishBinMenuFlyout"] as MenuFlyout;
+
+                    menuFlyout.ShowAt(GetViewControlInUse(sender), position);
                     
-                    ViewModel.ActiveFolderView.FocusedNode = listViewItem.DataContext as IMegaNode;
+                    ViewModel.ActiveFolderView.FocusedNode = item.DataContext as IMegaNode;
                 }
                 else
                 {
-                    return true;
+                    return false;
                 }
 
-                return false;
+                return true;
             }
-            catch (Exception) { return true; }
+            catch (Exception) { return false; }
         }
     }
 }

@@ -41,6 +41,7 @@ namespace MegaApp.ViewModels
             this.IsMultiSelectActive = false;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
+            this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
             this.DownloadItemCommand = new RelayCommand(DownloadItem);
             this.MoveItemToRubbishBinCommand = new RelayCommand(this.MoveItemToRubbishBin);
@@ -52,8 +53,7 @@ namespace MegaApp.ViewModels
             this.UploadCommand = new RelayCommand(this.Upload);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
-            //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);
-            //this.ChangeViewCommand = new DelegateCommand(this.ChangeView);
+            //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);
             //this.MultiSelectCommand = new DelegateCommand(this.MultiSelect);
             //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
@@ -104,6 +104,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }
+        public ICommand ChangeViewCommand { get; private set; }
         public ICommand CleanRubbishBinCommand { get; private set; }
         public ICommand DownloadItemCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; private set; }
@@ -113,8 +114,7 @@ namespace MegaApp.ViewModels
         public ICommand RemoveItemCommand { get; private set; }
         public ICommand RenameItemCommand { get; private set; }
         public ICommand UploadCommand { get; private set; }
-
-        //public ICommand ChangeViewCommand { get; private set; }
+        
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }
@@ -204,8 +204,8 @@ namespace MegaApp.ViewModels
             // Clear the child nodes to make a fresh start
             ClearChildNodes();
 
-            // Set the correct view for the main drive. Do this after the childs are cleared to speed things up
-            //SetViewOnLoad();
+            // Set the correct view. Do this after the childs are cleared to speed things up
+            SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
             OnUiThread(() => BuildBreadCrumbs());
@@ -700,12 +700,8 @@ namespace MegaApp.ViewModels
                     viewportItemCount = 256;
                     backgroundItemCount = 1024;
                     break;
-                case ViewMode.LargeThumbnails:
+                case ViewMode.GridView:
                     viewportItemCount = 128;
-                    backgroundItemCount = 512;
-                    break;
-                case ViewMode.SmallThumbnails:
-                    viewportItemCount = 72;
                     backgroundItemCount = 512;
                     break;
             }
@@ -722,22 +718,77 @@ namespace MegaApp.ViewModels
             this.LoadingCancelToken = this.LoadingCancelTokenSource.Token;
         }
 
+        /// <summary>
+        /// Sets the view mode for the folder on load content.
+        /// </summary>
+        private void SetViewOnLoad()
+        {
+            if (FolderRootNode == null) return;
+
+            SetView(UiService.GetViewMode(FolderRootNode.Base64Handle, FolderRootNode.Name));
+        }
+
+        /// <summary>
+        /// Sets the default view mode for the folder conten.
+        /// </summary>
         private void SetViewDefaults()
         {
-            //this.VirtualizationStrategy = new StackVirtualizationStrategyDefinition()
-            //{
-            //    Orientation = Orientation.Vertical
-            //};
-
             this.NodeTemplateSelector = new NodeTemplateSelector()
             {
-                FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListFileItemContent"],
-                FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListFolderItemContent"]
+                FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
             };
 
             this.ViewMode = ViewMode.ListView;
-            //this.NextViewButtonPathData = VisualResources.LargeThumbnailViewPathData;
+            this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");            
             //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["DefaultCheckBoxStyle"];
+        }
+
+        /// <summary>
+        /// Changes the view mode for the folder content.
+        /// </summary>
+        private void ChangeView()
+        {
+            if (FolderRootNode == null) return;
+
+            switch (this.ViewMode)
+            {
+                case ViewMode.ListView:
+                    SetView(ViewMode.GridView);
+                    UiService.SetViewMode(FolderRootNode.Base64Handle, ViewMode.GridView);
+                    break;
+
+                case ViewMode.GridView:
+                    SetView(ViewMode.ListView);
+                    UiService.SetViewMode(FolderRootNode.Base64Handle, ViewMode.ListView);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Sets the view mode for the folder content.
+        /// </summary>
+        /// <param name="viewMode">View mode to set.</param>
+        public void SetView(ViewMode viewMode)
+        {
+            switch (viewMode)
+            {
+                case ViewMode.GridView:
+                    this.NodeTemplateSelector = new NodeTemplateSelector()
+                    {
+                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
+                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
+                    };
+
+                    this.ViewMode = ViewMode.GridView;
+                    this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
+                    //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["MultiSelectItemCheckBoxStyle"];
+                    break;
+
+                case ViewMode.ListView:
+                    SetViewDefaults();
+                    break;
+            }
         }
 
         public void BuildBreadCrumbs()
@@ -820,7 +871,20 @@ namespace MegaApp.ViewModels
 
         public ContainerType Type { get; private set; }
 
-        public ViewMode ViewMode { get; set; }
+        private ViewMode _viewMode;
+        public ViewMode ViewMode
+        {
+            get { return _viewMode; }
+            set
+            {
+                SetField(ref _viewMode, value);
+                OnPropertyChanged("IsListViewMode");
+                OnPropertyChanged("IsGridViewMode");
+            }
+        }
+
+        public bool IsListViewMode => ViewMode == ViewMode.ListView;
+        public bool IsGridViewMode => ViewMode == ViewMode.GridView;
 
         private IMegaNode _folderRootNode;
         public IMegaNode FolderRootNode
@@ -846,12 +910,12 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
-        private Style _multiSelectCheckBoxStyle;
-        public Style MultiSelectCheckBoxStyle
-        {
-            get { return _multiSelectCheckBoxStyle; }
-            private set { SetField(ref _multiSelectCheckBoxStyle, value); }
-        }
+        //private Style _multiSelectCheckBoxStyle;
+        //public Style MultiSelectCheckBoxStyle
+        //{
+        //    get { return _multiSelectCheckBoxStyle; }
+        //    private set { SetField(ref _multiSelectCheckBoxStyle, value); }
+        //}
 
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive

@@ -27,8 +27,8 @@
     <!--SELECTORS -->
     <selectors:NodeTemplateSelector 
         x:Key="NodeTemplateSelector" 
-        FileItemTemplate="{StaticResource MegaNodeListFileItemContent}" 
-        FolderItemTemplate="{StaticResource MegaNodeListFolderItemContent}"/>
+        FileItemTemplate="{StaticResource MegaNodeListViewFileItemContent}" 
+        FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}"/>
 
     <!-- TEMPLATES -->
     <DataTemplate x:Key="MegaPageHeaderLogo">
@@ -95,13 +95,13 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaNodeListFileItemContent">
+    <DataTemplate x:Key="MegaNodeListViewFileItemContent">
         <Border 
             Margin="-24,1,0,1" 
             BorderThickness="2,2,2,2" 
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
-            <Grid Margin="12,2,12,2">
+            <Grid Margin="12,2,0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -112,8 +112,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Grid 
-                    Margin="0,0" 
+                <Grid
                     Grid.Row="0" 
                     Grid.RowSpan="2" 
                     Grid.Column="0">
@@ -144,8 +143,7 @@
                             <BitmapImage
                                 UriSource="{Binding ThumbnailImageUri}"
                                 DecodePixelHeight="36"
-                                DecodePixelType="Logical"
-                                />
+                                DecodePixelType="Logical"/>
                         </Image.Source>
                     </Image>
                 </Grid>
@@ -183,13 +181,63 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaNodeListFolderItemContent">
+    <DataTemplate x:Key="MegaNodeGridViewFileItemContent">
+        <Border 
+            BorderThickness="1" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Width="96">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Path 
+                    Grid.Row="0" 
+                    Data="{Binding DefaultImagePathData}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="64" 
+                    Height="64" 
+                    Stretch="Uniform" 
+                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
+                    </Path.Fill>
+                </Path>
+                <Image 
+                    Grid.Row="0" 
+                    Stretch="UniformToFill" 
+                    Height="96" 
+                    Width="96" 
+                    Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image.Source>
+                        <BitmapImage
+                            UriSource="{Binding ThumbnailImageUri}"
+                            DecodePixelHeight="96"
+                            DecodePixelType="Logical"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock
+                    Margin="0,4,0,0" 
+                    HorizontalAlignment="Stretch"
+                    TextAlignment="Center"
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis"
+                    VerticalAlignment="Bottom" 
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaNodeListViewFolderItemContent">
         <Border 
             Margin="-24,1,0,1" 
             BorderThickness="2,2,2,2" 
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
-            <Grid Margin="12,2,12,2">
+            <Grid Margin="12,2,0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -201,7 +249,6 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid 
-                    Margin="0,0" 
                     Grid.Row="0" 
                     Grid.RowSpan="2" 
                     Grid.Column="0">
@@ -249,6 +296,41 @@
                     Style="{ThemeResource CaptionTextBlockStyle}" 
                     Grid.Row="1" 
                     Grid.Column="2"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaNodeGridViewFolderItemContent">
+        <Border 
+            BorderThickness="1" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Width="96">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Path 
+                    Data="{Binding DefaultImagePathData}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="64" 
+                    Height="64" 
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
+                    </Path.Fill>
+                </Path>                
+                <TextBlock
+                    Margin="0,4,0,0" 
+                    HorizontalAlignment="Stretch" 
+                    TextAlignment="Center" 
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis" 
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Row="1"/>
             </Grid>
         </Border>
     </DataTemplate>

@@ -49,7 +49,7 @@ namespace MegaApp.Services
             if (_folderViewMode.ContainsKey(folderBase64Handle))
                 return (ViewMode)_folderViewMode[folderBase64Handle];
 
-            return folderName.Equals("Camera Uploads") ? ViewMode.LargeThumbnails : ViewMode.ListView;
+            return folderName.Equals("Camera Uploads") ? ViewMode.GridView : ViewMode.ListView;
         }
 
         public static void SetViewMode(string folderBase64Handle, ViewMode viewMode)

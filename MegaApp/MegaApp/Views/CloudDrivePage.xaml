@@ -10,6 +10,36 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
+    <Page.Resources>
+        <MenuFlyout x:Name="CloudDriveMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem 
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadItemCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RenameText}" 
+                    Command="{Binding RenameItemCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding MoveToRubbishBinText}" 
+                    Command="{Binding MoveItemToRubbishBinCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+        
+        <MenuFlyout x:Name="RubbishBinMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadItemCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RenameText}"
+                    Command="{Binding RenameItemCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RemoveText}" 
+                    Command="{Binding RemoveItemCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+    </Page.Resources>
+    
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -21,23 +51,32 @@
                 <RowDefinition Height="48"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Margin="0,-6,0,0" 
-                  DataContext="{Binding ActiveFolderView}"
-                  Background="{StaticResource MegaAppBarBackgroundBrush}">
-                <!--<StackPanel Margin="0,0,24,24" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <Button x:Name="BtnGoToTop" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToTopPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,2"/>
+            <Grid
+                DataContext="{Binding ActiveFolderView}"
+                Background="{StaticResource MegaAppBarBackgroundBrush}">
+                <StackPanel 
+                    Margin="0,0,12,0" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="{StaticResource MegaAppBarBackgroundBrush}">
+                    <Button 
+                        x:Name="BtnChangeView"
+                        Width="32" 
+                        Height="32"
+                        Command="{Binding ChangeViewCommand}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Bottom">
+                        <Path
+                            Width="14" 
+                            Height="14"
+                            Stretch="UniformToFill" 
+                            Data="{Binding NextViewButtonPathData}"
+                            Fill="{StaticResource MegaAppForegroundBrush}"/>
                     </Button>
-                    <Button x:Name="BtnGoToBottom" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToBottomPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,-2"/>
-                    </Button>
-                    <Button x:Name="BtnChangeView" Command="{Binding ChangeViewCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Visibility="{Binding HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding NextViewButtonPathData}" Width="22" Height="22"/>
-                    </Button>
-                    <Button x:Name="BtnChangeViewDisabled" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" IsEnabled="False" Visibility="{Binding HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.LargeThumbnailViewPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="22" Height="22"/>
-                    </Button>
-                </StackPanel>-->
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
                 <Pivot x:Name="MainPivot"
@@ -109,14 +148,14 @@
                                 Grid.Row="1" 
                                 Margin="12,0,0,0">
                                 <ListView
-                                    x:Name="LstCloudDrive"
+                                    x:Name="ListViewCloudDrive"
+                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
                                     <ListView.ItemContainerStyle>
@@ -124,22 +163,21 @@
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                         </Style>
                                     </ListView.ItemContainerStyle>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout x:Name="CloudDriveMenuFlyout">
-                                            <MenuFlyout.Items>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding DownloadText}"
-                                                    Command="{Binding DownloadItemCommand}"/>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding RenameText}" 
-                                                    Command="{Binding RenameItemCommand}"/>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding MoveToRubbishBinText}" 
-                                                    Command="{Binding MoveItemToRubbishBinCommand}"/>
-                                            </MenuFlyout.Items>                                            
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
                                 </ListView>
+                                <GridView
+                                    x:Name="GridViewCloudDrive"
+                                    Padding="2,4"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DataContext="{Binding CloudDrive}"
+                                    ItemsSource="{Binding ChildNodes}"                                    
+                                    Tapped="OnItemTapped"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding"
+                                    HorizontalAlignment="Center">
+                                </GridView>
                             </Grid>
                         </Grid>
                     </PivotItem>
@@ -211,14 +249,13 @@
                                 Grid.Row="1" 
                                 Margin="12,0,0,0">
                                 <ListView
-                                    x:Name="LstRubbishBin"
+                                    x:Name="ListViewRubbishBin"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
                                     <ListView.ItemContainerStyle>
@@ -226,22 +263,20 @@
                                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                                         </Style>
                                     </ListView.ItemContainerStyle>
-                                    <FlyoutBase.AttachedFlyout>
-                                        <MenuFlyout x:Name="RubbishBinMenuFlyout">
-                                            <MenuFlyout.Items>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding DownloadText}"
-                                                    Command="{Binding DownloadItemCommand}"/>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding RenameText}"
-                                                    Command="{Binding RenameItemCommand}"/>
-                                                <MenuFlyoutItem 
-                                                    Text="{Binding RemoveText}" 
-                                                    Command="{Binding RemoveItemCommand}"/>
-                                            </MenuFlyout.Items>
-                                        </MenuFlyout>
-                                    </FlyoutBase.AttachedFlyout>
-                                </ListView>                                
+                                </ListView>
+                                <GridView
+                                    x:Name="GridViewRubbishBin"
+                                    Padding="2,4"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DataContext="{Binding RubbishBin}"
+                                    ItemsSource="{Binding ChildNodes}"
+                                    Tapped="OnItemTapped"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                </GridView>
                             </Grid>
                         </Grid>
                     </PivotItem>
