@@ -50,7 +50,7 @@ namespace MegaApp.ViewModels
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveCommand = new RelayCommand(this.Remove);
-            this.RenameItemCommand = new RelayCommand(this.RenameItem);
+            this.RenameCommand = new RelayCommand(this.Rename);
             this.UploadCommand = new RelayCommand(this.Upload);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
@@ -113,7 +113,7 @@ namespace MegaApp.ViewModels
         public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
-        public ICommand RenameItemCommand { get; private set; }
+        public ICommand RenameCommand { get; private set; }
         public ICommand UploadCommand { get; private set; }
         
         //public ICommand GetLinkCommand { get; private set; }        
@@ -461,7 +461,10 @@ namespace MegaApp.ViewModels
             await customMessageDialog.ShowDialogAsync();
         }
 
-        private void RenameItem()
+        /// <summary>
+        /// Renames the focused node.
+        /// </summary>
+        private void Rename()
         {
             FocusedNode?.Rename();
         }
