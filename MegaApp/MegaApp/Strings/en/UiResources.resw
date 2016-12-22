@@ -226,6 +226,10 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Folders</value>
     <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_MultiSelect" xml:space="preserve">
+    <value>Multi select</value>
+    <comment>Label for any 'Multi select' button, link, text, title, etc. for multiple selection - (String as short as possible).</comment>
+  </data>
   <data name="UI_MyAccount" xml:space="preserve">
     <value>My account</value>
     <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -301,5 +305,13 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_Yes" xml:space="preserve">
     <value>Yes</value>
     <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DeselectAll" xml:space="preserve">
+    <value>Deselect all</value>
+    <comment>Label for any 'Deselect all' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SelectAll" xml:space="preserve">
+    <value>Select all</value>
+    <comment>Label for any 'Select all' button, link, etc. - (String as short as possible).</comment>
   </data>
 </root>

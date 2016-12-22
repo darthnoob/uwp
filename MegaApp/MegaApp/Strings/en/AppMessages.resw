@@ -545,4 +545,47 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <value>Failed to select the folder. Please try again or select another folder.</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
+  <data name="AM_MultiMoveToRubbishBinQuestion" xml:space="preserve">
+    <value>Are you sure you want to move {0} items to the rubbish bin?</value>
+    <comment>Message of the dialog displayed when a user want to move multiple nodes to the rubbish bin, asking for confirmation to make the movement.
+Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
+  </data>
+  <data name="AM_MultiMoveToRubbishBinSucces" xml:space="preserve">
+    <value>{0} items moved to the rubbish bin</value>
+    <comment>Message of the dialog displayed when move successfully multiple nodes to the rubbish bin.
+Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
+  </data>
+  <data name="AM_MultiMoveToRubbishBinSucces_Title" xml:space="preserve">
+    <value>Items moved</value>
+    <comment>Title of the dialog displayed when move successfully multiple nodes to the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MultiRemoveSucces" xml:space="preserve">
+    <value>{0} items removed</value>
+    <comment>Message of the dialog displayed when remove successfully multiple nodes definitely from the rubbish bin.
+Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
+  </data>
+  <data name="AM_MultiRemoveSucces_Title" xml:space="preserve">
+    <value>Items removed</value>
+    <comment>Title of the dialog displayed when remove successfully multiple nodes definitely from the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MultiSelectRemoveQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} items?</value>
+    <comment>Message of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement.
+Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
+  </data>
+  <data name="AM_MultiSelectRemoveQuestion_Title" xml:space="preserve">
+    <value>Remove items?</value>
+    <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CreateDownloadPathError" xml:space="preserve">
+    <value>Download path doesn't exist and any error occurred trying create it. 
+Please try again and if continues failing contact support@mega.nz. [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
+  <data name="AM_DownloadPathUnknownError" xml:space="preserve">
+    <value>Unknown error in the download path. Please try again and if continues failing contact support@mega.nz. [{0}]</value>
+    <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
+Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+  </data>
 </root>

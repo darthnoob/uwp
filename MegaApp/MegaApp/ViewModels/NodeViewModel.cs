@@ -261,27 +261,12 @@ namespace MegaApp.ViewModels
             var downloadFolder = await FolderService.SelectFolder();
             if (downloadFolder != null)
             {
-                // Extra check to try avoid null values
-                if (string.IsNullOrWhiteSpace(downloadFolder.Path))
+                if (await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_SelectFolderFailedNoErrorCode"));
-                    return;
+                    Transfer.ExternalDownloadPath = downloadFolder.Path;
+                    transferQueue.Add(Transfer);
+                    Transfer.StartTransfer();
                 }
-
-                // Check for illegal characters in the download path
-                if (FolderService.HasIllegalChars(downloadFolder.Path))
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_InvalidFolderNameOrPath"), downloadFolder.Path));
-                    return;
-                }
-
-                Transfer.ExternalDownloadPath = downloadFolder.Path;
-                transferQueue.Add(Transfer);                
-                Transfer.StartTransfer();
             }
         }
 

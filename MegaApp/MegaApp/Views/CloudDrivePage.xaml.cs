@@ -2,7 +2,7 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
@@ -119,20 +119,10 @@ namespace MegaApp.Views
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                AddFolderButton.Visibility = UploadButton.Visibility = Visibility.Visible;                
-                CleanRubbishBinButton.Visibility = Visibility.Collapsed;
-
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
-            }
 
             if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                AddFolderButton.Visibility = UploadButton.Visibility = Visibility.Collapsed;
-                CleanRubbishBinButton.Visibility = Visibility.Visible;
-
                 this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
-            }                
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
@@ -140,32 +130,71 @@ namespace MegaApp.Views
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
             if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
-                ProcessItemTapped(sender);
+                ProcessItemTapped(sender, (FrameworkElement)e.OriginalSource);
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            ProcessItemTapped(sender);
+            ProcessItemTapped(sender, (FrameworkElement)e.OriginalSource);
         }
 
-        private void ProcessItemTapped(object sender)
+        /// <summary>
+        /// Processes the tapped item.
+        /// </summary>
+        /// <param name="sender">View control which contains the tapped item.</param>
+        /// <param name="item">Tapped item.</param>
+        private void ProcessItemTapped(object sender, FrameworkElement item)
         {
-            IMegaNode itemTapped = null;
-            if (sender is ListView)
-                itemTapped = ((ListView)sender).SelectedItem as IMegaNode;
-            if (sender is GridView)
-                itemTapped = ((GridView)sender).SelectedItem as IMegaNode;
+            IMegaNode itemTapped = item?.DataContext as IMegaNode;
 
             if (itemTapped != null)
             {
-                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                    ListViewCloudDrive.SelectedItem = GridViewCloudDrive.SelectedItem = null;
-                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                    ListViewRubbishBin.SelectedItem = GridViewRubbishBin.SelectedItem = null;
+                if(ViewModel.ActiveFolderView.IsMultiSelectActive)
+                {
+                    // Add or delete the item tapped to or from the selected nodes list
+                    if (ViewModel.ActiveFolderView.SelectedNodes.Contains(itemTapped))
+                        ViewModel.ActiveFolderView.SelectedNodes.Remove(itemTapped);
+                    else
+                        ViewModel.ActiveFolderView.SelectedNodes.Add(itemTapped);
 
-                this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+                    // Manage the selected items of the view control which is not now in use, 
+                    // because the view control in use y automatically managed.
+                    switch (ViewModel.ActiveFolderView.ViewMode)
+                    {
+                        case FolderContentViewMode.ListView:
+                            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                                ManageMultiSelectItems(GridViewCloudDrive, itemTapped);
+                            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                                ManageMultiSelectItems(GridViewRubbishBin, itemTapped);
+                            break;
+
+                        case FolderContentViewMode.GridView:
+                            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                                ManageMultiSelectItems(ListViewCloudDrive, itemTapped);
+                            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                                ManageMultiSelectItems(ListViewRubbishBin, itemTapped);
+                            break;
+                    }
+                }
+                else
+                {                    
+                    this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+                }
             }
-        }        
+        }
+
+        /// <summary>
+        /// Adds or removes the item to the selected items collection of the view control.
+        /// </summary>
+        /// <param name="viewObject">View control where add or remove the item.</param>
+        /// <param name="item">Item to add or remove.</param>
+        private void ManageMultiSelectItems(ListViewBase viewControl, IMegaNode item)
+        {
+            if (viewControl.SelectedItems.Contains(item))
+                viewControl.SelectedItems.Remove(item);
+            else
+                viewControl.SelectedItems.Add(item);
+        }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
@@ -173,12 +202,90 @@ namespace MegaApp.Views
             SdkService.MegaSdk.retryPendingConnections();
         }
 
+        private void OnMultiSelectButtonClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                ListViewCloudDrive.SelectionMode = GridViewCloudDrive.SelectionMode = 
+                    ListViewSelectionMode.Multiple;
+            }
+                
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                ListViewRubbishBin.SelectionMode = GridViewRubbishBin.SelectionMode = 
+                    ListViewSelectionMode.Multiple;
+            }
+        }
+
+        private void OnCancelMultiSelectButtonClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                ListViewCloudDrive.SelectionMode = GridViewCloudDrive.SelectionMode =
+                    ListViewSelectionMode.Extended;
+            }
+
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                ListViewRubbishBin.SelectionMode = GridViewRubbishBin.SelectionMode =
+                    ListViewSelectionMode.Extended;
+            }
+
+            ViewModel.ActiveFolderView.SelectedNodes.Clear();
+        }
+
+        private void OnSelectAllClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                ListViewCloudDrive.SelectAll();
+                GridViewCloudDrive.SelectAll();
+            }
+
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                ListViewRubbishBin.SelectAll();
+                GridViewRubbishBin.SelectAll();
+            }
+
+            ViewModel.ActiveFolderView.SelectedNodes.AddRange(ViewModel.ActiveFolderView.ChildNodes);
+        }
+
+        private void OnDeselectAllClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                ListViewCloudDrive.SelectedItems.Clear();
+                GridViewCloudDrive.SelectedItems.Clear();
+            }
+
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                ListViewRubbishBin.SelectedItems.Clear();
+                GridViewRubbishBin.SelectedItems.Clear();
+            }
+
+            ViewModel.ActiveFolderView.SelectedNodes.Clear();
+        }
+
         private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             try
             {
                 e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
-                    e.GetPosition(GetViewControlInUse(sender)));
+                    e.GetPosition(sender as ListViewBase));
             }
             catch (Exception) { }
         }
@@ -188,25 +295,9 @@ namespace MegaApp.Views
             try
             {
                 e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
-                    e.GetPosition(GetViewControlInUse(sender)));
+                    e.GetPosition(sender as ListViewBase));
             }
             catch (Exception) { }
-        }
-
-        /// <summary>
-        /// Converts the view control object in use to ListView or GridView
-        /// </summary>
-        /// <param name="obj">The view control object in use.</param>
-        /// <returns>The view control in use as ListView or GridView</returns>
-        /// <exception cref="ArgumentOutOfRangeException"/>
-        private UIElement GetViewControlInUse(object obj)
-        {
-            if (obj is ListView)
-                return obj as ListView;
-            if (obj is GridView)
-                return obj as GridView;
-
-            throw new ArgumentOutOfRangeException("Invalid view control");
         }
 
         /// <summary>
@@ -225,7 +316,7 @@ namespace MegaApp.Views
                 if (ViewModel?.ActiveFolderView != null)
                 {
                     // If the user is moving nodes, don't show the contextual menu
-                    if (ViewModel.ActiveFolderView.CurrentDisplayMode == DriveDisplayMode.CopyOrMoveItem)
+                    if (ViewModel.ActiveFolderView.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
                         return true;
 
                     // We don't want to open the menu if the focused element is not a list view item.
@@ -234,14 +325,28 @@ namespace MegaApp.Views
                         return true;
 
                     MenuFlyout menuFlyout = null;
-                    if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                        menuFlyout = this.Resources["CloudDriveMenuFlyout"] as MenuFlyout;
-                    if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                        menuFlyout = this.Resources["RubbishBinMenuFlyout"] as MenuFlyout;
 
-                    menuFlyout.ShowAt(GetViewControlInUse(sender), position);
+                    if ((sender as ListViewBase).SelectedItems.Count > 1)
+                    {
+                        if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                            menuFlyout = this.Resources["MultiselectCloudDriveMenuFlyout"] as MenuFlyout;
+                        else if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                            menuFlyout = this.Resources["MultiselectRubbishBinMenuFlyout"] as MenuFlyout;
+                    }
+                    else
+                    {
+                        if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                            menuFlyout = this.Resources["CloudDriveMenuFlyout"] as MenuFlyout;
+                        else if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                            menuFlyout = this.Resources["RubbishBinMenuFlyout"] as MenuFlyout;
+                    }
+
+                    menuFlyout.ShowAt(sender as ListViewBase, position);
                     
                     ViewModel.ActiveFolderView.FocusedNode = item.DataContext as IMegaNode;
+
+                    foreach (var selectedItem in (sender as ListViewBase).SelectedItems)
+                        ViewModel.ActiveFolderView.SelectedNodes.Add(selectedItem as IMegaNode);
                 }
                 else
                 {

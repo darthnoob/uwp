@@ -5,23 +5,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:breadcrumb="using:GoedWare.Controls.Breadcrumb"
+    xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
+    <!-- PAGE RESOURCES -->
     <Page.Resources>
+        <!-- FLYOUT MENUS -->
         <MenuFlyout x:Name="CloudDriveMenuFlyout">
             <MenuFlyout.Items>
                 <MenuFlyoutItem 
                     Text="{Binding DownloadText}"
-                    Command="{Binding DownloadItemCommand}"/>
+                    Command="{Binding DownloadCommand}"/>
                 <MenuFlyoutItem 
                     Text="{Binding RenameText}" 
-                    Command="{Binding RenameItemCommand}"/>
+                    Command="{Binding RenameCommand}"/>
                 <MenuFlyoutItem 
                     Text="{Binding MoveToRubbishBinText}" 
-                    Command="{Binding MoveItemToRubbishBinCommand}"/>
+                    Command="{Binding MoveToRubbishBinCommand}"/>
             </MenuFlyout.Items>
         </MenuFlyout>
         
@@ -29,18 +32,62 @@
             <MenuFlyout.Items>
                 <MenuFlyoutItem
                     Text="{Binding DownloadText}"
-                    Command="{Binding DownloadItemCommand}"/>
+                    Command="{Binding DownloadCommand}"/>
                 <MenuFlyoutItem 
                     Text="{Binding RenameText}"
-                    Command="{Binding RenameItemCommand}"/>
+                    Command="{Binding RenameCommand}"/>
                 <MenuFlyoutItem 
                     Text="{Binding RemoveText}" 
-                    Command="{Binding RemoveItemCommand}"/>
+                    Command="{Binding RemoveCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+
+        <MenuFlyout x:Name="MultiselectCloudDriveMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem 
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>                
+                <MenuFlyoutItem 
+                    Text="{Binding MoveToRubbishBinText}" 
+                    Command="{Binding MoveToRubbishBinCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+
+        <MenuFlyout x:Name="MultiselectRubbishBinMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>                
+                <MenuFlyoutItem 
+                    Text="{Binding RemoveText}" 
+                    Command="{Binding RemoveCommand}"/>
             </MenuFlyout.Items>
         </MenuFlyout>
     </Page.Resources>
     
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Collapsed" />
+                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Visible" />
+                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -155,7 +202,8 @@
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
                                     <ListView.ItemContainerStyle>
@@ -173,10 +221,10 @@
                                     ItemsSource="{Binding ChildNodes}"                                    
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
                                     RightTapped="OnRightTapped"
-                                    Holding="OnHolding"
-                                    HorizontalAlignment="Center">
+                                    Holding="OnHolding">
                                 </GridView>
                             </Grid>
                         </Grid>
@@ -255,7 +303,8 @@
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
                                     <ListView.ItemContainerStyle>
@@ -273,7 +322,8 @@
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
-                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"                                    
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
                                     RightTapped="OnRightTapped"
                                     Holding="OnHolding">
                                 </GridView>
@@ -284,35 +334,100 @@
             </Grid>
         </Grid>
 
+        <!-- CLOUD DRIVE COMMAND BAR -->
         <CommandBar 
             Grid.Row="1"
-            Style="{StaticResource MegaCommandBarStyle}">
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
             <AppBarButton 
-                x:Name="UploadButton"
                 Icon="Upload" 
                 Label="{Binding UploadText}" 
                 Command="{Binding ActiveFolderView.UploadCommand}"
                 Click="OnButtonClick"/>
             <AppBarButton 
-                x:Name="AddFolderButton"
-                Icon="NewFolder" 
+                Icon="Add" 
                 Label="{Binding AddFolderText}" 
                 Command="{Binding ActiveFolderView.AddFolderCommand}"
                 Click="OnButtonClick"/>
             <AppBarButton 
-                x:Name="CleanRubbishBinButton"
+                x:Name="MultiSelectButtonCloudDrive"
+                Icon="AllApps" 
+                Label="{Binding MultiSelectText}" 
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnMultiSelectButtonClick"/>
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Icon="Refresh" 
+                    Label="{Binding RefreshText}" 
+                    Command="{Binding ActiveFolderView.RefreshCommand}"
+                    Click="OnButtonClick"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+        
+        <!-- RUBBISH BIN COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton 
                 Icon="Delete" 
                 Label="{Binding EmptyRubbishBinText}" 
                 Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
                 Click="OnButtonClick"/>
+            <AppBarButton 
+                x:Name="MultiSelectButtonRubbishBin"
+                Icon="AllApps" 
+                Label="{Binding MultiSelectText}" 
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnMultiSelectButtonClick"/>
             
             <CommandBar.SecondaryCommands>
                 <AppBarButton
-                x:Name="RefreshButton"
-                Icon="Refresh" 
-                Label="{Binding RefreshText}" 
-                Command="{Binding ActiveFolderView.RefreshCommand}"
+                    Icon="Refresh" 
+                    Label="{Binding RefreshText}" 
+                    Command="{Binding ActiveFolderView.RefreshCommand}"
+                    Click="OnButtonClick"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <!-- MULTI SELECT COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton
+                Icon="Download" 
+                Label="{Binding DownloadText}" 
+                Command="{Binding ActiveFolderView.DownloadCommand}"
                 Click="OnButtonClick"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding MoveToRubbishBinText}" 
+                Command="{Binding ActiveFolderView.MoveToRubbishBinCommand}"
+                Click="OnButtonClick"
+                Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding RemoveText}" 
+                Command="{Binding ActiveFolderView.RemoveCommand}"
+                Click="OnButtonClick"
+                Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            <AppBarButton
+                Icon="Cancel" 
+                Label="{Binding CancelText}"
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnCancelMultiSelectButtonClick"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Icon="SelectAll" 
+                    Label="{Binding SelectAllText}"                     
+                    Click="OnSelectAllClick"/>
+                <AppBarButton
+                    Icon="SelectAll" 
+                    Label="{Binding DeselectAllText}"                     
+                    Click="OnDeselectAllClick"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>

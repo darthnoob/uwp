@@ -18,6 +18,12 @@ namespace MegaApp.Services
         private static Dictionary<string, int> _folderSorting;
         private static Dictionary<string, int> _folderViewMode;
 
+        /// <summary>
+        /// Gets sort order of a folder.
+        /// </summary>
+        /// <param name="folderBase64Handle">Folder base 64 handle.</param>
+        /// <param name="folderName">Folder name.</param>
+        /// <returns>Sort order. Possible values: <see cref="MSortOrderType"/></returns>
         public static int GetSortOrder(string folderBase64Handle, string folderName)
         {
             if (_folderSorting == null)
@@ -30,6 +36,11 @@ namespace MegaApp.Services
                 (int)MSortOrderType.ORDER_DEFAULT_ASC;
         }
 
+        /// <summary>
+        /// Sets sort order of a folder.
+        /// </summary>
+        /// <param name="folderBase64Handle">Folder base 64 handle.</param>
+        /// <param name="sortOrder">Sort order. Possible values: <see cref="MSortOrderType"/></param>
         public static void SetSortOrder(string folderBase64Handle, int sortOrder)
         {
             if (_folderSorting == null)
@@ -41,18 +52,29 @@ namespace MegaApp.Services
                 _folderSorting.Add(folderBase64Handle, sortOrder);
         }
 
-        public static ViewMode GetViewMode(string folderBase64Handle, string folderName)
+        /// <summary>
+        /// Gets the content view mode of a folder.
+        /// </summary>
+        /// <param name="folderBase64Handle">Folder base 64 handle.</param>
+        /// <param name="folderName">Folder name.</param>
+        /// <returns>Folder content view mode. Possible values: <see cref="FolderContentViewMode"/></returns>
+        public static FolderContentViewMode GetViewMode(string folderBase64Handle, string folderName)
         {
             if (_folderViewMode == null)
                 _folderViewMode = new Dictionary<string, int>();
 
             if (_folderViewMode.ContainsKey(folderBase64Handle))
-                return (ViewMode)_folderViewMode[folderBase64Handle];
+                return (FolderContentViewMode)_folderViewMode[folderBase64Handle];
 
-            return folderName.Equals("Camera Uploads") ? ViewMode.GridView : ViewMode.ListView;
+            return folderName.Equals("Camera Uploads") ? FolderContentViewMode.GridView : FolderContentViewMode.ListView;
         }
 
-        public static void SetViewMode(string folderBase64Handle, ViewMode viewMode)
+        /// <summary>
+        /// Sets the content view mode of a folder.
+        /// </summary>
+        /// <param name="folderBase64Handle">Folder base 64 handle.</param>
+        /// <param name="viewMode">Folder content view mode. Possible values: <see cref="FolderContentViewMode"/></param>        
+        public static void SetViewMode(string folderBase64Handle, FolderContentViewMode viewMode)
         {
             if (_folderViewMode == null)
                 _folderViewMode = new Dictionary<string, int>();

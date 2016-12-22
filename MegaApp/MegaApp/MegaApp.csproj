@@ -111,6 +111,7 @@
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
@@ -119,7 +120,7 @@
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
-    <Compile Include="Enums\DriveDisplayMode.cs" />
+    <Compile Include="Enums\FolderContentViewState.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
@@ -135,7 +136,7 @@
     <Compile Include="Enums\TransferStatus.cs" />
     <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
-    <Compile Include="Enums\ViewMode.cs" />
+    <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />

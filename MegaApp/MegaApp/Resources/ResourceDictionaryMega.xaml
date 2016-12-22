@@ -21,8 +21,9 @@
 
     <!-- CONVERTERS -->
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter"/>
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter"/>
-    <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter"/>    
+    <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter"/>
 
     <!--SELECTORS -->
     <selectors:NodeTemplateSelector 

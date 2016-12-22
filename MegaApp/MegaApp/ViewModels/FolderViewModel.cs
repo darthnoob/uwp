@@ -43,19 +43,19 @@ namespace MegaApp.ViewModels
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
-            this.DownloadItemCommand = new RelayCommand(DownloadItem);
-            this.MoveItemToRubbishBinCommand = new RelayCommand(this.MoveItemToRubbishBin);
+            this.DownloadCommand = new RelayCommand(Download);
+            this.MoveToRubbishBinCommand = new RelayCommand(this.MoveToRubbishBin);
+            this.MultiSelectCommand = new RelayCommand(this.MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
-            this.RemoveItemCommand = new RelayCommand(this.RemoveItem);
+            this.RemoveCommand = new RelayCommand(this.Remove);
             this.RenameItemCommand = new RelayCommand(this.RenameItem);
             this.UploadCommand = new RelayCommand(this.Upload);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
-            //this.GetLinkCommand = new DelegateCommand(this.GetLink);
-            //this.MultiSelectCommand = new DelegateCommand(this.MultiSelect);
+            //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
             //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
             this.ChildNodes.CollectionChanged += ChildNodes_CollectionChanged;
@@ -68,22 +68,22 @@ namespace MegaApp.ViewModels
             switch (containerType)
             {
                 case ContainerType.CloudDrive:
-                    this.CurrentDisplayMode = DriveDisplayMode.CloudDrive;
+                    this.CurrentViewState = FolderContentViewState.CloudDrive;
                     break;
                 case ContainerType.RubbishBin:
-                    this.CurrentDisplayMode = DriveDisplayMode.RubbishBin;
+                    this.CurrentViewState = FolderContentViewState.RubbishBin;
                     break;
                 case ContainerType.InShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.InShares;
+                    this.CurrentViewState = FolderContentViewState.InShares;
                     break;
                 case ContainerType.OutShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.OutShares;
+                    this.CurrentViewState = FolderContentViewState.OutShares;
                     break;
                 case ContainerType.ContactInShares:
-                    this.CurrentDisplayMode = DriveDisplayMode.ContactInShares;
+                    this.CurrentViewState = FolderContentViewState.ContactInShares;
                     break;
                 case ContainerType.FolderLink:
-                    this.CurrentDisplayMode = DriveDisplayMode.FolderLink;
+                    this.CurrentViewState = FolderContentViewState.FolderLink;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
@@ -106,19 +106,19 @@ namespace MegaApp.ViewModels
         public ICommand AddFolderCommand { get; private set; }
         public ICommand ChangeViewCommand { get; private set; }
         public ICommand CleanRubbishBinCommand { get; private set; }
-        public ICommand DownloadItemCommand { get; private set; }
+        public ICommand DownloadCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; private set; }
         public ICommand ItemSelectedCommand { get; private set; }
-        public ICommand MoveItemToRubbishBinCommand { get; private set; }
+        public ICommand MoveToRubbishBinCommand { get; private set; }
+        public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; private set; }
-        public ICommand RemoveItemCommand { get; private set; }
+        public ICommand RemoveCommand { get; private set; }
         public ICommand RenameItemCommand { get; private set; }
         public ICommand UploadCommand { get; private set; }
         
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
-        //public ICommand CreateShortCutCommand { get; private set; }
-        //public ICommand MultiSelectCommand { get; set; }
+        //public ICommand CreateShortCutCommand { get; private set; }        
         //public ICommand ViewDetailsCommand { get; private set; }
 
         #endregion
@@ -318,19 +318,147 @@ namespace MegaApp.ViewModels
             customMessageDialog.ShowDialog();
         }
 
-        private void DownloadItem()
+        private void Download()
         {
-            FocusedNode?.Download(TransferService.MegaTransfers);
+            if (SelectedNodes?.Count > 1)
+                MultipleDownloadAsync();
+            else if (SelectedNodes?.Count == 1)
+                SelectedNodes?.First()?.Download(TransferService.MegaTransfers);
+            else
+                FocusedNode?.Download(TransferService.MegaTransfers);
         }
 
-        private void MoveItemToRubbishBin()
+        private async void MultipleDownloadAsync()
         {
-            FocusedNode?.MoveToRubbishBinAsync();
+            if (SelectedNodes.Count < 1) return;
+
+            var downloadFolder = await FolderService.SelectFolder();
+            if (downloadFolder != null)
+            {
+                if(await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
+                {
+                    foreach (var node in SelectedNodes)
+                    {
+                        node.Transfer.ExternalDownloadPath = downloadFolder.Path;
+                        TransferService.MegaTransfers.Add(node.Transfer);
+                        node.Transfer.StartTransfer();
+                    }
+                }
+            }
+
+            IsMultiSelectActive = false;
         }
 
-        private void RemoveItem()
+        private async void MoveToRubbishBin()
         {
-            FocusedNode?.RemoveAsync();
+            if (SelectedNodes?.Count > 1)
+                await MultipleMoveToRubbishBinAsync();
+            else if (SelectedNodes?.Count == 1)
+                await SelectedNodes?.First()?.MoveToRubbishBinAsync();
+            else
+                await FocusedNode?.MoveToRubbishBinAsync();
+        }
+
+        private async Task MultipleMoveToRubbishBinAsync()
+        {
+            int count = SelectedNodes.Count;
+
+            if (count < 1) return;
+
+            var customMessageDialog = new CustomMessageDialog(
+                ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count),
+                App.AppInformation,
+                MessageDialogButtons.OkCancel);
+
+            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            {
+                Task.Run(async () =>
+                {
+                    WaitHandle[] waitEventRequests = new WaitHandle[count];
+
+                    int index = 0;
+
+                    foreach (var node in SelectedNodes)
+                    {
+                        waitEventRequests[index] = new AutoResetEvent(false);
+                        await node.MoveToRubbishBinAsync(true, (AutoResetEvent)waitEventRequests[index]);
+                        index++;
+                    }
+
+                    WaitHandle.WaitAll(waitEventRequests);
+
+                    new CustomMessageDialog(
+                        ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces"), count),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
+
+                    IsMultiSelectActive = false;
+                });
+            };
+
+            await customMessageDialog.ShowDialogAsync();
+        }        
+
+        /// <summary>
+        /// Sets if multiselect is active or not.
+        /// </summary>
+        private void MultiSelect()
+        {
+            IsMultiSelectActive = !IsMultiSelectActive;
+        }
+
+        private async void Remove()
+        {
+            if (SelectedNodes?.Count > 1)
+                await MultipleRemoveAsync();
+            else if (SelectedNodes?.Count == 1)
+                await SelectedNodes?.First()?.RemoveAsync();
+            else
+                await FocusedNode?.RemoveAsync();
+        }
+
+        private async Task MultipleRemoveAsync()
+        {
+            int count = SelectedNodes.Count;
+
+            if (count < 1) return;
+
+            var customMessageDialog = new CustomMessageDialog(
+                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count),
+                App.AppInformation,
+                MessageDialogButtons.OkCancel);
+
+            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            {
+                Task.Run(async () =>
+                {
+                    WaitHandle[] waitEventRequests = new WaitHandle[count];
+
+                    int index = 0;
+
+                    foreach (var node in SelectedNodes)
+                    {
+                        waitEventRequests[index] = new AutoResetEvent(false);
+                        await node.RemoveAsync(true, (AutoResetEvent)waitEventRequests[index]);
+                        index++;
+                    }
+
+                    WaitHandle.WaitAll(waitEventRequests);
+
+                    new CustomMessageDialog(
+                        ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), count),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
+
+                    IsMultiSelectActive = false;
+                });
+            };
+
+            await customMessageDialog.ShowDialogAsync();
         }
 
         private void RenameItem()
@@ -399,12 +527,12 @@ namespace MegaApp.ViewModels
                     break;
                 case MNodeType.TYPE_FILE:
                     // If the user is moving nodes don't process the file node
-                    if (this.CurrentDisplayMode != DriveDisplayMode.CopyOrMoveItem)
+                    if (this.CurrentViewState != FolderContentViewState.CopyOrMoveItem)
                         ProcessFileNode(node);
                     break;
                 case MNodeType.TYPE_FOLDER:
                     // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentDisplayMode == DriveDisplayMode.CopyOrMoveItem) && (IsSelectedNode(node))) return;
+                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMoveItem) && (IsSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
                 case MNodeType.TYPE_ROOT:
@@ -629,7 +757,7 @@ namespace MegaApp.ViewModels
 
                 // If the user is moving nodes, check if the node had been selected to move 
                 // and establish the corresponding display mode
-                if (this.CurrentDisplayMode == DriveDisplayMode.CopyOrMoveItem)
+                if (this.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
                 {
                     // Check if it is the only focused node
                     if ((this.FocusedNode != null) && (node.OriginalMNode.getBase64Handle() == this.FocusedNode.OriginalMNode.getBase64Handle()))
@@ -696,11 +824,11 @@ namespace MegaApp.ViewModels
             // Each view has different performance options
             switch (this.ViewMode)
             {
-                case ViewMode.ListView:
+                case FolderContentViewMode.ListView:
                     viewportItemCount = 256;
                     backgroundItemCount = 1024;
                     break;
-                case ViewMode.GridView:
+                case FolderContentViewMode.GridView:
                     viewportItemCount = 128;
                     backgroundItemCount = 512;
                     break;
@@ -739,7 +867,7 @@ namespace MegaApp.ViewModels
                 FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
             };
 
-            this.ViewMode = ViewMode.ListView;
+            this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");            
             //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["DefaultCheckBoxStyle"];
         }
@@ -753,14 +881,14 @@ namespace MegaApp.ViewModels
 
             switch (this.ViewMode)
             {
-                case ViewMode.ListView:
-                    SetView(ViewMode.GridView);
-                    UiService.SetViewMode(FolderRootNode.Base64Handle, ViewMode.GridView);
+                case FolderContentViewMode.ListView:
+                    SetView(FolderContentViewMode.GridView);
+                    UiService.SetViewMode(FolderRootNode.Base64Handle, FolderContentViewMode.GridView);
                     break;
 
-                case ViewMode.GridView:
-                    SetView(ViewMode.ListView);
-                    UiService.SetViewMode(FolderRootNode.Base64Handle, ViewMode.ListView);
+                case FolderContentViewMode.GridView:
+                    SetView(FolderContentViewMode.ListView);
+                    UiService.SetViewMode(FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
                     break;
             }
         }
@@ -769,23 +897,23 @@ namespace MegaApp.ViewModels
         /// Sets the view mode for the folder content.
         /// </summary>
         /// <param name="viewMode">View mode to set.</param>
-        public void SetView(ViewMode viewMode)
+        public void SetView(FolderContentViewMode viewMode)
         {
             switch (viewMode)
             {
-                case ViewMode.GridView:
+                case FolderContentViewMode.GridView:
                     this.NodeTemplateSelector = new NodeTemplateSelector()
                     {
                         FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
                         FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
                     };
 
-                    this.ViewMode = ViewMode.GridView;
+                    this.ViewMode = FolderContentViewMode.GridView;
                     this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
                     //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["MultiSelectItemCheckBoxStyle"];
                     break;
 
-                case ViewMode.ListView:
+                case FolderContentViewMode.ListView:
                     SetViewDefaults();
                     break;
             }
@@ -853,9 +981,21 @@ namespace MegaApp.ViewModels
         #region Properties
 
         public IMegaNode FocusedNode { get; set; }
-        public DriveDisplayMode CurrentDisplayMode { get; set; }
-        public DriveDisplayMode PreviousDisplayMode { get; set; }
         public List<IMegaNode> SelectedNodes { get; set; }
+
+        private FolderContentViewState _currentViewState;
+        public FolderContentViewState CurrentViewState
+        {
+            get { return _currentViewState; }
+            set { SetField(ref _currentViewState, value); }
+        }
+
+        private FolderContentViewState _previousViewState;
+        public FolderContentViewState PreviousViewState
+        {
+            get { return _previousViewState; }
+            set { SetField(ref _previousViewState, value); }
+        }
 
         private ObservableCollection<IMegaNode> _childNodes;
         public ObservableCollection<IMegaNode> ChildNodes
@@ -871,8 +1011,8 @@ namespace MegaApp.ViewModels
 
         public ContainerType Type { get; private set; }
 
-        private ViewMode _viewMode;
-        public ViewMode ViewMode
+        private FolderContentViewMode _viewMode;
+        public FolderContentViewMode ViewMode
         {
             get { return _viewMode; }
             set
@@ -883,8 +1023,8 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public bool IsListViewMode => ViewMode == ViewMode.ListView;
-        public bool IsGridViewMode => ViewMode == ViewMode.GridView;
+        public bool IsListViewMode => ViewMode == FolderContentViewMode.ListView;
+        public bool IsGridViewMode => ViewMode == FolderContentViewMode.GridView;
 
         private IMegaNode _folderRootNode;
         public IMegaNode FolderRootNode
@@ -921,7 +1061,21 @@ namespace MegaApp.ViewModels
         public bool IsMultiSelectActive
         {
             get { return _isMultiSelectActive; }
-            set { SetField(ref _isMultiSelectActive, value); }
+            set
+            {
+                SetField(ref _isMultiSelectActive, value);
+                if (_isMultiSelectActive)
+                {
+                    if (CurrentViewState != FolderContentViewState.MultiSelect)
+                        PreviousViewState = CurrentViewState;
+                    CurrentViewState = FolderContentViewState.MultiSelect;
+                }
+                else
+                {
+                    CurrentViewState = PreviousViewState;
+                    SelectedNodes.Clear();
+                }
+            }
         }
 
         private DataTemplate _emptyContentTemplate;
