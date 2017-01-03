@@ -314,4 +314,12 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Select all</value>
     <comment>Label for any 'Select all' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Copy" xml:space="preserve">
+    <value>Copy</value>
+    <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Move" xml:space="preserve">
+    <value>Move</value>
+    <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>

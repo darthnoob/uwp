@@ -26,7 +26,7 @@ namespace MegaApp.Interfaces
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        NodeActionResult Move(IMegaNode newParentNode);
+        Task<NodeActionResult> MoveAsync(IMegaNode newParentNode);
 
         /// <summary>
         /// Copy the node from its current location to a new folder destination

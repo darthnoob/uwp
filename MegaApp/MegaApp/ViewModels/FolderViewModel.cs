@@ -38,7 +38,6 @@ namespace MegaApp.ViewModels
             this.ChildNodes = new ObservableCollection<IMegaNode>();
             this.BreadCrumbs = new ObservableCollection<IBaseNode>();
             this.SelectedNodes = new List<IMegaNode>();
-            this.IsMultiSelectActive = false;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
@@ -323,9 +322,9 @@ namespace MegaApp.ViewModels
             if (SelectedNodes?.Count > 1)
                 MultipleDownloadAsync();
             else if (SelectedNodes?.Count == 1)
-                SelectedNodes?.First()?.Download(TransferService.MegaTransfers);
-            else
-                FocusedNode?.Download(TransferService.MegaTransfers);
+                SelectedNodes.First()?.Download(TransferService.MegaTransfers);
+            else if (FocusedNode != null)
+                FocusedNode.Download(TransferService.MegaTransfers);
         }
 
         private async void MultipleDownloadAsync()
@@ -346,7 +345,8 @@ namespace MegaApp.ViewModels
                 }
             }
 
-            IsMultiSelectActive = false;
+            CurrentViewState = PreviousViewState;
+            SelectedNodes.Clear();
         }
 
         private async void MoveToRubbishBin()
@@ -354,9 +354,9 @@ namespace MegaApp.ViewModels
             if (SelectedNodes?.Count > 1)
                 await MultipleMoveToRubbishBinAsync();
             else if (SelectedNodes?.Count == 1)
-                await SelectedNodes?.First()?.MoveToRubbishBinAsync();
-            else
-                await FocusedNode?.MoveToRubbishBinAsync();
+                await SelectedNodes.First()?.MoveToRubbishBinAsync();
+            else if (FocusedNode != null)
+                await FocusedNode.MoveToRubbishBinAsync();
         }
 
         private async Task MultipleMoveToRubbishBinAsync()
@@ -394,7 +394,8 @@ namespace MegaApp.ViewModels
                         App.AppInformation,
                         MessageDialogButtons.Ok).ShowDialog();
 
-                    IsMultiSelectActive = false;
+                    CurrentViewState = PreviousViewState;
+                    SelectedNodes.Clear();
                 });
             };
 
@@ -406,7 +407,15 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void MultiSelect()
         {
-            IsMultiSelectActive = !IsMultiSelectActive;
+            if(IsMultiSelectActive)
+            {
+                CurrentViewState = PreviousViewState;
+            }
+            else
+            {
+                PreviousViewState = CurrentViewState;
+                CurrentViewState = FolderContentViewState.MultiSelect;
+            }
         }
 
         private async void Remove()
@@ -414,9 +423,9 @@ namespace MegaApp.ViewModels
             if (SelectedNodes?.Count > 1)
                 await MultipleRemoveAsync();
             else if (SelectedNodes?.Count == 1)
-                await SelectedNodes?.First()?.RemoveAsync();
-            else
-                await FocusedNode?.RemoveAsync();
+                await SelectedNodes.First()?.RemoveAsync();
+            else if(FocusedNode != null)
+                await FocusedNode.RemoveAsync();
         }
 
         private async Task MultipleRemoveAsync()
@@ -454,7 +463,8 @@ namespace MegaApp.ViewModels
                         App.AppInformation,
                         MessageDialogButtons.Ok).ShowDialog();
 
-                    IsMultiSelectActive = false;
+                    CurrentViewState = PreviousViewState;
+                    SelectedNodes.Clear();
                 });
             };
 
@@ -530,12 +540,12 @@ namespace MegaApp.ViewModels
                     break;
                 case MNodeType.TYPE_FILE:
                     // If the user is moving nodes don't process the file node
-                    if (this.CurrentViewState != FolderContentViewState.CopyOrMoveItem)
+                    if (this.CurrentViewState != FolderContentViewState.CopyOrMove)
                         ProcessFileNode(node);
                     break;
                 case MNodeType.TYPE_FOLDER:
                     // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMoveItem) && (IsSelectedNode(node))) return;
+                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
                 case MNodeType.TYPE_ROOT:
@@ -556,16 +566,17 @@ namespace MegaApp.ViewModels
         /// <returns>True if is a selected node or false in other case</returns>
         private bool IsSelectedNode(IMegaNode node)
         {
-            if ((this.SelectedNodes != null) && (this.SelectedNodes.Count > 0))
+            if (SelectedNodes?.Count > 0)
             {
-                for (int index = 0; index < this.SelectedNodes.Count; index++)
+                var count = SelectedNodes.Count;
+                for (int index = 0; index < count; index++)
                 {
-                    var selectedNode = this.SelectedNodes[index];
-                    if ((selectedNode != null) && (node.OriginalMNode.getBase64Handle() == selectedNode.OriginalMNode.getBase64Handle()))
+                    var selectedNode = SelectedNodes[index];
+                    if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
                     {
                         //Update the selected nodes list values
                         node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        this.SelectedNodes[index] = node;
+                        SelectedNodes[index] = node;
 
                         return true;
                     }
@@ -760,7 +771,7 @@ namespace MegaApp.ViewModels
 
                 // If the user is moving nodes, check if the node had been selected to move 
                 // and establish the corresponding display mode
-                if (this.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
+                if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
                 {
                     // Check if it is the only focused node
                     if ((this.FocusedNode != null) && (node.OriginalMNode.getBase64Handle() == this.FocusedNode.OriginalMNode.getBase64Handle()))
@@ -871,8 +882,8 @@ namespace MegaApp.ViewModels
             };
 
             this.ViewMode = FolderContentViewMode.ListView;
-            this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");            
-            //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["DefaultCheckBoxStyle"];
+            this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
+            
         }
 
         /// <summary>
@@ -913,7 +924,6 @@ namespace MegaApp.ViewModels
 
                     this.ViewMode = FolderContentViewMode.GridView;
                     this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
-                    //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["MultiSelectItemCheckBoxStyle"];
                     break;
 
                 case FolderContentViewMode.ListView:
@@ -990,7 +1000,11 @@ namespace MegaApp.ViewModels
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set { SetField(ref _currentViewState, value); }
+            set
+            {
+                SetField(ref _currentViewState, value);
+                OnPropertyChanged("IsMultiSelectActive");
+            }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1053,33 +1067,7 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
-        //private Style _multiSelectCheckBoxStyle;
-        //public Style MultiSelectCheckBoxStyle
-        //{
-        //    get { return _multiSelectCheckBoxStyle; }
-        //    private set { SetField(ref _multiSelectCheckBoxStyle, value); }
-        //}
-
-        private bool _isMultiSelectActive;
-        public bool IsMultiSelectActive
-        {
-            get { return _isMultiSelectActive; }
-            set
-            {
-                SetField(ref _isMultiSelectActive, value);
-                if (_isMultiSelectActive)
-                {
-                    if (CurrentViewState != FolderContentViewState.MultiSelect)
-                        PreviousViewState = CurrentViewState;
-                    CurrentViewState = FolderContentViewState.MultiSelect;
-                }
-                else
-                {
-                    CurrentViewState = PreviousViewState;
-                    SelectedNodes.Clear();
-                }
-            }
-        }
+        public bool IsMultiSelectActive => CurrentViewState == FolderContentViewState.MultiSelect;
 
         private DataTemplate _emptyContentTemplate;
         public DataTemplate EmptyContentTemplate
@@ -1128,6 +1116,9 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");

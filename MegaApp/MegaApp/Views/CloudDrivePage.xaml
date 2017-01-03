@@ -23,6 +23,9 @@
                     Text="{Binding RenameText}" 
                     Command="{Binding RenameCommand}"/>
                 <MenuFlyoutItem 
+                    Text="{Binding CopyOrMoveText}" 
+                    Click="OnCopyOrMoveClick"/>
+                <MenuFlyoutItem 
                     Text="{Binding MoveToRubbishBinText}" 
                     Command="{Binding MoveToRubbishBinCommand}"/>
             </MenuFlyout.Items>
@@ -37,6 +40,9 @@
                     Text="{Binding RenameText}"
                     Command="{Binding RenameCommand}"/>
                 <MenuFlyoutItem 
+                    Text="{Binding CopyOrMoveText}" 
+                    Click="OnCopyOrMoveClick"/>
+                <MenuFlyoutItem 
                     Text="{Binding RemoveText}" 
                     Command="{Binding RemoveCommand}"/>
             </MenuFlyout.Items>
@@ -46,7 +52,10 @@
             <MenuFlyout.Items>
                 <MenuFlyoutItem 
                     Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>                
+                    Command="{Binding DownloadCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding CopyOrMoveText}" 
+                    Click="OnCopyOrMoveClick"/>
                 <MenuFlyoutItem 
                     Text="{Binding MoveToRubbishBinText}" 
                     Command="{Binding MoveToRubbishBinCommand}"/>
@@ -57,7 +66,10 @@
             <MenuFlyout.Items>
                 <MenuFlyoutItem
                     Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>                
+                    Command="{Binding DownloadCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding CopyOrMoveText}" 
+                    Click="OnCopyOrMoveClick"/>
                 <MenuFlyoutItem 
                     Text="{Binding RemoveText}" 
                     Command="{Binding RemoveCommand}"/>
@@ -192,8 +204,7 @@
                             </StackPanel>
                             <Grid 
                                 x:Name="CloudDriveContentPanel" 
-                                Grid.Row="1" 
-                                Margin="12,0,0,0">
+                                Grid.Row="1">
                                 <ListView
                                     x:Name="ListViewCloudDrive"
                                     Visibility="{Binding IsListViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
@@ -214,6 +225,7 @@
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewCloudDrive"
+                                    Margin="12,0,0,0"
                                     Padding="2,4"
                                     Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
@@ -294,8 +306,7 @@
 
                             <Grid 
                                 x:Name="RubbishBinContentPanel" 
-                                Grid.Row="1" 
-                                Margin="12,0,0,0">
+                                Grid.Row="1">
                                 <ListView
                                     x:Name="ListViewRubbishBin"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
@@ -315,6 +326,7 @@
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewRubbishBin"
+                                    Margin="12,0,0,0"
                                     Padding="2,4"
                                     Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
@@ -391,6 +403,30 @@
             </CommandBar.SecondaryCommands>
         </CommandBar>
 
+        <!-- COPY OR MOVE COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton 
+                Icon="Add" 
+                Label="{Binding AddFolderText}" 
+                Command="{Binding ActiveFolderView.AddFolderCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                Icon="Copy" 
+                Label="{Binding CopyText}"                 
+                Click="OnAcceptCopyClick"/>
+            <AppBarButton 
+                Icon="MoveToFolder" 
+                Label="{Binding MoveText}"
+                Click="OnAcceptMoveClick"/>
+            <AppBarButton 
+                Icon="Cancel" 
+                Label="{Binding CancelText}"                 
+                Click="OnCancelCopyOrMoveClick"/>
+        </CommandBar>
+
         <!-- MULTI SELECT COMMAND BAR -->
         <CommandBar 
             Grid.Row="1"
@@ -401,6 +437,10 @@
                 Label="{Binding DownloadText}" 
                 Command="{Binding ActiveFolderView.DownloadCommand}"
                 Click="OnButtonClick"/>
+            <AppBarButton
+                Icon="Copy" 
+                Label="{Binding CopyOrMoveText}"
+                Click="OnCopyOrMoveClick"/>
             <AppBarButton
                 Icon="Delete" 
                 Label="{Binding MoveToRubbishBinText}" 

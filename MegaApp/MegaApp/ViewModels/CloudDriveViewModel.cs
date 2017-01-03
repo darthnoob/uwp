@@ -1,4 +1,5 @@
-﻿using MegaApp.Enums;
+﻿using System;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -84,6 +85,76 @@ namespace MegaApp.ViewModels
             this.MegaSdk.fetchNodes(fetchNodesRequestListener);
         }
 
+        public async void AcceptCopyAction()
+        {
+            try
+            {
+                // Copy all the selected nodes and then clear and release the selected nodes list
+                if (SourceFolderView?.SelectedNodes?.Count > 0)
+                {
+                    foreach (var node in SourceFolderView.SelectedNodes)
+                    {
+                        if (node != null)
+                        {
+                            node.Copy(ActiveFolderView.FolderRootNode);
+                            node.DisplayMode = NodeDisplayMode.Normal;
+                        }
+                    }
+                    SourceFolderView.SelectedNodes.Clear();
+                }
+
+                // Release the focused node
+                if (SourceFolderView?.FocusedNode != null)
+                {
+                    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
+                    SourceFolderView.FocusedNode = null;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_CopyFailed"));
+            }
+
+            SourceFolderView = null;
+        }
+
+        public async void AcceptMoveAction()
+        {
+            try
+            {
+                // Copy all the selected nodes and then clear and release the selected nodes list
+                if (SourceFolderView?.SelectedNodes?.Count > 0)
+                {
+                    foreach (var node in SourceFolderView.SelectedNodes)
+                    {
+                        if (node != null)
+                        {
+                            await node.MoveAsync(ActiveFolderView.FolderRootNode);
+                            node.DisplayMode = NodeDisplayMode.Normal;
+                        }
+                    }
+                    SourceFolderView.SelectedNodes.Clear();
+                }
+
+                // Release the focused node
+                if (SourceFolderView?.FocusedNode != null)
+                {
+                    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
+                    SourceFolderView.FocusedNode = null;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_MoveFailed"));
+            }
+
+            SourceFolderView = null;
+        }
+
         #endregion
 
         #region Properties
@@ -109,6 +180,16 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeFolderView, value); }
         }
 
+        /// <summary>
+        /// Property needed to store the source folder in a move/copy action 
+        /// </summary>
+        private FolderViewModel _sourceFolderView;
+        public FolderViewModel SourceFolderView
+        {
+            get { return _sourceFolderView; }
+            set { SetField(ref _sourceFolderView, value); }
+        }
+
         #endregion
 
         #region UiResources
@@ -116,10 +197,13 @@ namespace MegaApp.ViewModels
         public string AddFolderText => ResourceService.UiResources.GetString("UI_AddFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        

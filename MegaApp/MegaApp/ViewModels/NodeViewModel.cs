@@ -189,14 +189,41 @@ namespace MegaApp.ViewModels
 
             return NodeActionResult.IsBusy;
         }
-                
-        public NodeActionResult Move(IMegaNode newParentNode)
+
+        /// <summary>
+        /// Move the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> MoveAsync(IMegaNode newParentNode)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (MegaSdk.checkMove(OriginalMNode, newParentNode.OriginalMNode).getErrorCode() != MErrorType.API_OK)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_MoveFailed"));
+
+                return NodeActionResult.Failed;
+            }
+
+            MegaSdk.moveNode(OriginalMNode, newParentNode.OriginalMNode);
             return NodeActionResult.IsBusy;
         }
 
+        /// <summary>
+        /// Copy the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
         public NodeActionResult Copy(IMegaNode newParentNode)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            MegaSdk.copyNode(OriginalMNode, newParentNode.OriginalMNode);
             return NodeActionResult.IsBusy;
         }
 
@@ -323,7 +350,12 @@ namespace MegaApp.ViewModels
 
         public ContainerType ParentContainerType { get; private set; }
 
-        public NodeDisplayMode DisplayMode { get; set; }
+        private NodeDisplayMode _displayMode;
+        public NodeDisplayMode DisplayMode
+        {
+            get { return _displayMode; }
+            set { SetField(ref _displayMode, value); }
+        }
 
         private bool _isSelectedForOffline;
         public bool IsSelectedForOffline

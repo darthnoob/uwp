@@ -2,7 +2,6 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
@@ -202,22 +201,80 @@ namespace MegaApp.Views
             SdkService.MegaSdk.retryPendingConnections();
         }
 
+        private void OnCopyOrMoveClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if ((ViewModel?.ActiveFolderView?.SelectedNodes?.Count == 0) && 
+                (ViewModel?.ActiveFolderView?.FocusedNode != null))
+            {
+                ViewModel.ActiveFolderView.SelectedNodes.Add(ViewModel.ActiveFolderView.FocusedNode);
+            }
+
+            if (ViewModel?.ActiveFolderView?.SelectedNodes?.Count > 0)
+            {
+                foreach(var node in ViewModel.ActiveFolderView.SelectedNodes)
+                    if(node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+
+                ViewModel.CloudDrive.PreviousViewState = ViewModel.CloudDrive.CurrentViewState;
+                ViewModel.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
+                ViewModel.RubbishBin.PreviousViewState = ViewModel.RubbishBin.CurrentViewState;
+                ViewModel.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
+
+                ViewModel.SourceFolderView = ViewModel.ActiveFolderView;
+
+                ChangeSelectionMode(false);
+            }
+        }
+
+        private void OnCancelCopyOrMoveClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+
+            if (ViewModel?.SourceFolderView != null)
+            {
+                // Release the focused node
+                if (ViewModel?.SourceFolderView?.FocusedNode != null)
+                {
+                    ViewModel.SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
+                    ViewModel.SourceFolderView.FocusedNode = null;
+                }
+
+                // Clear and release the selected nodes list
+                if (ViewModel?.SourceFolderView?.SelectedNodes?.Count > 0)
+                {
+                    foreach (var node in ViewModel.SourceFolderView.SelectedNodes)
+                        if(node != null) node.DisplayMode = NodeDisplayMode.Normal;
+
+                    ViewModel.SourceFolderView.SelectedNodes.Clear();
+                }
+
+                ViewModel.SourceFolderView = null;
+            }
+
+            ResetViewStates();
+        }
+
+        private void OnAcceptCopyClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AcceptCopyAction();
+            ResetViewStates();
+        }
+
+        private void OnAcceptMoveClick(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AcceptMoveAction();
+            ResetViewStates();
+        }
+
         private void OnMultiSelectButtonClick(object sender, RoutedEventArgs e)
         {
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
 
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectionMode = GridViewCloudDrive.SelectionMode = 
-                    ListViewSelectionMode.Multiple;
-            }
-                
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectionMode = GridViewRubbishBin.SelectionMode = 
-                    ListViewSelectionMode.Multiple;
-            }
+            ChangeSelectionMode(true);
         }
 
         private void OnCancelMultiSelectButtonClick(object sender, RoutedEventArgs e)
@@ -225,19 +282,36 @@ namespace MegaApp.Views
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
 
+            ChangeSelectionMode(false);
+
+            ViewModel.ActiveFolderView.SelectedNodes.Clear();
+        }
+
+        private void ResetViewStates()
+        {
+            ViewModel.CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
+            ViewModel.CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
+
+            ViewModel.RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
+            ViewModel.RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
+        }
+
+        private void ChangeSelectionMode(bool isMultiSelect)
+        {
+            var selectionMode = isMultiSelect ? 
+                ListViewSelectionMode.Multiple : ListViewSelectionMode.Extended;
+
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
             {
-                ListViewCloudDrive.SelectionMode = GridViewCloudDrive.SelectionMode =
-                    ListViewSelectionMode.Extended;
+                ListViewCloudDrive.SelectionMode = selectionMode;
+                GridViewCloudDrive.SelectionMode = selectionMode;
             }
 
             if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
             {
-                ListViewRubbishBin.SelectionMode = GridViewRubbishBin.SelectionMode =
-                    ListViewSelectionMode.Extended;
+                ListViewRubbishBin.SelectionMode = selectionMode;
+                GridViewRubbishBin.SelectionMode = selectionMode;
             }
-
-            ViewModel.ActiveFolderView.SelectedNodes.Clear();
         }
 
         private void OnSelectAllClick(object sender, RoutedEventArgs e)
@@ -316,7 +390,7 @@ namespace MegaApp.Views
                 if (ViewModel?.ActiveFolderView != null)
                 {
                     // If the user is moving nodes, don't show the contextual menu
-                    if (ViewModel.ActiveFolderView.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
+                    if (ViewModel.ActiveFolderView.CurrentViewState == FolderContentViewState.CopyOrMove)
                         return true;
 
                     // We don't want to open the menu if the focused element is not a list view item.
