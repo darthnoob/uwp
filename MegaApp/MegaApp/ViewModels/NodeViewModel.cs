@@ -11,8 +11,6 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MegaApp.ViewModels
 {
@@ -209,8 +207,13 @@ namespace MegaApp.ViewModels
                 return NodeActionResult.Failed;
             }
 
-            MegaSdk.moveNode(OriginalMNode, newParentNode.OriginalMNode);
-            return NodeActionResult.IsBusy;
+            var moveNode = new MoveNodeRequestListenerAsync();
+            var result = await moveNode.ExecuteAsync(() =>
+                MegaSdk.moveNode(OriginalMNode, newParentNode.OriginalMNode, moveNode));
+
+            if (!result) return NodeActionResult.Failed;
+            
+            return NodeActionResult.Succeeded;
         }
 
         /// <summary>
@@ -218,13 +221,18 @@ namespace MegaApp.ViewModels
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        public NodeActionResult Copy(IMegaNode newParentNode)
+        public async Task<NodeActionResult> CopyAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;
 
-            MegaSdk.copyNode(OriginalMNode, newParentNode.OriginalMNode);
-            return NodeActionResult.IsBusy;
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                MegaSdk.copyNode(OriginalMNode, newParentNode.OriginalMNode, copyNode));
+
+            if (!result) return NodeActionResult.Failed;
+            
+            return NodeActionResult.Succeeded;
         }
 
         public async Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)

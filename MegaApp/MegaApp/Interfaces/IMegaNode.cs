@@ -33,7 +33,7 @@ namespace MegaApp.Interfaces
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        NodeActionResult Copy(IMegaNode newParentNode);
+        Task<NodeActionResult> CopyAsync(IMegaNode newParentNode);
 
         /// <summary>
         /// Move the node to the rubbish bin

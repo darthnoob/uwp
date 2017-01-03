@@ -87,16 +87,19 @@ namespace MegaApp.ViewModels
 
         public async void AcceptCopyAction()
         {
+            bool result = true;
             try
             {
                 // Copy all the selected nodes and then clear and release the selected nodes list
                 if (SourceFolderView?.SelectedNodes?.Count > 0)
                 {
+                    // Fix the new parent node to allow navigation while the nodes are being copied
+                    var newParentNode = ActiveFolderView.FolderRootNode;
                     foreach (var node in SourceFolderView.SelectedNodes)
                     {
                         if (node != null)
                         {
-                            node.Copy(ActiveFolderView.FolderRootNode);
+                            result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
                             node.DisplayMode = NodeDisplayMode.Normal;
                         }
                     }
@@ -112,26 +115,36 @@ namespace MegaApp.ViewModels
             }
             catch (InvalidOperationException)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_CopyFailed"));
+                result = false;
             }
+            finally
+            {
+                if(!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_CopyFailed"));
+                }
 
-            SourceFolderView = null;
+                SourceFolderView = null;
+            }
         }
 
         public async void AcceptMoveAction()
         {
+            bool result = true;
             try
             {
                 // Copy all the selected nodes and then clear and release the selected nodes list
                 if (SourceFolderView?.SelectedNodes?.Count > 0)
                 {
+                    // Fix the new parent node to allow navigation while the nodes are being moved
+                    var newParentNode = ActiveFolderView.FolderRootNode;
                     foreach (var node in SourceFolderView.SelectedNodes)
                     {
                         if (node != null)
                         {
-                            await node.MoveAsync(ActiveFolderView.FolderRootNode);
+                            result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
                             node.DisplayMode = NodeDisplayMode.Normal;
                         }
                     }
@@ -147,12 +160,19 @@ namespace MegaApp.ViewModels
             }
             catch (InvalidOperationException)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_MoveFailed"));
+                result = false;
             }
+            finally
+            {
+                if(!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MoveFailed"));
+                }
 
-            SourceFolderView = null;
+                SourceFolderView = null;
+            }
         }
 
         #endregion
