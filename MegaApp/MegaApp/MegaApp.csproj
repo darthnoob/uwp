@@ -128,7 +128,6 @@
     <Compile Include="Enums\MediaType.cs" />
     <Compile Include="Enums\MenuType.cs" />
     <Compile Include="Enums\NavigationActionType.cs" />
-    <Compile Include="Enums\NavigationParameter.cs" />
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
