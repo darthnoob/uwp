@@ -214,11 +214,13 @@ namespace MegaApp.Services
         {
             try
             {
-                FileOpenPicker fileOpenPicker = new FileOpenPicker();
-
+                var fileOpenPicker = new FileOpenPicker
+                {
+                    ViewMode = PickerViewMode.List,
+                    SuggestedStartLocation = PickerLocationId.ComputerFolder,
+                    CommitButtonText = ResourceService.UiResources.GetString("UI_Upload")
+                };
                 fileOpenPicker.FileTypeFilter.Add("*");
-                fileOpenPicker.ViewMode = PickerViewMode.Thumbnail;
-                fileOpenPicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
 
                 return await fileOpenPicker.PickMultipleFilesAsync();                
             }
@@ -227,7 +229,7 @@ namespace MegaApp.Services
                 await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message));
-                return null;
+                return new List<StorageFile>();
             }
         }
 

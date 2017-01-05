@@ -6,7 +6,7 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public CloudDriveViewModel() : base()
+        public CloudDriveViewModel()
         {
             InitializeModel();
         }
@@ -113,7 +113,7 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string AddFolderText => ResourceService.UiResources.GetString("UI_AddFolder");
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");

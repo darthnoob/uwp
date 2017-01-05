@@ -49,7 +49,7 @@ namespace MegaApp.MegaApi
                     {
                         // REMOVED Scenario
 
-                        foreach (var folder in Folders)
+                        foreach (var folder in this.Folders)
                         {
                             IMegaNode nodeToRemoveFromView = folder.ChildNodes.FirstOrDefault(
                                 node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
@@ -83,7 +83,7 @@ namespace MegaApp.MegaApi
                             
                             if(parentNode != null)
                             {
-                                foreach (var folder in Folders)
+                                foreach (var folder in this.Folders)
                                 {
                                     IMegaNode nodeToUpdateInView = folder.ChildNodes.FirstOrDefault(
                                         node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
@@ -121,7 +121,7 @@ namespace MegaApp.MegaApi
                         // Used in different scenario's
                         MNode parentNode = api.getParentNode(megaNode);
 
-                        foreach (var folder in Folders)
+                        foreach (var folder in this.Folders)
                         {
                             IMegaNode nodeToUpdateInView = folder.ChildNodes.FirstOrDefault(
                                 node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
@@ -168,7 +168,7 @@ namespace MegaApp.MegaApi
                         
                         if (parentNode != null && !isProcessed)
                         {
-                            foreach (var folder in Folders)
+                            foreach (var folder in this.Folders)
                             {
                                 bool isAddedInFolder = folder.FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
 

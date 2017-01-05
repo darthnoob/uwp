@@ -314,4 +314,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Select all</value>
     <comment>Label for any 'Select all' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_NewFolder" xml:space="preserve">
+    <value>New folder</value>
+    <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

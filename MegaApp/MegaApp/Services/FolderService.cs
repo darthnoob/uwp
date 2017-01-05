@@ -155,7 +155,7 @@ namespace MegaApp.Services
         /// <summary>
         /// Copy a folder to a specified folder and allow rename the destination folder
         /// </summary>
-        /// <param name="sourcePath">Path of the source folder</param>
+        /// <param name="srcFolderPath">Path of the source folder</param>
         /// <param name="destFolderPath">Path of the destination folder for the copied folder</param>
         /// <param name="folderNewName">New name for the folder</param>
         /// <exception cref="DirectoryNotFoundException"/>
@@ -237,12 +237,20 @@ namespace MegaApp.Services
         {
             try
             {
-                FolderPicker folderPicker = new FolderPicker();
-
+                var folderPicker = new FolderPicker
+                {
+                    ViewMode = PickerViewMode.List,
+                    SuggestedStartLocation = PickerLocationId.Downloads,
+                    CommitButtonText = ResourceService.UiResources.GetString("UI_Download")
+                };
                 folderPicker.FileTypeFilter.Add("*");
-                folderPicker.SuggestedStartLocation = PickerLocationId.Downloads;                
 
-                return await folderPicker.PickSingleFolderAsync();
+                var folder = await folderPicker.PickSingleFolderAsync();
+
+                if(folder != null)
+                    Windows.Storage.AccessCache.StorageApplicationPermissions.FutureAccessList.Add(folder);
+
+                return folder;
             }
             catch (Exception e)
             {

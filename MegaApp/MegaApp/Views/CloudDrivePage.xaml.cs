@@ -2,7 +2,6 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
@@ -149,17 +148,17 @@ namespace MegaApp.Views
 
             if (itemTapped != null)
             {
-                if(ViewModel.ActiveFolderView.IsMultiSelectActive)
+                if(this.ViewModel.ActiveFolderView.IsMultiSelectActive)
                 {
                     // Add or delete the item tapped to or from the selected nodes list
-                    if (ViewModel.ActiveFolderView.SelectedNodes.Contains(itemTapped))
-                        ViewModel.ActiveFolderView.SelectedNodes.Remove(itemTapped);
+                    if (this.ViewModel.ActiveFolderView.SelectedNodes.Contains(itemTapped))
+                        this.ViewModel.ActiveFolderView.SelectedNodes.Remove(itemTapped);
                     else
-                        ViewModel.ActiveFolderView.SelectedNodes.Add(itemTapped);
+                        this.ViewModel.ActiveFolderView.SelectedNodes.Add(itemTapped);
 
                     // Manage the selected items of the view control which is not now in use, 
                     // because the view control in use y automatically managed.
-                    switch (ViewModel.ActiveFolderView.ViewMode)
+                    switch (this.ViewModel.ActiveFolderView.ViewMode)
                     {
                         case FolderContentViewMode.ListView:
                             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
@@ -237,7 +236,7 @@ namespace MegaApp.Views
                     ListViewSelectionMode.Extended;
             }
 
-            ViewModel.ActiveFolderView.SelectedNodes.Clear();
+            this.ViewModel.ActiveFolderView.SelectedNodes.Clear();
         }
 
         private void OnSelectAllClick(object sender, RoutedEventArgs e)
@@ -257,7 +256,7 @@ namespace MegaApp.Views
                 GridViewRubbishBin.SelectAll();
             }
 
-            ViewModel.ActiveFolderView.SelectedNodes.AddRange(ViewModel.ActiveFolderView.ChildNodes);
+            this.ViewModel.ActiveFolderView.SelectedNodes.AddRange(this.ViewModel.ActiveFolderView.ChildNodes);
         }
 
         private void OnDeselectAllClick(object sender, RoutedEventArgs e)
@@ -277,7 +276,7 @@ namespace MegaApp.Views
                 GridViewRubbishBin.SelectedItems.Clear();
             }
 
-            ViewModel.ActiveFolderView.SelectedNodes.Clear();
+            this.ViewModel.ActiveFolderView.SelectedNodes.Clear();
         }
 
         private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -313,10 +312,10 @@ namespace MegaApp.Views
 
             try
             {
-                if (ViewModel?.ActiveFolderView != null)
+                if (this.ViewModel?.ActiveFolderView != null)
                 {
                     // If the user is moving nodes, don't show the contextual menu
-                    if (ViewModel.ActiveFolderView.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
+                    if (this.ViewModel.ActiveFolderView.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
                         return true;
 
                     // We don't want to open the menu if the focused element is not a list view item.
@@ -342,11 +341,11 @@ namespace MegaApp.Views
                     }
 
                     menuFlyout.ShowAt(sender as ListViewBase, position);
-                    
-                    ViewModel.ActiveFolderView.FocusedNode = item.DataContext as IMegaNode;
+
+                    this.ViewModel.ActiveFolderView.FocusedNode = item.DataContext as IMegaNode;
 
                     foreach (var selectedItem in (sender as ListViewBase).SelectedItems)
-                        ViewModel.ActiveFolderView.SelectedNodes.Add(selectedItem as IMegaNode);
+                        this.ViewModel.ActiveFolderView.SelectedNodes.Add(selectedItem as IMegaNode);
                 }
                 else
                 {

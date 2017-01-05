@@ -150,6 +150,9 @@
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\DeleteNodeRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\ToastService.cs" />
     <Compile Include="Services\TransferService.cs" />
     <Compile Include="Services\UiService.cs" />
     <Compile Include="Services\UriService.cs" />
