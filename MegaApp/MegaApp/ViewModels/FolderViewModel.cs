@@ -460,7 +460,7 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void Rename()
         {
-            this.FocusedNode?.Rename();
+            this.FocusedNode?.RenameAsync();
         }
 
         /// <summary>

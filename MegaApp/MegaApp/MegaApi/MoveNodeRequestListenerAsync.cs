@@ -16,7 +16,7 @@ namespace MegaApp.MegaApi
             {
                 switch (e.getErrorCode())
                 {
-                    case MErrorType.API_OK: // Successfull create folder process
+                    case MErrorType.API_OK: // Successfull move node process
                         Tcs?.TrySetResult(true);
                         break;
                     default: // Default error processing

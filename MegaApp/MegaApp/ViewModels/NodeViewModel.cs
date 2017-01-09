@@ -157,7 +157,7 @@ namespace MegaApp.ViewModels
 
         #region IMegaNode Interface
 
-        public async Task Rename()
+        public async Task RenameAsync()
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return;
@@ -193,7 +193,7 @@ namespace MegaApp.ViewModels
             
             await OnUiThread(() => this.Name = newName);
             ToastService.ShowText(
-                string.Format(ResourceService.AppMessages.GetString("AM_RenamedNode"),
+                string.Format(ResourceService.AppMessages.GetString("AM_RenameNodeSuccess"),
                 oldName, newName));
         }
                 

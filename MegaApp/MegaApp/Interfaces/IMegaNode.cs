@@ -19,7 +19,7 @@ namespace MegaApp.Interfaces
         /// Rename the current Node
         /// </summary>
         /// <returns>Result of the action</returns>
-        Task Rename();
+        Task RenameAsync();
 
         /// <summary>
         /// Move the node from its current location to a new folder destination
