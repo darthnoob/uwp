@@ -2,9 +2,8 @@
 using System.IO;
 using Windows.Storage;
 using Windows.ApplicationModel;
+using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
@@ -91,13 +90,13 @@ namespace MegaApp.Services
             if (App.LinkInformation.ActiveLink.Contains("#newsignup"))
             {
                 UiService.OnUiThread(() =>
-                    (Window.Current.Content as Frame).Navigate(typeof(LoginAndCreateAccountPage)));
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                 return true;
             }
             else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
             {
                 UiService.OnUiThread(() =>
-                    (Window.Current.Content as Frame).Navigate(typeof(ConfirmAccountPage)));
+                    NavigateService.Instance.Navigate(typeof(ConfirmAccountPage), true));
                 return true;
             }
 
@@ -132,7 +131,15 @@ namespace MegaApp.Services
         /// <returns>App user agent</returns>
         public static string GetAppUserAgent()
         {
-            return string.Format("MEGA_UWP/{0}", GetAppVersion());
+            // Get an instance of the object that allow recover the local device information.
+            var deviceInfo = new EasClientDeviceInformation();
+
+            return string.Format(
+                "MEGA_UWP/{0}/{1}/{2}/{3}",
+                GetAppVersion(),
+                deviceInfo.SystemManufacturer,
+                deviceInfo.SystemProductName,
+                deviceInfo.OperatingSystem);
         }
 
         /// <summary>

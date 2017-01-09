@@ -137,6 +137,10 @@
     <value>Creating folder...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
+  <data name="PM_Delete" xml:space="preserve">
+    <value>Deleting...</value>
+    <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
+  </data>
   <data name="PM_FastLogin" xml:space="preserve">
     <value>Resuming session...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
@@ -157,6 +161,22 @@ Preserve the [{0}] code because is for include current number of fetched nodes.<
   <data name="PM_Logout" xml:space="preserve">
     <value>Logging out...</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Move" xml:space="preserve">
+    <value>Moving...</value>
+    <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
+  </data>
+  <data name="PM_MoveToRubbishBin" xml:space="preserve">
+    <value>Moving to rubbish bin...</value>
+    <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Remove" xml:space="preserve">
+    <value>Removing...</value>
+    <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Rename" xml:space="preserve">
+    <value>Renaming...</value>
+    <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
   <data name="PM_ServersTooBusy" xml:space="preserve">
     <value>Servers too busy. Please wait…</value>

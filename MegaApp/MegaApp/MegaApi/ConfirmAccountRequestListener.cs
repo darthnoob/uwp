@@ -174,7 +174,7 @@ namespace MegaApp.MegaApi
                 title, message, App.AppInformation, MessageDialogButtons.Ok);
 
             customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                (Window.Current.Content as Frame).Navigate(NavigateToPage, NavigationObject);
+                NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject);
 
             customMessageDialog.ShowDialog();
         }

@@ -16,7 +16,7 @@
     </Page.Resources>
 
     <Grid 
-        Background="{StaticResource MegaAppBackgroundBrush}">
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup>

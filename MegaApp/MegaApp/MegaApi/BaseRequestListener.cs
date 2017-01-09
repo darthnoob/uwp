@@ -51,7 +51,8 @@ namespace MegaApp.MegaApi
                     OnSuccesAction(api, request);
 
                 if (NavigateOnSucces)
-                    UiService.OnUiThread(() => (Window.Current.Content as Frame).Navigate(NavigateToPage, NavigationObject));
+                    UiService.OnUiThread(() => 
+                        NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
             }
             else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 
             {

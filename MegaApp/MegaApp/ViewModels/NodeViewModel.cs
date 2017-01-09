@@ -41,10 +41,10 @@ namespace MegaApp.ViewModels
 
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
-            if (FileService.FileExists(ThumbnailPath))
+            if (FileService.FileExists(this.ThumbnailPath))
             {
                 this.IsDefaultImage = false;
-                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+                this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
             }
             else
             {
@@ -55,14 +55,14 @@ namespace MegaApp.ViewModels
 
         private void GetThumbnail()
         {
-            if (FileService.FileExists(ThumbnailPath))
+            if (FileService.FileExists(this.ThumbnailPath))
             {
                 this.IsDefaultImage = false;
-                this.ThumbnailImageUri = new Uri(ThumbnailPath);
+                this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
             }
-            else if (Convert.ToBoolean(MegaSdk.isLoggedIn()) || ParentContainerType == ContainerType.FolderLink)
+            else if (Convert.ToBoolean(this.MegaSdk.isLoggedIn()) || this.ParentContainerType == ContainerType.FolderLink)
             {
-                this.MegaSdk.getThumbnail(OriginalMNode, ThumbnailPath, new GetThumbnailRequestListener(this));
+                this.MegaSdk.getThumbnail(this.OriginalMNode, this.ThumbnailPath, new GetThumbnailRequestListener(this));
             }
         }
 
@@ -80,7 +80,12 @@ namespace MegaApp.ViewModels
 
         #region IBaseNode Interface
 
-        public string Name { get; set; }
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { SetField(ref _name, value); }
+        }
 
         public string CreationTime { get; private set; }
 
@@ -91,8 +96,7 @@ namespace MegaApp.ViewModels
             get
             {
                 return Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), 
-                    this.OriginalMNode.getBase64Handle());
+                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), this.OriginalMNode.getBase64Handle());
             }
         }
 
@@ -114,13 +118,26 @@ namespace MegaApp.ViewModels
             set { SetField(ref _sizeText, value); }
         }
 
-        public bool IsMultiSelected { get; set; }
+        private bool _isMultiSelected;
+        public bool IsMultiSelected
+        {
+            get { return _isMultiSelected; }
+            set { SetField(ref _isMultiSelected, value); }
+        }
 
-        public bool IsFolder { get; }
+        public bool IsFolder
+        {
+            get { return this.Type == MNodeType.TYPE_FOLDER ? true : false; }
+        }
 
-        public bool IsImage { get; }
+        public bool IsImage => ImageService.IsImage(this.Name);
 
-        public bool IsDefaultImage { get; set; }
+        private bool _IsDefaultImage;
+        public bool IsDefaultImage
+        {
+            get { return _IsDefaultImage; }
+            set { SetField(ref _IsDefaultImage, value); }
+        }
 
         private Uri _thumbnailImageUri;
         public Uri ThumbnailImageUri
@@ -140,9 +157,44 @@ namespace MegaApp.ViewModels
 
         #region IMegaNode Interface
 
-        public NodeActionResult Rename()
+        public async Task RenameAsync()
         {
-            return NodeActionResult.IsBusy;
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            var oldName = this.Name;
+
+            var inputName = await DialogService.ShowInputDialogAsync(
+                ResourceService.UiResources.GetString("UI_Rename"),
+                ResourceService.UiResources.GetString("UI_TypeNewName"),
+                new InputDialogSettings
+                {
+                    InputText = this.Name,
+                    IsTextSelected = true,
+                    IgnoreExtensionInSelection = true
+                });
+            
+            if(string.IsNullOrEmpty(inputName) || string.IsNullOrWhiteSpace(inputName)) return;
+            if (this.Name.Equals(inputName)) return;
+
+            var rename = new RenameNodeRequestListenerAsync();
+            var newName = await rename.ExecuteAsync(() =>
+            {
+                this.MegaSdk.renameNode(this.OriginalMNode, inputName, rename);
+            });
+
+            if (string.IsNullOrEmpty(newName))
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                return;
+            };
+            
+            await OnUiThread(() => this.Name = newName);
+            ToastService.ShowText(
+                string.Format(ResourceService.AppMessages.GetString("AM_RenameNodeSuccess"),
+                oldName, newName));
         }
                 
         public NodeActionResult Move(IMegaNode newParentNode)
@@ -155,13 +207,65 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiRemove, AutoResetEvent waitEventRequest = null)
+        public async Task MoveToRubbishBinAsync(bool isMultiSelect = false)
         {
-            return NodeActionResult.IsBusy;
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            if (this.OriginalMNode == null) return;
+
+            if (!isMultiSelect)
+            {
+                var dialogResult = await DialogService.ShowOkCancelAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name));
+
+                if (!dialogResult) return;
+            }
+
+            var moveNode = new MoveNodeRequestListenerAsync();
+            var result = await moveNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode);
+            });
+
+            if (result)
+            {
+                if (!isMultiSelect)
+                {
+                    ToastService.ShowText(string.Format(
+                         ResourceService.AppMessages.GetString("AM_MoveToRubbishBinSuccess"),
+                         this.Name));
+                }
+                return;
+            };
+
+            await DialogService.ShowAlertAsync(
+                  ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
+                  string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
         }
 
-        public async Task<NodeActionResult> DeleteAsync()
+        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+
+            if (!isMultiSelect)
+            {
+                var result = await new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name),
+                    App.AppInformation,
+                    MessageDialogButtons.OkCancel).ShowDialogAsync();
+
+                if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
+            }
+
+            this.MegaSdk.remove(this.OriginalMNode, 
+                new DeleteNodeRequestListener(this, isMultiSelect, waitEventRequest));
+
             return NodeActionResult.IsBusy;
         }
 
@@ -170,20 +274,30 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public void Download(TransferQueu transferQueu, string downloadPath = null)
+        public async void Download(TransferQueue transferQueue)
         {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+            if (transferQueue == null) return;
 
+            var downloadFolder = await FolderService.SelectFolder();
+            if (downloadFolder == null) return;
+            if (!await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path)) return;
+
+            this.Transfer.ExternalDownloadPath = downloadFolder.Path;
+            transferQueue.Add(this.Transfer);
+            this.Transfer.StartTransfer();
         }
 
         public void Update(MNode megaNode, ContainerType parentContainerType)
         {
-            OriginalMNode = megaNode;
+            this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
             this.Base64Handle = megaNode.getBase64Handle();
             this.Type = megaNode.getType();
             this.ParentContainerType = parentContainerType;
             this.Name = megaNode.getName();
-            this.Size = MegaSdk.getSize(megaNode);
+            this.Size = this.MegaSdk.getSize(megaNode);
             this.SizeText = this.Size.ToStringAndSuffix();
             this.IsExported = megaNode.isExported();
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
@@ -193,9 +307,9 @@ namespace MegaApp.ViewModels
             else
                 this.ModificationTime = this.CreationTime;
 
-            //if (!App.MegaSdk.isInShare(megaNode) && this.ParentContainerType != ContainerType.PublicLink &&
-            //    this.ParentContainerType != ContainerType.InShares && this.ParentContainerType != ContainerType.ContactInShares &&
-            //    this.ParentContainerType != ContainerType.FolderLink)
+            //if (!App.MegaSdk.isInShare(megaNode) && ParentContainerType != ContainerType.PublicLink &&
+            //    ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
+            //    ParentContainerType != ContainerType.FolderLink)
             //    CheckAndUpdateSFO(megaNode);
             this.IsAvailableOffline = false;
             this.IsSelectedForOffline = false;
@@ -205,7 +319,7 @@ namespace MegaApp.ViewModels
         {
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
-            if (this.ThumbnailImageUri != null && !IsDefaultImage) return;
+            if (this.ThumbnailImageUri != null && !this.IsDefaultImage) return;
 
             if (this.IsImage || this.OriginalMNode.hasThumbnail())
             {
@@ -213,9 +327,9 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public void Open()
+        public virtual void Open()
         {
-
+            throw new NotImplementedException();
         }
 
         public ulong Handle { get; set; }
@@ -237,29 +351,23 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _isSelectedForOffline, value);
-                IsSelectedForOfflineText = _isSelectedForOffline ? 
+                this.IsSelectedForOfflineText = _isSelectedForOffline ? 
                     ResourceService.UiResources.GetString("UI_On") : ResourceService.UiResources.GetString("UI_Off");
             }
         }
 
-        private String _isSelectedForOfflineText;
-        public String IsSelectedForOfflineText
+        private string _isSelectedForOfflineText;
+        public string IsSelectedForOfflineText
         {
             get { return _isSelectedForOfflineText; }
-            set
-            {
-                SetField(ref _isSelectedForOfflineText, value);
-            }
+            set { SetField(ref _isSelectedForOfflineText, value); }
         }
 
         private bool _isAvailableOffline;
         public bool IsAvailableOffline
         {
             get { return _isAvailableOffline; }
-            set
-            {
-                SetField(ref _isAvailableOffline, value);
-            }
+            set { SetField(ref _isAvailableOffline, value); }
         }
 
         private bool _isExported;
@@ -272,6 +380,13 @@ namespace MegaApp.ViewModels
         public TransferObjectModel Transfer { get; set; }
 
         public MNode OriginalMNode { get; private set; }
+
+        #endregion
+
+        #region Properties
+
+        public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
+            ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
 
         #endregion
     }

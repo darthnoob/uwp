@@ -19,7 +19,7 @@ namespace MegaApp.Interfaces
         /// Rename the current Node
         /// </summary>
         /// <returns>Result of the action</returns>
-        NodeActionResult Rename();
+        Task RenameAsync();
 
         /// <summary>
         /// Move the node from its current location to a new folder destination
@@ -36,18 +36,19 @@ namespace MegaApp.Interfaces
         NodeActionResult Copy(IMegaNode newParentNode);
 
         /// <summary>
-        /// Remove the node from the cloud drive to the rubbish bin
+        /// Move the node to the rubbish bin
         /// </summary>
-        /// <param name="isMultiRemove">True if the node is in a multi-select scenario</param>
-        /// <param name="waitEventRequest"></param>
+        /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> RemoveAsync(bool isMultiRemove, AutoResetEvent waitEventRequest = null);
+        Task MoveToRubbishBinAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Delete the node permanently
         /// </summary>
+        /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
+        /// <param name="waitEventRequest"></param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> DeleteAsync();
+        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
 
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 
@@ -56,11 +57,10 @@ namespace MegaApp.Interfaces
         NodeActionResult GetLink();
 
         /// <summary>
-        /// Dowload the node to the specified download destionation
+        /// Dowload the node to a specified download destionation
         /// </summary>
-        /// <param name="transferQueu">Global app transfer queu to add the download to</param>
-        /// <param name="downloadPath">Download destionation location</param>
-        void Download(TransferQueu transferQueu, string downloadPath = null);
+        /// <param name="transferQueue">Global app transfer queue to add the download to</param>        
+        void Download(TransferQueue transferQueue);
 
         /// <summary>
         /// Update core date associated with the SDK MNode object

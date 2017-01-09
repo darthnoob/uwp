@@ -6,26 +6,72 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public CloudDriveViewModel() : base()
+        public CloudDriveViewModel()
         {
             InitializeModel();
         }
 
+        /// <summary>
+        /// Initialize the view model
+        /// </summary>
+        private void InitializeModel()
+        {
+            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
+            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
+
+            // The Cloud Drive is always the first active folder on initalization
+            this.ActiveFolderView = this.CloudDrive;
+        }
+
         #region Public Methods
 
+        /// <summary>
+        /// Add folders to global listener to receive notifications
+        /// </summary>
+        /// <param name="globalListener">Global notifications listener</param>
+        public void Initialize(GlobalListener globalListener)
+        {
+            globalListener?.Folders?.Add(this.CloudDrive);
+            globalListener?.Folders?.Add(this.RubbishBin);
+        }
+
+        /// <summary>
+        /// Remove folders from global listener
+        /// </summary>
+        /// <param name="globalListener">Global notifications listener</param>
+        public void Deinitialize(GlobalListener globalListener)
+        {
+            globalListener?.Folders?.Remove(this.CloudDrive);
+            globalListener?.Folders?.Remove(this.RubbishBin);
+        }
+
+        /// <summary>
+        /// Load folders of the view model
+        /// </summary>
         public void LoadFolders()
         {
-            if (this.CloudDrive.FolderRootNode == null)
-                this.CloudDrive.FolderRootNode = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+            if (this.CloudDrive?.FolderRootNode == null)
+            {
+                this.CloudDrive.FolderRootNode = 
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
+                    SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+            }
 
             this.CloudDrive.LoadChildNodes();
 
-            if (this.RubbishBin.FolderRootNode == null)
-                this.RubbishBin.FolderRootNode = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+            if (this.RubbishBin?.FolderRootNode == null)
+            {
+                this.RubbishBin.FolderRootNode = 
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
+                    SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+            }
 
             this.RubbishBin.LoadChildNodes();
         }
 
+        /// <summary>
+        /// Load all content trees: nodes, shares, contacts
+        /// </summary>
         public void FetchNodes()
         {
             OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
@@ -36,15 +82,6 @@ namespace MegaApp.ViewModels
 
             var fetchNodesRequestListener = new FetchNodesRequestListener(this);
             this.MegaSdk.fetchNodes(fetchNodesRequestListener);
-        }
-
-        private void InitializeModel()
-        {
-            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
-            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
-
-            // The Cloud Drive is always the first active folder on initalization
-            this.ActiveFolderView = this.CloudDrive;
         }
 
         #endregion
@@ -76,8 +113,19 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
 
         #endregion
 

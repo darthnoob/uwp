@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
 
@@ -20,6 +21,11 @@ namespace MegaApp
         /// </summary>
         public static AppInformation AppInformation { get; private set; }
         public static string IpAddress { get; set; }
+
+        /// <summary>
+        /// Global notifications listener
+        /// </summary>
+        public static GlobalListener GlobalListener { get; private set; }
 
         /// <summary>
         /// Provides easy access to usefull links information
@@ -183,6 +189,13 @@ namespace MegaApp
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();
+
+            // Add a global notifications listener
+            GlobalListener = new GlobalListener(AppInformation);
+            SdkService.MegaSdk.addGlobalListener(GlobalListener);
+
+            // Add a global transfer listener to process all transfers.            
+            SdkService.MegaSdk.addTransferListener(TransferService.GlobalTransferListener);
 
             // Initialize Folders
             AppService.InitializeAppFolders();

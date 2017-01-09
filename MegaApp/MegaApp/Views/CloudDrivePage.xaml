@@ -5,48 +5,144 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:breadcrumb="using:GoedWare.Controls.Breadcrumb"
+    xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
+    <!-- PAGE RESOURCES -->
+    <Page.Resources>
+        <!-- FLYOUT MENUS -->
+        <MenuFlyout x:Name="CloudDriveMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem 
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RenameText}" 
+                    Command="{Binding RenameCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding MoveToRubbishBinText}" 
+                    Command="{Binding MoveToRubbishBinCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+        
+        <MenuFlyout x:Name="RubbishBinMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RenameText}"
+                    Command="{Binding RenameCommand}"/>
+                <MenuFlyoutItem 
+                    Text="{Binding RemoveText}" 
+                    Command="{Binding RemoveCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+
+        <MenuFlyout x:Name="MultiselectCloudDriveMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem 
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>                
+                <MenuFlyoutItem 
+                    Text="{Binding MoveToRubbishBinText}" 
+                    Command="{Binding MoveToRubbishBinCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+
+        <MenuFlyout x:Name="MultiselectRubbishBinMenuFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem
+                    Text="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>                
+                <MenuFlyoutItem 
+                    Text="{Binding RemoveText}" 
+                    Command="{Binding RemoveCommand}"/>
+            </MenuFlyout.Items>
+        </MenuFlyout>
+    </Page.Resources>
+    
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Collapsed" />
+                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Visible" />
+                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <Grid x:Name="LayoutRoot" Background="{StaticResource MegaAppBackgroundBrush}">
+        
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="84"/>
+                <RowDefinition Height="48"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid x:Name="HeaderGrid" Margin="0,-6,0,0" DataContext="{Binding ActiveFolderView}">                
-                <!--<StackPanel Margin="0,0,24,24" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                    <Button x:Name="BtnGoToTop" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToTopPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,2"/>
+            <Grid
+                DataContext="{Binding ActiveFolderView}"
+                Background="{StaticResource MegaAppBarBackgroundBrush}">
+                <StackPanel 
+                    Margin="0,0,12,0" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    VerticalAlignment="Center"
+                    Background="{StaticResource MegaAppBarBackgroundBrush}">
+                    <Button 
+                        x:Name="BtnChangeView"
+                        Width="32" 
+                        Height="32"
+                        Command="{Binding ChangeViewCommand}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Bottom">
+                        <Path
+                            Width="14" 
+                            Height="14"
+                            Stretch="UniformToFill" 
+                            Data="{Binding NextViewButtonPathData}"
+                            Fill="{StaticResource MegaAppForegroundBrush}"/>
                     </Button>
-                    <Button x:Name="BtnGoToBottom" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Margin="0,0,24,0" Visibility="{Binding ChildNodes.Count, ConverterParameter=100, Converter={StaticResource CountToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.GoToBottomPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="20" Height="16" Margin="0,0,0,-2"/>
-                    </Button>
-                    <Button x:Name="BtnChangeView" Command="{Binding ChangeViewCommand}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" Visibility="{Binding HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding NextViewButtonPathData}" Width="22" Height="22"/>
-                    </Button>
-                    <Button x:Name="BtnChangeViewDisabled" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="48" Height="48" IsEnabled="False" Visibility="{Binding HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                        <Path Stretch="UniformToFill" Data="{Binding LocalizedVisualResources.LargeThumbnailViewPathData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Width="22" Height="22"/>
-                    </Button>
-                </StackPanel>-->
+                </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <Pivot x:Name="MainPivot" HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" SelectionChanged="OnPivotSelectionChanged" Margin="0">
-                    <PivotItem x:Name="CloudDrivePivot" Header="{Binding CloudDriveNameText, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
-                        <Grid x:Name="CloudDriveRoot" Background="Transparent" Margin="0,0,12,0">
+                <Pivot x:Name="MainPivot"
+                       HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" 
+                       SelectionChanged="OnPivotSelectionChanged">
+                    <PivotItem 
+                        x:Name="CloudDrivePivot" 
+                        Header="{Binding CloudDriveNameText}" 
+                        CacheMode="{x:Null}" 
+                        Margin="0,-10,0,0">
+                        <Grid x:Name="CloudDriveRoot" 
+                              Background="Transparent" 
+                              Margin="0,0,12,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0">
+                            <StackPanel Grid.Row="0">
                                 <Grid Margin="24,0,12,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -56,7 +152,13 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar 
+                                        VerticalAlignment="Center" 
+                                        IsIndeterminate="True" 
+                                        Foreground="{StaticResource MegaRedColorBrush}" 
+                                        Height="8" 
+                                        Grid.ColumnSpan="2" 
+                                        Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -68,32 +170,80 @@
                                         Seperator=">"
                                         ItemsSource="{Binding CloudDrive.BreadCrumbs}"
                                         OverFlow="..."/>
-                                    <TextBlock Text="{Binding CloudDrive.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <TextBlock Text="{Binding CloudDrive.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding CloudDrive.EmptyInformationText}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center"                                         
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding CloudDrive.FolderRootNode.Information}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center"                                         
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
-                            <Grid x:Name="CloudDriveContentPanel" Grid.Row="1" Margin="12,0,0,0">
+                            <Grid 
+                                x:Name="CloudDriveContentPanel" 
+                                Grid.Row="1" 
+                                Margin="12,0,0,0">
                                 <ListView
-                                    x:Name="LstCloudDrive"
+                                    x:Name="ListViewCloudDrive"
+                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded">
+                                    SelectionMode="Extended"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
                                 </ListView>
+                                <GridView
+                                    x:Name="GridViewCloudDrive"
+                                    Padding="2,4"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DataContext="{Binding CloudDrive}"
+                                    ItemsSource="{Binding ChildNodes}"                                    
+                                    Tapped="OnItemTapped"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                </GridView>
                             </Grid>
                         </Grid>
                     </PivotItem>
-                    <PivotItem x:Name="RubbishBinPivot" Header="{Binding RubbishBinNameText, Converter={StaticResource TextToLowerCaseConverter}}" CacheMode="{x:Null}" Margin="0,-10,0,0">
-                        <Grid x:Name="RubbishBinRoot" Background="Transparent" Margin="0,0,12,0">                            
+                    <PivotItem 
+                        x:Name="RubbishBinPivot" 
+                        Header="{Binding RubbishBinNameText}" 
+                        CacheMode="{x:Null}" 
+                        Margin="0,-10,0,0">
+                        <Grid 
+                            x:Name="RubbishBinRoot" 
+                            Background="Transparent" 
+                            Margin="0,0,12,0">                            
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0">
+                            <StackPanel Grid.Row="0">
                                 <Grid Margin="24,0,12,5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -103,7 +253,13 @@
                                         <RowDefinition Height="16"/>
                                         <RowDefinition Height="24"/>
                                     </Grid.RowDefinitions>
-                                    <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" Foreground="{StaticResource MegaRedColorBrush}" Height="8" Grid.ColumnSpan="2" Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <ProgressBar 
+                                        VerticalAlignment="Center" 
+                                        IsIndeterminate="True" 
+                                        Foreground="{StaticResource MegaRedColorBrush}" 
+                                        Height="8" 
+                                        Grid.ColumnSpan="2" 
+                                        Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -115,22 +271,62 @@
                                         Seperator=">"
                                         ItemsSource="{Binding RubbishBin.BreadCrumbs}"
                                         OverFlow="..."/>
-                                    <TextBlock Text="{Binding RubbishBin.EmptyInformationText}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                    <TextBlock Text="{Binding RubbishBin.FolderRootNode.Information}" HorizontalAlignment="Right" TextAlignment="Right" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Column="1" VerticalAlignment="Center" Margin="0" Grid.Row="1" Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding RubbishBin.EmptyInformationText}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center" 
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <TextBlock 
+                                        Text="{Binding RubbishBin.FolderRootNode.Information}" 
+                                        HorizontalAlignment="Right" 
+                                        TextAlignment="Right" 
+                                        Style="{ThemeResource CaptionTextBlockStyle}" 
+                                        Grid.Row="1" 
+                                        Grid.Column="1" 
+                                        VerticalAlignment="Center" 
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
 
-                            <Grid x:Name="RubbishBinContentPanel" Grid.Row="1" Margin="12,0,0,0">
+                            <Grid 
+                                x:Name="RubbishBinContentPanel" 
+                                Grid.Row="1" 
+                                Margin="12,0,0,0">
                                 <ListView
-                                    x:Name="LstRubbishBin"
+                                    x:Name="ListViewRubbishBin"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    Loaded="OnListLoaded">
-                                </ListView>                                
+                                    SelectionMode="Extended"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </ListView>
+                                <GridView
+                                    x:Name="GridViewRubbishBin"
+                                    Padding="2,4"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DataContext="{Binding RubbishBin}"
+                                    ItemsSource="{Binding ChildNodes}"
+                                    Tapped="OnItemTapped"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    SelectionMode="Extended"
+                                    RightTapped="OnRightTapped"
+                                    Holding="OnHolding">
+                                </GridView>
                             </Grid>
                         </Grid>
                     </PivotItem>
@@ -138,34 +334,98 @@
             </Grid>
         </Grid>
 
+        <!-- CLOUD DRIVE COMMAND BAR -->
         <CommandBar 
             Grid.Row="1"
-            Style="{StaticResource MegaCommandBarStyle}">
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
             <AppBarButton 
-                x:Name="AddFolderButton"
-                Icon="NewFolder" 
-                Label="Add folder" 
+                Icon="Upload" 
+                Label="{Binding UploadText}" 
+                Command="{Binding ActiveFolderView.UploadCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                Icon="Add" 
+                Label="{Binding AddFolderText}" 
                 Command="{Binding ActiveFolderView.AddFolderCommand}"
                 Click="OnButtonClick"/>
             <AppBarButton 
-                x:Name="CleanRubbishBinButton"
-                Icon="Delete" 
-                Label="Empty Rubbish Bin" 
-                Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
-                Click="OnButtonClick"/>
+                x:Name="MultiSelectButtonCloudDrive"
+                Icon="AllApps" 
+                Label="{Binding MultiSelectText}" 
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnMultiSelectButtonClick"/>
             <AppBarButton
-                x:Name="RefreshButton"
                 Icon="Refresh" 
-                Label="Refresh" 
+                Label="{Binding RefreshText}" 
                 Command="{Binding ActiveFolderView.RefreshCommand}"
                 Click="OnButtonClick"/>
         </CommandBar>
+        
+        <!-- RUBBISH BIN COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton 
+                Icon="Delete" 
+                Label="{Binding EmptyRubbishBinText}" 
+                Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                x:Name="MultiSelectButtonRubbishBin"
+                Icon="AllApps" 
+                Label="{Binding MultiSelectText}" 
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnMultiSelectButtonClick"/>
+            
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Icon="Refresh" 
+                    Label="{Binding RefreshText}" 
+                    Command="{Binding ActiveFolderView.RefreshCommand}"
+                    Click="OnButtonClick"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+
+        <!-- MULTI SELECT COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton
+                Icon="Download" 
+                Label="{Binding DownloadText}" 
+                Command="{Binding ActiveFolderView.DownloadCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding MoveToRubbishBinText}" 
+                Command="{Binding ActiveFolderView.MoveToRubbishBinCommand}"
+                Click="OnButtonClick"
+                Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding RemoveText}" 
+                Command="{Binding ActiveFolderView.RemoveCommand}"
+                Click="OnButtonClick"
+                Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            <AppBarButton
+                Icon="Cancel" 
+                Label="{Binding CancelText}"
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"
+                Click="OnCancelMultiSelectButtonClick"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Icon="SelectAll" 
+                    Label="{Binding SelectAllText}"                     
+                    Click="OnSelectAllClick"/>
+                <AppBarButton
+                    Icon="SelectAll" 
+                    Label="{Binding DeselectAllText}"                     
+                    Click="OnDeselectAllClick"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
     </Grid>
 </views:BaseCloudDrivePage>
-
-
-
-
-
-
-

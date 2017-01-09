@@ -7,7 +7,7 @@
     <!-- Resource dictionary entries should be defined here. -->
 
     <!-- APP THEME OVERRIDES -->
-    
+
     <!--Measurements-->
     <GridLength x:Key="MegaPageHeaderLogoRowHeight">44</GridLength>
     <x:Double x:Key="InputHeight">40</x:Double>
@@ -21,31 +21,53 @@
 
     <!-- CONVERTERS -->
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter"/>
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter"/>
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter"/>
 
     <!--SELECTORS -->
-    <selectors:NodeTemplateSelector x:Key="NodeTemplateSelector" FileItemTemplate="{StaticResource MegaNodeListFileItemContent}" FolderItemTemplate="{StaticResource MegaNodeListFolderItemContent}"/>
-    
+    <selectors:NodeTemplateSelector 
+        x:Key="NodeTemplateSelector" 
+        FileItemTemplate="{StaticResource MegaNodeListViewFileItemContent}" 
+        FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}"/>
+
     <!-- TEMPLATES -->
     <DataTemplate x:Key="MegaPageHeaderLogo">
-        <Border Background="{StaticResource MegaAppBackgroundBrush}" Height="44" Width="44">
-            <Path Data="{StaticResource MegaIconVector}" Height="24" Width="24" StrokeThickness="0"
-                  Stretch="UniformToFill" Fill="{StaticResource MegaHeaderIconColorBrush}" FlowDirection="LeftToRight"/>
-        </Border>        
+        <Border 
+            Background="{StaticResource MegaAppBackgroundBrush}" 
+            Height="44" 
+            Width="44">
+            <Path 
+                Data="{StaticResource MegaIconVector}" 
+                Height="24" 
+                Width="24" 
+                StrokeThickness="0"
+                Stretch="UniformToFill" 
+                Fill="{StaticResource MegaHeaderIconColorBrush}" 
+                FlowDirection="LeftToRight"/>
+        </Border>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaPivoHeaderTemplate">
         <Grid>
-            <TextBlock Text="{Binding}" FontFamily="Segoe UI" FontSize="24" FontWeight="Normal"/>
+            <TextBlock 
+                Text="{Binding}" 
+                FontFamily="Segoe UI" 
+                FontSize="24" 
+                FontWeight="Normal"/>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
         <Grid>
-            <Path x:Name="BreadcrumbHomeMegaIcon" Height="14" Width="14" Data="{Binding BreadcrumbHomeMegaIcon}" Stretch="UniformToFill">
+            <Path 
+                x:Name="BreadcrumbHomeMegaIcon" 
+                Height="14" 
+                Width="14" 
+                Data="{Binding BreadcrumbHomeMegaIcon}" 
+                Stretch="UniformToFill">
                 <Path.Fill>
-                    <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                 </Path.Fill>
             </Path>
         </Grid>
@@ -53,9 +75,14 @@
 
     <DataTemplate x:Key="BreadcrumbHomeRubbishBinTemplate">
         <Grid>
-            <Path x:Name="BreadcrumbHomeRubbishBinIcon" Height="14" Width="14" Data="{Binding BreadcrumbHomeRubbishBinIcon}" Stretch="UniformToFill">
+            <Path 
+                x:Name="BreadcrumbHomeRubbishBinIcon" 
+                Height="14" 
+                Width="14" 
+                Data="{Binding BreadcrumbHomeRubbishBinIcon}" 
+                Stretch="UniformToFill">
                 <Path.Fill>
-                    <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                 </Path.Fill>
             </Path>
         </Grid>
@@ -63,13 +90,19 @@
 
     <DataTemplate x:Key="BreadcrumbItemTemplate">
         <Grid>
-            <TextBlock Text="{Binding Name}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+            <TextBlock 
+                Text="{Binding Name}" 
+                Style="{ThemeResource CaptionTextBlockStyle}"/>
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaNodeListFileItemContent">
-        <Border Margin="-24,1,0,1" BorderThickness="2,2,2,2" Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
-            <Grid Margin="12,2,12,2">
+    <DataTemplate x:Key="MegaNodeListViewFileItemContent">
+        <Border 
+            Margin="-24,1,0,1" 
+            BorderThickness="2,2,2,2" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Margin="12,2,0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -80,54 +113,132 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Margin="0,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
-                    <Path Data="{Binding DefaultImagePathData}" Canvas.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" Stretch="Uniform" Margin="0,0,12,0" Visibility="{Binding IsDefaultImage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Grid
+                    Grid.Row="0" 
+                    Grid.RowSpan="2" 
+                    Grid.Column="0">
+                    <Path 
+                        Data="{Binding DefaultImagePathData}" 
+                        Canvas.ZIndex="0" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Width="36" 
+                        Height="36" 
+                        Stretch="Uniform" 
+                        Margin="0,0,12,0" 
+                        Visibility="{Binding IsDefaultImage, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Path.Fill>
-                            <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                         </Path.Fill>
                     </Path>
-                    <Image HorizontalAlignment="Center" Canvas.ZIndex="1" VerticalAlignment="Center" Width="64" Height="64" Stretch="UniformToFill" Margin="0,0,12,0" Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image 
+                        HorizontalAlignment="Center" 
+                        Canvas.ZIndex="1" 
+                        VerticalAlignment="Center" 
+                        Width="36" 
+                        Height="36" 
+                        Stretch="UniformToFill" 
+                        Margin="0,0,12,0" 
+                        Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <Image.Source>
-                            <BitmapImage 
-        					UriSource="{Binding ThumbnailImageUri}"
-        					DecodePixelHeight="64"
-        					DecodePixelType="Logical"
-                        />
+                            <BitmapImage
+                                UriSource="{Binding ThumbnailImageUri}"
+                                DecodePixelHeight="36"
+                                DecodePixelType="Logical"/>
                         </Image.Source>
                     </Image>
-                    <Border Margin="0,0,12,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" BorderThickness="2" Canvas.ZIndex="1" Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
-                        </Border.BorderBrush>
-                    </Border>
-                    <!--<Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="White" StrokeThickness="2" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Path Data="{Binding LocalizedVisualResources.SavedOfflineViewData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Margin="-5,-2,0,0" Width="20" Height="20" Canvas.ZIndex="3" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Path.Fill>
-                            <SolidColorBrush Color="White"/>
-                        </Path.Fill>
-                    </Path>
-                    <Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Stroke="White" StrokeThickness="2" Visibility="{Binding IsExported, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Image Source="/Assets/AppBar/link.png" Margin="-5,-2,0,0" Width="20" Height="20" Canvas.ZIndex="3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding IsExported, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
                 </Grid>
 
-                <TextBlock x:Name="txtFileName" HorizontalAlignment="Left" Text="{Binding Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
-                <TextBlock x:Name="txtSize" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Information}" VerticalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Row="1" Grid.Column="1"/>
-                <TextBlock x:Name="txtCreated" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding ModificationTime}" VerticalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Row="1" Grid.Column="2"/>
+                <TextBlock 
+                    x:Name="txtFileName" 
+                    HorizontalAlignment="Left" 
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Column="1" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"/>
+                <TextBlock 
+                    x:Name="txtSize" 
+                    HorizontalAlignment="Left" 
+                    TextWrapping="NoWrap" 
+                    Text="{Binding Information}" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource CaptionTextBlockStyle}" 
+                    Grid.Row="1" 
+                    Grid.Column="1"/>
+                <TextBlock 
+                    x:Name="txtCreated" 
+                    HorizontalAlignment="Right" 
+                    TextWrapping="NoWrap" 
+                    Text="{Binding ModificationTime}" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource CaptionTextBlockStyle}" 
+                    Grid.Row="1" 
+                    Grid.Column="2"/>
             </Grid>
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaNodeListFolderItemContent">
-        <Border Margin="-24,1,0,1" BorderThickness="2,2,2,2" Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
-            <Grid Margin="12,2,12,2">
+    <DataTemplate x:Key="MegaNodeGridViewFileItemContent">
+        <Border 
+            BorderThickness="1" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Width="96">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Path 
+                    Grid.Row="0" 
+                    Data="{Binding DefaultImagePathData}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="64" 
+                    Height="64" 
+                    Stretch="Uniform" 
+                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
+                    </Path.Fill>
+                </Path>
+                <Image 
+                    Grid.Row="0" 
+                    Stretch="UniformToFill" 
+                    Height="96" 
+                    Width="96" 
+                    Visibility="{Binding IsDefaultImage, ConverterParameter=False, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Image.Source>
+                        <BitmapImage
+                            UriSource="{Binding ThumbnailImageUri}"
+                            DecodePixelHeight="96"
+                            DecodePixelType="Logical"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock
+                    Margin="0,4,0,0" 
+                    HorizontalAlignment="Stretch"
+                    TextAlignment="Center"
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis"
+                    VerticalAlignment="Bottom" 
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaNodeListViewFolderItemContent">
+        <Border 
+            Margin="-24,1,0,1" 
+            BorderThickness="2,2,2,2" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Margin="12,2,0,2">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -138,35 +249,91 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Grid Margin="0,0" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
-                    <Path Data="{Binding DefaultImagePathData}" Canvas.ZIndex="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="64" Height="64" Stretch="Uniform" Margin="0,0,12,0">
+                <Grid 
+                    Grid.Row="0" 
+                    Grid.RowSpan="2" 
+                    Grid.Column="0">
+                    <Path 
+                        Data="{Binding DefaultImagePathData}" 
+                        Canvas.ZIndex="0" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
+                        Width="36" 
+                        Height="36" 
+                        Stretch="Uniform" 
+                        Margin="0,0,12,0">
                         <Path.Fill>
-                            <SolidColorBrush Color="{ThemeResource SystemBaseHighColor}"/>
+                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                         </Path.Fill>
                     </Path>
-                    <!--<Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top" Stroke="White" StrokeThickness="2" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Path Data="{Binding LocalizedVisualResources.SavedOfflineViewData, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Margin="-5,-2,0,0" Width="20" Height="20" Canvas.ZIndex="3" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Uniform" Visibility="{Binding IsAvailableOffline, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Path.Fill>
-                            <SolidColorBrush Color="White"/>
-                        </Path.Fill>
-                    </Path>-->
-                    <!--<Ellipse Margin="-5,-2,0,0" Height="20" Width="20" Canvas.ZIndex="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Stroke="White" StrokeThickness="2" Visibility="{Binding IsExported, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
-                    <Image Source="/Assets/AppBar/link.png" Margin="-5,-2,0,0" Width="20" Height="20" Canvas.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="{Binding IsExported, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
                 </Grid>
 
-                <TextBlock x:Name="txtFolderName" HorizontalAlignment="Left" Text="{Binding Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
-                <TextBlock x:Name="txtCount" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Information}" VerticalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Row="1" Grid.Column="1"/>
-                <TextBlock x:Name="txtCreated" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding CreationTime}" VerticalAlignment="Center" Style="{ThemeResource CaptionTextBlockStyle}" Grid.Row="1" Grid.Column="2"/>
+                <TextBlock 
+                    x:Name="txtFolderName" 
+                    HorizontalAlignment="Left" 
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Column="1" 
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="2"/>
+                <TextBlock 
+                    x:Name="txtCount" 
+                    HorizontalAlignment="Left" 
+                    TextWrapping="NoWrap" 
+                    Text="{Binding Information}" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource CaptionTextBlockStyle}" 
+                    Grid.Row="1" 
+                    Grid.Column="1"/>
+                <TextBlock 
+                    x:Name="txtCreated" 
+                    HorizontalAlignment="Right" 
+                    TextWrapping="NoWrap" 
+                    Text="{Binding CreationTime}" 
+                    VerticalAlignment="Center" 
+                    Style="{ThemeResource CaptionTextBlockStyle}" 
+                    Grid.Row="1" 
+                    Grid.Column="2"/>
             </Grid>
         </Border>
     </DataTemplate>
-    
+
+    <DataTemplate x:Key="MegaNodeGridViewFolderItemContent">
+        <Border 
+            BorderThickness="1" 
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
+            <Grid Width="96">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Path 
+                    Data="{Binding DefaultImagePathData}" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="64" 
+                    Height="64" 
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
+                    </Path.Fill>
+                </Path>                
+                <TextBlock
+                    Margin="0,4,0,0" 
+                    HorizontalAlignment="Stretch" 
+                    TextAlignment="Center" 
+                    TextWrapping="NoWrap"
+                    Text="{Binding Name}" 
+                    TextTrimming="CharacterEllipsis" 
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource BaseTextBlockStyle}" 
+                    Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
 </ResourceDictionary>
