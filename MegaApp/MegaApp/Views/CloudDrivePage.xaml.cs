@@ -344,6 +344,7 @@ namespace MegaApp.Views
 
                     this.ViewModel.ActiveFolderView.FocusedNode = item.DataContext as IMegaNode;
 
+                    this.ViewModel.ActiveFolderView.SelectedNodes.Clear();
                     foreach (var selectedItem in (sender as ListViewBase).SelectedItems)
                         this.ViewModel.ActiveFolderView.SelectedNodes.Add(selectedItem as IMegaNode);
                 }
