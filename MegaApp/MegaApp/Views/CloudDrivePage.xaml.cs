@@ -2,7 +2,6 @@
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
@@ -356,6 +355,17 @@ namespace MegaApp.Views
                 return true;
             }
             catch (Exception) { return false; }
+        }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+            var sortButton = sender as Button;
+
+            var buttonPosition = sortButton.TransformToVisual(BtnSort);
+            Point screenCoords = buttonPosition.TransformPoint(new Point(32, 32));
+
+            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
+            menuFlyout.ShowAt(sortButton, screenCoords);
         }
     }
 }
