@@ -111,6 +111,7 @@
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
-    <Compile Include="Enums\DriveDisplayMode.cs" />
+    <Compile Include="Enums\FolderContentViewState.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Enums\TransferStatus.cs" />
     <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
-    <Compile Include="Enums\ViewMode.cs" />
+    <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />
@@ -150,6 +151,9 @@
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
     <Compile Include="MegaApi\DeleteNodeRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
@@ -174,6 +178,7 @@
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\ToastService.cs" />
     <Compile Include="Services\TransferService.cs" />
     <Compile Include="Services\UiService.cs" />
     <Compile Include="Services\UriService.cs" />

@@ -1,4 +1,5 @@
 ﻿using Windows.System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -17,7 +18,9 @@ namespace MegaApp.Views
     {
         public LoginAndCreateAccountPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            UiService.SetStatusBarBackground((Color)Application.Current.Resources["MegaAppBackground"]);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

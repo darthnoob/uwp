@@ -19,7 +19,7 @@ namespace MegaApp.Interfaces
         /// Rename the current Node
         /// </summary>
         /// <returns>Result of the action</returns>
-        NodeActionResult Rename();
+        Task RenameAsync();
 
         /// <summary>
         /// Move the node from its current location to a new folder destination
@@ -39,9 +39,8 @@ namespace MegaApp.Interfaces
         /// Move the node to the rubbish bin
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
-        /// <param name="waitEventRequest"></param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
+        Task MoveToRubbishBinAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Delete the node permanently

@@ -1,13 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using mega;
-using MegaApp.Classes;
-using MegaApp.MegaApi;
-using MegaApp.ViewModels;
-using MegaApp.Enums;
+using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml;
+using mega;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Extensions;
+using MegaApp.MegaApi;
+using MegaApp.ViewModels;
 
 namespace MegaApp.Services
 {
@@ -157,6 +161,114 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Checks if the destination download path external to the app exists 
+        /// and has a right name, right permissions, etc.
+        /// </summary>
+        /// <param name="downloadPath">Download folder path.</param>
+        /// <returns>TRUE if all is OK or FALSE in other case.</returns>
+        public static async Task<bool> CheckExternalDownloadPathAsync(string downloadPath)
+        {
+            // Extra check to try avoid null values
+            if (string.IsNullOrWhiteSpace(downloadPath))
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_SelectFolderFailedNoErrorCode"));
+                return false;
+            }
+
+            // Check for illegal characters in the download path
+            if (FolderService.HasIllegalChars(downloadPath))
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_InvalidFolderNameOrPath"), downloadPath));
+                return false;
+            }
+
+            bool pathExists = true; //Suppose that the download path exists
+            try { await StorageFolder.GetFolderFromPathAsync(downloadPath); }
+            catch (FileNotFoundException) { pathExists = false; }
+            catch (UnauthorizedAccessException)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess_Title"),
+                    ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess"));
+                return false;
+            }
+            catch (Exception e)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DownloadPathUnknownError"),
+                    e.GetType().Name + " - " + e.Message));
+                return false;
+            }
+
+            // Create the download path if not exists
+            if (!pathExists)
+                return await CreateExternalDownloadPathAsync(downloadPath);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Creates a destination download path external to the app.
+        /// </summary>
+        /// <param name="downloadPath">The external download folder path.</param>
+        /// <returns>TRUE if all went well or FALSE in other case.</returns>
+        private static async Task<bool> CreateExternalDownloadPathAsync(string downloadPath)
+        {
+            string rootPath = Path.GetPathRoot(downloadPath);
+            string tempDownloadPath = downloadPath;
+
+            List<string> foldersNames = new List<string>(); //Folders that will be needed create
+            List<string> foldersPaths = new List<string>(); //Paths where will needed create the folders
+
+            //Loop to follow the reverse path to search the first missing folder
+            while (string.Compare(tempDownloadPath, rootPath) != 0)
+            {
+                try { await StorageFolder.GetFolderFromPathAsync(tempDownloadPath); }
+                catch (UnauthorizedAccessException)
+                {
+                    //The folder exists, but probably is a restricted access system folder in the download path. 
+                    break; // Exit the loop.
+                }
+                catch (FileNotFoundException) //Folder not exists
+                {
+                    //Include the folder name that will be needed create and the corresponding path
+                    foldersNames.Insert(0, Path.GetFileName(tempDownloadPath));
+                    foldersPaths.Insert(0, new DirectoryInfo(tempDownloadPath).Parent.FullName);
+                }
+                finally
+                {
+                    //Upgrade to the next path to check (parent folder)
+                    tempDownloadPath = new DirectoryInfo(tempDownloadPath).Parent.FullName;
+                }
+            }
+
+            // Create each necessary folder of the download path
+            for (int i = 0; i < foldersNames.Count; i++)
+            {
+                try
+                {
+                    StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(foldersPaths.ElementAt(i));
+                    await folder.CreateFolderAsync(Path.GetFileName(foldersNames.ElementAt(i)), CreationCollisionOption.OpenIfExists);
+                }
+                catch (Exception e)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_CreateDownloadPathError"),
+                        e.GetType().Name + " - " + e.Message));
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Cancel all the pending offline transfer of a node and wait until all transfers are canceled.
         /// </summary>
         /// <param name="nodePath">Path of the node.</param>
@@ -176,7 +288,7 @@ namespace MegaApp.Services
         //            transferPathToCompare = transfer.getParentPath();
         //        else
         //            transferPathToCompare = transfer.getPath();
-                                
+
         //        WaitHandle waitEventRequestTransfer = new AutoResetEvent(false);
         //        if (string.Compare(nodePath, transferPathToCompare) == 0)
         //        {

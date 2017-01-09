@@ -12,7 +12,17 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Background="{StaticResource MegaAppBarBackgroundBrush}">
+
+            </Grid>
+        </Grid>
+
         <CommandBar
             Grid.Row="1"
             Style="{StaticResource MegaCommandBarStyle}">

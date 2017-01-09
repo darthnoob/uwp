@@ -6,7 +6,7 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public CloudDriveViewModel() : base()
+        public CloudDriveViewModel()
         {
             InitializeModel();
         }
@@ -113,12 +113,18 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string AddFolderText => ResourceService.UiResources.GetString("UI_AddFolder");
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
         public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
 
         #endregion

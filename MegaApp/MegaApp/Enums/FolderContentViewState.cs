@@ -1,6 +1,9 @@
 ﻿namespace MegaApp.Enums
 {
-    public enum DriveDisplayMode
+    /// <summary>
+    /// Possible folder content view states.
+    /// </summary>
+    public enum FolderContentViewState
     {
         CloudDrive,
         CopyOrMoveItem,
