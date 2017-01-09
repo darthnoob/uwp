@@ -17,10 +17,14 @@
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="84"/>
+                <RowDefinition Height="48"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
+            <Grid
+                Grid.Row="0"
+                Background="{StaticResource MegaAppBarBackgroundBrush}">
+            </Grid>
             <Grid Grid.Row="1">
                 <Pivot 
                 x:Name="TransfersPivot" 
