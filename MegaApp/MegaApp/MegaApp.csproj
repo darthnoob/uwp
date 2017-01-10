@@ -148,6 +148,7 @@
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListener.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
+    <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />

@@ -596,4 +596,20 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message displayed when user has renamed a node with success.
 Preserve the '{0}' and '{1}'codes because are for include the old and new name in runtime.</comment>
   </data>
+  <data name="AM_CopyFailed" xml:space="preserve">
+    <value>Failed copying nodes. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to copy node(s) failed.</comment>
+  </data>
+  <data name="AM_CopyFailed_Title" xml:space="preserve">
+    <value>Copy failed</value>
+    <comment>Title of the dialog displayed when the process/request to copy node(s) failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_MoveFailed" xml:space="preserve">
+    <value>Failed moving nodes. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to move node(s) failed.</comment>
+  </data>
+  <data name="AM_MoveFailed_Title" xml:space="preserve">
+    <value>Move failed</value>
+    <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
+  </data>
 </root>
