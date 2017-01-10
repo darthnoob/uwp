@@ -326,4 +326,36 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Move</value>
     <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_SortOptionFilesAscending" xml:space="preserve">
+    <value>Files (ascending)</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by type - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionFilesDescending" xml:space="preserve">
+    <value>Files (descending)</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by type - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLargest" xml:space="preserve">
+    <value>Largest</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionNameAscending" xml:space="preserve">
+    <value>Name (ascending)</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by name - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionNameDescending" xml:space="preserve">
+    <value>Name (descending)</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by name - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionNewest" xml:space="preserve">
+    <value>Newest</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionOldest" xml:space="preserve">
+    <value>Oldest</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionSmallest" xml:space="preserve">
+    <value>Smallest</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
 </root>

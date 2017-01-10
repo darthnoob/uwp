@@ -432,5 +432,16 @@ namespace MegaApp.Views
             }
             catch (Exception) { return false; }
         }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+            var sortButton = sender as Button;
+
+            var buttonPosition = sortButton.TransformToVisual(BtnSort);
+            Point screenCoords = buttonPosition.TransformPoint(new Point(32, 32));
+
+            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
+            menuFlyout.ShowAt(sortButton, screenCoords);
+        }
     }
 }

@@ -120,14 +120,27 @@
                     VerticalAlignment="Center"
                     Background="{StaticResource MegaAppBarBackgroundBrush}">
                     <Button 
+                        x:Name="BtnSort"
+                        Width="32" 
+                        Height="32"
+                        Click="OnSortClick"                        
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Viewbox
+                            MaxWidth="14"
+                            MaxHeight="14">
+                            <SymbolIcon
+                                Symbol="Sort"
+                                Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                        </Viewbox>                        
+                    </Button>                    
+                    <Button 
                         x:Name="BtnChangeView"
                         Width="32" 
                         Height="32"
                         Command="{Binding ChangeViewCommand}"
                         Background="Transparent"
-                        BorderThickness="0"
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Bottom">
+                        BorderThickness="0">
                         <Path
                             Width="14" 
                             Height="14"
