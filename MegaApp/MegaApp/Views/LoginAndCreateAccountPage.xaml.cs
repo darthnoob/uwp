@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -23,12 +24,42 @@ namespace MegaApp.Views
             UiService.SetStatusBarBackground((Color)Application.Current.Resources["MegaAppBackground"]);
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);            
 
             // Do not allow user to go back to any previous page
             NavigateService.CoreFrame.BackStack.Clear();
+            
+            // If exists a navigation object
+            if (e?.Parameter != null)
+            {
+                NavigationActionType navActionType = NavigateService.GetNavigationObject(e.Parameter).Action;
+
+                switch (navActionType)
+                {
+                    case NavigationActionType.API_ESID:
+                        // Show a message notifying the error
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_SessionIDError_Title"),
+                            ResourceService.AppMessages.GetString("AM_SessionIDError"));
+                        break;
+
+                    case NavigationActionType.API_EBLOCKED:
+                        // Show a message notifying the error
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_AccountBlocked_Title"),
+                            ResourceService.AppMessages.GetString("AM_AccountBlocked"));
+                        break;
+
+                    case NavigationActionType.API_ESSL:
+                        // Show a message notifying the error
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_SSLKeyError_Title"),
+                            ResourceService.AppMessages.GetString("AM_SSLKeyError"));
+                        break;
+                }
+            }
         }
 
         private void OnAcceptClick(object sender, RoutedEventArgs e)
