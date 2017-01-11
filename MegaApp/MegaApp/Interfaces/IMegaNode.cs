@@ -40,15 +40,14 @@ namespace MegaApp.Interfaces
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task MoveToRubbishBinAsync(bool isMultiSelect = false);
+        Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Delete the node permanently
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
-        /// <param name="waitEventRequest"></param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null);
+        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 

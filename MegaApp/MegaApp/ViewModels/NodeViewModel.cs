@@ -53,7 +53,10 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void GetThumbnail()
+        /// <summary>
+        /// Get the thumbnail of the node
+        /// </summary>
+        private async void GetThumbnail()
         {
             if (FileService.FileExists(this.ThumbnailPath))
             {
@@ -62,7 +65,21 @@ namespace MegaApp.ViewModels
             }
             else if (Convert.ToBoolean(this.MegaSdk.isLoggedIn()) || this.ParentContainerType == ContainerType.FolderLink)
             {
-                this.MegaSdk.getThumbnail(this.OriginalMNode, this.ThumbnailPath, new GetThumbnailRequestListener(this));
+                var getThumbnail = new GetThumbnailRequestListenerAsync();
+                var result = await getThumbnail.ExecuteAsync(() =>
+                {
+                    this.MegaSdk.getThumbnail(this.OriginalMNode, 
+                        this.ThumbnailPath, getThumbnail);
+                });
+                
+                if(result)
+                {
+                    await UiService.OnUiThread(() =>
+                    {
+                        this.IsDefaultImage = false;
+                        this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
+                    });
+                }
             }
         }
 
@@ -192,9 +209,6 @@ namespace MegaApp.ViewModels
             };
             
             await OnUiThread(() => this.Name = newName);
-            ToastService.ShowText(
-                string.Format(ResourceService.AppMessages.GetString("AM_RenameNodeSuccess"),
-                oldName, newName));
         }
 
         /// <summary>
@@ -244,45 +258,7 @@ namespace MegaApp.ViewModels
             return NodeActionResult.Succeeded;
         }
 
-        public async Task MoveToRubbishBinAsync(bool isMultiSelect = false)
-        {
-            // User must be online to perform this operation
-            if (!IsUserOnline()) return;
-
-            if (this.OriginalMNode == null) return;
-
-            if (!isMultiSelect)
-            {
-                var dialogResult = await DialogService.ShowOkCancelAsync(
-                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name));
-
-                if (!dialogResult) return;
-            }
-
-            var moveNode = new MoveNodeRequestListenerAsync();
-            var result = await moveNode.ExecuteAsync(() =>
-            {
-                this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode);
-            });
-
-            if (result)
-            {
-                if (!isMultiSelect)
-                {
-                    ToastService.ShowText(string.Format(
-                         ResourceService.AppMessages.GetString("AM_MoveToRubbishBinSuccess"),
-                         this.Name));
-                }
-                return;
-            };
-
-            await DialogService.ShowAlertAsync(
-                  ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
-                  string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
-        }
-
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false, AutoResetEvent waitEventRequest = null)
+        public async Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return NodeActionResult.NotOnline;
@@ -291,19 +267,49 @@ namespace MegaApp.ViewModels
 
             if (!isMultiSelect)
             {
-                var result = await new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name),
-                    App.AppInformation,
-                    MessageDialogButtons.OkCancel).ShowDialogAsync();
+                var dialogResult = await DialogService.ShowOkCancelAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name));
 
-                if (result == MessageDialogResult.CancelNo) return NodeActionResult.Cancelled;
+                if (!dialogResult) return NodeActionResult.Cancelled;
             }
 
-            this.MegaSdk.remove(this.OriginalMNode, 
-                new DeleteNodeRequestListener(this, isMultiSelect, waitEventRequest));
+            var moveNode = new MoveNodeRequestListenerAsync();
+            var result = await moveNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode);
+            });
 
-            return NodeActionResult.IsBusy;
+            if (!result) return NodeActionResult.Failed;
+
+            return NodeActionResult.Succeeded;
+        }
+
+        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false)
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+
+            if (!isMultiSelect)
+            {
+                var dialogResult = await DialogService.ShowOkCancelAsync(
+                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name));
+
+                if (!dialogResult) return NodeActionResult.Cancelled;
+            }
+
+            var removeNode = new RemoveNodeRequestListenerAsync();
+            var result = await removeNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.remove(this.OriginalMNode, removeNode);
+            });
+
+            if (!result) return NodeActionResult.Failed;
+
+            return NodeActionResult.Succeeded;
         }
 
         public NodeActionResult GetLink()

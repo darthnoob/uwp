@@ -357,8 +357,9 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
-    <value>Failed to remove item</value>
-    <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.</comment>
+    <value>Failed removing '{0}'. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request remove definitely a node failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">
     <value>Remove failed</value>
@@ -635,5 +636,17 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
     <value>Logged out</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
+  </data>
+  <data name="AM_RemoveFailed_Title" xml:space="preserve">
+    <value>Remove failed</value>
+    <comment>Title of the dialog displayed when the process/request to remove node(s) failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFailed" xml:space="preserve">
+    <value>Failed removing files or folders. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to remove multiple nodes failed.</comment>
+  </data>
+  <data name="AM_MoveToRubbishBinMultipleNodesFailed" xml:space="preserve">
+    <value>Failed moving files or folders to the rubbish bin. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to move multiple nodes to the rubbish bin failed.</comment>
   </data>
 </root>

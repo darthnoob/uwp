@@ -292,35 +292,36 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder);
             });
 
-            if (result)
+            if (!result)
             {
-                ToastService.ShowText(string.Format(
-                    ResourceService.AppMessages.GetString("AM_CreateFolderSuccess"),
-                    folderName));
-                return;
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
             };
-
-            await DialogService.ShowAlertAsync(
-                ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
         }
 
-        private void CleanRubbishBin()
+        private async void CleanRubbishBin()
         {
             if (this.Type != ContainerType.RubbishBin || this.ChildNodes.Count < 1) return;
 
-            var customMessageDialog = new CustomMessageDialog(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
-                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"),
-                App.AppInformation,
-                MessageDialogButtons.OkCancel);
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"));
 
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            if (!dialogResult) return;
+
+            var cleanRubbishBin = new CleanRubbishBinRequestListenerAsync();
+            var result = await cleanRubbishBin.ExecuteAsync(() =>
             {
-                this.MegaSdk.cleanRubbishBin(new CleanRubbishBinRequestListener());
-            };
+                this.MegaSdk.cleanRubbishBin(cleanRubbishBin);
+            });
 
-            customMessageDialog.ShowDialog();
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBinFailed"));
+            }
         }
 
         private void Download()
@@ -331,10 +332,13 @@ namespace MegaApp.ViewModels
                 return;
             };
             
-            MultipleDownloadAsync(this.SelectedNodes);
+            MultipleDownload(this.SelectedNodes.ToList());
+
+            CurrentViewState = PreviousViewState;
+            SelectedNodes.Clear();
         }
 
-        private async void MultipleDownloadAsync(ICollection<IMegaNode> nodes)
+        private async void MultipleDownload(ICollection<IMegaNode> nodes)
         {
             if (nodes == null || nodes.Count < 1) return;
 
@@ -351,9 +355,6 @@ namespace MegaApp.ViewModels
                     }
                 }
             }
-            
-            CurrentViewState = PreviousViewState;
-            SelectedNodes.Clear();
         }
 
         private async void MoveToRubbishBin()
@@ -361,7 +362,12 @@ namespace MegaApp.ViewModels
             if (this.SelectedNodes == null || !this.SelectedNodes.Any())
             {
                 if(this.FocusedNode == null) return;
-                await this.FocusedNode.MoveToRubbishBinAsync();
+                if (await this.FocusedNode.MoveToRubbishBinAsync() != NodeActionResult.Succeeded)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"));
+                }
                 return;
             };
 
@@ -373,7 +379,10 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            MultipleMoveToRubbishBin(this.SelectedNodes);
+            MultipleMoveToRubbishBin(this.SelectedNodes.ToList());
+
+            CurrentViewState = PreviousViewState;
+            SelectedNodes.Clear();
         }
 
         private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
@@ -382,17 +391,18 @@ namespace MegaApp.ViewModels
 
             Task.Run(async () =>
             {
-                foreach (var node in this.SelectedNodes)
+                bool result = true;
+                foreach (var node in nodes)
                 {
-                    await node.MoveToRubbishBinAsync(true);
+                    result = result & (await node.MoveToRubbishBinAsync(true) == NodeActionResult.Succeeded);
                 }
 
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces"), nodes.Count));
-              
-                CurrentViewState = PreviousViewState;
-                SelectedNodes.Clear();
+                if (!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
+                }
             });
         }        
 
@@ -414,55 +424,49 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.SelectedNodes?.Count > 1)
-                await MultipleRemoveAsync();
-            else if (this.SelectedNodes?.Count == 1)
-                await this.SelectedNodes?.First()?.RemoveAsync();
-            else
-                await this.FocusedNode?.RemoveAsync();
-        }
-
-        private async Task MultipleRemoveAsync()
-        {
-            int count = this.SelectedNodes.Count;
-
-            if (count < 1) return;
-
-            var customMessageDialog = new CustomMessageDialog(
-                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count),
-                App.AppInformation,
-                MessageDialogButtons.OkCancel);
-
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            if (this.SelectedNodes == null || !this.SelectedNodes.Any())
             {
-                Task.Run(async () =>
+                if (this.FocusedNode == null) return;
+                if (await this.FocusedNode.RemoveAsync() != NodeActionResult.Succeeded)
                 {
-                    WaitHandle[] waitEventRequests = new WaitHandle[count];
-
-                    int index = 0;
-
-                    foreach (var node in this.SelectedNodes)
-                    {
-                        waitEventRequests[index] = new AutoResetEvent(false);
-                        await node.RemoveAsync(true, (AutoResetEvent)waitEventRequests[index]);
-                        index++;
-                    }
-
-                    WaitHandle.WaitAll(waitEventRequests);
-
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), count),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
-
-                    CurrentViewState = PreviousViewState;
-                    SelectedNodes.Clear();
-                });
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveNodeFailed"));
+                }
+                return;
             };
 
-            await customMessageDialog.ShowDialogAsync();
+            var result = await DialogService.ShowOkCancelAsync(
+               ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
+               string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), this.SelectedNodes.Count));
+
+            if (!result) return;
+
+            MultipleRemove(this.SelectedNodes.ToList());
+
+            CurrentViewState = PreviousViewState;
+            SelectedNodes.Clear();
+        }
+
+        private void MultipleRemove(ICollection<IMegaNode> nodes)
+        {
+            if (nodes == null || nodes.Count < 1) return;
+
+            Task.Run(async () =>
+            {
+                bool result = true;
+                foreach (var node in nodes)
+                {
+                    result = result & (await node.RemoveAsync(true) == NodeActionResult.Succeeded);
+                }
+
+                if (!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
+                }
+            });
         }
 
         /// <summary>
