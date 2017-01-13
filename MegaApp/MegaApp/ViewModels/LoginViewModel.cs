@@ -17,17 +17,26 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async void LoginAsync()
+        private void OnServerBusy(object sender, EventArgs e)
+        {
+            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader");
+        }
+
+        public async void Login()
         {
             if (!await CheckInputParametersAsync()) return;
 
             var login = new LoginRequestListenerAsync();
+            login.ServerBusy += OnServerBusy;
+
             LoginResult result;
             try
             {
                 this.ControlState = false;
                 this.IsBusy = true;
-                
+
+                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+
                 result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
             }
             catch (BlockedAccountException)
@@ -46,34 +55,30 @@ namespace MegaApp.ViewModels
             switch (result)
             {
                 case LoginResult.Success:
-                    {
-                        SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
-                        // Navigate to the main page to load the main application for the user
-                        NavigateService.Instance.Navigate(
-                            typeof(MainPage), 
-                            true,
-                            NavigationObject.Create(this.GetType(), NavigationActionType.Login));
-                        return;
-                    }
+                    SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+                    
+                    // Navigate to the main page to load the main application for the user
+                    NavigateService.Instance.Navigate(typeof(MainPage), true,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Login));
+                    return;
+
                 case LoginResult.UnassociatedEmailOrWrongPassword:
-                    {
-                        errorContent = ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin");
-                        break;
-                    }
+                    errorContent = ResourceService.AppMessages.GetString("AM_WrongEmailPasswordLogin");
+                    break;
+
                 case LoginResult.TooManyLoginAttempts:
-                    {
-                        // Too many failed login attempts. Wait one hour.
-                        errorContent = string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"),
-                            DateTime.Now.AddHours(1).ToString("HH:mm:ss"));
-                        break;
-                    }
+                    // Too many failed login attempts. Wait one hour.
+                    errorContent = string.Format(ResourceService.AppMessages.GetString("AM_TooManyFailedLoginAttempts"),
+                        DateTime.Now.AddHours(1).ToString("HH:mm:ss"));
+                    break;
+
                 case LoginResult.AccountNotConfirmed:
-                    {
-                        errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
-                        break;
-                    }
+                    errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
+                    break;
+
                 case LoginResult.Unknown:
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -122,7 +127,13 @@ namespace MegaApp.ViewModels
         #region ProgressMessages
        
         public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_LoginHeader");
-        public string ProgressSubHeaderText => ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+
+        private string _progressSubHeaderText;
+        public string ProgressSubHeaderText
+        {
+            get { return _progressSubHeaderText; }
+            set { SetField(ref _progressSubHeaderText, value); }
+        }
 
         #endregion
     }

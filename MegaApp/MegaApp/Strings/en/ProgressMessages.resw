@@ -178,8 +178,8 @@ Preserve the [{0}] code because is for include current number of fetched nodes.<
     <value>Renaming...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersTooBusy" xml:space="preserve">
-    <value>Servers too busy. Please wait…</value>
+  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
+    <value>Servers too busy. Please wait.</value>
     <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
   </data>
 </root>

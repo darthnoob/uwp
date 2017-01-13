@@ -271,9 +271,8 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when a user logged out successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginFailed" xml:space="preserve">
-    <value>MEGA Cloud Drive login failed. Please try again. [{0}]</value>
-    <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails. 
-Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+    <value>MEGA Cloud Drive login failed. Please try again.</value>
+    <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails.</comment>
   </data>
   <data name="AM_LoginFailed_Title" xml:space="preserve">
     <value>Login failed</value>
