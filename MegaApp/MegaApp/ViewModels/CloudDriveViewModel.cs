@@ -72,7 +72,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Load all content trees: nodes, shares, contacts
         /// </summary>
-        public void FetchNodes()
+        public async void FetchNodes()
         {
             OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
             this.CloudDrive?.CancelLoad();
@@ -80,8 +80,30 @@ namespace MegaApp.ViewModels
             OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
             this.RubbishBin?.CancelLoad();
 
-            var fetchNodesRequestListener = new FetchNodesRequestListener(this);
-            this.MegaSdk.fetchNodes(fetchNodesRequestListener);
+            var fetchNodes = new FetchNodesRequestListenerAsync();
+            //fetchNodes.ServerBusy += OnServerBusy;
+            if (!await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes)))
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
+                return;
+            }
+
+            var cloudDriveRootNode = this.CloudDrive.FolderRootNode ??
+                NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                this.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+            var rubbishBinRootNode = this.RubbishBin.FolderRootNode ??
+                NodeService.CreateNew(this.MegaSdk, App.AppInformation, 
+                this.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+
+            await UiService.OnUiThread(() =>
+            {
+                this.CloudDrive.FolderRootNode = cloudDriveRootNode;
+                this.RubbishBin.FolderRootNode = rubbishBinRootNode;
+
+                LoadFolders();
+            });
         }
 
         #endregion

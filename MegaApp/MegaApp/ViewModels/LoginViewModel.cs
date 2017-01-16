@@ -17,6 +17,11 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
+        private void OnDecryptNodes(object sender, EventArgs e)
+        {
+            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader");
+        }
+
         private void OnServerBusy(object sender, EventArgs e)
         {
             this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader");
@@ -44,11 +49,6 @@ namespace MegaApp.ViewModels
                 // Do nothing, app is already logging out
                 return;
             }
-            finally
-            {
-                this.ControlState = true;
-                this.IsBusy = false;
-            }
            
             // Set default error content
             var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
@@ -56,6 +56,9 @@ namespace MegaApp.ViewModels
             {
                 case LoginResult.Success:
                     SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+
+                    // Fetch nodes from MEGA
+                    if (!await this.FetchNodes()) return;
                     
                     // Navigate to the main page to load the main application for the user
                     NavigateService.Instance.Navigate(typeof(MainPage), true,
@@ -83,6 +86,9 @@ namespace MegaApp.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
+            this.ControlState = true;
+            this.IsBusy = false;
+
             // Show error message
             await DialogService.ShowAlertAsync(this.LoginText, errorContent);
         }
@@ -104,6 +110,39 @@ namespace MegaApp.ViewModels
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Fetch nodes and show an alert if something went wrong.
+        /// </summary>
+        /// <returns>TRUE if all was well or FALSE in other case.</returns>
+        private async Task<bool> FetchNodes()
+        {
+            try
+            {
+                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+
+                var fetchNodes = new FetchNodesRequestListenerAsync();
+                fetchNodes.DecryptNodes += OnDecryptNodes;
+                fetchNodes.ServerBusy += OnServerBusy;
+                if (!await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes)))
+                {
+                    this.ControlState = true;
+                    this.IsBusy = false;
+
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
+                    return false;
+                }
+
+                return true;
+            }
+            catch (BlockedAccountException)
+            {
+                // Do nothing, app is already logging out
+                return false;
+            }
         }
         
         #endregion

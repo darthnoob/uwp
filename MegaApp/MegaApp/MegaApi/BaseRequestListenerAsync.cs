@@ -24,7 +24,7 @@ namespace MegaApp.MegaApi
         /// <summary>
         /// Event triggered when servers are busy (receive API_EAGAIN (-3) during more than 10 seconds).
         /// </summary>
-        public EventHandler ServerBusy;   
+        public EventHandler ServerBusy;
         
         public BaseRequestListenerAsync()
         {
@@ -36,8 +36,11 @@ namespace MegaApp.MegaApi
 
         private async void TimerApiEagainOnTick(object sender, object o)
         {
-            await UiService.OnUiThread(() => TimerApiEagain.Stop());
-            ServerBusy.Invoke(this, EventArgs.Empty);
+            await UiService.OnUiThread(() =>
+            {
+                TimerApiEagain.Stop();
+                ServerBusy?.Invoke(this, EventArgs.Empty);
+            });
         }
 
         public async Task<T> ExecuteAsync(Action action)
