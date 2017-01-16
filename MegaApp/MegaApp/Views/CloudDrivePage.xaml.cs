@@ -81,7 +81,10 @@ namespace MegaApp.Views
             switch(navActionType)
             {
                 case NavigationActionType.Login:
-                    this.ViewModel.FetchNodes();
+                    if (!App.AppInformation.HasFetchedNodes)
+                        this.ViewModel.FetchNodes();
+                    else
+                        this.ViewModel.LoadFolders();
                     break;
                 
                 default:

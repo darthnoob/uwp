@@ -150,6 +150,10 @@
     <comment>Progress indicator message when loading nodes from MEGA web service - (String as short as possible).
 Preserve the [{0}] code because is for include current number of fetched nodes.</comment>
   </data>
+  <data name="PM_FetchNodesSubHeader" xml:space="preserve">
+    <value>Requesting account data.</value>
+    <comment>Progress indicator message when fetching nodes.</comment>
+  </data>
   <data name="PM_LoginHeader" xml:space="preserve">
     <value>Logging in...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
@@ -178,8 +182,12 @@ Preserve the [{0}] code because is for include current number of fetched nodes.<
     <value>Renaming...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersTooBusy" xml:space="preserve">
-    <value>Servers too busy. Please wait…</value>
+  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
+    <value>Servers too busy. Please wait.</value>
     <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
+  </data>
+  <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
+    <value>Decrypting nodes.</value>
+    <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
 </root>

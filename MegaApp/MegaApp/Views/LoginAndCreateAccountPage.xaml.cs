@@ -68,7 +68,7 @@ namespace MegaApp.Views
 
             if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
             {
-                this.ViewModel?.LoginViewModel?.LoginAsync();
+                this.ViewModel?.LoginViewModel?.Login();
                 return;
             }
             // Else it is always create account
@@ -90,7 +90,7 @@ namespace MegaApp.Views
         {
             if (e.Key != VirtualKey.Enter) return;
             // On enter in password box. Start the login process
-            this.ViewModel?.LoginViewModel?.LoginAsync();
+            this.ViewModel?.LoginViewModel?.Login();
         }
     }
 }

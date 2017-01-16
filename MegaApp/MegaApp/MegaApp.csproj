@@ -150,13 +150,13 @@
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
-    <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
+	<Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
-    <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
     <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
