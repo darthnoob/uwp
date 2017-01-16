@@ -110,11 +110,11 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
+    <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -139,6 +139,7 @@
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />
     <Compile Include="Interfaces\IBaseNode.cs" />
@@ -151,11 +152,11 @@
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\DeleteNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListener.cs" />
-    <Compile Include="MegaApi\DeleteNodeRequestListener.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListener.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListener.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="ViewModels\TransferListViewModel.cs" />
     <Compile Include="ViewModels\TransferManagerViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">

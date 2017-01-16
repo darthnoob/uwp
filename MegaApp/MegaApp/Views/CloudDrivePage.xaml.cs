@@ -279,26 +279,6 @@ namespace MegaApp.Views
             this.ViewModel.ActiveFolderView.SelectedNodes.Clear();
         }
 
-        private void OnRightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            try
-            {
-                e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
-                    e.GetPosition(sender as ListViewBase));
-            }
-            catch (Exception) { }
-        }
-
-        private void OnHolding(object sender, HoldingRoutedEventArgs e)
-        {
-            try
-            {
-                e.Handled = !OpenFlyoutMenu(sender, (FrameworkElement)e.OriginalSource,
-                    e.GetPosition(sender as ListViewBase));
-            }
-            catch (Exception) { }
-        }
-
         /// <summary>
         /// Opens the flyout menu (contextual menu).
         /// </summary>
@@ -308,8 +288,6 @@ namespace MegaApp.Views
         /// <returns>Boolean value indicating if all went well.</returns>
         private bool OpenFlyoutMenu(object sender, FrameworkElement item, Point position)
         {
-            SdkService.MegaSdk.retryPendingConnections();
-
             try
             {
                 if (this.ViewModel?.ActiveFolderView != null)

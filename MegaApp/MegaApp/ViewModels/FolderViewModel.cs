@@ -50,7 +50,6 @@ namespace MegaApp.ViewModels
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveCommand = new RelayCommand(Remove);
-            this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
@@ -113,7 +112,6 @@ namespace MegaApp.ViewModels
         public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; private set; }
         public ICommand RemoveCommand { get; private set; }
-        public ICommand RenameCommand { get; private set; }
         public ICommand UploadCommand { get; private set; }
         
         //public ICommand GetLinkCommand { get; private set; }        
@@ -147,11 +145,11 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public async void ClearChildNodes()
+        public void ClearChildNodes()
         {
             if (this.ChildNodes == null || !this.ChildNodes.Any()) return;
 
-            await OnUiThread(() => this.ChildNodes.Clear());
+            OnUiThread(() => this.ChildNodes.Clear());
         }
 
         /// <summary>
@@ -252,13 +250,13 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.RubbishBin:
                         this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
-                            App.AppInformation, this.MegaSdk.getRubbishNode(), this.Type);
+                            App.AppInformation, this.MegaSdk.getRubbishNode(), this);
                         break;
 
                     case ContainerType.CloudDrive:
                     case ContainerType.FolderLink:
                         this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
-                            App.AppInformation, this.MegaSdk.getRootNode(), this.Type);
+                            App.AppInformation, this.MegaSdk.getRootNode(), this);
                         break;
                 }
             }
@@ -293,13 +291,7 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder);
             });
 
-            if (result)
-            {
-                ToastService.ShowText(string.Format(
-                    ResourceService.AppMessages.GetString("AM_CreateFolderSuccess"),
-                    folderName));
-                return;
-            };
+            if (result) return;
 
             await DialogService.ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
@@ -326,12 +318,7 @@ namespace MegaApp.ViewModels
 
         private void Download()
         {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any())
-            {
-                this.FocusedNode?.Download(TransferService.MegaTransfers);
-                return;
-            };
-            
+            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
             MultipleDownloadAsync(this.SelectedNodes);
         }
 
@@ -358,12 +345,7 @@ namespace MegaApp.ViewModels
 
         private async void MoveToRubbishBin()
         {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any())
-            {
-                if(this.FocusedNode == null) return;
-                await this.FocusedNode.MoveToRubbishBinAsync();
-                return;
-            };
+            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
 
             int count = this.SelectedNodes.Count;
 
@@ -405,64 +387,39 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.SelectedNodes?.Count > 1)
-                await MultipleRemoveAsync();
-            else if (this.SelectedNodes?.Count == 1)
-                await this.SelectedNodes?.First()?.RemoveAsync();
-            else
-                await this.FocusedNode?.RemoveAsync();
-        }
+            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
 
-        private async Task MultipleRemoveAsync()
-        {
             int count = this.SelectedNodes.Count;
 
-            if (count < 1) return;
+            var result = await DialogService.ShowOkCancelAsync(
+               ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
+               string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count));
 
-            var customMessageDialog = new CustomMessageDialog(
-                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count),
-                App.AppInformation,
-                MessageDialogButtons.OkCancel);
+            if (!result) return;
 
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-            {
-                Task.Run(async () =>
-                {
-                    WaitHandle[] waitEventRequests = new WaitHandle[count];
-
-                    int index = 0;
-
-                    foreach (var node in this.SelectedNodes)
-                    {
-                        waitEventRequests[index] = new AutoResetEvent(false);
-                        await node.RemoveAsync(true, (AutoResetEvent)waitEventRequests[index]);
-                        index++;
-                    }
-
-                    WaitHandle.WaitAll(waitEventRequests);
-
-                    new CustomMessageDialog(
-                        ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), count),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
-
-                    this.IsMultiSelectActive = false;
-                });
-            };
-
-            await customMessageDialog.ShowDialogAsync();
+            MultipleRemoveAsync(this.SelectedNodes);
+           
         }
 
-        /// <summary>
-        /// Renames the focused node.
-        /// </summary>
-        private void Rename()
+        private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
         {
-            this.FocusedNode?.RenameAsync();
-        }
+            if (nodes == null || nodes.Count < 1) return;
 
+            Task.Run(async () =>
+            {
+                foreach (var node in this.SelectedNodes)
+                {
+                    await node.RemoveAsync(true);
+                }
+
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), nodes.Count));
+
+                this.IsMultiSelectActive = false;
+            });
+        }
+        
         /// <summary>
         /// Select files for upload to cloud
         /// </summary>
@@ -651,7 +608,7 @@ namespace MegaApp.ViewModels
             if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
                 return false;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this.Type, this.ChildNodes);
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this, this.ChildNodes);
 
             LoadChildNodes();
 
@@ -681,7 +638,7 @@ namespace MegaApp.ViewModels
 
             if (homeNode == null) return;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, this.Type, this.ChildNodes);
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, this, this.ChildNodes);
             OnFolderNavigatedTo();
 
             LoadChildNodes();
@@ -715,7 +672,7 @@ namespace MegaApp.ViewModels
             });
         }
 
-        private async Task CreateChildren(MNodeList childList, int listSize)
+        private void CreateChildren(MNodeList childList, int listSize)
         {
             // Set the parameters for the performance for the different view types of a folder
             int viewportItemCount, backgroundItemCount;
@@ -735,7 +692,7 @@ namespace MegaApp.ViewModels
                 // To avoid pass null values to CreateNew
                 if (childList.get(i) == null) continue;
 
-                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this.Type, this.ChildNodes);
+                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this, this.ChildNodes);
 
                 // If node creation failed for some reason, continue with the rest and leave this one
                 if (node == null) continue;
@@ -760,7 +717,7 @@ namespace MegaApp.ViewModels
                 // First add the viewport items to show some data to the user will still loading
                 if (i == viewportItemCount)
                 {
-                    await OnUiThread(() =>
+                    OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -774,7 +731,7 @@ namespace MegaApp.ViewModels
                 if (helperList.Count != backgroundItemCount || i <= viewportItemCount) continue;
 
                 // Add the rest of the items in the background to the list
-                await OnUiThread(() =>
+                OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
@@ -785,7 +742,7 @@ namespace MegaApp.ViewModels
             }
 
             // Add any nodes that are left over
-            await OnUiThread(() =>
+            OnUiThread(() =>
             {
                 // Show the user that processing the childnodes is done
                 SetProgressIndication(false);
@@ -919,7 +876,7 @@ namespace MegaApp.ViewModels
             while ((parentNode != null) && (parentNode.getType() != MNodeType.TYPE_ROOT) &&
                 (parentNode.getType() != MNodeType.TYPE_RUBBISH))
             {
-                this.BreadCrumbs.Insert(0, NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this.Type));
+                this.BreadCrumbs.Insert(0, NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this));
                 parentNode = this.MegaSdk.getParentNode(parentNode);
             }
         }

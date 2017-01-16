@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -45,70 +43,68 @@ namespace MegaApp.Services
             }
         }
 
-        /// <summary>
-        /// Update the transfers list/queue.
-        /// </summary>
-        /// <param name="MegaTransfers">Transfers list/queue to update.</param>
-        public static void UpdateMegaTransfersList(TransferQueue MegaTransfers)
+        public static void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type)
         {
             UiService.OnUiThread(() =>
             {
-                MegaTransfers.Clear();
-                MegaTransfers.Downloads.Clear();
-                MegaTransfers.Uploads.Clear();
+                switch (type)
+                {
+                    case MTransferType.TYPE_DOWNLOAD:
+                        megaTransfers.Downloads.Clear();
+                        break;
+                    case MTransferType.TYPE_UPLOAD:
+                        megaTransfers.Uploads.Clear();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
             });
 
-            // Get transfers and fill the transfers list again.
-            var transfers = SdkService.MegaSdk.getTransfers();
+            var transfers = SdkService.MegaSdk.getTransfers(type);
             var numTransfers = transfers.size();
             for (int i = 0; i < numTransfers; i++)
-                AddTransferToList(transfers.get(i));
+                AddTransferToList(megaTransfers, transfers.get(i));
         }
-
-        public static void AddTransferToList(MTransfer transfer)
+        
+        public static void AddTransferToList(TransferQueue megaTransfers, MTransfer transfer)
         {
-            TransferObjectModel megaTransfer = null;
+            TransferObjectModel megaTransfer;
             if (transfer.getType() == MTransferType.TYPE_DOWNLOAD)
             {
-                // If is a public node
-                MNode node = transfer.getPublicMegaNode();
-                if (node == null) // If not
-                    node = SdkService.MegaSdk.getNodeByHandle(transfer.getNodeHandle());
+                
+                MNode node = transfer.getPublicMegaNode() ?? // If is a public node
+                             SdkService.MegaSdk.getNodeByHandle(transfer.getNodeHandle()); // If not
 
                 if (node == null) return;
 
                 megaTransfer = new TransferObjectModel(
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, ContainerType.CloudDrive),
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, null),
                     TransferType.Download, transfer.getPath());
             }
             else
             {
                 var parentNode = SdkService.MegaSdk.getNodeByPath(transfer.getParentPath());
                 megaTransfer = new TransferObjectModel(
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, ContainerType.CloudDrive),
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, null),
                     TransferType.Upload, transfer.getPath());
             }
 
-            if (megaTransfer != null)
+            UiService.OnUiThread(() =>
             {
-                UiService.OnUiThread(() =>
-                {
-                    GetTransferAppData(transfer, megaTransfer);
+                GetTransferAppData(transfer, megaTransfer);
 
-                    megaTransfer.Transfer = transfer;
-                    megaTransfer.Status = TransferStatus.Queued;
-                    megaTransfer.IsBusy = true;
-                    megaTransfer.TotalBytes = transfer.getTotalBytes();
-                    megaTransfer.TransferedBytes = transfer.getTransferredBytes();
+                megaTransfer.Transfer = transfer;
+                megaTransfer.Status = TransferStatus.Queued;
+                megaTransfer.IsBusy = true;
+                megaTransfer.TotalBytes = transfer.getTotalBytes();
+                megaTransfer.TransferedBytes = transfer.getTransferredBytes();
 
-                    if (!SdkService.MegaSdk.areTransfersPaused((int)transfer.getType()))
-                        megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
-                    else
-                        megaTransfer.TransferSpeed = string.Empty;
+                megaTransfer.TransferSpeed = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType()) 
+                    ? transfer.getSpeed().ToStringAndSuffixPerSecond() 
+                    : string.Empty;
 
-                    MegaTransfers.Add(megaTransfer);
-                });
-            }
+                megaTransfers.Add(megaTransfer);
+            });
         }
 
         /// <summary>

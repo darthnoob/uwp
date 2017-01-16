@@ -27,11 +27,12 @@ namespace MegaApp.MegaApi
             if (transfer == null) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var transfersList = TransferService.MegaTransfers.ToList();
+            var transfersList = TransferService.MegaTransfers.SelectAll();
 
             // Extra checking during finding to avoid NullReferenceException
             var megaTransfer = transfersList.FirstOrDefault(t => 
-                (t.Transfer != null) && (t.Transfer.getTag() == transfer.getTag()));
+                t.Transfer != null && t.Transfer.getTag() == transfer.getTag() ||
+                t.TransferPath.Equals(transfer.getPath()));
             
             if(megaTransfer != null)
             {
@@ -153,7 +154,7 @@ namespace MegaApp.MegaApi
 
         public void onTransferStart(MegaSDK api, MTransfer transfer)
         {
-            TransferService.AddTransferToList(transfer);
+            TransferService.AddTransferToList(TransferService.MegaTransfers, transfer);
         }
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
@@ -167,11 +168,12 @@ namespace MegaApp.MegaApi
             if (transfer == null) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var transfersList = TransferService.MegaTransfers.ToList();
+            var transfersList = TransferService.MegaTransfers.SelectAll();
 
             // Extra checking during finding to avoid NullReferenceException
             var megaTransfer = transfersList.FirstOrDefault(t => 
-                (t.Transfer != null) && (t.Transfer.getTag() == transfer.getTag()));
+                t.Transfer != null && t.Transfer.getTag() == transfer.getTag() ||
+                t.TransferPath.Equals(transfer.getPath()));
 
             if(megaTransfer != null)
             {

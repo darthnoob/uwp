@@ -357,7 +357,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
-    <value>Failed to remove item</value>
+    <value>Failed to remove '{0}'</value>
     <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.</comment>
   </data>
   <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">

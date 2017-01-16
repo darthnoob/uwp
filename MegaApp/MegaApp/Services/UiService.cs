@@ -8,6 +8,7 @@ using Windows.System.Threading;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;
 
@@ -90,21 +91,12 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="action">Action to invoke on the user interface thread</param>
         /// <param name="priority">The priority of the dispatcher</param>
-        public static async Task OnUiThread(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        public static void OnUiThread(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             // If no action defined then do nothing and return to save time
             if (action == null) return;
-            
-            // Start a task to wait for UI and avoid freeze the app
-            await Task.Factory.StartNew(() =>
-            {
-                IAsyncAction ThreadPoolWorkItem = ThreadPool.RunAsync(async(source) =>
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                        CoreDispatcherPriority.Normal,
-                        action.Invoke);
-                });
-            });
+
+            CoreApplication.MainView.Dispatcher.RunAsync(priority, action.Invoke);
         }
 
         /// <summary>

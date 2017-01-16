@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -39,21 +38,21 @@ namespace MegaApp.ViewModels
             switch (transferType)
             {
                 case TransferType.Download:
-                    DisplayName = selectedNode.Name;
+                    this.DisplayName = selectedNode.Name;
                     break;
 
                 case TransferType.Upload:
-                    DisplayName = Path.GetFileName(transferPath);
+                    this.DisplayName = Path.GetFileName(transferPath);
                     break;            
             }
 
-            Type = transferType;
-            TransferPath = transferPath;
-            ExternalDownloadPath = externalDownloadPath;
-            Status = TransferStatus.NotStarted;
-            SelectedNode = selectedNode;
-            AutoLoadImageOnFinish = false;
-            CancelTransferCommand = new RelayCommand(CancelTransfer);
+            this.Type = transferType;
+            this.TransferPath = transferPath;
+            this.ExternalDownloadPath = externalDownloadPath;
+            this.Status = TransferStatus.NotStarted;
+            this.SelectedNode = selectedNode;
+            this.AutoLoadImageOnFinish = false;
+            this.CancelTransferCommand = new RelayCommand(CancelTransfer);
             SetThumbnail();
         }
 
@@ -73,20 +72,19 @@ namespace MegaApp.ViewModels
         /// </param>
         public void StartTransfer(bool isSaveForOffline = false)
         {
-            switch (Type)
+            switch (this.Type)
             {
                 case TransferType.Download:
                     // Download all nodes with the App instance of the SDK and authorize nodes to be downloaded with this SDK instance.
                     // Needed to allow transfers resumption of folder link nodes.
-                    SdkService.MegaSdk.startDownloadWithAppData(MegaSdk.authorizeNode(SelectedNode.OriginalMNode),
-                        TransferPath, TransferService.CreateTransferAppDataString(isSaveForOffline, ExternalDownloadPath));
+                    SdkService.MegaSdk.startDownloadWithAppData(this.MegaSdk.authorizeNode(this.SelectedNode.OriginalMNode), this.TransferPath, TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
 
                 case TransferType.Upload:
                     // Start uploads with the flag of temporary source activated to always automatically delete the 
                     // uploaded file from the upload temporary folder in the sandbox of the app
-                    SdkService.MegaSdk.startUploadWithDataTempSource(TransferPath, SelectedNode.OriginalMNode, string.Empty, true);
+                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath, this.SelectedNode.OriginalMNode, string.Empty, true);
                     break;
 
                 default:
@@ -99,14 +97,14 @@ namespace MegaApp.ViewModels
         /// </summary>
         public void CancelTransfer()
         {
-            if (!IsBusy)
+            if (!this.IsBusy)
             {
-                if (Status == TransferStatus.NotStarted)
-                    Status = TransferStatus.Canceled;
+                if (this.Status == TransferStatus.NotStarted)
+                    this.Status = TransferStatus.Canceled;
                 return;
             }
-            Status = TransferStatus.Canceling;
-            SdkService.MegaSdk.cancelTransfer(Transfer);
+            this.Status = TransferStatus.Canceling;
+            SdkService.MegaSdk.cancelTransfer(this.Transfer);
         }
 
         /// <summary>
@@ -114,28 +112,28 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void SetThumbnail()
         {
-            switch (Type)
+            switch (this.Type)
             {
                 case TransferType.Download:
-                    IsDefaultImage = true;
-                    FileTypePathData = ImageService.GetDefaultFileTypePathData(SelectedNode.Name);
-                    if (FileService.FileExists(SelectedNode.ThumbnailPath))
+                    this.IsDefaultImage = true;
+                    this.FileTypePathData = ImageService.GetDefaultFileTypePathData(this.SelectedNode.Name);
+                    if (FileService.FileExists(this.SelectedNode.ThumbnailPath))
                     {
-                        IsDefaultImage = false;
-                        ThumbnailUri = new Uri(SelectedNode.ThumbnailPath);
+                        this.IsDefaultImage = false;
+                        this.ThumbnailUri = new Uri(this.SelectedNode.ThumbnailPath);
                     }
                     break;
 
                 case TransferType.Upload:
-                    if (ImageService.IsImage(TransferPath))
+                    if (ImageService.IsImage(this.TransferPath))
                     {
-                        IsDefaultImage = false;
-                        ThumbnailUri = new Uri(TransferPath);
+                        this.IsDefaultImage = false;
+                        this.ThumbnailUri = new Uri(this.TransferPath);
                     }
                     else
                     {
-                        IsDefaultImage = true;
-                        FileTypePathData = ImageService.GetDefaultFileTypePathData(TransferPath);
+                        this.IsDefaultImage = true;
+                        this.FileTypePathData = ImageService.GetDefaultFileTypePathData(this.TransferPath);
                     }
                     break;
 
@@ -164,16 +162,16 @@ namespace MegaApp.ViewModels
             {
                 // If transfer is child of a folder transfer, doesn't need to do anything 
                 // because the parent folder transfer will do the final required action.
-                if (Transfer.getFolderTransferTag() > 0) return true;
+                if (this.Transfer.getFolderTransferTag() > 0) return true;
 
                 string defaultDownloadLocation = ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation");
-                ExternalDownloadPath = ExternalDownloadPath ?? SettingsService.LoadSetting<string>(defaultDownloadLocation, null);
-                if (ExternalDownloadPath == null) return false;
+                this.ExternalDownloadPath = this.ExternalDownloadPath ?? SettingsService.LoadSetting<string>(defaultDownloadLocation, null);
+                if (this.ExternalDownloadPath == null) return false;
                 
-                if (Transfer.isFolderTransfer())
-                    await FolderService.MoveFolder(srcPath, ExternalDownloadPath, destName);
+                if (this.Transfer.isFolderTransfer())
+                    await FolderService.MoveFolder(srcPath, this.ExternalDownloadPath, destName);
                 else
-                    await FileService.MoveFile(srcPath, ExternalDownloadPath, destName);
+                    await FileService.MoveFile(srcPath, this.ExternalDownloadPath, destName);
 
                 return true;
             }
@@ -195,7 +193,13 @@ namespace MegaApp.ViewModels
         public string ExternalDownloadPath { get; set; }
         public TransferType Type { get; set; }
         public IMegaNode SelectedNode { get; private set; }
-        public MTransfer Transfer { get; set; }
+
+        private MTransfer _transfer;
+        public MTransfer Transfer
+        {
+            get { return _transfer; }
+            set { SetField(ref _transfer, value); }
+        }
 
         private bool _isDefaultImage;
         public bool IsDefaultImage
@@ -244,11 +248,36 @@ namespace MegaApp.ViewModels
         }
 
         private string _transferSpeed;
+
         public string TransferSpeed
         {
             get { return _transferSpeed; }
             set { SetField(ref _transferSpeed, value); }
         }
+
+        public bool IsActionAvailable
+        {
+            get
+            {
+                switch (this.Status)
+                {
+                    case TransferStatus.Error:
+                    case TransferStatus.Canceled:
+                    case TransferStatus.Canceling:
+                    case TransferStatus.Downloaded:
+                    case TransferStatus.Uploaded:
+                        return false;
+                    default:
+                        return true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Ui_Resources
+
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
 
         #endregion
     }

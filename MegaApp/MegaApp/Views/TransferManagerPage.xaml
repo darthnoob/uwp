@@ -8,7 +8,7 @@
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:TransferManagerViewModel}">
-
+  
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,7 +17,7 @@
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
+                <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
@@ -25,63 +25,28 @@
                 Grid.Row="0"
                 Background="{StaticResource MegaAppBarBackgroundBrush}">
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid 
+                Grid.Row="1">
                 <Pivot 
-                x:Name="TransfersPivot" 
-                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
-                SelectionChanged="OnPivotSelectionChanged">
+                    x:Name="TransfersPivot" 
+                    HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
+                    SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem 
-                        x:Name="UploadsPivot"                     
-                        Header="{Binding UploadsText}"
-                        Margin="0,-10,0,0">
+                        Header="{Binding Description}"
+                        DataContext="{Binding Uploads}">
                         <ListView
-                            x:Name="LstUploads"
-                            Background="{StaticResource MegaAppBackgroundBrush}"
-                            ItemsSource="{Binding MegaTransfers.Uploads}"
+                            ItemsSource="{Binding Items}"
                             ItemTemplate="{StaticResource MegaTransferItemContent}"
-                            RightTapped="OnRightTapped"
-                            Holding="OnHolding">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout x:Name="UploadsMenuFlyout">
-                                    <MenuFlyout.Items>
-                                        <MenuFlyoutItem
-                                            Text="{Binding CancelText}"
-                                            Command="{Binding CancelTransferCommand}"/>
-                                    </MenuFlyout.Items>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>
                     <PivotItem 
-                        x:Name="DownloadsPivot"                     
-                        Header="{Binding DownloadsText}"
-                        Margin="0,-10,0,0">
+                        Header="{Binding Description}"
+                        DataContext="{Binding Downloads}">
                         <ListView
-                            x:Name="LstDownloads"
-                            Background="{StaticResource MegaAppBackgroundBrush}"
-                            ItemsSource="{Binding MegaTransfers.Downloads}"
+                            ItemsSource="{Binding Items}"
                             ItemTemplate="{StaticResource MegaTransferItemContent}"
-                            RightTapped="OnRightTapped"
-                            Holding="OnHolding">
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout x:Name="DownloadsMenuFlyout">
-                                    <MenuFlyout.Items>
-                                        <MenuFlyoutItem
-                                            Text="{Binding CancelText}"
-                                            Command="{Binding CancelTransferCommand}"/>                                        
-                                    </MenuFlyout.Items>
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>
                 </Pivot>
@@ -92,22 +57,33 @@
             Grid.Row="1"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
-                x:Name="PauseResumeButton"
+                Command="{Binding ActiveViewModel.ResumeCommand}"
+                Icon="Play" 
+                Label="{Binding ActiveViewModel.ResumeText}" 
+                Visibility="{Binding ActiveViewModel.IsPauseEnabled, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <AppBarButton 
+                Command="{Binding ActiveViewModel.PauseCommand}"
                 Icon="Pause" 
-                Label="{Binding PauseText}" 
-                Click="OnPauseResumeClick"/>
+                Label="{Binding ActiveViewModel.PauseText}"
+                Visibility="{Binding ActiveViewModel.IsPauseEnabled, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
-                    x:Name="CancelButton"
+                    Command="{Binding ActiveViewModel.CancelCommand}"
                     Icon="Cancel"
-                    Click="OnCancelClick"/>
+                    Label="{Binding ActiveViewModel.CancelAllText}"/>
                 <AppBarButton
-                    x:Name="CleanUpButton"
+                    Command="{Binding ActiveViewModel.CleanCommand}"
                     Icon="Clear"
-                    Label="{Binding CleanUpTransfersText}" 
-                    Click="OnCleanUpTransfersClick"/>
+                    Label="{Binding ActiveViewModel.CleanUpTransfersText}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>
 </views:BaseTransferManagerPage>
+
+
+
+
+
+
+

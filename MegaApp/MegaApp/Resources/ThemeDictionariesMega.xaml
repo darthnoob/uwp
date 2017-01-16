@@ -6,6 +6,10 @@
     <Color x:Key="SystemAccentColor">#EB4444</Color>
 
     <!-- STYLES -->
+    <Style x:Key="StretchedListviewItemStyle" TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+    </Style>
+        
     <Style x:Key="MegaCommandBarStyle" TargetType="CommandBar">
         <Setter Property="Background" Value="{StaticResource MegaAppBarBackgroundBrush}" />
         <Setter Property="Foreground" Value="{StaticResource MegaAppBarForegroundBrush}"/>
