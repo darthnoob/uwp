@@ -31,7 +31,6 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
-            this.Parent.PropertyChanged += ParentOnPropertyChanged;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
             this.DownloadCommand = new RelayCommand(Download);
@@ -369,7 +368,21 @@ namespace MegaApp.ViewModels
 
         public ulong Handle { get; set; }
 
-        public FolderViewModel Parent { get; set; }
+        private FolderViewModel _parent;
+        public FolderViewModel Parent
+        {
+            get { return _parent; }
+            set
+            {
+                if (_parent != null)
+                    _parent.PropertyChanged -= ParentOnPropertyChanged;
+
+                SetField(ref _parent, value);
+
+                if (_parent != null)
+                    _parent.PropertyChanged += ParentOnPropertyChanged;
+            }
+        }
 
         public ObservableCollection<IMegaNode> ParentCollection { get; set; }
 
