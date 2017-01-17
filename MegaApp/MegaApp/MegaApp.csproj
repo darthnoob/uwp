@@ -101,6 +101,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\MultiSelect.cs" />
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />

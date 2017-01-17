@@ -231,8 +231,14 @@ namespace MegaApp.ViewModels
             return NodeActionResult.IsBusy;
         }
 
-        public async void MoveToRubbishBin()
+        private async void MoveToRubbishBin()
         {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if (this.Parent.MoveToRubbishBinCommand.CanExecute(null))
+                    this.Parent.MoveToRubbishBinCommand.Execute(null);
+                return;
+            }
             await MoveToRubbishBinAsync();
         }
 
@@ -265,8 +271,14 @@ namespace MegaApp.ViewModels
                   string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
         }
 
-        public async void Remove()
+        private async void Remove()
         {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if (this.Parent.RemoveCommand.CanExecute(null))
+                    this.Parent.RemoveCommand.Execute(null);
+                return;
+            }
             await RemoveAsync();
         }
 
@@ -306,6 +318,12 @@ namespace MegaApp.ViewModels
 
         private void Download()
         {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if(this.Parent.DownloadCommand.CanExecute(null))
+                    this.Parent.DownloadCommand.Execute(null);
+                return;
+            }
             Download(TransferService.MegaTransfers);
         }
 

@@ -51,6 +51,7 @@ namespace MegaApp.ViewModels
             this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
+            this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
@@ -88,6 +89,12 @@ namespace MegaApp.ViewModels
                     throw new ArgumentOutOfRangeException(nameof(containerType));
             }
         }
+       
+
+        private void SelectionChanged()
+        {
+            this.OnUiThread(() => this.IsMultiSelectActive = this.SelectedNodes.Count > 0);
+        }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -103,17 +110,18 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }
-        public ICommand ChangeViewCommand { get; private set; }
-        public ICommand CleanRubbishBinCommand { get; private set; }
+        public ICommand ChangeViewCommand { get; }
+        public ICommand CleanRubbishBinCommand { get; }
         public ICommand DownloadCommand { get; private set; }
-        public ICommand HomeSelectedCommand { get; private set; }
-        public ICommand ItemSelectedCommand { get; private set; }
-        public ICommand MoveToRubbishBinCommand { get; private set; }
+        public ICommand HomeSelectedCommand { get; }
+        public ICommand ItemSelectedCommand { get; }
+        public ICommand MoveToRubbishBinCommand { get; }
         public ICommand MultiSelectCommand { get; set; }
-        public ICommand RefreshCommand { get; private set; }
-        public ICommand RemoveCommand { get; private set; }
-        public ICommand UploadCommand { get; private set; }
-        
+        public ICommand RefreshCommand { get; }
+        public ICommand RemoveCommand { get; }
+        public ICommand UploadCommand { get; }
+        public ICommand SelectionChangedCommand { get; }
+
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }        
@@ -316,13 +324,13 @@ namespace MegaApp.ViewModels
             customMessageDialog.ShowDialog();
         }
 
-        private void Download()
+        private async void Download()
         {
             if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
-            MultipleDownloadAsync(this.SelectedNodes);
+            await MultipleDownloadAsync(this.SelectedNodes);
         }
 
-        private async void MultipleDownloadAsync(ICollection<IMegaNode> nodes)
+        private async Task MultipleDownloadAsync(ICollection<IMegaNode> nodes)
         {
             if (nodes == null || nodes.Count < 1) return;
 
@@ -651,7 +659,7 @@ namespace MegaApp.ViewModels
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-
+            
             this.FolderRootNode = node;
             OnFolderNavigatedTo();
 
@@ -925,7 +933,13 @@ namespace MegaApp.ViewModels
         #region Properties
 
         public IMegaNode FocusedNode { get; set; }
-        public List<IMegaNode> SelectedNodes { get; set; }
+
+        private List<IMegaNode> _selectedNodes;
+        public List<IMegaNode> SelectedNodes
+        {
+            get { return _selectedNodes; }
+            set { SetField(ref _selectedNodes, value); }
+        }
 
         private FolderContentViewState _currentViewState;
         public FolderContentViewState CurrentViewState
@@ -948,10 +962,7 @@ namespace MegaApp.ViewModels
             set { SetField(ref _childNodes, value); }
         }
 
-        public bool HasChildNodesBinding
-        {
-            get { return HasChildNodes(); }
-        }
+        public bool HasChildNodesBinding => HasChildNodes();
 
         public ContainerType Type { get; private set; }
 
@@ -994,6 +1005,16 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
+        private IMegaNode _selectedItem;
+        public IMegaNode SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                SetField(ref _selectedItem, value);
+            }
+        }
+
         //private Style _multiSelectCheckBoxStyle;
         //public Style MultiSelectCheckBoxStyle
         //{
@@ -1017,7 +1038,7 @@ namespace MegaApp.ViewModels
                 else
                 {
                     this.CurrentViewState = this.PreviousViewState;
-                    this.SelectedNodes.Clear();
+                    //this.SelectedNodes.Clear();
                 }
             }
         }

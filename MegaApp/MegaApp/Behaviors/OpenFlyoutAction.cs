@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.Devices.Input;
+using Windows.UI.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
@@ -44,18 +46,13 @@ namespace MegaApp.Behaviors
             else
             {
                 var rightTap = parameter as RightTappedRoutedEventArgs;
-                if (rightTap != null)
+                if (rightTap != null )
                 {
                     menuFlyout.ShowAt(frameworkElement, rightTap.GetPosition(frameworkElement));
+                    rightTap.Handled = true;
+                    return null;
                 }
-                else
-                {
-                    var hold = parameter as HoldingRoutedEventArgs;
-                    if(hold != null)
-                        menuFlyout.ShowAt(frameworkElement, hold.GetPosition(frameworkElement));
-                    else
-                        menuFlyout.ShowAt(frameworkElement);
-                }
+                menuFlyout.ShowAt(frameworkElement);
             }
 
             return null;

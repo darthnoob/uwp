@@ -8,12 +8,15 @@
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:behaviors="using:MegaApp.Behaviors"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
     <!-- PAGE RESOURCES -->
     <Page.Resources>
-    
+        
     </Page.Resources>
     
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
@@ -24,8 +27,10 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Collapsed" />
-                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Collapsed" />
+                        <Setter Target="ListViewCloudDrive.SelectionMode" Value="Multiple" />
+                        <Setter Target="GridViewCloudDrive.SelectionMode" Value="Multiple" />
+                        <Setter Target="ListViewRubbishBin.SelectionMode" Value="Multiple" />
+                        <Setter Target="GridViewRubbishBin.SelectionMode" Value="Multiple" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -33,8 +38,10 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Visible" />
-                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Visible" />
+                        <Setter Target="ListViewCloudDrive.SelectionMode" Value="None" />
+                        <Setter Target="GridViewCloudDrive.SelectionMode" Value="None" />
+                        <Setter Target="ListViewRubbishBin.SelectionMode" Value="None" />
+                        <Setter Target="GridViewRubbishBin.SelectionMode" Value="None" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -152,13 +159,16 @@
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewCloudDrive"
@@ -169,8 +179,15 @@
                                     ItemsSource="{Binding ChildNodes}"                                    
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended">
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </GridView>
                             </Grid>
                         </Grid>
@@ -247,14 +264,17 @@
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewRubbishBin"
@@ -263,10 +283,18 @@
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
+                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended">
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </GridView>
                             </Grid>
                         </Grid>
@@ -355,7 +383,7 @@
                 Icon="Cancel" 
                 Label="{Binding CancelText}"
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnCancelMultiSelectButtonClick"/>
+                Tapped="OnCancelMultiSelectTapped"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton

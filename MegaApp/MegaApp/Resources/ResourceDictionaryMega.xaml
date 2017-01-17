@@ -139,9 +139,6 @@
                     <core:EventTriggerBehavior EventName="RightTapped">
                         <behaviors:OpenFlyoutAction IsEnabled="True"/>
                     </core:EventTriggerBehavior>
-                    <core:EventTriggerBehavior EventName="Holding">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
-                    </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -256,9 +253,6 @@
                     <core:EventTriggerBehavior EventName="RightTapped">
                         <behaviors:OpenFlyoutAction IsEnabled="True"/>
                     </core:EventTriggerBehavior>
-                    <core:EventTriggerBehavior EventName="Holding">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
-                    </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="96"/>
@@ -337,9 +331,6 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
-                    </core:EventTriggerBehavior>
-                    <core:EventTriggerBehavior EventName="Holding">
                         <behaviors:OpenFlyoutAction IsEnabled="True"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
@@ -439,9 +430,6 @@
                     <core:EventTriggerBehavior EventName="RightTapped">
                         <behaviors:OpenFlyoutAction IsEnabled="True"/>
                     </core:EventTriggerBehavior>
-                    <core:EventTriggerBehavior EventName="Holding">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
-                    </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="96"/>
@@ -487,9 +475,6 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsActionAvailable}"/>
-                </core:EventTriggerBehavior>
-                <core:EventTriggerBehavior EventName="Holding">
                     <behaviors:OpenFlyoutAction IsEnabled="{Binding IsActionAvailable}"/>
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
