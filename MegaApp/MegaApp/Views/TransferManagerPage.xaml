@@ -8,7 +8,7 @@
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:TransferManagerViewModel}">
-  
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -80,10 +80,3 @@
         </CommandBar>
     </Grid>
 </views:BaseTransferManagerPage>
-
-
-
-
-
-
-

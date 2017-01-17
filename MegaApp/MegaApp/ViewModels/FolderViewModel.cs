@@ -287,9 +287,12 @@ namespace MegaApp.ViewModels
 
             if (this.FolderRootNode == null)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+                OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+                });
                 return;
             }
 
@@ -301,9 +304,12 @@ namespace MegaApp.ViewModels
 
             if (result) return;
 
-            await DialogService.ShowAlertAsync(
-                ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+            OnUiThread(async () =>
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+            });
         }
 
         private void CleanRubbishBin()
@@ -358,8 +364,8 @@ namespace MegaApp.ViewModels
             int count = this.SelectedNodes.Count;
 
             var result = await DialogService.ShowOkCancelAsync(
-               ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
-               string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count));
+                ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count));
 
             if (!result) return;
 
@@ -377,9 +383,12 @@ namespace MegaApp.ViewModels
                     await node.MoveToRubbishBinAsync(true);
                 }
 
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces"), nodes.Count));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces"), nodes.Count));
+                });
               
                 this.IsMultiSelectActive = false;
             });
@@ -400,8 +409,8 @@ namespace MegaApp.ViewModels
             int count = this.SelectedNodes.Count;
 
             var result = await DialogService.ShowOkCancelAsync(
-               ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
-               string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count));
+                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count));
 
             if (!result) return;
 
@@ -420,9 +429,12 @@ namespace MegaApp.ViewModels
                     await node.RemoveAsync(true);
                 }
 
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), nodes.Count));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), nodes.Count));
+                });
 
                 this.IsMultiSelectActive = false;
             });
@@ -462,9 +474,12 @@ namespace MegaApp.ViewModels
                 }
                 catch (Exception)
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
+                    });
                 }
             }
         }

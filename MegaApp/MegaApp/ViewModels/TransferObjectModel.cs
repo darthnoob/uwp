@@ -177,9 +177,12 @@ namespace MegaApp.ViewModels
             }
             catch(Exception e)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DownloadNodeFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_DownloadNodeFailed"), e.Message));
+                OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DownloadNodeFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_DownloadNodeFailed"), e.Message));
+                });                
                 return false;
             }
         }
@@ -248,7 +251,6 @@ namespace MegaApp.ViewModels
         }
 
         private string _transferSpeed;
-
         public string TransferSpeed
         {
             get { return _transferSpeed; }

@@ -71,7 +71,6 @@ namespace MegaApp.Services
             TransferObjectModel megaTransfer;
             if (transfer.getType() == MTransferType.TYPE_DOWNLOAD)
             {
-                
                 MNode node = transfer.getPublicMegaNode() ?? // If is a public node
                              SdkService.MegaSdk.getNodeByHandle(transfer.getNodeHandle()); // If not
 
@@ -167,18 +166,24 @@ namespace MegaApp.Services
             // Extra check to try avoid null values
             if (string.IsNullOrWhiteSpace(downloadPath))
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_SelectFolderFailedNoErrorCode"));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_SelectFolderFailedNoErrorCode"));
+                });
                 return false;
             }
 
             // Check for illegal characters in the download path
             if (FolderService.HasIllegalChars(downloadPath))
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_InvalidFolderNameOrPath"), downloadPath));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_InvalidFolderNameOrPath"), downloadPath));
+                });
                 return false;
             }
 
@@ -187,17 +192,23 @@ namespace MegaApp.Services
             catch (FileNotFoundException) { pathExists = false; }
             catch (UnauthorizedAccessException)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess_Title"),
-                    ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess"));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess_Title"),
+                        ResourceService.AppMessages.GetString("AM_DowloadPathUnauthorizedAccess"));
+                });
                 return false;
             }
             catch (Exception e)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_DownloadPathUnknownError"),
-                    e.GetType().Name + " - " + e.Message));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_DownloadPathUnknownError"),
+                        e.GetType().Name + " - " + e.Message));
+                });
                 return false;
             }
 
@@ -253,10 +264,13 @@ namespace MegaApp.Services
                 }
                 catch (Exception e)
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_CreateDownloadPathError"),
-                        e.GetType().Name + " - " + e.Message));
+                    UiService.OnUiThread(async() =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_CreateDownloadPathError"),
+                            e.GetType().Name + " - " + e.Message));
+                    });
                     return false;
                 }
             }

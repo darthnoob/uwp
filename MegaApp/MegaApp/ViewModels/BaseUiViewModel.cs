@@ -21,7 +21,7 @@ namespace MegaApp.ViewModels
             // If no action defined then do nothing and return to save time
             if (action == null) return;
 
-            UiService.OnUiThread(action);
+            UiService.OnUiThread(action, priority);
         }
     }
 }

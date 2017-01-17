@@ -358,7 +358,8 @@ Preserve the {0} code because is for include the name of the item to be removed 
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
     <value>Failed to remove '{0}'</value>
-    <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.</comment>
+    <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.
+Preserve the {0} code because is for include the name of the item in runtime.</comment>
   </data>
   <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">
     <value>Remove failed</value>
@@ -611,5 +612,9 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>Item '{0}' renamed to '{1}'</value>
     <comment>Message displayed when user has renamed a node with success.
 Preserve the '{0}' and '{1}'codes because are for include the old and new name in runtime.</comment>
+  </data>
+  <data name="AM_DownloadFailed_Title" xml:space="preserve">
+    <value>Download failed</value>
+    <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
 </root>

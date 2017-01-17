@@ -212,9 +212,12 @@ namespace MegaApp.ViewModels
 
             if (string.IsNullOrEmpty(newName))
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RenameNodeFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                });
                 return;
             };
             
@@ -266,9 +269,12 @@ namespace MegaApp.ViewModels
 
             if (result) return;
 
-            await DialogService.ShowAlertAsync(
-                  ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
-                  string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
+            OnUiThread(async () =>
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
+            });
         }
 
         private async void Remove()
@@ -306,9 +312,12 @@ namespace MegaApp.ViewModels
 
             if (result) return;
 
-            await DialogService.ShowAlertAsync(
-                  ResourceService.AppMessages.GetString("AM_RemoveNodeFailed_Title"),
-                  string.Format(ResourceService.AppMessages.GetString("AM_RemoveNodeFailed"), this.Name));
+            OnUiThread(async () =>
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_RemoveNodeFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveNodeFailed"), this.Name));
+            });
         }
 
         public NodeActionResult GetLink()

@@ -118,7 +118,7 @@ namespace MegaApp.MegaApi
                             //MediaService.SetAutoCameraUpload(false);
                             SettingsService.SaveSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"), false);
 
-                            DialogService.ShowOverquotaAlert();
+                            UiService.OnUiThread(() => DialogService.ShowOverquotaAlert());
                             break;
                         }
                     case MErrorType.API_EINCOMPLETE:
@@ -132,15 +132,21 @@ namespace MegaApp.MegaApi
                             switch (megaTransfer.Type)
                             {
                                 case TransferType.Download:
-                                    await DialogService.ShowAlertAsync(
-                                        ResourceService.AppMessages.GetString("AM_DownloadNodeFailed_Title"),
-                                        string.Format(ResourceService.AppMessages.GetString("AM_DownloadNodeFailed"), e.getErrorString()));
+                                    UiService.OnUiThread(async() =>
+                                    {
+                                        await DialogService.ShowAlertAsync(
+                                            ResourceService.AppMessages.GetString("AM_DownloadNodeFailed_Title"),
+                                            string.Format(ResourceService.AppMessages.GetString("AM_DownloadNodeFailed"), e.getErrorString()));
+                                    });
                                     break;
 
                                 case TransferType.Upload:
-                                    await DialogService.ShowAlertAsync(
-                                        ResourceService.AppMessages.GetString("AM_UploadNodeFailed_Title"),
-                                        string.Format(ResourceService.AppMessages.GetString("AM_UploadNodeFailed"), e.getErrorString()));
+                                    UiService.OnUiThread(async() =>
+                                    {
+                                        await DialogService.ShowAlertAsync(
+                                            ResourceService.AppMessages.GetString("AM_UploadNodeFailed_Title"),
+                                            string.Format(ResourceService.AppMessages.GetString("AM_UploadNodeFailed"), e.getErrorString()));
+                                    });
                                     break;
 
                                 default:
