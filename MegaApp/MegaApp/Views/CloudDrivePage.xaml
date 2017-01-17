@@ -347,14 +347,11 @@
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
                 Click="OnMultiSelectButtonClick"/>
-            
-            <CommandBar.SecondaryCommands>
-                <AppBarButton
-                    Icon="Refresh" 
-                    Label="{Binding RefreshText}" 
-                    Command="{Binding ActiveFolderView.RefreshCommand}"
-                    Click="OnButtonClick"/>
-            </CommandBar.SecondaryCommands>
+            <AppBarButton
+                Icon="Refresh" 
+                Label="{Binding RefreshText}" 
+                Command="{Binding ActiveFolderView.RefreshCommand}"
+                Click="OnButtonClick"/>
         </CommandBar>
 
         <!-- MULTI SELECT COMMAND BAR -->
