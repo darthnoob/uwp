@@ -70,6 +70,7 @@ namespace MegaApp.Converters
                     switch (command)
                     {
                         case "download":
+                        case "rename":
                         case "remove":
                             return Visibility.Visible;
                         default:
