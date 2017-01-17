@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
@@ -70,12 +72,13 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            SetStatus(isPauseEnabled);
+            // Use a temp variable to avoid InvalidOperationException
+            SetStatus(this.Items.ToList(), isPauseEnabled);
         }
 
-        public void SetStatus(bool playPauseStatus)
+        private void SetStatus(ICollection<TransferObjectModel> items, bool playPauseStatus)
         {
-            foreach (var transferObjectModel in this.Items)
+            foreach (var transferObjectModel in items)
             {
                 if (transferObjectModel.TransferedBytes < transferObjectModel.TotalBytes ||
                     transferObjectModel.TransferedBytes == 0)
