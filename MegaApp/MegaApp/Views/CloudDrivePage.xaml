@@ -311,7 +311,7 @@
             <AppBarButton 
                 Icon="Upload" 
                 Label="{Binding UploadText}" 
-                Command="{Binding ActiveFolderView.UploadCommand}"
+                Command="{Binding ActiveFolderView.UploadCommand}"                
                 Click="OnButtonClick"/>
             <AppBarButton 
                 Icon="Add" 
@@ -320,10 +320,13 @@
                 Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="MultiSelectButtonCloudDrive"
-                Icon="AllApps" 
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick"/>
+                Click="OnMultiSelectButtonClick">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE762;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
                 Icon="Refresh" 
                 Label="{Binding RefreshText}" 
@@ -343,10 +346,13 @@
                 Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="MultiSelectButtonRubbishBin"
-                Icon="AllApps" 
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick"/>
+                Click="OnMultiSelectButtonClick">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE762;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
                 Icon="Refresh" 
                 Label="{Binding RefreshText}" 
