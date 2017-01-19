@@ -87,7 +87,7 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Invoke the code/action on the UI Thread. If not on UI thread, dispatch to UI with the Dispatcher
+        /// Invoke the code/action on the UI Thread.
         /// </summary>
         /// <param name="action">Action to invoke on the user interface thread</param>
         /// <param name="priority">The priority of the dispatcher</param>
@@ -97,6 +97,20 @@ namespace MegaApp.Services
             if (action == null) return;
 
             CoreApplication.MainView.Dispatcher.RunAsync(priority, action.Invoke);
+        }
+
+        /// <summary>
+        /// Invoke the code/action on the UI Thread.
+        /// </summary>
+        /// <param name="action">Action to invoke on the user interface thread</param>
+        /// <param name="priority">The priority of the dispatcher</param>
+        /// <returns>Result of the action</returns>
+        public static async Task OnUiThreadAsync(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        {
+            // If no action defined then do nothing and return to save time
+            if (action == null) return;
+
+            await CoreApplication.MainView.Dispatcher.RunAsync(priority, action.Invoke);
         }
 
         /// <summary>
