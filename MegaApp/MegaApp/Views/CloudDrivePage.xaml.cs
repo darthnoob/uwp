@@ -142,8 +142,7 @@ namespace MegaApp.Views
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
-            ((ListViewBase) sender).SelectedItems.Clear();
-            ((ListViewBase)sender).SelectionMode = ListViewSelectionMode.None;
+            ((ListViewBase)sender).SelectedItems.Clear();
             
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
