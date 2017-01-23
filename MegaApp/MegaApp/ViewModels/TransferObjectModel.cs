@@ -78,16 +78,16 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case TransferType.Download:
-                    // Download all nodes with the App instance of the SDK and authorize nodes to be downloaded with this SDK instance.
-                    // Needed to allow transfers resumption of folder link nodes.
-                    SdkService.MegaSdk.startDownloadWithAppData(this.MegaSdk.authorizeNode(this.SelectedNode.OriginalMNode), this.TransferPath, TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
+                    SdkService.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath, 
+                        TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
 
                 case TransferType.Upload:
                     // Start uploads with the flag of temporary source activated to always automatically delete the 
                     // uploaded file from the upload temporary folder in the sandbox of the app
-                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath, this.SelectedNode.OriginalMNode, string.Empty, true);
+                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath, 
+                        this.SelectedNode.OriginalMNode, string.Empty, true);
                     break;
 
                 default:
