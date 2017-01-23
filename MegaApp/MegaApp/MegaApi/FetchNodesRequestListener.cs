@@ -169,9 +169,9 @@ namespace MegaApp.MegaApi
             //else
             //{
                 var cloudDriveRootNode = _cloudDriveViewModel.CloudDrive.FolderRootNode ??
-                    NodeService.CreateNew(api, App.AppInformation, api.getRootNode(), ContainerType.CloudDrive);
+                    NodeService.CreateNew(api, App.AppInformation, api.getRootNode(), _cloudDriveViewModel.CloudDrive);
                 var rubbishBinRootNode = _cloudDriveViewModel.RubbishBin.FolderRootNode ??
-                    NodeService.CreateNew(api, App.AppInformation, api.getRubbishNode(), ContainerType.RubbishBin);
+                    NodeService.CreateNew(api, App.AppInformation, api.getRubbishNode(), _cloudDriveViewModel.RubbishBin);
 
                 var autoResetEvent = new AutoResetEvent(false);
                 UiService.OnUiThread(() =>

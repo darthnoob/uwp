@@ -54,7 +54,7 @@ namespace MegaApp.ViewModels
             {
                 this.CloudDrive.FolderRootNode = 
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+                    SdkService.MegaSdk.getRootNode(), this.CloudDrive);
             }
 
             this.CloudDrive.LoadChildNodes();
@@ -63,7 +63,7 @@ namespace MegaApp.ViewModels
             {
                 this.RubbishBin.FolderRootNode = 
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+                    SdkService.MegaSdk.getRubbishNode(), this.RubbishBin);
             }
 
             this.RubbishBin.LoadChildNodes();

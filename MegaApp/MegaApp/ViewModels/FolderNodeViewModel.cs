@@ -9,9 +9,9 @@ namespace MegaApp.ViewModels
 {
     public class FolderNodeViewModel: NodeViewModel
     {
-        public FolderNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, ContainerType parentContainerType,
+        public FolderNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
-            : base(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection)
+            : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             SetFolderInfo();
             Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);

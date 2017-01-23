@@ -25,7 +25,7 @@ namespace MegaApp.MegaApi
 
         #region MGlobalListenerInterface
 
-        public async void onNodesUpdate(MegaSDK api, MNodeList nodes)
+        public void onNodesUpdate(MegaSDK api, MNodeList nodes)
         {
             // Exit methods when node list is incorrect
             if (nodes == null || nodes.size() < 1) return;
@@ -60,7 +60,7 @@ namespace MegaApp.MegaApi
                                 // Needed because we are in a foreach loop to prevent the use of the wrong 
                                 // local variable in the dispatcher code.
                                 var currentFolder = folder;
-                                await UiService.OnUiThread(() =>
+                                UiService.OnUiThread(() =>
                                 {
                                     try
                                     {
@@ -91,11 +91,11 @@ namespace MegaApp.MegaApi
                                     // If parent folder is found, process the update action
                                     if (nodeToUpdateInView != null)
                                     {
-                                        await UiService.OnUiThread(() =>
+                                        UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
-                                                nodeToUpdateInView.Update(parentNode, folder.Type);
+                                                nodeToUpdateInView.Update(parentNode);
                                                 var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                                                 folderNode?.SetFolderInfo();
                                             }
@@ -137,7 +137,7 @@ namespace MegaApp.MegaApi
                                     // Needed because we are in a foreach loop to prevent the use of the wrong 
                                     // local variable in the dispatcher code.
                                     var currentFolder = folder;
-                                    await UiService.OnUiThread(() =>
+                                    UiService.OnUiThread(() =>
                                     {
                                         try
                                         {
@@ -152,9 +152,9 @@ namespace MegaApp.MegaApi
                                 // Node is updated with new data. Update node in current view
                                 else
                                 {
-                                    await UiService.OnUiThread(() =>
+                                    UiService.OnUiThread(() =>
                                     {
-                                        try { nodeToUpdateInView.Update(megaNode, folder.Type); }
+                                        try { nodeToUpdateInView.Update(megaNode); }
                                         catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                     });
                                     isProcessed = true;
@@ -186,12 +186,12 @@ namespace MegaApp.MegaApi
                                         // Needed because we are in a foreach loop to prevent the use of the wrong 
                                         // local variable in the dispatcher code.
                                         var currentFolder = folder;
-                                        await UiService.OnUiThread(() =>
+                                        UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
                                                 currentFolder.ChildNodes.Add(NodeService.CreateNew(api,
-                                                    _appInformation, megaNode, currentFolder.Type));
+                                                    _appInformation, megaNode, currentFolder));
                                                 
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                                 UpdateFolders(currentFolder);
@@ -209,12 +209,12 @@ namespace MegaApp.MegaApi
                                         // Needed because we are in a foreach loop to prevent the use of the wrong 
                                         // local variable in the dispatcher code.
                                         var currentFolder = folder;
-                                        await UiService.OnUiThread(() =>
+                                        UiService.OnUiThread(() =>
                                         {
                                             try
                                             {
                                                 currentFolder.ChildNodes.Insert(insertIndex,
-                                                    NodeService.CreateNew(api, _appInformation, megaNode, currentFolder.Type));
+                                                    NodeService.CreateNew(api, _appInformation, megaNode, currentFolder));
 
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                                 UpdateFolders(currentFolder);
@@ -232,11 +232,11 @@ namespace MegaApp.MegaApi
 
                                 if (nodeToUpdateInView != null)
                                 {
-                                    await UiService.OnUiThread(() =>
+                                    UiService.OnUiThread(() =>
                                     {
                                         try
                                         {
-                                            nodeToUpdateInView.Update(parentNode, folder.Type);
+                                            nodeToUpdateInView.Update(parentNode);
                                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                                             if (folderNode != null) folderNode.SetFolderInfo();
                                         }
@@ -248,7 +248,7 @@ namespace MegaApp.MegaApi
                                 // Unconditional scenarios
                                 // Move/delete/add actions in subfolders
                                 var localFolder = folder;
-                                await UiService.OnUiThread(() =>
+                                UiService.OnUiThread(() =>
                                 {
                                     try { UpdateFolders(localFolder); }
                                     catch (Exception) { /* Dummy catch, surpress possible exception */ }
