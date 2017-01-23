@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels
             this.ResumeCommand = new RelayCommand(ResumeTransfers);
             this.PauseCommand = new RelayCommand(PauseTransfers);
             this.CancelCommand = new RelayCommand(CancelTransfers);
-            this.CleanCommand = new RelayCommand(UpdateTransfers);
+            this.CleanCommand = new RelayCommand<bool>(UpdateTransfers);
         }
 
         public async void ResumeTransfers()
@@ -54,9 +54,9 @@ namespace MegaApp.ViewModels
             await ResumePauseTransfersAsync(true);
         }
 
-        public void UpdateTransfers()
+        public void UpdateTransfers(bool cleanTransfers = false)
         {
-            TransferService.UpdateMegaTransferList(TransferService.MegaTransfers, this.Type);
+            TransferService.UpdateMegaTransferList(TransferService.MegaTransfers, this.Type, cleanTransfers);
         }
 
         public async Task ResumePauseTransfersAsync(bool isPauseEnabled)

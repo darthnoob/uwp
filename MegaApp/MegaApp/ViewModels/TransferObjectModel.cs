@@ -50,6 +50,9 @@ namespace MegaApp.ViewModels
             this.TransferPath = transferPath;
             this.ExternalDownloadPath = externalDownloadPath;
             this.Status = TransferStatus.NotStarted;
+            this.TotalBytes = ulong.MaxValue;
+            this.TransferedBytes = 0;
+            this.TransferSpeed = String.Empty;
             this.SelectedNode = selectedNode;
             this.AutoLoadImageOnFinish = false;
             this.CancelTransferCommand = new RelayCommand(CancelTransfer);
@@ -156,6 +159,13 @@ namespace MegaApp.ViewModels
             return true;
         }
 
+        /// <summary>
+        /// Moves a downloaded file/folder to the final destination.
+        /// Shows an error message if something went wrong.
+        /// </summary>
+        /// <param name="srcPath">Path of the source file/folder</param>
+        /// <param name="destName">New name for the file/folder</param>
+        /// <returns>Result of the action. TRUE if all went well or FALSE in other case.</returns>
         public async Task<bool> FinishDownload(string srcPath, string destName)
         {
             try
@@ -175,14 +185,20 @@ namespace MegaApp.ViewModels
 
                 return true;
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                OnUiThread(async() =>
+                string message = string.Empty;
+                if (this.Transfer.isFolderTransfer())
+                    message = ResourceService.AppMessages.GetString("AM_DownloadFolderFailed");
+                else
+                    message = ResourceService.AppMessages.GetString("AM_DownloadFileFailed");
+
+                UiService.OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_DownloadNodeFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DownloadNodeFailed"), e.Message));
-                });                
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                        string.Format(message, destName));
+                });
                 return false;
             }
         }
@@ -203,6 +219,9 @@ namespace MegaApp.ViewModels
             get { return _transfer; }
             set { SetField(ref _transfer, value); }
         }
+
+        public bool IsFolderTransfer => (this.Transfer != null) ? 
+            this.Transfer.isFolderTransfer() : !Path.HasExtension(this.TransferPath);
 
         private bool _isDefaultImage;
         public bool IsDefaultImage

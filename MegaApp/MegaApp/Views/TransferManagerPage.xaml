@@ -75,7 +75,11 @@
                 <AppBarButton
                     Command="{Binding ActiveViewModel.CleanCommand}"
                     Icon="Clear"
-                    Label="{Binding ActiveViewModel.CleanUpTransfersText}"/>
+                    Label="{Binding ActiveViewModel.CleanUpTransfersText}">
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>

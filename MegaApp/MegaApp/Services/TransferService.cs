@@ -7,7 +7,6 @@ using Windows.Storage;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 
@@ -43,67 +42,139 @@ namespace MegaApp.Services
             }
         }
 
-        public static void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type)
+        #region Public Methods
+
+        /// <summary>
+        /// Update a transfers list.
+        /// </summary>
+        /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>
+        /// <param name="type">Type of the transfers list to update (Download or Upload).</param>
+        /// <param name="cleanTransfers">Boolean value which indicates if clean the transfers list before update or not.</param>
+        public static async void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type, bool cleanTransfers = false)
         {
-            UiService.OnUiThread(() =>
+            if(cleanTransfers)
             {
-                switch (type)
+                // Need await clear the transfer list before update it.
+                await UiService.OnUiThreadAsync(() =>
                 {
-                    case MTransferType.TYPE_DOWNLOAD:
-                        megaTransfers.Downloads.Clear();
-                        break;
-                    case MTransferType.TYPE_UPLOAD:
-                        megaTransfers.Uploads.Clear();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
-                }
-            });
+                    switch (type)
+                    {
+                        case MTransferType.TYPE_DOWNLOAD:
+                            megaTransfers.Downloads.Clear();
+                            break;
+                        case MTransferType.TYPE_UPLOAD:
+                            megaTransfers.Uploads.Clear();
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                    }
+                });
+            }
 
             var transfers = SdkService.MegaSdk.getTransfers(type);
             var numTransfers = transfers.size();
             for (int i = 0; i < numTransfers; i++)
                 AddTransferToList(megaTransfers, transfers.get(i));
         }
-        
+
+        /// <summary>
+        /// Add a <see cref="MTransfer"/> to the corresponding transfers list.
+        /// </summary>
+        /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>
+        /// <param name="transfer"><see cref="MTransfer"/> to be added to the corresponding transfer list.</param>
         public static void AddTransferToList(TransferQueue megaTransfers, MTransfer transfer)
         {
-            TransferObjectModel megaTransfer;
-            if (transfer.getType() == MTransferType.TYPE_DOWNLOAD)
-            {
-                MNode node = transfer.getPublicMegaNode() ?? // If is a public node
-                             SdkService.MegaSdk.getNodeByHandle(transfer.getNodeHandle()); // If not
+            // Folder transfers are not included into the transfers list.
+            if (transfer.isFolderTransfer()) return;
 
-                if (node == null) return;
+            // Search if the transfer already exists into the transfers list.
+            var megaTransfer = SearchTransfer(megaTransfers.SelectAll(), transfer);
+            if (megaTransfer != null) return;
 
-                megaTransfer = new TransferObjectModel(
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, null),
-                    TransferType.Download, transfer.getPath());
-            }
-            else
-            {
-                var parentNode = SdkService.MegaSdk.getNodeByPath(transfer.getParentPath());
-                megaTransfer = new TransferObjectModel(
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, null),
-                    TransferType.Upload, transfer.getPath());
-            }
+            megaTransfer = CreateTransferObjectModel(transfer);            
+            if (megaTransfer != null)                
+                UiService.OnUiThread(() => megaTransfers.Add(megaTransfer));
+        }
 
-            UiService.OnUiThread(() =>
-            {
-                GetTransferAppData(transfer, megaTransfer);
+        /// <summary>
+        /// Search into a transfers list the <see cref="TransferObjectModel"/> corresponding to a <see cref="MTransfer"/>.
+        /// </summary>
+        /// <param name="transfersList">Transfers list where search the transfer.</param>
+        /// <param name="transfer">Transfer to search.</param>
+        /// <returns>The transfer object if exists or NULL in other case.</returns>
+        public static TransferObjectModel SearchTransfer(IList<TransferObjectModel> transfersList, MTransfer transfer)
+        {
+            // Folder transfers are not included into the transfers list.
+            if (transfer == null || transfer.isFolderTransfer()) return null;
 
+            var megaTransfer = transfersList.FirstOrDefault(
+                t => (t.Transfer != null && t.Transfer.getTag() == transfer.getTag()) ||
+                t.TransferPath.Equals(transfer.getPath()));
+
+            // Extra checking to avoid NullReferenceException
+            if (megaTransfer != null && megaTransfer.Transfer == null)
                 megaTransfer.Transfer = transfer;
-                megaTransfer.Status = TransferStatus.Queued;
-                megaTransfer.IsBusy = true;
-                megaTransfer.TotalBytes = transfer.getTotalBytes();
-                megaTransfer.TransferedBytes = transfer.getTransferredBytes();
 
-                megaTransfer.TransferSpeed = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType()) 
-                    ? transfer.getSpeed().ToStringAndSuffixPerSecond() 
-                    : string.Empty;
+            return megaTransfer;
+        }
 
-                megaTransfers.Add(megaTransfer);
-            });
+        /// <summary>
+        /// Create a <see cref="TransferObjectModel"/> from a <see cref="MTransfer"/>.
+        /// </summary>
+        /// <param name="transfer"></param>
+        /// <returns>The new <see cref="TransferObjectModel"/></returns>
+        public static TransferObjectModel CreateTransferObjectModel(MTransfer transfer)
+        {
+            if (transfer == null) return null;
+
+            try
+            {
+                TransferObjectModel megaTransfer = null;
+
+                switch (transfer.getType())
+                {
+                    case MTransferType.TYPE_DOWNLOAD:
+                        MNode node = transfer.getPublicMegaNode() ?? // If is a public node
+                            SdkService.MegaSdk.getNodeByHandle(transfer.getNodeHandle()); // If not
+
+                        if (node == null) return null;
+
+                        megaTransfer = new TransferObjectModel(
+                            NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, null),
+                            TransferType.Download, transfer.getPath());
+                        break;
+
+                    case MTransferType.TYPE_UPLOAD:
+                        var parentNode = SdkService.MegaSdk.getNodeByPath(transfer.getParentPath());
+
+                        if (parentNode == null) return null;
+
+                        megaTransfer = new TransferObjectModel(
+                            NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, null),
+                            TransferType.Upload, transfer.getPath());
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                if (megaTransfer != null)
+                {
+                    GetTransferAppData(transfer, megaTransfer);
+
+                    megaTransfer.Transfer = transfer;
+                    megaTransfer.IsBusy = true;
+                    megaTransfer.TotalBytes = transfer.getTotalBytes();
+                    megaTransfer.TransferedBytes = transfer.getTransferredBytes();
+                    megaTransfer.TransferSpeed = string.Empty;
+
+                    megaTransfer.Status = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType())
+                        ? TransferStatus.Queued : TransferStatus.Paused;
+                }
+
+                return megaTransfer;
+            }
+            catch (Exception) { return null; }
         }
 
         /// <summary>
@@ -219,6 +290,10 @@ namespace MegaApp.Services
             return true;
         }
 
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Creates a destination download path external to the app.
         /// </summary>
@@ -278,35 +353,6 @@ namespace MegaApp.Services
             return true;
         }
 
-        /// <summary>
-        /// Cancel all the pending offline transfer of a node and wait until all transfers are canceled.
-        /// </summary>
-        /// <param name="nodePath">Path of the node.</param>
-        /// <param name="isFolder">Boolean value which indicates if the node is a folder or not.</param>
-        //public static void CancelPendingNodeOfflineTransfers(string nodePath, bool isFolder)
-        //{
-        //    var megaTransfers = SdkService.MegaSdk.getTransfers(MTransferType.TYPE_DOWNLOAD);
-        //    var numMegaTransfers = megaTransfers.size();
-
-        //    for (int i = 0; i < numMegaTransfers; i++)
-        //    {
-        //        var transfer = megaTransfers.get(i);
-        //        if (transfer == null) continue;
-
-        //        string transferPathToCompare;
-        //        if (isFolder)
-        //            transferPathToCompare = transfer.getParentPath();
-        //        else
-        //            transferPathToCompare = transfer.getPath();
-
-        //        WaitHandle waitEventRequestTransfer = new AutoResetEvent(false);
-        //        if (string.Compare(nodePath, transferPathToCompare) == 0)
-        //        {
-        //            SdkService.MegaSdk.cancelTransfer(transfer, 
-        //                new CancelTransferRequestListener((AutoResetEvent)waitEventRequestTransfer));
-        //            waitEventRequestTransfer.WaitOne();
-        //        }
-        //    }
-        //}
+        #endregion
     }
 }

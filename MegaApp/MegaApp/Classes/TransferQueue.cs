@@ -28,6 +28,9 @@ namespace MegaApp.Classes
         /// <param name="transferObjectModel">Transfer to add</param>
         public void Add(TransferObjectModel transferObjectModel)
         {
+            // Folder transfers are not included into the transfers list.
+            if (transferObjectModel.IsFolderTransfer) return;
+
             switch (transferObjectModel.Type)
             {
                 case TransferType.Download:
