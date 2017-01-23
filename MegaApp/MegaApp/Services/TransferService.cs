@@ -50,25 +50,21 @@ namespace MegaApp.Services
         /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>
         /// <param name="type">Type of the transfers list to update (Download or Upload).</param>
         /// <param name="cleanTransfers">Boolean value which indicates if clean the transfers list before update or not.</param>
-        public static async void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type, bool cleanTransfers = false)
+        public static void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type, bool cleanTransfers = false)
         {
             if(cleanTransfers)
             {
-                // Need await clear the transfer list before update it.
-                await UiService.OnUiThreadAsync(() =>
+                switch (type)
                 {
-                    switch (type)
-                    {
-                        case MTransferType.TYPE_DOWNLOAD:
-                            megaTransfers.Downloads.Clear();
-                            break;
-                        case MTransferType.TYPE_UPLOAD:
-                            megaTransfers.Uploads.Clear();
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(type), type, null);
-                    }
-                });
+                    case MTransferType.TYPE_DOWNLOAD:
+                        megaTransfers.Downloads.Clear();
+                        break;
+                    case MTransferType.TYPE_UPLOAD:
+                        megaTransfers.Uploads.Clear();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+                }
             }
 
             var transfers = SdkService.MegaSdk.getTransfers(type);
@@ -91,9 +87,10 @@ namespace MegaApp.Services
             var megaTransfer = SearchTransfer(megaTransfers.SelectAll(), transfer);
             if (megaTransfer != null) return;
 
+            // If doesn't exist create a new one and add it to the transfers list
             megaTransfer = CreateTransferObjectModel(transfer);            
             if (megaTransfer != null)                
-                UiService.OnUiThread(() => megaTransfers.Add(megaTransfer));
+                megaTransfers.Add(megaTransfer);
         }
 
         /// <summary>
@@ -110,10 +107,6 @@ namespace MegaApp.Services
             var megaTransfer = transfersList.FirstOrDefault(
                 t => (t.Transfer != null && t.Transfer.getTag() == transfer.getTag()) ||
                 t.TransferPath.Equals(transfer.getPath()));
-
-            // Extra checking to avoid NullReferenceException
-            if (megaTransfer != null && megaTransfer.Transfer == null)
-                megaTransfer.Transfer = transfer;
 
             return megaTransfer;
         }

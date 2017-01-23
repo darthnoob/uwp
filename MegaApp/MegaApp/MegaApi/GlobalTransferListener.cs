@@ -175,10 +175,11 @@ namespace MegaApp.MegaApi
         /// <param name="transfer"></param>
         private void ProcessDefaultError(MTransfer transfer)
         {
-            string message = string.Empty;
+            string message, title = string.Empty;
             switch (transfer.getType())
             {
                 case MTransferType.TYPE_DOWNLOAD:
+                    title = ResourceService.AppMessages.GetString("AM_DownloadFailed_Title");
                     if (transfer.isFolderTransfer())
                         message = ResourceService.AppMessages.GetString("AM_DownloadFolderFailed");
                     else
@@ -186,6 +187,7 @@ namespace MegaApp.MegaApi
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
+                    title = ResourceService.AppMessages.GetString("AM_UploadFailed_Title");
                     if (transfer.isFolderTransfer())
                         message = ResourceService.AppMessages.GetString("AM_UploadFolderFailed");
                     else
@@ -198,8 +200,7 @@ namespace MegaApp.MegaApi
 
             UiService.OnUiThread(async () =>
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
+                await DialogService.ShowAlertAsync(title, 
                     string.Format(message, transfer.getFileName()));
             });
         }
@@ -231,18 +232,24 @@ namespace MegaApp.MegaApi
 
             // Search the corresponding transfer in the transfers list
             var megaTransfer = TransferService.SearchTransfer(TransferService.MegaTransfers.SelectAll(), transfer);
-            if (megaTransfer != null)
+                        
+            UiService.OnUiThread(() =>
             {
-                UiService.OnUiThread(() =>
+                // If the transfer exists in the transfers list.
+                if (megaTransfer != null)
                 {
-                    megaTransfer.TransferSpeed = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType()) ?
-                        transfer.getSpeed().ToStringAndSuffixPerSecond() : string.Empty;
-                });
-                return;
-            }
+                    // Extra checking to avoid NullReferenceException
+                    if (megaTransfer.Transfer == null)
+                        megaTransfer.Transfer = transfer;
 
-            // If the transfer doesn't exist in the transfers list add it.
-            TransferService.AddTransferToList(TransferService.MegaTransfers, transfer);
+                    megaTransfer.Status = TransferStatus.Queued;
+                    megaTransfer.TransferSpeed = string.Empty;
+                    return;
+                }
+
+                // If the transfer doesn't exist in the transfers list add it.
+                TransferService.AddTransferToList(TransferService.MegaTransfers, transfer);
+            });
         }
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
@@ -259,12 +266,12 @@ namespace MegaApp.MegaApi
             var megaTransfer = TransferService.SearchTransfer(TransferService.MegaTransfers.SelectAll(), transfer);
             if (megaTransfer == null) return;
 
-            // Extra checking to avoid NullReferenceException
-            if (megaTransfer.Transfer == null)
-                UiService.OnUiThread(() => megaTransfer.Transfer = transfer);
-
             UiService.OnUiThread(() =>
             {
+                // Extra checking to avoid NullReferenceException
+                if (megaTransfer.Transfer == null)
+                    megaTransfer.Transfer = transfer;
+
                 megaTransfer.IsBusy = true;
                 megaTransfer.TotalBytes = transfer.getTotalBytes();
                 megaTransfer.TransferedBytes = transfer.getTransferredBytes();

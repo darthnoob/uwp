@@ -479,9 +479,9 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file: {0} for upload</value>
+    <value>Failed to prepare file '{0}' for upload</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
-Preserve the {0} code because is for include the file name in runtime.</comment>
+Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed_Title" xml:space="preserve">
     <value>Error preparing file</value>
