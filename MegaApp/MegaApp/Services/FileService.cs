@@ -191,17 +191,24 @@ namespace MegaApp.Services
                 if (file != null)
                     return await Windows.System.Launcher.LaunchFileAsync(file);
 
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_FileNotFound_Title"),
-                    ResourceService.AppMessages.GetString("AM_FileNotFound"));
+                UiService.OnUiThread(async() =>
+                {
+                     await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_FileNotFound_Title"),
+                        ResourceService.AppMessages.GetString("AM_FileNotFound"));
+                });
 
                 return false;
             }
             catch (Exception)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_OpenFileFailed"));                
+                UiService.OnUiThread(async() =>
+                {
+                     await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_OpenFileFailed"));
+                });
+
                 return false;
             }            
         }
@@ -226,9 +233,13 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message));
+                });
+
                 return new List<StorageFile>();
             }
         }

@@ -40,14 +40,14 @@ namespace MegaApp.Interfaces
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false);
+        Task<bool> MoveToRubbishBinAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Delete the node permanently
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false);
+        Task<bool> RemoveAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 
@@ -65,8 +65,7 @@ namespace MegaApp.Interfaces
         /// Update core date associated with the SDK MNode object
         /// </summary>
         /// <param name="megaNode">Node to update</param>
-        /// <param name="parentContainerType">Container type of the parent of the node.</param>
-        void Update(MNode megaNode, ContainerType parentContainerType);
+        void Update(MNode megaNode);
 
         /// <summary>
         /// Load node thumbnail if available on disk. If not availble download it with the Mega SDK

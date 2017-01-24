@@ -214,7 +214,7 @@ namespace MegaApp
 
         #region MRequestListenerInterface
 
-        public virtual async void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             if (e.getErrorCode() == MErrorType.API_ESID || e.getErrorCode() == MErrorType.API_ESSL)
             {
@@ -223,7 +223,7 @@ namespace MegaApp
                 // Show the login page with the corresponding navigation parameter
                 if (e.getErrorCode() == MErrorType.API_ESID)
                 {
-                    await UiService.OnUiThread(() =>
+                    UiService.OnUiThread(() =>
                     {
                         NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
                             NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESID));
@@ -231,7 +231,7 @@ namespace MegaApp
                 }
                 else if (e.getErrorCode() == MErrorType.API_ESSL)
                 {
-                    await UiService.OnUiThread(() =>
+                    UiService.OnUiThread(() =>
                     {
                         NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
                             NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESSL));

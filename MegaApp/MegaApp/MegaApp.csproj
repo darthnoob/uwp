@@ -101,6 +101,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\MultiSelect.cs" />
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
@@ -110,10 +111,11 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
-    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
+    <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
+    <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
+    <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
     <Compile Include="Interfaces\IApplicationBar.cs" />
     <Compile Include="Interfaces\IBaseNode.cs" />
@@ -151,11 +154,11 @@
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
-	<Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
+    <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
     <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FolderService.cs" />
@@ -199,6 +203,8 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
+    <Compile Include="ViewModels\TransferListViewModel.cs" />
+    <Compile Include="ViewModels\TransferManagerViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
@@ -221,6 +227,9 @@
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TransferManagerPage.xaml.cs">
+      <DependentUpon>TransferManagerPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +287,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TransferManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

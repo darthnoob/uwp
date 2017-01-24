@@ -8,73 +8,15 @@
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:behaviors="using:MegaApp.Behaviors"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
     <!-- PAGE RESOURCES -->
     <Page.Resources>
-        <!-- FLYOUT MENUS -->
-        <MenuFlyout x:Name="CloudDriveMenuFlyout">
-            <MenuFlyout.Items>
-                <MenuFlyoutItem 
-                    Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding RenameText}" 
-                    Command="{Binding RenameCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding CopyOrMoveText}" 
-                    Click="OnCopyOrMoveClick"/>
-                <MenuFlyoutItem 
-                    Text="{Binding MoveToRubbishBinText}" 
-                    Command="{Binding MoveToRubbishBinCommand}"/>
-            </MenuFlyout.Items>
-        </MenuFlyout>
-        
-        <MenuFlyout x:Name="RubbishBinMenuFlyout">
-            <MenuFlyout.Items>
-                <MenuFlyoutItem
-                    Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding RenameText}"
-                    Command="{Binding RenameCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding CopyOrMoveText}" 
-                    Click="OnCopyOrMoveClick"/>
-                <MenuFlyoutItem 
-                    Text="{Binding RemoveText}" 
-                    Command="{Binding RemoveCommand}"/>
-            </MenuFlyout.Items>
-        </MenuFlyout>
 
-        <MenuFlyout x:Name="MultiselectCloudDriveMenuFlyout">
-            <MenuFlyout.Items>
-                <MenuFlyoutItem 
-                    Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding CopyOrMoveText}" 
-                    Click="OnCopyOrMoveClick"/>
-                <MenuFlyoutItem 
-                    Text="{Binding MoveToRubbishBinText}" 
-                    Command="{Binding MoveToRubbishBinCommand}"/>
-            </MenuFlyout.Items>
-        </MenuFlyout>
-
-        <MenuFlyout x:Name="MultiselectRubbishBinMenuFlyout">
-            <MenuFlyout.Items>
-                <MenuFlyoutItem
-                    Text="{Binding DownloadText}"
-                    Command="{Binding DownloadCommand}"/>
-                <MenuFlyoutItem 
-                    Text="{Binding CopyOrMoveText}" 
-                    Click="OnCopyOrMoveClick"/>
-                <MenuFlyoutItem 
-                    Text="{Binding RemoveText}" 
-                    Command="{Binding RemoveCommand}"/>
-            </MenuFlyout.Items>
-        </MenuFlyout>
     </Page.Resources>
     
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
@@ -85,8 +27,10 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Collapsed" />
-                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Collapsed" />
+                        <Setter Target="ListViewCloudDrive.SelectionMode" Value="Multiple" />
+                        <Setter Target="GridViewCloudDrive.SelectionMode" Value="Multiple" />
+                        <Setter Target="ListViewRubbishBin.SelectionMode" Value="Multiple" />
+                        <Setter Target="GridViewRubbishBin.SelectionMode" Value="Multiple" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -94,8 +38,10 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="MultiSelectButtonCloudDrive.Visibility" Value="Visible" />
-                        <Setter Target="MultiSelectButtonRubbishBin.Visibility" Value="Visible" />
+                        <Setter Target="ListViewCloudDrive.SelectionMode" Value="None" />
+                        <Setter Target="GridViewCloudDrive.SelectionMode" Value="None" />
+                        <Setter Target="ListViewRubbishBin.SelectionMode" Value="None" />
+                        <Setter Target="GridViewRubbishBin.SelectionMode" Value="None" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -107,7 +53,7 @@
         
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="48"/>
+                <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid
@@ -157,8 +103,7 @@
                     <PivotItem 
                         x:Name="CloudDrivePivot" 
                         Header="{Binding CloudDriveNameText}" 
-                        CacheMode="{x:Null}" 
-                        Margin="0,-10,0,0">
+                        CacheMode="{x:Null}">
                         <Grid x:Name="CloudDriveRoot" 
                               Background="Transparent" 
                               Margin="0,0,12,0">
@@ -183,7 +128,7 @@
                                         Foreground="{StaticResource MegaRedColorBrush}" 
                                         Height="8" 
                                         Grid.ColumnSpan="2" 
-                                        Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="CloudDriveBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -203,7 +148,7 @@
                                         Grid.Row="1" 
                                         Grid.Column="1" 
                                         VerticalAlignment="Center"                                         
-                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                                     <TextBlock 
                                         Text="{Binding CloudDrive.FolderRootNode.Information}" 
                                         HorizontalAlignment="Right" 
@@ -212,7 +157,7 @@
                                         Grid.Row="1" 
                                         Grid.Column="1" 
                                         VerticalAlignment="Center"                                         
-                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
                             <Grid 
@@ -220,36 +165,42 @@
                                 Grid.Row="1">
                                 <ListView
                                     x:Name="ListViewCloudDrive"
-                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended"
-                                    RightTapped="OnRightTapped"
-                                    Holding="OnHolding">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewCloudDrive"
                                     Margin="12,0,0,0"
                                     Padding="2,4"
-                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding CloudDrive}"
                                     ItemsSource="{Binding ChildNodes}"                                    
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended"
-                                    RightTapped="OnRightTapped"
-                                    Holding="OnHolding">
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </GridView>
                             </Grid>
                         </Grid>
@@ -257,8 +208,7 @@
                     <PivotItem 
                         x:Name="RubbishBinPivot" 
                         Header="{Binding RubbishBinNameText}" 
-                        CacheMode="{x:Null}" 
-                        Margin="0,-10,0,0">
+                        CacheMode="{x:Null}">
                         <Grid 
                             x:Name="RubbishBinRoot" 
                             Background="Transparent" 
@@ -284,7 +234,7 @@
                                         Foreground="{StaticResource MegaRedColorBrush}" 
                                         Height="8" 
                                         Grid.ColumnSpan="2" 
-                                        Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                     <breadcrumb:BreadcrumbControl 
                                         x:Name="RubbishBinBreadCrumb"
                                         Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
@@ -304,7 +254,7 @@
                                         Grid.Row="1" 
                                         Grid.Column="1" 
                                         VerticalAlignment="Center" 
-                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, ConverterParameter=false, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                                     <TextBlock 
                                         Text="{Binding RubbishBin.FolderRootNode.Information}" 
                                         HorizontalAlignment="Right" 
@@ -313,7 +263,7 @@
                                         Grid.Row="1" 
                                         Grid.Column="1" 
                                         VerticalAlignment="Center" 
-                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </Grid>
                             </StackPanel>
 
@@ -326,31 +276,38 @@
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended"
-                                    RightTapped="OnRightTapped"
-                                    Holding="OnHolding">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="ListViewItem">
-                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewRubbishBin"
                                     Margin="12,0,0,0"
                                     Padding="2,4"
-                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
                                     ItemsSource="{Binding ChildNodes}"
+                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                    SelectionMode="Extended"
-                                    RightTapped="OnRightTapped"
-                                    Holding="OnHolding">
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    SelectionMode="Multiple">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding SelectedNodes, Mode=TwoWay}"/>
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
                                 </GridView>
                             </Grid>
                         </Grid>
@@ -367,7 +324,7 @@
             <AppBarButton 
                 Icon="Upload" 
                 Label="{Binding UploadText}" 
-                Command="{Binding ActiveFolderView.UploadCommand}"
+                Command="{Binding ActiveFolderView.UploadCommand}"                
                 Click="OnButtonClick"/>
             <AppBarButton 
                 Icon="Add" 
@@ -376,10 +333,13 @@
                 Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="MultiSelectButtonCloudDrive"
-                Icon="AllApps" 
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick"/>
+                Click="OnMultiSelectButtonClick">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE762;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
                 Icon="Refresh" 
                 Label="{Binding RefreshText}" 
@@ -399,18 +359,18 @@
                 Click="OnButtonClick"/>
             <AppBarButton 
                 x:Name="MultiSelectButtonRubbishBin"
-                Icon="AllApps" 
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick"/>
-            
-            <CommandBar.SecondaryCommands>
-                <AppBarButton
-                    Icon="Refresh" 
-                    Label="{Binding RefreshText}" 
-                    Command="{Binding ActiveFolderView.RefreshCommand}"
-                    Click="OnButtonClick"/>
-            </CommandBar.SecondaryCommands>
+                Click="OnMultiSelectButtonClick">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE762;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Icon="Refresh" 
+                Label="{Binding RefreshText}" 
+                Command="{Binding ActiveFolderView.RefreshCommand}"
+                Click="OnButtonClick"/>
         </CommandBar>
 
         <!-- COPY OR MOVE COMMAND BAR -->
@@ -467,7 +427,7 @@
                 Icon="Cancel" 
                 Label="{Binding CancelText}"
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnCancelMultiSelectButtonClick"/>
+                Tapped="OnCancelMultiSelectTapped"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton

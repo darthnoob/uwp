@@ -17,7 +17,7 @@ namespace MegaApp.MegaApi
         /// <summary>
         /// Timer to ignore the received API_EAGAIN (-3) during request.
         /// </summary>
-        private readonly DispatcherTimer TimerApiEagain;
+        private DispatcherTimer TimerApiEagain;
 
         /// <summary>
         /// Flag to check if is the first API_EAGAIN (-3) received.
@@ -32,14 +32,17 @@ namespace MegaApp.MegaApi
         public BaseRequestListenerAsync()
         {
             // Set the timer to trigger the event after 10 seconds
-            TimerApiEagain = new DispatcherTimer();
-            TimerApiEagain.Tick += TimerApiEagainOnTick;
-            TimerApiEagain.Interval = new TimeSpan(0, 0, 10);
+            UiService.OnUiThread(() =>
+            {
+                TimerApiEagain = new DispatcherTimer();
+                TimerApiEagain.Tick += TimerApiEagainOnTick;
+                TimerApiEagain.Interval = new TimeSpan(0, 0, 10);
+            });
         }
 
-        private async void TimerApiEagainOnTick(object sender, object o)
+        private void TimerApiEagainOnTick(object sender, object o)
         {
-            await UiService.OnUiThread(() =>
+            UiService.OnUiThread(() =>
             {
                 TimerApiEagain.Stop();
                 ServerBusy?.Invoke(this, EventArgs.Empty);
@@ -65,26 +68,26 @@ namespace MegaApp.MegaApi
             // Do nothing
         }
 
-        public virtual async void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
+        public virtual void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
             // Starts the timer when receives the first API_EAGAIN (-3)
             if (e.getErrorCode() == MErrorType.API_EAGAIN && IsFirstApiEagain)
             {
                 IsFirstApiEagain = false;
-                await UiService.OnUiThread(() => TimerApiEagain.Start());
+                UiService.OnUiThread(() => TimerApiEagain.Start());
             }
         }
 
-        public virtual async void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            await UiService.OnUiThread(() => TimerApiEagain.Stop());
+            UiService.OnUiThread(() => TimerApiEagain.Stop());
 
             if (e.getErrorCode() != MErrorType.API_EBLOCKED) return;
             
             // If the account has been blocked, always logout
             api.logout(new LogOutRequestListener(false));
 
-            await UiService.OnUiThread(() =>
+            UiService.OnUiThread(() =>
             {
                 NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
                     NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));

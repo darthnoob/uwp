@@ -128,7 +128,7 @@ namespace MegaApp.Services
         /// Empties a folder
         /// </summary>
         /// <param name="path">Path of the folder</param>
-        public static async void Clear(string path)
+        public static void Clear(string path)
         {
             try
             {
@@ -146,9 +146,12 @@ namespace MegaApp.Services
             }
             catch (IOException e)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message));
+                });
             }
         }
 
@@ -254,9 +257,13 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_SelectFolderFailed"), e.Message));
+                UiService.OnUiThread(async() =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SelectFolderFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_SelectFolderFailed"), e.Message));
+                });
+
                 return null;
             }
         }

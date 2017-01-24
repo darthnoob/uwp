@@ -52,7 +52,7 @@ namespace MegaApp.MegaApi
                     OnSuccesAction(api, request);
 
                 if (NavigateOnSucces)
-                    await UiService.OnUiThread(() => 
+                    UiService.OnUiThread(() => 
                         NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
             }
             else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 
@@ -60,7 +60,7 @@ namespace MegaApp.MegaApi
                 // If the account has been blocked
                 api.logout(new LogOutRequestListener(false));
 
-                await UiService.OnUiThread(() =>
+                UiService.OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
                         NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
 
@@ -28,7 +27,7 @@ namespace MegaApp.Services
             return nodeList;
         }
 
-        public static NodeViewModel CreateNew(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, ContainerType parentContainerType,
+        public static NodeViewModel CreateNew(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel folder,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
         {
             if (megaNode == null) return null;
@@ -42,15 +41,15 @@ namespace MegaApp.Services
                     case MNodeType.TYPE_FILE:
                         {
                             if (megaNode.hasThumbnail() || megaNode.hasPreview() || ImageService.IsImage(megaNode.getName()))
-                                return new ImageNodeViewModel(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection);
+                                return new ImageNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
 
-                            return new FileNodeViewModel(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection);
+                            return new FileNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
                         }
                     case MNodeType.TYPE_FOLDER:
                     case MNodeType.TYPE_ROOT:
                     case MNodeType.TYPE_RUBBISH:
                         {
-                            return new FolderNodeViewModel(megaSdk, appInformation, megaNode, parentContainerType, parentCollection, childCollection);
+                            return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
                         }
                     case MNodeType.TYPE_INCOMING:
                         break;
@@ -78,7 +77,7 @@ namespace MegaApp.Services
                 // To avoid pass null values to CreateNew
                 if (childNodeList.get(i) == null) continue;
 
-                var node = CreateNew(megaSdk, appInformation, childNodeList.get(i), folderNode.ParentContainerType);
+                var node = CreateNew(megaSdk, appInformation, childNodeList.get(i), folderNode.Parent);
 
                 var folder = node as FolderNodeViewModel;
                 if (folder != null)

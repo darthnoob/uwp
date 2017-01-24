@@ -51,8 +51,11 @@ namespace MegaApp.ViewModels
                             {
                                 case CreateAccountResult.Success:
                                     {
-                                        await DialogService.ShowAlertAsync(ResourceService.AppMessages.GetString("AM_ConfirmEmail_Title"),
-                                            string.Format(ResourceService.AppMessages.GetString("AM_ConfirmEmail"), this.Email));
+                                        OnUiThread(async() =>
+                                        {
+                                            await DialogService.ShowAlertAsync(ResourceService.AppMessages.GetString("AM_ConfirmEmail_Title"),
+                                                string.Format(ResourceService.AppMessages.GetString("AM_ConfirmEmail"), this.Email));
+                                        });
                                         return;
                                     }
                                 case CreateAccountResult.AlreadyExists:
@@ -90,7 +93,8 @@ namespace MegaApp.ViewModels
                 messageContent = ResourceService.AppMessages.GetString("AM_EmptyRequiredFields");
             }    
             if(string.IsNullOrEmpty(messageContent)) return;
-            await DialogService.ShowAlertAsync(this.CreateAccountText, messageContent);
+
+            OnUiThread(async() => await DialogService.ShowAlertAsync(this.CreateAccountText, messageContent));
         }        
 
         private bool CheckInputParameters()

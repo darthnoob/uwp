@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -55,7 +57,7 @@ namespace MegaApp.ViewModels
             {
                 this.CloudDrive.FolderRootNode = 
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+                    SdkService.MegaSdk.getRootNode(), this.CloudDrive);
             }
 
             this.CloudDrive.LoadChildNodes();
@@ -64,7 +66,7 @@ namespace MegaApp.ViewModels
             {
                 this.RubbishBin.FolderRootNode = 
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+                    SdkService.MegaSdk.getRubbishNode(), this.RubbishBin);
             }
 
             this.RubbishBin.LoadChildNodes();
@@ -93,12 +95,12 @@ namespace MegaApp.ViewModels
 
             var cloudDriveRootNode = this.CloudDrive.FolderRootNode ??
                 NodeService.CreateNew(this.MegaSdk, App.AppInformation,
-                this.MegaSdk.getRootNode(), ContainerType.CloudDrive);
+                this.MegaSdk.getRootNode(), this.CloudDrive);
             var rubbishBinRootNode = this.RubbishBin.FolderRootNode ??
                 NodeService.CreateNew(this.MegaSdk, App.AppInformation, 
-                this.MegaSdk.getRubbishNode(), ContainerType.RubbishBin);
+                this.MegaSdk.getRubbishNode(), this.RubbishBin);
 
-            await UiService.OnUiThread(() =>
+            UiService.OnUiThread(() =>
             {
                 this.CloudDrive.FolderRootNode = cloudDriveRootNode;
                 this.RubbishBin.FolderRootNode = rubbishBinRootNode;
@@ -107,17 +109,17 @@ namespace MegaApp.ViewModels
             });
         }
 
-        public async void AcceptCopyAction()
+        public async void AcceptCopyAction(IList<IMegaNode> nodes)
         {
             bool result = true;
             try
             {
                 // Copy all the selected nodes and then clear and release the selected nodes list
-                if (SourceFolderView?.SelectedNodes?.Count > 0)
+                if (nodes?.Count > 0)
                 {
                     // Fix the new parent node to allow navigation while the nodes are being copied
                     var newParentNode = ActiveFolderView.FolderRootNode;
-                    foreach (var node in SourceFolderView.SelectedNodes)
+                    foreach (var node in nodes)
                     {
                         if (node != null)
                         {
@@ -125,15 +127,15 @@ namespace MegaApp.ViewModels
                             node.DisplayMode = NodeDisplayMode.Normal;
                         }
                     }
-                    SourceFolderView.SelectedNodes.Clear();
+                    //SourceFolderView.SelectedNodes.Clear();
                 }
 
-                // Release the focused node
-                if (SourceFolderView?.FocusedNode != null)
-                {
-                    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
-                    SourceFolderView.FocusedNode = null;
-                }
+                //// Release the focused node
+                //if (SourceFolderView?.FocusedNode != null)
+                //{
+                //    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
+                //    SourceFolderView.FocusedNode = null;
+                //}
             }
             catch (InvalidOperationException)
             {
@@ -152,17 +154,17 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public async void AcceptMoveAction()
+        public async void AcceptMoveAction(IList<IMegaNode> nodes)
         {
             bool result = true;
             try
             {
                 // Copy all the selected nodes and then clear and release the selected nodes list
-                if (SourceFolderView?.SelectedNodes?.Count > 0)
+                if (nodes?.Count > 0)
                 {
                     // Fix the new parent node to allow navigation while the nodes are being moved
                     var newParentNode = ActiveFolderView.FolderRootNode;
-                    foreach (var node in SourceFolderView.SelectedNodes)
+                    foreach (var node in nodes)
                     {
                         if (node != null)
                         {
@@ -170,15 +172,15 @@ namespace MegaApp.ViewModels
                             node.DisplayMode = NodeDisplayMode.Normal;
                         }
                     }
-                    SourceFolderView.SelectedNodes.Clear();
+                    //SourceFolderView.SelectedNodes.Clear();
                 }
 
-                // Release the focused node
-                if (SourceFolderView?.FocusedNode != null)
-                {
-                    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
-                    SourceFolderView.FocusedNode = null;
-                }
+                //// Release the focused node
+                //if (SourceFolderView?.FocusedNode != null)
+                //{
+                //    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
+                //    SourceFolderView.FocusedNode = null;
+                //}
             }
             catch (InvalidOperationException)
             {

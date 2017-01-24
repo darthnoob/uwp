@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
@@ -22,15 +23,35 @@ namespace MegaApp.ViewModels
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
-        protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, ContainerType parentContainerType,
+        protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
         {
-            Update(megaNode, parentContainerType);
+            Update(megaNode);
             SetDefaultValues();
 
+            this.Parent = parent;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
+            this.DownloadCommand = new RelayCommand(Download);
+            this.RenameCommand = new RelayCommand(Rename);
+            this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
+            this.RemoveCommand = new RelayCommand(Remove);
         }
+
+        private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Parent.CurrentViewState))
+                OnPropertyChanged(nameof(this.Parent));
+        }
+
+        #region Commands
+
+        public ICommand DownloadCommand { get; }
+        public ICommand RenameCommand { get; }
+        public ICommand RemoveCommand { get; }
+        public ICommand MoveToRubbishBinCommand { get; }
+
+        #endregion
 
         #region Private Methods
 
@@ -74,7 +95,7 @@ namespace MegaApp.ViewModels
                 
                 if(result)
                 {
-                    await UiService.OnUiThread(() =>
+                    UiService.OnUiThread(() =>
                     {
                         this.IsDefaultImage = false;
                         this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
@@ -174,6 +195,11 @@ namespace MegaApp.ViewModels
 
         #region IMegaNode Interface
 
+        public async void Rename()
+        {
+            await RenameAsync();
+        }
+
         public async Task RenameAsync()
         {
             // User must be online to perform this operation
@@ -202,13 +228,16 @@ namespace MegaApp.ViewModels
 
             if (string.IsNullOrEmpty(newName))
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RenameNodeFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                });
                 return;
             };
-            
-            await OnUiThread(() => this.Name = newName);
+
+            OnUiThread(() => this.Name = newName);
         }
 
         /// <summary>
@@ -258,12 +287,23 @@ namespace MegaApp.ViewModels
             return NodeActionResult.Succeeded;
         }
 
-        public async Task<NodeActionResult> MoveToRubbishBinAsync(bool isMultiSelect = false)
+        private async void MoveToRubbishBin()
+        {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if (this.Parent.MoveToRubbishBinCommand.CanExecute(null))
+                    this.Parent.MoveToRubbishBinCommand.Execute(null);
+                return;
+            }
+            await MoveToRubbishBinAsync();
+        }
+
+        public async Task<bool> MoveToRubbishBinAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!IsUserOnline()) return false;
 
-            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+            if (this.OriginalMNode == null) return false;
 
             if (!isMultiSelect)
             {
@@ -271,7 +311,7 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name));
 
-                if (!dialogResult) return NodeActionResult.Cancelled;
+                if (!dialogResult) return true;
             }
 
             var moveNode = new MoveNodeRequestListenerAsync();
@@ -280,17 +320,28 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode);
             });
 
-            if (!result) return NodeActionResult.Failed;
+            if (!result) return false;
 
-            return NodeActionResult.Succeeded;
+            return true;
         }
 
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiSelect = false)
+        private async void Remove()
+        {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if (this.Parent.RemoveCommand.CanExecute(null))
+                    this.Parent.RemoveCommand.Execute(null);
+                return;
+            }
+            await RemoveAsync();
+        }
+
+        public async Task<bool> RemoveAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!IsUserOnline()) return false;
 
-            if (this.OriginalMNode == null) return NodeActionResult.Failed;
+            if (this.OriginalMNode == null) return false;
 
             if (!isMultiSelect)
             {
@@ -298,7 +349,7 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name));
 
-                if (!dialogResult) return NodeActionResult.Cancelled;
+                if (!dialogResult) return true;
             }
 
             var removeNode = new RemoveNodeRequestListenerAsync();
@@ -307,14 +358,25 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.remove(this.OriginalMNode, removeNode);
             });
 
-            if (!result) return NodeActionResult.Failed;
+            if (!result) return false;
 
-            return NodeActionResult.Succeeded;
+            return true;
         }
 
         public NodeActionResult GetLink()
         {
             return NodeActionResult.IsBusy;
+        }
+
+        private void Download()
+        {
+            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            {
+                if(this.Parent.DownloadCommand.CanExecute(null))
+                    this.Parent.DownloadCommand.Execute(null);
+                return;
+            }
+            Download(TransferService.MegaTransfers);
         }
 
         public async void Download(TransferQueue transferQueue)
@@ -332,13 +394,12 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
-        public void Update(MNode megaNode, ContainerType parentContainerType)
+        public void Update(MNode megaNode)
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
             this.Base64Handle = megaNode.getBase64Handle();
             this.Type = megaNode.getType();
-            this.ParentContainerType = parentContainerType;
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
             this.SizeText = this.Size.ToStringAndSuffix();
@@ -376,6 +437,22 @@ namespace MegaApp.ViewModels
         }
 
         public ulong Handle { get; set; }
+
+        private FolderViewModel _parent;
+        public FolderViewModel Parent
+        {
+            get { return _parent; }
+            set
+            {
+                if (_parent != null)
+                    _parent.PropertyChanged -= ParentOnPropertyChanged;
+
+                SetField(ref _parent, value);
+
+                if (_parent != null)
+                    _parent.PropertyChanged += ParentOnPropertyChanged;
+            }
+        }
 
         public ObservableCollection<IMegaNode> ParentCollection { get; set; }
 
@@ -435,6 +512,15 @@ namespace MegaApp.ViewModels
 
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
             ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
+
+        #endregion
+
+        #region UiResources
+
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
 
         #endregion
     }

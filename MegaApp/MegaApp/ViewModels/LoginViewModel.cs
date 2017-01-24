@@ -29,7 +29,7 @@ namespace MegaApp.ViewModels
 
         public async void Login()
         {
-            if (!await CheckInputParametersAsync()) return;
+            if (!CheckInputParametersAsync()) return;
 
             var login = new LoginRequestListenerAsync();
             login.ServerBusy += OnServerBusy;
@@ -90,22 +90,28 @@ namespace MegaApp.ViewModels
             this.IsBusy = false;
 
             // Show error message
-            await DialogService.ShowAlertAsync(this.LoginText, errorContent);
+            OnUiThread(async () => await DialogService.ShowAlertAsync(this.LoginText, errorContent));
         }
 
-        private async Task<bool> CheckInputParametersAsync()
+        private bool CheckInputParametersAsync()
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
-                await DialogService.ShowAlertAsync(this.LoginText,
-                    ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(this.LoginText,
+                        ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+                });
                 return false;
             }
             
             if(!ValidationService.IsValidEmail(this.Email))
             {
-                await DialogService.ShowAlertAsync(this.LoginText,
-                   ResourceService.AppMessages.GetString("AM_MalformedEmail"));
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(this.LoginText,
+                        ResourceService.AppMessages.GetString("AM_MalformedEmail"));
+                });
                 return false;
             }
 

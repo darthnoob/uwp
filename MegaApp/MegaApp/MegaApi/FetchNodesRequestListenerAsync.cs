@@ -34,7 +34,7 @@ namespace MegaApp.MegaApi
             }
         }
 
-        public override async void onRequestUpdate(MegaSDK api, MRequest request)
+        public override void onRequestUpdate(MegaSDK api, MRequest request)
         {
             base.onRequestUpdate(api, request);
 
@@ -45,7 +45,7 @@ namespace MegaApp.MegaApi
                     double progressValue = 100.0 * request.getTransferredBytes() / request.getTotalBytes();
                     if ((progressValue > 99) || (progressValue < 0))
                     {
-                        await UiService.OnUiThread(() => DecryptNodes?.Invoke(this, EventArgs.Empty));
+                        UiService.OnUiThread(() => DecryptNodes?.Invoke(this, EventArgs.Empty));
                     }
                 }
             }
