@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using MegaApp.Services;
 
@@ -6,6 +7,8 @@ namespace MegaApp.ViewModels.Settings
 {
     public class CameraUploadsSettingViewModel: SettingViewModel<bool>
     {
+        public const string ImageDateSetting = "ImageLastUploadDate";
+
         public CameraUploadsSettingViewModel()
             : base(ResourceService.UiResources.GetString("UI_CameraUploadsTitle"), null, "CameraUploadsSettingsKey")
         {
@@ -48,6 +51,9 @@ namespace MegaApp.ViewModels.Settings
             TaskService.UnregisterBackgroundTask(
                 TaskService.CameraUploadTaskEntryPoint,
                 TaskService.CameraUploadTaskName);
+
+            // Reset the date
+            SettingsService.SaveSettingToFile(ImageDateSetting, DateTime.MinValue);
 
             return true;
         }
