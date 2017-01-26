@@ -1,4 +1,10 @@
-﻿using MegaApp.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
+using MegaApp.Classes;
+using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -6,9 +12,16 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
+        public event EventHandler ClearSelectedItems;
+
         public CloudDriveViewModel()
         {
             InitializeModel();
+
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
+            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
+            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
+            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
         }
 
         /// <summary>
@@ -19,9 +32,21 @@ namespace MegaApp.ViewModels
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
 
+            this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
+            this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
+
             // The Cloud Drive is always the first active folder on initalization
             this.ActiveFolderView = this.CloudDrive;
         }
+
+        #region Commands
+
+        public ICommand CopyOrMoveCommand { get; }
+        public ICommand CancelCopyOrMoveCommand { get; }
+        public ICommand AcceptCopyCommand { get; }
+        public ICommand AcceptMoveCommand { get; }
+
+        #endregion
 
         #region Public Methods
 
@@ -72,7 +97,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Load all content trees: nodes, shares, contacts
         /// </summary>
-        public void FetchNodes()
+        public async void FetchNodes()
         {
             OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
             this.CloudDrive?.CancelLoad();
@@ -80,8 +105,157 @@ namespace MegaApp.ViewModels
             OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
             this.RubbishBin?.CancelLoad();
 
-            var fetchNodesRequestListener = new FetchNodesRequestListener(this);
-            this.MegaSdk.fetchNodes(fetchNodesRequestListener);
+            var fetchNodes = new FetchNodesRequestListenerAsync();
+            //fetchNodes.ServerBusy += OnServerBusy;
+            if (!await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes)))
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
+                return;
+            }
+
+            var cloudDriveRootNode = this.CloudDrive.FolderRootNode ??
+                NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                this.MegaSdk.getRootNode(), this.CloudDrive);
+            var rubbishBinRootNode = this.RubbishBin.FolderRootNode ??
+                NodeService.CreateNew(this.MegaSdk, App.AppInformation, 
+                this.MegaSdk.getRubbishNode(), this.RubbishBin);
+
+            UiService.OnUiThread(() =>
+            {
+                this.CloudDrive.FolderRootNode = cloudDriveRootNode;
+                this.RubbishBin.FolderRootNode = rubbishBinRootNode;
+
+                LoadFolders();
+            });
+        }
+
+        #endregion
+
+        #region Provate Methods
+
+        private void ResetViewStates()
+        {
+            CloudDrive.IsMultiSelectActive = false;
+            CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
+            CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
+
+            RubbishBin.IsMultiSelectActive = false;
+            RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
+            RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
+        }
+
+        private void CopyOrMove() => OnCopyOrMove(this, EventArgs.Empty);
+
+        private void OnCopyOrMove(object sender, EventArgs e)
+        {
+            if (this.ActiveFolderView.SelectedNodes == null || !this.ActiveFolderView.SelectedNodes.Any()) return;
+
+            foreach (var node in this.ActiveFolderView.SelectedNodes)
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+
+            this.ActiveFolderView.IsMultiSelectActive = false;
+            ResetViewStates();
+
+            this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
+            this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
+            this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
+            this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
+
+            this.SourceFolderView = this.ActiveFolderView;
+        }
+
+        private void CancelCopyOrMove()
+        {
+            if (SourceFolderView?.SelectedNodes != null)
+            {
+                foreach (var node in SourceFolderView.SelectedNodes)
+                    if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
+            }
+
+            SourceFolderView?.SelectedNodes.Clear();
+            SourceFolderView = null;
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AcceptCopy()
+        {
+            // Use a temp variable to avoid InvalidOperationException
+            AcceptCopyAction(SourceFolderView.SelectedNodes.ToList());
+            SourceFolderView.SelectedNodes.Clear();
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void AcceptCopyAction(IList<IMegaNode> nodes)
+        {
+            if (nodes == null || !nodes.Any()) return;
+
+            bool result = true;
+            try
+            {
+                // Fix the new parent node to allow navigation while the nodes are being copied
+                var newParentNode = ActiveFolderView.FolderRootNode;
+                foreach (var node in nodes)
+                {
+                    if (node != null)
+                    {
+                        result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
+                        node.DisplayMode = NodeDisplayMode.Normal;
+                    }
+                }
+            }
+            catch (Exception) { result = false; }
+            finally
+            {
+                if (!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_CopyFailed"));
+                }
+            }
+        }
+
+        private void AcceptMove()
+        {
+            // Use a temp variable to avoid InvalidOperationException
+            AcceptMoveAction(SourceFolderView.SelectedNodes.ToList());
+            SourceFolderView.SelectedNodes.Clear();
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void AcceptMoveAction(IList<IMegaNode> nodes)
+        {
+            if (nodes == null || !nodes.Any()) return;
+
+            bool result = true;
+            try
+            {
+                // Fix the new parent node to allow navigation while the nodes are being moved
+                var newParentNode = ActiveFolderView.FolderRootNode;
+                foreach (var node in nodes)
+                {
+                    if (node != null)
+                    {
+                        result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
+                        node.DisplayMode = NodeDisplayMode.Normal;
+                    }
+                }
+            }
+            catch (Exception) { result = false; }
+            finally
+            {
+                if (!result)
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_MoveFailed"));
+                }
+            }
         }
 
         #endregion
@@ -109,6 +283,16 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeFolderView, value); }
         }
 
+        /// <summary>
+        /// Property needed to store the source folder in a move/copy action 
+        /// </summary>
+        private FolderViewModel _sourceFolderView;
+        public FolderViewModel SourceFolderView
+        {
+            get { return _sourceFolderView; }
+            set { SetField(ref _sourceFolderView, value); }
+        }
+
         #endregion
 
         #region UiResources
@@ -116,10 +300,13 @@ namespace MegaApp.ViewModels
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        

@@ -4,17 +4,20 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    public partial class App : Application, MRequestListenerInterface
     {
         /// <summary>
         /// Provides easy access to usefull application information
@@ -194,6 +197,9 @@ namespace MegaApp
             GlobalListener = new GlobalListener(AppInformation);
             SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
+            // Add a global request listener to process all.
+            SdkService.MegaSdk.addRequestListener(this);
+
             // Add a global transfer listener to process all transfers.            
             SdkService.MegaSdk.addTransferListener(TransferService.GlobalTransferListener);
 
@@ -202,6 +208,51 @@ namespace MegaApp
 
             // Ensure we don't initialize again
             ApplicationInitialized = true;
+        }
+
+        #endregion
+
+        #region MRequestListenerInterface
+
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        {
+            if (e.getErrorCode() == MErrorType.API_ESID || e.getErrorCode() == MErrorType.API_ESSL)
+            {
+                AppService.LogoutActions();
+
+                // Show the login page with the corresponding navigation parameter
+                if (e.getErrorCode() == MErrorType.API_ESID)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESID));
+                    });
+                }
+                else if (e.getErrorCode() == MErrorType.API_ESSL)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESSL));
+                    });
+                }
+            }
+        }
+
+        public virtual void onRequestStart(MegaSDK api, MRequest request)
+        {
+            // Not necessary
+        }
+
+        public virtual void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
+        {
+            // Not necessary
+        }
+
+        public virtual void onRequestUpdate(MegaSDK api, MRequest request)
+        {
+            // Not necessary
         }
 
         #endregion

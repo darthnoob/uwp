@@ -39,7 +39,7 @@
         x:Key="NodeTemplateSelector" 
         FileItemTemplate="{StaticResource MegaNodeListViewFileItemContent}" 
         FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}"/>
-    
+
     <!-- TEMPLATES -->
     <DataTemplate x:Key="MegaPageHeaderLogo">
         <Border 
@@ -107,7 +107,7 @@
 
     <DataTemplate x:Key="MegaNodeListViewFileItemContent">
         <Border 
-            Margin="-24,1,0,1" 
+            Margin="-12,1" 
             BorderThickness="2,2,2,2" 
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
@@ -125,6 +125,10 @@
                                 Text="{Binding RenameText}" 
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
@@ -240,6 +244,10 @@
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
@@ -301,7 +309,7 @@
 
     <DataTemplate x:Key="MegaNodeListViewFolderItemContent">
         <Border 
-            Margin="-24,1,0,1" 
+            Margin="-12,1" 
             BorderThickness="2,2,2,2" 
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
@@ -319,6 +327,10 @@
                                 Text="{Binding RenameText}" 
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
@@ -416,6 +428,10 @@
                                 Text="{Binding RenameText}" 
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"

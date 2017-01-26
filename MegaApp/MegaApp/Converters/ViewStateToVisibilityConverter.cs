@@ -25,20 +25,22 @@ namespace MegaApp.Converters
                     {
                         case "download":
                         case "rename":
+                        case "copyormove":
                         case "movetorubbish":
                             return Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
 
                     }
-                case FolderContentViewState.CopyOrMoveItem:
+                case FolderContentViewState.CopyOrMove:
                     break;
-                case FolderContentViewState.ImportItem:
+                case FolderContentViewState.Import:
                     break;
                 case FolderContentViewState.MultiSelect:
                     switch (command)
                     {
                         case "download":
+                        case "copyormove":
                             return Visibility.Visible;
                         case "remove":
                         {
@@ -71,6 +73,7 @@ namespace MegaApp.Converters
                     {
                         case "download":
                         case "rename":
+                        case "copyormove":
                         case "remove":
                             return Visibility.Visible;
                         default:

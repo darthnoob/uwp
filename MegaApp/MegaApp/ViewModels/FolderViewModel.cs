@@ -28,6 +28,11 @@ namespace MegaApp.ViewModels
     {
         public event EventHandler FolderNavigatedTo;
 
+        public event EventHandler CopyOrMoveEvent;
+
+        public event EventHandler EnableMultiSelect;
+        public event EventHandler DisableMultiSelect;
+
         public FolderViewModel(ContainerType containerType)
         {
             this.Type = containerType;
@@ -38,11 +43,11 @@ namespace MegaApp.ViewModels
             this.ChildNodes = new ObservableCollection<IMegaNode>();
             this.BreadCrumbs = new ObservableCollection<IBaseNode>();
             this.SelectedNodes = new List<IMegaNode>();
-            this.IsMultiSelectActive = false;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
@@ -88,12 +93,16 @@ namespace MegaApp.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
             }
-        }
-       
+        }       
 
         private void SelectionChanged()
         {
-            this.OnUiThread(() => this.IsMultiSelectActive = this.SelectedNodes.Count > 0);
+            this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+
+            if (this.IsMultiSelectActive)
+                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            else
+                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -112,6 +121,7 @@ namespace MegaApp.ViewModels
         public ICommand AddFolderCommand { get; private set; }
         public ICommand ChangeViewCommand { get; }
         public ICommand CleanRubbishBinCommand { get; }
+        public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
@@ -302,33 +312,43 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder);
             });
 
-            if (result) return;
-
-            OnUiThread(async () =>
+            if (!result)
             {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
-            });
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+
+                });
+            }
         }
 
-        private void CleanRubbishBin()
+        private async void CleanRubbishBin()
         {
             if (this.Type != ContainerType.RubbishBin || this.ChildNodes.Count < 1) return;
 
-            var customMessageDialog = new CustomMessageDialog(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
-                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"),
-                App.AppInformation,
-                MessageDialogButtons.OkCancel);
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"));
 
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            if (!dialogResult) return;
+
+            var cleanRubbishBin = new CleanRubbishBinRequestListenerAsync();
+            var result = await cleanRubbishBin.ExecuteAsync(() =>
             {
-                this.MegaSdk.cleanRubbishBin(new CleanRubbishBinRequestListener());
-            };
+                this.MegaSdk.cleanRubbishBin(cleanRubbishBin);
+            });
 
-            customMessageDialog.ShowDialog();
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBinFailed"));
+            }
         }
+
+        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);        
 
         private async void Download()
         {
@@ -353,8 +373,6 @@ namespace MegaApp.ViewModels
                     }
                 }
             }
-
-            this.IsMultiSelectActive = false;
         }
 
         private async void MoveToRubbishBin()
@@ -369,7 +387,10 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            MultipleMoveToRubbishBin(this.SelectedNodes);
+            MultipleMoveToRubbishBin(this.SelectedNodes.ToList());
+
+            CurrentViewState = PreviousViewState;
+            SelectedNodes.Clear();
         }
 
         private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
@@ -378,21 +399,25 @@ namespace MegaApp.ViewModels
 
             Task.Run(async () =>
             {
-                foreach (var node in this.SelectedNodes)
+                bool result = true;
+                foreach (var node in nodes)
                 {
-                    await node.MoveToRubbishBinAsync(true);
+                    result = result & await node.MoveToRubbishBinAsync(true);
                 }
 
-                OnUiThread(async () =>
+                if (!result)
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinSucces"), nodes.Count));
-                });
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
+                    });
+                }
               
                 this.IsMultiSelectActive = false;
             });
-        }        
+        }
 
         /// <summary>
         /// Sets if multiselect is active or not.
@@ -400,6 +425,16 @@ namespace MegaApp.ViewModels
         private void MultiSelect()
         {
             this.IsMultiSelectActive = !this.IsMultiSelectActive;
+
+            if (this.IsMultiSelectActive)
+            {
+                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                this.SelectedNodes.Clear();
+                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private async void Remove()
@@ -414,8 +449,7 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            MultipleRemoveAsync(this.SelectedNodes);
-           
+            MultipleRemoveAsync(this.SelectedNodes.ToList());
         }
 
         private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
@@ -424,17 +458,21 @@ namespace MegaApp.ViewModels
 
             Task.Run(async () =>
             {
-                foreach (var node in this.SelectedNodes)
+                bool result = true;
+                foreach (var node in nodes)
                 {
-                    await node.RemoveAsync(true);
+                    result = result & await node.RemoveAsync(true);
                 }
 
-                OnUiThread(async () =>
+                if(!result)
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_MultiRemoveSucces_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_MultiRemoveSucces"), nodes.Count));
-                });
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_RemoveFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
+                    });
+                }
 
                 this.IsMultiSelectActive = false;
             });
@@ -492,12 +530,12 @@ namespace MegaApp.ViewModels
                     break;
                 case MNodeType.TYPE_FILE:
                     // If the user is moving nodes don't process the file node
-                    if (this.CurrentViewState != FolderContentViewState.CopyOrMoveItem)
+                    if (this.CurrentViewState != FolderContentViewState.CopyOrMove)
                         ProcessFileNode(node);
                     break;
                 case MNodeType.TYPE_FOLDER:
                     // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMoveItem) && (IsSelectedNode(node))) return;
+                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
                 case MNodeType.TYPE_ROOT:
@@ -518,16 +556,17 @@ namespace MegaApp.ViewModels
         /// <returns>True if is a selected node or false in other case</returns>
         private bool IsSelectedNode(IMegaNode node)
         {
-            if ((this.SelectedNodes != null) && (this.SelectedNodes.Count > 0))
+            if (SelectedNodes?.Count > 0)
             {
-                for (int index = 0; index < this.SelectedNodes.Count; index++)
+                var count = SelectedNodes.Count;
+                for (int index = 0; index < count; index++)
                 {
-                    var selectedNode = this.SelectedNodes[index];
-                    if ((selectedNode != null) && (node.OriginalMNode.getBase64Handle() == selectedNode.OriginalMNode.getBase64Handle()))
+                    var selectedNode = SelectedNodes[index];
+                    if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
                     {
                         //Update the selected nodes list values
                         node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        this.SelectedNodes[index] = node;
+                        SelectedNodes[index] = node;
 
                         return true;
                     }
@@ -722,16 +761,9 @@ namespace MegaApp.ViewModels
 
                 // If the user is moving nodes, check if the node had been selected to move 
                 // and establish the corresponding display mode
-                if (this.CurrentViewState == FolderContentViewState.CopyOrMoveItem)
+                if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
                 {
-                    // Check if it is the only focused node
-                    if ((this.FocusedNode != null) && (node.OriginalMNode.getBase64Handle() == this.FocusedNode.OriginalMNode.getBase64Handle()))
-                    {
-                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        this.FocusedNode = node;
-                    }
-
-                    // Check if it is one of the multiple selected nodes
+                    // Check if it is one of the selected nodes
                     IsSelectedNode(node);
                 }
 
@@ -833,8 +865,7 @@ namespace MegaApp.ViewModels
             };
 
             this.ViewMode = FolderContentViewMode.ListView;
-            this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");            
-            //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["DefaultCheckBoxStyle"];
+            this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
         }
 
         /// <summary>
@@ -875,7 +906,6 @@ namespace MegaApp.ViewModels
 
                     this.ViewMode = FolderContentViewMode.GridView;
                     this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
-                    //this.MultiSelectCheckBoxStyle = (Style)Application.Current.Resources["MultiSelectItemCheckBoxStyle"];
                     break;
 
                 case FolderContentViewMode.ListView:
@@ -947,8 +977,6 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public IMegaNode FocusedNode { get; set; }
-
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes
         {
@@ -960,7 +988,11 @@ namespace MegaApp.ViewModels
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set { SetField(ref _currentViewState, value); }
+            set
+            {
+                SetField(ref _currentViewState, value);
+                //OnPropertyChanged("IsMultiSelectActive");
+            }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1020,23 +1052,6 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
-        private IMegaNode _selectedItem;
-        public IMegaNode SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                SetField(ref _selectedItem, value);
-            }
-        }
-
-        //private Style _multiSelectCheckBoxStyle;
-        //public Style MultiSelectCheckBoxStyle
-        //{
-        //    get { return _multiSelectCheckBoxStyle; }
-        //    private set { SetField(ref _multiSelectCheckBoxStyle, value); }
-        //}
-
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
@@ -1053,7 +1068,6 @@ namespace MegaApp.ViewModels
                 else
                 {
                     this.CurrentViewState = this.PreviousViewState;
-                    //this.SelectedNodes.Clear();
                 }
             }
         }
@@ -1105,6 +1119,9 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");

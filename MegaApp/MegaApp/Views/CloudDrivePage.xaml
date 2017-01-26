@@ -16,7 +16,7 @@
 
     <!-- PAGE RESOURCES -->
     <Page.Resources>
-        
+
     </Page.Resources>
     
     <Grid Background="{StaticResource MegaAppBackgroundBrush}">
@@ -66,14 +66,27 @@
                     VerticalAlignment="Center"
                     Background="{StaticResource MegaAppBarBackgroundBrush}">
                     <Button 
+                        x:Name="BtnSort"
+                        Width="32" 
+                        Height="32"
+                        Click="OnSortClick"                        
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Viewbox
+                            MaxWidth="14"
+                            MaxHeight="14">
+                            <SymbolIcon
+                                Symbol="Sort"
+                                Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                        </Viewbox>                        
+                    </Button>                    
+                    <Button 
                         x:Name="BtnChangeView"
                         Width="32" 
                         Height="32"
                         Command="{Binding ChangeViewCommand}"
                         Background="Transparent"
-                        BorderThickness="0"
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Bottom">
+                        BorderThickness="0">
                         <Path
                             Width="14" 
                             Height="14"
@@ -149,8 +162,7 @@
                             </StackPanel>
                             <Grid 
                                 x:Name="CloudDriveContentPanel" 
-                                Grid.Row="1" 
-                                Margin="12,0,0,0">
+                                Grid.Row="1">
                                 <ListView
                                     x:Name="ListViewCloudDrive"
                                     Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
@@ -172,6 +184,7 @@
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewCloudDrive"
+                                    Margin="12,0,0,0"
                                     Padding="2,4"
                                     Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
@@ -256,8 +269,7 @@
 
                             <Grid 
                                 x:Name="RubbishBinContentPanel" 
-                                Grid.Row="1" 
-                                Margin="12,0,0,0">
+                                Grid.Row="1">
                                 <ListView
                                     x:Name="ListViewRubbishBin"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
@@ -278,12 +290,12 @@
                                 </ListView>
                                 <GridView
                                     x:Name="GridViewRubbishBin"
+                                    Margin="12,0,0,0"
                                     Padding="2,4"
                                     Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
-                                    ItemsSource="{Binding ChildNodes}"
-                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                    ItemsSource="{Binding ChildNodes}"                                    
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
@@ -322,7 +334,7 @@
                 x:Name="MultiSelectButtonCloudDrive"
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick">
+                Click="OnButtonClick">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE762;"/>
                 </AppBarButton.Icon>
@@ -348,7 +360,7 @@
                 x:Name="MultiSelectButtonRubbishBin"
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick">
+                Click="OnButtonClick">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE762;"/>
                 </AppBarButton.Icon>
@@ -357,6 +369,33 @@
                 Icon="Refresh" 
                 Label="{Binding RefreshText}" 
                 Command="{Binding ActiveFolderView.RefreshCommand}"
+                Click="OnButtonClick"/>
+        </CommandBar>
+
+        <!-- COPY OR MOVE COMMAND BAR -->
+        <CommandBar 
+            Grid.Row="1"
+            Style="{StaticResource MegaCommandBarStyle}"
+            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+            <AppBarButton 
+                Icon="Add" 
+                Label="{Binding AddFolderText}" 
+                Command="{Binding ActiveFolderView.AddFolderCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                Icon="Copy" 
+                Label="{Binding CopyText}"
+                Command="{Binding AcceptCopyCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                Icon="MoveToFolder" 
+                Label="{Binding MoveText}"
+                Command="{Binding AcceptMoveCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton 
+                Icon="Cancel" 
+                Label="{Binding CancelText}"
+                Command="{Binding CancelCopyOrMoveCommand}"
                 Click="OnButtonClick"/>
         </CommandBar>
 
@@ -369,6 +408,11 @@
                 Icon="Download" 
                 Label="{Binding DownloadText}" 
                 Command="{Binding ActiveFolderView.DownloadCommand}"
+                Click="OnButtonClick"/>
+            <AppBarButton
+                Icon="Copy" 
+                Label="{Binding CopyOrMoveText}"
+                Command="{Binding CopyOrMoveCommand}"
                 Click="OnButtonClick"/>
             <AppBarButton
                 Icon="Delete" 
@@ -385,8 +429,7 @@
             <AppBarButton
                 Icon="Cancel" 
                 Label="{Binding CancelText}"
-                Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Tapped="OnCancelMultiSelectTapped"/>
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
