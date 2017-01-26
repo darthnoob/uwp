@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -23,6 +22,14 @@ namespace MegaApp.Views
         public CloudDrivePage()
         {
             InitializeComponent();
+
+            this.ViewModel.ClearSelectedItems += OnClearSelectedItems;
+
+            this.ViewModel.CloudDrive.EnableMultiSelect += OnEnableMultiSelect;
+            this.ViewModel.RubbishBin.EnableMultiSelect += OnEnableMultiSelect;
+
+            this.ViewModel.CloudDrive.DisableMultiSelect += OnDisableMultiSelect;
+            this.ViewModel.RubbishBin.DisableMultiSelect += OnDisableMultiSelect;
         }
 
         public override bool CanGoBack
@@ -82,7 +89,10 @@ namespace MegaApp.Views
             switch(navActionType)
             {
                 case NavigationActionType.Login:
-                    this.ViewModel.FetchNodes();
+                    if (!App.AppInformation.HasFetchedNodes)
+                        this.ViewModel.FetchNodes();
+                    else
+                        this.ViewModel.LoadFolders();
                     break;
                 
                 default:
@@ -129,23 +139,59 @@ namespace MegaApp.Views
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            if (this.ViewModel.ActiveFolderView.IsMultiSelectActive)
             {
-                if (this.ViewModel.ActiveFolderView.IsMultiSelectActive) return;
-                IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
-                if (itemTapped == null) return;
-                this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+                // Manage the selected items of the view control which is not now in use,
+                // because the view control in use y automatically managed.
+                switch (this.ViewModel.ActiveFolderView.ViewMode)
+                {
+                    case FolderContentViewMode.ListView:
+                        if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                            ManageMultiSelectItems(GridViewCloudDrive, itemTapped);
+                        if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                            ManageMultiSelectItems(GridViewRubbishBin, itemTapped);
+                        break;
+
+                    case FolderContentViewMode.GridView:
+                        if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                            ManageMultiSelectItems(ListViewCloudDrive, itemTapped);
+                        if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                            ManageMultiSelectItems(ListViewRubbishBin, itemTapped);
+                        break;
+                }
+                return;
             }
+
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+        }
+
+        /// <summary>
+        /// Adds or removes the item to the selected items collection of the view control.
+        /// </summary>
+        /// <param name="viewObject">View control where add or remove the item.</param>
+        /// <param name="item">Item to add or remove.</param>
+        private void ManageMultiSelectItems(ListViewBase viewControl, IMegaNode item)
+        {
+            if (viewControl.SelectedItems.Contains(item))
+                viewControl.SelectedItems.Remove(item);
+            else
+                viewControl.SelectedItems.Add(item);
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
-            ((ListViewBase)sender).SelectedItems.Clear();
-            
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
+
+            if (((ListViewBase)sender)?.SelectedItems?.Contains(itemTapped) == true)
+                ((ListViewBase)sender).SelectedItems.Remove(itemTapped);
+
             this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
         }
 
@@ -153,24 +199,6 @@ namespace MegaApp.Views
         {
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
-        }
-
-        private void OnMultiSelectButtonClick(object sender, RoutedEventArgs e)
-        {
-            // Needed on every UI interaction
-            SdkService.MegaSdk.retryPendingConnections();
-
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectionMode = GridViewCloudDrive.SelectionMode = 
-                    ListViewSelectionMode.Multiple;
-            }
-                
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectionMode = GridViewRubbishBin.SelectionMode = 
-                    ListViewSelectionMode.Multiple;
-            }
         }
 
         private void OnSelectAllClick(object sender, RoutedEventArgs e)
@@ -209,32 +237,73 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnCancelMultiSelectTapped(object sender, TappedRoutedEventArgs e)
+        private void OnEnableMultiSelect(object sender, EventArgs e)
         {
-            // Needed on every UI interaction
-            SdkService.MegaSdk.retryPendingConnections();
-
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
             {
-                ListViewCloudDrive.SelectedItems.Clear();
-                GridViewCloudDrive.SelectedItems.Clear();
-                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                {
+                    ListViewCloudDrive.SelectionMode = ListViewSelectionMode.Multiple;
+                    GridViewCloudDrive.SelectionMode = ListViewSelectionMode.Multiple;
+                }
+
+                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                {
+                    ListViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
+                    GridViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
+                }
+            }
+        }
+
+        private void OnDisableMultiSelect(object sender, EventArgs e)
+        {
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                OnClearSelectedItems(sender, e);
+
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            {
+                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 {
                     ListViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
                     GridViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
                 }
-            }
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectedItems.Clear();
-                GridViewRubbishBin.SelectedItems.Clear();
-                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
                 {
                     ListViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
                     GridViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
                 }
             }
+        }
+
+        private void OnClearSelectedItems(object sender, EventArgs e)
+        {
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
+                if (ListViewCloudDrive?.SelectedItems?.Count > 0)
+                    ListViewCloudDrive.SelectedItems.Clear();
+                if (GridViewCloudDrive?.SelectedItems?.Count > 0)
+                    GridViewCloudDrive.SelectedItems.Clear();
+            }
+
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+            {
+                if (ListViewRubbishBin?.SelectedItems?.Count > 0)
+                    ListViewRubbishBin.SelectedItems.Clear();
+                if (GridViewRubbishBin?.SelectedItems?.Count > 0)
+                    GridViewRubbishBin.SelectedItems.Clear();
+            }
+        }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+            var sortButton = sender as Button;
+
+            var buttonPosition = sortButton.TransformToVisual(BtnSort);
+            Point screenCoords = buttonPosition.TransformPoint(new Point(32, 32));
+
+            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
+            menuFlyout.ShowAt(sortButton, screenCoords);
         }
     }
 }

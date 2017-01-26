@@ -6,8 +6,8 @@
     public enum FolderContentViewState
     {
         CloudDrive,
-        CopyOrMoveItem,
-        ImportItem,
+        CopyOrMove,
+        Import,
         MultiSelect,
         RubbishBin,
         InShares,

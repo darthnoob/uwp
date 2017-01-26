@@ -1,9 +1,10 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
+using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -28,7 +29,7 @@ namespace MegaApp.MegaApi
 
         #region MRequestListenerInterface
 
-        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual async void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             //Deployment.Current.Dispatcher.BeginInvoke(() =>
             //{
@@ -59,8 +60,11 @@ namespace MegaApp.MegaApi
                 // If the account has been blocked
                 api.logout(new LogOutRequestListener(false));
 
-                //Deployment.Current.Dispatcher.BeginInvoke(() =>
-                //    NavigateService.NavigateTo(typeof(InitTourPage), NavigationParameter.API_EBLOCKED));
+                UiService.OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
+                });
             }
             else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {

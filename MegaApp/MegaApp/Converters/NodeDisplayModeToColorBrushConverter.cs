@@ -20,7 +20,7 @@ namespace MegaApp.Converters
                     return new SolidColorBrush(Colors.Transparent);
                 case NodeDisplayMode.SelectedForCopyOrMove:
                 {
-                    var solidColor = new SolidColorBrush((Color)Application.Current.Resources["PhoneAccentColor"])
+                    var solidColor = new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"])
                     {
                         // Specify culture independent number information
                         // Parameter is always with , (resource)

@@ -26,28 +26,28 @@ namespace MegaApp.Interfaces
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        NodeActionResult Move(IMegaNode newParentNode);
+        Task<NodeActionResult> MoveAsync(IMegaNode newParentNode);
 
         /// <summary>
         /// Copy the node from its current location to a new folder destination
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        NodeActionResult Copy(IMegaNode newParentNode);
+        Task<NodeActionResult> CopyAsync(IMegaNode newParentNode);
 
         /// <summary>
         /// Move the node to the rubbish bin
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task MoveToRubbishBinAsync(bool isMultiSelect = false);
+        Task<bool> MoveToRubbishBinAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Delete the node permanently
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
         /// <returns>Result of the action</returns>
-        Task RemoveAsync(bool isMultiSelect = false);
+        Task<bool> RemoveAsync(bool isMultiSelect = false);
 
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 

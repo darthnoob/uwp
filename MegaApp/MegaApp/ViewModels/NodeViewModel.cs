@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -33,6 +32,8 @@ namespace MegaApp.ViewModels
             this.Parent = parent;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
+
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.RenameCommand = new RelayCommand(Rename);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
@@ -47,6 +48,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
+        public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -75,7 +77,10 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void GetThumbnail()
+        /// <summary>
+        /// Get the thumbnail of the node
+        /// </summary>
+        private async void GetThumbnail()
         {
             if (FileService.FileExists(this.ThumbnailPath))
             {
@@ -84,7 +89,21 @@ namespace MegaApp.ViewModels
             }
             else if (Convert.ToBoolean(this.MegaSdk.isLoggedIn()) || this.ParentContainerType == ContainerType.FolderLink)
             {
-                this.MegaSdk.getThumbnail(this.OriginalMNode, this.ThumbnailPath, new GetThumbnailRequestListener(this));
+                var getThumbnail = new GetThumbnailRequestListenerAsync();
+                var result = await getThumbnail.ExecuteAsync(() =>
+                {
+                    this.MegaSdk.getThumbnail(this.OriginalMNode, 
+                        this.ThumbnailPath, getThumbnail);
+                });
+                
+                if(result)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        this.IsDefaultImage = false;
+                        this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
+                    });
+                }
             }
         }
 
@@ -220,18 +239,67 @@ namespace MegaApp.ViewModels
                 });
                 return;
             };
-            
+
             OnUiThread(() => this.Name = newName);
         }
-                
-        public NodeActionResult Move(IMegaNode newParentNode)
+
+        private void CopyOrMove()
         {
-            return NodeActionResult.IsBusy;
+            if (this.Parent?.CurrentViewState != FolderContentViewState.MultiSelect)
+            {
+                Parent.SelectedNodes.Clear();
+                Parent.SelectedNodes.Add(this);
+            }
+
+            if (this.Parent.CopyOrMoveCommand.CanExecute(null))
+                this.Parent.CopyOrMoveCommand.Execute(null);
         }
 
-        public NodeActionResult Copy(IMegaNode newParentNode)
+        /// <summary>
+        /// Move the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> MoveAsync(IMegaNode newParentNode)
         {
-            return NodeActionResult.IsBusy;
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            if (MegaSdk.checkMove(OriginalMNode, newParentNode.OriginalMNode).getErrorCode() != MErrorType.API_OK)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_MoveFailed"));
+
+                return NodeActionResult.Failed;
+            }
+
+            var moveNode = new MoveNodeRequestListenerAsync();
+            var result = await moveNode.ExecuteAsync(() =>
+                MegaSdk.moveNode(OriginalMNode, newParentNode.OriginalMNode, moveNode));
+
+            if (!result) return NodeActionResult.Failed;
+            
+            return NodeActionResult.Succeeded;
+        }
+
+        /// <summary>
+        /// Copy the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> CopyAsync(IMegaNode newParentNode)
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                MegaSdk.copyNode(OriginalMNode, newParentNode.OriginalMNode, copyNode));
+
+            if (!result) return NodeActionResult.Failed;
+            
+            return NodeActionResult.Succeeded;
         }
 
         private async void MoveToRubbishBin()
@@ -245,12 +313,12 @@ namespace MegaApp.ViewModels
             await MoveToRubbishBinAsync();
         }
 
-        public async Task MoveToRubbishBinAsync(bool isMultiSelect = false)
+        public async Task<bool> MoveToRubbishBinAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!IsUserOnline()) return false;
 
-            if (this.OriginalMNode == null) return;
+            if (this.OriginalMNode == null) return false;
 
             if (!isMultiSelect)
             {
@@ -258,7 +326,7 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name));
 
-                if (!dialogResult) return;
+                if (!dialogResult) return true;
             }
 
             var moveNode = new MoveNodeRequestListenerAsync();
@@ -267,14 +335,9 @@ namespace MegaApp.ViewModels
                 this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode);
             });
 
-            if (result) return;
+            if (!result) return false;
 
-            OnUiThread(async () =>
-            {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed"), this.Name));
-            });
+            return true;
         }
 
         private async void Remove()
@@ -288,12 +351,12 @@ namespace MegaApp.ViewModels
             await RemoveAsync();
         }
 
-        public async Task RemoveAsync(bool isMultiSelect = false)
+        public async Task<bool> RemoveAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!IsUserOnline()) return false;
 
-            if (this.OriginalMNode == null) return;
+            if (this.OriginalMNode == null) return false;
 
             if (!isMultiSelect)
             {
@@ -301,23 +364,18 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.Name));
 
-                if (!dialogResult) return;
+                if (!dialogResult) return true;
             }
 
-            var removeNode = new DeleteNodeRequestListenerAsync();
+            var removeNode = new RemoveNodeRequestListenerAsync();
             var result = await removeNode.ExecuteAsync(() =>
             {
                 this.MegaSdk.remove(this.OriginalMNode, removeNode);
             });
 
-            if (result) return;
+            if (!result) return false;
 
-            OnUiThread(async () =>
-            {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_RemoveNodeFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveNodeFailed"), this.Name));
-            });
+            return true;
         }
 
         public NodeActionResult GetLink()
@@ -419,7 +477,12 @@ namespace MegaApp.ViewModels
 
         public ContainerType ParentContainerType { get; private set; }
 
-        public NodeDisplayMode DisplayMode { get; set; }
+        private NodeDisplayMode _displayMode;
+        public NodeDisplayMode DisplayMode
+        {
+            get { return _displayMode; }
+            set { SetField(ref _displayMode, value); }
+        }
 
         private bool _isSelectedForOffline;
         public bool IsSelectedForOffline
@@ -470,6 +533,9 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
