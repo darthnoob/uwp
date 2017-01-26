@@ -95,7 +95,9 @@
     <PRIResource Include="Strings\en\SettingsResources.resw" />
     <PRIResource Include="Strings\en\ProgressMessages.resw" />
     <PRIResource Include="Strings\en\AppResources.resw" />
-    <PRIResource Include="Strings\en\AppMessages.resw" />
+    <PRIResource Include="Strings\en\AppMessages.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -108,6 +110,7 @@
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
+    <Compile Include="Classes\SettingTemplateSelector.cs" />
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
@@ -146,6 +149,7 @@
     <Compile Include="Interfaces\IMegaNode.cs" />
     <Compile Include="Interfaces\INavigate.cs" />
     <Compile Include="Interfaces\INavigationObject.cs" />
+    <Compile Include="Interfaces\ISetting.cs" />
     <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
@@ -168,6 +172,13 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\DescriptionSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\RecoveryKeySettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\CameraUploadsSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingViewModel.cs" />
     <Compile Include="Services\DeviceService.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FolderService.cs" />
@@ -201,6 +212,8 @@
     <Compile Include="ViewModels\LoginAndCreateAccountViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingSectionViewModel.cs" />
+    <Compile Include="ViewModels\SettingsMyAccountViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\TransferListViewModel.cs" />
@@ -225,8 +238,8 @@
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\ValidationService.cs" />
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    <Compile Include="Views\SettingsMyAccountPage.xaml.cs">
+      <DependentUpon>SettingsMyAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
@@ -286,7 +299,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\SettingsPage.xaml">
+    <Page Include="Views\SettingsMyAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
