@@ -28,6 +28,11 @@ namespace MegaApp.ViewModels
     {
         public event EventHandler FolderNavigatedTo;
 
+        public event EventHandler CopyOrMoveEvent;
+
+        public event EventHandler EnableMultiSelect;
+        public event EventHandler DisableMultiSelect;
+
         public FolderViewModel(ContainerType containerType)
         {
             this.Type = containerType;
@@ -42,6 +47,7 @@ namespace MegaApp.ViewModels
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
@@ -87,12 +93,16 @@ namespace MegaApp.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
             }
-        }
-       
+        }       
 
         private void SelectionChanged()
         {
-            this.OnUiThread(() => this.IsMultiSelectActive = this.SelectedNodes.Count > 0);
+            this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+
+            if (this.IsMultiSelectActive)
+                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            else
+                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -111,6 +121,7 @@ namespace MegaApp.ViewModels
         public ICommand AddFolderCommand { get; private set; }
         public ICommand ChangeViewCommand { get; }
         public ICommand CleanRubbishBinCommand { get; }
+        public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
@@ -337,6 +348,8 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);        
+
         private async void Download()
         {
             if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
@@ -404,24 +417,24 @@ namespace MegaApp.ViewModels
               
                 this.IsMultiSelectActive = false;
             });
-        }        
+        }
 
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
         private void MultiSelect()
         {
-            //if(IsMultiSelectActive)
-            //{
-            //    CurrentViewState = PreviousViewState;
-            //}
-            //else
-            //{
-            //    PreviousViewState = CurrentViewState;
-            //    CurrentViewState = FolderContentViewState.MultiSelect;
-            //}
-
             this.IsMultiSelectActive = !this.IsMultiSelectActive;
+
+            if (this.IsMultiSelectActive)
+            {
+                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            }
+            else
+            {
+                this.SelectedNodes.Clear();
+                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private async void Remove()
@@ -750,14 +763,7 @@ namespace MegaApp.ViewModels
                 // and establish the corresponding display mode
                 if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
                 {
-                    // Check if it is the only focused node
-                    if ((this.FocusedNode != null) && (node.OriginalMNode.getBase64Handle() == this.FocusedNode.OriginalMNode.getBase64Handle()))
-                    {
-                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        this.FocusedNode = node;
-                    }
-
-                    // Check if it is one of the multiple selected nodes
+                    // Check if it is one of the selected nodes
                     IsSelectedNode(node);
                 }
 
@@ -971,8 +977,6 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public IMegaNode FocusedNode { get; set; }
-
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes
         {
@@ -987,7 +991,7 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _currentViewState, value);
-                OnPropertyChanged("IsMultiSelectActive");
+                //OnPropertyChanged("IsMultiSelectActive");
             }
         }
 
@@ -1048,8 +1052,6 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
-        //public bool IsMultiSelectActive => CurrentViewState == FolderContentViewState.MultiSelect;
-
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
@@ -1066,7 +1068,6 @@ namespace MegaApp.ViewModels
                 else
                 {
                     this.CurrentViewState = this.PreviousViewState;
-                    //this.SelectedNodes.Clear();
                 }
             }
         }

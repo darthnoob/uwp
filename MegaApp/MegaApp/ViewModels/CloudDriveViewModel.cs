@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -9,9 +12,16 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
+        public event EventHandler ClearSelectedItems;
+
         public CloudDriveViewModel()
         {
             InitializeModel();
+
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
+            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
+            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
+            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
         }
 
         /// <summary>
@@ -22,9 +32,21 @@ namespace MegaApp.ViewModels
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
 
+            this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
+            this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
+
             // The Cloud Drive is always the first active folder on initalization
             this.ActiveFolderView = this.CloudDrive;
         }
+
+        #region Commands
+
+        public ICommand CopyOrMoveCommand { get; }
+        public ICommand CancelCopyOrMoveCommand { get; }
+        public ICommand AcceptCopyCommand { get; }
+        public ICommand AcceptMoveCommand { get; }
+
+        #endregion
 
         #region Public Methods
 
@@ -109,93 +131,130 @@ namespace MegaApp.ViewModels
             });
         }
 
-        public async void AcceptCopyAction(IList<IMegaNode> nodes)
+        #endregion
+
+        #region Provate Methods
+
+        private void ResetViewStates()
         {
+            CloudDrive.IsMultiSelectActive = false;
+            CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
+            CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
+
+            RubbishBin.IsMultiSelectActive = false;
+            RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
+            RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
+        }
+
+        private void CopyOrMove() => OnCopyOrMove(this, EventArgs.Empty);
+
+        private void OnCopyOrMove(object sender, EventArgs e)
+        {
+            if (this.ActiveFolderView.SelectedNodes == null || !this.ActiveFolderView.SelectedNodes.Any()) return;
+
+            foreach (var node in this.ActiveFolderView.SelectedNodes)
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+
+            this.ActiveFolderView.IsMultiSelectActive = false;
+            ResetViewStates();
+
+            this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
+            this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
+            this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
+            this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
+
+            this.SourceFolderView = this.ActiveFolderView;
+        }
+
+        private void CancelCopyOrMove()
+        {
+            if (SourceFolderView?.SelectedNodes != null)
+            {
+                foreach (var node in SourceFolderView.SelectedNodes)
+                    if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
+            }
+
+            SourceFolderView?.SelectedNodes.Clear();
+            SourceFolderView = null;
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AcceptCopy()
+        {
+            // Use a temp variable to avoid InvalidOperationException
+            AcceptCopyAction(SourceFolderView.SelectedNodes.ToList());
+            SourceFolderView.SelectedNodes.Clear();
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void AcceptCopyAction(IList<IMegaNode> nodes)
+        {
+            if (nodes == null || !nodes.Any()) return;
+
             bool result = true;
             try
             {
-                // Copy all the selected nodes and then clear and release the selected nodes list
-                if (nodes?.Count > 0)
+                // Fix the new parent node to allow navigation while the nodes are being copied
+                var newParentNode = ActiveFolderView.FolderRootNode;
+                foreach (var node in nodes)
                 {
-                    // Fix the new parent node to allow navigation while the nodes are being copied
-                    var newParentNode = ActiveFolderView.FolderRootNode;
-                    foreach (var node in nodes)
+                    if (node != null)
                     {
-                        if (node != null)
-                        {
-                            result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
-                            node.DisplayMode = NodeDisplayMode.Normal;
-                        }
+                        result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
+                        node.DisplayMode = NodeDisplayMode.Normal;
                     }
-                    //SourceFolderView.SelectedNodes.Clear();
                 }
-
-                //// Release the focused node
-                //if (SourceFolderView?.FocusedNode != null)
-                //{
-                //    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
-                //    SourceFolderView.FocusedNode = null;
-                //}
             }
-            catch (InvalidOperationException)
-            {
-                result = false;
-            }
+            catch (Exception) { result = false; }
             finally
             {
-                if(!result)
+                if (!result)
                 {
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_CopyFailed"));
                 }
-
-                SourceFolderView = null;
             }
         }
 
-        public async void AcceptMoveAction(IList<IMegaNode> nodes)
+        private void AcceptMove()
         {
+            // Use a temp variable to avoid InvalidOperationException
+            AcceptMoveAction(SourceFolderView.SelectedNodes.ToList());
+            SourceFolderView.SelectedNodes.Clear();
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void AcceptMoveAction(IList<IMegaNode> nodes)
+        {
+            if (nodes == null || !nodes.Any()) return;
+
             bool result = true;
             try
             {
-                // Copy all the selected nodes and then clear and release the selected nodes list
-                if (nodes?.Count > 0)
+                // Fix the new parent node to allow navigation while the nodes are being moved
+                var newParentNode = ActiveFolderView.FolderRootNode;
+                foreach (var node in nodes)
                 {
-                    // Fix the new parent node to allow navigation while the nodes are being moved
-                    var newParentNode = ActiveFolderView.FolderRootNode;
-                    foreach (var node in nodes)
+                    if (node != null)
                     {
-                        if (node != null)
-                        {
-                            result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
-                            node.DisplayMode = NodeDisplayMode.Normal;
-                        }
+                        result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
+                        node.DisplayMode = NodeDisplayMode.Normal;
                     }
-                    //SourceFolderView.SelectedNodes.Clear();
                 }
-
-                //// Release the focused node
-                //if (SourceFolderView?.FocusedNode != null)
-                //{
-                //    SourceFolderView.FocusedNode.DisplayMode = NodeDisplayMode.Normal;
-                //    SourceFolderView.FocusedNode = null;
-                //}
             }
-            catch (InvalidOperationException)
-            {
-                result = false;
-            }
+            catch (Exception) { result = false; }
             finally
             {
-                if(!result)
+                if (!result)
                 {
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_MoveFailed"));
                 }
-
-                SourceFolderView = null;
             }
         }
 

@@ -295,8 +295,7 @@
                                     Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
                                     DataContext="{Binding RubbishBin}"
-                                    ItemsSource="{Binding ChildNodes}"
-                                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                                    ItemsSource="{Binding ChildNodes}"                                    
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}"
@@ -335,7 +334,7 @@
                 x:Name="MultiSelectButtonCloudDrive"
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick">
+                Click="OnButtonClick">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE762;"/>
                 </AppBarButton.Icon>
@@ -361,7 +360,7 @@
                 x:Name="MultiSelectButtonRubbishBin"
                 Label="{Binding MultiSelectText}" 
                 Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Click="OnMultiSelectButtonClick">
+                Click="OnButtonClick">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE762;"/>
                 </AppBarButton.Icon>
@@ -385,16 +384,19 @@
                 Click="OnButtonClick"/>
             <AppBarButton 
                 Icon="Copy" 
-                Label="{Binding CopyText}"                 
-                Click="OnAcceptCopyClick"/>
+                Label="{Binding CopyText}"
+                Command="{Binding AcceptCopyCommand}"
+                Click="OnButtonClick"/>
             <AppBarButton 
                 Icon="MoveToFolder" 
                 Label="{Binding MoveText}"
-                Click="OnAcceptMoveClick"/>
+                Command="{Binding AcceptMoveCommand}"
+                Click="OnButtonClick"/>
             <AppBarButton 
                 Icon="Cancel" 
-                Label="{Binding CancelText}"                 
-                Click="OnCancelCopyOrMoveClick"/>
+                Label="{Binding CancelText}"
+                Command="{Binding CancelCopyOrMoveCommand}"
+                Click="OnButtonClick"/>
         </CommandBar>
 
         <!-- MULTI SELECT COMMAND BAR -->
@@ -410,7 +412,8 @@
             <AppBarButton
                 Icon="Copy" 
                 Label="{Binding CopyOrMoveText}"
-                Click="OnCopyOrMoveClick"/>
+                Command="{Binding CopyOrMoveCommand}"
+                Click="OnButtonClick"/>
             <AppBarButton
                 Icon="Delete" 
                 Label="{Binding MoveToRubbishBinText}" 
@@ -426,8 +429,7 @@
             <AppBarButton
                 Icon="Cancel" 
                 Label="{Binding CancelText}"
-                Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                Tapped="OnCancelMultiSelectTapped"/>
+                Command="{Binding ActiveFolderView.MultiSelectCommand}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton

@@ -32,6 +32,8 @@ namespace MegaApp.ViewModels
             this.Parent = parent;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
+
+            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.RenameCommand = new RelayCommand(Rename);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
@@ -46,6 +48,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
+        public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -238,6 +241,18 @@ namespace MegaApp.ViewModels
             };
 
             OnUiThread(() => this.Name = newName);
+        }
+
+        private void CopyOrMove()
+        {
+            if (this.Parent?.CurrentViewState != FolderContentViewState.MultiSelect)
+            {
+                Parent.SelectedNodes.Clear();
+                Parent.SelectedNodes.Add(this);
+            }
+
+            if (this.Parent.CopyOrMoveCommand.CanExecute(null))
+                this.Parent.CopyOrMoveCommand.Execute(null);
         }
 
         /// <summary>
@@ -518,6 +533,9 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");

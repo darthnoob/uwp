@@ -125,6 +125,10 @@
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
@@ -239,6 +243,10 @@
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
@@ -318,6 +326,10 @@
                                 Text="{Binding RenameText}" 
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"
@@ -415,6 +427,10 @@
                                 Text="{Binding RenameText}" 
                                 Command="{Binding RenameCommand}"
                                 Visibility="{Binding Parent, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
+                            <MenuFlyoutItem 
+                                Text="{Binding CopyOrMoveText}" 
+                                Command="{Binding CopyOrMoveCommand}"
+                                Visibility="{Binding Parent, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding MoveToRubbishBinText}" 
                                 Command="{Binding MoveToRubbishBinCommand}"

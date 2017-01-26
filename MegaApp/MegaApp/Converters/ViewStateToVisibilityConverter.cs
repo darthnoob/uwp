@@ -25,6 +25,7 @@ namespace MegaApp.Converters
                     {
                         case "download":
                         case "rename":
+                        case "copyormove":
                         case "movetorubbish":
                             return Visibility.Visible;
                         default:
@@ -39,6 +40,7 @@ namespace MegaApp.Converters
                     switch (command)
                     {
                         case "download":
+                        case "copyormove":
                             return Visibility.Visible;
                         case "remove":
                         {
@@ -71,6 +73,7 @@ namespace MegaApp.Converters
                     {
                         case "download":
                         case "rename":
+                        case "copyormove":
                         case "remove":
                             return Visibility.Visible;
                         default:
