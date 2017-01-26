@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
+using mega;
 using MegaApp.Classes;
 
 namespace MegaApp.Services
@@ -13,25 +14,61 @@ namespace MegaApp.Services
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
 
-        public static void SaveSetting<T>(string key, T value)
+        /// <summary>
+        /// Save a value to the app local settings container
+        /// </summary>
+        /// <typeparam name="T">Type of the value</typeparam>
+        /// <param name="key">Key name of the value container</param>
+        /// <param name="value">Value to save</param>
+        /// <returns>True if save was succesful, else it will return False</returns>
+        public static bool Save<T>(string key, T value)
         {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            var settings = ApplicationData.Current.LocalSettings;
+            if (settings == null) return false;
+
             try
             {
-                SettingsMutex.WaitOne();
-                var settings = ApplicationData.Current.LocalSettings;
-                settings.Values[key] = value;
+                if (settings.Values.ContainsKey(key))
+                {
+                    settings.Values[key] = value;
+                }
+                else
+                {
+                    settings.Values.Add(key, value);
+                }
+
+                return true;
             }
             catch (Exception e)
             {
-                new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return false;
             }
-            finally
+        }
+
+        public static T Load<T>(string key, T defaultValue)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            var settings = ApplicationData.Current.LocalSettings;
+            if (settings == null) return defaultValue;
+
+            try
             {
-                SettingsMutex.ReleaseMutex();
+                if (settings.Values.ContainsKey(key))
+                {
+                    return (T) settings.Values[key];
+                }
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return defaultValue;
             }
         }
 
@@ -282,8 +319,8 @@ namespace MegaApp.Services
         /// <param name="session">User session ID</param>
         public static void SaveMegaLoginData(string email, string session)
         {
-            SaveSetting(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"), email);
-            SaveSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
+            Save(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"), email);
+            Save(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
 
             // Save session for automatic camera upload agent
             SaveSettingToFile(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);

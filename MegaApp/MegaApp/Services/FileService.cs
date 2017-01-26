@@ -244,6 +244,26 @@ namespace MegaApp.Services
             }
         }
 
+        public static async Task<StorageFile> SaveFile(KeyValuePair<string, IList<string>> fileTypes)
+        {
+            try
+            {
+                var fileSavePicker = new FileSavePicker()
+                {
+                    SuggestedStartLocation = PickerLocationId.ComputerFolder,
+                };
+                fileSavePicker.FileTypeChoices.Add(fileTypes);
+                return await fileSavePicker.PickSaveFileAsync();
+            }
+            catch (Exception e)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message));
+                return null;
+            }
+        }
+
         public static string CreateRandomFilePath(string path)
         {
             return Path.Combine(path, Guid.NewGuid().ToString("N"));

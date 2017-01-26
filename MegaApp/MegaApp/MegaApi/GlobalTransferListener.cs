@@ -7,7 +7,7 @@ using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
-    public class GlobalTransferListener: MTransferListenerInterface
+    public class GlobalTransferListener : MTransferListenerInterface
     {
         /// <summary>
         /// This function is called when a folder transfer has finished
@@ -31,7 +31,7 @@ namespace MegaApp.MegaApi
                             var folderNode = megaTransfer.SelectedNode as FolderNodeViewModel;
                             if (folderNode != null)
                             {
-                                if(!await megaTransfer.FinishDownload(megaTransfer.TransferPath, folderNode.Name))
+                                if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, folderNode.Name))
                                     UiService.OnUiThread(() => megaTransfer.Status = TransferStatus.Error);
                                 else
                                     UiService.OnUiThread(() => megaTransfer.Status = TransferStatus.Downloaded);
@@ -95,7 +95,7 @@ namespace MegaApp.MegaApi
                     {
                         case TransferType.Download:
                             bool result = true;
-                            
+
                             //If is download transfer of an image file 
                             var imageNode = megaTransfer.SelectedNode as ImageNodeViewModel;
                             if (imageNode != null)
@@ -163,9 +163,9 @@ namespace MegaApp.MegaApi
 
             // Disable the "camera upload" service
             //MediaService.SetAutoCameraUpload(false);
-            SettingsService.SaveSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"), false);
+            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"), false);
 
-            UiService.OnUiThread(() => DialogService.ShowOverquotaAlert());
+            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace MegaApp.MegaApi
 
             UiService.OnUiThread(async () =>
             {
-                await DialogService.ShowAlertAsync(title, 
+                await DialogService.ShowAlertAsync(title,
                     string.Format(message, transfer.getFileName()));
             });
         }
@@ -213,7 +213,7 @@ namespace MegaApp.MegaApi
         {
             return false;
         }
-        
+
         public void onTransferFinish(MegaSDK api, MTransfer transfer, MError e)
         {
             // Extra checking to avoid NullReferenceException
@@ -232,7 +232,7 @@ namespace MegaApp.MegaApi
 
             // Search the corresponding transfer in the transfers list
             var megaTransfer = TransferService.SearchTransfer(TransferService.MegaTransfers.SelectAll(), transfer);
-                        
+
             UiService.OnUiThread(() =>
             {
                 // If the transfer exists in the transfers list.
@@ -254,7 +254,7 @@ namespace MegaApp.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
-            
+
         }
 
         public void onTransferUpdate(MegaSDK api, MTransfer transfer)

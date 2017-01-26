@@ -99,9 +99,17 @@ namespace MegaApp.Services
             var task = BackgroundTaskRegistration.AllTasks
                 .FirstOrDefault(t => t.Value.Name.Equals(taskName));
             
-            // Return task if found, else return null
+        // Return task if found, else return null
             if (!task.IsNull()) return (BackgroundTaskRegistration)task.Value;
             return null;
+        }
+
+        public static bool IsBackGroundTaskActive(
+            string taskEntryPoint,
+            string taskName)
+        {
+            var task = GetBackgroundTask(taskEntryPoint, taskName);
+            return task != null;
         }
 
     }

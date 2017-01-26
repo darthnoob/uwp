@@ -69,7 +69,7 @@ namespace MegaApp.UserControls
                     Label = MyAccountText,
                     SubLabel = "& " + SettingsText,
                     Icon = new SymbolIcon(Symbol.Setting),
-                    TargetViewModel = typeof(SettingsViewModel)
+                    TargetViewModel = typeof(SettingsMyAccountViewModel)
                 },
             };
         }

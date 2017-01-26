@@ -618,5 +618,37 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Failed to upload the folder '{0}'. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to upload a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
+   </data>
+  <data name="AM_RecoveryKeyCopied" xml:space="preserve">
+    <value>The recovery key has been copied to your clipboard.</value>
+    <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
+  </data>
+  <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
+    <value>Failed to copy the recovery key to your clipboard. Please try again.</value>
+    <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
+  </data>
+  <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
+    <value>Recovery key copy failed</value>
+    <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
+  </data>
+  <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
+    <value>Recovery key copied</value>
+    <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
+  </data>
+  <data name="AM_SavedFile" xml:space="preserve">
+    <value>File '{0}' has been saved.</value>
+    <comment>Message of the dialog displayed in cases that the app has succesful saved a file.</comment>
+  </data>
+  <data name="AM_SavedFile_Title" xml:space="preserve">
+    <value>File saved</value>
+    <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
+  </data>
+  <data name="AM_SaveFileFailed" xml:space="preserve">
+    <value>Failed to save file '{0}'.</value>
+    <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
+  </data>
+  <data name="AM_SaveFileFailed_Title" xml:space="preserve">
+    <value>Save file failed</value>
+    <comment>Title of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
 </root>

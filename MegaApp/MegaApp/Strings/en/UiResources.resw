@@ -426,4 +426,52 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>New folder</value>
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Logout" xml:space="preserve">
+    <value>Logout</value>
+    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CameraUploadsDescription" xml:space="preserve">
+    <value>Upload your photo's to your account.</value>
+    <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CameraUploadsTitle" xml:space="preserve">
+    <value>Enable auto camera uploads</value>
+    <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryKey" xml:space="preserve">
+    <value>Recovery key</value>
+    <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryKeyDescription" xml:space="preserve">
+    <value>Your Recovery key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SecuritySettings" xml:space="preserve">
+    <value>Security</value>
+    <comment>Label for any 'Security settings' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SecuritySettingsDescription" xml:space="preserve">
+    <value>Security settings differ on each of your connected devices.</value>
+    <comment>Label for any 'Security settings description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_About" xml:space="preserve">
+    <value>About</value>
+    <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AboutDescription" xml:space="preserve">
+    <value>Information about the MEGA application</value>
+    <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyKey" xml:space="preserve">
+    <value>Copy key</value>
+    <comment>Label for any 'Copy key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveKey" xml:space="preserve">
+    <value>Save key</value>
+    <comment>Label for any 'Save key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PlainText" xml:space="preserve">
+    <value>Plain text</value>
+    <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
