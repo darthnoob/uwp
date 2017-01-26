@@ -1,11 +1,10 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Services;
+using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -24,13 +23,13 @@ namespace MegaApp.MegaApi
         abstract protected bool NavigateOnSucces { get; }
         abstract protected bool ActionOnSucces { get; }
         abstract protected Type NavigateToPage { get; }
-        abstract protected NavigationParameter NavigationParameter { get; }
-        
+        abstract protected NavigationObject NavigationObject { get; }
+
         #endregion
 
         #region MRequestListenerInterface
 
-        public async virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual async void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             //Deployment.Current.Dispatcher.BeginInvoke(() =>
             //{
@@ -42,32 +41,30 @@ namespace MegaApp.MegaApi
             {
                 if (ShowSuccesMessage)
                 {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        new CustomMessageDialog(
-                            SuccessMessageTitle,
-                            SuccessMessage,
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                    new CustomMessageDialog(
+                        SuccessMessageTitle,
+                        SuccessMessage,
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
 
                 if (ActionOnSucces)
                     OnSuccesAction(api, request);
 
                 if (NavigateOnSucces)
-                {
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        (Window.Current.Content as Frame).Navigate(NavigateToPage));
-                }
+                    UiService.OnUiThread(() => 
+                        NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
             }
             else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 
             {
                 // If the account has been blocked
                 api.logout(new LogOutRequestListener(false));
 
-                //Deployment.Current.Dispatcher.BeginInvoke(() =>
-                //    NavigateService.NavigateTo(typeof(InitTourPage), NavigationParameter.API_EBLOCKED));
+                UiService.OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
+                });
             }
             else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {
@@ -90,15 +87,12 @@ namespace MegaApp.MegaApi
             else if (e.getErrorCode() != MErrorType.API_EINCOMPLETE)
             {
                 if (ShowErrorMessage)
-                {                    
-                    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        new CustomMessageDialog(
-                            ErrorMessageTitle,
-                            String.Format(ErrorMessage, e.getErrorString()),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialogAsync();
-                    });
+                {
+                    new CustomMessageDialog(
+                        ErrorMessageTitle,
+                        string.Format(ErrorMessage, e.getErrorString()),
+                        App.AppInformation,
+                        MessageDialogButtons.Ok).ShowDialog();
                 }
             }           
         }

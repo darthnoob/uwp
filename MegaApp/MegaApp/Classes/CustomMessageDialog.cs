@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
+using MegaApp.Services;
 
 namespace MegaApp.Classes
 {
@@ -17,7 +19,7 @@ namespace MegaApp.Classes
 
         #region Controls
 
-        protected MessageDialog DialogWindow { get; set; }        
+        protected MessageDialog DialogWindow { get; set; }
 
         #endregion
 
@@ -25,7 +27,8 @@ namespace MegaApp.Classes
 
         private readonly string _title;
         private readonly string _message;
-        private readonly AppInformation _appInformation;        
+        private readonly AppInformation _appInformation;
+        private TaskCompletionSource<MessageDialogResult> _taskCompletionSource;
 
         #endregion
 
@@ -46,7 +49,7 @@ namespace MegaApp.Classes
             DialogWindow = new MessageDialog(_message, _title);
 
             // Add commands and set their callbacks
-            DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"), 
+            DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                 new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
 
             // Set the command that will be invoked by default
@@ -71,30 +74,30 @@ namespace MegaApp.Classes
             _appInformation = appInformation;
 
             DialogWindow = new MessageDialog(_message, _title);
-            
+
             // Create buttons defined in the constructor
             switch (dialogButtons)
             {
                 case MessageDialogButtons.Ok:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 0;
                     break;
 
                 case MessageDialogButtons.OkCancel:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Ok"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Ok"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Cancel"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Cancel"),
                         new UICommandInvokedHandler(this.OnCancelOrNoButtonTapped), 1));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 1;
                     break;
 
                 case MessageDialogButtons.YesNo:
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_Yes"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_Yes"),
                         new UICommandInvokedHandler(this.OnOkOrYesButtonTapped), 0));
-                    DialogWindow.Commands.Add(new UICommand(App.ResourceLoaders.UiResources.GetString("UI_No"),
+                    DialogWindow.Commands.Add(new UICommand(ResourceService.UiResources.GetString("UI_No"),
                         new UICommandInvokedHandler(this.OnCancelOrNoButtonTapped), 1));
                     DialogWindow.DefaultCommandIndex = 0;
                     DialogWindow.CancelCommandIndex = 1;
@@ -108,9 +111,24 @@ namespace MegaApp.Classes
         /// <summary>
         /// Display the CustomMessageDialog on screen with the specified parameter from the constructor
         /// </summary>
-        public async void ShowDialogAsync()
+        public void ShowDialog()
         {
-            await DialogWindow.ShowAsync();
+            UiService.OnUiThread(async () => await DialogWindow.ShowAsync());
+        }
+
+        /// <summary>
+        /// Display the CustomMessageDialog on screen with the specified parameter from the constructor
+        /// </summary>
+        /// <returns>Message dialog result specified by user button tap action</returns>
+        public Task<MessageDialogResult> ShowDialogAsync()
+        {
+            // Needed to make a awaitable task
+            _taskCompletionSource = new TaskCompletionSource<MessageDialogResult>();
+
+            ShowDialog();
+
+            // Return awaitable task
+            return _taskCompletionSource.Task;
         }
 
         #region Virtual Methods
@@ -121,8 +139,9 @@ namespace MegaApp.Classes
         /// <param name="command">Command that was invoked</param>
         protected virtual void OnOkOrYesButtonTapped(IUICommand command)
         {
-            if (OkOrYesButtonTapped != null)
-                OkOrYesButtonTapped(this, new EventArgs());
+            this.DialogResult = MessageDialogResult.OkYes;
+            _taskCompletionSource?.TrySetResult(this.DialogResult);
+            OkOrYesButtonTapped?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
@@ -131,9 +150,19 @@ namespace MegaApp.Classes
         /// <param name="command">Command that was invoked</param>
         protected virtual void OnCancelOrNoButtonTapped(IUICommand command)
         {
-            if (CancelOrNoButtonTapped != null)
-                CancelOrNoButtonTapped(this, new EventArgs());
+            this.DialogResult = MessageDialogResult.CancelNo;
+            _taskCompletionSource?.TrySetResult(this.DialogResult);
+            CancelOrNoButtonTapped?.Invoke(this, new EventArgs());
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Result of the dialog. Defined by the user action
+        /// </summary>
+        public MessageDialogResult DialogResult { get; private set; }
 
         #endregion
     }
@@ -152,5 +181,21 @@ namespace MegaApp.Classes
         /// Displays a Yes and No button
         /// </summary>
         YesNo,
+    }
+
+    public enum MessageDialogResult
+    {
+        /// <summary>
+        /// User has pressed Ok or Yes
+        /// </summary>
+        OkYes,
+        /// <summary>
+        /// User has pressed Cancel or No
+        /// </summary>
+        CancelNo,
+        /// <summary>
+        /// User has pressed a custom defined button
+        /// </summary>
+        Custom,
     }
 }

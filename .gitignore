@@ -1,8 +1,13 @@
 *.opendb
 *.db
 MegaApp/.vs/
-MegaApp/ARM/
+
 *.user
+MegaApp/ARM/
+MegaApp/BackgroundTaskService/bin/
+MegaApp/BackgroundTaskService/obj/
+MegaApp/BackgroundTaskService/project.lock.json
+MegaApp/Debug/
 MegaApp/MegaApp/MegaApp_TemporaryKey.pfx
 MegaApp/MegaApp/project.lock.json
 MegaApp/MegaApp/bin/

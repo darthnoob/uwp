@@ -3,17 +3,8 @@
 //Only debug levels FATAL, ERROR, WARNING and INFO can be shown in Release builds
 //DEBUG and MAX are reserved for Debug builds
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Windows;
 using mega;
-using MegaApp.Resources;
-using MegaApp.Services;
 
 namespace MegaApp.MegaApi
 {
@@ -21,7 +12,7 @@ namespace MegaApp.MegaApi
     {
         public virtual void log(string time, int loglevel, string source, string message)
         {
-            String logLevelString;
+            string logLevelString;
             switch((MLogLevel)loglevel)
             {
                 case MLogLevel.LOG_LEVEL_DEBUG:

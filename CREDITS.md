@@ -1,6 +1,37 @@
 ## CREDITS
 <p>Here is the list of the external libraries used by the Windows Phone Client. We thank them all for their contributions:</p>
 
+#### UWP Community Toolkit
+<p>https://github.com/Microsoft/UWPCommunityToolkit</p>
+<p>Copyright (c) .NET Foundation and Contributors. All rights reserved.</p>
+###### Description:
+<p>A collection of helper functions, custom controls, and app services. It simplifies and demonstrates common developer tasks building UWP apps for Windows 10</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/Microsoft/UWPCommunityToolkit/blob/master/license.md</p>
+<hr>
+
+#### UWP Breadcrumb Control
+<p>https://github.com/goedware/UWP-Breadcrumb-Control</p>
+<p>Copyright (c) 2016 C. Goedegebuure</p>
+###### Description:
+<p>Create a Breadcrumb control for your Universal Windows Platform (UWP) app in just a few minutes. 
+This library allows to generate a breadcrumb for your UWP app with less effort, it's fully customizable.</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/goedware/UWP-Breadcrumb-Control/blob/master/LICENSE</p>
+<hr>
+
+#### WindowsStateTriggers
+<p>https://github.com/dotMorten/WindowsStateTriggers</p>
+<p>Copyright (c) Morten Nielsen</p>
+###### Description:
+<p>A collection of custom visual state triggers</p>
+###### License:
+<p>MIT License</p>
+<p>https://github.com/dotMorten/WindowsStateTriggers/blob/master/LICENSE</p>
+<hr>
+
 #### MEGA C++ SDK
 <p>https://github.com/meganz/sdk</p>
 <p>© 2013-2016 by Mega Limited, Auckland, New Zealand</p>

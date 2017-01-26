@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.Threading;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
-using MegaApp.Pages;
-using MegaApp.Resources;
 using MegaApp.Services;
+using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
     class LogOutRequestListener: BaseRequestListener
     {
         private readonly bool _navigateOnSucces;
+        private readonly AutoResetEvent _waitEventRequest;
 
         /// <summary>
         /// LogOutRequestListener constructor
@@ -23,15 +19,19 @@ namespace MegaApp.MegaApi
         /// <param name="navigateOnSucces">
         /// Boolean value to allow the developer decide if the app should go to the
         /// "InitTourPage" after logout or no. The default value is TRUE.
-        /// </param>        
-        public LogOutRequestListener(bool navigateOnSucces = true)
+        /// </param>
+        /// <param name="waitEventRequest">
+        /// Event to notify to the caller method that the request has finished
+        /// </param>
+        public LogOutRequestListener(bool navigateOnSucces = true, AutoResetEvent waitEventRequest = null)
         {
             _navigateOnSucces = navigateOnSucces;
+            _waitEventRequest = waitEventRequest;
         }
 
         protected override string ProgressMessage
         {
-            get { return App.ResourceLoaders.ProgressMessages.GetString("PM_Logout"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_Logout"); }
         }
 
         protected override bool ShowProgressMessage
@@ -41,12 +41,12 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LogoutFailed"); }
+            get { return ResourceService.AppMessages.GetString("AM_LogoutFailed"); }
         }
 
         protected override string ErrorMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LogoutFailed_Title"); }
+            get { return ResourceService.AppMessages.GetString("AM_LogoutFailed_Title"); }
         }
 
         protected override bool ShowErrorMessage
@@ -56,12 +56,12 @@ namespace MegaApp.MegaApi
 
         protected override string SuccessMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoggedOut"); }
+            get { return ResourceService.AppMessages.GetString("AM_LoggedOut"); }
         }
 
         protected override string SuccessMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_LoggedOut_Title"); }
+            get { return ResourceService.AppMessages.GetString("AM_LoggedOut_Title"); }
         }
 
         protected override bool ShowSuccesMessage
@@ -84,15 +84,16 @@ namespace MegaApp.MegaApi
             get { return typeof(LoginAndCreateAccountPage); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
-            get { return NavigationParameter.Normal; }
+            get { return NavigationObject.Create(typeof(CloudDriveViewModel)); }
         }
 
         #region Override Methods
 
         protected override void OnSuccesAction(MegaSDK api, MRequest request)
         {
+            _waitEventRequest?.Set();
             AppService.LogoutActions();
         }
 

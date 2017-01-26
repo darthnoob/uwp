@@ -1,32 +1,25 @@
 ﻿using System;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 using mega;
-using MegaApp.Enums;
 using MegaApp.Classes;
-using MegaApp.Models;
-using MegaApp.Pages;
-using MegaApp.Resources;
 using MegaApp.Services;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
     class CreateAccountRequestListener : BaseRequestListener
     {
         private readonly CreateAccountViewModel _createAccountViewModel;
-        private readonly LoginAndCreateAccountPage _loginPage;
 
-        public CreateAccountRequestListener(CreateAccountViewModel createAccountViewModel, LoginAndCreateAccountPage loginPage)
+        public CreateAccountRequestListener(CreateAccountViewModel createAccountViewModel)
         {
             _createAccountViewModel = createAccountViewModel;
-            _loginPage = loginPage;
         }
 
         #region Base Properties
 
         protected override string ProgressMessage
         {
-            get { return App.ResourceLoaders.ProgressMessages.GetString("PM_CreateAccount"); }
+            get { return ResourceService.ProgressMessages.GetString("PM_CreateAccount"); }
         }
 
         protected override bool ShowProgressMessage
@@ -36,12 +29,12 @@ namespace MegaApp.MegaApi
 
         protected override string ErrorMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed"); }
+            get { return ResourceService.AppMessages.GetString("AM_CreateAccountFailed"); }
         }
 
         protected override string ErrorMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_CreateAccountFailed_Title").ToUpper(); }
+            get { return ResourceService.UiResources.GetString("UI_CreateAccount"); }
         }
 
         protected override bool ShowErrorMessage
@@ -51,22 +44,26 @@ namespace MegaApp.MegaApi
 
         protected override string SuccessMessage
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_ConfirmNeeded"); }
+            get
+            {
+                return string.Format(ResourceService.AppMessages.GetString("AM_ConfirmEmail"), 
+                    _createAccountViewModel.Email);
+            }
         }
 
         protected override string SuccessMessageTitle
         {
-            get { return App.ResourceLoaders.AppMessages.GetString("AM_ConfirmNeeded_Title").ToUpper(); }
+            get { return ResourceService.AppMessages.GetString("AM_ConfirmEmail_Title"); }
         }
 
         protected override bool ShowSuccesMessage
         {
-            get { return false; } //Shown when navigates to the "InitTourPage"
+            get { return true; }
         }
 
         protected override bool NavigateOnSucces
         {
-            get { return true; }
+            get { return false; }
         }
 
         protected override bool ActionOnSucces
@@ -76,13 +73,12 @@ namespace MegaApp.MegaApi
 
         protected override Type NavigateToPage
         {
-            //get { return typeof(InitTourPage); }
-            get { return typeof(LoginAndCreateAccountPage); }
+            get { throw new NotImplementedException(); }
         }
 
-        protected override NavigationParameter NavigationParameter
+        protected override NavigationObject NavigationObject
         {
-            get { return NavigationParameter.CreateAccount; }
+            get { throw new NotImplementedException(); }
         }
 
         #endregion
@@ -95,9 +91,9 @@ namespace MegaApp.MegaApi
                 base.onRequestStart(api, request);
         }
 
-        public async override void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            UiService.OnUiThread(() =>
             {
                 //ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
                 //ProgressService.SetProgressIndicator(false);
@@ -111,24 +107,21 @@ namespace MegaApp.MegaApi
                 switch(e.getErrorCode())
                 {
                     case MErrorType.API_OK: // Valid and operative #newsignup link
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        UiService.OnUiThread(() =>
                         {
                             _createAccountViewModel.Email = request.getEmail();
-
-                            if (!String.IsNullOrWhiteSpace(_createAccountViewModel.Email))
-                                this._loginPage.SetStatusTxtEmailCreateAccount(true);
+                           
+                            if (!string.IsNullOrWhiteSpace(_createAccountViewModel.Email))
+                                _createAccountViewModel.IsReadOnly = true;
                         });
                         break;
 
                     case MErrorType.API_EARGS: // Invalid #newsignup link
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            new CustomMessageDialog(
-                                App.ResourceLoaders.AppMessages.GetString("AM_InvalidLink"),
-                                App.ResourceLoaders.AppMessages.GetString("AM_NewSignUpInvalidLink"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
-                        });
+                        new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_InvalidLink"),
+                            ResourceService.AppMessages.GetString("AM_NewSignUpInvalidLink"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
                         break;
 
                     default: // Default error processing
@@ -146,14 +139,11 @@ namespace MegaApp.MegaApi
                         break;
 
                     case MErrorType.API_EEXIST: // Email already registered
-                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                        {
-                            new CustomMessageDialog(
-                                ErrorMessageTitle,
-                                App.ResourceLoaders.AppMessages.GetString("AM_EmailAlreadyRegistered"),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialogAsync();
-                        });
+                        new CustomMessageDialog(
+                            ErrorMessageTitle,
+                            ResourceService.AppMessages.GetString("AM_EmailAlreadyRegistered"),
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
                         break;
 
                     default: // Default error processing

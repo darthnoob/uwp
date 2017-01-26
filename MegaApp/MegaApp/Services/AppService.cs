@@ -1,14 +1,112 @@
 ﻿using System;
+using System.IO;
+using Windows.Storage;
 using Windows.ApplicationModel;
-using Windows.Security.Cryptography;
-using Windows.Security.Cryptography.Core;
-using Windows.Storage.Streams;
-using Windows.System.Profile;
+using Windows.Security.ExchangeActiveSyncProvisioning;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Navigation;
+using MegaApp.Classes;
+using MegaApp.MegaApi;
+using MegaApp.Views;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
     class AppService
     {
+        /// <summary>
+        /// Check if the user has an active and online session
+        /// </summary>
+        /// <param name="navigationMode">Type of navigation that is taking place </param>
+        /// <returns>True if the user has an active and online session or false in other case</returns>
+        public static async Task<bool> CheckActiveAndOnlineSession(NavigationMode navigationMode = NavigationMode.New)
+        {
+            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) && !SettingsService.HasValidSession())
+            {
+                if(!await CheckSpecialNavigation(false))
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true);
+                    });
+                }
+                
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if need to navigate to a page depending on the current state or the active link.
+        /// </summary>
+        /// <param name="hasActiveAndOnlineSession">
+        /// Bool value that indicates if the user has an active and online session.
+        /// </param>
+        /// <returns>True if navigates or false in other case.</returns>
+        public static async Task<bool> CheckSpecialNavigation(bool hasActiveAndOnlineSession = true)
+        {
+            if (App.LinkInformation?.ActiveLink != null)
+            {
+                if ((App.LinkInformation.ActiveLink.Contains("#newsignup")) || 
+                    App.LinkInformation.ActiveLink.Contains("#confirm"))
+                {
+                    if(hasActiveAndOnlineSession)
+                    {
+                        var customMessageDialog = new CustomMessageDialog(
+                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
+                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
+                            App.AppInformation,
+                            MessageDialogButtons.YesNo);
+
+                        var dialogResult = await customMessageDialog.ShowDialogAsync();
+                        if(dialogResult == MessageDialogResult.OkYes)
+                        {
+                            // First need to log out of the current account
+                            var waitHandleLogout = new AutoResetEvent(false);
+                            SdkService.MegaSdk.logout(new LogOutRequestListener(false, waitHandleLogout));
+                            waitHandleLogout.WaitOne();
+
+                            return SpecialNavigation();
+                        }
+                    }
+                    else
+                    {
+                        return SpecialNavigation();
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Navigates to the corresponding page depending on the current state or the active link.
+        /// </summary>
+        /// <returns>TRUE if navigates or FALSE in other case.</returns>
+        private static bool SpecialNavigation()
+        {
+            if (App.LinkInformation.ActiveLink.Contains("#newsignup"))
+            {
+                UiService.OnUiThread(() =>
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
+                return true;
+            }
+            else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
+            {
+                UiService.OnUiThread(() =>
+                    NavigateService.Instance.Navigate(typeof(ConfirmAccountPage), true));
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Get the app version number
+        /// </summary>
+        /// <returns>App version number</returns>
         public static string GetAppVersion()
         {
             return string.Format("{0}.{1}.{2}.{3}",
@@ -18,28 +116,188 @@ namespace MegaApp.Services
                 Package.Current.Id.Version.Revision);
         }
 
+        /// <summary>
+        /// Get the MegaSDK version 
+        /// </summary>
+        /// <returns>MegaSDK version</returns>
         public static string GetMegaSDK_Version()
         {
             return string.Format("970e65b");
         }
 
+        /// <summary>
+        /// Get the app user agent
+        /// </summary>
+        /// <returns>App user agent</returns>
         public static string GetAppUserAgent()
         {
-            return string.Format("MEGA_UWP/{0}", GetAppVersion());
+            // Get an instance of the object that allow recover the local device information.
+            var deviceInfo = new EasClientDeviceInformation();
+
+            return string.Format(
+                "MEGA_UWP/{0}/{1}/{2}/{3}",
+                GetAppVersion(),
+                deviceInfo.SystemManufacturer,
+                deviceInfo.SystemProductName,
+                deviceInfo.OperatingSystem);
         }
 
-        public static string GetDeviceID()
+        /// <summary>
+        /// Create working directories for the app to use if they do not exist yet
+        /// </summary>
+        public static void InitializeAppFolders()
         {
-            HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
-            IBuffer hardwareId = token.Id;
+            try
+            {
+                string thumbnailDir = GetThumbnailDirectoryPath();
+                if (!Directory.Exists(thumbnailDir)) Directory.CreateDirectory(thumbnailDir);
 
-            HashAlgorithmProvider hasher = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer hashed = hasher.HashData(hardwareId);
+                string previewDir = GetPreviewDirectoryPath();
+                if (!Directory.Exists(previewDir)) Directory.CreateDirectory(previewDir);
 
-            string hashedString = CryptographicBuffer.EncodeToHexString(hashed);
-            return hashedString;
+                string downloadDir = GetDownloadDirectoryPath();
+                if (!Directory.Exists(downloadDir)) Directory.CreateDirectory(downloadDir);
+
+                string uploadDir = GetUploadDirectoryPath();
+                if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
+            }
+            catch (IOException) { }
         }
 
+        /// <summary>
+        /// Get the path of the temporary folder for the upload
+        /// </summary>
+        /// <param name="checkIfExists">Check if the folder exists</param>
+        /// <returns>The folder path</returns>
+        public static string GetUploadDirectoryPath(bool checkIfExists = false)
+        {
+            var uploadDir = Path.Combine(ApplicationData.Current.LocalFolder.Path, 
+                ResourceService.AppResources.GetString("AR_UploadsDirectory"));
+
+            if (checkIfExists)
+            {
+                if (!Directory.Exists(uploadDir))
+                    Directory.CreateDirectory(uploadDir);
+            }
+
+            return uploadDir;
+        }
+
+        /// <summary>
+        /// Get the path of the temporary folder for the downloads
+        /// </summary>
+        /// <returns>The folder path</returns>
+        public static string GetDownloadDirectoryPath()
+        {
+            return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_DownloadsDirectory"));
+        }
+
+        /// <summary>
+        /// Get the path of the folder to store the previews
+        /// </summary>
+        /// <returns>The folder path</returns>
+        public static string GetPreviewDirectoryPath()
+        {
+            return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_PreviewsDirectory"));
+        }
+
+        /// <summary>
+        /// Get the path of the folder to store the thumbnails
+        /// </summary>
+        /// <returns>The folder path</returns>
+        public static string GetThumbnailDirectoryPath()
+        {
+            return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"));
+        }
+
+        public static void ClearAppCache(bool includeLocalFolder)
+        {
+            if (includeLocalFolder)
+                ClearLocalCache();
+            ClearThumbnailCache();
+            ClearPreviewCache();
+            ClearDownloadCache();
+            ClearUploadCache();
+
+            //ClearAppDatabase();
+        }
+
+        //public static void ClearAppDatabase()
+        //{
+        //    SavedForOffline.DeleteAllNodes();
+        //}
+
+        /// <summary>
+        /// Clear the thumbnails cache
+        /// </summary>
+        public static void ClearThumbnailCache()
+        {
+            string thumbnailDir = GetThumbnailDirectoryPath();
+            if (!String.IsNullOrWhiteSpace(thumbnailDir) && !FolderService.HasIllegalChars(thumbnailDir) &&
+                Directory.Exists(thumbnailDir))
+            {
+                FileService.ClearFiles(Directory.GetFiles(thumbnailDir));
+            }
+        }
+
+        /// <summary>
+        /// Clear the previews cache
+        /// </summary>
+        public static void ClearPreviewCache()
+        {
+            string previewDir = GetPreviewDirectoryPath();
+            if (!String.IsNullOrWhiteSpace(previewDir) && !FolderService.HasIllegalChars(previewDir) &&
+                Directory.Exists(previewDir))
+            {
+                FileService.ClearFiles(Directory.GetFiles(previewDir));
+            }
+        }
+
+        /// <summary>
+        /// Clear the downloads cache
+        /// </summary>
+        public static void ClearDownloadCache()
+        {
+            string downloadDir = GetDownloadDirectoryPath();
+            if (!String.IsNullOrWhiteSpace(downloadDir) && !FolderService.HasIllegalChars(downloadDir) &&
+                Directory.Exists(downloadDir))
+            {
+                FolderService.Clear(downloadDir);
+            }
+        }
+
+        /// <summary>
+        /// Clear the uploads cache
+        /// </summary>
+        public static void ClearUploadCache()
+        {
+            string uploadDir = GetUploadDirectoryPath();
+            if (!String.IsNullOrWhiteSpace(uploadDir) && !FolderService.HasIllegalChars(uploadDir) &&
+                Directory.Exists(uploadDir))
+            {
+                FileService.ClearFiles(Directory.GetFiles(uploadDir));
+            }
+        }
+
+        /// <summary>
+        /// Clear the app local cache
+        /// </summary>
+        public static void ClearLocalCache()
+        {
+            string localCacheDir = ApplicationData.Current.LocalFolder.Path;
+            if (!String.IsNullOrWhiteSpace(localCacheDir) && !FolderService.HasIllegalChars(localCacheDir) &&
+                Directory.Exists(localCacheDir))
+            {
+                FileService.ClearFiles(Directory.GetFiles(localCacheDir));
+            }
+        }
+
+        /// <summary>
+        /// Method that executes the actions needed for a logout
+        /// </summary>
         public static void LogoutActions()
         {
             //// Disable the "camera upload" service if is enabled
@@ -63,10 +321,22 @@ namespace MegaApp.Services
             //    if (App.MainPageViewModel.RubbishBin != null)
             //        App.MainPageViewModel.RubbishBin.ChildNodes.Clear();
             //});
-            //AppService.ClearAppCache(false);
+            AppService.ClearAppCache(false);
 
             // Delete the User Data
             //App.UserData = null;
+        }
+
+        /// <summary>
+        /// Set the software back button visibility for the app view
+        /// (Only for desktop or devices without hardware button)
+        /// </summary>
+        /// <param name="isVisible">TRUE for visible or FALSE for hidden</param>
+        public static void SetAppViewBackButtonVisibility(bool isVisible)
+        {
+            var computedVisible = isVisible || NavigateService.MainFrame.CanGoBack;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+               computedVisible ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
         }
     }
 }

@@ -3,9 +3,8 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
-using Windows.UI.Core;
+using mega;
 using MegaApp.Classes;
 
 namespace MegaApp.Services
@@ -15,28 +14,61 @@ namespace MegaApp.Services
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
 
-        public static async void SaveSetting<T>(string key, T value)
+        /// <summary>
+        /// Save a value to the app local settings container
+        /// </summary>
+        /// <typeparam name="T">Type of the value</typeparam>
+        /// <param name="key">Key name of the value container</param>
+        /// <param name="value">Value to save</param>
+        /// <returns>True if save was succesful, else it will return False</returns>
+        public static bool Save<T>(string key, T value)
         {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            var settings = ApplicationData.Current.LocalSettings;
+            if (settings == null) return false;
+
             try
             {
-                SettingsMutex.WaitOne();
-                var settings = ApplicationData.Current.LocalSettings;
-                settings.Values[key] = value;
+                if (settings.Values.ContainsKey(key))
+                {
+                    settings.Values[key] = value;
+                }
+                else
+                {
+                    settings.Values.Add(key, value);
+                }
+
+                return true;
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return false;
             }
-            finally
+        }
+
+        public static T Load<T>(string key, T defaultValue)
+        {
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
+
+            var settings = ApplicationData.Current.LocalSettings;
+            if (settings == null) return defaultValue;
+
+            try
             {
-                SettingsMutex.ReleaseMutex();
+                if (settings.Values.ContainsKey(key))
+                {
+                    return (T) settings.Values[key];
+                }
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return defaultValue;
             }
         }
 
@@ -72,7 +104,7 @@ namespace MegaApp.Services
         //    }
         //}
 
-        public static async Task<T> LoadSetting<T>(string key, T defaultValue)
+        public static T LoadSetting<T>(string key, T defaultValue)
         {
             var returnValue = defaultValue;
 
@@ -85,14 +117,11 @@ namespace MegaApp.Services
             }
             catch(Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -139,12 +168,12 @@ namespace MegaApp.Services
         //    return returnValue;
         //}
 
-        public static Task<T> LoadSetting<T>(string key)
+        public static T LoadSetting<T>(string key)
         {
             return LoadSetting(key, default(T));
         }
 
-        public static async void DeleteSetting(string key)
+        public static void DeleteSetting(string key)
         {
             try
             {
@@ -156,14 +185,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -171,7 +197,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async void DeleteFileSetting(string key)
+        public static void DeleteFileSetting(string key)
         {
             try
             {
@@ -195,14 +221,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -210,7 +233,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async void SaveSettingToFile<T>(string key, T value)
+        public static void SaveSettingToFile<T>(string key, T value)
         {
             try
             {
@@ -231,14 +254,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -266,14 +286,11 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                {
-                    new CustomMessageDialog(
-                        App.ResourceLoaders.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                        String.Format(App.ResourceLoaders.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialogAsync();
-                });
+                new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
             }
             finally
             {
@@ -283,11 +300,11 @@ namespace MegaApp.Services
             return returnValue;
         }
 
-        public async static Task<bool> HasValidSession()
+        public static bool HasValidSession()
         {
             try
             {
-                if (await LoadSetting<string>(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaSession")) != null)
+                if (LoadSetting<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession")) != null)
                     return true;
                 else
                     return false;
@@ -302,11 +319,11 @@ namespace MegaApp.Services
         /// <param name="session">User session ID</param>
         public static void SaveMegaLoginData(string email, string session)
         {
-            SaveSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaEmailAddress"), email);
-            SaveSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaSession"), session);
+            Save(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"), email);
+            Save(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
 
             // Save session for automatic camera upload agent
-            SaveSettingToFile(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaSession"), session);
+            SaveSettingToFile(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
         }
 
         /// <summary>
@@ -314,10 +331,10 @@ namespace MegaApp.Services
         /// </summary>
         public static void ClearMegaLoginData()
         {
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaEmailAddress"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaSession"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
 
-            DeleteFileSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserMegaSession"));
+            DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
         }
 
         /// <summary>
@@ -325,19 +342,19 @@ namespace MegaApp.Services
         /// </summary>
         public static void ClearSettings()
         {
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_AskDownloadLocationIsEnabled"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_CameraUploadsConnectionType"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_CameraUploadsFileType"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_CameraUploadsFirstInit"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_CameraUploadsIsEnabled"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_DebugModeIsEnabled"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_DefaultDownloadLocation"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_ExportImagesToPhotoAlbum"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_QuestionAskedDownloadOption"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserPinLockIsEnabled"));
-            DeleteSetting(App.ResourceLoaders.SettingsResources.GetString("SR_UserPinLock"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_AskDownloadLocationIsEnabled"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsConnectionType"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsFileType"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsFirstInit"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_ExportImagesToPhotoAlbum"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_QuestionAskedDownloadOption"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserPinLockIsEnabled"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserPinLock"));
 
-            DeleteFileSetting(App.ResourceLoaders.SettingsResources.GetString("SR_LastUploadDate"));
+            DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_LastUploadDate"));
         }
     }
 }

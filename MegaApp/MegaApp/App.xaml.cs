@@ -1,55 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Security.ExchangeActiveSyncProvisioning;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
-using MegaApp.Pages;
-using MegaApp.Resources;
 using MegaApp.Services;
+using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    public partial class App : Application, MRequestListenerInterface
     {
         /// <summary>
         /// Provides easy access to usefull application information
         /// </summary>
         public static AppInformation AppInformation { get; private set; }
-        public static String IpAddress { get; set; }
+        public static string IpAddress { get; set; }
 
         /// <summary>
-        /// Provides easy access to the resources strings
+        /// Global notifications listener
         /// </summary>
-        public static ResourceLoaders ResourceLoaders { get; private set; }
-
-        /// <summary>
-        /// Main MegaSDK instance of the app
-        /// </summary>
-        public static MegaSDK MegaSdk { get; set; }
-
-        /// <summary>
-        /// MegaSDK instance for the folder links management
-        /// </summary>
-        public static MegaSDK MegaSdkFolderLinks { get; set; }
+        public static GlobalListener GlobalListener { get; private set; }
 
         /// <summary>
         /// Provides easy access to usefull links information
@@ -85,6 +64,70 @@ namespace MegaApp
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
+            Frame rootFrame = CreateRootFrame();
+
+            if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                //TODO: Load state from previously suspended application
+            }
+
+            if (e.PrelaunchActivated == false)
+            {
+                // When the navigation stack isn't restored navigate to the first page, configuring 
+                // the new page by passing required information as a navigation parameter
+                if (rootFrame.Content == null)
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+
+                // Ensure the current window is active
+                Window.Current.Activate();
+            }
+        }
+
+        /// <summary>
+        /// Handle protocol activations.
+        /// </summary>
+        /// <param name="e">Details about the activate request and process.</param>
+        protected override async void OnActivated(IActivatedEventArgs e)
+        {
+            if (e.Kind == ActivationKind.Protocol)
+            {
+                ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
+                // TODO: Handle URI activation
+                // The received URI is eventArgs.Uri.AbsoluteUri
+
+                // Initialize the links information
+                if (LinkInformation == null)
+                    LinkInformation = new LinkInformation();
+
+                LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+
+                Frame rootFrame = CreateRootFrame();
+
+                if (eventArgs.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                {
+                    //TODO: Load state from previously suspended application
+                }
+
+                // When the navigation stack isn't restored navigate to the first page, configuring 
+                // the new page by passing required information as a navigation parameter
+                if (rootFrame.Content == null)
+                    rootFrame.Navigate(typeof(MainPage), eventArgs);
+
+                // Ensure the current window is active
+                Window.Current.Activate();
+
+                // Check session and special navigation
+                if (await AppService.CheckActiveAndOnlineSession())
+                    await AppService.CheckSpecialNavigation();
+            }
+        }
+
+        /// <summary>
+        /// Get the current root frame or create a new one if not exists
+        /// </summary>
+        /// <returns>The app root frame</returns>
+        private Frame CreateRootFrame()
+        {
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -94,29 +137,16 @@ namespace MegaApp
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                // Add rootFrame as mainframe to navigation service
+                NavigateService.CoreFrame = rootFrame;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
+                rootFrame.NavigationFailed += OnNavigationFailed;
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
+            return rootFrame;
         }
 
         /// <summary>
@@ -153,44 +183,76 @@ namespace MegaApp
             if (ApplicationInitialized) return;
 
             // Initialize the application information
-            AppInformation = new AppInformation();
+            if(AppInformation == null)
+                AppInformation = new AppInformation();
 
-            // Initialize the resource loaders
-            ResourceLoaders = new ResourceLoaders();
+            // Initialize the links information
+            if (LinkInformation == null)
+                LinkInformation = new LinkInformation();
 
-            //The next line enables a custom logger, if this function is not used OutputDebugString() is called
-            //in the native library and log messages are only readable with the native debugger attached.
-            //The default behavior of MegaLogger() is to print logs using Debug.WriteLine() but it could
-            //be used to sends log to a file, for example.
-            MegaSDK.setLoggerObject(new MegaLogger());
+            // Initialize SDK parameters
+            SdkService.InitializeSdkParams();
 
-            //You can select the maximum output level for debug messages.
-            //By default FATAL, ERROR, WARNING and INFO will be enabled
-            //DEBUG and MAX can only be enabled in Debug builds, they are ignored in Release builds
-            MegaSDK.setLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
+            // Add a global notifications listener
+            GlobalListener = new GlobalListener(AppInformation);
+            SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
-            //You can send messages to the logger using MEGASDK.log(), those messages will be received
-            //in the active logger
-            MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
+            // Add a global request listener to process all.
+            SdkService.MegaSdk.addRequestListener(this);
 
-            // Set the ID for statistics
-            MegaSDK.setStatsID(AppService.GetDeviceID());
+            // Add a global transfer listener to process all transfers.            
+            SdkService.MegaSdk.addTransferListener(TransferService.GlobalTransferListener);
 
-            // Get an instance of the object that allow recover the local device information.
-            EasClientDeviceInformation deviceInfo = new EasClientDeviceInformation();
-
-            // Initialize the main MegaSDK instance
-            MegaSdk = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-                AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-                ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
-
-            // Initialize the MegaSDK instance for Folder Links
-            MegaSdkFolderLinks = new MegaSDK("Z5dGhQhL", String.Format("{0}/{1}/{2}", 
-                AppService.GetAppUserAgent(), deviceInfo.SystemManufacturer, deviceInfo.SystemProductName),
-                ApplicationData.Current.LocalFolder.Path, new MegaRandomNumberProvider());
+            // Initialize Folders
+            AppService.InitializeAppFolders();
 
             // Ensure we don't initialize again
             ApplicationInitialized = true;
+        }
+
+        #endregion
+
+        #region MRequestListenerInterface
+
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        {
+            if (e.getErrorCode() == MErrorType.API_ESID || e.getErrorCode() == MErrorType.API_ESSL)
+            {
+                AppService.LogoutActions();
+
+                // Show the login page with the corresponding navigation parameter
+                if (e.getErrorCode() == MErrorType.API_ESID)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESID));
+                    });
+                }
+                else if (e.getErrorCode() == MErrorType.API_ESSL)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESSL));
+                    });
+                }
+            }
+        }
+
+        public virtual void onRequestStart(MegaSDK api, MRequest request)
+        {
+            // Not necessary
+        }
+
+        public virtual void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
+        {
+            // Not necessary
+        }
+
+        public virtual void onRequestUpdate(MegaSDK api, MRequest request)
+        {
+            // Not necessary
         }
 
         #endregion
