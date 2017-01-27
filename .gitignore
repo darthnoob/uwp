@@ -13,3 +13,9 @@ MegaApp/MegaApp/project.lock.json
 MegaApp/MegaApp/bin/
 MegaApp/MegaApp/obj/
 MegaApp/x64/
+MegaApp/MegaApp/AppPackages/
+MegaApp/MegaApp/BundleArtifacts/
+MegaApp/Release/
+MegaApp/MegaApp/MegaApp_StoreKey.pfx
+MegaApp/MegaApp/Package.StoreAssociation.xml
+MegaApp/MegaApp/_pkginfo.txt
