@@ -108,10 +108,14 @@ namespace MegaApp.ViewModels
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if(e.NewItems != null)
+            if (e.NewItems != null)
             {
-                foreach (var node in e.NewItems)
-                    (node as NodeViewModel)?.SetThumbnailImage();
+                // Start a new task to avoid freeze the UI
+                Task.Run(() =>
+                {
+                    foreach (var node in e.NewItems)
+                        (node as NodeViewModel)?.SetThumbnailImage();
+                });
             }
 
             OnPropertyChanged("HasChildNodesBinding");
