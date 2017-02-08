@@ -18,6 +18,7 @@ using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -722,7 +723,20 @@ namespace MegaApp.ViewModels
 
         public void ProcessFileNode(IMegaNode node)
         {
+            if (node.IsImage)
+            {
+                // Navigate to the preview page
+                OnUiThread(() =>
+                {
+                    this.FocusedNode = node;
 
+                    var parameters = new Dictionary<NavigationParamType, object>();
+                    parameters.Add(NavigationParamType.Data, this);
+
+                    NavigateService.Instance.Navigate(typeof(PreviewImagePage), true,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default, parameters));
+                });
+            }
         }
 
         public void SetProgressIndication(bool onOff, string busyText = null)
@@ -976,6 +990,8 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region Properties
+
+        public IMegaNode FocusedNode;
 
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes

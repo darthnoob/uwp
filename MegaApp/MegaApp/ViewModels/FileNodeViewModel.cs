@@ -8,7 +8,7 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    class FileNodeViewModel: NodeViewModel
+    public class FileNodeViewModel: NodeViewModel
     {
         public FileNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
