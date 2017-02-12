@@ -28,6 +28,8 @@ namespace MegaApp.ViewModels
     {
         public event EventHandler FolderNavigatedTo;
 
+        public event EventHandler ChangeViewEvent;
+
         public event EventHandler CopyOrMoveEvent;
 
         public event EventHandler EnableMultiSelect;
@@ -43,6 +45,7 @@ namespace MegaApp.ViewModels
             this.ChildNodes = new ObservableCollection<IMegaNode>();
             this.BreadCrumbs = new ObservableCollection<IBaseNode>();
             this.SelectedNodes = new List<IMegaNode>();
+            this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
@@ -93,24 +96,26 @@ namespace MegaApp.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
             }
-        }       
+        }
 
         private void SelectionChanged()
         {
-            this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
-
-            if (this.IsMultiSelectActive)
-                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.SelectedNodes.Count >= 1) || this.SelectedNodes.Count > 1;
             else
-                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
+                this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if(e.NewItems != null)
+            if (e.NewItems != null)
             {
-                foreach (var node in e.NewItems)
-                    (node as NodeViewModel)?.SetThumbnailImage();
+                // Start a new task to avoid freeze the UI
+                Task.Run(() =>
+                {
+                    foreach (var node in e.NewItems)
+                        (node as NodeViewModel)?.SetThumbnailImage();
+                });
             }
 
             OnPropertyChanged("HasChildNodesBinding");
@@ -354,6 +359,7 @@ namespace MegaApp.ViewModels
         {
             if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
             await MultipleDownloadAsync(this.SelectedNodes);
+            this.IsMultiSelectActive = false;
         }
 
         private async Task MultipleDownloadAsync(ICollection<IMegaNode> nodes)
@@ -389,8 +395,7 @@ namespace MegaApp.ViewModels
 
             MultipleMoveToRubbishBin(this.SelectedNodes.ToList());
 
-            CurrentViewState = PreviousViewState;
-            SelectedNodes.Clear();
+            this.IsMultiSelectActive = false;
         }
 
         private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
@@ -414,28 +419,13 @@ namespace MegaApp.ViewModels
                             ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
                     });
                 }
-              
-                this.IsMultiSelectActive = false;
             });
         }
 
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
-        private void MultiSelect()
-        {
-            this.IsMultiSelectActive = !this.IsMultiSelectActive;
-
-            if (this.IsMultiSelectActive)
-            {
-                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                this.SelectedNodes.Clear();
-                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
-            }
-        }
+        private void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
 
         private async void Remove()
         {
@@ -450,6 +440,8 @@ namespace MegaApp.ViewModels
             if (!result) return;
 
             MultipleRemoveAsync(this.SelectedNodes.ToList());
+
+            this.IsMultiSelectActive = false;
         }
 
         private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
@@ -473,8 +465,6 @@ namespace MegaApp.ViewModels
                             ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
                     });
                 }
-
-                this.IsMultiSelectActive = false;
             });
         }
         
@@ -535,7 +525,7 @@ namespace MegaApp.ViewModels
                     break;
                 case MNodeType.TYPE_FOLDER:
                     // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsSelectedNode(node))) return;
+                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsCopyOrMoveSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
                 case MNodeType.TYPE_ROOT:
@@ -554,19 +544,19 @@ namespace MegaApp.ViewModels
         /// </summary>        
         /// <param name="node">Node to check if is in the selected node list</param>        
         /// <returns>True if is a selected node or false in other case</returns>
-        private bool IsSelectedNode(IMegaNode node)
+        private bool IsCopyOrMoveSelectedNode(IMegaNode node)
         {
-            if (SelectedNodes?.Count > 0)
+            if (CopyOrMoveSelectedNodes?.Count > 0)
             {
-                var count = SelectedNodes.Count;
+                var count = CopyOrMoveSelectedNodes.Count;
                 for (int index = 0; index < count; index++)
                 {
-                    var selectedNode = SelectedNodes[index];
+                    var selectedNode = CopyOrMoveSelectedNodes[index];
                     if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
                     {
                         //Update the selected nodes list values
                         node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        SelectedNodes[index] = node;
+                        CopyOrMoveSelectedNodes[index] = node;
 
                         return true;
                     }
@@ -764,7 +754,7 @@ namespace MegaApp.ViewModels
                 if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
                 {
                     // Check if it is one of the selected nodes
-                    IsSelectedNode(node);
+                    IsCopyOrMoveSelectedNode(node);
                 }
 
                 helperList.Add(node);
@@ -887,6 +877,8 @@ namespace MegaApp.ViewModels
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
                     break;
             }
+
+            this.ChangeViewEvent?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -984,15 +976,21 @@ namespace MegaApp.ViewModels
             set { SetField(ref _selectedNodes, value); }
         }
 
+        /// <summary>
+        /// Property needed to store the selected nodes in a move/copy action 
+        /// </summary>
+        private List<IMegaNode> _copyOrMoveSelectedNodes;
+        public List<IMegaNode> CopyOrMoveSelectedNodes
+        {
+            get { return _copyOrMoveSelectedNodes; }
+            set { SetField(ref _copyOrMoveSelectedNodes, value); }
+        }
+
         private FolderContentViewState _currentViewState;
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set
-            {
-                SetField(ref _currentViewState, value);
-                //OnPropertyChanged("IsMultiSelectActive");
-            }
+            set { SetField(ref _currentViewState, value); }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1055,19 +1053,24 @@ namespace MegaApp.ViewModels
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
-            get { return _isMultiSelectActive; }
+            get { return _isMultiSelectActive || _selectedNodes.Count > 1; }
             set
             {
-                SetField(ref _isMultiSelectActive, value);
+                if (!SetField(ref _isMultiSelectActive, value)) return;
+
                 if (_isMultiSelectActive)
                 {
                     if (this.CurrentViewState != FolderContentViewState.MultiSelect)
                         this.PreviousViewState = this.CurrentViewState;
+
                     this.CurrentViewState = FolderContentViewState.MultiSelect;
+                    EnableMultiSelect?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
                     this.CurrentViewState = this.PreviousViewState;
+                    SelectedNodes.Clear();
+                    DisableMultiSelect?.Invoke(this, EventArgs.Empty);                    
                 }
             }
         }

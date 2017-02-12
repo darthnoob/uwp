@@ -24,13 +24,14 @@ namespace MegaApp.Converters
                     switch (command)
                     {
                         case "download":
-                        case "rename":
                         case "copyormove":
                         case "movetorubbish":
                             return Visibility.Visible;
+                        case "rename":
+                            return (node.SelectedNodes.Count > 1) ? 
+                                Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
-
                     }
                 case FolderContentViewState.CopyOrMove:
                     break;
@@ -47,9 +48,9 @@ namespace MegaApp.Converters
                             switch (type)
                             {
                                 case ContainerType.CloudDrive:
-                                    return Visibility.Collapsed; ;
+                                    return Visibility.Collapsed;
                                 case ContainerType.RubbishBin:
-                                    return Visibility.Visible; ;
+                                    return Visibility.Visible;
                             }
                             return Visibility.Collapsed;;
                         }
@@ -72,10 +73,12 @@ namespace MegaApp.Converters
                     switch (command)
                     {
                         case "download":
-                        case "rename":
                         case "copyormove":
                         case "remove":
                             return Visibility.Visible;
+                        case "rename":
+                            return (node.SelectedNodes.Count > 1) ?
+                                Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
                     }; 

@@ -13,6 +13,8 @@ namespace MegaApp.ViewModels
     public class CloudDriveViewModel: BaseSdkViewModel
     {
         public event EventHandler ClearSelectedItems;
+        public event EventHandler DisableSelection;
+        public event EventHandler EnableSelection;
 
         public CloudDriveViewModel()
         {
@@ -155,7 +157,9 @@ namespace MegaApp.ViewModels
             foreach (var node in this.ActiveFolderView.SelectedNodes)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
+            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.SelectedNodes.ToList();            
             this.ActiveFolderView.IsMultiSelectActive = false;
+
             ResetViewStates();
 
             this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
@@ -164,29 +168,39 @@ namespace MegaApp.ViewModels
             this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
 
             this.SourceFolderView = this.ActiveFolderView;
+
+            this.DisableSelection?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Reset the variables used in the copy or move actions
+        /// </summary>
+        private void ResetCopyOrMove()
+        {
+            SourceFolderView.SelectedNodes.Clear();
+            SourceFolderView.CopyOrMoveSelectedNodes.Clear();
+            SourceFolderView = null;
+            ResetViewStates();
+            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+            EnableSelection?.Invoke(this, EventArgs.Empty);
         }
 
         private void CancelCopyOrMove()
         {
-            if (SourceFolderView?.SelectedNodes != null)
+            if (SourceFolderView?.CopyOrMoveSelectedNodes != null)
             {
-                foreach (var node in SourceFolderView.SelectedNodes)
+                foreach (var node in SourceFolderView.CopyOrMoveSelectedNodes)
                     if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
             }
 
-            SourceFolderView?.SelectedNodes.Clear();
-            SourceFolderView = null;
-            ResetViewStates();
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+            ResetCopyOrMove();
         }
 
         private void AcceptCopy()
         {
             // Use a temp variable to avoid InvalidOperationException
-            AcceptCopyAction(SourceFolderView.SelectedNodes.ToList());
-            SourceFolderView.SelectedNodes.Clear();
-            ResetViewStates();
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+            AcceptCopyAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
+            ResetCopyOrMove();
         }
 
         private async void AcceptCopyAction(IList<IMegaNode> nodes)
@@ -222,10 +236,8 @@ namespace MegaApp.ViewModels
         private void AcceptMove()
         {
             // Use a temp variable to avoid InvalidOperationException
-            AcceptMoveAction(SourceFolderView.SelectedNodes.ToList());
-            SourceFolderView.SelectedNodes.Clear();
-            ResetViewStates();
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
+            AcceptMoveAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
+            ResetCopyOrMove();
         }
 
         private async void AcceptMoveAction(IList<IMegaNode> nodes)
