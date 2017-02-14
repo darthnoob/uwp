@@ -13,15 +13,22 @@
     <Page.Resources>
         <DataTemplate x:Key="ImagePreviewTemplate">
             <Image
-                Grid.Row="1"
-                Margin="20,0,20,20"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Stretch="Uniform">
+                x:Name="ImagePreview"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Stretch="Uniform"
+                ManipulationMode="TranslateX, TranslateY, Scale"
+                ManipulationStarted="OnImageManipulationStarted" 
+                ManipulationDelta="OnImageManipulationDelta"
+                ManipulationCompleted="OnImageManipulationCompleted"
+                DoubleTapped="OnImageDoubleTapped"
+                PointerWheelChanged="OnImagePointerWheelChanged">
                 <Image.Source>
-                    <BitmapImage
-                        UriSource="{Binding PreviewImageUri}"/>
+                    <BitmapImage UriSource="{Binding PreviewImageUri}"/>
                 </Image.Source>
+                <Image.RenderTransform>
+                    <CompositeTransform x:Name="ImageTransform"/>
+                </Image.RenderTransform>
             </Image>
         </DataTemplate>
     </Page.Resources>
@@ -87,10 +94,10 @@
                 Icon="Download" 
                 Label="{Binding DownloadText}" 
                 Command="{Binding DownloadCommand}"/>
-            <AppBarButton 
+            <!--<AppBarButton 
                 Icon="Link"
                 Label="{Binding GetLinkText}" 
-                Command="{Binding GetLinkCommand}"/>
+                Command="{Binding GetLinkCommand}"/>-->
             <AppBarButton
                 Name="NextButton"
                 Icon="Next" 
