@@ -10,29 +10,6 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:PreviewImageViewModel}">
 
-    <Page.Resources>
-        <DataTemplate x:Key="ImagePreviewTemplate">
-            <Image
-                x:Name="ImagePreview"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Stretch="Uniform"
-                ManipulationMode="TranslateX, TranslateY, Scale"
-                ManipulationStarted="OnImageManipulationStarted" 
-                ManipulationDelta="OnImageManipulationDelta"
-                ManipulationCompleted="OnImageManipulationCompleted"
-                DoubleTapped="OnImageDoubleTapped"
-                PointerWheelChanged="OnImagePointerWheelChanged">
-                <Image.Source>
-                    <BitmapImage UriSource="{Binding PreviewImageUri}"/>
-                </Image.Source>
-                <Image.RenderTransform>
-                    <CompositeTransform x:Name="ImageTransform"/>
-                </Image.RenderTransform>
-            </Image>
-        </DataTemplate>
-    </Page.Resources>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -72,14 +49,33 @@
         <FlipView
             x:Name="FlipView"
             Grid.Row="1"
-            Margin="12,0"
             Background="Transparent"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            ItemTemplate="{StaticResource ImagePreviewTemplate}"
             ItemsSource="{Binding PreviewItems}"
             SelectedItem="{Binding SelectedPreview, Mode=TwoWay}"
-            SelectionChanged="OnFlipViewSelectionChanged"/>
+            SelectionChanged="OnFlipViewSelectionChanged">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <ScrollViewer
+                        x:Name="ScrollViewer"                        
+                        MinZoomFactor="1"
+                        ZoomMode="Enabled"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+                        <Image
+                            MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewer}"
+                            MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewer}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Stretch="Uniform"
+                            DoubleTapped="OnImageDoubleTapped">
+                            <Image.Source>
+                                <BitmapImage UriSource="{Binding PreviewImageUri}"/>
+                            </Image.Source>
+                        </Image>
+                    </ScrollViewer>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
 
         <CommandBar
             Name="PageCommandBar"
