@@ -81,6 +81,7 @@ namespace MegaApp.ViewModels
                 var getPreview = new GetPreviewRequestListenerAsync();
                 var result = await getPreview.ExecuteAsync(() =>
                 {
+                    this.IsBusy = true;
                     this.MegaSdk.getPreview(this.OriginalMNode,
                         this.PreviewPath, getPreview);
                 });
@@ -90,6 +91,8 @@ namespace MegaApp.ViewModels
                     UiService.OnUiThread(() => 
                         this.PreviewImageUri = new Uri(this.PreviewPath));
                 }
+
+                this.IsBusy = false;
             }
         }
 

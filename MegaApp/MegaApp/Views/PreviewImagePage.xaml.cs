@@ -28,12 +28,16 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(true);
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
+            UiService.HideStatusBar();
+
             var parameters = NavigateService.GetNavigationObject(e.Parameter).Parameters;
             _parentFolder = parameters[NavigationParamType.Data] as FolderViewModel;
 
             if (_parentFolder == null)
             {
-                PageCommandBar.IsEnabled = false;
+                // If something went wrong, disables the command bars
+                this.TopCommandBar.IsEnabled = false;
+                this.BottomCommandBar.IsEnabled = false;
 
                 await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_PreviewImageFailed_Title"),
@@ -48,6 +52,7 @@ namespace MegaApp.Views
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            UiService.ShowStatusBar();
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
             base.OnNavigatedFrom(e);
         }
@@ -63,26 +68,47 @@ namespace MegaApp.Views
 
         private void OnFlipViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var numItems = ViewModel.PreviewItems.Count;
-            var itemIndex = ViewModel.PreviewItems.IndexOf(ViewModel.SelectedPreview);
+            var itemsCount = this.FlipView.Items.Count;
+            var itemIndex = this.FlipView.SelectedIndex;
 
-            this.PreviousButton.IsEnabled = (itemIndex > 0) ? true : false;
-            this.NextButton.IsEnabled = (itemIndex < numItems - 1) ? true : false;
-
-            // Reset scale of the old selected image
-            foreach (var previousImage in e.RemovedItems)
+            // Set the gallery direction and reset scale of the old selected image
+            if (e.RemovedItems?.Count > 0 && e.RemovedItems[0] != null)
             {
-                if (previousImage != null)
+                // Reset the scale of the old selected image
+                var container = this.FlipView.ContainerFromItem(e.RemovedItems[0]);
+                if (container != null)
                 {
-                    var container = this.FlipView.ContainerFromItem(previousImage);
-                    if (container != null)
-                    {
-                        var scrollViewer = container.FindDescendant<ScrollViewer>();
-                        if (scrollViewer != null)
-                            scrollViewer.ChangeView(null, null, 1);
-                    }
+                    var scrollViewer = container.FindDescendant<ScrollViewer>();
+                    if (scrollViewer != null)
+                        scrollViewer.ChangeView(null, null, 1);
+                }
+
+                // Set the gallery direction taking into account the old and new image
+                if (e.AddedItems?.Count > 0 && e.AddedItems[0] != null)
+                {
+                    var currentIndex = ViewModel.PreviewItems.IndexOf(e.AddedItems[0] as ImageNodeViewModel);
+                    var lastIndex = ViewModel.PreviewItems.IndexOf(e.RemovedItems[0] as ImageNodeViewModel);
+
+                    ViewModel.GalleryDirection = currentIndex > lastIndex ?
+                        GalleryDirection.Next : GalleryDirection.Previous;
                 }
             }
+            else
+            {
+                // Set the default gallery direction
+                ViewModel.GalleryDirection = GalleryDirection.Next;
+            }
+                        
+            // Set the move buttons status
+            this.PreviousButton.IsEnabled = (itemIndex > 0) ? true : false;
+            this.NextButton.IsEnabled = (itemIndex < itemsCount - 1) ? true : false;
+
+            // Check if the selected item is the first or the last item of the gallery.
+            // If it is, invert the gallery direction to the only possible direction.
+            if (itemIndex == 0)
+                ViewModel.GalleryDirection = GalleryDirection.Next;
+            else if (itemIndex == itemsCount - 1)
+                ViewModel.GalleryDirection = GalleryDirection.Previous;
         }
 
         private void OnImageDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -90,16 +116,18 @@ namespace MegaApp.Views
             var image = sender as Image;
             if(image != null)
             {
+                // Get the offset (exact point of double tap)
                 var hOffset = e.GetPosition(image).X;
                 var vOffset = e.GetPosition(image).Y;
 
+                // Get the container of the image and set the new zoom
                 var scrollViewer = image.FindAscendant<ScrollViewer>();
                 if(scrollViewer != null)
                 {
                     if (scrollViewer.ZoomFactor > 1)
                         scrollViewer.ChangeView(hOffset, vOffset, 1);
                     else
-                        scrollViewer.ChangeView(hOffset, vOffset, 2);
+                        scrollViewer.ChangeView(hOffset, vOffset, 4);
                 }
             }
         }

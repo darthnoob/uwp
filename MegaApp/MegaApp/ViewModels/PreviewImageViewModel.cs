@@ -97,22 +97,82 @@ namespace MegaApp.ViewModels
             await SelectedPreview?.RenameAsync();
         }
 
-        private void SetViewingRange(int inViewRange)
+        /// <summary>
+        /// Set the range of previews to load before and after the current preview.
+        /// </summary>
+        /// <param name="viewRange">Range from the current item to load the previews.</param>
+        /// <param name="initialize">Indicates if is an initialization.</param>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        private void SetViewingRange(int viewRange, bool initialize)
         {
-            try
-            {
-                int currentIndex = PreviewItems.IndexOf(SelectedPreview);
-                int lowIndex = currentIndex - inViewRange;
-                if (lowIndex < 0) lowIndex = 0;
-                int highIndex = currentIndex + inViewRange;
-                if (highIndex > PreviewItems.Count - 1) highIndex = PreviewItems.Count - 1;
+            int currentIndex = PreviewItems.IndexOf(SelectedPreview);
+            int lowIndex = currentIndex - viewRange;
+            if (lowIndex < 0) lowIndex = 0;
+            int highIndex = currentIndex + viewRange;
+            if (highIndex > PreviewItems.Count - 1) highIndex = PreviewItems.Count - 1;
 
+            if (initialize)
+            {
                 for (int i = currentIndex; i >= lowIndex; i--)
                     PreviewItems[i].InViewingRange = true;
                 for (int i = currentIndex; i <= highIndex; i++)
                     PreviewItems[i].InViewingRange = true;
             }
-            catch (ArgumentOutOfRangeException) { return; }
+            else
+            {
+                switch (GalleryDirection)
+                {
+                    case GalleryDirection.Next:
+                        PreviewItems[highIndex].InViewingRange = true;
+                        break;
+
+                    case GalleryDirection.Previous:
+                        PreviewItems[lowIndex].InViewingRange = true;
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clean up from memory the previews that are not in the view range.
+        /// </summary>
+        /// <param name="cleanRange">Range from the current item to clean previews.</param>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        private void CleanUpMemory(int cleanRange)
+        {
+            int currentIndex = PreviewItems.IndexOf(SelectedPreview);
+            int previewItemsCount = PreviewItems.Count - 1;
+
+            switch (GalleryDirection)
+            {
+                case GalleryDirection.Next:
+                    if ((currentIndex - cleanRange) >= 0)
+                    {
+                        int cleanIndex = currentIndex - cleanRange;
+                        if (PreviewItems[cleanIndex].IsBusy)
+                            PreviewItems[cleanIndex].CancelPreviewRequest();
+                        PreviewItems[cleanIndex].InViewingRange = false;
+                        PreviewItems[cleanIndex].PreviewImageUri = null;
+                    }
+                    break;
+
+                case GalleryDirection.Previous:
+                    if ((currentIndex + cleanRange) <= previewItemsCount)
+                    {
+                        int cleanIndex = currentIndex + cleanRange;
+                        if (PreviewItems[cleanIndex].IsBusy)
+                            PreviewItems[cleanIndex].CancelPreviewRequest();
+                        PreviewItems[cleanIndex].InViewingRange = false;
+                        PreviewItems[cleanIndex].PreviewImageUri = null;
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion
@@ -131,10 +191,18 @@ namespace MegaApp.ViewModels
             get { return _selectedPreview; }
             set
             {
+                bool initialize = _selectedPreview == null;
                 SetField(ref _selectedPreview, value);
-                SetViewingRange(3);
+                SetViewingRange(3, initialize);
+                CleanUpMemory(4);
             }
         }
+
+        #endregion
+
+        #region ProgressMessages
+
+        public string ProgressLoadingPreviewText => ResourceService.ProgressMessages.GetString("PM_LoadingPreview");
 
         #endregion
 
