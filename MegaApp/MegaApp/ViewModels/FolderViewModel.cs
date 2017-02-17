@@ -515,6 +515,15 @@ namespace MegaApp.ViewModels
 
         public void OnChildNodeTapped(IMegaNode node)
         {
+            // Needed to avoid process the node when the user is in MultiSelect mode and also after the
+            // node is the last removed from selection and MultiSelect mode will be automatically disabled.
+            if (this.CurrentViewState == FolderContentViewState.MultiSelect) return;
+            if (this.PreviousViewState == FolderContentViewState.MultiSelect)
+            {
+                this.PreviousViewState = this.CurrentViewState;
+                return;
+            }
+
             switch (node.Type)
             {
                 case MNodeType.TYPE_UNKNOWN:
@@ -1084,7 +1093,12 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    this.CurrentViewState = this.PreviousViewState;
+                    if (this.PreviousViewState != FolderContentViewState.MultiSelect)
+                    {
+                        this.CurrentViewState = this.PreviousViewState;
+                        this.PreviousViewState = FolderContentViewState.MultiSelect;
+                    }
+                        
                     SelectedNodes.Clear();
                     DisableMultiSelect?.Invoke(this, EventArgs.Empty);                    
                 }
