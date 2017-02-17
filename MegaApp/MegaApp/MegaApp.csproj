@@ -163,6 +163,7 @@
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />

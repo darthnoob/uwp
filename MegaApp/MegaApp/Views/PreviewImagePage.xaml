@@ -26,10 +26,10 @@
                 Label="{Binding DownloadText}" 
                 ToolTipService.ToolTip="{Binding DownloadText}"
                 Command="{Binding DownloadCommand}"/>
-            <!--<AppBarButton 
+            <AppBarButton 
                 Icon="Link"
                 Label="{Binding GetLinkText}" 
-                Command="{Binding GetLinkCommand}"/>-->
+                Command="{Binding GetLinkCommand}"/>
             <AppBarButton
                 Icon="Rename" 
                 Label="{Binding RenameText}"
@@ -146,10 +146,10 @@
                 Icon="Download" 
                 Label="{Binding DownloadText}" 
                 Command="{Binding DownloadCommand}"/>
-            <!--<AppBarButton 
+            <AppBarButton 
                 Icon="Link"
                 Label="{Binding GetLinkText}" 
-                Command="{Binding GetLinkCommand}"/>-->
+                Command="{Binding GetLinkCommand}"/>
             <AppBarButton
                 Name="NextButton"
                 Icon="Next" 

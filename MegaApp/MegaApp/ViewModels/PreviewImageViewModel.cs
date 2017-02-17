@@ -63,7 +63,7 @@ namespace MegaApp.ViewModels
 
         private void GetLink()
         {
-            throw new NotImplementedException();
+            SelectedPreview?.GetLinkAsync();
         }
 
         private async void MoveToRubbishBin()

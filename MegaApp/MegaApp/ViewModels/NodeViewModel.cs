@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -13,6 +14,7 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -36,24 +38,31 @@ namespace MegaApp.ViewModels
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.RenameCommand = new RelayCommand(Rename);
+            this.GetLinkCommand = new RelayCommand(GetLinkAsync);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
+            this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
+            this.RenameCommand = new RelayCommand(Rename);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.Parent.CurrentViewState))
+            {
                 OnPropertyChanged(nameof(this.Parent));
+                OnPropertyChanged(nameof(this.NodeBinding));
+            }
         }
 
         #region Commands
 
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; }
-        public ICommand RenameCommand { get; }
-        public ICommand RemoveCommand { get; }
+        public ICommand GetLinkCommand { get; }
         public ICommand MoveToRubbishBinCommand { get; }
+        public ICommand PreviewCommand { get; }
+        public ICommand RemoveCommand { get; }
+        public ICommand RenameCommand { get; }
 
         #endregion
 
@@ -121,6 +130,8 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region IBaseNode Interface
+
+        public NodeViewModel NodeBinding => this;
 
         private string _name;
         public string Name
@@ -343,6 +354,21 @@ namespace MegaApp.ViewModels
             return true;
         }
 
+        private void Preview()
+        {
+            this.Parent.FocusedNode = this;
+
+            // Navigate to the preview page
+            OnUiThread(() =>
+            {
+                var parameters = new Dictionary<NavigationParamType, object>();
+                parameters.Add(NavigationParamType.Data, this.Parent);
+
+                NavigateService.Instance.Navigate(typeof(PreviewImagePage), true,
+                    NavigationObject.Create(this.GetType(), NavigationActionType.Default, parameters));
+            });
+        }
+
         private async void Remove()
         {
             if (this.Parent != null && this.Parent.IsMultiSelectActive)
@@ -381,9 +407,37 @@ namespace MegaApp.ViewModels
             return true;
         }
 
-        public NodeActionResult GetLink()
+        public async void GetLinkAsync()
         {
-            return NodeActionResult.IsBusy;
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            string link;
+            if (this.OriginalMNode.isExported())
+            {
+                link = this.OriginalMNode.getPublicLink();
+            }
+            else
+            {
+                var exportNode = new ExporNodeRequestListenerAsync();
+                link = await exportNode.ExecuteAsync(() =>
+                {
+                    this.MegaSdk.exportNode(this.OriginalMNode, exportNode);
+                });
+
+                if (string.IsNullOrEmpty(link))
+                {
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_GetLinkFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_GetLinkFailed"));
+                    });
+                    return;
+                };
+            }
+
+            OnUiThread(() => DialogService.ShowShareLink(link));
         }
 
         private void Download()
@@ -538,8 +592,10 @@ namespace MegaApp.ViewModels
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
 

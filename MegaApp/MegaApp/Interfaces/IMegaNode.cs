@@ -52,8 +52,7 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 
         /// </summary>
-        /// <returns>Result of the action</returns>
-        NodeActionResult GetLink();
+        void GetLinkAsync();
 
         /// <summary>
         /// Dowload the node to a specified download destionation
