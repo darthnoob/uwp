@@ -169,6 +169,20 @@ namespace MegaApp.Views
             this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
         }
 
+        private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            if(!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
+            {
+                ((ListViewBase)sender).SelectedItems.Clear();
+                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            }
+        }
+
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             // Needed on every UI interaction

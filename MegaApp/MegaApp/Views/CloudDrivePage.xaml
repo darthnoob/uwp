@@ -171,6 +171,7 @@
                                     ItemsSource="{Binding ChildNodes}"
                                     Tapped="OnItemTapped"
                                     DoubleTapped="OnItemDoubleTapped"
+                                    RightTapped="OnRightItemTapped"
                                     IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplateSelector="{Binding NodeTemplateSelector}">

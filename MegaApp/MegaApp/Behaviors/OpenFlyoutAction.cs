@@ -1,11 +1,9 @@
-﻿using Windows.Devices.Input;
-using Windows.UI.Input;
+﻿using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using MegaApp.Services;
-using Microsoft.Xaml.Interactivity;
 
 namespace MegaApp.Behaviors
 {
@@ -49,7 +47,6 @@ namespace MegaApp.Behaviors
                 if (rightTap != null )
                 {
                     menuFlyout.ShowAt(frameworkElement, rightTap.GetPosition(frameworkElement));
-                    rightTap.Handled = true;
                     return null;
                 }
                 menuFlyout.ShowAt(frameworkElement);
