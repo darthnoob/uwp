@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -245,10 +246,12 @@ namespace MegaApp.ViewModels
 
         private void CopyOrMove()
         {
-            if (this.Parent?.CurrentViewState != FolderContentViewState.MultiSelect)
+            // In case that copy or move a single node using the flyout menu and the selected 
+            // nodes list is empty, we need add the current node to the selected nodes
+            if (this.Parent != null && !this.Parent.IsMultiSelectActive)
             {
-                Parent.SelectedNodes.Clear();
-                Parent.SelectedNodes.Add(this);
+                if (!this.Parent.SelectedNodes.Any())
+                    this.Parent.SelectedNodes.Add(this);
             }
 
             if (this.Parent.CopyOrMoveCommand.CanExecute(null))
@@ -304,7 +307,7 @@ namespace MegaApp.ViewModels
 
         private async void MoveToRubbishBin()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if (this.Parent.MoveToRubbishBinCommand.CanExecute(null))
                     this.Parent.MoveToRubbishBinCommand.Execute(null);
@@ -342,7 +345,7 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if (this.Parent.RemoveCommand.CanExecute(null))
                     this.Parent.RemoveCommand.Execute(null);
@@ -385,7 +388,7 @@ namespace MegaApp.ViewModels
 
         private void Download()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if(this.Parent.DownloadCommand.CanExecute(null))
                     this.Parent.DownloadCommand.Execute(null);
