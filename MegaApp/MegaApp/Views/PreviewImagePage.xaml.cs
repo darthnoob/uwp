@@ -131,5 +131,17 @@ namespace MegaApp.Views
                 }
             }
         }
+
+        private void OnImageManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
+        {
+            var scrollViewer = sender as ScrollViewer;
+            if (scrollViewer != null)
+            {
+                var hOffset = scrollViewer.HorizontalOffset - (scrollViewer.ZoomFactor * e.Delta.Translation.X);
+                var vOffset = scrollViewer.VerticalOffset - (scrollViewer.ZoomFactor * e.Delta.Translation.Y);
+
+                scrollViewer.ChangeView(hOffset, vOffset, scrollViewer.ZoomFactor);
+            }
+        }
     }
 }
