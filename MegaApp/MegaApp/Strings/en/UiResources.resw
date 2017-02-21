@@ -343,7 +343,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploaded" xml:space="preserve">
-    <value>uploaded</value>
+    <value>Uploaded</value>
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
@@ -513,5 +513,9 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_SortOptionSmallest" xml:space="preserve">
     <value>Smallest</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPreparing" xml:space="preserve">
+    <value>Preparing...</value>
+    <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
 </root>

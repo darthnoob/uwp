@@ -476,38 +476,97 @@ namespace MegaApp.ViewModels
             // Set upload directory only once for speed improvement and if not exists, create dir
             var uploadDir = AppService.GetUploadDirectoryPath(true);
 
+            // Create a dictionary to store the files and its corresponding transfer object.            
+            var uploads = new Dictionary<StorageFile, TransferObjectModel>();
+
+            // Pick up the files to upload
             var pickedFiles = await FileService.SelectMultipleFiles();
+
+            // First create the transfers object and fill the dictionary
             foreach (StorageFile file in pickedFiles)
             {
                 if (file == null) continue; // To avoid null references
 
+                TransferObjectModel uploadTransfer = null;
                 try
                 {
-                    string tempUploadFilePath = Path.Combine(uploadDir, file.Name);
-                    using (var fs = new FileStream(tempUploadFilePath, FileMode.Create))
+                    uploadTransfer = new TransferObjectModel(
+                        this.FolderRootNode, TransferType.Upload,
+                        Path.Combine(uploadDir, file.Name));
+
+                    if(uploadTransfer != null)
                     {
-                        // Set buffersize to avoid copy failure of large files
-                        var stream = await file.OpenStreamForReadAsync();
-                        await stream.CopyToAsync(fs, 8192);
-                        await fs.FlushAsync();
+                        uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
+                        uploadTransfer.Status = TransferStatus.Preparing;
+                        uploads.Add(file, uploadTransfer);
+                        TransferService.MegaTransfers.Add(uploadTransfer);
                     }
-
-                    var uploadTransfer = new TransferObjectModel(
-                        this.FolderRootNode,
-                        TransferType.Upload, 
-                        tempUploadFilePath);
-
-                    TransferService.MegaTransfers.Add(uploadTransfer);
-                    uploadTransfer.StartTransfer();
                 }
                 catch (Exception)
                 {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name);
+
                     OnUiThread(async () =>
                     {
+                        if (uploadTransfer != null) uploadTransfer.Status = TransferStatus.Error;
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
                             string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
                     });
+                }
+            }
+
+            // Second finish preparing transfers copying the files to the temporary upload folder
+            foreach (var upload in uploads)
+            {
+                if (upload.Key == null || upload.Value == null) continue; // To avoid null references
+
+                TransferObjectModel uploadTransfer = null;
+                try
+                {
+                    uploadTransfer = upload.Value;
+
+                    // If the upload isn´t already cancelled then copy the file to the temporary upload folder
+                    if(uploadTransfer?.PreparingUploadCancelToken?.Token.IsCancellationRequested == false)
+                    {
+                        using (var fs = new FileStream(Path.Combine(uploadDir, upload.Key.Name), FileMode.Create))
+                        {
+                            // Set buffersize to avoid copy failure of large files
+                            var stream = await upload.Key.OpenStreamForReadAsync();
+                            await stream.CopyToAsync(fs, 8192, uploadTransfer.PreparingUploadCancelToken.Token);
+                            await fs.FlushAsync(uploadTransfer.PreparingUploadCancelToken.Token);
+                        }
+
+                        uploadTransfer.StartTransfer();
+                    }
+                    else
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                        OnUiThread(() => uploadTransfer.Status = TransferStatus.Canceled);
+                    }
+                }
+                // If the upload is cancelled during the preparation process, 
+                // changes the status and delete the corresponding temporary file
+                catch (TaskCanceledException)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                    FileService.DeleteFile(uploadTransfer.TransferPath);
+                    OnUiThread(() => uploadTransfer.Status = TransferStatus.Canceled);
+                }
+                catch (Exception)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name);
+                    OnUiThread(async () =>
+                    {
+                        uploadTransfer.Status = TransferStatus.Error;
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), upload.Key.Name));
+                    });
+                }
+                finally
+                {
+                    uploadTransfer.PreparingUploadCancelToken = null;
                 }
             }
         }

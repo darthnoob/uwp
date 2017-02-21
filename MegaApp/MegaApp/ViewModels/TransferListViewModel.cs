@@ -112,6 +112,10 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Cancel all transfers of the current type.        
+        /// </summary>
+        /// <see cref="MTransferType"/>.
         public async void CancelTransfers()
         {
             var result = await DialogService.ShowOkCancelAsync(
@@ -119,6 +123,29 @@ namespace MegaApp.ViewModels
                 this.CancelTransfersDescriptionText);
 
             if (!result) return;
+
+            // Use a temp list to avoid InvalidOperationException
+            var transfers = Items.ToList();
+            foreach (var transfer in transfers)
+            {
+                // If the transfer is an upload and is being prepared (copying file to the upload temporary folder)
+                if (this.Type == MTransferType.TYPE_UPLOAD && transfer?.PreparingUploadCancelToken != null)
+                {
+                    transfer.Status = TransferStatus.Canceling;
+                    transfer.PreparingUploadCancelToken.Cancel();
+                }
+                // If the transfer is ready but not started for some reason
+                else if (transfer?.IsBusy == false && transfer?.Status == TransferStatus.NotStarted)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}",
+                        this.Type == MTransferType.TYPE_UPLOAD? "UPLOAD" : "DOWNLOAD", transfer.DisplayName));                    
+                    transfer.Status = TransferStatus.Canceled;
+                }
+                else
+                {
+                    transfer.Status = TransferStatus.Canceling;
+                }
+            }
 
             SdkService.MegaSdk.cancelTransfers((int)this.Type);
         }

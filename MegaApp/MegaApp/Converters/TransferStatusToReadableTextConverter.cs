@@ -25,27 +25,29 @@ namespace MegaApp.Converters
             switch ((TransferStatus)value)
             {
                 case TransferStatus.NotStarted:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusNotStarted").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusNotStarted");
+                case TransferStatus.Preparing:
+                    return ResourceService.UiResources.GetString("UI_TransferStatusPreparing");
                 case TransferStatus.Queued:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusQueued").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusQueued");
                 case TransferStatus.Downloading:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusDownloading").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusDownloading");
                 case TransferStatus.Downloaded:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusDownloaded").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusDownloaded");
                 case TransferStatus.Uploading:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusUploading").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusUploading");
                 case TransferStatus.Uploaded:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusUploaded").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusUploaded");
                 case TransferStatus.Pausing:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusPausing").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusPausing");
                 case TransferStatus.Paused:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusPaused").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusPaused");
                 case TransferStatus.Canceling:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusCanceling").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusCanceling");
                 case TransferStatus.Canceled:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusCanceled").ToLower();                                                
+                    return ResourceService.UiResources.GetString("UI_TransferStatusCanceled");
                 case TransferStatus.Error:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusError").ToLower();
+                    return ResourceService.UiResources.GetString("UI_TransferStatusError");
                 default:
                     throw new ArgumentOutOfRangeException("value");
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
@@ -100,12 +101,26 @@ namespace MegaApp.ViewModels
         /// </summary>
         public void CancelTransfer()
         {
+            // If the transfer is an upload and is being prepared (copying file to the upload temporary folder)
+            if (this.Type == TransferType.Upload && this.PreparingUploadCancelToken != null)
+            {
+                this.Status = TransferStatus.Canceling;
+                this.PreparingUploadCancelToken.Cancel();
+                return;
+            }
+
+            // If the transfer is ready but not started for some reason
             if (!this.IsBusy)
             {
                 if (this.Status == TransferStatus.NotStarted)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}", 
+                        this.Type == TransferType.Upload ? "UPLOAD" : "DOWNLOAD", this.DisplayName));
                     this.Status = TransferStatus.Canceled;
+                }
                 return;
             }
+
             this.Status = TransferStatus.Canceling;
             SdkService.MegaSdk.cancelTransfer(this.Transfer);
         }
@@ -212,6 +227,8 @@ namespace MegaApp.ViewModels
         public string ExternalDownloadPath { get; set; }
         public TransferType Type { get; set; }
         public IMegaNode SelectedNode { get; private set; }
+
+        public CancellationTokenSource PreparingUploadCancelToken;
 
         private MTransfer _transfer;
         public MTransfer Transfer
