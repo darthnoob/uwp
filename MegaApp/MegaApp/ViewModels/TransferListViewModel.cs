@@ -105,6 +105,7 @@ namespace MegaApp.ViewModels
                             {
                                 OnUiThread(() =>
                                 {
+                                    transferObjectModel.IsBusy = false;
                                     transferObjectModel.Status = TransferStatus.Paused;
                                     transferObjectModel.TransferSpeed = string.Empty;
                                 });

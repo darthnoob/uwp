@@ -47,6 +47,7 @@ namespace MegaApp.ViewModels
                     break;            
             }
 
+            this.IsBusy = false;
             this.Type = transferType;
             this.TransferPath = transferPath;
             this.ExternalDownloadPath = externalDownloadPath;
@@ -283,8 +284,14 @@ namespace MegaApp.ViewModels
         public ulong TransferedBytes
         {
             get { return _transferedBytes; }
-            set { SetField(ref _transferedBytes, value); }
+            set
+            {
+                SetField(ref _transferedBytes, value);
+                OnPropertyChanged("TransferedPercentage");
+            }
         }
+
+        public string TransferedPercentage => string.Format("{0}%", TransferedBytes * 100 / TotalBytes);
 
         private string _transferSpeed;
         public string TransferSpeed

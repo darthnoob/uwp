@@ -611,7 +611,19 @@
                 Grid.Column="1"                 
                 Margin="0,-6,0,0"
                 Style="{ThemeResource CaptionTextBlockStyle}" 
-                Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+            <TextBlock 
+                HorizontalAlignment="Left" 
+                TextWrapping="Wrap" 
+                Text="{Binding TransferedPercentage}" 
+                VerticalAlignment="Top" 
+                Grid.Row="2" 
+                Grid.Column="1"                 
+                Margin="0,-6,0,0"
+                Style="{ThemeResource CaptionTextBlockStyle}" 
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
             <TextBlock 
                 HorizontalAlignment="Right" 
                 TextWrapping="Wrap" 
@@ -621,7 +633,8 @@
                 Grid.Column="1"                 
                 Margin="0,-6,0,0"
                 Style="{ThemeResource CaptionTextBlockStyle}" 
-                Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </Grid>
     </DataTemplate>
 

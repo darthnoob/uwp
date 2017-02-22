@@ -280,7 +280,7 @@ namespace MegaApp.MegaApi
                 if (megaTransfer.Transfer == null)
                     megaTransfer.Transfer = transfer;
 
-                megaTransfer.IsBusy = true;
+                megaTransfer.IsBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
                 megaTransfer.TotalBytes = transfer.getTotalBytes();
                 megaTransfer.TransferedBytes = transfer.getTransferredBytes();
                 megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
