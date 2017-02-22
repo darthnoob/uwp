@@ -52,16 +52,24 @@ namespace MegaApp.Services
         /// <param name="cleanTransfers">Boolean value which indicates if clean the transfers list before update or not.</param>
         public static void UpdateMegaTransferList(TransferQueue megaTransfers, MTransferType type, bool cleanTransfers = false)
         {
-            if(cleanTransfers)
+            // List to store the uploads that are pending on preparation (copy file to the temporary upload folder), 
+            // because they have not already added to the SDK queue
+            List<TransferObjectModel> uploadsInPreparation = new List<TransferObjectModel>();
+
+            if (cleanTransfers)
             {
                 switch (type)
                 {
-                    case MTransferType.TYPE_DOWNLOAD:
+                    case MTransferType.TYPE_DOWNLOAD:                        
                         megaTransfers.Downloads.Clear();
                         break;
+
                     case MTransferType.TYPE_UPLOAD:
+                        // Store the uploads pending on preparation and clear the list
+                        uploadsInPreparation = megaTransfers.Uploads.Where(t => t.PreparingUploadCancelToken != null).ToList();
                         megaTransfers.Uploads.Clear();
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException(nameof(type), type, null);
                 }
@@ -71,6 +79,10 @@ namespace MegaApp.Services
             var numTransfers = transfers.size();
             for (int i = 0; i < numTransfers; i++)
                 AddTransferToList(megaTransfers, transfers.get(i));
+
+            // Restore the uploads in preparation
+            foreach (var upload in uploadsInPreparation)
+                megaTransfers.Add(upload);
         }
 
         /// <summary>
@@ -81,7 +93,7 @@ namespace MegaApp.Services
         public static void AddTransferToList(TransferQueue megaTransfers, MTransfer transfer)
         {
             // Folder transfers are not included into the transfers list.
-            if (transfer.isFolderTransfer()) return;
+            if (transfer?.isFolderTransfer() == true) return;
 
             // Search if the transfer already exists into the transfers list.
             var megaTransfer = SearchTransfer(megaTransfers.SelectAll(), transfer);
