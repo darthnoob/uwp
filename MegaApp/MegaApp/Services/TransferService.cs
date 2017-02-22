@@ -81,8 +81,11 @@ namespace MegaApp.Services
                 AddTransferToList(megaTransfers, transfers.get(i));
 
             // Restore the uploads in preparation
-            foreach (var upload in uploadsInPreparation)
-                megaTransfers.Add(upload);
+            if (type == MTransferType.TYPE_UPLOAD)
+            {
+                foreach (var upload in uploadsInPreparation)
+                    megaTransfers.Add(upload);
+            }
         }
 
         /// <summary>
