@@ -138,7 +138,7 @@ namespace MegaApp.Services
                         break;
 
                     case MTransferType.TYPE_UPLOAD:
-                        var parentNode = SdkService.MegaSdk.getNodeByPath(transfer.getParentPath());
+                        var parentNode = SdkService.MegaSdk.getNodeByHandle(transfer.getParentHandle());
 
                         if (parentNode == null) return null;
 
