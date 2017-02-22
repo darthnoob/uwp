@@ -17,9 +17,11 @@ namespace MegaApp.Classes
 
             this.Uploads = new ObservableCollection<TransferObjectModel>();
             this.Downloads = new ObservableCollection<TransferObjectModel>();
+            this.Completed = new ObservableCollection<TransferObjectModel>();
 
             this.Uploads.CollectionChanged += OnCollectionChanged;
             this.Downloads.CollectionChanged += OnCollectionChanged;
+            this.Completed.CollectionChanged += OnCollectionChanged;
         }
 
         /// <summary>
@@ -133,6 +135,8 @@ namespace MegaApp.Classes
         public ObservableCollection<TransferObjectModel> Uploads { get; }
 
         public ObservableCollection<TransferObjectModel> Downloads { get; }
+
+        public ObservableCollection<TransferObjectModel> Completed { get; }
 
         public bool QueuePaused { get; set; }
     }

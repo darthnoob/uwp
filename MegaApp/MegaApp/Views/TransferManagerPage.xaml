@@ -49,29 +49,34 @@
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>
+                    <PivotItem 
+                        Header="{Binding Description}"
+                        DataContext="{Binding Completed}">
+                        <ListView
+                            ItemsSource="{Binding Items}"
+                            ItemTemplate="{StaticResource MegaTransferItemContent}"
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
+                        </ListView>
+                    </PivotItem>
                 </Pivot>
             </Grid>
         </Grid>    
 
         <CommandBar 
             Grid.Row="1"
-            Style="{StaticResource MegaCommandBarStyle}">
+            Style="{StaticResource MegaCommandBarStyle}">            
             <AppBarButton 
-                Command="{Binding ActiveViewModel.ResumeCommand}"
-                Icon="Play" 
-                Label="{Binding ActiveViewModel.ResumeText}" 
-                Visibility="{Binding ActiveViewModel.IsPauseEnabled, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <AppBarButton 
-                Command="{Binding ActiveViewModel.PauseCommand}"
-                Icon="Pause" 
-                Label="{Binding ActiveViewModel.PauseText}"
-                Visibility="{Binding ActiveViewModel.IsPauseEnabled, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
+                Label="{Binding ActiveViewModel.PauseOrResumeText}"
+                Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
                     Command="{Binding ActiveViewModel.CancelCommand}"
                     Icon="Cancel"
-                    Label="{Binding ActiveViewModel.CancelAllText}"/>
+                    Label="{Binding ActiveViewModel.CancelAllText}"
+                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                 <AppBarButton
                     Command="{Binding ActiveViewModel.CleanCommand}"
                     Icon="Clear"

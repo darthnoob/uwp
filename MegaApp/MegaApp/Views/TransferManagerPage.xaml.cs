@@ -1,14 +1,7 @@
-﻿using System;
-using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Input;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using MegaApp.Enums;
 
 namespace MegaApp.Views
 {
@@ -38,6 +31,9 @@ namespace MegaApp.Views
                     break;
                 case 1:
                     this.ViewModel.ActiveViewModel = this.ViewModel.Downloads;
+                    break;
+                case 2:
+                    this.ViewModel.ActiveViewModel = this.ViewModel.Completed;
                     break;
             }
         }

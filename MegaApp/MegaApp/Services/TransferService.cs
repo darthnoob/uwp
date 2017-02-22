@@ -45,6 +45,28 @@ namespace MegaApp.Services
         #region Public Methods
 
         /// <summary>
+        /// Moves a transfer to the completed transfers list.
+        /// </summary>
+        /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>
+        /// <param name="megaTransfer"><see cref="TransferObjectModel"/> of the transfer to move.</param>
+        public static void MoveMegaTransferToCompleted(TransferQueue megaTransfers, TransferObjectModel megaTransfer)
+        {
+            switch (megaTransfer.Type)
+            {
+                case TransferType.Download:
+                    megaTransfers.Downloads.Remove(megaTransfer);
+                    break;
+                case TransferType.Upload:
+                    megaTransfers.Uploads.Remove(megaTransfer);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(megaTransfer.Type), megaTransfer.Type, null);
+            }
+
+            megaTransfers.Completed.Add(megaTransfer);
+        }
+
+        /// <summary>
         /// Update a transfers list.
         /// </summary>
         /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>

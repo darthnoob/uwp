@@ -124,11 +124,19 @@ namespace MegaApp.MegaApi
                             if (!result)
                                 UiService.OnUiThread(() => megaTransfer.Status = TransferStatus.Error);
                             else
-                                UiService.OnUiThread(() => megaTransfer.Status = TransferStatus.Downloaded);
+                                UiService.OnUiThread(() =>
+                                {
+                                    megaTransfer.Status = TransferStatus.Downloaded;
+                                    TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer);
+                                });
                             break;
 
                         case TransferType.Upload:
-                            UiService.OnUiThread(() => megaTransfer.Status = TransferStatus.Uploaded);
+                            UiService.OnUiThread(() =>
+                            {
+                                megaTransfer.Status = TransferStatus.Uploaded;
+                                TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer);
+                            });
                             break;
 
                         default:

@@ -518,4 +518,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Preparing...</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
+  <data name="UI_Completed" xml:space="preserve">
+    <value>Completed</value>
+    <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
