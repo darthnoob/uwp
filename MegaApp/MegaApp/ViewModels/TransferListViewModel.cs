@@ -143,7 +143,6 @@ namespace MegaApp.ViewModels
                 // If the transfer is an upload and is being prepared (copying file to the upload temporary folder)
                 if (this.Type == MTransferType.TYPE_UPLOAD && transfer?.PreparingUploadCancelToken != null)
                 {
-                    transfer.Status = TransferStatus.Canceling;
                     transfer.PreparingUploadCancelToken.Cancel();
                 }
                 // If the transfer is ready but not started for some reason
@@ -152,10 +151,6 @@ namespace MegaApp.ViewModels
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}",
                         this.Type == MTransferType.TYPE_UPLOAD? "UPLOAD" : "DOWNLOAD", transfer.DisplayName));                    
                     transfer.Status = TransferStatus.Canceled;
-                }
-                else
-                {
-                    transfer.Status = TransferStatus.Canceling;
                 }
             }
 

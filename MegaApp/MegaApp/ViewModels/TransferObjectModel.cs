@@ -105,24 +105,19 @@ namespace MegaApp.ViewModels
             // If the transfer is an upload and is being prepared (copying file to the upload temporary folder)
             if (this.Type == TransferType.Upload && this.PreparingUploadCancelToken != null)
             {
-                this.Status = TransferStatus.Canceling;
                 this.PreparingUploadCancelToken.Cancel();
                 return;
             }
 
             // If the transfer is ready but not started for some reason
-            if (!this.IsBusy)
+            if (!this.IsBusy && this.Status == TransferStatus.NotStarted)
             {
-                if (this.Status == TransferStatus.NotStarted)
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}", 
-                        this.Type == TransferType.Upload ? "UPLOAD" : "DOWNLOAD", this.DisplayName));
-                    this.Status = TransferStatus.Canceled;
-                }
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}",
+                    this.Type == TransferType.Upload ? "UPLOAD" : "DOWNLOAD", this.DisplayName));
+                this.Status = TransferStatus.Canceled;
                 return;
             }
 
-            this.Status = TransferStatus.Canceling;
             SdkService.MegaSdk.cancelTransfer(this.Transfer);
         }
 
@@ -308,7 +303,6 @@ namespace MegaApp.ViewModels
                 {
                     case TransferStatus.Error:
                     case TransferStatus.Canceled:
-                    case TransferStatus.Canceling:
                     case TransferStatus.Downloaded:
                     case TransferStatus.Uploaded:
                         return false;

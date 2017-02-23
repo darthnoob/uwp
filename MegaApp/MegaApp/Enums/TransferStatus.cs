@@ -4,9 +4,7 @@
     {
         Downloading = 0,
         Uploading   = 10,
-        Pausing     = 20,
         Paused      = 30,
-        Canceling   = 40,
         Queued      = 50,
         Preparing   = 55,        
         NotStarted  = 60,

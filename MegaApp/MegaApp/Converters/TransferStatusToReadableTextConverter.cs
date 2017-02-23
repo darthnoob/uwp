@@ -38,12 +38,8 @@ namespace MegaApp.Converters
                     return ResourceService.UiResources.GetString("UI_TransferStatusUploading");
                 case TransferStatus.Uploaded:
                     return ResourceService.UiResources.GetString("UI_TransferStatusUploaded");
-                case TransferStatus.Pausing:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusPausing");
                 case TransferStatus.Paused:
                     return ResourceService.UiResources.GetString("UI_TransferStatusPaused");
-                case TransferStatus.Canceling:
-                    return ResourceService.UiResources.GetString("UI_TransferStatusCanceling");
                 case TransferStatus.Canceled:
                     return ResourceService.UiResources.GetString("UI_TransferStatusCanceled");
                 case TransferStatus.Error:

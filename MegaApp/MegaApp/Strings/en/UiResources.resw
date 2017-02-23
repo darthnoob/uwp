@@ -310,10 +310,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Canceled</value>
     <comment>Label for the status of a canceled transfer - (String as short as possible).</comment>
   </data>
-  <data name="UI_TransferStatusCanceling" xml:space="preserve">
-    <value>Canceling...</value>
-    <comment>Label for the status of a transfer when is being canceling - (String as short as possible).</comment>
-  </data>
   <data name="UI_TransferStatusDownloaded" xml:space="preserve">
     <value>Downloaded</value>
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
@@ -333,10 +329,6 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_TransferStatusPaused" xml:space="preserve">
     <value>Paused</value>
     <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
-  </data>
-  <data name="UI_TransferStatusPausing" xml:space="preserve">
-    <value>Pausing...</value>
-    <comment>Label for the status of a transfer when is being pausing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusQueued" xml:space="preserve">
     <value>Queued</value>
