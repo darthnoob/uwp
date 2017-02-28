@@ -190,4 +190,8 @@ Preserve the [{0}] code because is for include current number of fetched nodes.<
     <value>Decrypting nodes.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
+  <data name="PM_LoadingPreview" xml:space="preserve">
+    <value>Loading preview...</value>
+    <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
+  </data>
 </root>

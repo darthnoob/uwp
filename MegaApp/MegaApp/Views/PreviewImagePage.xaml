@@ -1,0 +1,203 @@
+﻿<views:BasePreviewImagePage
+    x:Class="MegaApp.Views.PreviewImagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:views="using:MegaApp.Views"
+    xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:userControls="using:MegaApp.UserControls"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModels:PreviewImageViewModel}">
+
+    <Page.TopAppBar>
+        <CommandBar
+            Name="TopCommandBar"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <CommandBar.Content>
+                <TextBlock 
+                    Margin="12"
+                    Text="{Binding SelectedPreview.Name}"/>
+            </CommandBar.Content>
+
+            <AppBarButton 
+                Icon="Download" 
+                Label="{Binding DownloadText}" 
+                ToolTipService.ToolTip="{Binding DownloadText}"
+                Command="{Binding DownloadCommand}"/>
+            <AppBarButton 
+                Icon="Link"
+                Label="{Binding GetLinkText}" 
+                Command="{Binding GetLinkCommand}"/>
+            <AppBarButton
+                Icon="Rename" 
+                Label="{Binding RenameText}"
+                ToolTipService.ToolTip="{Binding RenameText}"
+                Command="{Binding RenameCommand}"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding MoveToRubbishBinText}"
+                ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
+                Command="{Binding MoveToRubbishBinCommand}"                
+                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            <AppBarButton
+                Icon="Delete" 
+                Label="{Binding RemoveText}"
+                ToolTipService.ToolTip="{Binding RemoveText}"
+                Command="{Binding RemoveCommand}"
+                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+        </CommandBar>
+    </Page.TopAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ImageName.Visibility" Value="Collapsed"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ImageName.Visibility" Value="Visible"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            x:Name="ImageName"
+            Grid.Row="0"
+            Margin="12,12,12,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Text="{Binding SelectedPreview.Name}"
+            TextWrapping="Wrap"/>
+
+        <FlipView
+            x:Name="FlipView"
+            Grid.Row="1"
+            Margin="12"
+            Background="Transparent"
+            ItemsSource="{Binding PreviewItems}"
+            SelectedItem="{Binding SelectedPreview, Mode=TwoWay}"
+            SelectionChanged="OnFlipViewSelectionChanged">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <UserControl>
+                        <ScrollViewer
+                            x:Name="ScrollViewer"
+                            MinZoomFactor="1"
+                            MaxZoomFactor="4"
+                            ZoomMode="Enabled"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden"
+                            ManipulationDelta="OnImageManipulationDelta">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    <VisualState x:Name="Desktop">
+                                        <VisualState.StateTriggers>
+                                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="ScrollViewer.Margin" Value="36,0"/>
+                                            <Setter Target="ScrollViewer.ManipulationMode" Value="TranslateX, TranslateY"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Mobile">
+                                        <VisualState.StateTriggers>
+                                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                                        </VisualState.StateTriggers>
+                                        <VisualState.Setters>
+                                            <Setter Target="ScrollViewer.Margin" Value="0,0"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            
+                            <Image
+                                MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewer}"
+                                MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewer}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Stretch="Uniform"
+                                DoubleTapped="OnImageDoubleTapped">
+                                <Image.Source>
+                                    <BitmapImage UriSource="{Binding PreviewImageUri}"/>
+                                </Image.Source>
+                            </Image>
+                        </ScrollViewer>
+                    </UserControl>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>
+
+        <userControls:ProgressPanel
+            Grid.Row="1"
+            x:Name="ProgressPanelControl"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            HeaderText="{Binding Path=ProgressLoadingPreviewText}"
+            IsVisible="{Binding IsBusy}"/>
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar
+            Name="BottomCommandBar"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton
+                Name="PreviousButton"
+                Icon="Previous" 
+                Label="{Binding PreviousText}" 
+                Command="{Binding PreviousCommand}"/>
+            <AppBarButton 
+                Icon="Download" 
+                Label="{Binding DownloadText}" 
+                Command="{Binding DownloadCommand}"/>
+            <AppBarButton 
+                Icon="Link"
+                Label="{Binding GetLinkText}" 
+                Command="{Binding GetLinkCommand}"/>
+            <AppBarButton
+                Name="NextButton"
+                Icon="Next" 
+                Label="{Binding NextText}" 
+                Command="{Binding NextCommand}"/>
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    Icon="Rename" 
+                    Label="{Binding RenameText}"
+                    Command="{Binding RenameCommand}"/>
+                <AppBarButton
+                    Icon="Delete" 
+                    Label="{Binding MoveToRubbishBinText}"
+                    Command="{Binding MoveToRubbishBinCommand}"
+                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                <AppBarButton
+                    Icon="Delete" 
+                    Label="{Binding RemoveText}"
+                    Command="{Binding RemoveCommand}"
+                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</views:BasePreviewImagePage>

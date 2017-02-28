@@ -514,4 +514,28 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Smallest</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
+  <data name="UI_GetLink" xml:space="preserve">
+    <value>Get link</value>
+    <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Next" xml:space="preserve">
+    <value>Next</value>
+    <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Previous" xml:space="preserve">
+    <value>Previous</value>
+    <comment>Label for any 'Previous' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Share" xml:space="preserve">
+    <value>Share</value>
+    <comment>Label for any 'Share' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportLink" xml:space="preserve">
+    <value>Export link</value>
+    <comment>Label for any 'Export link' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Preview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
