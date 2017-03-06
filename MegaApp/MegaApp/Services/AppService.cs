@@ -122,7 +122,7 @@ namespace MegaApp.Services
         /// <returns>MegaSDK version</returns>
         public static string GetMegaSDK_Version()
         {
-            return string.Format("970e65b");
+            return string.Format("20e9c36");
         }
 
         /// <summary>

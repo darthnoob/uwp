@@ -491,13 +491,13 @@ namespace MegaApp.ViewModels
                 try
                 {
                     uploadTransfer = new TransferObjectModel(
-                        this.FolderRootNode, TransferType.Upload,
+                        this.FolderRootNode, MTransferType.TYPE_UPLOAD,
                         Path.Combine(uploadDir, file.Name));
 
                     if(uploadTransfer != null)
                     {
                         uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
-                        uploadTransfer.Status = TransferStatus.Preparing;
+                        uploadTransfer.TransferState = MTransferState.STATE_NONE;
                         uploads.Add(file, uploadTransfer);
                         TransferService.MegaTransfers.Add(uploadTransfer);
                     }
@@ -508,7 +508,7 @@ namespace MegaApp.ViewModels
 
                     OnUiThread(async () =>
                     {
-                        if (uploadTransfer != null) uploadTransfer.Status = TransferStatus.Error;
+                        if (uploadTransfer != null) uploadTransfer.TransferState = MTransferState.STATE_FAILED;
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
                             string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
@@ -542,7 +542,7 @@ namespace MegaApp.ViewModels
                     else
                     {
                         LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
-                        OnUiThread(() => uploadTransfer.Status = TransferStatus.Canceled);
+                        OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                     }
                 }
                 // If the upload is cancelled during the preparation process, 
@@ -551,14 +551,14 @@ namespace MegaApp.ViewModels
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
                     FileService.DeleteFile(uploadTransfer.TransferPath);
-                    OnUiThread(() => uploadTransfer.Status = TransferStatus.Canceled);
+                    OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                 }
                 catch (Exception)
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name);
                     OnUiThread(async () =>
                     {
-                        uploadTransfer.Status = TransferStatus.Error;
+                        uploadTransfer.TransferState = MTransferState.STATE_FAILED;
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
                             string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), upload.Key.Name));

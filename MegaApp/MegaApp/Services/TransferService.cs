@@ -53,10 +53,10 @@ namespace MegaApp.Services
         {
             switch (megaTransfer.Type)
             {
-                case TransferType.Download:
+                case MTransferType.TYPE_DOWNLOAD:
                     megaTransfers.Downloads.Remove(megaTransfer);
                     break;
-                case TransferType.Upload:
+                case MTransferType.TYPE_UPLOAD:
                     megaTransfers.Uploads.Remove(megaTransfer);
                     break;
                 default:
@@ -111,23 +111,26 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Add a <see cref="MTransfer"/> to the corresponding transfers list.
+        /// Add a <see cref="MTransfer"/> to the corresponding transfers list if it is not already included.
         /// </summary>
         /// <param name="megaTransfers"><see cref="TransferQueue"/> which contains the transfers list(s).</param>
         /// <param name="transfer"><see cref="MTransfer"/> to be added to the corresponding transfer list.</param>
-        public static void AddTransferToList(TransferQueue megaTransfers, MTransfer transfer)
+        /// <returns>The <see cref="TransferObjectModel"/> corresponding to the <see cref="MTransfer"/>.</returns>
+        public static TransferObjectModel AddTransferToList(TransferQueue megaTransfers, MTransfer transfer)
         {
             // Folder transfers are not included into the transfers list.
-            if (transfer?.isFolderTransfer() == true) return;
+            if (transfer?.isFolderTransfer() == true) return null;
 
             // Search if the transfer already exists into the transfers list.
             var megaTransfer = SearchTransfer(megaTransfers.SelectAll(), transfer);
-            if (megaTransfer != null) return;
+            if (megaTransfer != null) return megaTransfer;
 
             // If doesn't exist create a new one and add it to the transfers list
             megaTransfer = CreateTransferObjectModel(transfer);            
             if (megaTransfer != null)                
                 megaTransfers.Add(megaTransfer);
+
+            return megaTransfer;
         }
 
         /// <summary>
@@ -171,7 +174,7 @@ namespace MegaApp.Services
 
                         megaTransfer = new TransferObjectModel(
                             NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, null),
-                            TransferType.Download, transfer.getPath());
+                            MTransferType.TYPE_DOWNLOAD, transfer.getPath());
                         break;
 
                     case MTransferType.TYPE_UPLOAD:
@@ -181,7 +184,7 @@ namespace MegaApp.Services
 
                         megaTransfer = new TransferObjectModel(
                             NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, null),
-                            TransferType.Upload, transfer.getPath());
+                            MTransferType.TYPE_UPLOAD, transfer.getPath());
                         break;
 
                     default:
@@ -193,13 +196,16 @@ namespace MegaApp.Services
                     GetTransferAppData(transfer, megaTransfer);
 
                     megaTransfer.Transfer = transfer;
-                    megaTransfer.IsBusy = true;
+                    megaTransfer.TransferState = transfer.getState();
+                    megaTransfer.TransferPriority = transfer.getPriority();
+                    megaTransfer.IsBusy = false;
                     megaTransfer.TotalBytes = transfer.getTotalBytes();
                     megaTransfer.TransferedBytes = transfer.getTransferredBytes();
                     megaTransfer.TransferSpeed = string.Empty;
+                    megaTransfer.TransferMeanSpeed = 0;
 
-                    megaTransfer.Status = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType())
-                        ? TransferStatus.Queued : TransferStatus.Paused;
+                    megaTransfer.TransferState = !SdkService.MegaSdk.areTransfersPaused((int)transfer.getType())
+                        ? MTransferState.STATE_QUEUED : MTransferState.STATE_PAUSED;
                 }
 
                 return megaTransfer;

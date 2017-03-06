@@ -73,8 +73,7 @@ namespace MegaApp.ViewModels
         private async Task PauseOrResumeTransfersAsync()
         {
             var playPauseStatus = !IsPauseEnabled;
-            OnUiThread(() => this.IsPauseEnabled = playPauseStatus);
-
+            
             var pauseTransfers = new PauseTransfersRequestListenerAsync();
             var result = await pauseTransfers.ExecuteAsync(() =>
             {
@@ -84,45 +83,7 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            // Use a temp variable to avoid InvalidOperationException
-            SetStatus(this.Items.ToList(), playPauseStatus);
-        }
-
-        private void SetStatus(ICollection<TransferObjectModel> items, bool playPauseStatus)
-        {
-            foreach (var transferObjectModel in items)
-            {
-                if (transferObjectModel.TransferedBytes < transferObjectModel.TotalBytes ||
-                    transferObjectModel.TransferedBytes == 0)
-                {
-                    switch (transferObjectModel.Status)
-                    {
-                        case TransferStatus.Downloading:
-                        case TransferStatus.Uploading:
-                        case TransferStatus.Queued:
-                        {
-                            if (playPauseStatus)
-                            {
-                                OnUiThread(() =>
-                                {
-                                    transferObjectModel.IsBusy = false;
-                                    transferObjectModel.Status = TransferStatus.Paused;
-                                    transferObjectModel.TransferSpeed = string.Empty;
-                                });
-                            }
-                            break;
-                        }
-                        case TransferStatus.Paused:
-                        {
-                            if (!playPauseStatus)
-                            {
-                                OnUiThread(() => transferObjectModel.Status = TransferStatus.Queued);
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
+            OnUiThread(() => this.IsPauseEnabled = playPauseStatus);
         }
 
         /// <summary>
@@ -146,11 +107,11 @@ namespace MegaApp.ViewModels
                     transfer.PreparingUploadCancelToken.Cancel();
                 }
                 // If the transfer is ready but not started for some reason
-                else if (transfer?.IsBusy == false && transfer?.Status == TransferStatus.NotStarted)
+                else if (transfer?.IsBusy == false && transfer?.TransferState == MTransferState.STATE_NONE)
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO, string.Format("Transfer ({0}) canceled: {1}",
                         this.Type == MTransferType.TYPE_UPLOAD? "UPLOAD" : "DOWNLOAD", transfer.DisplayName));                    
-                    transfer.Status = TransferStatus.Canceled;
+                    transfer.TransferState = MTransferState.STATE_CANCELLED;
                 }
             }
 
@@ -187,22 +148,22 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _isPauseEnabled, value);
-                OnPropertyChanged("PauseOrResumeText");
+                OnPropertyChanged("PauseOrResumeAllText");
                 OnPropertyChanged("PauseOrResumeIcon");
             }
         }
 
-        public string PauseOrResumeText => IsPauseEnabled ? ResumeText : PauseText;
+        public string PauseOrResumeAllText => IsPauseEnabled ? ResumeAllText : PauseAllText;
         public SymbolIcon PauseOrResumeIcon => IsPauseEnabled ? new SymbolIcon(Symbol.Play) : new SymbolIcon(Symbol.Pause);
 
         #endregion
 
         #region Ui_Resources
 
-        public string PauseText => ResourceService.UiResources.GetString("UI_Pause");
+        public string PauseAllText => ResourceService.UiResources.GetString("UI_PauseAll");
         public string CancelAllText => ResourceService.UiResources.GetString("UI_CancelAll");
-        public string ResumeText => ResourceService.UiResources.GetString("UI_Resume");
-        public string CleanUpTransfersText => ResourceService.UiResources.GetString("UI_CleanUpTransfers");
+        public string ResumeAllText => ResourceService.UiResources.GetString("UI_ResumeAll");
+        public string ClearAllText => ResourceService.UiResources.GetString("UI_ClearAll");
         public string CancelTransfersTitleText { get; }
         public string CancelTransfersDescriptionText { get; }
 

@@ -370,10 +370,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Pause all</value>
     <comment>Label for any 'Pause all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_Resume" xml:space="preserve">
-    <value>Resume</value>
-    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_CancelAll" xml:space="preserve">
     <value>Cancel all</value>
     <comment>Label for any 'Cancel all' button, link, etc. - (String as short as possible).</comment>
@@ -402,9 +398,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Cancel upload</value>
     <comment>Label for any 'Cancel upload' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanUpTransfers" xml:space="preserve">
-    <value>Clean up transfers</value>
-    <comment>Label for any 'Clean up transfers' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
+  <data name="UI_ClearAll" xml:space="preserve">
+    <value>Clear all</value>
+    <comment>Label for any 'Clear all' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
   </data>
   <data name="UI_DeselectAll" xml:space="preserve">
     <value>Deselect all</value>
@@ -513,5 +509,25 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_Completed" xml:space="preserve">
     <value>Completed</value>
     <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ResumeAll" xml:space="preserve">
+    <value>Resume all</value>
+    <comment>Label for any 'Resume all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Resume" xml:space="preserve">
+    <value>Resume</value>
+    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Retry" xml:space="preserve">
+    <value>Retry</value>
+    <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCompleting" xml:space="preserve">
+    <value>Completing...</value>
+    <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusRetrying" xml:space="preserve">
+    <value>Retrying...</value>
+    <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
 </root>

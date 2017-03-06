@@ -123,7 +123,8 @@
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
-    <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
@@ -143,8 +144,6 @@
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
     <Compile Include="Enums\RelativeAlignment.cs" />
-    <Compile Include="Enums\TransferStatus.cs" />
-    <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
@@ -165,6 +164,7 @@
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />

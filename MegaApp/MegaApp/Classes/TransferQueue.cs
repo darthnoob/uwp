@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using MegaApp.Enums;
+using mega;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Classes
@@ -35,10 +35,10 @@ namespace MegaApp.Classes
 
             switch (transferObjectModel.Type)
             {
-                case TransferType.Download:
+                case MTransferType.TYPE_DOWNLOAD:
                     Sort(this.Downloads, transferObjectModel);
                     break;
-                case TransferType.Upload:
+                case MTransferType.TYPE_UPLOAD:
                     Sort(this.Uploads, transferObjectModel);
                     break;
                 default:
@@ -85,11 +85,11 @@ namespace MegaApp.Classes
 
         private void OnStatusPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!e.PropertyName.Equals("Status")) return;
+            if (!e.PropertyName.Equals("TransferState")) return;
 
             var transferObjectModel = sender as TransferObjectModel;
             if (transferObjectModel == null) return;
-            Sort(transferObjectModel.Type == TransferType.Download ? this.Downloads : this.Uploads, transferObjectModel);
+            Sort(transferObjectModel.Type == MTransferType.TYPE_DOWNLOAD ? this.Downloads : this.Uploads, transferObjectModel);
         }
 
         public static void Sort(ObservableCollection<TransferObjectModel> transferList, 
@@ -104,7 +104,7 @@ namespace MegaApp.Classes
 
             for (var i = 0; i <= count; i++)
             {
-                if ((int)transferObject.Status > (int)transferList[i].Status) continue;
+                if ((int)transferObject.TransferPriority > (int)transferList[i].TransferPriority) continue;
 
                 if (move)
                 {
@@ -129,7 +129,7 @@ namespace MegaApp.Classes
             else
             {
                 transferList.Add(transferObject);
-            }   
+            }
         }
 
         public ObservableCollection<TransferObjectModel> Uploads { get; }

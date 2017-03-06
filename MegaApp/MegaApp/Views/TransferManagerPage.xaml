@@ -68,7 +68,7 @@
             <AppBarButton 
                 Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
                 Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
-                Label="{Binding ActiveViewModel.PauseOrResumeText}"
+                Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
                 Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
             <CommandBar.SecondaryCommands>
@@ -80,7 +80,7 @@
                 <AppBarButton
                     Command="{Binding ActiveViewModel.CleanCommand}"
                     Icon="Clear"
-                    Label="{Binding ActiveViewModel.CleanUpTransfersText}">
+                    Label="{Binding ActiveViewModel.ClearAllText}">
                     <AppBarButton.CommandParameter>
                         <x:Boolean>True</x:Boolean>
                     </AppBarButton.CommandParameter>
