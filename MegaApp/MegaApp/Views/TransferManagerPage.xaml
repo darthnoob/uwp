@@ -4,12 +4,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:TransferManagerViewModel}">
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UploadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
+                        <Setter Target="DownloadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
+                        <Setter Target="CompletedListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UploadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
+                        <Setter Target="DownloadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
+                        <Setter Target="CompletedListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -35,8 +61,8 @@
                         Header="{Binding Description}"
                         DataContext="{Binding Uploads}">
                         <ListView
+                            x:Name="UploadsListView" 
                             ItemsSource="{Binding Items}"
-                            ItemTemplate="{StaticResource MegaTransferItemContent}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>
@@ -44,8 +70,8 @@
                         Header="{Binding Description}"
                         DataContext="{Binding Downloads}">
                         <ListView
+                            x:Name="DownloadsListView" 
                             ItemsSource="{Binding Items}"
-                            ItemTemplate="{StaticResource MegaTransferItemContent}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>
@@ -53,8 +79,8 @@
                         Header="{Binding Description}"
                         DataContext="{Binding Completed}">
                         <ListView
+                            x:Name="CompletedListView" 
                             ItemsSource="{Binding Items}"
-                            ItemTemplate="{StaticResource MegaTransferItemContent}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
                         </ListView>
                     </PivotItem>

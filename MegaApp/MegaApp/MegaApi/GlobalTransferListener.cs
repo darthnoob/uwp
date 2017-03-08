@@ -242,6 +242,7 @@ namespace MegaApp.MegaApi
                     megaTransfer.Transfer = transfer;
                     megaTransfer.IsBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
                     megaTransfer.TransferState = api.areTransfersPaused((int)transfer.getType()) ? MTransferState.STATE_QUEUED : transfer.getState();
+                    megaTransfer.TotalBytes = transfer.getTotalBytes();
                     megaTransfer.TransferPriority = transfer.getPriority();
                 }
             });

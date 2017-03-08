@@ -3,8 +3,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Storage;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -36,17 +38,27 @@ namespace MegaApp.ViewModels
         public TransferObjectModel(IMegaNode selectedNode, MTransferType transferType,
             string transferPath, string externalDownloadPath = null)
         {
+            Initialize(selectedNode, transferType, transferPath, externalDownloadPath);
+        }
+
+        private async void Initialize(IMegaNode selectedNode, MTransferType transferType,
+            string transferPath, string externalDownloadPath = null)
+        {
             this.TypeAndState = new object[2];
 
             switch (transferType)
             {
                 case MTransferType.TYPE_DOWNLOAD:
                     this.DisplayName = selectedNode.Name;
+                    this.TotalBytes = selectedNode.Size;
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
-                    this.DisplayName = Path.GetFileName(transferPath);
-                    break;            
+                    var srcFile = await StorageFile.GetFileFromPathAsync(transferPath);
+                    var fileProperties = await srcFile.GetBasicPropertiesAsync();
+                    this.DisplayName = srcFile.Name;
+                    this.TotalBytes = fileProperties.Size;
+                    break;
             }
 
             this.IsBusy = false;
@@ -54,14 +66,14 @@ namespace MegaApp.ViewModels
             this.TransferPath = transferPath;
             this.ExternalDownloadPath = externalDownloadPath;
             this.TransferState = MTransferState.STATE_NONE;
-            this.TotalBytes = ulong.MaxValue;
             this.TransferedBytes = 0;
-            this.TransferSpeed = String.Empty;
+            this.TransferSpeed = string.Empty;
             this.SelectedNode = selectedNode;
             this.AutoLoadImageOnFinish = false;
             this.PauseOrResumeTransferCommand = new RelayCommand(PauseOrResumeTransfer);
             this.CancelTransferCommand = new RelayCommand(CancelTransfer);
             this.RetryTransferCommand = new RelayCommand(RetryTransfer);
+            this.RemoveTransferCommand = new RelayCommand(RemoveTransfer);
             SetThumbnail();
         }
 
@@ -70,6 +82,7 @@ namespace MegaApp.ViewModels
         public ICommand PauseOrResumeTransferCommand { get; set; }
         public ICommand CancelTransferCommand { get; set; }
         public ICommand RetryTransferCommand { get; set; }
+        public ICommand RemoveTransferCommand { get; set; }
 
         #endregion
 
@@ -86,7 +99,7 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
-                    SdkService.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath, 
+                    SdkService.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath,
                         TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
@@ -94,7 +107,7 @@ namespace MegaApp.ViewModels
                 case MTransferType.TYPE_UPLOAD:
                     // Start uploads with the flag of temporary source activated to always automatically delete the 
                     // uploaded file from the upload temporary folder in the sandbox of the app
-                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath, 
+                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath,
                         this.SelectedNode.OriginalMNode, string.Empty, true);
                     break;
 
@@ -106,7 +119,7 @@ namespace MegaApp.ViewModels
         public async void PauseOrResumeTransfer()
         {
             bool pause = this.TransferState == MTransferState.STATE_PAUSED ? false : true;
-            
+
             var pauseTransfer = new PauseTransferRequestListenerAsync();
             var result = await pauseTransfer.ExecuteAsync(() =>
             {
@@ -145,6 +158,11 @@ namespace MegaApp.ViewModels
             SdkService.MegaSdk.retryTransfer(this.Transfer);
         }
 
+        public void RemoveTransfer()
+        {
+            TransferService.MegaTransfers.Remove(this);
+        }
+
         /// <summary>
         /// Sets the transfer thumbnail
         /// </summary>
@@ -180,20 +198,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public bool IsAliveTransfer()
-        {
-            switch (this.TransferState)
-            {
-                case MTransferState.STATE_CANCELLED:
-                case MTransferState.STATE_COMPLETED:
-                case MTransferState.STATE_COMPLETING:
-                case MTransferState.STATE_FAILED:
-                    return false;
-            }
-
-            return true;
-        }
-
         /// <summary>
         /// Moves a downloaded file/folder to the final destination.
         /// Shows an error message if something went wrong.
@@ -220,7 +224,7 @@ namespace MegaApp.ViewModels
 
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 string message = string.Empty;
                 if (this.Transfer.isFolderTransfer())
@@ -304,10 +308,15 @@ namespace MegaApp.ViewModels
             get { return _transferState; }
             set
             {
+                if (_transferState == value) return;
+
                 SetField(ref _transferState, value);
+
                 this.IsBusy = (value == MTransferState.STATE_ACTIVE) ? true : false;
                 this.TypeAndState[1] = value;
+
                 OnPropertyChanged("TypeAndState");
+                OnPropertyChanged("IsAliveTransfer");
             }
         }
 
@@ -325,6 +334,8 @@ namespace MegaApp.ViewModels
             set { SetField(ref _totalBytes, value); }
         }
 
+        public string TotalBytesText => this.TotalBytes.ToStringAndSuffix();
+
         private ulong _transferedBytes;
         public ulong TransferedBytes
         {
@@ -334,8 +345,12 @@ namespace MegaApp.ViewModels
                 SetField(ref _transferedBytes, value);
                 OnPropertyChanged("TransferedPercentage");
                 OnPropertyChanged("EstimatedTime");
+                OnPropertyChanged("TransferedAndTotalBytes");
             }
         }
+
+        public string TransferedAndTotalBytes => string.Format("{0:n2} / {1}",
+            this.TransferedBytes.ToEqualSize(this.TotalBytes), this.TotalBytes.ToStringAndSuffix());
 
         public string TransferedPercentage => string.Format("{0}%", TransferedBytes * 100 / TotalBytes);
 
@@ -367,13 +382,29 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public bool IsAliveTransfer
+        {
+            get
+            {
+                switch (this.TransferState)
+                {
+                    case MTransferState.STATE_CANCELLED:
+                    case MTransferState.STATE_COMPLETED:
+                    case MTransferState.STATE_COMPLETING:
+                    case MTransferState.STATE_FAILED:
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
         public bool IsActionAvailable
         {
             get
             {
                 switch (this.TransferState)
                 {
-                    case MTransferState.STATE_COMPLETED:
                     case MTransferState.STATE_COMPLETING:
                         return false;
                     default:
@@ -388,6 +419,7 @@ namespace MegaApp.ViewModels
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string PauseText => ResourceService.UiResources.GetString("UI_Pause");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string ResumeText => ResourceService.UiResources.GetString("UI_Resume");
         public string RetryText => ResourceService.UiResources.GetString("UI_Retry");
 

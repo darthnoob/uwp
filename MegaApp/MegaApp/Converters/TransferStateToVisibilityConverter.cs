@@ -17,7 +17,13 @@ namespace MegaApp.Converters
             switch (transferState)
             {
                 case MTransferState.STATE_COMPLETED:
-                    return Visibility.Collapsed;
+                    switch (command)
+                    {
+                        case "remove":
+                            return Visibility.Visible;
+                        default:
+                            return Visibility.Collapsed;
+                    }
 
                 case MTransferState.STATE_ACTIVE:
                     switch (command)
@@ -25,8 +31,6 @@ namespace MegaApp.Converters
                         case "pause":
                         case "cancel":
                             return Visibility.Visible;
-                        case "resume":
-                        case "retry":
                         default:
                             return Visibility.Collapsed;
                     }
@@ -35,11 +39,9 @@ namespace MegaApp.Converters
                 case MTransferState.STATE_FAILED:
                     switch (command)
                     {
+                        case "remove":
                         case "retry":
                             return Visibility.Visible;
-                        case "pause":
-                        case "resume":
-                        case "cancel":
                         default:
                             return Visibility.Collapsed;
                     }
@@ -50,8 +52,6 @@ namespace MegaApp.Converters
                         case "resume":
                         case "cancel":
                             return Visibility.Visible;
-                        case "pause":
-                        case "retry":
                         default:
                             return Visibility.Collapsed;
                     }
@@ -60,14 +60,15 @@ namespace MegaApp.Converters
                 case MTransferState.STATE_QUEUED:
                     switch (command)
                     {
+                        case "pause":
                         case "cancel":
                             return Visibility.Visible;
-                        case "pause":
-                        case "resume":
-                        case "retry":
                         default:
                             return Visibility.Collapsed;
                     }
+
+                case MTransferState.STATE_COMPLETING:
+                    return Visibility.Collapsed;
 
                 default:
                     throw new ArgumentOutOfRangeException();

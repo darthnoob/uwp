@@ -47,6 +47,31 @@ namespace MegaApp.Classes
         }
 
         /// <summary>
+        /// Remove a transfer to the Transfer Queue.
+        /// </summary>
+        /// <param name="transferObjectModel">Transfer to remove</param>
+        public void Remove(TransferObjectModel transferObjectModel)
+        {
+            if (transferObjectModel.TransferState == MTransferState.STATE_COMPLETED)
+            {
+                this.Completed.Remove(transferObjectModel);
+                return;
+            }
+
+            switch (transferObjectModel.Type)
+            {
+                case MTransferType.TYPE_DOWNLOAD:
+                    this.Downloads.Remove(transferObjectModel);
+                    break;
+                case MTransferType.TYPE_UPLOAD:
+                    this.Uploads.Remove(transferObjectModel);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
         /// Select and return all transfers in the queue.
         /// </summary>
         /// <returns>Download and upload transfers combined in one list.</returns>
