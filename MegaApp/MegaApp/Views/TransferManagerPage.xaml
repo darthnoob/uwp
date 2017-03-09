@@ -18,6 +18,9 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
                         <Setter Target="UploadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
                         <Setter Target="DownloadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
                         <Setter Target="CompletedListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentMobile}"/>
@@ -28,6 +31,9 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="Auto"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
                         <Setter Target="UploadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
                         <Setter Target="DownloadsListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
                         <Setter Target="CompletedListView.ItemTemplate" Value="{StaticResource MegaTransferItemContentDesktop}"/>
@@ -37,64 +43,82 @@
         </VisualStateManager.VisualStateGroups>
         
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <Grid
-                Grid.Row="0"
-                Background="{StaticResource MegaAppBarBackgroundBrush}">
-            </Grid>
-            <Grid 
-                Grid.Row="1">
-                <Pivot 
-                    x:Name="TransfersPivot" 
-                    HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
-                    SelectionChanged="OnPivotSelectionChanged">
-                    <PivotItem 
-                        Header="{Binding Description}"
-                        DataContext="{Binding Uploads}">
-                        <ListView
-                            x:Name="UploadsListView" 
-                            ItemsSource="{Binding Items}"
-                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
-                        </ListView>
-                    </PivotItem>
-                    <PivotItem 
-                        Header="{Binding Description}"
-                        DataContext="{Binding Downloads}">
-                        <ListView
-                            x:Name="DownloadsListView" 
-                            ItemsSource="{Binding Items}"
-                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
-                        </ListView>
-                    </PivotItem>
-                    <PivotItem 
-                        Header="{Binding Description}"
-                        DataContext="{Binding Completed}">
-                        <ListView
-                            x:Name="CompletedListView" 
-                            ItemsSource="{Binding Items}"
-                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}">
-                        </ListView>
-                    </PivotItem>
-                </Pivot>
-            </Grid>
-        </Grid>    
-
+        <Grid
+            Grid.Row="0"
+            Background="{StaticResource MegaAppBarBackgroundBrush}">
+            <CommandBar
+                x:Name="TopCommandBar"
+                Style="{StaticResource MegaCommandBarStyle}">
+                <AppBarButton 
+                    Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                    Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
+                    Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.PauseOrResumeAllText}"
+                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                <AppBarButton
+                    Command="{Binding ActiveViewModel.CancelCommand}"
+                    Icon="Cancel"
+                    Label="{Binding ActiveViewModel.CancelAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.CancelAllText}"
+                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                <AppBarButton
+                    Command="{Binding ActiveViewModel.CleanCommand}"
+                    Icon="Delete"
+                    Label="{Binding ActiveViewModel.ClearAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>        
+        <Grid 
+            Grid.Row="1">
+            <Pivot 
+                x:Name="TransfersPivot" 
+                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
+                SelectionChanged="OnPivotSelectionChanged">
+                <PivotItem 
+                    Header="{Binding Description}"
+                    DataContext="{Binding Downloads}">
+                    <ListView
+                        x:Name="DownloadsListView" 
+                        ItemsSource="{Binding Items}"
+                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                </PivotItem>
+                <PivotItem 
+                    Header="{Binding Description}"
+                    DataContext="{Binding Uploads}">
+                    <ListView
+                        x:Name="UploadsListView" 
+                        ItemsSource="{Binding Items}"
+                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                </PivotItem>                
+                <PivotItem 
+                    Header="{Binding Description}"
+                    DataContext="{Binding Completed}">
+                    <ListView
+                        x:Name="CompletedListView" 
+                        ItemsSource="{Binding Items}"
+                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                </PivotItem>
+            </Pivot>
+        </Grid>
+        
         <CommandBar 
-            Grid.Row="1"
+            x:Name="BottomCommandBar"
+            Grid.Row="2"
             Style="{StaticResource MegaCommandBarStyle}">            
             <AppBarButton 
                 Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
                 Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
                 Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
+                ToolTipService.ToolTip="{Binding ActiveViewModel.PauseOrResumeAllText}"
                 Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
             <CommandBar.SecondaryCommands>
