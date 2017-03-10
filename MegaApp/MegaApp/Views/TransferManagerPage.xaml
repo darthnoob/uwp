@@ -55,18 +55,21 @@
                 x:Name="TopCommandBar"
                 Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
                     Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
                     Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
                     Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
                     ToolTipService.ToolTip="{Binding ActiveViewModel.PauseOrResumeAllText}"
                     Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                 <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
                     Command="{Binding ActiveViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{Binding ActiveViewModel.CancelAllText}"
                     ToolTipService.ToolTip="{Binding ActiveViewModel.CancelAllText}"
                     Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                 <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
                     Command="{Binding ActiveViewModel.CleanCommand}"
                     Icon="Delete"
                     Label="{Binding ActiveViewModel.ClearAllText}"
@@ -115,6 +118,7 @@
             Grid.Row="2"
             Style="{StaticResource MegaCommandBarStyle}">            
             <AppBarButton 
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
                 Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
                 Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
