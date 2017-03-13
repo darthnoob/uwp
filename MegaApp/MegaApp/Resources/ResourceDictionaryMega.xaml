@@ -598,13 +598,11 @@
                 Maximum="{Binding TotalBytes}"
                 Value="{Binding TransferedBytes}" 
                 IsIndeterminate="False"
+                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
                 Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ProgressBar.Foreground>
                     <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
                 </ProgressBar.Foreground>
-                <ProgressBar.Background>
-                    <SolidColorBrush Color="White" Opacity="0.3"/>
-                </ProgressBar.Background>
             </ProgressBar>
             <Grid
                 Grid.Row="2" 
@@ -844,13 +842,11 @@
                 Maximum="{Binding TotalBytes}"
                 Value="{Binding TransferedBytes}" 
                 IsIndeterminate="False"
+                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
                 Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
                 <ProgressBar.Foreground>
                     <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
                 </ProgressBar.Foreground>
-                <ProgressBar.Background>
-                    <SolidColorBrush Color="White" Opacity="0.3"/>
-                </ProgressBar.Background>
             </ProgressBar>
             <Button
                 Grid.Row="0" 

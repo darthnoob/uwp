@@ -27,10 +27,10 @@ namespace MegaApp.Views
             switch(TransfersPivot.SelectedIndex)
             {
                 case 0:
-                    this.ViewModel.ActiveViewModel = this.ViewModel.Uploads;
+                    this.ViewModel.ActiveViewModel = this.ViewModel.Downloads;
                     break;
                 case 1:
-                    this.ViewModel.ActiveViewModel = this.ViewModel.Downloads;
+                    this.ViewModel.ActiveViewModel = this.ViewModel.Uploads;
                     break;
                 case 2:
                     this.ViewModel.ActiveViewModel = this.ViewModel.Completed;
