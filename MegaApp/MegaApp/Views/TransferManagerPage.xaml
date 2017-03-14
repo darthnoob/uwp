@@ -89,26 +89,35 @@
                 <PivotItem 
                     Header="{Binding Description}"
                     DataContext="{Binding Downloads}">
-                    <ListView
-                        x:Name="DownloadsListView" 
-                        ItemsSource="{Binding Items}"
-                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                    <Grid>
+                        <ListView
+                            x:Name="DownloadsListView" 
+                            ItemsSource="{Binding Items}"
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                        <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
+                    </Grid>
                 </PivotItem>
                 <PivotItem 
                     Header="{Binding Description}"
                     DataContext="{Binding Uploads}">
-                    <ListView
-                        x:Name="UploadsListView" 
-                        ItemsSource="{Binding Items}"
-                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                    <Grid>
+                        <ListView
+                            x:Name="UploadsListView" 
+                            ItemsSource="{Binding Items}"
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                        <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
+                    </Grid>
                 </PivotItem>                
                 <PivotItem 
                     Header="{Binding Description}"
                     DataContext="{Binding Completed}">
-                    <ListView
-                        x:Name="CompletedListView" 
-                        ItemsSource="{Binding Items}"
-                        ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                    <Grid>
+                        <ListView
+                            x:Name="CompletedListView" 
+                            ItemsSource="{Binding Items}"
+                            ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
+                        <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
+                    </Grid>
                 </PivotItem>
             </Pivot>
         </Grid>

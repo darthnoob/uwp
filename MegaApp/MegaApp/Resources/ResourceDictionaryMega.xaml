@@ -6,6 +6,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:userControls="using:MegaApp.UserControls"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters">
 
     <!-- Resource dictionary entries should be defined here. -->
@@ -43,6 +44,58 @@
         FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}"/>
 
     <!-- TEMPLATES -->
+    <ControlTemplate x:Name="EmptyStateTemplate">
+        <userControls:EmptyState
+            x:Name="EmptyState"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            VerticalContentAlignment="Center"
+            HeaderText="{Binding EmptyStateHeaderText}"
+            SubHeaderText="{Binding EmptyStateSubHeaderText}"
+            SubHeaderMargin="0,14,0,0"
+            IsVisible="{Binding IsEmpty}">
+            <userControls:EmptyState.SubHeaderForeground>
+                <SolidColorBrush 
+                    Color="{ThemeResource MegaAppForeground}" 
+                    Opacity="0.6"/>
+            </userControls:EmptyState.SubHeaderForeground>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Small">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="16,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="24" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="16" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Normal">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="600" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="97,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="24" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="16" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Wide">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="1200" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="178,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="44" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="18" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </userControls:EmptyState>
+    </ControlTemplate>
+
     <DataTemplate x:Key="MegaPageHeaderLogo">
         <Border 
             Background="{StaticResource MegaAppBackgroundBrush}" 

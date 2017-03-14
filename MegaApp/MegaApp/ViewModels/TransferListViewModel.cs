@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -25,16 +24,22 @@ namespace MegaApp.ViewModels
             {
                 case MTransferType.TYPE_DOWNLOAD:
                     this.Description = ResourceService.UiResources.GetString("UI_Downloads");
+                    this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_DownloadsHeader"); ;
+                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_DownloadsSubHeader");
                     this.CancelTransfersTitleText = ResourceService.UiResources.GetString("UI_CancelDownloads");
                     this.CancelTransfersDescriptionText = ResourceService.AppMessages.GetString("AM_CancelDownloadsQuestion");
                     this.Items = TransferService.MegaTransfers.Downloads;
                     break;
+
                 case MTransferType.TYPE_UPLOAD:
                     this.Description = ResourceService.UiResources.GetString("UI_Uploads");
+                    this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_UploadsHeader"); ;
+                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_UploadsSubHeader");
                     this.CancelTransfersTitleText = ResourceService.UiResources.GetString("UI_CancelUploads");
                     this.CancelTransfersDescriptionText = ResourceService.AppMessages.GetString("AM_CancelUploadsQuestion");
                     this.Items = TransferService.MegaTransfers.Uploads;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -44,15 +49,26 @@ namespace MegaApp.ViewModels
             this.PauseOrResumeCommand = new RelayCommand(PauseOrResumeTransfers);
             this.CancelCommand = new RelayCommand(CancelTransfers);
             this.CleanCommand = new RelayCommand<bool>(UpdateTransfers);
+
+            this.Items.CollectionChanged += ItemsOnCollectionChanged;
         }
 
         public TransferListViewModel()
         {
             this.Description = ResourceService.UiResources.GetString("UI_Completed");
+            this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersHeader"); ;
+            this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersSubHeader");
             this.IsCompletedTransfersList = true;
             this.Items = TransferService.MegaTransfers.Completed;
             this.IsPauseEnabled = false;            
             this.CleanCommand = new RelayCommand(CleanCompletedTransfers);
+
+            this.Items.CollectionChanged += ItemsOnCollectionChanged;
+        }
+
+        private void ItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged("IsEmpty");
         }
 
         public async void PauseOrResumeTransfers()
@@ -130,9 +146,14 @@ namespace MegaApp.ViewModels
 
         public string Description { get; }
 
+        public string EmptyStateHeaderText { get; }
+        public string EmptyStateSubHeaderText { get; }
+
         public MTransferType Type { get; set; }
 
         public ObservableCollection<TransferObjectModel> Items { get; }
+
+        public bool IsEmpty => (Items.Count == 0);
 
         private bool _isCompletedTransfersList;
         public bool IsCompletedTransfersList
