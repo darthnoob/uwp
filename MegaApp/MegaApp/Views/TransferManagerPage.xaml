@@ -51,34 +51,61 @@
         <Grid
             Grid.Row="0"
             Background="{StaticResource MegaAppBarBackgroundBrush}">
-            <CommandBar
-                x:Name="TopCommandBar"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton 
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
-                    Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
-                    Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
-                    ToolTipService.ToolTip="{Binding ActiveViewModel.PauseOrResumeAllText}"
-                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                <AppBarButton
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Command="{Binding ActiveViewModel.CancelCommand}"
-                    Icon="Cancel"
-                    Label="{Binding ActiveViewModel.CancelAllText}"
-                    ToolTipService.ToolTip="{Binding ActiveViewModel.CancelAllText}"
-                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                <AppBarButton
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Command="{Binding ActiveViewModel.CleanCommand}"
-                    Icon="Delete"
-                    Label="{Binding ActiveViewModel.ClearAllText}"
-                    ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
-                    <AppBarButton.CommandParameter>
-                        <x:Boolean>True</x:Boolean>
-                    </AppBarButton.CommandParameter>
-                </AppBarButton>
-            </CommandBar>
+            <Grid x:Name="TopCommandBar">
+                <!-- DOWNLOADS & UPLOADS TOP COMMAND BAR -->
+                <CommandBar
+                    x:Name="TopCommandBarStandard"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton 
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                        Icon="Pause" 
+                        Label="{Binding ActiveViewModel.PauseAllText}"
+                        ToolTipService.ToolTip="{Binding ActiveViewModel.PauseAllText}"
+                        Visibility="{Binding ActiveViewModel.AreTransfersPaused, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                    <AppBarButton 
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                        Icon="Play" 
+                        Label="{Binding ActiveViewModel.ResumeAllText}"
+                        ToolTipService.ToolTip="{Binding ActiveViewModel.ResumeAllText}"
+                        Visibility="{Binding ActiveViewModel.AreTransfersPaused, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <AppBarButton
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Command="{Binding ActiveViewModel.CancelCommand}"
+                        Icon="Cancel"
+                        Label="{Binding ActiveViewModel.CancelAllText}"
+                        ToolTipService.ToolTip="{Binding ActiveViewModel.CancelAllText}"/>
+                    <AppBarButton
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Command="{Binding ActiveViewModel.CleanCommand}"
+                        Icon="Delete"
+                        Label="{Binding ActiveViewModel.ClearAllText}"
+                        ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
+                        <AppBarButton.CommandParameter>
+                            <x:Boolean>True</x:Boolean>
+                        </AppBarButton.CommandParameter>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!-- COMPLETED TRANSFERS TOP COMMAND BAR -->
+                <CommandBar
+                    x:Name="TopCommandBarCompletedTransfers"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Command="{Binding ActiveViewModel.CleanCommand}"
+                        Icon="Delete"
+                        Label="{Binding ActiveViewModel.ClearAllText}"
+                        ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
+                        <AppBarButton.CommandParameter>
+                            <x:Boolean>True</x:Boolean>
+                        </AppBarButton.CommandParameter>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
         </Grid>        
         <Grid 
             Grid.Row="1">
@@ -121,34 +148,64 @@
                 </PivotItem>
             </Pivot>
         </Grid>
-        
-        <CommandBar 
-            x:Name="BottomCommandBar"
-            Grid.Row="2"
-            Style="{StaticResource MegaCommandBarStyle}">            
-            <AppBarButton 
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
-                Icon="{Binding ActiveViewModel.PauseOrResumeIcon}" 
-                Label="{Binding ActiveViewModel.PauseOrResumeAllText}"
-                ToolTipService.ToolTip="{Binding ActiveViewModel.PauseOrResumeAllText}"
-                Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
 
-            <CommandBar.SecondaryCommands>
+        <Grid
+            x:Name="BottomCommandBar"
+            Grid.Row="2">
+
+            <!-- DOWNLOADS & UPLOADS BOTTOM COMMAND BAR -->
+            <CommandBar
+                x:Name="BottomCommandBarStandard"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                    Icon="Pause" 
+                    Label="{Binding ActiveViewModel.PauseAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.PauseAllText}"
+                    Visibility="{Binding ActiveViewModel.AreTransfersPaused, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                <AppBarButton 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding ActiveViewModel.PauseOrResumeCommand}"
+                    Icon="Play" 
+                    Label="{Binding ActiveViewModel.ResumeAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.ResumeAllText}"
+                    Visibility="{Binding ActiveViewModel.AreTransfersPaused, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
                     Command="{Binding ActiveViewModel.CancelCommand}"
                     Icon="Cancel"
                     Label="{Binding ActiveViewModel.CancelAllText}"
-                    Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.CancelAllText}"/>
                 <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
                     Command="{Binding ActiveViewModel.CleanCommand}"
-                    Icon="Clear"
-                    Label="{Binding ActiveViewModel.ClearAllText}">
+                    Icon="Delete"
+                    Label="{Binding ActiveViewModel.ClearAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
                     <AppBarButton.CommandParameter>
                         <x:Boolean>True</x:Boolean>
                     </AppBarButton.CommandParameter>
                 </AppBarButton>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
+            </CommandBar>
+
+            <!-- COMPLETED TRANSFERS BOTTOM COMMAND BAR -->
+            <CommandBar
+                x:Name="BottomCommandBarCompletedTransfers"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding ActiveViewModel.IsCompletedTransfersList, Converter={StaticResource BoolToVisibilityConverter}}">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding ActiveViewModel.CleanCommand}"
+                    Icon="Delete"
+                    Label="{Binding ActiveViewModel.ClearAllText}"
+                    ToolTipService.ToolTip="{Binding ActiveViewModel.ClearAllText}">
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>        
     </Grid>
 </views:BaseTransferManagerPage>

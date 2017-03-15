@@ -4,7 +4,6 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
@@ -44,7 +43,6 @@ namespace MegaApp.ViewModels
                     throw new ArgumentOutOfRangeException();
             }
 
-            this.IsPauseEnabled = this.MegaSdk.areTransfersPaused((int) this.Type);
             this.IsCompletedTransfersList = false;
             this.PauseOrResumeCommand = new RelayCommand(PauseOrResumeTransfers);
             this.CancelCommand = new RelayCommand(CancelTransfers);
@@ -60,7 +58,6 @@ namespace MegaApp.ViewModels
             this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersSubHeader");
             this.IsCompletedTransfersList = true;
             this.Items = TransferService.MegaTransfers.Completed;
-            this.IsPauseEnabled = false;            
             this.CleanCommand = new RelayCommand(CleanCompletedTransfers);
 
             this.Items.CollectionChanged += ItemsOnCollectionChanged;
@@ -88,7 +85,7 @@ namespace MegaApp.ViewModels
 
         private async Task PauseOrResumeTransfersAsync()
         {
-            var playPauseStatus = !IsPauseEnabled;
+            var playPauseStatus = !AreTransfersPaused;
             
             var pauseTransfers = new PauseTransfersRequestListenerAsync();
             var result = await pauseTransfers.ExecuteAsync(() =>
@@ -99,7 +96,7 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            OnUiThread(() => this.IsPauseEnabled = playPauseStatus);
+            OnPropertyChanged("AreTransfersPaused");
         }
 
         /// <summary>
@@ -162,20 +159,8 @@ namespace MegaApp.ViewModels
             set { SetField(ref _isCompletedTransfersList, value); }
         }
 
-        private bool _isPauseEnabled;
-        public bool IsPauseEnabled
-        {
-            get { return _isPauseEnabled; }
-            set
-            {
-                SetField(ref _isPauseEnabled, value);
-                OnPropertyChanged("PauseOrResumeAllText");
-                OnPropertyChanged("PauseOrResumeIcon");
-            }
-        }
-
-        public string PauseOrResumeAllText => IsPauseEnabled ? ResumeAllText : PauseAllText;
-        public SymbolIcon PauseOrResumeIcon => IsPauseEnabled ? new SymbolIcon(Symbol.Play) : new SymbolIcon(Symbol.Pause);
+        public bool AreTransfersPaused => this.IsCompletedTransfersList ? 
+            false : this.MegaSdk.areTransfersPaused((int)this.Type);
 
         #endregion
 
