@@ -126,5 +126,29 @@ namespace MegaApp.Services
                 statusbar.BackgroundOpacity = 1;
             }
         }
+
+        /// <summary>
+        /// Hide the status bar if is present in the device
+        /// </summary>
+        public static async void HideStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusbar = StatusBar.GetForCurrentView();
+                await statusbar.HideAsync();
+            }
+        }
+
+        /// <summary>
+        /// Show the status bar if is present in the device
+        /// </summary>
+        public static async void ShowStatusBar()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusbar = StatusBar.GetForCurrentView();
+                await statusbar.ShowAsync();
+            }
+        }
     }
 }

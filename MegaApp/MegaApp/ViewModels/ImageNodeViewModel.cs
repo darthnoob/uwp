@@ -6,11 +6,12 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    class ImageNodeViewModel: FileNodeViewModel
+    public class ImageNodeViewModel: FileNodeViewModel
     {
         public ImageNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
@@ -69,16 +70,30 @@ namespace MegaApp.ViewModels
 
         #region Private Methods
 
-        private void GetPreview()
+        private async void GetPreview()
         {
-            //if (FileService.FileExists(PreviewPath))
-            //{
-            //    PreviewImageUri = new Uri(PreviewPath);
-            //}
-            //else
-            //{
-            //    MegaSdk.getPreview(this.OriginalMNode, PreviewPath, new GetPreviewRequestListener(this));
-            //}
+            if (FileService.FileExists(PreviewPath))
+            {
+                PreviewImageUri = new Uri(PreviewPath);
+            }
+            else
+            {
+                var getPreview = new GetPreviewRequestListenerAsync();
+                var result = await getPreview.ExecuteAsync(() =>
+                {
+                    this.IsBusy = true;
+                    this.MegaSdk.getPreview(this.OriginalMNode,
+                        this.PreviewPath, getPreview);
+                });
+
+                if(result)
+                {
+                    UiService.OnUiThread(() => 
+                        this.PreviewImageUri = new Uri(this.PreviewPath));
+                }
+
+                this.IsBusy = false;
+            }
         }
 
         private void GetImage(bool isForPreview)

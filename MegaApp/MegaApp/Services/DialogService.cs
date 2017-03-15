@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -126,6 +127,92 @@ namespace MegaApp.Services
                     return input.Text;
                 case ContentDialogResult.Secondary:
                     return null;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// Shows a dialog to allow copy a link to the clipboard or share it using other app
+        /// </summary>
+        /// <param name="link">Link to share</param>
+        public static async void ShowShareLink(string link)
+        {
+            var dialog = new ContentDialog
+            {
+                IsPrimaryButtonEnabled = true,
+                IsSecondaryButtonEnabled = true,
+                PrimaryButtonText = ResourceService.UiResources.GetString("UI_Copy"),
+                SecondaryButtonText = ResourceService.UiResources.GetString("UI_Share"),
+                Title = ResourceService.UiResources.GetString("UI_ExportLink")
+            };
+
+            var stackPanel = new StackPanel
+            {
+                Margin = new Thickness(0, 20, 0, 0)
+            };
+
+            var messageText = new TextBlock
+            {
+                Text = link,
+                Margin = new Thickness(0, 0, 0, 12),
+                TextWrapping = TextWrapping.WrapWholeWords,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+            };
+
+            stackPanel.Children.Add(messageText);            
+            dialog.Content = stackPanel;
+            var result = await dialog.ShowAsync();
+            switch (result)
+            {
+                case ContentDialogResult.None:
+                    break;
+
+                case ContentDialogResult.Primary:
+                    try
+                    {
+                        var data = new DataPackage();
+                        data.SetText(link);
+                        Clipboard.SetContent(data);
+
+                        UiService.OnUiThread(async () =>
+                        {
+                            await ShowAlertAsync(
+                                ResourceService.AppMessages.GetString("AM_LinkCopiedToClipboard_Title"),
+                                ResourceService.AppMessages.GetString("AM_LinkCopiedToClipboard"));
+                        });
+                    }
+                    catch (Exception)
+                    {
+                        UiService.OnUiThread(async () =>
+                        {
+                            await ShowAlertAsync(
+                                ResourceService.AppMessages.GetString("AM_CopyLinkToClipboardFailed_Title"),
+                                ResourceService.AppMessages.GetString("AM_CopyLinkToClipboardFailed"));
+                        });
+                    }
+                    break;
+
+                case ContentDialogResult.Secondary:
+                    DataTransferManager.GetForCurrentView().DataRequested += (sender, args) =>
+                    {
+                        args.Request.Data.Properties.Title = ResourceService.AppMessages.GetString("AM_ShareLinkFromMega_Title");
+                        args.Request.Data.Properties.Description = ResourceService.AppMessages.GetString("AM_ShareLinkFromMega");
+                        args.Request.Data.SetText(link);
+                    };
+
+                    try { DataTransferManager.ShowShareUI(); }
+                    catch(Exception)
+                    {
+                        UiService.OnUiThread(async () =>
+                        {
+                            await ShowAlertAsync(
+                                ResourceService.AppMessages.GetString("AM_ShareLinkFromMegaFailed_Title"),
+                                ResourceService.AppMessages.GetString("AM_ShareLinkFromMegaFailed"));
+                        });
+                    }
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

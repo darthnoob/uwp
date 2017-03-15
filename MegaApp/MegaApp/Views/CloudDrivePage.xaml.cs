@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -82,7 +83,8 @@ namespace MegaApp.Views
             this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;
 
-            NavigationActionType navActionType = NavigateService.GetNavigationObject(e.Parameter).Action;
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
 
             // Need to check it always and no only in StartupMode, 
             // because this is the first page loaded
@@ -165,6 +167,20 @@ namespace MegaApp.Views
                 ((ListViewBase)sender).SelectedItems.Remove(itemTapped);
 
             this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+        }
+
+        private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            if(!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
+            {
+                ((ListViewBase)sender).SelectedItems.Clear();
+                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            }
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
