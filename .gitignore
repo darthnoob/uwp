@@ -19,3 +19,5 @@ MegaApp/Release/
 MegaApp/MegaApp/MegaApp_StoreKey.pfx
 MegaApp/MegaApp/Package.StoreAssociation.xml
 MegaApp/MegaApp/_pkginfo.txt
+MegaApp/MegaApp/MegaApp.nuget.props
+MegaApp/MegaApp/MegaApp.nuget.targets
