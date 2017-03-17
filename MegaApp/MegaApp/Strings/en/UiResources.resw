@@ -538,4 +538,12 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Preview</value>
     <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ViewDetails" xml:space="preserve">
+    <value>View details</value>
+    <comment>Label for any 'View details' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>

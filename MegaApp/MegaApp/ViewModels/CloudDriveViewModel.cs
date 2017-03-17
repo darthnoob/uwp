@@ -15,6 +15,7 @@ namespace MegaApp.ViewModels
         public event EventHandler ClearSelectedItems;
         public event EventHandler DisableSelection;
         public event EventHandler EnableSelection;
+        public event EventHandler CloseDetailsViewEvent;
 
         public CloudDriveViewModel()
         {
@@ -24,6 +25,7 @@ namespace MegaApp.ViewModels
             this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
             this.AcceptMoveCommand = new RelayCommand(AcceptMove);
+            this.CloseDetailsViewCommand = new RelayCommand(CloseDetailsView);
         }
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace MegaApp.ViewModels
         public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand AcceptCopyCommand { get; }
         public ICommand AcceptMoveCommand { get; }
+        public ICommand CloseDetailsViewCommand { get; }
 
         #endregion
 
@@ -270,6 +273,11 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void CloseDetailsView()
+        {
+            CloseDetailsViewEvent?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Properties
@@ -311,6 +319,7 @@ namespace MegaApp.ViewModels
 
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
@@ -321,6 +330,7 @@ namespace MegaApp.ViewModels
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");

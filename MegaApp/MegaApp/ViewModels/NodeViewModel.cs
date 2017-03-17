@@ -43,6 +43,7 @@ namespace MegaApp.ViewModels
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
+            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -63,6 +64,7 @@ namespace MegaApp.ViewModels
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
+        public ICommand ViewDetailsCommand { get; }
 
         #endregion
 
@@ -158,6 +160,20 @@ namespace MegaApp.ViewModels
         {
             get { return _information; }
             set { SetField(ref _information, value); }
+        }
+
+        private int _childFiles;
+        public int ChildFiles
+        {
+            get { return _childFiles; }
+            set { SetField(ref _childFiles, value); }
+        }
+
+        private int _childFolders;
+        public int ChildFolders
+        {
+            get { return _childFolders; }
+            set { SetField(ref _childFolders, value); }
         }
 
         public string Base64Handle { get; set; }
@@ -367,6 +383,17 @@ namespace MegaApp.ViewModels
                 NavigateService.Instance.Navigate(typeof(PreviewImagePage), true,
                     NavigationObject.Create(this.GetType(), NavigationActionType.Default, parameters));
             });
+        }
+
+        private void ViewDetails()
+        {
+            if(Parent != null)
+            {
+                this.Parent.FocusedNode = this;
+
+                if (this.Parent.ViewDetailsCommand.CanExecute(null))
+                    this.Parent.ViewDetailsCommand.Execute(null);
+            }
         }
 
         private async void Remove()
@@ -598,6 +625,7 @@ namespace MegaApp.ViewModels
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
 
         #endregion
     }

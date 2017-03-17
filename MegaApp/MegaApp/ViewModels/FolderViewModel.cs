@@ -36,6 +36,8 @@ namespace MegaApp.ViewModels
         public event EventHandler EnableMultiSelect;
         public event EventHandler DisableMultiSelect;
 
+        public event EventHandler ViewDetailsEvent;
+
         public FolderViewModel(ContainerType containerType)
         {
             this.Type = containerType;
@@ -61,11 +63,11 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
+            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
-            //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
             this.ChildNodes.CollectionChanged += ChildNodesOnCollectionChanged;
             this.BreadCrumbs.CollectionChanged += BreadCrumbsOnCollectionChanged;
@@ -122,6 +124,11 @@ namespace MegaApp.ViewModels
             OnPropertyChanged("HasChildNodesBinding");
         }
 
+        private void ViewDetails()
+        {
+            ViewDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }
@@ -137,11 +144,11 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
+        public ICommand ViewDetailsCommand { get; private set; }
 
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }        
-        //public ICommand ViewDetailsCommand { get; private set; }
 
         #endregion
 
@@ -992,7 +999,12 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public IMegaNode FocusedNode;
+        private IMegaNode _focusedNode;
+        public IMegaNode FocusedNode
+        {
+            get { return _focusedNode; }
+            set { SetField(ref _focusedNode, value); }
+        }
 
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes
@@ -1073,6 +1085,13 @@ namespace MegaApp.ViewModels
         {
             get { return _nodeTemplateSelector; }
             private set { SetField(ref _nodeTemplateSelector, value); }
+        }
+
+        private bool _isNodeDetailsViewVisible;
+        public bool IsNodeDetailsViewVisible
+        {
+            get { return _isNodeDetailsViewVisible; }
+            set { SetField(ref _isNodeDetailsViewVisible, value); }
         }
 
         private bool _isMultiSelectActive;

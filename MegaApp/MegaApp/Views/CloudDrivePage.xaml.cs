@@ -30,6 +30,7 @@ namespace MegaApp.Views
             this.ViewModel.ClearSelectedItems += OnClearSelectedItems;
             this.ViewModel.DisableSelection += OnDisableSelection;
             this.ViewModel.EnableSelection += OnEnableSelection;
+            this.ViewModel.CloseDetailsViewEvent += OnCloseDetailsView;
 
             this.ViewModel.CloudDrive.ChangeViewEvent += OnChangeView;
             this.ViewModel.RubbishBin.ChangeViewEvent += OnChangeView;
@@ -39,6 +40,9 @@ namespace MegaApp.Views
 
             this.ViewModel.CloudDrive.DisableMultiSelect += OnDisableMultiSelect;
             this.ViewModel.RubbishBin.DisableMultiSelect += OnDisableMultiSelect;
+
+            this.ViewModel.CloudDrive.ViewDetailsEvent += OnShowViewDetails;
+            this.ViewModel.RubbishBin.ViewDetailsEvent += OnShowViewDetails;
         }
 
         public override bool CanGoBack
@@ -138,6 +142,8 @@ namespace MegaApp.Views
        
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.SplitView.IsPaneOpen = false;
+
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
 
@@ -152,13 +158,17 @@ namespace MegaApp.Views
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
+            else
                 this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+
+            this.SplitView.IsPaneOpen = false;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
@@ -176,7 +186,7 @@ namespace MegaApp.Views
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
-            if(!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
+            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
                 ((ListViewBase)sender).SelectedItems.Add(itemTapped);
@@ -335,6 +345,16 @@ namespace MegaApp.Views
 
             // Enable the view behaviors again
             EnableViewsBehaviors();
+        }
+
+        private void OnShowViewDetails(object sender, EventArgs e)
+        {
+            this.SplitView.IsPaneOpen = true;
+        }
+
+        private void OnCloseDetailsView(object sender, EventArgs e)
+        {
+            this.SplitView.IsPaneOpen = false;
         }
 
         /// <summary>

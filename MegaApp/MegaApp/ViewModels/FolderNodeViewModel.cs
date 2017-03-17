@@ -30,14 +30,14 @@ namespace MegaApp.ViewModels
 
         public void SetFolderInfo()
         {
-            int childFolders = this.MegaSdk.getNumChildFolders(this.OriginalMNode);
-            int childFiles = this.MegaSdk.getNumChildFiles(this.OriginalMNode);
+            this.ChildFolders = this.MegaSdk.getNumChildFolders(this.OriginalMNode);
+            this.ChildFiles = this.MegaSdk.getNumChildFiles(this.OriginalMNode);
 
             OnUiThread(() =>
             {
                 this.Information = string.Format("{0} {1} | {2} {3}",
-                    childFolders, childFolders == 1 ? ResourceService.UiResources.GetString("UI_SingleFolder").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower(),
-                    childFiles, childFiles == 1 ? ResourceService.UiResources.GetString("UI_SingleFile").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower());
+                    this.ChildFolders, this.ChildFolders == 1 ? ResourceService.UiResources.GetString("UI_SingleFolder").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower(),
+                    this.ChildFiles, this.ChildFiles == 1 ? ResourceService.UiResources.GetString("UI_SingleFile").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower());
             });
         }
 
