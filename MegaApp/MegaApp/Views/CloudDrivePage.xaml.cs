@@ -43,6 +43,26 @@ namespace MegaApp.Views
 
             this.ViewModel.CloudDrive.ViewDetailsEvent += OnShowViewDetails;
             this.ViewModel.RubbishBin.ViewDetailsEvent += OnShowViewDetails;
+
+            this.NodeDetailsSplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
+        }
+
+        private void IsDetailsViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (this.NodeDetailsSplitView.IsPaneOpen)
+            {
+                if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.NodeDetailsSplitView.ActualWidth < 600)
+                {
+                    this.NodeDetailsSplitView.OpenPaneLength = this.NodeDetailsSplitView.ActualWidth;
+                    AppService.SetAppViewBackButtonVisibility(true);
+                    return;
+                }
+
+                this.NodeDetailsSplitView.OpenPaneLength = this.NodeDetailsSplitView.MinWidth;
+            }
+
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
         public override bool CanGoBack
@@ -142,7 +162,7 @@ namespace MegaApp.Views
        
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.SplitView.IsPaneOpen = false;
+            this.NodeDetailsSplitView.IsPaneOpen = false;
 
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
@@ -168,7 +188,7 @@ namespace MegaApp.Views
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
-            this.SplitView.IsPaneOpen = false;
+            this.NodeDetailsSplitView.IsPaneOpen = false;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
@@ -237,6 +257,8 @@ namespace MegaApp.Views
 
         private void OnEnableMultiSelect(object sender, EventArgs e)
         {
+            this.NodeDetailsSplitView.IsPaneOpen = false;
+
             // First save the current selected nodes to restore them after enable the multi select
             var tempSelectedNodes = this.ViewModel.ActiveFolderView.SelectedNodes.ToList();
 
@@ -349,12 +371,12 @@ namespace MegaApp.Views
 
         private void OnShowViewDetails(object sender, EventArgs e)
         {
-            this.SplitView.IsPaneOpen = true;
+            this.NodeDetailsSplitView.IsPaneOpen = true;
         }
 
         private void OnCloseDetailsView(object sender, EventArgs e)
         {
-            this.SplitView.IsPaneOpen = false;
+            this.NodeDetailsSplitView.IsPaneOpen = false;
         }
 
         /// <summary>

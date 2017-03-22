@@ -15,10 +15,10 @@
     d:DataContext="{d:DesignInstance viewModels:CloudDriveViewModel}">
 
     <SplitView
-        x:Name="SplitView"
+        x:Name="NodeDetailsSplitView"
         IsPaneOpen="False"
         DisplayMode="Inline"
-        OpenPaneLength="435"
+        MinWidth="435"
         PanePlacement="Right">
 
         <VisualStateManager.VisualStateGroups>
@@ -43,6 +43,27 @@
                         <Setter Target="GridViewCloudDrive.SelectionMode" Value="None" />
                         <Setter Target="ListViewRubbishBin.SelectionMode" Value="None" />
                         <Setter Target="GridViewRubbishBin.SelectionMode" Value="None" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Overlay" />
+                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -484,6 +505,7 @@
                         Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
                     <CommandBar.Content>
                         <AppBarButton
+                            x:Name="CloseDetailsViewButton"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             Icon="Cancel" 
                             ToolTipService.ToolTip="{Binding CloseText}"
