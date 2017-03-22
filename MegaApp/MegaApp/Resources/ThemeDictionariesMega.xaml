@@ -15,6 +15,10 @@
         <Setter Property="Foreground" Value="{StaticResource MegaAppBarForegroundBrush}"/>
     </Style>
 
+    <Style x:Key="MegaAppBarButtonStyle" TargetType="AppBarButton">
+        <Setter Property="Width" Value="48" />        
+    </Style>
+
     <Style x:Key="MegaHeaderFontStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Foreground" Value="{StaticResource SystemAccentColor}"/>
@@ -953,6 +957,7 @@
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222"/>
+            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#222222"/>
         </ResourceDictionary>
 
         <!-- COLOR PALETTE FOR THE LIGHT THEME -->
@@ -975,6 +980,7 @@
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA"/>
+            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#E6E6E6"/>
         </ResourceDictionary>        
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
