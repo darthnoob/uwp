@@ -546,4 +546,59 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Close</value>
     <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Added" xml:space="preserve">
+    <value>Added</value>
+    <comment>Label for any 'Added' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Files" xml:space="preserve">
+    <value>Files</value>
+    <comment>Label for any 'Files' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folders" xml:space="preserve">
+    <value>Folders</value>
+    <comment>Label for any 'Folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Modified" xml:space="preserve">
+    <value>Modified</value>
+    <comment>Label for any 'Modified' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Size" xml:space="preserve">
+    <value>Size</value>
+    <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Audio" xml:space="preserve">
+    <value>Audio</value>
+    <comment>Label for any 'Audio' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_File" xml:space="preserve">
+    <value>File</value>
+    <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folder" xml:space="preserve">
+    <value>Folder</value>
+    <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Image" xml:space="preserve">
+    <value>Image</value>
+    <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Type" xml:space="preserve">
+    <value>Type</value>
+    <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+    <comment>Label for any 'Unknown' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Video" xml:space="preserve">
+    <value>Video</value>
+    <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

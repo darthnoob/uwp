@@ -559,6 +559,44 @@ namespace MegaApp.ViewModels
 
         public MNodeType Type { get; private set; }
 
+        public string TypeText
+        {
+            get
+            {
+                if (this.IsFolder)
+                    return this.FolderLabelText;
+                else
+                {
+                    string extension = Path.GetExtension(this.Name);
+                    if (string.IsNullOrEmpty(extension))
+                        return this.UnknownLabelText;                    
+
+                    extension = extension.TrimStart('.');
+                    char[] ext = extension.ToCharArray();
+                    ext[0] = char.ToUpper(ext[0]);
+
+                    switch(FileService.GetFileType(this.Name))
+                    {
+                        case FileType.TYPE_FILE:
+                            return new string(ext) + "/" + this.FileLabelText;
+
+                        case FileType.TYPE_IMAGE:
+                            return new string(ext) + "/" + this.ImageLabelText;
+
+                        case FileType.TYPE_AUDIO:
+                            return new string(ext) + "/" + this.AudioLabelText;
+
+                        case FileType.TYPE_VIDEO:
+                            return new string(ext) + "/" + this.VideoLabelText;
+
+                        case FileType.TYPE_UNKNOWN:
+                        default:
+                            return new string(ext) + "/" + this.UnknownLabelText;
+                    }
+                }
+            }
+        }
+
         public ContainerType ParentContainerType { get; private set; }
 
         private NodeDisplayMode _displayMode;
@@ -616,15 +654,27 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string AddedLabelText => ResourceService.UiResources.GetString("UI_Added");
+        public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string FileLabelText => ResourceService.UiResources.GetString("UI_File");
+        public string FilesLabelText => ResourceService.UiResources.GetString("UI_Files");
+        public string FolderLabelText => ResourceService.UiResources.GetString("UI_Folder");
+        public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
+        public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");
+        public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
+        public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
+        public string VideoLabelText => ResourceService.UiResources.GetString("UI_Video");
         public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
 
         #endregion
