@@ -139,7 +139,12 @@ namespace MegaApp.ViewModels
         public string Name
         {
             get { return _name; }
-            set { SetField(ref _name, value); }
+            set
+            {
+                SetField(ref _name, value);
+                if(!this.IsFolder)
+                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
+            }
         }
 
         public string CreationTime { get; private set; }
@@ -367,6 +372,8 @@ namespace MegaApp.ViewModels
 
             if (!result) return false;
 
+            this.Parent.CloseNodeDetails();
+
             return true;
         }
 
@@ -391,8 +398,8 @@ namespace MegaApp.ViewModels
             {
                 this.Parent.FocusedNode = this;
 
-                if (this.Parent.ViewDetailsCommand.CanExecute(null))
-                    this.Parent.ViewDetailsCommand.Execute(null);
+                if (this.Parent.OpenNodeDetailsCommand.CanExecute(null))
+                    this.Parent.OpenNodeDetailsCommand.Execute(null);
             }
         }
 
@@ -504,6 +511,7 @@ namespace MegaApp.ViewModels
             this.SizeText = this.Size.ToStringAndSuffix();
             this.IsExported = megaNode.isExported();
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
+            this.TypeText = this.GetTypeText();
 
             if (this.Type == MNodeType.TYPE_FILE)
                 this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
@@ -516,6 +524,39 @@ namespace MegaApp.ViewModels
             //    CheckAndUpdateSFO(megaNode);
             this.IsAvailableOffline = false;
             this.IsSelectedForOffline = false;
+        }
+
+        private string GetTypeText()
+        {
+            if (this.IsFolder)
+                return this.FolderLabelText;
+
+            string extension = Path.GetExtension(this.Name);
+            if (string.IsNullOrEmpty(extension))
+                return this.UnknownLabelText;
+
+            extension = extension.TrimStart('.');
+            char[] ext = extension.ToCharArray();
+            ext[0] = char.ToUpper(ext[0]);
+
+            switch (FileService.GetFileType(this.Name))
+            {
+                case FileType.TYPE_FILE:
+                    return new string(ext) + "/" + this.FileLabelText;
+
+                case FileType.TYPE_IMAGE:
+                    return new string(ext) + "/" + this.ImageLabelText;
+
+                case FileType.TYPE_AUDIO:
+                    return new string(ext) + "/" + this.AudioLabelText;
+
+                case FileType.TYPE_VIDEO:
+                    return new string(ext) + "/" + this.VideoLabelText;
+
+                case FileType.TYPE_UNKNOWN:
+                default:
+                    return new string(ext) + "/" + this.UnknownLabelText;
+            }
         }
 
         public void SetThumbnailImage()
@@ -559,42 +600,11 @@ namespace MegaApp.ViewModels
 
         public MNodeType Type { get; private set; }
 
+        private string _typeText;
         public string TypeText
         {
-            get
-            {
-                if (this.IsFolder)
-                    return this.FolderLabelText;
-                else
-                {
-                    string extension = Path.GetExtension(this.Name);
-                    if (string.IsNullOrEmpty(extension))
-                        return this.UnknownLabelText;                    
-
-                    extension = extension.TrimStart('.');
-                    char[] ext = extension.ToCharArray();
-                    ext[0] = char.ToUpper(ext[0]);
-
-                    switch(FileService.GetFileType(this.Name))
-                    {
-                        case FileType.TYPE_FILE:
-                            return new string(ext) + "/" + this.FileLabelText;
-
-                        case FileType.TYPE_IMAGE:
-                            return new string(ext) + "/" + this.ImageLabelText;
-
-                        case FileType.TYPE_AUDIO:
-                            return new string(ext) + "/" + this.AudioLabelText;
-
-                        case FileType.TYPE_VIDEO:
-                            return new string(ext) + "/" + this.VideoLabelText;
-
-                        case FileType.TYPE_UNKNOWN:
-                        default:
-                            return new string(ext) + "/" + this.UnknownLabelText;
-                    }
-                }
-            }
+            get { return _typeText; }
+            set { SetField(ref _typeText, value); }
         }
 
         public ContainerType ParentContainerType { get; private set; }
@@ -657,6 +667,9 @@ namespace MegaApp.ViewModels
         public string AddedLabelText => ResourceService.UiResources.GetString("UI_Added");
         public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string FileLabelText => ResourceService.UiResources.GetString("UI_File");

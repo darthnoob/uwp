@@ -601,4 +601,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Video</value>
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_EnableOfflineView" xml:space="preserve">
+    <value>Enable Offline view</value>
+    <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

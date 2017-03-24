@@ -36,7 +36,8 @@ namespace MegaApp.ViewModels
         public event EventHandler EnableMultiSelect;
         public event EventHandler DisableMultiSelect;
 
-        public event EventHandler ViewDetailsEvent;
+        public event EventHandler OpenNodeDetailsEvent;
+        public event EventHandler CloseNodeDetailsEvent;
 
         public FolderViewModel(ContainerType containerType)
         {
@@ -63,7 +64,8 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
-            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
+            this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
+            this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
@@ -124,9 +126,14 @@ namespace MegaApp.ViewModels
             OnPropertyChanged("HasChildNodesBinding");
         }
 
-        private void ViewDetails()
+        public void OpenNodeDetails()
         {
-            ViewDetailsEvent?.Invoke(this, EventArgs.Empty);
+            OpenNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void CloseNodeDetails()
+        {
+            CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
         }
 
         #region Commands
@@ -144,7 +151,8 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
-        public ICommand ViewDetailsCommand { get; private set; }
+        public ICommand OpenNodeDetailsCommand { get; private set; }
+        public ICommand CloseNodeDetailsCommand { get; }
 
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
@@ -269,6 +277,8 @@ namespace MegaApp.ViewModels
         private void Refresh()
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
+
+            CloseNodeDetails();
 
             FileService.ClearFiles(
                 NodeService.GetFiles(this.ChildNodes,
@@ -693,6 +703,8 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
+            CloseNodeDetails();
+
             MNode homeNode = null;
 
             switch (this.Type)
@@ -716,6 +728,8 @@ namespace MegaApp.ViewModels
         public void BrowseToFolder(IMegaNode node)
         {
             if (node == null) return;
+
+            CloseNodeDetails();
 
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen

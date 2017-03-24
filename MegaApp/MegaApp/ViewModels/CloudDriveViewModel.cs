@@ -15,7 +15,6 @@ namespace MegaApp.ViewModels
         public event EventHandler ClearSelectedItems;
         public event EventHandler DisableSelection;
         public event EventHandler EnableSelection;
-        public event EventHandler CloseDetailsViewEvent;
 
         public CloudDriveViewModel()
         {
@@ -25,7 +24,6 @@ namespace MegaApp.ViewModels
             this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
             this.AcceptMoveCommand = new RelayCommand(AcceptMove);
-            this.CloseDetailsViewCommand = new RelayCommand(CloseDetailsView);
         }
 
         /// <summary>
@@ -48,8 +46,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand AcceptCopyCommand { get; }
-        public ICommand AcceptMoveCommand { get; }
-        public ICommand CloseDetailsViewCommand { get; }
+        public ICommand AcceptMoveCommand { get; }        
 
         #endregion
 
@@ -271,11 +268,6 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_MoveFailed"));
                 }
             }
-        }
-
-        private void CloseDetailsView()
-        {
-            CloseDetailsViewEvent?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

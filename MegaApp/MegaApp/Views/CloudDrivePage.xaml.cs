@@ -29,8 +29,7 @@ namespace MegaApp.Views
 
             this.ViewModel.ClearSelectedItems += OnClearSelectedItems;
             this.ViewModel.DisableSelection += OnDisableSelection;
-            this.ViewModel.EnableSelection += OnEnableSelection;
-            this.ViewModel.CloseDetailsViewEvent += OnCloseDetailsView;
+            this.ViewModel.EnableSelection += OnEnableSelection;            
 
             this.ViewModel.CloudDrive.ChangeViewEvent += OnChangeView;
             this.ViewModel.RubbishBin.ChangeViewEvent += OnChangeView;
@@ -41,8 +40,11 @@ namespace MegaApp.Views
             this.ViewModel.CloudDrive.DisableMultiSelect += OnDisableMultiSelect;
             this.ViewModel.RubbishBin.DisableMultiSelect += OnDisableMultiSelect;
 
-            this.ViewModel.CloudDrive.ViewDetailsEvent += OnShowViewDetails;
-            this.ViewModel.RubbishBin.ViewDetailsEvent += OnShowViewDetails;
+            this.ViewModel.CloudDrive.OpenNodeDetailsEvent += OnOpenNodeDetails;
+            this.ViewModel.RubbishBin.OpenNodeDetailsEvent += OnOpenNodeDetails;
+
+            this.ViewModel.CloudDrive.CloseNodeDetailsEvent += OnCloseNodeDetails;
+            this.ViewModel.RubbishBin.CloseNodeDetailsEvent += OnCloseNodeDetails;
 
             this.NodeDetailsSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
@@ -205,6 +207,8 @@ namespace MegaApp.Views
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
+
+            this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
             if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
             {
@@ -369,12 +373,12 @@ namespace MegaApp.Views
             EnableViewsBehaviors();
         }
 
-        private void OnShowViewDetails(object sender, EventArgs e)
+        private void OnOpenNodeDetails(object sender, EventArgs e)
         {
             this.NodeDetailsSplitView.IsPaneOpen = true;
         }
 
-        private void OnCloseDetailsView(object sender, EventArgs e)
+        private void OnCloseNodeDetails(object sender, EventArgs e)
         {
             this.NodeDetailsSplitView.IsPaneOpen = false;
         }

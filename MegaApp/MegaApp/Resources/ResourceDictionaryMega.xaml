@@ -6,7 +6,8 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:MegaApp.Behaviors"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters">
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:triggers="using:WindowsStateTriggers">
 
     <!-- Resource dictionary entries should be defined here. -->
 
@@ -665,5 +666,318 @@
         </Grid>
     </DataTemplate>
 
-</ResourceDictionary>
+    <ControlTemplate x:Name="NodeDetailsPanelControl">
+        <Grid Background="{ThemeResource MegaNodeDetailsBackgroundBrush}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Desktop">
+                        <VisualState.StateTriggers>
+                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="TopRow.Height" Value="Auto"/>
+                            <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                            <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Mobile">
+                        <VisualState.StateTriggers>
+                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}"/>
+                            <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                            <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                            <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup>
+                    <VisualState x:Name="Small">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                            <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
+                            <Setter Target="TypeLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
+                            <Setter Target="AddedLabelText.(RelativePanel.Below)" Value="TypeLabelText" />
+                            <Setter Target="ModifiedLabelText.(RelativePanel.Below)" Value="AddedLabelText" />
+                            <Setter Target="FilesLabelText.(RelativePanel.Below)" Value="ModifiedLabelText" />
+                            <Setter Target="FoldersLabelText.(RelativePanel.Below)" Value="FilesLabelText" />
+                            <Setter Target="SizeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                            <Setter Target="TypeText.(RelativePanel.Below)" Value="SizeText" />
+                            <Setter Target="TypeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                            <Setter Target="CreationTime.(RelativePanel.Below)" Value="TypeText" />
+                            <Setter Target="CreationTime.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                            <Setter Target="ModificationTime.(RelativePanel.Below)" Value="CreationTime" />
+                            <Setter Target="ModificationTime.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                            <Setter Target="ChildFiles.(RelativePanel.Below)" Value="ModificationTime" />
+                            <Setter Target="ChildFiles.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                            <Setter Target="ChildFolders.(RelativePanel.Below)" Value="ChildFiles" />
+                            <Setter Target="ChildFolders.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Medium">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="360" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                            <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
+                            <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
+                            <Setter Target="TypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                            <Setter Target="TypeText.(RelativePanel.Below)" Value="TypeLabelText" />
+                            <Setter Target="TypeText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="AddedLabelText.(RelativePanel.Below)" Value="SizeText" />
+                            <Setter Target="AddedLabelText.Margin" Value="0,36,0,0" />
+                            <Setter Target="CreationTime.(RelativePanel.Below)" Value="AddedLabelText" />
+                            <Setter Target="ModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="AddedLabelText" />
+                            <Setter Target="ModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="ModificationTime.(RelativePanel.Below)" Value="ModifiedLabelText" />
+                            <Setter Target="ModificationTime.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="FilesLabelText.(RelativePanel.Below)" Value="CreationTime" />
+                            <Setter Target="FilesLabelText.Margin" Value="0,36,0,0" />
+                            <Setter Target="ChildFiles.(RelativePanel.Below)" Value="FilesLabelText" />
+                            <Setter Target="FoldersLabelText.(RelativePanel.AlignBottomWith)" Value="FilesLabelText" />
+                            <Setter Target="FoldersLabelText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="ChildFolders.(RelativePanel.Below)" Value="FoldersLabelText" />
+                            <Setter Target="ChildFolders.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Wide">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="600" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="CloseDetailsViewButton.Visibility" Value="Visible" />
+                            <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
+                            <Setter Target="TypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                            <Setter Target="TypeText.(RelativePanel.Below)" Value="TypeLabelText" />
+                            <Setter Target="TypeText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="AddedLabelText.(RelativePanel.Below)" Value="SizeText" />
+                            <Setter Target="AddedLabelText.Margin" Value="0,36,0,0" />
+                            <Setter Target="CreationTime.(RelativePanel.Below)" Value="AddedLabelText" />
+                            <Setter Target="ModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="AddedLabelText" />
+                            <Setter Target="ModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="ModificationTime.(RelativePanel.Below)" Value="ModifiedLabelText" />
+                            <Setter Target="ModificationTime.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="FilesLabelText.(RelativePanel.Below)" Value="CreationTime" />
+                            <Setter Target="FilesLabelText.Margin" Value="0,36,0,0" />
+                            <Setter Target="ChildFiles.(RelativePanel.Below)" Value="FilesLabelText" />
+                            <Setter Target="FoldersLabelText.(RelativePanel.AlignBottomWith)" Value="FilesLabelText" />
+                            <Setter Target="FoldersLabelText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                            <Setter Target="ChildFolders.(RelativePanel.Below)" Value="FoldersLabelText" />
+                            <Setter Target="ChildFolders.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
 
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar
+                x:Name="TopCommandBar"
+                Grid.Row="0"
+                Style="{StaticResource MegaCommandBarStyle}">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Icon="Rename" 
+                    ToolTipService.ToolTip="{Binding RenameText}"
+                    Command="{Binding RenameCommand}"/>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Icon="Download" 
+                    ToolTipService.ToolTip="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>                
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Icon="Delete" 
+                    ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
+                    Command="{Binding MoveToRubbishBinCommand}"
+                    Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Icon="Delete" 
+                    ToolTipService.ToolTip="{Binding RemoveText}"
+                    Command="{Binding RemoveCommand}"
+                    Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                <CommandBar.Content>
+                    <AppBarButton
+                        x:Name="CloseDetailsViewButton"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Icon="Cancel" 
+                        ToolTipService.ToolTip="{Binding CloseText}"
+                        Command="{Binding Parent.CloseNodeDetailsCommand}"/>
+                </CommandBar.Content>
+            </CommandBar>
+            
+            <Pivot
+                x:Name="PivotControl"
+                Grid.Row="1"
+                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
+                <PivotItem
+                    x:Name="NodeDetailsPivot"
+                    Header="Details">
+                    <ScrollViewer 
+                        Margin="-12,0"
+                        VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="192"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Grid 
+                                Grid.Row="0"
+                                Margin="0,0"
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Center"
+                                Background="{ThemeResource MegaAppBackgroundBrush}">
+                                <Path 
+                                    Margin="12"
+                                    Data="{Binding DefaultImagePathData, Mode=OneWay}"
+                                    Stretch="Uniform"
+                                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <Path.Fill>
+                                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
+                                    </Path.Fill>
+                                </Path>
+                                <Image 
+                                    Stretch="Uniform" 
+                                    Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding ThumbnailImageUri}"/>
+                                    </Image.Source>
+                                </Image>
+                            </Grid>
+                            
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="24,20"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="24"
+                                    FontWeight="SemiLight"
+                                    Text="{Binding Name}"
+                                    TextWrapping="NoWrap"
+                                    TextTrimming="CharacterEllipsis"/>
+                                <TextBlock
+                                    FontSize="16"
+                                    Margin="0,18,0,0"
+                                    Text="{Binding EnableOfflineViewText, Mode=OneTime}"
+                                    Opacity="0.4"/>
+                                <ToggleSwitch Margin="0,12,0,0"/>
+                            </StackPanel>
+                            
+                            <RelativePanel
+                                Grid.Row="2"
+                                Margin="24,12">
+                                <TextBlock
+                                    x:Name="SizeLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding SizeLabelText, Mode=OneTime}"/>
+                                <TextBlock
+                                    x:Name="SizeText"
+                                    Text="{Binding SizeText, Mode=OneWay}"/>
+                                
+                                <TextBlock 
+                                    x:Name="TypeLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding TypeLabelText, Mode=OneTime}"/>
+                                <TextBlock 
+                                    x:Name="TypeText"
+                                    Text="{Binding TypeText, Mode=OneWay}"/>
+                                
+                                <TextBlock 
+                                    x:Name="AddedLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding AddedLabelText, Mode=OneTime}"/>
+                                <TextBlock 
+                                    x:Name="CreationTime"
+                                    Text="{Binding CreationTime, Mode=OneWay}"/>
+                                
+                                <TextBlock 
+                                    x:Name="ModifiedLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding ModifiedLabelText, Mode=OneTime}"/>
+                                <TextBlock 
+                                    x:Name="ModificationTime"
+                                    Text="{Binding ModificationTime, Mode=OneWay}"/>
+                                
+                                <TextBlock 
+                                    x:Name="FilesLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding FilesLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock 
+                                    x:Name="ChildFiles"
+                                    Text="{Binding ChildFiles, Mode=OneWay}"
+                                    Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                
+                                <TextBlock 
+                                    x:Name="FoldersLabelText"
+                                    Opacity="0.4"
+                                    Text="{Binding FoldersLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock 
+                                    x:Name="ChildFolders"
+                                    Text="{Binding ChildFolders, Mode=OneWay}"
+                                    Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            </RelativePanel>
+                        </Grid>
+                    </ScrollViewer>
+                </PivotItem>                
+                <PivotItem
+                    x:Name="NodeLinkPivot"
+                    Header="Link">
+                    <ScrollViewer 
+                        Margin="-12,0"
+                        VerticalScrollBarVisibility="Auto">
+                        
+                    </ScrollViewer>
+                </PivotItem>
+            </Pivot>
+
+            <CommandBar
+                x:Name="BottomCommandBar"
+                Grid.Row="2"
+                Style="{StaticResource MegaCommandBarStyle}">
+                <AppBarButton
+                    Icon="Download" 
+                    Label="{Binding DownloadText}"
+                    ToolTipService.ToolTip="{Binding DownloadText}"
+                    Command="{Binding DownloadCommand}"/>
+                <AppBarButton
+                    Icon="Delete" 
+                    Label="{Binding MoveToRubbishBinText}"
+                    ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
+                    Command="{Binding MoveToRubbishBinCommand}"
+                    Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                <AppBarButton
+                    Icon="Delete" 
+                    Label="{Binding RemoveText}"
+                    ToolTipService.ToolTip="{Binding RemoveText}"
+                    Command="{Binding RemoveCommand}"
+                    Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton
+                        Icon="Rename"
+                        Label="{Binding RenameText}"
+                        ToolTipService.ToolTip="{Binding RenameText}"
+                        Command="{Binding RenameCommand}"/>
+                    <AppBarButton
+                        Icon="Cancel"
+                        Label="{Binding CancelText}"
+                        ToolTipService.ToolTip="{Binding CancelText}"
+                        Command="{Binding Parent.CloseNodeDetailsCommand}"/>
+                </CommandBar.SecondaryCommands>
+            </CommandBar>
+        </Grid>
+    </ControlTemplate>
+</ResourceDictionary>

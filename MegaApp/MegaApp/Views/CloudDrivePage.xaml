@@ -54,7 +54,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Overlay" />
-                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide">
@@ -63,7 +62,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -467,183 +465,11 @@
         </Grid>
         
         <SplitView.Pane>
-            <Grid
-                Background="{ThemeResource MegaNodeDetailsBackgroundBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <CommandBar 
-                    Grid.Row="0"
-                    Style="{StaticResource MegaCommandBarStyle}">
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Icon="Download" 
-                        ToolTipService.ToolTip="{Binding DownloadText}"
-                        Command="{Binding ActiveFolderView.FocusedNode.DownloadCommand}"
-                        Click="OnButtonClick"/>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Icon="Rename" 
-                        ToolTipService.ToolTip="{Binding RenameText}"
-                        Command="{Binding ActiveFolderView.FocusedNode.RenameCommand}"
-                        Click="OnButtonClick"/>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Icon="Delete" 
-                        ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
-                        Command="{Binding ActiveFolderView.FocusedNode.MoveToRubbishBinCommand}"
-                        Click="OnButtonClick"
-                        Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Icon="Delete" 
-                        ToolTipService.ToolTip="{Binding RemoveText}"
-                        Command="{Binding ActiveFolderView.FocusedNode.RemoveCommand}"
-                        Click="OnButtonClick"
-                        Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-                    <CommandBar.Content>
-                        <AppBarButton
-                            x:Name="CloseDetailsViewButton"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            Icon="Cancel" 
-                            ToolTipService.ToolTip="{Binding CloseText}"
-                            Command="{Binding CloseDetailsViewCommand}"
-                            Click="OnButtonClick"/>
-                    </CommandBar.Content>
-                </CommandBar>
-                
-                <Pivot
-                    Grid.Row="1"
-                    DataContext="{Binding ActiveFolderView.FocusedNode}">
-                    <PivotItem
-                        x:Name="NodeDetailsPivot"
-                        Header="Details">
-                        <ScrollViewer 
-                            Margin="-12,0"
-                            VerticalScrollBarVisibility="Auto">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="192"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                
-                                <Grid 
-                                    Grid.Row="0"
-                                    Margin="-12,0"
-                                    HorizontalAlignment="Stretch" 
-                                    VerticalAlignment="Center"
-                                    Background="{ThemeResource MegaAppBackgroundBrush}">
-                                    <Path 
-                                        Margin="12"
-                                        Data="{Binding DefaultImagePathData, Mode=OneWay}"
-                                        Stretch="Uniform"
-                                        Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <Path.Fill>
-                                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
-                                        </Path.Fill>
-                                    </Path>
-                                    <Image 
-                                        Stretch="Uniform" 
-                                        Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                                        <Image.Source>
-                                            <BitmapImage UriSource="{Binding ThumbnailImageUri}"/>
-                                        </Image.Source>
-                                    </Image>
-                                </Grid>
-                                
-                                <StackPanel
-                                    Grid.Row="1"
-                                    Margin="12,20"
-                                    Orientation="Vertical">
-                                    <TextBlock
-                                        FontSize="24"
-                                        FontWeight="SemiLight"
-                                        Text="{Binding Name}"
-                                        TextWrapping="NoWrap"
-                                        TextTrimming="CharacterEllipsis"/>
-                                    <TextBlock
-                                        FontSize="16"
-                                        Margin="0,18,0,0"
-                                        Text="Enable Offline view"
-                                        Opacity="0.4"/>
-                                    <ToggleSwitch Margin="0,12,0,0"/>
-                                </StackPanel>
-                                
-                                <Grid
-                                    Grid.Row="2"
-                                    Margin="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <StackPanel 
-                                        Grid.Column="0" 
-                                        Grid.Row="0"
-                                        Margin="0,36,0,0">
-                                        <TextBlock Text="{Binding SizeLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding SizeText, Mode=OneWay}"/>
-                                    </StackPanel>
-                                    <StackPanel 
-                                        Grid.Column="1" 
-                                        Grid.Row="0"
-                                        Margin="0,36,0,0">
-                                        <TextBlock Text="{Binding TypeLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding TypeText, Mode=OneWay}"/>
-                                    </StackPanel>
-                                    <StackPanel 
-                                        Grid.Column="0" 
-                                        Grid.Row="1"
-                                        Margin="0,36,0,0">
-                                        <TextBlock Text="{Binding AddedLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding CreationTime, Mode=OneWay}"/>
-                                    </StackPanel>
-                                    <StackPanel 
-                                        Grid.Column="1" 
-                                        Grid.Row="1"
-                                        Margin="0,36,0,0">
-                                        <TextBlock Text="{Binding ModifiedLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding ModificationTime, Mode=OneWay}"/>
-                                    </StackPanel>
-                                    <StackPanel 
-                                        Grid.Column="0" 
-                                        Grid.Row="2"
-                                        Margin="0,36,0,0"
-                                        Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <TextBlock Text="{Binding FilesLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding ChildFiles, Mode=OneWay}"/>
-                                    </StackPanel>
-                                    <StackPanel 
-                                        Grid.Column="1" 
-                                        Grid.Row="2"
-                                        Margin="0,36,0,0"
-                                        Visibility="{Binding IsFolder, Converter={StaticResource BoolToVisibilityConverter}}">
-                                        <TextBlock Text="{Binding FoldersLabelText, Mode=OneTime}"/>
-                                        <TextBlock Text="{Binding ChildFolders, Mode=OneWay}"/>
-                                    </StackPanel>
-                                </Grid>
-                            </Grid>
-                        </ScrollViewer>
-                    </PivotItem>
-                    <PivotItem
-                        x:Name="NodeLinkPivot"
-                        Header="Link">
-                        <ScrollViewer 
-                            Margin="-12,0"
-                            VerticalScrollBarVisibility="Auto">
-                            
-                        </ScrollViewer>
-                    </PivotItem>
-
-                </Pivot>
-            </Grid>
+            <ContentControl
+                x:Name="NodeDetailsPaneControl"
+                Grid.Row="1"
+                DataContext="{Binding ActiveFolderView.FocusedNode}"
+                Template="{StaticResource NodeDetailsPanelControl}"/>
         </SplitView.Pane>
         
     </SplitView>
