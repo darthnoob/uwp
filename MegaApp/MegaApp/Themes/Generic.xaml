@@ -5,6 +5,68 @@
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:triggers="using:WindowsStateTriggers">
 
+    <Style TargetType="userControls:EmptyState">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+        <Setter Property="HeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
+        <Setter Property="SubHeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}"/>
+        <Setter Property="SubHeaderMargin" Value="0, 8, 0, 0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="userControls:EmptyState">
+                    <Grid
+                        x:Name="PART_RootGrid"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                        Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid 
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                Foreground="{TemplateBinding HeaderForeground}"
+                                x:Name="PART_HeaderText"
+                                TextWrapping="Wrap"
+                                Text="{TemplateBinding HeaderText}"
+                                FontSize="{TemplateBinding HeaderFontSize}"/>
+                            <TextBlock
+                                Grid.Row="1"
+                                FontFamily="{TemplateBinding FontFamily}"
+                                Foreground="{TemplateBinding SubHeaderForeground}"
+                                x:Name="PART_SubHeaderText"
+                                TextWrapping="Wrap"
+                                Margin="{TemplateBinding SubHeaderMargin}"
+                                Text="{TemplateBinding SubHeaderText}"
+                                FontSize="{TemplateBinding SubHeaderFontSize}"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="userControls:ProgressPanel">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>

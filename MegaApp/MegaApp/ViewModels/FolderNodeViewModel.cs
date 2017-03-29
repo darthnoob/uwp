@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             SetFolderInfo();
-            Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);
+            Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
 
             this.IsDefaultImage = true;
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_default");

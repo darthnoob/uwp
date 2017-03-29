@@ -96,6 +96,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="MegaApp_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\en\EmptyStates.resw" />
     <PRIResource Include="Strings\en\VisualResources.resw" />
     <PRIResource Include="Strings\en\UiResources.resw" />
     <PRIResource Include="Strings\en\SettingsResources.resw" />
@@ -120,10 +121,12 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
-    <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
@@ -143,8 +146,6 @@
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
     <Compile Include="Enums\RelativeAlignment.cs" />
-    <Compile Include="Enums\TransferStatus.cs" />
-    <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
     <Compile Include="Extensions\CommandBarExtensions.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
@@ -186,6 +188,7 @@
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
+    <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />
