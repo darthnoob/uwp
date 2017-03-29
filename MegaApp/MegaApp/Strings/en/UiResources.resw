@@ -605,4 +605,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Enable Offline view</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_EnableLink" xml:space="preserve">
+    <value>Enable link</value>
+    <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

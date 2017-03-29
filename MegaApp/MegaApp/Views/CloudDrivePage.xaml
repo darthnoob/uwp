@@ -8,6 +8,7 @@
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:userControls="using:MegaApp.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:MegaApp.Behaviors"
@@ -465,11 +466,12 @@
         </Grid>
         
         <SplitView.Pane>
-            <ContentControl
-                x:Name="NodeDetailsPaneControl"
+            <userControls:NodeDetailsPanel
                 Grid.Row="1"
-                DataContext="{Binding ActiveFolderView.FocusedNode}"
-                Template="{StaticResource NodeDetailsPanelControl}"/>
+                x:Name="NodeDetailsPanelControl"
+                Background="{StaticResource MegaAppBackgroundBrush}"
+                Foreground="{StaticResource MegaAppForegroundBrush}" 
+                Node="{Binding ActiveFolderView.FocusedNode}"/>
         </SplitView.Pane>
         
     </SplitView>

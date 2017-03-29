@@ -38,7 +38,7 @@ namespace MegaApp.ViewModels
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.GetLinkCommand = new RelayCommand(GetLinkAsync);
+            this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
@@ -441,25 +441,24 @@ namespace MegaApp.ViewModels
             return true;
         }
 
-        public async void GetLinkAsync()
+        public async void GetLinkAsync(bool showLinkDialog = true)
         {
             // User must be online to perform this operation
             if (!IsUserOnline()) return;
 
-            string link;
             if (this.OriginalMNode.isExported())
             {
-                link = this.OriginalMNode.getPublicLink();
+                this.ExportLink = this.OriginalMNode.getPublicLink();
             }
             else
             {
                 var exportNode = new ExporNodeRequestListenerAsync();
-                link = await exportNode.ExecuteAsync(() =>
+                this.ExportLink = await exportNode.ExecuteAsync(() =>
                 {
                     this.MegaSdk.exportNode(this.OriginalMNode, exportNode);
                 });
 
-                if (string.IsNullOrEmpty(link))
+                if (string.IsNullOrEmpty(this.ExportLink))
                 {
                     OnUiThread(async () =>
                     {
@@ -471,7 +470,36 @@ namespace MegaApp.ViewModels
                 };
             }
 
-            OnUiThread(() => DialogService.ShowShareLink(link));
+            this.IsExported = true;
+
+            if (showLinkDialog)
+                OnUiThread(() => DialogService.ShowShareLink(this.ExportLink));
+        }
+
+        public async void RemoveLink()
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline() || !this.OriginalMNode.isExported()) return;
+
+            var disableExportNode = new DisableExportRequestListenerAsync();
+            var result = await disableExportNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.disableExport(this.OriginalMNode, disableExportNode);
+            });
+
+            if(!result)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveLinkFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveLinkFailed"));
+                });
+                return;
+            }
+
+            this.IsExported = false;
+            this.ExportLink = null;
         }
 
         private void Download()
@@ -509,9 +537,14 @@ namespace MegaApp.ViewModels
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
             this.SizeText = this.Size.ToStringAndSuffix();
-            this.IsExported = megaNode.isExported();
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
+
+            if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
+            {
+                this.IsExported = megaNode.isExported();
+                this.ExportLink = this.IsExported ? megaNode.getPublicLink() : null;
+            }
 
             if (this.Type == MNodeType.TYPE_FILE)
                 this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
@@ -657,6 +690,13 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        private string _exportLink;
+        public string ExportLink
+        {
+            get { return _exportLink; }
+            set { SetField(ref _exportLink, value); }
+        }
+
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
             ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
 
@@ -668,6 +708,8 @@ namespace MegaApp.ViewModels
         public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
+        public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
+        public string ExportLinkText => ResourceService.UiResources.GetString("UI_ExportLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
@@ -684,6 +726,7 @@ namespace MegaApp.ViewModels
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string ShareText => ResourceService.UiResources.GetString("UI_Share");
         public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");
         public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
         public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
