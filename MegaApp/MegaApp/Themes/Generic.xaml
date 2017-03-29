@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:triggers="using:WindowsStateTriggers">
 
@@ -203,7 +204,8 @@
                         <CommandBar
                             x:Name="TopCommandBar"
                             Grid.Row="0"
-                            Style="{StaticResource MegaCommandBarStyle}">
+                            Style="{StaticResource MegaCommandBarStyle}"
+                            extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 Icon="Rename" 
