@@ -27,6 +27,11 @@ namespace MegaApp.UserControls
         public string SubLabel { get; set; }
 
         /// <summary>
+        /// Tooltip for the menu item
+        /// </summary>
+        public string ToolTip { get; set; }
+
+        /// <summary>
         /// Type of the viewmodel to navigate on selection
         /// </summary>
         public Type TargetViewModel { get; set; }
@@ -43,13 +48,15 @@ namespace MegaApp.UserControls
                 {
                     Label = CloudDriveText,
                     SubLabel = CameraUploadsText + " & " + RubbishBinText,
+                    ToolTip = CloudDriveText,
                     Icon = new SymbolIcon(Symbol.Home),
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
 
                 new MenuItem()
                 {
-                    Label = TransferManagerText,                    
+                    Label = TransferManagerText,
+                    ToolTip = TransferManagerText,
                     Icon = new SymbolIcon(Symbol.Sort),
                     TargetViewModel = typeof(TransferManagerViewModel)
                 },
@@ -68,6 +75,7 @@ namespace MegaApp.UserControls
                 {
                     Label = MyAccountText,
                     SubLabel = "& " + SettingsText,
+                    ToolTip = MyAccountText,
                     Icon = new SymbolIcon(Symbol.Setting),
                     TargetViewModel = typeof(SettingsMyAccountViewModel)
                 },
