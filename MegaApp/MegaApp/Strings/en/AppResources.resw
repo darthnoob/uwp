@@ -233,7 +233,7 @@
     <value>https://github.com/meganz/sdk/tree/c429958d7b59f1994c96cd6c6ce138b64a601c64</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
-  <data name="AR_SkdVersion" xml:space="preserve">
+  <data name="AR_SdkVersion" xml:space="preserve">
     <value>c429958</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
