@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 using MegaApp.Services;
 using MegaApp.ViewModels;
 
@@ -11,6 +14,8 @@ namespace MegaApp.UserControls
     /// </summary>
     public class MenuItem
     {
+        #region Properties
+
         /// <summary>
         /// Icon to show in the menu. Can be of type FontIcon, SymbolIcon or PathIcon
         /// </summary>
@@ -36,6 +41,10 @@ namespace MegaApp.UserControls
         /// </summary>
         public Type TargetViewModel { get; set; }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Create list of default menu items
         /// </summary>
@@ -57,12 +66,12 @@ namespace MegaApp.UserControls
                 {
                     Label = TransferManagerText,
                     ToolTip = TransferManagerText,
-                    Icon = new SymbolIcon(Symbol.Sort),
+                    Icon = GetIconFromXamlPath(MenuTransfersPathData),
                     TargetViewModel = typeof(TransferManagerViewModel)
                 },
             };
         }
-        
+
         /// <summary>
         /// Create list of option menu items
         /// </summary>
@@ -76,11 +85,36 @@ namespace MegaApp.UserControls
                     Label = MyAccountText,
                     SubLabel = "& " + SettingsText,
                     ToolTip = MyAccountText,
-                    Icon = new SymbolIcon(Symbol.Setting),
+                    Icon = GetIconFromXamlPath(MenuSettingsPathData),
                     TargetViewModel = typeof(SettingsMyAccountViewModel)
                 },
             };
         }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Gets an icon from a XAML path data
+        /// </summary>
+        /// <param name="xamlPathData">XAML path data to draw the icon</param>
+        /// <returns>Icon corresponding with the XAML path data</returns>
+        private static PathIcon GetIconFromXamlPath(string xamlPathData)
+        {
+            var geometry = (Geometry)XamlReader.Load(
+                "<Geometry xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+                + xamlPathData + "</Geometry>");
+
+            return new PathIcon()
+            {
+                Data = geometry,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+        }
+
+        #endregion
 
         #region Ui_Resources
 
@@ -90,6 +124,16 @@ namespace MegaApp.UserControls
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
         private static string TransferManagerText => ResourceService.UiResources.GetString("UI_TransferManager");
+
+        #endregion
+
+        #region VisualResources
+
+        private static string MenuContactsPathData => ResourceService.VisualResources.GetString("VR_MenuContactsPathData");
+        private static string MenuSaveForOfflinePathData => ResourceService.VisualResources.GetString("VR_MenuSaveForOfflinePathData");
+        private static string MenuSettingsPathData => ResourceService.VisualResources.GetString("VR_MenuSettingsPathData");
+        private static string MenuSharedPathData => ResourceService.VisualResources.GetString("VR_MenuSharedPathData");
+        private static string MenuTransfersPathData => ResourceService.VisualResources.GetString("VR_MenuTransfersPathData");
 
         #endregion
     }
