@@ -70,7 +70,8 @@ namespace MegaApp.Interfaces
         /// Update core date associated with the SDK MNode object
         /// </summary>
         /// <param name="megaNode">Node to update</param>
-        void Update(MNode megaNode);
+        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
+        void Update(MNode megaNode, bool externalUpdate = false);
 
         /// <summary>
         /// Load node thumbnail if available on disk. If not availble download it with the Mega SDK

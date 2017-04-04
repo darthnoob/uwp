@@ -526,7 +526,7 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
-        public void Update(MNode megaNode)
+        public void Update(MNode megaNode, bool externalUpdate = false)
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
@@ -538,7 +538,8 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
 
-            if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
+            // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
+            if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
             {
                 this.IsExported = megaNode.isExported();
                 this.ExportLink = this.IsExported ? megaNode.getPublicLink() : null;
