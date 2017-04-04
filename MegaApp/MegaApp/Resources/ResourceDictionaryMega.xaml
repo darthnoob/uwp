@@ -234,7 +234,6 @@
                     Grid.Column="0">
                     <Path 
                         Data="{Binding DefaultImagePathData}" 
-                        Canvas.ZIndex="0" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         Width="36" 
@@ -248,7 +247,6 @@
                     </Path>
                     <Image 
                         HorizontalAlignment="Center" 
-                        Canvas.ZIndex="1" 
                         VerticalAlignment="Center"
                         Width="36" 
                         Height="36" 
@@ -262,6 +260,17 @@
                                 DecodePixelType="Logical"/>
                         </Image.Source>
                     </Image>
+                    <Ellipse 
+                        Margin="-3,0,0,0" 
+                        Height="12" 
+                        Width="12" 
+                        Canvas.ZIndex="1" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Bottom" 
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}" 
+                        StrokeThickness="1" 
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </Grid>
 
                 <TextBlock 
@@ -303,6 +312,7 @@
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
             <Grid 
+                Margin="4"
                 Width="96"
                 Background="Transparent" >
                 <FlyoutBase.AttachedFlyout>
@@ -382,16 +392,30 @@
                             DecodePixelType="Logical"/>
                     </Image.Source>
                 </Image>
-                <TextBlock
-                    Margin="0,4,0,0" 
-                    HorizontalAlignment="Stretch"
-                    TextAlignment="Center"
-                    TextWrapping="NoWrap"
-                    Text="{Binding Name}" 
-                    TextTrimming="CharacterEllipsis"
-                    VerticalAlignment="Bottom" 
-                    Style="{ThemeResource BaseTextBlockStyle}" 
-                    Grid.Row="1"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch"
+                        TextAlignment="Center"
+                        TextWrapping="NoWrap"
+                        Text="{Binding Name}" 
+                        TextTrimming="CharacterEllipsis"
+                        FontSize="12"/>
+                    <Ellipse
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Height="8" 
+                        Width="8" 
+                        Fill="{ThemeResource MegaRedColorBrush}"                        
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
             </Grid>
         </Border>
     </DataTemplate>
@@ -464,7 +488,6 @@
                     Grid.Column="0">
                     <Path 
                         Data="{Binding DefaultImagePathData}" 
-                        Canvas.ZIndex="0" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center"
                         Width="36" 
@@ -475,6 +498,17 @@
                             <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                         </Path.Fill>
                     </Path>
+                    <Ellipse 
+                        Margin="-3,0,0,0" 
+                        Height="12" 
+                        Width="12" 
+                        Canvas.ZIndex="1" 
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Bottom" 
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}" 
+                        StrokeThickness="1" 
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </Grid>
 
                 <TextBlock 
@@ -516,6 +550,7 @@
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}" 
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}">
             <Grid 
+                Margin="4"
                 Width="96"
                 Background="Transparent">
                 <FlyoutBase.AttachedFlyout>
@@ -575,17 +610,31 @@
                     <Path.Fill>
                         <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
                     </Path.Fill>
-                </Path>                
-                <TextBlock
-                    Margin="0,4,0,0" 
-                    HorizontalAlignment="Stretch" 
-                    TextAlignment="Center" 
-                    TextWrapping="NoWrap"
-                    Text="{Binding Name}" 
-                    TextTrimming="CharacterEllipsis" 
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource BaseTextBlockStyle}" 
-                    Grid.Row="1"/>
+                </Path>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Stretch"
+                        TextAlignment="Center"
+                        TextWrapping="NoWrap"
+                        Text="{Binding Name}" 
+                        TextTrimming="CharacterEllipsis"
+                        FontSize="12"/>
+                    <Ellipse
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Height="8" 
+                        Width="8" 
+                        Fill="{ThemeResource MegaRedColorBrush}"                        
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </Grid>
             </Grid>
         </Border>
     </DataTemplate>
