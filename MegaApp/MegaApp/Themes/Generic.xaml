@@ -332,7 +332,8 @@
                                                     <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                                                 </Path.Fill>
                                             </Path>
-                                            <Image 
+                                            <Image
+                                                x:Name="PART_PreviewImage"
                                                 Stretch="Uniform" 
                                                 Visibility="{Binding PreviewImageUri, Converter={StaticResource StringVisibilityConverter}}">
                                                 <Image.Source>

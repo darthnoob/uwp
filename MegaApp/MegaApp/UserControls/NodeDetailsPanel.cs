@@ -26,6 +26,7 @@ namespace MegaApp.UserControls
                 typeof(NodeDetailsPanel),
                 new PropertyMetadata(null));
 
+        private Image _previewImage;
         //private ToggleSwitch _enableOfflineView;
         private ToggleSwitch _enableLink;
         private Button _copyLink;
@@ -41,15 +42,23 @@ namespace MegaApp.UserControls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            this._previewImage = (Image)this.GetTemplateChild("PART_PreviewImage");
             //this._enableOfflineView = (ToggleSwitch)this.GetTemplateChild("PART_EnableOfflineViewSwitch");
             this._enableLink = (ToggleSwitch)this.GetTemplateChild("PART_EnableLinkSwitch");
             this._copyLink = (Button)this.GetTemplateChild("PART_CopyLinkButton");
             this._shareLink = (Button)this.GetTemplateChild("PART_ShareLinkButton");
 
+            this._previewImage.Tapped += (sender, args) => OnPreviewImageTapped();
             //this._enableOfflineView.Toggled += (sender, args) => OnEnableOfflineViewSwitchToggled();
             this._enableLink.Toggled += (sender, args) => OnEnableLinkSwitchToggled();
             this._copyLink.Tapped += (sender, args) => OnCopyLinkButtonTapped();
             this._shareLink.Tapped += (sender, args) => OnShareLinkButtonTapped();
+        }
+
+        private void OnPreviewImageTapped()
+        {
+            this.Node.Parent.ProcessFileNode(this.Node);
         }
 
         //private void OnEnableOfflineViewSwitchToggled()
