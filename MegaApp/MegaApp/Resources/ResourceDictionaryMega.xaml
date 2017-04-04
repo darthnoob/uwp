@@ -37,6 +37,7 @@
     <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <toolkit:BoolToObjectConverter x:Key="InverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
     <toolkit:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
+    <toolkit:EmptyStringToObjectConverter x:Key="InverseStringVisibilityConverter" EmptyValue="Visible" NotEmptyValue="Collapsed"/>
 
     <!--SELECTORS -->
     <selectors:NodeTemplateSelector 
@@ -240,7 +241,7 @@
                         Height="36" 
                         Stretch="Uniform" 
                         Margin="0,0,12,0" 
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                         <Path.Fill>
                             <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                         </Path.Fill>
@@ -253,7 +254,7 @@
                         Height="36" 
                         Stretch="UniformToFill" 
                         Margin="0,0,12,0" 
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                         <Image.Source>
                             <BitmapImage
                                 UriSource="{Binding ThumbnailImageUri}"
@@ -363,7 +364,7 @@
                     Width="64" 
                     Height="64" 
                     Stretch="Uniform" 
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                     <Path.Fill>
                         <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
                     </Path.Fill>
@@ -373,7 +374,7 @@
                     Stretch="UniformToFill" 
                     Height="96" 
                     Width="96" 
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                     <Image.Source>
                         <BitmapImage
                             UriSource="{Binding ThumbnailImageUri}"
@@ -667,7 +668,7 @@
                 VerticalAlignment="Center" 
                 Data="{Binding FileTypePathData}" 
                 Stretch="Uniform"                
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                 <Path.Fill>
                     <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
                 </Path.Fill>
@@ -682,7 +683,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" 
                 Stretch="UniformToFill"
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource StringVisibilityConverter}}">
                 <Image.Source>
                     <BitmapImage 
                         UriSource="{Binding ThumbnailUri}"
@@ -852,7 +853,7 @@
                 VerticalAlignment="Center" 
                 Data="{Binding FileTypePathData}" 
                 Stretch="Uniform"                
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                 <Path.Fill>
                     <SolidColorBrush Color="{StaticResource MegaAppForeground}"/>
                 </Path.Fill>
@@ -867,7 +868,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center" 
                 Stretch="UniformToFill"
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource StringVisibilityConverter}}">
                 <Image.Source>
                     <BitmapImage 
                         UriSource="{Binding ThumbnailUri}"

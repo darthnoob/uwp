@@ -171,26 +171,16 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
-                    this.IsDefaultImage = true;
                     this.FileTypePathData = ImageService.GetDefaultFileTypePathData(this.SelectedNode.Name);
                     if (FileService.FileExists(this.SelectedNode.ThumbnailPath))
-                    {
-                        this.IsDefaultImage = false;
                         this.ThumbnailUri = new Uri(this.SelectedNode.ThumbnailPath);
-                    }
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
                     if (ImageService.IsImage(this.TransferPath))
-                    {
-                        this.IsDefaultImage = false;
                         this.ThumbnailUri = new Uri(this.TransferPath);
-                    }
                     else
-                    {
-                        this.IsDefaultImage = true;
                         this.FileTypePathData = ImageService.GetDefaultFileTypePathData(this.TransferPath);
-                    }
                     break;
 
                 default:
@@ -276,13 +266,6 @@ namespace MegaApp.ViewModels
 
         public bool IsFolderTransfer => (this.Transfer != null) ? 
             this.Transfer.isFolderTransfer() : !Path.HasExtension(this.TransferPath);
-
-        private bool _isDefaultImage;
-        public bool IsDefaultImage
-        {
-            get { return _isDefaultImage; }
-            set { SetField(ref _isDefaultImage, value); }
-        }
 
         private Uri _thumbnailUri;
         public Uri ThumbnailUri

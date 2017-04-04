@@ -327,14 +327,14 @@
                                                 Margin="12"
                                                 Data="{Binding DefaultImagePathData, Mode=OneWay}"
                                                 Stretch="Uniform"
-                                                Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                Visibility="{Binding PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                                                 <Path.Fill>
                                                     <SolidColorBrush Color="{ThemeResource MegaAppForeground}"/>
                                                 </Path.Fill>
                                             </Path>
                                             <Image 
                                                 Stretch="Uniform" 
-                                                Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                                Visibility="{Binding PreviewImageUri, Converter={StaticResource StringVisibilityConverter}}">
                                                 <Image.Source>
                                                     <BitmapImage UriSource="{Binding PreviewImageUri}"/>
                                                 </Image.Source>

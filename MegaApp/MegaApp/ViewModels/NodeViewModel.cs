@@ -78,15 +78,9 @@ namespace MegaApp.ViewModels
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
             if (FileService.FileExists(this.ThumbnailPath))
-            {
-                this.IsDefaultImage = false;
                 this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
-            }
             else
-            {
-                this.IsDefaultImage = true;
                 this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-            }
         }
 
         /// <summary>
@@ -96,7 +90,6 @@ namespace MegaApp.ViewModels
         {
             if (FileService.FileExists(this.ThumbnailPath))
             {
-                this.IsDefaultImage = false;
                 this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
             }
             else if (Convert.ToBoolean(this.MegaSdk.isLoggedIn()) || this.ParentContainerType == ContainerType.FolderLink)
@@ -109,13 +102,7 @@ namespace MegaApp.ViewModels
                 });
                 
                 if(result)
-                {
-                    UiService.OnUiThread(() =>
-                    {
-                        this.IsDefaultImage = false;
-                        this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
-                    });
-                }
+                    UiService.OnUiThread(() => this.ThumbnailImageUri = new Uri(this.ThumbnailPath));
             }
         }
 
@@ -205,13 +192,6 @@ namespace MegaApp.ViewModels
         }
 
         public bool IsImage => ImageService.IsImage(this.Name);
-
-        private bool _IsDefaultImage;
-        public bool IsDefaultImage
-        {
-            get { return _IsDefaultImage; }
-            set { SetField(ref _IsDefaultImage, value); }
-        }
 
         private Uri _thumbnailImageUri;
         public Uri ThumbnailImageUri
@@ -614,7 +594,7 @@ namespace MegaApp.ViewModels
         {
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
-            if (this.ThumbnailImageUri != null && !this.IsDefaultImage) return;
+            if (this.ThumbnailImageUri != null) return;
 
             if (this.IsImage || this.OriginalMNode.hasThumbnail())
             {
