@@ -220,6 +220,21 @@ namespace MegaApp.ViewModels
             set { SetField(ref _thumbnailImageUri, value); }
         }
 
+        public virtual Uri PreviewImageUri
+        {
+            get
+            {
+                return ((this is ImageNodeViewModel) && (this as ImageNodeViewModel) != null) ?
+                    (this as ImageNodeViewModel).PreviewImageUri : null;
+            }
+
+            set
+            {
+                if((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
+                    (this as ImageNodeViewModel).PreviewImageUri = value;
+            }
+        }
+
         private string _defaultImagePathData;
         public string DefaultImagePathData
         {
@@ -396,6 +411,9 @@ namespace MegaApp.ViewModels
         {
             if(Parent != null)
             {
+                if ((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
+                    (this as ImageNodeViewModel).InViewingRange = true;
+
                 this.Parent.FocusedNode = this;
 
                 if (this.Parent.OpenNodeDetailsCommand.CanExecute(null))

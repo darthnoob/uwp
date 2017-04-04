@@ -336,7 +336,7 @@
                                                 Stretch="Uniform" 
                                                 Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                                 <Image.Source>
-                                                    <BitmapImage UriSource="{Binding ThumbnailImageUri}"/>
+                                                    <BitmapImage UriSource="{Binding PreviewImageUri}"/>
                                                 </Image.Source>
                                             </Image>
                                         </Grid>

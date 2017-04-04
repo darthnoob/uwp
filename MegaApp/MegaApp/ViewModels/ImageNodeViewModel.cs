@@ -123,7 +123,7 @@ namespace MegaApp.ViewModels
         public bool InViewingRange { get; set; }
 
         private Uri _previewImageUri;
-        public Uri PreviewImageUri
+        public override Uri PreviewImageUri
         {
             get
             {

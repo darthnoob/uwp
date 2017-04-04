@@ -180,10 +180,16 @@ namespace MegaApp.Views
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
-            else
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            {
                 this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
+                return;
+            }
+
+            if ((itemTapped is ImageNodeViewModel) && (itemTapped as ImageNodeViewModel != null))
+                (itemTapped as ImageNodeViewModel).InViewingRange = true;
+
+            this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)

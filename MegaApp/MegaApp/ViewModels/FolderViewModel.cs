@@ -109,6 +109,15 @@ namespace MegaApp.ViewModels
                 this.IsMultiSelectActive = (this.IsMultiSelectActive && this.SelectedNodes.Count >= 1) || this.SelectedNodes.Count > 1;
             else
                 this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+
+            if(this.SelectedNodes?.Count > 0)
+            {
+                var focusedNode = (NodeViewModel)this.SelectedNodes.Last();
+                if((focusedNode is ImageNodeViewModel) && (focusedNode as ImageNodeViewModel != null))
+                    (focusedNode as ImageNodeViewModel).InViewingRange = true;
+
+                this.FocusedNode = focusedNode;
+            }
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
