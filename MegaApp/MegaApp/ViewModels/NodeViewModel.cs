@@ -446,7 +446,7 @@ namespace MegaApp.ViewModels
 
             if (this.OriginalMNode.isExported())
             {
-                this.ExportLink = this.OriginalMNode.getPublicLink();
+                this.ExportLink = this.OriginalMNode.getPublicLink(true);
             }
             else
             {
@@ -471,7 +471,7 @@ namespace MegaApp.ViewModels
             this.IsExported = true;
 
             if (showLinkDialog)
-                OnUiThread(() => DialogService.ShowShareLink(this.ExportLink));
+                OnUiThread(() => DialogService.ShowShareLink(this.OriginalMNode));
         }
 
         public async void RemoveLink()
@@ -542,7 +542,7 @@ namespace MegaApp.ViewModels
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
             {
                 this.IsExported = megaNode.isExported();
-                this.ExportLink = this.IsExported ? megaNode.getPublicLink() : null;
+                this.ExportLink = this.IsExported ? megaNode.getPublicLink(true) : null;
             }
 
             if (this.Type == MNodeType.TYPE_FILE)
@@ -708,7 +708,6 @@ namespace MegaApp.ViewModels
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
-        public string ExportLinkText => ResourceService.UiResources.GetString("UI_ExportLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();

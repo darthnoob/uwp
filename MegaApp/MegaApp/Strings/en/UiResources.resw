@@ -625,4 +625,16 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Enable link</value>
     <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_DecryptionKey" xml:space="preserve">
+    <value>Decryption key</value>
+    <comment>Label for any 'Decryption key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithKey" xml:space="preserve">
+    <value>Link with key</value>
+    <comment>Label for any 'Link with key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithoutKey" xml:space="preserve">
+    <value>Link without key</value>
+    <comment>Label for any 'Link without key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

@@ -132,10 +132,10 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Shows a dialog to allow copy a link to the clipboard or share it using other app
+        /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
-        /// <param name="link">Link to share</param>
-        public static async void ShowShareLink(string link)
+        /// <param name="node">Node to share the link</param>
+        public static async void ShowShareLink(MNode node)
         {
             var dialog = new ContentDialog
             {
@@ -153,14 +153,38 @@ namespace MegaApp.Services
 
             var messageText = new TextBlock
             {
-                Text = link,
-                Margin = new Thickness(0, 0, 0, 12),
+                Text = node.getPublicLink(true),
+                Margin = new Thickness(0, 20, 0, 12),
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
 
-            stackPanel.Children.Add(messageText);            
+            var linkWithoutKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_LinkWithoutKey")
+            };
+            linkWithoutKey.Checked += (sender, args) => messageText.Text = node.getPublicLink(false);
+
+            var decryptionKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_DecryptionKey")
+            };
+            decryptionKey.Checked += (sender, args) => messageText.Text = node.getBase64Key();
+
+            var linkWithKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_LinkWithKey"),
+                IsChecked = true
+            };
+            linkWithKey.Checked += (sender, args) => messageText.Text = node.getPublicLink(true);
+
+            stackPanel.Children.Add(linkWithoutKey);
+            stackPanel.Children.Add(decryptionKey);
+            stackPanel.Children.Add(linkWithKey);
+                        
+            stackPanel.Children.Add(messageText);
             dialog.Content = stackPanel;
+
             var result = await dialog.ShowAsync();
             switch (result)
             {
@@ -168,11 +192,11 @@ namespace MegaApp.Services
                     break;
 
                 case ContentDialogResult.Primary:
-                    ShareService.CopyLinkToClipboard(link);
+                    ShareService.CopyLinkToClipboard(messageText.Text);
                     break;
 
                 case ContentDialogResult.Secondary:
-                    ShareService.ShareLink(link);
+                    ShareService.ShareLink(messageText.Text);
                     break;
 
                 default:

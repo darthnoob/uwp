@@ -423,6 +423,7 @@
                                     VerticalScrollBarVisibility="Auto">
                                     <Grid Margin="0,0,0,48">
                                         <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
@@ -446,8 +447,24 @@
                                                 IsOn="{Binding IsExported, Mode=TwoWay}"
                                                 Margin="0,12,0,0"/>
                                         </StackPanel>
-                                        <Grid
+                                        <StackPanel
                                             Grid.Row="1"
+                                            Margin="24,20"
+                                            Orientation="Vertical"
+                                            Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <RadioButton 
+                                                x:Name="PART_LinkWithoutKeyRadioButton"
+                                                Content="{Binding LinkWithoutKeyLabelText, Mode=OneTime}"/>
+                                            <RadioButton 
+                                                x:Name="PART_DecryptionKeyRadioButton"
+                                                Content="{Binding DecryptionKeyLabelText, Mode=OneTime}"/>
+                                            <RadioButton 
+                                                x:Name="PART_LinkWithKeyRadioButton"
+                                                Content="{Binding LinkWithKeyLabelText, Mode=OneTime}"
+                                                IsChecked="True"/>
+                                        </StackPanel>
+                                        <Grid
+                                            Grid.Row="2"
                                             Margin="24,0"
                                             Visibility="{Binding ExportLink, Converter={StaticResource StringVisibilityConverter}}">
                                             <Grid.RowDefinitions>
@@ -473,7 +490,7 @@
                                                 <StackPanel
                                                     Margin="12">
                                                     <TextBlock
-                                                        Text="{Binding ExportLinkText, Mode=OneTime}"
+                                                        x:Name="PART_ExportLinkBorderTitle"
                                                         Foreground="{ThemeResource MegaRedColorBrush}"/>
                                                     <TextBlock 
                                                         Text="{Binding ExportLink, Mode=OneWay}"
