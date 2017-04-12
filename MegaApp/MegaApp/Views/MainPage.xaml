@@ -24,6 +24,7 @@
                 <ContentPresenter
                     Grid.Column="0"
                     Content="{x:Bind Icon}"
+                    ToolTipService.ToolTip="{x:Bind ToolTip}"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.AccessibilityView="Raw"/>
                 <StackPanel 
