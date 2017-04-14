@@ -16,7 +16,7 @@
     </Style>
 
     <Style x:Key="MegaAppBarButtonStyle" TargetType="AppBarButton">
-        <Setter Property="Width" Value="48" />        
+        <Setter Property="Width" Value="48" />
     </Style>
 
     <Style x:Key="MegaHeaderFontStyle" TargetType="TextBlock">
@@ -940,7 +940,7 @@
         <!-- COLOR PALETTE FOR THE DARK THEME -->
         <ResourceDictionary x:Key="Dark">
             <Color x:Key="MegaRedColor">#EB4444</Color>
-            <Color x:Key="MegaAppBackground">#030303</Color>
+            <Color x:Key="MegaAppBackground">#000000</Color>
             <Color x:Key="MegaAppForeground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarBackground">#111111</Color>
             <Color x:Key="MegaAppBarForeground">#FFFFFF</Color>
@@ -957,6 +957,8 @@
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222"/>
+            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#111111"/>
+            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#222222"/>
         </ResourceDictionary>
 
@@ -980,6 +982,8 @@
             <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333"/>
             <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA"/>
             <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA"/>
+            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#FFFFFF"/>
+            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#111111"/>
             <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#E6E6E6"/>
         </ResourceDictionary>        
     </ResourceDictionary.ThemeDictionaries>

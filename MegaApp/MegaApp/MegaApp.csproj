@@ -139,7 +139,7 @@
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
     <Compile Include="Enums\LoginResult.cs" />
-    <Compile Include="Enums\MediaType.cs" />
+    <Compile Include="Enums\FileType.cs" />
     <Compile Include="Enums\MenuType.cs" />
     <Compile Include="Enums\NavigationActionType.cs" />
     <Compile Include="Enums\NavigationParamType.cs" />
@@ -148,6 +148,7 @@
     <Compile Include="Enums\RelativeAlignment.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
+    <Compile Include="Extensions\CommandBarExtensions.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
@@ -182,6 +184,10 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\ShareService.cs" />
+    <Compile Include="Services\VideoService.cs" />
+    <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />

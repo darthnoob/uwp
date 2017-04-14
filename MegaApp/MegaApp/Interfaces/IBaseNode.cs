@@ -63,12 +63,6 @@ namespace MegaApp.Interfaces
         bool IsImage { get; }
 
         /// <summary>
-        /// A true/false value if the current thumbnail of the node is the default thumbnail image
-        /// for that file/folder type
-        /// </summary>
-        bool IsDefaultImage { get; set; }
-
-        /// <summary>
         /// The uniform resource identifier of the current thumbnail for this node
         /// Could be a default file/folder type image or a thumbnail preview of the real picture
         /// </summary>

@@ -46,7 +46,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand AcceptCopyCommand { get; }
-        public ICommand AcceptMoveCommand { get; }
+        public ICommand AcceptMoveCommand { get; }        
 
         #endregion
 
@@ -311,6 +311,7 @@ namespace MegaApp.ViewModels
 
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
@@ -321,6 +322,7 @@ namespace MegaApp.ViewModels
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");

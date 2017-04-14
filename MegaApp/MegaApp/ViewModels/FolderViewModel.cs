@@ -36,6 +36,9 @@ namespace MegaApp.ViewModels
         public event EventHandler EnableMultiSelect;
         public event EventHandler DisableMultiSelect;
 
+        public event EventHandler OpenNodeDetailsEvent;
+        public event EventHandler CloseNodeDetailsEvent;
+
         public FolderViewModel(ContainerType containerType)
         {
             this.Type = containerType;
@@ -61,11 +64,12 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
+            this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
+            this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
-            //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
             this.ChildNodes.CollectionChanged += ChildNodesOnCollectionChanged;
             this.BreadCrumbs.CollectionChanged += BreadCrumbsOnCollectionChanged;
@@ -105,6 +109,15 @@ namespace MegaApp.ViewModels
                 this.IsMultiSelectActive = (this.IsMultiSelectActive && this.SelectedNodes.Count >= 1) || this.SelectedNodes.Count > 1;
             else
                 this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+
+            if(this.SelectedNodes?.Count > 0)
+            {
+                var focusedNode = (NodeViewModel)this.SelectedNodes.Last();
+                if((focusedNode is ImageNodeViewModel) && (focusedNode as ImageNodeViewModel != null))
+                    (focusedNode as ImageNodeViewModel).InViewingRange = true;
+
+                this.FocusedNode = focusedNode;
+            }
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -122,6 +135,16 @@ namespace MegaApp.ViewModels
             OnPropertyChanged("HasChildNodesBinding");
         }
 
+        public void OpenNodeDetails()
+        {
+            OpenNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void CloseNodeDetails()
+        {
+            CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }
@@ -137,11 +160,12 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
+        public ICommand OpenNodeDetailsCommand { get; private set; }
+        public ICommand CloseNodeDetailsCommand { get; }
 
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }        
-        //public ICommand ViewDetailsCommand { get; private set; }
 
         #endregion
 
@@ -262,6 +286,8 @@ namespace MegaApp.ViewModels
         private void Refresh()
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
+
+            CloseNodeDetails();
 
             FileService.ClearFiles(
                 NodeService.GetFiles(this.ChildNodes,
@@ -745,6 +771,8 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
+            CloseNodeDetails();
+
             MNode homeNode = null;
 
             switch (this.Type)
@@ -768,6 +796,8 @@ namespace MegaApp.ViewModels
         public void BrowseToFolder(IMegaNode node)
         {
             if (node == null) return;
+
+            CloseNodeDetails();
 
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
@@ -1051,7 +1081,12 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public IMegaNode FocusedNode;
+        private IMegaNode _focusedNode;
+        public IMegaNode FocusedNode
+        {
+            get { return _focusedNode; }
+            set { SetField(ref _focusedNode, value); }
+        }
 
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes
@@ -1132,6 +1167,13 @@ namespace MegaApp.ViewModels
         {
             get { return _nodeTemplateSelector; }
             private set { SetField(ref _nodeTemplateSelector, value); }
+        }
+
+        private bool _isNodeDetailsViewVisible;
+        public bool IsNodeDetailsViewVisible
+        {
+            get { return _isNodeDetailsViewVisible; }
+            set { SetField(ref _isNodeDetailsViewVisible, value); }
         }
 
         private bool _isMultiSelectActive;
