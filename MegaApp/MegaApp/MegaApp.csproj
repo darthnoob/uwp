@@ -168,6 +168,7 @@
     <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
@@ -184,11 +185,13 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AudioService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
+    <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />

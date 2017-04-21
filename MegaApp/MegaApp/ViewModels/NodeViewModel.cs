@@ -24,7 +24,7 @@ namespace MegaApp.ViewModels
     public abstract class NodeViewModel : BaseSdkViewModel, IMegaNode
     {
         // Offset DateTime value to calculate the correct creation and modification time
-        private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
@@ -446,7 +446,7 @@ namespace MegaApp.ViewModels
 
             if (this.OriginalMNode.isExported())
             {
-                this.ExportLink = this.OriginalMNode.getPublicLink();
+                this.ExportLink = this.OriginalMNode.getPublicLink(true);
             }
             else
             {
@@ -471,7 +471,32 @@ namespace MegaApp.ViewModels
             this.IsExported = true;
 
             if (showLinkDialog)
-                OnUiThread(() => DialogService.ShowShareLink(this.ExportLink));
+                OnUiThread(() => DialogService.ShowShareLink(this));
+        }
+
+        public async void SetLinkExpirationTime(long expireTime)
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline() || expireTime < 0) return;
+
+            var exportNode = new ExporNodeRequestListenerAsync();
+            this.ExportLink = await exportNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.exportNodeWithExpireTime(this.OriginalMNode, expireTime, exportNode);
+            });
+
+            if (string.IsNullOrEmpty(this.ExportLink))
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SetLinkExpirationTimeFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_SetLinkExpirationTimeFailed"));
+                });
+                return;
+            };
+
+            this.IsExported = true;
         }
 
         public async void RemoveLink()
@@ -537,12 +562,13 @@ namespace MegaApp.ViewModels
             this.SizeText = this.Size.ToStringAndSuffix();
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
+            this.LinkExpirationTime = megaNode.getExpirationTime();
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
             {
                 this.IsExported = megaNode.isExported();
-                this.ExportLink = this.IsExported ? megaNode.getPublicLink() : null;
+                this.ExportLink = this.IsExported ? megaNode.getPublicLink(true) : null;
             }
 
             if (this.Type == MNodeType.TYPE_FILE)
@@ -689,11 +715,41 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
+
         private string _exportLink;
         public string ExportLink
         {
             get { return _exportLink; }
             set { SetField(ref _exportLink, value); }
+        }
+
+        public bool LinkWithExpirationTime => (LinkExpirationTime > 0) ? true : false;
+
+        private long _linkExpirationTime;
+        public long LinkExpirationTime
+        {
+            get { return _linkExpirationTime; }
+            set
+            {
+                SetField(ref _linkExpirationTime, value);
+                OnPropertyChanged("LinkWithExpirationTime");
+                OnPropertyChanged("LinkExpirationDate");
+            }
+        }
+
+        public DateTimeOffset? LinkExpirationDate
+        {
+            get
+            {
+                DateTime? _linkExpirationDate;
+                if (LinkExpirationTime > 0)
+                    _linkExpirationDate = OriginalDateTime.AddSeconds(LinkExpirationTime);
+                else
+                    _linkExpirationDate = null;
+
+                return _linkExpirationDate;
+            }
         }
 
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
@@ -708,7 +764,6 @@ namespace MegaApp.ViewModels
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
-        public string ExportLinkText => ResourceService.UiResources.GetString("UI_ExportLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
@@ -731,6 +786,10 @@ namespace MegaApp.ViewModels
         public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
         public string VideoLabelText => ResourceService.UiResources.GetString("UI_Video");
         public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
+
+        public string SetLinkExpirationDateText => string.Format("{0} {1}",
+            ResourceService.UiResources.GetString("UI_SetExpirationDate"),
+            ResourceService.UiResources.GetString("UI_ProOnly"));
 
         #endregion
     }

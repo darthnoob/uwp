@@ -758,4 +758,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Remove link failed</value>
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
+    <value>Failed setting the link expiration time. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
+  </data>
+  <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
+    <value>Set expiry time failed</value>
+    <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
+  </data>
 </root>
