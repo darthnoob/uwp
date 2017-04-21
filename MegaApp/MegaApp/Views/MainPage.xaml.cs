@@ -87,8 +87,10 @@ namespace MegaApp.Views
 
         private void OnHamburgerMenuControlItemClick(object sender, ItemClickEventArgs e)
         {
-            // If in inline mode, do not close the pane on item selection
-            if (this.HamburgerMenuControl.DisplayMode == SplitViewDisplayMode.Inline) return;
+            // If in inline mode or compact inline mode, do not close the pane on item selection
+            if (this.HamburgerMenuControl.DisplayMode == (SplitViewDisplayMode.Inline | SplitViewDisplayMode.CompactInline))
+                return;
+
             HamburgerMenuControl.IsPaneOpen = false;
         }
     }
