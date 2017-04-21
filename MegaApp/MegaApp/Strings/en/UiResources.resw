@@ -642,7 +642,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label to indicate that a feature is only available for PRO users. Keep between parentheses and capital letters  - (String as short as possible).</comment>
   </data>
   <data name="UI_SetExpirationDate" xml:space="preserve">
-    <value>Set expiration date</value>
-    <comment>Label for any 'Set expiration date' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Set expiry date</value>
+    <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

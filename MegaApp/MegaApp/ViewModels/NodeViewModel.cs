@@ -471,7 +471,7 @@ namespace MegaApp.ViewModels
             this.IsExported = true;
 
             if (showLinkDialog)
-                OnUiThread(() => DialogService.ShowShareLink(this.OriginalMNode));
+                OnUiThread(() => DialogService.ShowShareLink(this));
         }
 
         public async void SetLinkExpirationTime(long expireTime)
