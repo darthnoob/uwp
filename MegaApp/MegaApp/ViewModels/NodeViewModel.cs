@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -12,6 +14,7 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -21,7 +24,7 @@ namespace MegaApp.ViewModels
     public abstract class NodeViewModel : BaseSdkViewModel, IMegaNode
     {
         // Offset DateTime value to calculate the correct creation and modification time
-        private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
@@ -35,24 +38,33 @@ namespace MegaApp.ViewModels
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.RenameCommand = new RelayCommand(Rename);
+            this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
             this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
+            this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
+            this.RenameCommand = new RelayCommand(Rename);
+            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.Parent.CurrentViewState))
+            {
                 OnPropertyChanged(nameof(this.Parent));
+                OnPropertyChanged(nameof(this.NodeBinding));
+            }
         }
 
         #region Commands
 
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; }
-        public ICommand RenameCommand { get; }
-        public ICommand RemoveCommand { get; }
+        public ICommand GetLinkCommand { get; }
         public ICommand MoveToRubbishBinCommand { get; }
+        public ICommand PreviewCommand { get; }
+        public ICommand RemoveCommand { get; }
+        public ICommand RenameCommand { get; }
+        public ICommand ViewDetailsCommand { get; }
 
         #endregion
 
@@ -66,15 +78,9 @@ namespace MegaApp.ViewModels
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
             if (FileService.FileExists(this.ThumbnailPath))
-            {
-                this.IsDefaultImage = false;
                 this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
-            }
             else
-            {
-                this.IsDefaultImage = true;
                 this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-            }
         }
 
         /// <summary>
@@ -84,7 +90,6 @@ namespace MegaApp.ViewModels
         {
             if (FileService.FileExists(this.ThumbnailPath))
             {
-                this.IsDefaultImage = false;
                 this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
             }
             else if (Convert.ToBoolean(this.MegaSdk.isLoggedIn()) || this.ParentContainerType == ContainerType.FolderLink)
@@ -97,13 +102,7 @@ namespace MegaApp.ViewModels
                 });
                 
                 if(result)
-                {
-                    UiService.OnUiThread(() =>
-                    {
-                        this.IsDefaultImage = false;
-                        this.ThumbnailImageUri = new Uri(this.ThumbnailPath);
-                    });
-                }
+                    UiService.OnUiThread(() => this.ThumbnailImageUri = new Uri(this.ThumbnailPath));
             }
         }
 
@@ -121,11 +120,18 @@ namespace MegaApp.ViewModels
 
         #region IBaseNode Interface
 
+        public NodeViewModel NodeBinding => this;
+
         private string _name;
         public string Name
         {
             get { return _name; }
-            set { SetField(ref _name, value); }
+            set
+            {
+                SetField(ref _name, value);
+                if(!this.IsFolder)
+                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
+            }
         }
 
         public string CreationTime { get; private set; }
@@ -146,6 +152,20 @@ namespace MegaApp.ViewModels
         {
             get { return _information; }
             set { SetField(ref _information, value); }
+        }
+
+        private int _childFiles;
+        public int ChildFiles
+        {
+            get { return _childFiles; }
+            set { SetField(ref _childFiles, value); }
+        }
+
+        private int _childFolders;
+        public int ChildFolders
+        {
+            get { return _childFolders; }
+            set { SetField(ref _childFolders, value); }
         }
 
         public string Base64Handle { get; set; }
@@ -173,18 +193,26 @@ namespace MegaApp.ViewModels
 
         public bool IsImage => ImageService.IsImage(this.Name);
 
-        private bool _IsDefaultImage;
-        public bool IsDefaultImage
-        {
-            get { return _IsDefaultImage; }
-            set { SetField(ref _IsDefaultImage, value); }
-        }
-
         private Uri _thumbnailImageUri;
         public Uri ThumbnailImageUri
         {
             get { return _thumbnailImageUri; }
             set { SetField(ref _thumbnailImageUri, value); }
+        }
+
+        public virtual Uri PreviewImageUri
+        {
+            get
+            {
+                return ((this is ImageNodeViewModel) && (this as ImageNodeViewModel) != null) ?
+                    (this as ImageNodeViewModel).PreviewImageUri : null;
+            }
+
+            set
+            {
+                if((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
+                    (this as ImageNodeViewModel).PreviewImageUri = value;
+            }
         }
 
         private string _defaultImagePathData;
@@ -245,10 +273,12 @@ namespace MegaApp.ViewModels
 
         private void CopyOrMove()
         {
-            if (this.Parent?.CurrentViewState != FolderContentViewState.MultiSelect)
+            // In case that copy or move a single node using the flyout menu and the selected 
+            // nodes list is empty, we need add the current node to the selected nodes
+            if (this.Parent != null && !this.Parent.IsMultiSelectActive)
             {
-                Parent.SelectedNodes.Clear();
-                Parent.SelectedNodes.Add(this);
+                if (!this.Parent.SelectedNodes.Any())
+                    this.Parent.SelectedNodes.Add(this);
             }
 
             if (this.Parent.CopyOrMoveCommand.CanExecute(null))
@@ -304,7 +334,7 @@ namespace MegaApp.ViewModels
 
         private async void MoveToRubbishBin()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if (this.Parent.MoveToRubbishBinCommand.CanExecute(null))
                     this.Parent.MoveToRubbishBinCommand.Execute(null);
@@ -337,12 +367,43 @@ namespace MegaApp.ViewModels
 
             if (!result) return false;
 
+            this.Parent.CloseNodeDetails();
+
             return true;
+        }
+
+        private void Preview()
+        {
+            this.Parent.FocusedNode = this;
+
+            // Navigate to the preview page
+            OnUiThread(() =>
+            {
+                var parameters = new Dictionary<NavigationParamType, object>();
+                parameters.Add(NavigationParamType.Data, this.Parent);
+
+                NavigateService.Instance.Navigate(typeof(PreviewImagePage), true,
+                    NavigationObject.Create(this.GetType(), NavigationActionType.Default, parameters));
+            });
+        }
+
+        private void ViewDetails()
+        {
+            if(Parent != null)
+            {
+                if ((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
+                    (this as ImageNodeViewModel).InViewingRange = true;
+
+                this.Parent.FocusedNode = this;
+
+                if (this.Parent.OpenNodeDetailsCommand.CanExecute(null))
+                    this.Parent.OpenNodeDetailsCommand.Execute(null);
+            }
         }
 
         private async void Remove()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if (this.Parent.RemoveCommand.CanExecute(null))
                     this.Parent.RemoveCommand.Execute(null);
@@ -378,14 +439,95 @@ namespace MegaApp.ViewModels
             return true;
         }
 
-        public NodeActionResult GetLink()
+        public async void GetLinkAsync(bool showLinkDialog = true)
         {
-            return NodeActionResult.IsBusy;
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            if (this.OriginalMNode.isExported())
+            {
+                this.ExportLink = this.OriginalMNode.getPublicLink(true);
+            }
+            else
+            {
+                var exportNode = new ExporNodeRequestListenerAsync();
+                this.ExportLink = await exportNode.ExecuteAsync(() =>
+                {
+                    this.MegaSdk.exportNode(this.OriginalMNode, exportNode);
+                });
+
+                if (string.IsNullOrEmpty(this.ExportLink))
+                {
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_GetLinkFailed_Title"),
+                            ResourceService.AppMessages.GetString("AM_GetLinkFailed"));
+                    });
+                    return;
+                };
+            }
+
+            this.IsExported = true;
+
+            if (showLinkDialog)
+                OnUiThread(() => DialogService.ShowShareLink(this));
+        }
+
+        public async void SetLinkExpirationTime(long expireTime)
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline() || expireTime < 0) return;
+
+            var exportNode = new ExporNodeRequestListenerAsync();
+            this.ExportLink = await exportNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.exportNodeWithExpireTime(this.OriginalMNode, expireTime, exportNode);
+            });
+
+            if (string.IsNullOrEmpty(this.ExportLink))
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SetLinkExpirationTimeFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_SetLinkExpirationTimeFailed"));
+                });
+                return;
+            };
+
+            this.IsExported = true;
+        }
+
+        public async void RemoveLink()
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline() || !this.OriginalMNode.isExported()) return;
+
+            var disableExportNode = new DisableExportRequestListenerAsync();
+            var result = await disableExportNode.ExecuteAsync(() =>
+            {
+                this.MegaSdk.disableExport(this.OriginalMNode, disableExportNode);
+            });
+
+            if(!result)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveLinkFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveLinkFailed"));
+                });
+                return;
+            }
+
+            this.IsExported = false;
+            this.ExportLink = null;
         }
 
         private void Download()
         {
-            if (this.Parent?.CurrentViewState == FolderContentViewState.MultiSelect)
+            if (this.Parent != null && this.Parent.IsMultiSelectActive)
             {
                 if(this.Parent.DownloadCommand.CanExecute(null))
                     this.Parent.DownloadCommand.Execute(null);
@@ -409,7 +551,7 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
-        public void Update(MNode megaNode)
+        public void Update(MNode megaNode, bool externalUpdate = false)
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
@@ -418,8 +560,16 @@ namespace MegaApp.ViewModels
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
             this.SizeText = this.Size.ToStringAndSuffix();
-            this.IsExported = megaNode.isExported();
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
+            this.TypeText = this.GetTypeText();
+            this.LinkExpirationTime = megaNode.getExpirationTime();
+
+            // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
+            if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
+            {
+                this.IsExported = megaNode.isExported();
+                this.ExportLink = this.IsExported ? megaNode.getPublicLink(true) : null;
+            }
 
             if (this.Type == MNodeType.TYPE_FILE)
                 this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
@@ -434,11 +584,44 @@ namespace MegaApp.ViewModels
             this.IsSelectedForOffline = false;
         }
 
+        private string GetTypeText()
+        {
+            if (this.IsFolder)
+                return this.FolderLabelText;
+
+            string extension = Path.GetExtension(this.Name);
+            if (string.IsNullOrEmpty(extension))
+                return this.UnknownLabelText;
+
+            extension = extension.TrimStart('.');
+            char[] ext = extension.ToCharArray();
+            ext[0] = char.ToUpper(ext[0]);
+
+            switch (FileService.GetFileType(this.Name))
+            {
+                case FileType.TYPE_FILE:
+                    return new string(ext) + "/" + this.FileLabelText;
+
+                case FileType.TYPE_IMAGE:
+                    return new string(ext) + "/" + this.ImageLabelText;
+
+                case FileType.TYPE_AUDIO:
+                    return new string(ext) + "/" + this.AudioLabelText;
+
+                case FileType.TYPE_VIDEO:
+                    return new string(ext) + "/" + this.VideoLabelText;
+
+                case FileType.TYPE_UNKNOWN:
+                default:
+                    return new string(ext) + "/" + this.UnknownLabelText;
+            }
+        }
+
         public void SetThumbnailImage()
         {
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
-            if (this.ThumbnailImageUri != null && !this.IsDefaultImage) return;
+            if (this.ThumbnailImageUri != null) return;
 
             if (this.IsImage || this.OriginalMNode.hasThumbnail())
             {
@@ -474,6 +657,13 @@ namespace MegaApp.ViewModels
         public ObservableCollection<IMegaNode> ChildCollection { get; set; }
 
         public MNodeType Type { get; private set; }
+
+        private string _typeText;
+        public string TypeText
+        {
+            get { return _typeText; }
+            set { SetField(ref _typeText, value); }
+        }
 
         public ContainerType ParentContainerType { get; private set; }
 
@@ -525,6 +715,43 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
+
+        private string _exportLink;
+        public string ExportLink
+        {
+            get { return _exportLink; }
+            set { SetField(ref _exportLink, value); }
+        }
+
+        public bool LinkWithExpirationTime => (LinkExpirationTime > 0) ? true : false;
+
+        private long _linkExpirationTime;
+        public long LinkExpirationTime
+        {
+            get { return _linkExpirationTime; }
+            set
+            {
+                SetField(ref _linkExpirationTime, value);
+                OnPropertyChanged("LinkWithExpirationTime");
+                OnPropertyChanged("LinkExpirationDate");
+            }
+        }
+
+        public DateTimeOffset? LinkExpirationDate
+        {
+            get
+            {
+                DateTime? _linkExpirationDate;
+                if (LinkExpirationTime > 0)
+                    _linkExpirationDate = OriginalDateTime.AddSeconds(LinkExpirationTime);
+                else
+                    _linkExpirationDate = null;
+
+                return _linkExpirationDate;
+            }
+        }
+
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
             ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
 
@@ -532,13 +759,37 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string AddedLabelText => ResourceService.UiResources.GetString("UI_Added");
+        public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
+        public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string FileLabelText => ResourceService.UiResources.GetString("UI_File");
+        public string FilesLabelText => ResourceService.UiResources.GetString("UI_Files");
+        public string FolderLabelText => ResourceService.UiResources.GetString("UI_Folder");
+        public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
+        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
+        public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string ShareText => ResourceService.UiResources.GetString("UI_Share");
+        public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");
+        public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
+        public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
+        public string VideoLabelText => ResourceService.UiResources.GetString("UI_Video");
+        public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
+
+        public string SetLinkExpirationDateText => string.Format("{0} {1}",
+            ResourceService.UiResources.GetString("UI_SetExpirationDate"),
+            ResourceService.UiResources.GetString("UI_ProOnly"));
 
         #endregion
     }

@@ -13,13 +13,13 @@ namespace MegaApp.ViewModels.Settings
         protected override async void DoAction()
         {
             await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_SdkLink"), 
+                AppService.GetMegaSDK_Link(), 
                 UriKind.RelativeOrAbsolute));
         }
 
         public override string GetValue(string defaultValue)
         {
-            return $"SDK {ResourceService.AppResources.GetString("AR_SkdVersion")}";
+            return $"SDK {AppService.GetMegaSDK_Version()}";
         }
     }
 }

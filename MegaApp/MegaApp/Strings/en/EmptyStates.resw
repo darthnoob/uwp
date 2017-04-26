@@ -117,81 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="PM_CleanRubbishBin" xml:space="preserve">
-    <value>Clearing the rubbish bin...</value>
-    <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
+  <data name="ES_CompletedTransfersHeader" xml:space="preserve">
+    <value>No completed transfers</value>
+    <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
-  <data name="PM_ConfirmAccount" xml:space="preserve">
-    <value>Confirming account...</value>
-    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
+    <value>Manage your completed transfers on this panel.</value>
+    <comment>Sub header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
-  <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Creating account...</value>
-    <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
+  <data name="ES_DownloadsHeader" xml:space="preserve">
+    <value>No active downloads</value>
+    <comment>Header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
-  <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
-    <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
+  <data name="ES_DownloadsSubHeader" xml:space="preserve">
+    <value>Manage your downloads on this panel.</value>
+    <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
-  <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Creating folder...</value>
-    <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
+  <data name="ES_UploadsHeader" xml:space="preserve">
+    <value>No active uploads</value>
+    <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
-  <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting...</value>
-    <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
-  </data>
-  <data name="PM_FastLogin" xml:space="preserve">
-    <value>Resuming session...</value>
-    <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
-  </data>
-  <data name="PM_FetchingNodes" xml:space="preserve">
-    <value>Fetching files and folders... [{0}]</value>
-    <comment>Progress indicator message when loading nodes from MEGA web service - (String as short as possible).
-Preserve the [{0}] code because is for include current number of fetched nodes.</comment>
-  </data>
-  <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>Requesting account data.</value>
-    <comment>Progress indicator message when fetching nodes.</comment>
-  </data>
-  <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Logging in...</value>
-    <comment>Progress indicator message when logging in - (String as short as possible).</comment>
-  </data>
-  <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>Please wait while we log you into your account.</value>
-    <comment>Progress indicator message when logging in - (String as short as possible).</comment>
-  </data>
-  <data name="PM_Logout" xml:space="preserve">
-    <value>Logging out...</value>
-    <comment>Progress indicator message when logging out - (String as short as possible).</comment>
-  </data>
-  <data name="PM_Move" xml:space="preserve">
-    <value>Moving...</value>
-    <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
-  </data>
-  <data name="PM_MoveToRubbishBin" xml:space="preserve">
-    <value>Moving to rubbish bin...</value>
-    <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
-  </data>
-  <data name="PM_Remove" xml:space="preserve">
-    <value>Removing...</value>
-    <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
-  </data>
-  <data name="PM_Rename" xml:space="preserve">
-    <value>Renaming...</value>
-    <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
-  </data>
-  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
-    <value>Servers too busy. Please wait.</value>
-    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
-  </data>
-  <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Decrypting nodes.</value>
-    <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
-  </data>
-  <data name="PM_LoadingPreview" xml:space="preserve">
-    <value>Loading preview...</value>
-    <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
+  <data name="ES_UploadsSubHeader" xml:space="preserve">
+    <value>Manage your uploads on this panel.</value>
+    <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
 </root>

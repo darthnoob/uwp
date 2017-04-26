@@ -52,8 +52,13 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Get the node link from the Mega SDK to share the node with others 
         /// </summary>
-        /// <returns>Result of the action</returns>
-        NodeActionResult GetLink();
+        /// <param name="showLinkDialog">True to show a dialog with the link and options</param>
+        void GetLinkAsync(bool showLinkDialog = true);
+
+        /// <summary>
+        /// Remove node link from the Mega SDK
+        /// </summary>
+        void RemoveLink();
 
         /// <summary>
         /// Dowload the node to a specified download destionation
@@ -65,7 +70,8 @@ namespace MegaApp.Interfaces
         /// Update core date associated with the SDK MNode object
         /// </summary>
         /// <param name="megaNode">Node to update</param>
-        void Update(MNode megaNode);
+        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
+        void Update(MNode megaNode, bool externalUpdate = false);
 
         /// <summary>
         /// Load node thumbnail if available on disk. If not availble download it with the Mega SDK

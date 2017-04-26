@@ -95,7 +95,7 @@ namespace MegaApp.MegaApi
                                         {
                                             try
                                             {
-                                                nodeToUpdateInView.Update(parentNode);
+                                                nodeToUpdateInView.Update(parentNode, true);
                                                 var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                                                 folderNode?.SetFolderInfo();
                                             }
@@ -154,7 +154,7 @@ namespace MegaApp.MegaApi
                                 {
                                     UiService.OnUiThread(() =>
                                     {
-                                        try { nodeToUpdateInView.Update(megaNode); }
+                                        try { nodeToUpdateInView.Update(megaNode, true); }
                                         catch (Exception) { /* Dummy catch, surpress possible exception */ }
                                     });
                                     isProcessed = true;
@@ -236,7 +236,7 @@ namespace MegaApp.MegaApi
                                     {
                                         try
                                         {
-                                            nodeToUpdateInView.Update(parentNode);
+                                            nodeToUpdateInView.Update(parentNode, true);
                                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                                             if (folderNode != null) folderNode.SetFolderInfo();
                                         }

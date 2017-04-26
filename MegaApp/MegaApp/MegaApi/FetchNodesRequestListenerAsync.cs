@@ -25,6 +25,7 @@ namespace MegaApp.MegaApi
                 {
                     case MErrorType.API_OK: // Successfull fetch nodes process
                         App.AppInformation.HasFetchedNodes = true;
+                        UiService.OnUiThread(() => AccountService.GetAccountDetails());
                         Tcs?.TrySetResult(true);
                         break;
                     default: // Default error processing

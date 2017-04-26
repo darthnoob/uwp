@@ -13,24 +13,34 @@ namespace MegaApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var node = value as FolderViewModel;
+            var node = value as NodeViewModel;
             if (node == null) return Visibility.Collapsed;
-            var viewState = node.CurrentViewState;
-            var type = node.Type;
+
+            var parentFolder = node.Parent;
+            if (parentFolder == null) return Visibility.Collapsed;
+
+            var viewState = parentFolder.CurrentViewState;
+            var parentFolderType = parentFolder.Type;
             var command = parameter as string;
             switch (viewState)
             {
                 case FolderContentViewState.CloudDrive:
                     switch (command)
                     {
+                        case "preview":
+                            return (node.IsImage) ? 
+                                Visibility.Visible : Visibility.Collapsed;
+                        case "viewdetails":
                         case "download":
-                        case "rename":
                         case "copyormove":
                         case "movetorubbish":
                             return Visibility.Visible;
+                        case "getlink":
+                        case "rename":
+                            return (parentFolder.SelectedNodes.Count > 1) ? 
+                                Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
-
                     }
                 case FolderContentViewState.CopyOrMove:
                     break;
@@ -44,18 +54,18 @@ namespace MegaApp.Converters
                             return Visibility.Visible;
                         case "remove":
                         {
-                            switch (type)
+                            switch (parentFolderType)
                             {
                                 case ContainerType.CloudDrive:
-                                    return Visibility.Collapsed; ;
+                                    return Visibility.Collapsed;
                                 case ContainerType.RubbishBin:
-                                    return Visibility.Visible; ;
+                                    return Visibility.Visible;
                             }
                             return Visibility.Collapsed;;
                         }
                         case "movetorubbish":
                         {
-                            switch (type)
+                            switch (parentFolderType)
                             {
                                 case ContainerType.CloudDrive:
                                     return Visibility.Visible;
@@ -71,11 +81,17 @@ namespace MegaApp.Converters
                 case FolderContentViewState.RubbishBin:
                     switch (command)
                     {
+                        case "preview":
+                            return (node.IsImage) ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        case "viewdetails":
                         case "download":
-                        case "rename":
                         case "copyormove":
                         case "remove":
                             return Visibility.Visible;
+                        case "rename":
+                            return (parentFolder.SelectedNodes.Count > 1) ?
+                                Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
                     }; 

@@ -8,6 +8,8 @@ namespace MegaApp.ViewModels
         {
             this.Downloads = new TransferListViewModel(MTransferType.TYPE_DOWNLOAD);
             this.Uploads = new TransferListViewModel(MTransferType.TYPE_UPLOAD);
+            this.Completed = new TransferListViewModel();
+
             this.ActiveViewModel = this.Uploads;
         }
 
@@ -22,6 +24,8 @@ namespace MegaApp.ViewModels
         public TransferListViewModel Uploads { get; }
 
         public TransferListViewModel Downloads { get; }
+
+        public TransferListViewModel Completed { get; }
 
         private TransferListViewModel _activeViewModel;
         public TransferListViewModel ActiveViewModel

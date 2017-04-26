@@ -18,6 +18,7 @@ using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -28,10 +29,15 @@ namespace MegaApp.ViewModels
     {
         public event EventHandler FolderNavigatedTo;
 
+        public event EventHandler ChangeViewEvent;
+
         public event EventHandler CopyOrMoveEvent;
 
         public event EventHandler EnableMultiSelect;
         public event EventHandler DisableMultiSelect;
+
+        public event EventHandler OpenNodeDetailsEvent;
+        public event EventHandler CloseNodeDetailsEvent;
 
         public FolderViewModel(ContainerType containerType)
         {
@@ -43,6 +49,7 @@ namespace MegaApp.ViewModels
             this.ChildNodes = new ObservableCollection<IMegaNode>();
             this.BreadCrumbs = new ObservableCollection<IBaseNode>();
             this.SelectedNodes = new List<IMegaNode>();
+            this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
@@ -57,11 +64,12 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
+            this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
+            this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
-            //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
             this.ChildNodes.CollectionChanged += ChildNodesOnCollectionChanged;
             this.BreadCrumbs.CollectionChanged += BreadCrumbsOnCollectionChanged;
@@ -93,27 +101,48 @@ namespace MegaApp.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
             }
-        }       
+        }
 
         private void SelectionChanged()
         {
-            this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
-
-            if (this.IsMultiSelectActive)
-                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.SelectedNodes.Count >= 1) || this.SelectedNodes.Count > 1;
             else
-                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
+                this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+
+            if(this.SelectedNodes?.Count > 0)
+            {
+                var focusedNode = (NodeViewModel)this.SelectedNodes.Last();
+                if((focusedNode is ImageNodeViewModel) && (focusedNode as ImageNodeViewModel != null))
+                    (focusedNode as ImageNodeViewModel).InViewingRange = true;
+
+                this.FocusedNode = focusedNode;
+            }
         }
 
         private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if(e.NewItems != null)
+            if (e.NewItems != null)
             {
-                foreach (var node in e.NewItems)
-                    (node as NodeViewModel)?.SetThumbnailImage();
+                // Start a new task to avoid freeze the UI
+                Task.Run(() =>
+                {
+                    foreach (var node in e.NewItems)
+                        (node as NodeViewModel)?.SetThumbnailImage();
+                });
             }
 
             OnPropertyChanged("HasChildNodesBinding");
+        }
+
+        public void OpenNodeDetails()
+        {
+            OpenNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void CloseNodeDetails()
+        {
+            CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
         }
 
         #region Commands
@@ -131,11 +160,12 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
+        public ICommand OpenNodeDetailsCommand { get; private set; }
+        public ICommand CloseNodeDetailsCommand { get; }
 
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }        
-        //public ICommand ViewDetailsCommand { get; private set; }
 
         #endregion
 
@@ -257,6 +287,8 @@ namespace MegaApp.ViewModels
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
 
+            CloseNodeDetails();
+
             FileService.ClearFiles(
                 NodeService.GetFiles(this.ChildNodes,
                 Path.Combine(ApplicationData.Current.LocalFolder.Path,
@@ -354,6 +386,7 @@ namespace MegaApp.ViewModels
         {
             if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
             await MultipleDownloadAsync(this.SelectedNodes);
+            this.IsMultiSelectActive = false;
         }
 
         private async Task MultipleDownloadAsync(ICollection<IMegaNode> nodes)
@@ -389,8 +422,7 @@ namespace MegaApp.ViewModels
 
             MultipleMoveToRubbishBin(this.SelectedNodes.ToList());
 
-            CurrentViewState = PreviousViewState;
-            SelectedNodes.Clear();
+            this.IsMultiSelectActive = false;
         }
 
         private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
@@ -414,28 +446,13 @@ namespace MegaApp.ViewModels
                             ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
                     });
                 }
-              
-                this.IsMultiSelectActive = false;
             });
         }
 
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
-        private void MultiSelect()
-        {
-            this.IsMultiSelectActive = !this.IsMultiSelectActive;
-
-            if (this.IsMultiSelectActive)
-            {
-                EnableMultiSelect?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                this.SelectedNodes.Clear();
-                DisableMultiSelect?.Invoke(this, EventArgs.Empty);
-            }
-        }
+        private void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
 
         private async void Remove()
         {
@@ -450,6 +467,8 @@ namespace MegaApp.ViewModels
             if (!result) return;
 
             MultipleRemoveAsync(this.SelectedNodes.ToList());
+
+            this.IsMultiSelectActive = false;
         }
 
         private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
@@ -473,8 +492,6 @@ namespace MegaApp.ViewModels
                             ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
                     });
                 }
-
-                this.IsMultiSelectActive = false;
             });
         }
         
@@ -486,44 +503,112 @@ namespace MegaApp.ViewModels
             // Set upload directory only once for speed improvement and if not exists, create dir
             var uploadDir = AppService.GetUploadDirectoryPath(true);
 
+            // Create a dictionary to store the files and its corresponding transfer object.            
+            var uploads = new Dictionary<StorageFile, TransferObjectModel>();
+
+            // Pick up the files to upload
             var pickedFiles = await FileService.SelectMultipleFiles();
+
+            // First create the transfers object and fill the dictionary
             foreach (StorageFile file in pickedFiles)
             {
                 if (file == null) continue; // To avoid null references
 
+                TransferObjectModel uploadTransfer = null;
                 try
                 {
-                    string tempUploadFilePath = Path.Combine(uploadDir, file.Name);
-                    using (var fs = new FileStream(tempUploadFilePath, FileMode.Create))
+                    uploadTransfer = new TransferObjectModel(
+                        this.FolderRootNode, MTransferType.TYPE_UPLOAD,
+                        Path.Combine(uploadDir, file.Name));
+
+                    if(uploadTransfer != null)
                     {
-                        // Set buffersize to avoid copy failure of large files
-                        var stream = await file.OpenStreamForReadAsync();
-                        await stream.CopyToAsync(fs, 8192);
-                        await fs.FlushAsync();
+                        uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
+                        uploadTransfer.TransferState = MTransferState.STATE_NONE;
+                        uploads.Add(file, uploadTransfer);
+                        TransferService.MegaTransfers.Add(uploadTransfer);
                     }
-
-                    var uploadTransfer = new TransferObjectModel(
-                        this.FolderRootNode,
-                        TransferType.Upload, 
-                        tempUploadFilePath);
-
-                    TransferService.MegaTransfers.Add(uploadTransfer);
-                    uploadTransfer.StartTransfer();
                 }
                 catch (Exception)
                 {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name);
+
                     OnUiThread(async () =>
                     {
+                        if (uploadTransfer != null) uploadTransfer.TransferState = MTransferState.STATE_FAILED;
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
                             string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
                     });
                 }
             }
+
+            // Second finish preparing transfers copying the files to the temporary upload folder
+            foreach (var upload in uploads)
+            {
+                if (upload.Key == null || upload.Value == null) continue; // To avoid null references
+
+                TransferObjectModel uploadTransfer = null;
+                try
+                {
+                    uploadTransfer = upload.Value;
+
+                    // If the upload isn´t already cancelled then copy the file to the temporary upload folder
+                    if(uploadTransfer?.PreparingUploadCancelToken?.Token.IsCancellationRequested == false)
+                    {
+                        using (var fs = new FileStream(Path.Combine(uploadDir, upload.Key.Name), FileMode.Create))
+                        {
+                            // Set buffersize to avoid copy failure of large files
+                            var stream = await upload.Key.OpenStreamForReadAsync();
+                            await stream.CopyToAsync(fs, 8192, uploadTransfer.PreparingUploadCancelToken.Token);
+                            await fs.FlushAsync(uploadTransfer.PreparingUploadCancelToken.Token);
+                        }
+
+                        uploadTransfer.StartTransfer();
+                    }
+                    else
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                        OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
+                    }
+                }
+                // If the upload is cancelled during the preparation process, 
+                // changes the status and delete the corresponding temporary file
+                catch (TaskCanceledException)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                    FileService.DeleteFile(uploadTransfer.TransferPath);
+                    OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
+                }
+                catch (Exception)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name);
+                    OnUiThread(async () =>
+                    {
+                        uploadTransfer.TransferState = MTransferState.STATE_FAILED;
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), upload.Key.Name));
+                    });
+                }
+                finally
+                {
+                    uploadTransfer.PreparingUploadCancelToken = null;
+                }
+            }
         }
 
         public void OnChildNodeTapped(IMegaNode node)
         {
+            // Needed to avoid process the node when the user is in MultiSelect mode and also after the
+            // node is the last removed from selection and MultiSelect mode will be automatically disabled.
+            if (this.CurrentViewState == FolderContentViewState.MultiSelect) return;
+            if (this.PreviousViewState == FolderContentViewState.MultiSelect)
+            {
+                this.PreviousViewState = this.CurrentViewState;
+                return;
+            }
+
             switch (node.Type)
             {
                 case MNodeType.TYPE_UNKNOWN:
@@ -535,7 +620,7 @@ namespace MegaApp.ViewModels
                     break;
                 case MNodeType.TYPE_FOLDER:
                     // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsSelectedNode(node))) return;
+                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsCopyOrMoveSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
                 case MNodeType.TYPE_ROOT:
@@ -554,19 +639,19 @@ namespace MegaApp.ViewModels
         /// </summary>        
         /// <param name="node">Node to check if is in the selected node list</param>        
         /// <returns>True if is a selected node or false in other case</returns>
-        private bool IsSelectedNode(IMegaNode node)
+        private bool IsCopyOrMoveSelectedNode(IMegaNode node)
         {
-            if (SelectedNodes?.Count > 0)
+            if (CopyOrMoveSelectedNodes?.Count > 0)
             {
-                var count = SelectedNodes.Count;
+                var count = CopyOrMoveSelectedNodes.Count;
                 for (int index = 0; index < count; index++)
                 {
-                    var selectedNode = SelectedNodes[index];
+                    var selectedNode = CopyOrMoveSelectedNodes[index];
                     if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
                     {
                         //Update the selected nodes list values
                         node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        SelectedNodes[index] = node;
+                        CopyOrMoveSelectedNodes[index] = node;
 
                         return true;
                     }
@@ -686,6 +771,8 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
+            CloseNodeDetails();
+
             MNode homeNode = null;
 
             switch (this.Type)
@@ -710,6 +797,8 @@ namespace MegaApp.ViewModels
         {
             if (node == null) return;
 
+            CloseNodeDetails();
+
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -722,7 +811,20 @@ namespace MegaApp.ViewModels
 
         public void ProcessFileNode(IMegaNode node)
         {
+            if (node.IsImage)
+            {
+                // Navigate to the preview page
+                OnUiThread(() =>
+                {
+                    this.FocusedNode = node;
 
+                    var parameters = new Dictionary<NavigationParamType, object>();
+                    parameters.Add(NavigationParamType.Data, this);
+
+                    NavigateService.Instance.Navigate(typeof(PreviewImagePage), true,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default, parameters));
+                });
+            }
         }
 
         public void SetProgressIndication(bool onOff, string busyText = null)
@@ -764,7 +866,7 @@ namespace MegaApp.ViewModels
                 if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
                 {
                     // Check if it is one of the selected nodes
-                    IsSelectedNode(node);
+                    IsCopyOrMoveSelectedNode(node);
                 }
 
                 helperList.Add(node);
@@ -887,6 +989,8 @@ namespace MegaApp.ViewModels
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
                     break;
             }
+
+            this.ChangeViewEvent?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -977,6 +1081,13 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        private IMegaNode _focusedNode;
+        public IMegaNode FocusedNode
+        {
+            get { return _focusedNode; }
+            set { SetField(ref _focusedNode, value); }
+        }
+
         private List<IMegaNode> _selectedNodes;
         public List<IMegaNode> SelectedNodes
         {
@@ -984,15 +1095,21 @@ namespace MegaApp.ViewModels
             set { SetField(ref _selectedNodes, value); }
         }
 
+        /// <summary>
+        /// Property needed to store the selected nodes in a move/copy action 
+        /// </summary>
+        private List<IMegaNode> _copyOrMoveSelectedNodes;
+        public List<IMegaNode> CopyOrMoveSelectedNodes
+        {
+            get { return _copyOrMoveSelectedNodes; }
+            set { SetField(ref _copyOrMoveSelectedNodes, value); }
+        }
+
         private FolderContentViewState _currentViewState;
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set
-            {
-                SetField(ref _currentViewState, value);
-                //OnPropertyChanged("IsMultiSelectActive");
-            }
+            set { SetField(ref _currentViewState, value); }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1052,22 +1169,39 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
+        private bool _isNodeDetailsViewVisible;
+        public bool IsNodeDetailsViewVisible
+        {
+            get { return _isNodeDetailsViewVisible; }
+            set { SetField(ref _isNodeDetailsViewVisible, value); }
+        }
+
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
-            get { return _isMultiSelectActive; }
+            get { return _isMultiSelectActive || _selectedNodes.Count > 1; }
             set
             {
-                SetField(ref _isMultiSelectActive, value);
+                if (!SetField(ref _isMultiSelectActive, value)) return;
+
                 if (_isMultiSelectActive)
                 {
                     if (this.CurrentViewState != FolderContentViewState.MultiSelect)
                         this.PreviousViewState = this.CurrentViewState;
+
                     this.CurrentViewState = FolderContentViewState.MultiSelect;
+                    EnableMultiSelect?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
-                    this.CurrentViewState = this.PreviousViewState;
+                    if (this.PreviousViewState != FolderContentViewState.MultiSelect)
+                    {
+                        this.CurrentViewState = this.PreviousViewState;
+                        this.PreviousViewState = FolderContentViewState.MultiSelect;
+                    }
+                        
+                    SelectedNodes.Clear();
+                    DisableMultiSelect?.Invoke(this, EventArgs.Empty);                    
                 }
             }
         }

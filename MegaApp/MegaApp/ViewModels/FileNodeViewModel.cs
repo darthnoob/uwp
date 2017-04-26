@@ -8,14 +8,14 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    class FileNodeViewModel: NodeViewModel
+    public class FileNodeViewModel: NodeViewModel
     {
         public FileNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             Information = Size.ToStringAndSuffix();
-            Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);
+            Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
         }
 
         #region Override Methods

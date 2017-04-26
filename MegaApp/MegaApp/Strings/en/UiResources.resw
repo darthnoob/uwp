@@ -310,10 +310,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Canceled</value>
     <comment>Label for the status of a canceled transfer - (String as short as possible).</comment>
   </data>
-  <data name="UI_TransferStatusCanceling" xml:space="preserve">
-    <value>Canceling...</value>
-    <comment>Label for the status of a transfer when is being canceling - (String as short as possible).</comment>
-  </data>
   <data name="UI_TransferStatusDownloaded" xml:space="preserve">
     <value>Downloaded</value>
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
@@ -334,16 +330,12 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Paused</value>
     <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
   </data>
-  <data name="UI_TransferStatusPausing" xml:space="preserve">
-    <value>Pausing...</value>
-    <comment>Label for the status of a transfer when is being pausing - (String as short as possible).</comment>
-  </data>
   <data name="UI_TransferStatusQueued" xml:space="preserve">
     <value>Queued</value>
     <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploaded" xml:space="preserve">
-    <value>uploaded</value>
+    <value>Uploaded</value>
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
@@ -378,10 +370,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Pause all</value>
     <comment>Label for any 'Pause all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_Resume" xml:space="preserve">
-    <value>Resume</value>
-    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_CancelAll" xml:space="preserve">
     <value>Cancel all</value>
     <comment>Label for any 'Cancel all' button, link, etc. - (String as short as possible).</comment>
@@ -410,9 +398,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Cancel upload</value>
     <comment>Label for any 'Cancel upload' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanUpTransfers" xml:space="preserve">
-    <value>Clean up transfers</value>
-    <comment>Label for any 'Clean up transfers' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
+  <data name="UI_ClearAll" xml:space="preserve">
+    <value>Clear all</value>
+    <comment>Label for any 'Clear all' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
   </data>
   <data name="UI_DeselectAll" xml:space="preserve">
     <value>Deselect all</value>
@@ -513,5 +501,148 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_SortOptionSmallest" xml:space="preserve">
     <value>Smallest</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPreparing" xml:space="preserve">
+    <value>Preparing...</value>
+    <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Completed" xml:space="preserve">
+    <value>Completed</value>
+    <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ResumeAll" xml:space="preserve">
+    <value>Resume all</value>
+    <comment>Label for any 'Resume all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Resume" xml:space="preserve">
+    <value>Resume</value>
+    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Retry" xml:space="preserve">
+    <value>Retry</value>
+    <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCompleting" xml:space="preserve">
+    <value>Completing...</value>
+    <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusRetrying" xml:space="preserve">
+    <value>Retrying...</value>
+    <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
+  </data>
+  <data name="UI_GetLink" xml:space="preserve">
+    <value>Get link</value>
+    <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Next" xml:space="preserve">
+    <value>Next</value>
+    <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Previous" xml:space="preserve">
+    <value>Previous</value>
+    <comment>Label for any 'Previous' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Share" xml:space="preserve">
+    <value>Share</value>
+    <comment>Label for any 'Share' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportLink" xml:space="preserve">
+    <value>Export link</value>
+    <comment>Label for any 'Export link' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Preview" xml:space="preserve">
+    <value>Preview</value>
+    <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewDetails" xml:space="preserve">
+    <value>View details</value>
+    <comment>Label for any 'View details' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Close" xml:space="preserve">
+    <value>Close</value>
+    <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Added" xml:space="preserve">
+    <value>Added</value>
+    <comment>Label for any 'Added' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Files" xml:space="preserve">
+    <value>Files</value>
+    <comment>Label for any 'Files' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folders" xml:space="preserve">
+    <value>Folders</value>
+    <comment>Label for any 'Folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Modified" xml:space="preserve">
+    <value>Modified</value>
+    <comment>Label for any 'Modified' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Size" xml:space="preserve">
+    <value>Size</value>
+    <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Audio" xml:space="preserve">
+    <value>Audio</value>
+    <comment>Label for any 'Audio' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_File" xml:space="preserve">
+    <value>File</value>
+    <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folder" xml:space="preserve">
+    <value>Folder</value>
+    <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Image" xml:space="preserve">
+    <value>Image</value>
+    <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Type" xml:space="preserve">
+    <value>Type</value>
+    <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Unknown" xml:space="preserve">
+    <value>Unknown</value>
+    <comment>Label for any 'Unknown' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Video" xml:space="preserve">
+    <value>Video</value>
+    <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableOfflineView" xml:space="preserve">
+    <value>Enable Offline view</value>
+    <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableLink" xml:space="preserve">
+    <value>Enable link</value>
+    <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DecryptionKey" xml:space="preserve">
+    <value>Decryption key</value>
+    <comment>Label for any 'Decryption key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithKey" xml:space="preserve">
+    <value>Link with key</value>
+    <comment>Label for any 'Link with key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithoutKey" xml:space="preserve">
+    <value>Link without key</value>
+    <comment>Label for any 'Link without key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ProOnly" xml:space="preserve">
+    <value>(PRO ONLY)</value>
+    <comment>Label to indicate that a feature is only available for PRO users. Keep between parentheses and capital letters  - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SetExpirationDate" xml:space="preserve">
+    <value>Set expiry date</value>
+    <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>
