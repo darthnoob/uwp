@@ -10,8 +10,10 @@ namespace BackgroundTaskService.MegaApi
     {
         // Helper Timer
         private Timer _timer;
-        // Event raised so that the task agent can abort itself on Quoata exceeded
-        public event EventHandler QuotaExceeded;
+        // Event raised so that the task agent can abort itself when storage quota is exceeded
+        public event EventHandler StorageQuotaExceeded;
+        // Event raised so that the task agent can abort itself when transfer quota is exceeded
+        public event EventHandler TransferQuotaExceeded;
 
         private TaskCompletionSource<string> _tcs;
         private string _dateSetting;
@@ -26,9 +28,14 @@ namespace BackgroundTaskService.MegaApi
             return await _tcs.Task;
         }
 
-        protected virtual void OnQuotaExceeded(EventArgs e)
+        protected virtual void OnStorageQuotaExceeded(EventArgs e)
         {
-            QuotaExceeded?.Invoke(this, e);
+            StorageQuotaExceeded?.Invoke(this, e);
+        }
+
+        protected virtual void OnTransferQuotaExceeded(EventArgs e)
+        {
+            TransferQuotaExceeded?.Invoke(this, e);
         }
 
         public bool onTransferData(MegaSDK api, MTransfer transfer, byte[] data)
@@ -39,12 +46,13 @@ namespace BackgroundTaskService.MegaApi
         public async void onTransferFinish(MegaSDK api, MTransfer transfer, MError e)
         {
             _timer?.Dispose();
-          
+
+            //Storage overquota error
             if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {
                 //Stop the Camera Upload Service
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (API_EOVERQUOTA)");
-                OnQuotaExceeded(EventArgs.Empty);
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                OnStorageQuotaExceeded(EventArgs.Empty);
                 _tcs.TrySetResult(e.getErrorString());
                 return;
             }
@@ -95,7 +103,13 @@ namespace BackgroundTaskService.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
-            // Do nothing       
+            // Transfer overquota error
+            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer quota exceeded (API_EOVERQUOTA)");
+                OnTransferQuotaExceeded(EventArgs.Empty);
+                _tcs.TrySetResult(e.getErrorString());
+            }
         }
 
         public void onTransferUpdate(MegaSDK api, MTransfer transfer)
