@@ -766,4 +766,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Set expiry time failed</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_TransferOverquotaWarning" xml:space="preserve">
+    <value>Your queued transfer exceeds the current transfer quota available for your account and may therefore be interrupted.</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error).</comment>
+  </data>
+  <data name="AM_TransferOverquotaWarning_Title" xml:space="preserve">
+    <value>Depleted transfer quota</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
+  </data>
 </root>

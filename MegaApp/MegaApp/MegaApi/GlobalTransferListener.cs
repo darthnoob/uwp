@@ -50,7 +50,7 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
-                case MErrorType.API_EOVERQUOTA:
+                case MErrorType.API_EOVERQUOTA: //Storage overquota error
                     ProcessOverquotaError(api);
                     break;
 
@@ -142,7 +142,7 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
-                case MErrorType.API_EOVERQUOTA:
+                case MErrorType.API_EOVERQUOTA: //Storage overquota error
                     ProcessOverquotaError(api);
                     break;
 
@@ -250,6 +250,10 @@ namespace MegaApp.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
+            // Transfer overquota error
+            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+                UiService.OnUiThread(() => DialogService.ShowTransferOverquotaWarning());
+
             // Extra checking to avoid NullReferenceException
             if (transfer == null) return;
 

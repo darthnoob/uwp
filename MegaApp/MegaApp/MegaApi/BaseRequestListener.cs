@@ -66,7 +66,7 @@ namespace MegaApp.MegaApi
                         NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
                 });
             }
-            else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA) //Storage overquota error
             {
                 //Deployment.Current.Dispatcher.BeginInvoke(() =>
                 //{

@@ -63,6 +63,13 @@ namespace MegaApp.Services
             //customMessageDialog.ShowDialog();
         }
 
+        public static async void ShowTransferOverquotaWarning()
+        {
+            await ShowAlertAsync(
+                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
+                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+        }
+
         /// <summary>
         /// Show an Input Dialog to the uses
         /// </summary>
