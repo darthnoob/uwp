@@ -162,14 +162,17 @@ namespace MegaApp.MegaApi
         /// <param name="api">MegaApi object that started the transfer</param>
         private void ProcessOverquotaError(MegaSDK api)
         {
+            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+
             // Stop all upload transfers
             api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
 
-            // Disable the "camera upload" service
-            //MediaService.SetAutoCameraUpload(false);
-            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"), false);
-
-            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+            // Disable the "Camera Uploads" service if is enabled
+            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+            }
         }
 
         /// <summary>

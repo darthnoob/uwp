@@ -82,19 +82,33 @@ namespace MegaApp.MegaApi
         {
             UiService.OnUiThread(() => TimerApiEagain.Stop());
 
-            if (e.getErrorCode() != MErrorType.API_EBLOCKED) return;
-            
-            // If the account has been blocked, always logout
-            api.logout(new LogOutRequestListener(false));
-
-            UiService.OnUiThread(() =>
+            if (e.getErrorCode() == MErrorType.API_EBLOCKED) // If the account has been blocked
             {
-                NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-            });
+                api.logout(new LogOutRequestListener(false));
 
-            // Throw task exception to catch and do nothing on logging out
-            Tcs?.TrySetException(new BlockedAccountException());
+                UiService.OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
+                });
+
+                // Throw task exception to catch and do nothing on logging out
+                Tcs?.TrySetException(new BlockedAccountException());
+            }
+            else if (e.getErrorCode() == MErrorType.API_EOVERQUOTA) //Storage overquota error
+            {
+                UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+
+                // Stop all upload transfers
+                api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+
+                // Disable the "Camera Uploads" service if is enabled
+                if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                    TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                }
+            }
         }
     }
 }
