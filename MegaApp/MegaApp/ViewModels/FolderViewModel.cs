@@ -523,6 +523,8 @@ namespace MegaApp.ViewModels
 
                     if(uploadTransfer != null)
                     {
+                        uploadTransfer.DisplayName = file.Name;
+                        uploadTransfer.TotalBytes = (await file.GetBasicPropertiesAsync()).Size;
                         uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
                         uploadTransfer.TransferState = MTransferState.STATE_NONE;
                         uploads.Add(file, uploadTransfer);
