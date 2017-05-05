@@ -270,33 +270,75 @@
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Icon="Rename" 
-                                ToolTipService.ToolTip="{Binding RenameText}"
-                                Command="{Binding RenameCommand}"/>
+                                ToolTipService.ToolTip="{Binding PreviewText}"
+                                Command="{Binding PreviewCommand}"
+                                Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Icon="Download" 
                                 ToolTipService.ToolTip="{Binding DownloadText}"
-                                Command="{Binding DownloadCommand}"/>
+                                Command="{Binding DownloadCommand}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Icon="Delete" 
-                                ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
+                                ToolTipService.ToolTip="{Binding RenameText}"
+                                Command="{Binding RenameCommand}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding RenamePathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding RemoveText}"
                                 Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Icon="Delete" 
                                 ToolTipService.ToolTip="{Binding RemoveText}"
                                 Command="{Binding RemoveCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <CommandBar.Content>
                                 <AppBarButton
                                     x:Name="CloseDetailsViewButton"
                                     Style="{StaticResource MegaAppBarButtonStyle}"
-                                    Icon="Cancel" 
                                     ToolTipService.ToolTip="{Binding CloseText}"
-                                    Command="{Binding Parent.CloseNodeDetailsCommand}"/>
+                                    Command="{Binding Parent.CloseNodeDetailsCommand}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon 
+                                            Data="{Binding ClosePanelPathData, Mode=OneTime}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
                             </CommandBar.Content>
                         </CommandBar>
                         
@@ -546,28 +588,68 @@
                             Grid.Row="2"
                             Style="{StaticResource MegaCommandBarStyle}">
                             <AppBarButton
-                                Icon="Download" 
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                Label="{Binding PreviewText}"
+                                ToolTipService.ToolTip="{Binding PreviewText}"
+                                Command="{Binding PreviewCommand}"
+                                Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding DownloadText}"
                                 ToolTipService.ToolTip="{Binding DownloadText}"
-                                Command="{Binding DownloadCommand}"/>
+                                Command="{Binding DownloadCommand}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
-                                Icon="Delete" 
+                                Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding MoveToRubbishBinText}"
                                 ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
                                 Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
-                                Icon="Delete" 
+                                Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding RemoveText}"
                                 ToolTipService.ToolTip="{Binding RemoveText}"
                                 Command="{Binding RemoveCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
-                                    Icon="Rename"
                                     Label="{Binding RenameText}"
                                     ToolTipService.ToolTip="{Binding RenameText}"
-                                    Command="{Binding RenameCommand}"/>
+                                    Command="{Binding RenameCommand}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon 
+                                            Data="{Binding RenamePathData, Mode=OneTime}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
                                 <AppBarButton
                                     Icon="Cancel"
                                     Label="{Binding CancelText}"

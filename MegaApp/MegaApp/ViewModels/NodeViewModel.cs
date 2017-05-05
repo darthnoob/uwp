@@ -792,5 +792,15 @@ namespace MegaApp.ViewModels
             ResourceService.UiResources.GetString("UI_ProOnly"));
 
         #endregion
+
+        #region VisualResources
+
+        public string ClosePanelPathData => ResourceService.VisualResources.GetString("VR_ClosePanelPathData");
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
+        public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
+
+        #endregion
     }
 }
