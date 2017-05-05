@@ -154,6 +154,8 @@ namespace MegaApp.ViewModels
         {
             if (this.ActiveFolderView.SelectedNodes == null || !this.ActiveFolderView.SelectedNodes.Any()) return;
 
+            this.ActiveFolderView.CloseNodeDetails();
+
             foreach (var node in this.ActiveFolderView.SelectedNodes)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 

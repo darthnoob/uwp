@@ -782,6 +782,7 @@ namespace MegaApp.ViewModels
         #region VisualResources
 
         public string ClosePanelPathData => ResourceService.VisualResources.GetString("VR_ClosePanelPathData");
+        public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");

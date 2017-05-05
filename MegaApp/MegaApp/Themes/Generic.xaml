@@ -293,6 +293,17 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CopyOrMoveText}"
+                                Command="{Binding CopyOrMoveCommand}">
+                                <AppBarButton.Icon>
+                                    <PathIcon 
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"/>
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RenameText}"
                                 Command="{Binding RenameCommand}">
                                 <AppBarButton.Icon>
@@ -612,6 +623,17 @@
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <CommandBar.SecondaryCommands>
+                                <AppBarButton
+                                    Label="{Binding CopyOrMoveText}"
+                                    ToolTipService.ToolTip="{Binding CopyOrMoveText}"
+                                    Command="{Binding CopyOrMoveCommand}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon 
+                                            Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"/>
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
                                 <AppBarButton
                                     Label="{Binding RenameText}"
                                     ToolTipService.ToolTip="{Binding RenameText}"
