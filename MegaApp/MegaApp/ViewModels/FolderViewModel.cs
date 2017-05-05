@@ -56,7 +56,6 @@ namespace MegaApp.ViewModels
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
@@ -154,7 +153,6 @@ namespace MegaApp.ViewModels
         public ICommand DownloadCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
-        public ICommand MoveToRubbishBinCommand { get; }
         public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -408,47 +406,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private async void MoveToRubbishBin()
-        {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
-
-            int count = this.SelectedNodes.Count;
-
-            var result = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count));
-
-            if (!result) return;
-
-            MultipleMoveToRubbishBin(this.SelectedNodes.ToList());
-
-            this.IsMultiSelectActive = false;
-        }
-
-        private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
-        {
-            if (nodes == null || nodes.Count < 1) return;
-
-            Task.Run(async () =>
-            {
-                bool result = true;
-                foreach (var node in nodes)
-                {
-                    result = result & await node.MoveToRubbishBinAsync(true);
-                }
-
-                if (!result)
-                {
-                    OnUiThread(async () =>
-                    {
-                        await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
-                    });
-                }
-            });
-        }
-
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
@@ -460,9 +417,24 @@ namespace MegaApp.ViewModels
 
             int count = this.SelectedNodes.Count;
 
-            var result = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count));
+            string title, message;
+            switch(this.Type)
+            {
+                case ContainerType.CloudDrive:
+                    title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
+                    message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), count);
+                    break;
+
+                case ContainerType.RubbishBin:
+                    title = ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title");
+                    message = string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
+                    break;
+
+                default:
+                    return;
+            }
+
+            var result = await DialogService.ShowOkCancelAsync(title, message);
 
             if (!result) return;
 
@@ -485,12 +457,24 @@ namespace MegaApp.ViewModels
 
                 if(!result)
                 {
-                    OnUiThread(async () =>
+                    string title, message;
+                    switch (this.Type)
                     {
-                        await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_RemoveFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
-                    });
+                        case ContainerType.CloudDrive:
+                            title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
+                            break;
+
+                        case ContainerType.RubbishBin:
+                            title = ResourceService.AppMessages.GetString("AM_RemoveFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed");
+                            break;
+
+                        default:
+                            return;
+                    }
+
+                    OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
                 }
             });
         }
@@ -1256,7 +1240,6 @@ namespace MegaApp.ViewModels
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
-        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
 

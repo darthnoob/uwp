@@ -37,16 +37,9 @@
                 Command="{Binding RenameCommand}"/>
             <AppBarButton
                 Icon="Delete" 
-                Label="{Binding MoveToRubbishBinText}"
-                ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
-                Command="{Binding MoveToRubbishBinCommand}"                
-                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-            <AppBarButton
-                Icon="Delete" 
                 Label="{Binding RemoveText}"
                 ToolTipService.ToolTip="{Binding RemoveText}"
-                Command="{Binding RemoveCommand}"
-                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                Command="{Binding RemoveCommand}"/>
         </CommandBar>
     </Page.TopAppBar>
 
@@ -189,14 +182,8 @@
                     Command="{Binding RenameCommand}"/>
                 <AppBarButton
                     Icon="Delete" 
-                    Label="{Binding MoveToRubbishBinText}"
-                    Command="{Binding MoveToRubbishBinCommand}"
-                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-                <AppBarButton
-                    Icon="Delete" 
                     Label="{Binding RemoveText}"
-                    Command="{Binding RemoveCommand}"
-                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                    Command="{Binding RemoveCommand}"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

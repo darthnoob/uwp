@@ -437,16 +437,9 @@
                     Click="OnButtonClick"/>
                 <AppBarButton
                     Icon="Delete" 
-                    Label="{Binding MoveToRubbishBinText}" 
-                    Command="{Binding ActiveFolderView.MoveToRubbishBinCommand}"
-                    Click="OnButtonClick"
-                    Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-                <AppBarButton
-                    Icon="Delete" 
                     Label="{Binding RemoveText}" 
                     Command="{Binding ActiveFolderView.RemoveCommand}"
-                    Click="OnButtonClick"
-                    Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                    Click="OnButtonClick"/>
                 <AppBarButton
                     Icon="Cancel" 
                     Label="{Binding CancelText}"

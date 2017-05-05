@@ -305,20 +305,7 @@
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RemoveText}"
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                                <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                            <AppBarButton
-                                Style="{StaticResource MegaAppBarButtonStyle}"
-                                ToolTipService.ToolTip="{Binding RemoveText}"
-                                Command="{Binding RemoveCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                Command="{Binding RemoveCommand}">
                                 <AppBarButton.Icon>
                                     <PathIcon 
                                         Data="{Binding RubbishBinPathData, Mode=OneTime}"
@@ -614,23 +601,9 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding MoveToRubbishBinText}"
-                                ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                                <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
-                                </AppBarButton.Icon>
-                            </AppBarButton>
-                            <AppBarButton
-                                Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding RemoveText}"
                                 ToolTipService.ToolTip="{Binding RemoveText}"
-                                Command="{Binding RemoveCommand}"
-                                Visibility="{Binding Parent.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                                Command="{Binding RemoveCommand}">
                                 <AppBarButton.Icon>
                                     <PathIcon 
                                         Data="{Binding RubbishBinPathData, Mode=OneTime}"

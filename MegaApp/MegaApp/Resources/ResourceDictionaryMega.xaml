@@ -203,10 +203,6 @@
                                 Command="{Binding CopyOrMoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
-                                Text="{Binding MoveToRubbishBinText}" 
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
-                            <MenuFlyoutItem 
                                 Text="{Binding RemoveText}" 
                                 Command="{Binding RemoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
@@ -347,10 +343,6 @@
                                 Command="{Binding CopyOrMoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
-                                Text="{Binding MoveToRubbishBinText}" 
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
-                            <MenuFlyoutItem 
                                 Text="{Binding RemoveText}" 
                                 Command="{Binding RemoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
@@ -456,10 +448,6 @@
                                 Text="{Binding CopyOrMoveText}" 
                                 Command="{Binding CopyOrMoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
-                            <MenuFlyoutItem 
-                                Text="{Binding MoveToRubbishBinText}" 
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding RemoveText}" 
                                 Command="{Binding RemoveCommand}"
@@ -580,10 +568,6 @@
                                 Text="{Binding CopyOrMoveText}" 
                                 Command="{Binding CopyOrMoveCommand}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
-                            <MenuFlyoutItem 
-                                Text="{Binding MoveToRubbishBinText}" 
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}"/>
                             <MenuFlyoutItem 
                                 Text="{Binding RemoveText}" 
                                 Command="{Binding RemoveCommand}"

@@ -320,7 +320,6 @@ namespace MegaApp.ViewModels
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
-        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        

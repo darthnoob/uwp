@@ -15,7 +15,6 @@ namespace MegaApp.ViewModels
         {
             DownloadCommand = new RelayCommand(Download);
             GetLinkCommand = new RelayCommand(GetLink);
-            MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             NextCommand = new RelayCommand(Next);
             PreviousCommand = new RelayCommand(Previous);
             RemoveCommand = new RelayCommand(Remove);
@@ -46,7 +45,6 @@ namespace MegaApp.ViewModels
 
         public ICommand DownloadCommand { get; }
         public ICommand GetLinkCommand { get; }
-        public ICommand MoveToRubbishBinCommand { get; }
         public ICommand NextCommand { get; }
         public ICommand PreviousCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -64,11 +62,6 @@ namespace MegaApp.ViewModels
         private void GetLink()
         {
             SelectedPreview?.GetLinkAsync(true);
-        }
-
-        private async void MoveToRubbishBin()
-        {
-            await SelectedPreview?.MoveToRubbishBinAsync();
         }
 
         private void Next()
@@ -211,7 +204,6 @@ namespace MegaApp.ViewModels
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
-        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string NextText => ResourceService.UiResources.GetString("UI_Next");
         public string PreviousText => ResourceService.UiResources.GetString("UI_Previous");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");

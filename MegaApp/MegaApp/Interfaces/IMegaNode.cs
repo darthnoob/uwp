@@ -36,13 +36,6 @@ namespace MegaApp.Interfaces
         Task<NodeActionResult> CopyAsync(IMegaNode newParentNode);
 
         /// <summary>
-        /// Move the node to the rubbish bin
-        /// </summary>
-        /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
-        /// <returns>Result of the action</returns>
-        Task<bool> MoveToRubbishBinAsync(bool isMultiSelect = false);
-
-        /// <summary>
         /// Delete the node permanently
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
