@@ -216,7 +216,8 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
+            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive &&
+                this.ViewModel.ActiveFolderView.CurrentViewState != FolderContentViewState.CopyOrMove)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
                 ((ListViewBase)sender).SelectedItems.Add(itemTapped);

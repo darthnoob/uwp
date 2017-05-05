@@ -211,7 +211,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -351,7 +351,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -457,7 +457,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -577,7 +577,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True"/>
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}"/>
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>

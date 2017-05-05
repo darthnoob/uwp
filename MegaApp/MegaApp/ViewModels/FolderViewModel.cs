@@ -1093,7 +1093,11 @@ namespace MegaApp.ViewModels
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set { SetField(ref _currentViewState, value); }
+            set
+            {
+                SetField(ref _currentViewState, value);
+                OnPropertyChanged("IsFlyoutActionAvailable");
+            }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1102,6 +1106,8 @@ namespace MegaApp.ViewModels
             get { return _previousViewState; }
             set { SetField(ref _previousViewState, value); }
         }
+
+        public bool IsFlyoutActionAvailable => this.CurrentViewState != FolderContentViewState.CopyOrMove;
 
         private ObservableCollection<IMegaNode> _childNodes;
         public ObservableCollection<IMegaNode> ChildNodes
