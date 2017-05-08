@@ -15,8 +15,6 @@ namespace MegaApp.ViewModels
         {
             DownloadCommand = new RelayCommand(Download);
             GetLinkCommand = new RelayCommand(GetLink);
-            NextCommand = new RelayCommand(Next);
-            PreviousCommand = new RelayCommand(Previous);
             RemoveCommand = new RelayCommand(Remove);
             RenameCommand = new RelayCommand(Rename);
         }
@@ -45,8 +43,6 @@ namespace MegaApp.ViewModels
 
         public ICommand DownloadCommand { get; }
         public ICommand GetLinkCommand { get; }
-        public ICommand NextCommand { get; }
-        public ICommand PreviousCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
 
@@ -62,22 +58,6 @@ namespace MegaApp.ViewModels
         private void GetLink()
         {
             SelectedPreview?.GetLinkAsync(true);
-        }
-
-        private void Next()
-        {
-            var currentPreviewIndex = PreviewItems.IndexOf(SelectedPreview);
-
-            if (currentPreviewIndex < PreviewItems.Count - 1)
-                SelectedPreview = PreviewItems[currentPreviewIndex + 1];
-        }
-
-        private void Previous()
-        {
-            var currentPreviewIndex = PreviewItems.IndexOf(SelectedPreview);
-
-            if (currentPreviewIndex > 0)
-                SelectedPreview = PreviewItems[currentPreviewIndex - 1];
         }
 
         private async void Remove()
@@ -209,6 +189,15 @@ namespace MegaApp.ViewModels
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
+
+        #endregion
+
+        #region VisualResources
+
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
 
         #endregion
     }

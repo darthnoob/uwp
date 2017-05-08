@@ -99,10 +99,6 @@ namespace MegaApp.Views
                 ViewModel.GalleryDirection = GalleryDirection.Next;
             }
                         
-            // Set the move buttons status
-            this.PreviousButton.IsEnabled = (itemIndex > 0) ? true : false;
-            this.NextButton.IsEnabled = (itemIndex < itemsCount - 1) ? true : false;
-
             // Check if the selected item is the first or the last item of the gallery.
             // If it is, invert the gallery direction to the only possible direction.
             if (itemIndex == 0)

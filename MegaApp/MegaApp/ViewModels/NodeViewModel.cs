@@ -787,6 +787,7 @@ namespace MegaApp.ViewModels
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
         public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
+        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 
         #endregion
     }
