@@ -6,6 +6,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:triggers="using:WindowsStateTriggers">
@@ -804,32 +805,35 @@
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </Grid>
-            <Button
+
+            <CommandBar
+                Margin="8,0,0,0"
                 Grid.Row="0" 
                 Grid.Column="2" 
                 Grid.RowSpan="3"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding CancelTransferCommand}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Cancel"
-                        ToolTipService.ToolTip="{Binding CancelText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
+                VerticalAlignment="Center"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding CancelText}" 
+                    ToolTipService.ToolTip="{Binding CancelText}"
+                    Command="{Binding CancelTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaTransferItemContentDesktop">
         <Grid 
-            Margin="0,8"
+            Margin="0,4"
             Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
@@ -868,7 +872,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="70"/>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -980,7 +983,7 @@
                 Grid.Row="1" 
                 Grid.Column="1"
                 Grid.ColumnSpan="4"
-                Margin="0,0,0,8"
+                Margin="0,-8,0,16"
                 VerticalAlignment="Top" 
                 Minimum="0" 
                 Maximum="{Binding TotalBytes}"
@@ -992,111 +995,83 @@
                     <SolidColorBrush Color="{StaticResource MegaRedColor}"/>
                 </ProgressBar.Foreground>
             </ProgressBar>
-            <Button
+            <CommandBar
+                Margin="8,0,0,0"
                 Grid.Row="0" 
                 Grid.Column="5" 
                 Grid.RowSpan="2"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding PauseOrResumeTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Pause"
-                        ToolTipService.ToolTip="{Binding PauseText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0" 
-                Grid.Column="5" 
-                Grid.RowSpan="2"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding PauseOrResumeTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Play"
-                        ToolTipService.ToolTip="{Binding ResumeText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0" 
-                Grid.Column="5" 
-                Grid.RowSpan="2"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding RetryTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Refresh"
-                        ToolTipService.ToolTip="{Binding RetryText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0" 
-                Grid.Column="6" 
-                Grid.RowSpan="2"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding RemoveTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Delete"
-                        ToolTipService.ToolTip="{Binding RemoveText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0" 
-                Grid.Column="6" 
-                Grid.RowSpan="2"
-                Width="36" 
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding CancelTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox
-                    MaxWidth="16"
-                    MaxHeight="16">
-                    <SymbolIcon
-                        Symbol="Cancel"
-                        ToolTipService.ToolTip="{Binding CancelText}"
-                        Foreground="{StaticResource MegaAppForegroundBrush}"/>
-                </Viewbox>
-            </Button>
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding PauseText}" 
+                    ToolTipService.ToolTip="{Binding PauseText}"
+                    Command="{Binding PauseOrResumeTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding PausePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding ResumeText}" 
+                    ToolTipService.ToolTip="{Binding ResumeText}"
+                    Command="{Binding PauseOrResumeTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding ResumePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding RetryText}" 
+                    ToolTipService.ToolTip="{Binding RetryText}"
+                    Command="{Binding RetryTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <Viewbox
+                        MaxHeight="16"
+                        MaxWidth="16"/>
+                    <AppBarButton.Icon>
+                        <SymbolIcon
+                            Symbol="Refresh"
+                            ToolTipService.ToolTip="{Binding RetryText}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding RemoveText}" 
+                    ToolTipService.ToolTip="{Binding RemoveText}"
+                    Command="{Binding RemoveTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding RemovePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{Binding CancelText}" 
+                    ToolTipService.ToolTip="{Binding CancelText}"
+                    Command="{Binding CancelTransferCommand}"
+                    Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
