@@ -471,7 +471,7 @@ namespace MegaApp.Views
             var sortButton = sender as Button;
 
             var buttonPosition = sortButton.TransformToVisual(BtnSort);
-            Point screenCoords = buttonPosition.TransformPoint(new Point(32, 32));
+            Point screenCoords = buttonPosition.TransformPoint(new Point(sortButton.Width, sortButton.Height));
 
             MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
             menuFlyout.ShowAt(sortButton, screenCoords);
