@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Input;
-using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -19,11 +17,6 @@ namespace MegaApp.ViewModels
         public CloudDriveViewModel()
         {
             InitializeModel();
-
-            this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
-            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
-            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
-            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
         }
 
         /// <summary>
@@ -34,21 +27,21 @@ namespace MegaApp.ViewModels
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
 
+            this.CloudDrive.AcceptCopyEvent += OnAcceptCopy;
+            this.RubbishBin.AcceptCopyEvent += OnAcceptCopy;
+
+            this.CloudDrive.AcceptMoveEvent += OnAcceptMove;
+            this.RubbishBin.AcceptMoveEvent += OnAcceptMove;
+
+            this.CloudDrive.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
+            this.RubbishBin.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
+
             this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
             this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
 
             // The Cloud Drive is always the first active folder on initalization
             this.ActiveFolderView = this.CloudDrive;
         }
-
-        #region Commands
-
-        public ICommand CopyOrMoveCommand { get; }
-        public ICommand CancelCopyOrMoveCommand { get; }
-        public ICommand AcceptCopyCommand { get; }
-        public ICommand AcceptMoveCommand { get; }        
-
-        #endregion
 
         #region Public Methods
 
@@ -148,8 +141,6 @@ namespace MegaApp.ViewModels
             RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
         }
 
-        private void CopyOrMove() => OnCopyOrMove(this, EventArgs.Empty);
-
         private void OnCopyOrMove(object sender, EventArgs e)
         {
             if (this.ActiveFolderView.SelectedNodes == null || !this.ActiveFolderView.SelectedNodes.Any()) return;
@@ -187,7 +178,7 @@ namespace MegaApp.ViewModels
             EnableSelection?.Invoke(this, EventArgs.Empty);
         }
 
-        private void CancelCopyOrMove()
+        private void OnCancelCopyOrMove(object sender, EventArgs e)
         {
             if (SourceFolderView?.CopyOrMoveSelectedNodes != null)
             {
@@ -198,7 +189,7 @@ namespace MegaApp.ViewModels
             ResetCopyOrMove();
         }
 
-        private void AcceptCopy()
+        private void OnAcceptCopy(object sender, EventArgs e)
         {
             // Use a temp variable to avoid InvalidOperationException
             AcceptCopyAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
@@ -235,7 +226,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void AcceptMove()
+        private void OnAcceptMove(object sender, EventArgs e)
         {
             // Use a temp variable to avoid InvalidOperationException
             AcceptMoveAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());

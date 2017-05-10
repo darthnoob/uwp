@@ -96,11 +96,11 @@
                     <Grid
                         x:Name="TopCommandBar"
                         Grid.Row="0"
-                        Grid.Column="0">
+                        Grid.Column="0"
+                        DataContext="{Binding ActiveFolderView}">
 
                         <!-- CLOUD DRIVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar
-                            DataContext="{Binding ActiveFolderView}"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
@@ -146,7 +146,6 @@
 
                         <!-- RUBBISH BIN TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
-                            DataContext="{Binding ActiveFolderView}"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             Visibility="{Binding CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
@@ -180,38 +179,38 @@
                         <!-- COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
+                            Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.AddFolderText, Mode=OneTime}" 
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.AddFolderText, Mode=OneTime}"
-                                Command="{Binding ActiveFolderView.AddFolderCommand}"
+                                Label="{Binding AddFolderText, Mode=OneTime}" 
+                                ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                                Command="{Binding AddFolderCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.AddFolderPathData, Mode=OneTime}"
+                                        Data="{Binding AddFolderPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.CopyText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.CopyText, Mode=OneTime}"
+                                Label="{Binding CopyText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
                                 Command="{Binding AcceptCopyCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.CopyOrMovePathData, Mode=OneTime}"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.MoveText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.MoveText, Mode=OneTime}"
+                                Label="{Binding MoveText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
                                 Command="{Binding AcceptMoveCommand}"
                                 Click="OnButtonClick">
                                 <Viewbox
@@ -222,13 +221,13 @@
                             </AppBarButton>
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
+                                Label="{Binding CancelText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
                                 Command="{Binding CancelCopyOrMoveCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.CancelPathData, Mode=OneTime}"
+                                        Data="{Binding CancelPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
@@ -238,51 +237,51 @@
                         <!-- MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
+                            Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.DownloadText, Mode=OneTime}" 
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.DownloadText, Mode=OneTime}"
-                                Command="{Binding ActiveFolderView.DownloadCommand}"
+                                Label="{Binding DownloadText, Mode=OneTime}" 
+                                ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                Command="{Binding DownloadCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.DownloadPathData, Mode=OneTime}"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.CopyOrMoveText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.CopyOrMoveText, Mode=OneTime}"
+                                Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
                                 Command="{Binding CopyOrMoveCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.CopyOrMovePathData, Mode=OneTime}"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.RemoveText, Mode=OneTime}" 
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.RemoveText, Mode=OneTime}"
-                                Command="{Binding ActiveFolderView.RemoveCommand}"
+                                Label="{Binding RemoveText, Mode=OneTime}" 
+                                ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}"
+                                Command="{Binding RemoveCommand}"
                                 Click="OnButtonClick">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.RubbishBinPathData, Mode=OneTime}"
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.SelectAllText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.SelectAllText, Mode=OneTime}"
+                                Label="{Binding SelectAllText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding SelectAllText, Mode=OneTime}"
                                 Click="OnSelectAllClick">
                                 <Viewbox
                                     MaxWidth="14"
@@ -292,8 +291,8 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.DeselectAllText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.DeselectAllText, Mode=OneTime}"
+                                Label="{Binding DeselectAllText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding DeselectAllText, Mode=OneTime}"
                                 Click="OnDeselectAllClick">
                                 <Viewbox
                                     MaxWidth="14"
@@ -303,12 +302,12 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                Label="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
-                                Command="{Binding ActiveFolderView.MultiSelectCommand}">
+                                Label="{Binding CancelText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
+                                Command="{Binding MultiSelectCommand}">
                                 <AppBarButton.Icon>
                                     <PathIcon 
-                                        Data="{Binding ActiveFolderView.CancelPathData, Mode=OneTime}"
+                                        Data="{Binding CancelPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
@@ -572,11 +571,11 @@
             <!-- BOTTOM COMMAND BAR AREA (MOBILE DEVICES) -->
             <Grid
                 x:Name="BottomCommandBar"
-                Grid.Row="1">
+                Grid.Row="1"
+                DataContext="{Binding ActiveFolderView}">
 
                 <!-- CLOUD DRIVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
-                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
@@ -634,7 +633,6 @@
                 
                 <!-- RUBBISH BIN BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
-                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
@@ -681,37 +679,37 @@
                 <!-- COPY OR MOVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
                     Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Label="{Binding ActiveFolderView.AddFolderText, Mode=OneTime}" 
-                        ToolTipService.ToolTip="{Binding ActiveFolderView.AddFolderText, Mode=OneTime}"
-                        Command="{Binding ActiveFolderView.AddFolderCommand}"
+                        Label="{Binding AddFolderText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                        Command="{Binding AddFolderCommand}"
                         Click="OnButtonClick">
                         <AppBarButton.Icon>
                             <PathIcon
-                                Data="{Binding ActiveFolderView.AddFolderPathData, Mode=OneTime}"
+                                Data="{Binding AddFolderPathData, Mode=OneTime}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton 
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Label="{Binding ActiveFolderView.CopyText, Mode=OneTime}"
-                        ToolTipService.ToolTip="{Binding ActiveFolderView.CopyText,Mode=OneTime}"
+                        Label="{Binding CopyText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{Binding CopyText,Mode=OneTime}"
                         Command="{Binding AcceptCopyCommand}"
                         Click="OnButtonClick">
                         <AppBarButton.Icon>
                             <PathIcon
-                                Data="{Binding ActiveFolderView.CopyPathData, Mode=OneTime}"
+                                Data="{Binding CopyPathData, Mode=OneTime}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton 
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Label="{Binding ActiveFolderView.MoveText, Mode=OneTime}"
-                        ToolTipService.ToolTip="{Binding ActiveFolderView.MoveText, Mode=OneTime}"
+                        Label="{Binding MoveText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
                         Command="{Binding AcceptMoveCommand}"
                         Click="OnButtonClick">
                         <Viewbox
@@ -722,13 +720,13 @@
                     </AppBarButton>
                     <AppBarButton 
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Label="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
-                        ToolTipService.ToolTip="{Binding ActiveFolderView.CancelText, Mode=OneTime}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
                         Command="{Binding CancelCopyOrMoveCommand}"
                         Click="OnButtonClick">
                         <AppBarButton.Icon>
                             <PathIcon
-                                Data="{Binding ActiveFolderView.CancelPathData, Mode=OneTime}"
+                                Data="{Binding CancelPathData, Mode=OneTime}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
@@ -737,7 +735,6 @@
                 
                 <!-- MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
-                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton

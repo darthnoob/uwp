@@ -31,6 +31,9 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChangeViewEvent;
 
+        public event EventHandler AcceptCopyEvent;
+        public event EventHandler AcceptMoveEvent;
+        public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
         public event EventHandler EnableMultiSelect;
@@ -51,7 +54,10 @@ namespace MegaApp.ViewModels
             this.SelectedNodes = new List<IMegaNode>();
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
+            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
+            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
             this.AddFolderCommand = new RelayCommand(AddFolder);
+            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
@@ -146,7 +152,10 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
+        public ICommand AcceptCopyCommand { get; }
+        public ICommand AcceptMoveCommand { get; }
         public ICommand AddFolderCommand { get; private set; }
+        public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand ChangeViewCommand { get; }
         public ICommand CleanRubbishBinCommand { get; }
         public ICommand CopyOrMoveCommand { get; }        
@@ -312,6 +321,10 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
+        private void AcceptCopy() => AcceptCopyEvent?.Invoke(this, EventArgs.Empty);
+
+        private void AcceptMove() => AcceptMoveEvent?.Invoke(this, EventArgs.Empty);
+
         /// <summary>
         /// Add a new sub-folder to the current folder
         /// </summary>
@@ -354,6 +367,8 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void CancelCopyOrMove() => CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+
         private async void CleanRubbishBin()
         {
             if (this.Type != ContainerType.RubbishBin || this.ChildNodes.Count < 1) return;
@@ -378,7 +393,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);        
+        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
         private async void Download()
         {
