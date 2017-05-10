@@ -361,7 +361,8 @@
                             CacheMode="{x:Null}">
                             <Grid x:Name="CloudDriveRoot" 
                                   Background="Transparent" 
-                                  Margin="0,0,12,0">
+                                  Margin="0,0,12,0"
+                                  DataContext="{Binding CloudDrive}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
@@ -383,36 +384,36 @@
                                             Foreground="{StaticResource MegaRedColorBrush}" 
                                             Height="8" 
                                             Grid.ColumnSpan="2" 
-                                            Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         <breadcrumb:BreadcrumbControl 
                                             x:Name="CloudDriveBreadCrumb"
                                             Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                             DisplayMemberPath="Name"
-                                            HomeCommand="{Binding CloudDrive.HomeSelectedCommand}"
-                                            ItemCommand="{Binding CloudDrive.ItemSelectedCommand}"                                        
+                                            HomeCommand="{Binding HomeSelectedCommand}"
+                                            ItemCommand="{Binding ItemSelectedCommand}"                                        
                                             HomeTemplate="{StaticResource BreadcrumbHomeMegaTemplate}"
                                             ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
                                             Seperator=">"
-                                            ItemsSource="{Binding CloudDrive.BreadCrumbs}"
+                                            ItemsSource="{Binding BreadCrumbs}"
                                             OverFlow="..."/>
                                         <TextBlock 
-                                            Text="{Binding CloudDrive.EmptyInformationText}" 
+                                            Text="{Binding EmptyInformationText}" 
                                             HorizontalAlignment="Right" 
                                             TextAlignment="Right" 
                                             Style="{ThemeResource CaptionTextBlockStyle}" 
                                             Grid.Row="1" 
                                             Grid.Column="1" 
                                             VerticalAlignment="Center"                                         
-                                            Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         <TextBlock 
-                                            Text="{Binding CloudDrive.FolderRootNode.Information}" 
+                                            Text="{Binding FolderRootNode.Information}" 
                                             HorizontalAlignment="Right" 
                                             TextAlignment="Right" 
                                             Style="{ThemeResource CaptionTextBlockStyle}" 
                                             Grid.Row="1" 
                                             Grid.Column="1" 
                                             VerticalAlignment="Center"                                         
-                                            Visibility="{Binding CloudDrive.HasChildNodesBinding, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsEmpty, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                                     </Grid>
                                 </StackPanel>
                                 <Grid 
@@ -422,7 +423,6 @@
                                         x:Name="ListViewCloudDrive"
                                         Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding CloudDrive}"
                                         ItemsSource="{Binding ChildNodes}"
                                         Tapped="OnItemTapped"
                                         DoubleTapped="OnItemDoubleTapped"
@@ -443,8 +443,7 @@
                                         Padding="2,4"
                                         Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding CloudDrive}"
-                                        ItemsSource="{Binding ChildNodes}"                                    
+                                        ItemsSource="{Binding ChildNodes}"
                                         Tapped="OnItemTapped"
                                         DoubleTapped="OnItemDoubleTapped"
                                         IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
@@ -456,6 +455,7 @@
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
                                     </GridView>
+                                    <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                                 </Grid>
                             </Grid>
                         </PivotItem>
@@ -466,7 +466,8 @@
                             <Grid 
                                 x:Name="RubbishBinRoot" 
                                 Background="Transparent" 
-                                Margin="0,0,12,0">
+                                Margin="0,0,12,0"
+                                DataContext="{Binding RubbishBin}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
@@ -488,36 +489,36 @@
                                             Foreground="{StaticResource MegaRedColorBrush}" 
                                             Height="8" 
                                             Grid.ColumnSpan="2" 
-                                            Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         <breadcrumb:BreadcrumbControl 
                                             x:Name="RubbishBinBreadCrumb"
                                             Margin="-12,0,6,0" Grid.Row="1" Grid.Column="0"
                                             DisplayMemberPath="Name"
-                                            HomeCommand="{Binding RubbishBin.HomeSelectedCommand}"
-                                            ItemCommand="{Binding RubbishBin.ItemSelectedCommand}"
+                                            HomeCommand="{Binding HomeSelectedCommand}"
+                                            ItemCommand="{Binding ItemSelectedCommand}"
                                             HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
                                             ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
                                             Seperator=">"
-                                            ItemsSource="{Binding RubbishBin.BreadCrumbs}"
+                                            ItemsSource="{Binding BreadCrumbs}"
                                             OverFlow="..."/>
                                         <TextBlock 
-                                            Text="{Binding RubbishBin.EmptyInformationText}" 
+                                            Text="{Binding EmptyInformationText}" 
                                             HorizontalAlignment="Right" 
                                             TextAlignment="Right" 
                                             Style="{ThemeResource CaptionTextBlockStyle}" 
                                             Grid.Row="1" 
                                             Grid.Column="1" 
                                             VerticalAlignment="Center" 
-                                            Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                         <TextBlock 
-                                            Text="{Binding RubbishBin.FolderRootNode.Information}" 
+                                            Text="{Binding FolderRootNode.Information}" 
                                             HorizontalAlignment="Right" 
                                             TextAlignment="Right" 
                                             Style="{ThemeResource CaptionTextBlockStyle}" 
                                             Grid.Row="1" 
                                             Grid.Column="1" 
                                             VerticalAlignment="Center" 
-                                            Visibility="{Binding RubbishBin.HasChildNodesBinding, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                            Visibility="{Binding IsEmpty, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                                     </Grid>
                                 </StackPanel>
                                 
@@ -528,7 +529,6 @@
                                         x:Name="ListViewRubbishBin"
                                         Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding RubbishBin}"
                                         ItemsSource="{Binding ChildNodes}"
                                         Tapped="OnItemTapped"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
@@ -548,8 +548,7 @@
                                         Padding="2,4"
                                         Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding RubbishBin}"
-                                        ItemsSource="{Binding ChildNodes}"                                    
+                                        ItemsSource="{Binding ChildNodes}"
                                         Tapped="OnItemTapped"
                                         DoubleTapped="OnItemDoubleTapped"
                                         ItemTemplateSelector="{Binding NodeTemplateSelector}"
@@ -561,6 +560,7 @@
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
                                     </GridView>
+                                    <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                                 </Grid>
                             </Grid>
                         </PivotItem>

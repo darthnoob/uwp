@@ -81,7 +81,7 @@ namespace MegaApp.ViewModels
 
             SetViewDefaults();
 
-            SetEmptyContentTemplate(true);
+            SetEmptyContent(true);
 
             switch (containerType)
             {
@@ -137,7 +137,7 @@ namespace MegaApp.ViewModels
                 });
             }
 
-            OnPropertyChanged("HasChildNodesBinding");
+            OnPropertyChanged("IsEmpty");
         }
 
         public void OpenNodeDetails()
@@ -177,12 +177,6 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Returns boolean value to indicatie if the current folder view has any child nodes
-        /// </summary>
-        /// <returns>True if there are child nodes, False if child node count is zero</returns>
-        public bool HasChildNodes() => this.ChildNodes.Count > 0;
 
         public void SelectAll()
         {
@@ -233,7 +227,7 @@ namespace MegaApp.ViewModels
             SetProgressIndication(true);
 
             // Process is started so we can set the empty content template to loading already
-            SetEmptyContentTemplate(true);
+            SetEmptyContent(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
@@ -246,7 +240,7 @@ namespace MegaApp.ViewModels
                     App.AppInformation,
                     MessageDialogButtons.Ok).ShowDialog();
 
-                SetEmptyContentTemplate(false);
+                SetEmptyContent(false);
 
                 return;
             }
@@ -660,14 +654,13 @@ namespace MegaApp.ViewModels
             return false;
         }
 
-        public void SetEmptyContentTemplate(bool isLoading)
+        public void SetEmptyContent(bool isLoading)
         {
             if (isLoading)
             {
                 OnUiThread(() =>
                 {
-                    //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListLoadingContent"];
-                    this.EmptyInformationText = "";
+                    this.EmptyInformationText = string.Empty;
                 });
             }
             else
@@ -682,24 +675,31 @@ namespace MegaApp.ViewModels
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListCloudDriveEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyCloudDrive").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_CloudDriveHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_CloudDriveSubHeader");
                             });
                         }
                         else if (this.FolderRootNode != null && megaRubbishBin != null && this.FolderRootNode.Base64Handle.Equals(megaRubbishBin.getBase64Handle()))
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyRubbishBin").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_RubbishBinHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_RubbishBinSubHeader");
                             });
                         }
                         else
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_FolderHeader");
+
+                                if (this.MegaSdk.isInRubbish(this.FolderRootNode.OriginalMNode))
+                                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderRubbishBinSubHeader");
+                                else
+                                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderSubHeader");
                             });
                         }
                         break;
@@ -708,7 +708,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.OutShares:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaSharedFoldersListEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
                         });
                         break;
@@ -719,7 +718,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.Offline:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyOffline").ToLower();
                         });
                         break;
@@ -727,7 +725,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.FolderLink:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
                         });
                         break;
@@ -904,13 +901,13 @@ namespace MegaApp.ViewModels
                 SetProgressIndication(false);
 
                 // Set empty content to folder instead of loading view
-                SetEmptyContentTemplate(false);
+                SetEmptyContent(false);
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
                     this.ChildNodes.Add(megaNode);
 
-                OnPropertyChanged("HasChildNodesBinding");
+                OnPropertyChanged("IsEmpty");
             });
         }
 
@@ -1082,6 +1079,20 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        private string _emptyStateHeaderText;
+        public string EmptyStateHeaderText
+        {
+            get { return _emptyStateHeaderText; }
+            set { SetField(ref _emptyStateHeaderText, value); }
+        }
+
+        private string _emptyStateSubHeaderText;
+        public string EmptyStateSubHeaderText
+        {
+            get { return _emptyStateSubHeaderText; }
+            set { SetField(ref _emptyStateSubHeaderText, value); }
+        }
+
         private IMegaNode _focusedNode;
         public IMegaNode FocusedNode
         {
@@ -1133,7 +1144,7 @@ namespace MegaApp.ViewModels
             set { SetField(ref _childNodes, value); }
         }
 
-        public bool HasChildNodesBinding => HasChildNodes();
+        public bool IsEmpty => (this.ChildNodes.Count == 0);
 
         public ContainerType Type { get; private set; }
 
@@ -1220,13 +1231,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private DataTemplate _emptyContentTemplate;
-        public DataTemplate EmptyContentTemplate
-        {
-            get { return _emptyContentTemplate; }
-            private set { SetField(ref _emptyContentTemplate, value); }
-        }
-
         private string _emptyInformationText;
         public string EmptyInformationText
         {
@@ -1290,6 +1294,8 @@ namespace MegaApp.ViewModels
         #region VisualResources
 
         public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
+        public string BreadcrumbHomeMegaIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon");
+        public string BreadcrumbHomeRubbishBinIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");

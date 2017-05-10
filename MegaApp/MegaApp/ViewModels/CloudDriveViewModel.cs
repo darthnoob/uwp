@@ -94,10 +94,10 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void FetchNodes()
         {
-            OnUiThread(() => this.CloudDrive?.SetEmptyContentTemplate(true));
+            OnUiThread(() => this.CloudDrive?.SetEmptyContent(true));
             this.CloudDrive?.CancelLoad();
 
-            OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
+            OnUiThread(() => this.RubbishBin?.SetEmptyContent(true));
             this.RubbishBin?.CancelLoad();
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
@@ -309,8 +309,6 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
-        public string BreadcrumbHomeMegaIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon");
-        public string BreadcrumbHomeRubbishBinIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon");
         public string EmptyCloudDrivePathData => ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData");
         public string EmptyFolderPathData => ResourceService.VisualResources.GetString("VR_EmptyFolderPathData");
         public string FolderLoadingPathData => ResourceService.VisualResources.GetString("VR_FolderLoadingPathData");
