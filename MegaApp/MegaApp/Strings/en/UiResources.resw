@@ -641,4 +641,16 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Set expiry date</value>
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_GridView" xml:space="preserve">
+    <value>Grid view</value>
+    <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListView" xml:space="preserve">
+    <value>List view</value>
+    <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortBy" xml:space="preserve">
+    <value>Sort by</value>
+    <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

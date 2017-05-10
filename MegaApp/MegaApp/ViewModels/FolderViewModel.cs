@@ -952,6 +952,7 @@ namespace MegaApp.ViewModels
 
             this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
+            this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_GridView");
         }
 
         /// <summary>
@@ -994,6 +995,7 @@ namespace MegaApp.ViewModels
 
                     this.ViewMode = FolderContentViewMode.GridView;
                     this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
+                    this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_ListView");
                     break;
 
                 case FolderContentViewMode.ListView:
@@ -1152,6 +1154,13 @@ namespace MegaApp.ViewModels
             set { SetField(ref _nextViewButtonPathData, value); }
         }
 
+        private string _nextViewButtonLabelText;
+        public string NextViewButtonLabelText
+        {
+            get { return _nextViewButtonLabelText; }
+            set { SetField(ref _nextViewButtonLabelText, value); }
+        }
+
         private DataTemplateSelector _nodeTemplateSelector;
         public DataTemplateSelector NodeTemplateSelector
         {
@@ -1242,12 +1251,38 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
+        public string GridViewText => ResourceService.UiResources.GetString("UI_GridView");
+        public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
+        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+        public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
+
+        #endregion
+
+        #region VisualResources
+
+        public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
+        public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
+        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+        public string UploadPathData => ResourceService.VisualResources.GetString("VR_UploadPathData");
 
         #endregion
     }

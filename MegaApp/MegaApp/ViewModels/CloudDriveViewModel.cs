@@ -311,23 +311,8 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
-        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
-        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
-        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
-        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
-        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
-        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
-        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
-        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
-        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
-        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
-        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");        
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
-        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
-        public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
 
         #endregion
 
