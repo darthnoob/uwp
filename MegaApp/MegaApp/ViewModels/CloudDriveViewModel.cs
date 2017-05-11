@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -17,6 +19,8 @@ namespace MegaApp.ViewModels
         public CloudDriveViewModel()
         {
             InitializeModel();
+
+            this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
         }
 
         /// <summary>
@@ -39,9 +43,17 @@ namespace MegaApp.ViewModels
             this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
             this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
 
+            this.RubbishBin.ChildNodesCollectionChanged += OnRubbishBinChildNodesCollectionChanged;
+
             // The Cloud Drive is always the first active folder on initalization
             this.ActiveFolderView = this.CloudDrive;
         }
+
+        #region Commands
+
+        public ICommand CleanRubbishBinCommand { get; }
+
+        #endregion
 
         #region Public Methods
 
@@ -128,7 +140,42 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Provate Methods
+        #region Private Methods
+
+        private async void CleanRubbishBin()
+        {
+            if (this.ActiveFolderView.Type != ContainerType.RubbishBin || this.IsRubbishBinEmpty) return;
+
+            var dialogResult = await DialogService.ShowOkCancelAsync(
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"));
+
+            if (!dialogResult) return;
+
+            if(this.ActiveFolderView.CanGoFolderUp())
+                this.ActiveFolderView.BrowseToHome();
+
+            var cleanRubbishBin = new CleanRubbishBinRequestListenerAsync();
+            var result = await cleanRubbishBin.ExecuteAsync(() =>
+            {
+                this.MegaSdk.cleanRubbishBin(cleanRubbishBin);
+            });
+
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                    ResourceService.AppMessages.GetString("AM_CleanRubbishBinFailed"));
+                return;
+            }
+
+            OnPropertyChanged("IsRubbishBinEmpty");
+        }
+
+        private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged("IsRubbishBinEmpty");
+        }
 
         private void ResetViewStates()
         {
@@ -267,6 +314,8 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        public bool IsRubbishBinEmpty => (this.MegaSdk.getNumChildren(this.MegaSdk.getRubbishNode()) == 0);
+
         private FolderViewModel _cloudDrive;
         public FolderViewModel CloudDrive
         {
@@ -303,6 +352,7 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
 
         #endregion
@@ -311,6 +361,7 @@ namespace MegaApp.ViewModels
 
         public string EmptyCloudDrivePathData => ResourceService.VisualResources.GetString("VR_EmptyCloudDrivePathData");
         public string EmptyFolderPathData => ResourceService.VisualResources.GetString("VR_EmptyFolderPathData");
+        public string EmptyRubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string FolderLoadingPathData => ResourceService.VisualResources.GetString("VR_FolderLoadingPathData");
 
         #endregion

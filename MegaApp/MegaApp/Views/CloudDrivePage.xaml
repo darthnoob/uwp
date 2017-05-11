@@ -96,11 +96,11 @@
                     <Grid
                         x:Name="TopCommandBar"
                         Grid.Row="0"
-                        Grid.Column="0"
-                        DataContext="{Binding ActiveFolderView}">
+                        Grid.Column="0">
 
                         <!-- CLOUD DRIVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar
+                            DataContext="{Binding ActiveFolderView}"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
@@ -147,22 +147,24 @@
                         <!-- RUBBISH BIN TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                            Visibility="{Binding CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
+                            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding EmptyRubbishBinText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
                                 Command="{Binding CleanRubbishBinCommand}"
-                                Click="OnButtonClick">
+                                Click="OnButtonClick"
+                                IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
                                 <AppBarButton.Icon>
                                     <PathIcon
-                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                        Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"/>
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 Label="{Binding RefreshText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}"
@@ -178,6 +180,7 @@
 
                         <!-- COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
+                            DataContext="{Binding ActiveFolderView}"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
@@ -236,6 +239,7 @@
                         
                         <!-- MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
+                            DataContext="{Binding ActiveFolderView}"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                             Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
@@ -341,7 +345,8 @@
                             Label="{Binding NextViewButtonLabelText}"
                             ToolTipService.ToolTip="{Binding NextViewButtonLabelText}"
                             Command="{Binding ChangeViewCommand}"
-                            Click="OnButtonClick">
+                            Click="OnButtonClick"
+                            IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     Data="{Binding NextViewButtonPathData, Mode=OneWay}"
@@ -571,11 +576,11 @@
             <!-- BOTTOM COMMAND BAR AREA (MOBILE DEVICES) -->
             <Grid
                 x:Name="BottomCommandBar"
-                Grid.Row="1"
-                DataContext="{Binding ActiveFolderView}">
+                Grid.Row="1">
 
                 <!-- CLOUD DRIVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
@@ -634,22 +639,23 @@
                 <!-- RUBBISH BIN BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
                     Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         Label="{Binding EmptyRubbishBinText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
                         Command="{Binding CleanRubbishBinCommand}"
-                        Click="OnButtonClick">
+                        Click="OnButtonClick"
+                        IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
                         <AppBarButton.Icon>
                             <PathIcon
-                                Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton 
-                        x:Name="MultiSelectButtonRubbishBin"
+                        DataContext="{Binding ActiveFolderView}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         Label="{Binding MultiSelectText,Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}"
@@ -663,6 +669,7 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
+                        DataContext="{Binding ActiveFolderView}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         Label="{Binding RefreshText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}"
@@ -678,6 +685,7 @@
                 
                 <!-- COPY OR MOVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton 
@@ -735,6 +743,7 @@
                 
                 <!-- MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES) -->
                 <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton

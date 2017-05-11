@@ -29,6 +29,7 @@
 
     <!-- CONVERTERS -->
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter"/>
+    <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter"/>
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter"/>
     <converters:TransferStateToReadableTextConverter x:Key="TransferStateToReadableTextConverter"/>
