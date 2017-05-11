@@ -430,40 +430,37 @@ namespace MegaApp.ViewModels
             this.IsMultiSelectActive = false;
         }
 
-        private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
+        private async void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
         {
             if (nodes == null || nodes.Count < 1) return;
-
-            Task.Run(async () =>
+            
+            bool result = true;
+            foreach (var node in nodes)
             {
-                bool result = true;
-                foreach (var node in nodes)
+                result = result & (await node.RemoveAsync(true));
+            }
+
+            if(!result)
+            {
+                string title, message;
+                switch (this.Type)
                 {
-                    result = result & await node.RemoveAsync(true);
+                    case ContainerType.CloudDrive:
+                        title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
+                        message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
+                        break;
+
+                    case ContainerType.RubbishBin:
+                        title = ResourceService.AppMessages.GetString("AM_RemoveFailed_Title");
+                        message = ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed");
+                        break;
+
+                    default:
+                        return;
                 }
 
-                if(!result)
-                {
-                    string title, message;
-                    switch (this.Type)
-                    {
-                        case ContainerType.CloudDrive:
-                            title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
-                            message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
-                            break;
-
-                        case ContainerType.RubbishBin:
-                            title = ResourceService.AppMessages.GetString("AM_RemoveFailed_Title");
-                            message = ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed");
-                            break;
-
-                        default:
-                            return;
-                    }
-
-                    OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
-                }
-            });
+                OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
+            }            
         }
         
         /// <summary>
