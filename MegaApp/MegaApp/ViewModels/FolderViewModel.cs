@@ -523,15 +523,17 @@ namespace MegaApp.ViewModels
 
                     if(uploadTransfer != null)
                     {
+                        uploadTransfer.DisplayName = file.Name;
+                        uploadTransfer.TotalBytes = (await file.GetBasicPropertiesAsync()).Size;
                         uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
                         uploadTransfer.TransferState = MTransferState.STATE_NONE;
                         uploads.Add(file, uploadTransfer);
                         TransferService.MegaTransfers.Add(uploadTransfer);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name);
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name, e);
 
                     OnUiThread(async () =>
                     {
@@ -580,9 +582,9 @@ namespace MegaApp.ViewModels
                     FileService.DeleteFile(uploadTransfer.TransferPath);
                     OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name);
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name, e);
                     OnUiThread(async () =>
                     {
                         uploadTransfer.TransferState = MTransferState.STATE_FAILED;
