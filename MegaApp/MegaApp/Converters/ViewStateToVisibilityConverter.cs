@@ -36,7 +36,7 @@ namespace MegaApp.Converters
                             return Visibility.Visible;
                         case "getlink":
                         case "rename":
-                            return (parentFolder.SelectedNodes.Count > 1) ? 
+                            return (parentFolder.ItemCollection.MoreThanOneSelected) ? 
                                 Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
@@ -88,7 +88,7 @@ namespace MegaApp.Converters
                         case "remove":
                             return Visibility.Visible;
                         case "rename":
-                            return (parentFolder.SelectedNodes.Count > 1) ?
+                            return (parentFolder.ItemCollection.MoreThanOneSelected) ?
                                 Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;

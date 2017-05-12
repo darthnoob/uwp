@@ -33,12 +33,15 @@ namespace MegaApp.Views
 
             this.ViewModel.CloudDrive.ChangeViewEvent += OnChangeView;
             this.ViewModel.RubbishBin.ChangeViewEvent += OnChangeView;
+            this.ViewModel.CameraUploads.ChangeViewEvent += OnChangeView;
 
             this.ViewModel.CloudDrive.EnableMultiSelect += OnEnableMultiSelect;
             this.ViewModel.RubbishBin.EnableMultiSelect += OnEnableMultiSelect;
+            this.ViewModel.CameraUploads.EnableMultiSelect += OnEnableMultiSelect;
 
             this.ViewModel.CloudDrive.DisableMultiSelect += OnDisableMultiSelect;
             this.ViewModel.RubbishBin.DisableMultiSelect += OnDisableMultiSelect;
+            this.ViewModel.CameraUploads.DisableMultiSelect += OnDisableMultiSelect;
         }
 
         public override bool CanGoBack
@@ -144,6 +147,9 @@ namespace MegaApp.Views
             if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
 
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
+
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
@@ -205,6 +211,12 @@ namespace MegaApp.Views
                 ListViewRubbishBin.SelectAll();
                 GridViewRubbishBin.SelectAll();
             }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                ListViewCameraUploads.SelectAll();
+                GridViewCameraUploads.SelectAll();
+            }
         }
 
         private void OnDeselectAllClick(object sender, RoutedEventArgs e)
@@ -223,12 +235,18 @@ namespace MegaApp.Views
                 ListViewRubbishBin.SelectedItems.Clear();
                 GridViewRubbishBin.SelectedItems.Clear();
             }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                ListViewCameraUploads.SelectedItems.Clear();
+                GridViewCameraUploads.SelectedItems.Clear();
+            }
         }
 
         private void OnEnableMultiSelect(object sender, EventArgs e)
         {
             // First save the current selected nodes to restore them after enable the multi select
-            var tempSelectedNodes = this.ViewModel.ActiveFolderView.SelectedNodes.ToList();
+            var tempSelectedNodes = this.ViewModel.ActiveFolderView.ItemCollection.SelectedItems.ToList();
 
             // Needed to avoid extrange behaviors during the view update
             DisableViewsBehaviors();
@@ -243,6 +261,12 @@ namespace MegaApp.Views
             {
                 ListViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
                 GridViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
+            }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Multiple;
+                GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Multiple;
             }
 
             // Restore the selected items and enable the view behaviors again
@@ -268,6 +292,12 @@ namespace MegaApp.Views
                 ListViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
                 GridViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
             }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+                GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+            }
         }
 
         private void OnEnableSelection(object sender, EventArgs e)
@@ -285,6 +315,12 @@ namespace MegaApp.Views
                     ListViewRubbishBin.SelectionMode = ListViewSelectionMode.Extended;
                     GridViewRubbishBin.SelectionMode = ListViewSelectionMode.Extended;
                 }
+
+                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                {
+                    ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
+                    GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
+                }
             }
             else
             {
@@ -298,6 +334,12 @@ namespace MegaApp.Views
                 {
                     ListViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
                     GridViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
+                }
+
+                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                {
+                    ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+                    GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
                 }
             }
         }
@@ -319,12 +361,20 @@ namespace MegaApp.Views
                 if (GridViewRubbishBin?.SelectedItems?.Count > 0)
                     GridViewRubbishBin.SelectedItems.Clear();
             }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                if (ListViewCameraUploads?.SelectedItems?.Count > 0)
+                    ListViewCameraUploads.SelectedItems.Clear();
+                if (GridViewCameraUploads?.SelectedItems?.Count > 0)
+                    GridViewCameraUploads.SelectedItems.Clear();
+            }
         }
 
         private void OnChangeView(object sender, EventArgs e)
         {
             // First save the current selected nodes to restore them after change the view
-            var tempSelectedNodes = this.ViewModel.ActiveFolderView.SelectedNodes.ToList();
+            var tempSelectedNodes = this.ViewModel.ActiveFolderView.ItemCollection.SelectedItems.ToList();
 
             // Needed to avoid extrange behaviors during the view update
             DisableViewsBehaviors();
@@ -353,6 +403,12 @@ namespace MegaApp.Views
                 Interaction.GetBehaviors(ListViewRubbishBin).Attach(ListViewRubbishBin);
                 Interaction.GetBehaviors(GridViewRubbishBin).Attach(GridViewRubbishBin);
             }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                Interaction.GetBehaviors(ListViewCameraUploads).Attach(ListViewCameraUploads);
+                Interaction.GetBehaviors(GridViewCameraUploads).Attach(GridViewCameraUploads);
+            }
         }
 
         /// <summary>
@@ -370,6 +426,12 @@ namespace MegaApp.Views
             {
                 Interaction.GetBehaviors(ListViewRubbishBin).Detach();
                 Interaction.GetBehaviors(GridViewRubbishBin).Detach();
+            }
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                Interaction.GetBehaviors(ListViewCameraUploads).Detach();
+                Interaction.GetBehaviors(GridViewCameraUploads).Detach();
             }
         }
 
@@ -405,6 +467,21 @@ namespace MegaApp.Views
                             break;
                         case FolderContentViewMode.GridView:
                             GridViewRubbishBin.SelectedItems.Add(node);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+
+                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                {
+                    switch (this.ViewModel.CameraUploads.ViewMode)
+                    {
+                        case FolderContentViewMode.ListView:
+                            ListViewCameraUploads.SelectedItems.Add(node);
+                            break;
+                        case FolderContentViewMode.GridView:
+                            GridViewCameraUploads.SelectedItems.Add(node);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();

@@ -51,7 +51,7 @@ namespace MegaApp.MegaApi
 
                         foreach (var folder in this.Folders)
                         {
-                            IMegaNode nodeToRemoveFromView = folder.ChildNodes.FirstOrDefault(
+                            IMegaNode nodeToRemoveFromView = folder.ItemCollection.Items.FirstOrDefault(
                                 node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
                             
                             // If node is found in current view, process the remove action
@@ -64,7 +64,7 @@ namespace MegaApp.MegaApi
                                 {
                                     try
                                     {
-                                        currentFolder.ChildNodes.Remove(nodeToRemoveFromView);
+                                        currentFolder.ItemCollection.Items.Remove(nodeToRemoveFromView);
                                         ((FolderNodeViewModel) currentFolder.FolderRootNode).SetFolderInfo();
                                     }
                                     catch (Exception) { /* Dummy catch, surpress possible exception */ }
@@ -85,7 +85,7 @@ namespace MegaApp.MegaApi
                             {
                                 foreach (var folder in this.Folders)
                                 {
-                                    IMegaNode nodeToUpdateInView = folder.ChildNodes.FirstOrDefault(
+                                    IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
                                         node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
 
                                     // If parent folder is found, process the update action
@@ -123,7 +123,7 @@ namespace MegaApp.MegaApi
 
                         foreach (var folder in this.Folders)
                         {
-                            IMegaNode nodeToUpdateInView = folder.ChildNodes.FirstOrDefault(
+                            IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
                                 node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
 
                             // If node is found, process the update action
@@ -141,7 +141,7 @@ namespace MegaApp.MegaApi
                                     {
                                         try
                                         {
-                                            currentFolder.ChildNodes.Remove(nodeToUpdateInView);
+                                            currentFolder.ItemCollection.Items.Remove(nodeToUpdateInView);
                                             ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
                                             UpdateFolders(currentFolder);
                                         }
@@ -181,7 +181,7 @@ namespace MegaApp.MegaApi
                                         UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
 
                                     // If the insert position is higher than the ChilNodes size insert in the last position
-                                    if (insertIndex >= folder.ChildNodes.Count())
+                                    if (insertIndex >= folder.ItemCollection.Items.Count())
                                     {
                                         // Needed because we are in a foreach loop to prevent the use of the wrong 
                                         // local variable in the dispatcher code.
@@ -190,7 +190,7 @@ namespace MegaApp.MegaApi
                                         {
                                             try
                                             {
-                                                currentFolder.ChildNodes.Add(NodeService.CreateNew(api,
+                                                currentFolder.ItemCollection.Items.Add(NodeService.CreateNew(api,
                                                     _appInformation, megaNode, currentFolder));
                                                 
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
@@ -213,7 +213,7 @@ namespace MegaApp.MegaApi
                                         {
                                             try
                                             {
-                                                currentFolder.ChildNodes.Insert(insertIndex,
+                                                currentFolder.ItemCollection.Items.Insert(insertIndex,
                                                     NodeService.CreateNew(api, _appInformation, megaNode, currentFolder));
 
                                                 ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
@@ -227,7 +227,7 @@ namespace MegaApp.MegaApi
                                 }
                                     
                                 // ADDED in subfolder scenario
-                                IMegaNode nodeToUpdateInView = folder.ChildNodes.FirstOrDefault(
+                                IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
                                     node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
 
                                 if (nodeToUpdateInView != null)
@@ -483,7 +483,7 @@ namespace MegaApp.MegaApi
         /// <param name="folder">Folder view to update</param>
         private static void UpdateFolders(FolderViewModel folder)
         {
-            foreach (var folderNode in folder.ChildNodes
+            foreach (var folderNode in folder.ItemCollection.Items
                 .Where(f => f is FolderNodeViewModel)
                 .Cast<FolderNodeViewModel>()
                 .ToList())

@@ -1,4 +1,6 @@
-﻿using Windows.Storage;
+﻿using System.Threading.Tasks;
+using Windows.Storage;
+using BackgroundTaskService.MegaApi;
 using mega;
 using MegaApp.MegaApi;
 
@@ -70,6 +72,53 @@ namespace MegaApp.Services
                 AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
+        }
+
+        /// <summary>
+        /// Locate the Camera Uploads folder node to use as parent for the uploads
+        /// </summary>
+        /// <returns>Camera Uploads root folder node</returns>
+        public static async Task<MNode> GetCameraUploadRootNodeAsync()
+        {
+            // First try to retrieve the Cloud Drive root node
+            var rootNode = MegaSdk.getRootNode();
+            if (rootNode == null) return null;
+
+            // Locate the camera upload node
+            var cameraUploadNode = FindCameraUploadNode(rootNode);
+
+            // If node found, return the node
+            if (cameraUploadNode != null) return cameraUploadNode;
+
+            // If node not found, create a new Camera Uploads node
+            var createFolder = new CreateFolderRequestListenerAsync();
+            var result = await createFolder.ExecuteAsync(() =>
+            {
+                MegaSdk.createFolder("Camera Uploads", rootNode, createFolder);
+            });
+            return result ? FindCameraUploadNode(rootNode) : null;
+        }
+
+        /// <summary>
+        /// Locate the Camera Uploads folder node in the specified root
+        /// </summary>
+        /// <param name="rootNode">Current root node</param>
+        /// <returns>Camera Uploads folder node in</returns>
+        private static MNode FindCameraUploadNode(MNode rootNode)
+        {
+            var childs = MegaSdk.getChildren(rootNode);
+
+            for (var x = 0; x < childs.size(); x++)
+            {
+                var node = childs.get(x);
+                // Camera Uploads is a folder
+                if (node.getType() != MNodeType.TYPE_FOLDER) continue;
+                // Check the folder name
+                if (!node.getName().ToLower().Equals("camera uploads")) continue;
+                return node;
+            }
+
+            return null;
         }
 
     }

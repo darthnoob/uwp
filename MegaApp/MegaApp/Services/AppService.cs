@@ -316,10 +316,10 @@ namespace MegaApp.Services
             //    if (App.MainPageViewModel == null) return;
 
             //    if (App.MainPageViewModel.CloudDrive != null)
-            //        App.MainPageViewModel.CloudDrive.ChildNodes.Clear();
+            //        App.MainPageViewModel.CloudDrive.ItemCollection.Clear();
 
             //    if (App.MainPageViewModel.RubbishBin != null)
-            //        App.MainPageViewModel.RubbishBin.ChildNodes.Clear();
+            //        App.MainPageViewModel.RubbishBin.ItemCollection.Clear();
             //});
             AppService.ClearAppCache(false);
 
