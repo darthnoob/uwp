@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using MegaApp.Enums;
+using mega;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Classes
@@ -13,13 +13,13 @@ namespace MegaApp.Classes
     {
         public TransferQueue()
         {
-            this.QueuePaused = true;
-
             this.Uploads = new ObservableCollection<TransferObjectModel>();
             this.Downloads = new ObservableCollection<TransferObjectModel>();
+            this.Completed = new ObservableCollection<TransferObjectModel>();
 
             this.Uploads.CollectionChanged += OnCollectionChanged;
             this.Downloads.CollectionChanged += OnCollectionChanged;
+            this.Completed.CollectionChanged += OnCollectionChanged;
         }
 
         /// <summary>
@@ -33,11 +33,36 @@ namespace MegaApp.Classes
 
             switch (transferObjectModel.Type)
             {
-                case TransferType.Download:
+                case MTransferType.TYPE_DOWNLOAD:
                     Sort(this.Downloads, transferObjectModel);
                     break;
-                case TransferType.Upload:
+                case MTransferType.TYPE_UPLOAD:
                     Sort(this.Uploads, transferObjectModel);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
+        /// Remove a transfer to the Transfer Queue.
+        /// </summary>
+        /// <param name="transferObjectModel">Transfer to remove</param>
+        public void Remove(TransferObjectModel transferObjectModel)
+        {
+            if (transferObjectModel.TransferState == MTransferState.STATE_COMPLETED)
+            {
+                this.Completed.Remove(transferObjectModel);
+                return;
+            }
+
+            switch (transferObjectModel.Type)
+            {
+                case MTransferType.TYPE_DOWNLOAD:
+                    this.Downloads.Remove(transferObjectModel);
+                    break;
+                case MTransferType.TYPE_UPLOAD:
+                    this.Uploads.Remove(transferObjectModel);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -83,11 +108,11 @@ namespace MegaApp.Classes
 
         private void OnStatusPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (!e.PropertyName.Equals("Status")) return;
+            if (!e.PropertyName.Equals("TransferState")) return;
 
             var transferObjectModel = sender as TransferObjectModel;
             if (transferObjectModel == null) return;
-            Sort(transferObjectModel.Type == TransferType.Download ? this.Downloads : this.Uploads, transferObjectModel);
+            Sort(transferObjectModel.Type == MTransferType.TYPE_DOWNLOAD ? this.Downloads : this.Uploads, transferObjectModel);
         }
 
         public static void Sort(ObservableCollection<TransferObjectModel> transferList, 
@@ -102,7 +127,7 @@ namespace MegaApp.Classes
 
             for (var i = 0; i <= count; i++)
             {
-                if ((int)transferObject.Status > (int)transferList[i].Status) continue;
+                if ((int)transferObject.TransferPriority > (int)transferList[i].TransferPriority) continue;
 
                 if (move)
                 {
@@ -127,13 +152,13 @@ namespace MegaApp.Classes
             else
             {
                 transferList.Add(transferObject);
-            }   
+            }
         }
 
         public ObservableCollection<TransferObjectModel> Uploads { get; }
 
         public ObservableCollection<TransferObjectModel> Downloads { get; }
 
-        public bool QueuePaused { get; set; }
+        public ObservableCollection<TransferObjectModel> Completed { get; }
     }
 }

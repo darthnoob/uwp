@@ -13,6 +13,9 @@ namespace MegaApp.MegaApi
     {
         private readonly AppInformation _appInformation;
 
+        public event EventHandler<MNode> NodeAdded;
+        public event EventHandler<MNode> NodeRemoved;
+
         public GlobalListener(AppInformation appInformation)
         {
             _appInformation = appInformation;
@@ -37,7 +40,7 @@ namespace MegaApp.MegaApi
 
                 for (int i = 0; i < listSize; i++)
                 {
-                    bool isProcessed = false;
+                    //bool isProcessed = false;
                     
                     // Get the specific node that has an update. If null exit the method
                     // and process no notification
@@ -47,68 +50,70 @@ namespace MegaApp.MegaApi
                     // PROCESS THE FOLDERS LISTENERS
                     if (megaNode.isRemoved())
                     {
+                        OnNodeRemoved(megaNode);
                         // REMOVED Scenario
 
-                        foreach (var folder in this.Folders)
-                        {
-                            IMegaNode nodeToRemoveFromView = folder.ItemCollection.Items.FirstOrDefault(
-                                node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
+                    //    foreach (var folder in this.Folders)
+                    //    {
+                    //        IMegaNode nodeToRemoveFromView = folder.ItemCollection.Items.FirstOrDefault(
+                    //            node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
                             
-                            // If node is found in current view, process the remove action
-                            if (nodeToRemoveFromView != null)
-                            {
-                                // Needed because we are in a foreach loop to prevent the use of the wrong 
-                                // local variable in the dispatcher code.
-                                var currentFolder = folder;
-                                UiService.OnUiThread(() =>
-                                {
-                                    try
-                                    {
-                                        currentFolder.ItemCollection.Items.Remove(nodeToRemoveFromView);
-                                        ((FolderNodeViewModel) currentFolder.FolderRootNode).SetFolderInfo();
-                                    }
-                                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                });
+                    //        // If node is found in current view, process the remove action
+                    //        if (nodeToRemoveFromView != null)
+                    //        {
+                    //            // Needed because we are in a foreach loop to prevent the use of the wrong 
+                    //            // local variable in the dispatcher code.
+                    //            var currentFolder = folder;
+                    //            UiService.OnUiThread(() =>
+                    //            {
+                    //                try
+                    //                {
+                    //                    currentFolder.ItemCollection.Items.Remove(nodeToRemoveFromView);
+                    //                    ((FolderNodeViewModel) currentFolder.FolderRootNode).SetFolderInfo();
+                    //                }
+                    //                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    //            });
                                 
-                                isProcessed = true;
-                                break;
-                            }
-                        }
+                    //            isProcessed = true;
+                    //            break;
+                    //        }
+                    //    }
 
-                        if (!isProcessed)
-                        {
-                            // REMOVED in subfolder scenario
+                    //    if (!isProcessed)
+                    //    {
+                    //        // REMOVED in subfolder scenario
 
-                            MNode parentNode = api.getParentNode(megaNode);
+                    //        MNode parentNode = api.getParentNode(megaNode);
                             
-                            if(parentNode != null)
-                            {
-                                foreach (var folder in this.Folders)
-                                {
-                                    IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
-                                        node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
+                    //        if(parentNode != null)
+                    //        {
+                    //            foreach (var folder in this.Folders)
+                    //            {
+                    //                IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
+                    //                    node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
 
-                                    // If parent folder is found, process the update action
-                                    if (nodeToUpdateInView != null)
-                                    {
-                                        UiService.OnUiThread(() =>
-                                        {
-                                            try
-                                            {
-                                                nodeToUpdateInView.Update(parentNode);
-                                                var folderNode = nodeToUpdateInView as FolderNodeViewModel;
-                                                folderNode?.SetFolderInfo();
-                                            }
-                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                        });
-                                    }
-                                }
-                            }
-                        }
+                    //                // If parent folder is found, process the update action
+                    //                if (nodeToUpdateInView != null)
+                    //                {
+                    //                    UiService.OnUiThread(() =>
+                    //                    {
+                    //                        try
+                    //                        {
+                    //                            nodeToUpdateInView.Update(parentNode, true);
+                    //                            var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                    //                            folderNode?.SetFolderInfo();
+                    //                        }
+                    //                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    //                    });
+                    //                }
+                    //            }
+                    //        }
+                    //    }
                     }
                     // UPDATE / ADDED scenarions
                     else
                     {
+                        OnNodeAdded(megaNode);
                         // UPDATE Scenario
 
                         // PROCESS THE SINGLE NODE(S) LISTENER(S) (NodeDetailsPage live updates)
@@ -119,142 +124,142 @@ namespace MegaApp.MegaApi
                         //}
 
                         // Used in different scenario's
-                        MNode parentNode = api.getParentNode(megaNode);
+                        //MNode parentNode = api.getParentNode(megaNode);
 
-                        foreach (var folder in this.Folders)
-                        {
-                            IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
-                                node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
+                        //foreach (var folder in this.Folders)
+                        //{
+                        //    IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
+                        //        node => node.Base64Handle.Equals(megaNode.getBase64Handle()));
 
-                            // If node is found, process the update action
-                            if (nodeToUpdateInView != null)
-                            {
-                                bool isMoved = !folder.FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+                        //    // If node is found, process the update action
+                        //    if (nodeToUpdateInView != null)
+                        //    {
+                        //        bool isMoved = !folder.FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
 
-                                // Is node is move to different folder. Remove from current folder view
-                                if (isMoved)
-                                {
-                                    // Needed because we are in a foreach loop to prevent the use of the wrong 
-                                    // local variable in the dispatcher code.
-                                    var currentFolder = folder;
-                                    UiService.OnUiThread(() =>
-                                    {
-                                        try
-                                        {
-                                            currentFolder.ItemCollection.Items.Remove(nodeToUpdateInView);
-                                            ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
-                                            UpdateFolders(currentFolder);
-                                        }
-                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                    });
+                        //        // Is node is move to different folder. Remove from current folder view
+                        //        if (isMoved)
+                        //        {
+                        //            // Needed because we are in a foreach loop to prevent the use of the wrong 
+                        //            // local variable in the dispatcher code.
+                        //            var currentFolder = folder;
+                        //            UiService.OnUiThread(() =>
+                        //            {
+                        //                try
+                        //                {
+                        //                    currentFolder.ItemCollection.Items.Remove(nodeToUpdateInView);
+                        //                    ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
+                        //                    UpdateFolders(currentFolder);
+                        //                }
+                        //                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //            });
                                     
-                                }
-                                // Node is updated with new data. Update node in current view
-                                else
-                                {
-                                    UiService.OnUiThread(() =>
-                                    {
-                                        try { nodeToUpdateInView.Update(megaNode); }
-                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                    });
-                                    isProcessed = true;
-                                    break;
-                                }
+                        //        }
+                        //        // Node is updated with new data. Update node in current view
+                        //        else
+                        //        {
+                        //            UiService.OnUiThread(() =>
+                        //            {
+                        //                try { nodeToUpdateInView.Update(megaNode, true); }
+                        //                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //            });
+                        //            isProcessed = true;
+                        //            break;
+                        //        }
                                
-                            }
-                        }
+                        //    }
+                        //}
                         
-                        // ADDED scenario
+                        //// ADDED scenario
                         
-                        if (parentNode != null && !isProcessed)
-                        {
-                            foreach (var folder in this.Folders)
-                            {
-                                bool isAddedInFolder = folder.FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+                        //if (parentNode != null && !isProcessed)
+                        //{
+                        //    foreach (var folder in this.Folders)
+                        //    {
+                        //        bool isAddedInFolder = folder.FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
 
-                                // If node is added in current folder, process the add action
-                                if (isAddedInFolder)
-                                {
-                                    // Retrieve the index from the SDK
-                                    // Substract -1 to get a valid list index
-                                    int insertIndex = api.getIndex(megaNode,
-                                        UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
+                        //        // If node is added in current folder, process the add action
+                        //        if (isAddedInFolder)
+                        //        {
+                        //            // Retrieve the index from the SDK
+                        //            // Substract -1 to get a valid list index
+                        //            int insertIndex = api.getIndex(megaNode,
+                        //                UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
 
-                                    // If the insert position is higher than the ChilNodes size insert in the last position
-                                    if (insertIndex >= folder.ItemCollection.Items.Count())
-                                    {
-                                        // Needed because we are in a foreach loop to prevent the use of the wrong 
-                                        // local variable in the dispatcher code.
-                                        var currentFolder = folder;
-                                        UiService.OnUiThread(() =>
-                                        {
-                                            try
-                                            {
-                                                currentFolder.ItemCollection.Items.Add(NodeService.CreateNew(api,
-                                                    _appInformation, megaNode, currentFolder));
+                        //            // If the insert position is higher than the ChilNodes size insert in the last position
+                        //            if (insertIndex >= folder.ItemCollection.Items.Count())
+                        //            {
+                        //                // Needed because we are in a foreach loop to prevent the use of the wrong 
+                        //                // local variable in the dispatcher code.
+                        //                var currentFolder = folder;
+                        //                UiService.OnUiThread(() =>
+                        //                {
+                        //                    try
+                        //                    {
+                        //                        currentFolder.ItemCollection.Items.Add(NodeService.CreateNew(api,
+                        //                            _appInformation, megaNode, currentFolder));
                                                 
-                                                ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
-                                                UpdateFolders(currentFolder);
-                                            }
-                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                        });
-                                    }
-                                    // Insert the node at a specific position
-                                    else
-                                    {
-                                        // Insert position can never be less then zero
-                                        // Replace negative index with first possible index zero
-                                        if (insertIndex < 0) insertIndex = 0;
+                        //                        ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
+                        //                        UpdateFolders(currentFolder);
+                        //                    }
+                        //                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //                });
+                        //            }
+                        //            // Insert the node at a specific position
+                        //            else
+                        //            {
+                        //                // Insert position can never be less then zero
+                        //                // Replace negative index with first possible index zero
+                        //                if (insertIndex < 0) insertIndex = 0;
 
-                                        // Needed because we are in a foreach loop to prevent the use of the wrong 
-                                        // local variable in the dispatcher code.
-                                        var currentFolder = folder;
-                                        UiService.OnUiThread(() =>
-                                        {
-                                            try
-                                            {
-                                                currentFolder.ItemCollection.Items.Insert(insertIndex,
-                                                    NodeService.CreateNew(api, _appInformation, megaNode, currentFolder));
+                        //                // Needed because we are in a foreach loop to prevent the use of the wrong 
+                        //                // local variable in the dispatcher code.
+                        //                var currentFolder = folder;
+                        //                UiService.OnUiThread(() =>
+                        //                {
+                        //                    try
+                        //                    {
+                        //                        currentFolder.ItemCollection.Items.Insert(insertIndex,
+                        //                            NodeService.CreateNew(api, _appInformation, megaNode, currentFolder));
 
-                                                ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
-                                                UpdateFolders(currentFolder);
-                                            }
-                                            catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                        });
-                                    }
+                        //                        ((FolderNodeViewModel)currentFolder.FolderRootNode).SetFolderInfo();
+                        //                        UpdateFolders(currentFolder);
+                        //                    }
+                        //                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //                });
+                        //            }
                                       
-                                    break;
-                                }
+                        //            break;
+                        //        }
                                     
-                                // ADDED in subfolder scenario
-                                IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
-                                    node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
+                        //        // ADDED in subfolder scenario
+                        //        IMegaNode nodeToUpdateInView = folder.ItemCollection.Items.FirstOrDefault(
+                        //            node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
 
-                                if (nodeToUpdateInView != null)
-                                {
-                                    UiService.OnUiThread(() =>
-                                    {
-                                        try
-                                        {
-                                            nodeToUpdateInView.Update(parentNode);
-                                            var folderNode = nodeToUpdateInView as FolderNodeViewModel;
-                                            if (folderNode != null) folderNode.SetFolderInfo();
-                                        }
-                                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                    });
-                                    break;
-                                }
+                        //        if (nodeToUpdateInView != null)
+                        //        {
+                        //            UiService.OnUiThread(() =>
+                        //            {
+                        //                try
+                        //                {
+                        //                    nodeToUpdateInView.Update(parentNode, true);
+                        //                    var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                        //                    if (folderNode != null) folderNode.SetFolderInfo();
+                        //                }
+                        //                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //            });
+                        //            break;
+                        //        }
 
-                                // Unconditional scenarios
-                                // Move/delete/add actions in subfolders
-                                var localFolder = folder;
-                                UiService.OnUiThread(() =>
-                                {
-                                    try { UpdateFolders(localFolder); }
-                                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
-                                });
-                            }
-                        }
+                        //        // Unconditional scenarios
+                        //        // Move/delete/add actions in subfolders
+                        //        var localFolder = folder;
+                        //        UiService.OnUiThread(() =>
+                        //        {
+                        //            try { UpdateFolders(localFolder); }
+                        //            catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        //        });
+                        //    }
+                        //}
                     }
                 }                
             }
@@ -503,5 +508,15 @@ namespace MegaApp.MegaApi
         //public IList<MyAccountPageViewModel> Accounts { get; private set; }
 
         #endregion
+
+        protected virtual void OnNodeAdded(MNode e)
+        {
+            NodeAdded?.Invoke(this, e);
+        }
+
+        protected virtual void OnNodeRemoved(MNode e)
+        {
+            NodeRemoved?.Invoke(this, e);
+        }
     }
 }

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="4b1bdd72-4d47-4081-80b8-5d0673700c46" Publisher="CN=Curtis Goedegebuure" Version="1.1.0.0" />
+  <Identity Name="MegaLimited.MEGAPrivacybeta" Publisher="CN=78B72E51-6188-4F93-9245-24D5C79F8840" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="4b1bdd72-4d47-4081-80b8-5d0673700c46" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>MEGA Privacy</DisplayName>
+    <DisplayName>MEGA Privacy (beta)</DisplayName>
     <PublisherDisplayName>Mega Limited</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MegaApp.App">
-      <uap:VisualElements DisplayName="MEGA Privacy" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="MEGA Cloud Service Application" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="MEGA Privacy (beta)" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="MEGA Cloud Service Application" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />

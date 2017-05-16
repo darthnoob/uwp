@@ -2,11 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:classes="using:MegaApp.Classes"
     xmlns:converters="using:MegaApp.Converters"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:selectors="using:MegaApp.Classes"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters">
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:userControls="using:MegaApp.UserControls">
 
     <!--  Resource dictionary entries should be defined here.  -->
 
@@ -29,22 +30,82 @@
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter" />
-    <converters:TransferStatusToReadableTextConverter x:Key="TransferStatusToReadableTextConverter" />
+    <converters:TransferStateToReadableTextConverter x:Key="TransferStateToReadableTextConverter" />
+    <converters:TransferStateToVisibilityConverter x:Key="TransferStateToVisibilityConverter" />
+    <converters:TransferTypeToSymbolConverter x:Key="TransferTypeToSymbolConverter" />
     <converters:ViewStateToVisibilityConverter x:Key="ViewStateToVisibilityConverter" />
     <toolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <toolkit:BoolToObjectConverter
         x:Key="InverseBoolToVisibilityConverter"
         FalseValue="Visible"
         TrueValue="Collapsed" />
+    <toolkit:BoolToObjectConverter
+        x:Key="InverseBoolConverter"
+        FalseValue="True"
+        TrueValue="False" />
     <toolkit:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+    <toolkit:EmptyStringToObjectConverter
+        x:Key="InverseStringVisibilityConverter"
+        EmptyValue="Visible"
+        NotEmptyValue="Collapsed" />
 
     <!--  SELECTORS  -->
-    <selectors:NodeTemplateSelector
+    <classes:NodeTemplateSelector
         x:Key="NodeTemplateSelector"
         FileItemTemplate="{StaticResource MegaNodeListViewFileItemContent}"
         FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}" />
 
     <!--  TEMPLATES  -->
+    <ControlTemplate x:Name="EmptyStateTemplate">
+        <userControls:EmptyState
+            x:Name="EmptyState"
+            VerticalContentAlignment="Center"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HeaderText="{Binding EmptyStateHeaderText}"
+            IsVisible="{Binding IsEmpty}"
+            SubHeaderMargin="0,14,0,0"
+            SubHeaderText="{Binding EmptyStateSubHeaderText}">
+            <userControls:EmptyState.SubHeaderForeground>
+                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:EmptyState.SubHeaderForeground>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Small">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="0" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="16,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="24" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="16" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Normal">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="600" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="97,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="24" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="16" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Wide">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="1200" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="EmptyState.Padding" Value="178,0,0,16" />
+                            <Setter Target="EmptyState.HeaderFontSize" Value="44" />
+                            <Setter Target="EmptyState.SubHeaderFontSize" Value="18" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </userControls:EmptyState>
+    </ControlTemplate>
+
     <DataTemplate x:Key="MegaPageHeaderLogo">
         <Border
             Width="44"
@@ -140,6 +201,10 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -150,7 +215,11 @@
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
@@ -195,10 +264,9 @@
                         Margin="0,0,12,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Canvas.ZIndex="0"
                         Data="{Binding DefaultImagePathData}"
                         Stretch="Uniform"
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                         <Path.Fill>
                             <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                         </Path.Fill>
@@ -209,9 +277,8 @@
                         Margin="0,0,12,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Canvas.ZIndex="1"
                         Stretch="UniformToFill"
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                         <Image.Source>
                             <BitmapImage
                                 DecodePixelHeight="36"
@@ -219,6 +286,17 @@
                                 UriSource="{Binding ThumbnailImageUri}" />
                         </Image.Source>
                     </Image>
+                    <Ellipse
+                        Width="12"
+                        Height="12"
+                        Margin="-3,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Canvas.ZIndex="1"
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        StrokeThickness="1"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
                 </Grid>
 
                 <TextBlock
@@ -259,10 +337,17 @@
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderThickness="1">
-            <Grid Width="96" Background="Transparent">
+            <Grid
+                Width="96"
+                Margin="4"
+                Background="Transparent">
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
@@ -274,7 +359,11 @@
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
@@ -311,7 +400,7 @@
                     VerticalAlignment="Center"
                     Data="{Binding DefaultImagePathData}"
                     Stretch="Uniform"
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                     <Path.Fill>
                         <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
                     </Path.Fill>
@@ -321,7 +410,7 @@
                     Width="96"
                     Height="96"
                     Stretch="UniformToFill"
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                     <Image.Source>
                         <BitmapImage
                             DecodePixelHeight="96"
@@ -329,16 +418,247 @@
                             UriSource="{Binding ThumbnailImageUri}" />
                     </Image.Source>
                 </Image>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Text="{Binding Name}"
+                        TextAlignment="Center"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <Ellipse
+                        Grid.Column="1"
+                        Width="8"
+                        Height="8"
+                        Margin="4,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaNodeListViewFolderItemContent">
+        <Border
+            Margin="-12,1"
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="2,2,2,2">
+            <Grid Margin="12,4" Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding DownloadCommand}"
+                                Text="{Binding DownloadText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding GetLinkCommand}"
+                                Text="{Binding GetLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding RenameCommand}"
+                                Text="{Binding RenameText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding CopyOrMoveCommand}"
+                                Text="{Binding CopyOrMoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding MoveToRubbishBinCommand}"
+                                Text="{Binding MoveToRubbishBinText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0">
+                    <Path
+                        Width="36"
+                        Height="36"
+                        Margin="0,0,12,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{Binding DefaultImagePathData}"
+                        Stretch="Uniform">
+                        <Path.Fill>
+                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                        </Path.Fill>
+                    </Path>
+                    <Ellipse
+                        Width="12"
+                        Height="12"
+                        Margin="-3,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Canvas.ZIndex="1"
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        StrokeThickness="1"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
+
                 <TextBlock
-                    Grid.Row="1"
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Bottom"
+                    x:Name="txtFolderName"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Style="{ThemeResource BaseTextBlockStyle}"
                     Text="{Binding Name}"
-                    TextAlignment="Center"
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="NoWrap" />
+                <TextBlock
+                    x:Name="txtCount"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding Information}"
+                    TextWrapping="NoWrap" />
+                <TextBlock
+                    x:Name="txtCreated"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding CreationTime}"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaNodeGridViewFolderItemContent">
+        <Border
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="1">
+            <Grid
+                Width="96"
+                Margin="4"
+                Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding DownloadCommand}"
+                                Text="{Binding DownloadText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding GetLinkCommand}"
+                                Text="{Binding GetLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding RenameCommand}"
+                                Text="{Binding RenameText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding CopyOrMoveCommand}"
+                                Text="{Binding CopyOrMoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding MoveToRubbishBinCommand}"
+                                Text="{Binding MoveToRubbishBinText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Path
+                    Width="64"
+                    Height="64"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding DefaultImagePathData}"
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Text="{Binding Name}"
+                        TextAlignment="Center"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <Ellipse
+                        Grid.Column="1"
+                        Width="8"
+                        Height="8"
+                        Margin="4,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Fill="{ThemeResource MegaRedColorBrush}"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </Grid>
             </Grid>
         </Border>
     </DataTemplate>
@@ -404,10 +724,9 @@
                         Margin="0,0,12,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Canvas.ZIndex="0"
                         Data="{Binding DefaultImagePathData}"
                         Stretch="Uniform"
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                         <Path.Fill>
                             <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                         </Path.Fill>
@@ -517,13 +836,14 @@
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Path
+                    Grid.Row="0"
                     Width="96"
                     Height="96"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding DefaultImagePathData}"
                     Stretch="Uniform"
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                     <Path.Fill>
                         <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
                     </Path.Fill>
@@ -540,180 +860,6 @@
                             UriSource="{Binding ThumbnailImageUri}" />
                     </Image.Source>
                 </Image>
-            </Grid>
-        </Border>
-    </DataTemplate>
-
-    <DataTemplate x:Key="MegaNodeListViewFolderItemContent">
-        <Border
-            Margin="-12,1"
-            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
-            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
-            BorderThickness="2,2,2,2">
-            <Grid Margin="12,4" Background="Transparent">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout>
-                        <MenuFlyout.Items>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding GetLinkCommand}"
-                                Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding RenameCommand}"
-                                Text="{Binding RenameText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                        </MenuFlyout.Items>
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <Grid
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="0">
-                    <Path
-                        Width="36"
-                        Height="36"
-                        Margin="0,0,12,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Canvas.ZIndex="0"
-                        Data="{Binding DefaultImagePathData}"
-                        Stretch="Uniform">
-                        <Path.Fill>
-                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                        </Path.Fill>
-                    </Path>
-                </Grid>
-
-                <TextBlock
-                    x:Name="txtFolderName"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource BaseTextBlockStyle}"
-                    Text="{Binding Name}"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
-                <TextBlock
-                    x:Name="txtCount"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding Information}"
-                    TextWrapping="NoWrap" />
-                <TextBlock
-                    x:Name="txtCreated"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding CreationTime}"
-                    TextWrapping="NoWrap" />
-            </Grid>
-        </Border>
-    </DataTemplate>
-
-    <DataTemplate x:Key="MegaNodeGridViewFolderItemContent">
-        <Border
-            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
-            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
-            BorderThickness="1">
-            <Grid Width="96" Background="Transparent">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout>
-                        <MenuFlyout.Items>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding GetLinkCommand}"
-                                Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding RenameCommand}"
-                                Text="{Binding RenameText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                        </MenuFlyout.Items>
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="96" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Path
-                    Width="64"
-                    Height="64"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Data="{Binding DefaultImagePathData}"
-                    Stretch="Uniform">
-                    <Path.Fill>
-                        <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
-                    </Path.Fill>
-                </Path>
-                <TextBlock
-                    Grid.Row="1"
-                    Margin="0,4,0,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource BaseTextBlockStyle}"
-                    Text="{Binding Name}"
-                    TextAlignment="Center"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -740,12 +886,31 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="MegaTransferItemContent">
+    <DataTemplate x:Key="MegaTransferItemContentMobile">
         <Grid Margin="0,8" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
-                        <MenuFlyoutItem Command="{Binding CancelTransferCommand}" Text="{Binding CancelText}" />
+                        <MenuFlyoutItem
+                            Command="{Binding PauseOrResumeTransferCommand}"
+                            Text="{Binding PauseText}"
+                            Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding PauseOrResumeTransferCommand}"
+                            Text="{Binding ResumeText}"
+                            Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding CancelTransferCommand}"
+                            Text="{Binding CancelText}"
+                            Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RetryTransferCommand}"
+                            Text="{Binding RetryText}"
+                            Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveTransferCommand}"
+                            Text="{Binding RemoveText}"
+                            Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -768,14 +933,14 @@
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="0"
-                Width="64"
-                Height="64"
+                Width="36"
+                Height="36"
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Data="{Binding FileTypePathData}"
                 Stretch="Uniform"
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                 <Path.Fill>
                     <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
                 </Path.Fill>
@@ -784,39 +949,24 @@
                 Grid.Row="0"
                 Grid.RowSpan="3"
                 Grid.Column="0"
-                Width="64"
-                Height="64"
+                Width="36"
+                Height="36"
                 Margin="0,0,8,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Stretch="UniformToFill"
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource StringVisibilityConverter}}">
                 <Image.Source>
                     <BitmapImage
-                        DecodePixelHeight="64"
+                        DecodePixelHeight="36"
                         DecodePixelType="Logical"
-                        DecodePixelWidth="64"
+                        DecodePixelWidth="36"
                         UriSource="{Binding ThumbnailUri}" />
                 </Image.Source>
             </Image>
-            <Border
-                Grid.RowSpan="3"
-                Width="64"
-                Height="64"
-                Margin="0,0,8,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                BorderThickness="2"
-                Canvas.ZIndex="1"
-                Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <Border.BorderBrush>
-                    <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
-                </Border.BorderBrush>
-            </Border>
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="1"
-                Margin="0,0,0,-6"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 Style="{ThemeResource BaseTextBlockStyle}"
@@ -825,56 +975,348 @@
             <ProgressBar
                 Grid.Row="1"
                 Grid.Column="1"
-                Margin="0,0,0,0"
                 VerticalAlignment="Center"
+                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
                 IsIndeterminate="False"
                 Maximum="{Binding TotalBytes}"
                 Minimum="0"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
                 Value="{Binding TransferedBytes}">
                 <ProgressBar.Foreground>
                     <SolidColorBrush Color="{StaticResource MegaRedColor}" />
                 </ProgressBar.Foreground>
-                <ProgressBar.Background>
-                    <SolidColorBrush Opacity="0.3" Color="White" />
-                </ProgressBar.Background>
             </ProgressBar>
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0,-6,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Foreground="{StaticResource MegaAppForegroundBrush}"
-                Style="{ThemeResource CaptionTextBlockStyle}"
-                Text="{Binding Status, Converter={StaticResource TransferStatusToReadableTextConverter}}"
-                TextWrapping="Wrap" />
-            <TextBlock
-                Grid.Row="2"
-                Grid.Column="1"
-                Margin="0,-6,0,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Foreground="{StaticResource MegaAppForegroundBrush}"
-                Style="{ThemeResource CaptionTextBlockStyle}"
-                Text="{Binding TransferSpeed}"
-                TextWrapping="Wrap" />
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding TotalBytesText}"
+                    TextWrapping="NoWrap"
+                    Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                <TextBlock
+                    Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding TransferedAndTotalBytes}"
+                    TextWrapping="NoWrap"
+                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <Viewbox
+                    Grid.Column="1"
+                    MaxWidth="12"
+                    MaxHeight="12"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center">
+                    <SymbolIcon Foreground="{StaticResource MegaAppForegroundBrush}" Symbol="{Binding Type, Converter={StaticResource TransferTypeToSymbolConverter}}" />
+                </Viewbox>
+                <TextBlock
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding TypeAndState, Converter={StaticResource TransferStateToReadableTextConverter}}"
+                    TextWrapping="NoWrap"
+                    Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                <TextBlock
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding EstimatedTime}"
+                    TextWrapping="NoWrap"
+                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </Grid>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.Column="2"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding CancelTransferCommand}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Cancel"
+                        ToolTipService.ToolTip="{Binding CancelText}" />
+                </Viewbox>
+            </Button>
         </Grid>
     </DataTemplate>
 
-
+    <DataTemplate x:Key="MegaTransferItemContentDesktop">
+        <Grid Margin="0,8" Background="Transparent">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding PauseOrResumeTransferCommand}"
+                            Text="{Binding PauseText}"
+                            Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding PauseOrResumeTransferCommand}"
+                            Text="{Binding ResumeText}"
+                            Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding CancelTransferCommand}"
+                            Text="{Binding CancelText}"
+                            Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RetryTransferCommand}"
+                            Text="{Binding RetryText}"
+                            Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveTransferCommand}"
+                            Text="{Binding RemoveText}"
+                            Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsActionAvailable}" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="70" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Path
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding FileTypePathData}"
+                Stretch="Uniform"
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                <Path.Fill>
+                    <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
+                Visibility="{Binding ThumbnailUri, Converter={StaticResource StringVisibilityConverter}}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelType="Logical"
+                        DecodePixelWidth="36"
+                        UriSource="{Binding ThumbnailUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{ThemeResource BaseTextBlockStyle}"
+                Text="{Binding DisplayName}"
+                TextTrimming="WordEllipsis" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{Binding TotalBytesText}"
+                TextWrapping="NoWrap"
+                Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="2"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{Binding TransferedAndTotalBytes}"
+                TextWrapping="NoWrap"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Viewbox
+                Grid.Row="0"
+                Grid.Column="3"
+                MaxWidth="16"
+                MaxHeight="16"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <SymbolIcon Foreground="{StaticResource MegaAppForegroundBrush}" Symbol="{Binding Type, Converter={StaticResource TransferTypeToSymbolConverter}}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="4"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{Binding EstimatedTime}"
+                TextWrapping="NoWrap"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="4"
+                Margin="0,0,8,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{Binding TypeAndState, Converter={StaticResource TransferStateToReadableTextConverter}}"
+                TextWrapping="NoWrap"
+                Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+            <ProgressBar
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="4"
+                Margin="0,0,0,8"
+                VerticalAlignment="Top"
+                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
+                IsIndeterminate="False"
+                Maximum="{Binding TotalBytes}"
+                Minimum="0"
+                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"
+                Value="{Binding TransferedBytes}">
+                <ProgressBar.Foreground>
+                    <SolidColorBrush Color="{StaticResource MegaRedColor}" />
+                </ProgressBar.Foreground>
+            </ProgressBar>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="5"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding PauseOrResumeTransferCommand}"
+                Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Pause"
+                        ToolTipService.ToolTip="{Binding PauseText}" />
+                </Viewbox>
+            </Button>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="5"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding PauseOrResumeTransferCommand}"
+                Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Play"
+                        ToolTipService.ToolTip="{Binding ResumeText}" />
+                </Viewbox>
+            </Button>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="5"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding RetryTransferCommand}"
+                Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Refresh"
+                        ToolTipService.ToolTip="{Binding RetryText}" />
+                </Viewbox>
+            </Button>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="6"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding RemoveTransferCommand}"
+                Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Delete"
+                        ToolTipService.ToolTip="{Binding RemoveText}" />
+                </Viewbox>
+            </Button>
+            <Button
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="6"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding CancelTransferCommand}"
+                Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                <Viewbox MaxWidth="16" MaxHeight="16">
+                    <SymbolIcon
+                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                        Symbol="Cancel"
+                        ToolTipService.ToolTip="{Binding CancelText}" />
+                </Viewbox>
+            </Button>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

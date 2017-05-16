@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using mega;
+using MegaApp.ViewModels;
 
 namespace MegaApp.Services
 {
@@ -265,6 +266,21 @@ namespace MegaApp.Services
                 });
 
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Update information of all folder nodes in a folder view
+        /// </summary>
+        /// <param name="folder">Folder view to update</param>
+        public static void UpdateFolders(FolderViewModel folder)
+        {
+            foreach (var folderNode in folder.ItemCollection.Items
+                .Where(f => f is FolderNodeViewModel)
+                .Cast<FolderNodeViewModel>()
+                .ToList())
+            {
+                folderNode.SetFolderInfo();
             }
         }
     }    

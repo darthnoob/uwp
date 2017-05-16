@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
-using Windows.Storage;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Security.ExchangeActiveSyncProvisioning;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Views;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
@@ -122,7 +122,16 @@ namespace MegaApp.Services
         /// <returns>MegaSDK version</returns>
         public static string GetMegaSDK_Version()
         {
-            return string.Format("970e65b");
+            return ResourceService.AppResources.GetString("AR_SdkVersion");
+        }
+
+        /// <summary>
+        /// Get the MegaSDK link 
+        /// </summary>
+        /// <returns>MegaSDK link</returns>
+        public static string GetMegaSDK_Link()
+        {
+            return ResourceService.AppResources.GetString("AR_SdkLink");
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using mega;
+using MegaApp.Enums;
 
 namespace MegaApp.Services
 {
@@ -18,6 +19,28 @@ namespace MegaApp.Services
         public static bool FileExists(string path)
         {
             return File.Exists(path);
+        }
+
+        public static FileType GetFileType(string filename)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(filename) || string.IsNullOrWhiteSpace(Path.GetExtension(filename)))
+                    return FileType.TYPE_UNKNOWN;
+
+                if (ImageService.IsImage(filename))
+                    return FileType.TYPE_IMAGE;
+                else if (AudioService.IsAudio(filename))
+                    return FileType.TYPE_AUDIO;
+                else if (VideoService.IsVideo(filename))
+                    return FileType.TYPE_VIDEO;
+                else
+                    return FileType.TYPE_FILE;
+            }
+            catch (Exception)
+            {
+                return FileType.TYPE_UNKNOWN;
+            }
         }
 
         /// <summary>

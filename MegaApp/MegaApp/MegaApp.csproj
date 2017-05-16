@@ -16,8 +16,8 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>MegaApp_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>F6EA545BA641A7D4A9E642B995B59A3258EBB174</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>MegaApp_StoreKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>EA2CC66D016324B939B2AFD74671150B7829709F</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
@@ -95,6 +95,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="MegaApp_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\en\EmptyStates.resw" />
     <PRIResource Include="Strings\en\VisualResources.resw" />
     <PRIResource Include="Strings\en\UiResources.resw" />
     <PRIResource Include="Strings\en\SettingsResources.resw" />
@@ -119,10 +120,12 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
-    <Compile Include="Converters\TransferStatusToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
+    <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
@@ -135,17 +138,16 @@
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
     <Compile Include="Enums\LoginResult.cs" />
-    <Compile Include="Enums\MediaType.cs" />
+    <Compile Include="Enums\FileType.cs" />
     <Compile Include="Enums\MenuType.cs" />
     <Compile Include="Enums\NavigationActionType.cs" />
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
     <Compile Include="Enums\RelativeAlignment.cs" />
-    <Compile Include="Enums\TransferStatus.cs" />
-    <Compile Include="Enums\TransferType.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
+    <Compile Include="Extensions\CommandBarExtensions.cs" />
     <Compile Include="Extensions\KeyValuePairExtensions.cs" />
     <Compile Include="Behaviors\OpenFlyoutAction.cs" />
     <Compile Include="Extensions\SizeExtensions.cs" />
@@ -163,10 +165,13 @@
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
+    <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
@@ -180,6 +185,14 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\ShareService.cs" />
+    <Compile Include="Services\VideoService.cs" />
+    <Compile Include="UserControls\NodeDetailsPanel.cs" />
+    <Compile Include="UserControls\EmptyState.cs" />
+    <Compile Include="UserControls\TogglePanel.cs" />
+    <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
     <Compile Include="ViewModels\BreadCrumbsViewModel.cs" />
     <Compile Include="ViewModels\CameraUploadsViewModel.cs" />
     <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />

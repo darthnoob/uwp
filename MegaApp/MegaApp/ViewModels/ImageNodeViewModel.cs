@@ -18,7 +18,7 @@ namespace MegaApp.ViewModels
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             // Image node downloads to the image path of the full original image
-            Transfer = new TransferObjectModel(this, TransferType.Download, LocalDownloadPath);
+            Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
 
             DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
 
@@ -123,7 +123,7 @@ namespace MegaApp.ViewModels
         public bool InViewingRange { get; set; }
 
         private Uri _previewImageUri;
-        public Uri PreviewImageUri
+        public override Uri PreviewImageUri
         {
             get
             {

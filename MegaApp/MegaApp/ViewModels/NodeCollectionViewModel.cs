@@ -65,7 +65,7 @@ namespace MegaApp.ViewModels
                 });
             }
 
-            OnPropertyChanged("HasChildNodesBinding");
+            OnPropertyChanged("HasItems");
         }
 
         #endregion

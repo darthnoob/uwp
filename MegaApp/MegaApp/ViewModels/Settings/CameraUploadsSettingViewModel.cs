@@ -7,8 +7,6 @@ namespace MegaApp.ViewModels.Settings
 {
     public class CameraUploadsSettingViewModel: SettingViewModel<bool>
     {
-        public const string ImageDateSetting = "ImageLastUploadDate";
-
         public CameraUploadsSettingViewModel()
             : base(ResourceService.UiResources.GetString("UI_CameraUploadsTitle"), null, "CameraUploadsSettingsKey")
         {
@@ -53,7 +51,7 @@ namespace MegaApp.ViewModels.Settings
                 TaskService.CameraUploadTaskName);
 
             // Reset the date
-            SettingsService.SaveSettingToFile(ImageDateSetting, DateTime.MinValue);
+            SettingsService.SaveSettingToFile(SettingsService.ImageDateSetting, DateTime.MinValue);
 
             return true;
         }

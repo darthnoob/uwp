@@ -34,6 +34,9 @@ namespace MegaApp.ViewModels
         public event EventHandler EnableMultiSelect;
         public event EventHandler DisableMultiSelect;
 
+        public event EventHandler OpenNodeDetailsEvent;
+        public event EventHandler CloseNodeDetailsEvent;
+
         public FolderViewModel(ContainerType containerType)
         {
             this.Type = containerType;
@@ -58,11 +61,12 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
+            this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
+            this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
             //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
-            //this.ViewDetailsCommand = new DelegateCommand(this.ViewDetails);
 
             SetViewDefaults();
 
@@ -101,6 +105,213 @@ namespace MegaApp.ViewModels
                     this.ItemCollection.MoreThanOneSelected;
             else
                 this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;
+
+            if(this.ItemCollection.HasSelectedItems)
+            {
+                var focusedNode = (NodeViewModel)this.ItemCollection.SelectedItems.Last();
+                if(focusedNode is ImageNodeViewModel)
+                    (focusedNode as ImageNodeViewModel).InViewingRange = true;
+
+                this.FocusedNode = focusedNode;
+            }
+        }
+
+        //private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
+        //    if (e.NewItems != null)
+        //    {
+        //        // Start a new task to avoid freeze the UI
+        //        Task.Run(() =>
+        //        {
+        //            foreach (var node in e.NewItems)
+        //                (node as NodeViewModel)?.SetThumbnailImage();
+        //        });
+        //    }
+
+        //    OnPropertyChanged("HasChildNodesBinding");
+        //}
+
+        public void OpenNodeDetails()
+        {
+            OpenNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void CloseNodeDetails()
+        {
+            CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnNodeAdded(object sender, MNode mNode)
+        {
+            if (mNode == null) return;
+
+            var isProcessed = false;
+
+            var parentNode = this.MegaSdk.getParentNode(mNode);
+
+            var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            if (nodeToUpdateInView != null)
+            {
+                var isMoved = !FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+
+                if (isMoved)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Remove(nodeToUpdateInView);
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+                else
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try { nodeToUpdateInView.Update(mNode, true); }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                    isProcessed = true;
+                }
+            }
+
+            if (parentNode == null || isProcessed) return;
+
+            var isAddedInFolder = FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+
+            // If node is added in current folder, process the add action
+            if (isAddedInFolder)
+            {
+                // Retrieve the index from the SDK
+                // Substract -1 to get a valid list index
+                var insertIndex = this.MegaSdk.getIndex(mNode,
+                    UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
+
+                // If the insert position is higher than the ChilNodes size insert in the last position
+                if (insertIndex >= ItemCollection.Items.Count)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Add(NodeService.CreateNew(this.MegaSdk,
+                                App.AppInformation, mNode, this));
+
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+                // Insert the node at a specific position
+                else
+                {
+                    // Insert position can never be less then zero
+                    // Replace negative index with first possible index zero
+                    if (insertIndex < 0) insertIndex = 0;
+                        
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Insert(insertIndex,
+                                NodeService.CreateNew(this.MegaSdk, App.AppInformation, mNode, this));
+
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+                   
+            }
+                
+
+            if (nodeToUpdateInView != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try
+                    {
+                        nodeToUpdateInView.Update(parentNode, true);
+                        var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                        folderNode?.SetFolderInfo();
+                    }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+            }
+
+            // Unconditional scenarios
+            // Move/delete/add actions in subfolders
+            UiService.OnUiThread(() =>
+            {
+                try { FolderService.UpdateFolders(this); }
+                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+            });
+        }
+
+        public void OnNodeRemoved(object sender, MNode mNode)
+        {
+            if (mNode == null) return;
+
+            var isProcessed = false;
+
+            var nodeToRemoveFromView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            // If node is found in current view, process the remove action
+            if (nodeToRemoveFromView != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try
+                    {
+                        ItemCollection.Items.Remove(nodeToRemoveFromView);
+                        ((FolderNodeViewModel) FolderRootNode).SetFolderInfo();
+                    }
+                    catch (Exception)
+                    {
+                        /* Dummy catch, surpress possible exception */
+                    }
+                });
+
+                isProcessed = true;
+            }
+
+            if (!isProcessed)
+            {
+                // REMOVED in subfolder scenario
+
+                var parentNode = this.MegaSdk.getParentNode(mNode);
+
+                if (parentNode == null) return;
+
+                var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                    node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
+
+                // If parent folder is found, process the update action
+                if (nodeToUpdateInView != null)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            nodeToUpdateInView.Update(parentNode, true);
+                            var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                            folderNode?.SetFolderInfo();
+                        }
+                        catch (Exception)
+                        {
+                            /* Dummy catch, surpress possible exception */
+                        }
+                    });
+                }
+            }
         }
 
         #region Commands
@@ -118,11 +329,12 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
+        public ICommand OpenNodeDetailsCommand { get; private set; }
+        public ICommand CloseNodeDetailsCommand { get; }
 
         //public ICommand GetLinkCommand { get; private set; }        
         //public ICommand ImportItemCommand { get; private set; }
         //public ICommand CreateShortCutCommand { get; private set; }        
-        //public ICommand ViewDetailsCommand { get; private set; }
 
         #endregion
 
@@ -158,7 +370,7 @@ namespace MegaApp.ViewModels
             SetEmptyContentTemplate(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
-            MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+            MNodeList childList = GetChildren();
 
             if (childList == null)
             {
@@ -215,6 +427,8 @@ namespace MegaApp.ViewModels
         private async void Refresh()
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
+
+            CloseNodeDetails();
 
             FileService.ClearFiles(
                 NodeService.GetFiles(this.ItemCollection.Items,
@@ -436,38 +650,99 @@ namespace MegaApp.ViewModels
             // Set upload directory only once for speed improvement and if not exists, create dir
             var uploadDir = AppService.GetUploadDirectoryPath(true);
 
+            // Create a dictionary to store the files and its corresponding transfer object.            
+            var uploads = new Dictionary<StorageFile, TransferObjectModel>();
+
+            // Pick up the files to upload
             var pickedFiles = await FileService.SelectMultipleFiles();
+
+            // First create the transfers object and fill the dictionary
             foreach (StorageFile file in pickedFiles)
             {
                 if (file == null) continue; // To avoid null references
 
+                TransferObjectModel uploadTransfer = null;
                 try
                 {
-                    string tempUploadFilePath = Path.Combine(uploadDir, file.Name);
-                    using (var fs = new FileStream(tempUploadFilePath, FileMode.Create))
+                    uploadTransfer = new TransferObjectModel(
+                        this.FolderRootNode, MTransferType.TYPE_UPLOAD,
+                        Path.Combine(uploadDir, file.Name));
+
+                    if(uploadTransfer != null)
                     {
-                        // Set buffersize to avoid copy failure of large files
-                        var stream = await file.OpenStreamForReadAsync();
-                        await stream.CopyToAsync(fs, 8192);
-                        await fs.FlushAsync();
+                        uploadTransfer.DisplayName = file.Name;
+                        uploadTransfer.TotalBytes = (await file.GetBasicPropertiesAsync()).Size;
+                        uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
+                        uploadTransfer.TransferState = MTransferState.STATE_NONE;
+                        uploads.Add(file, uploadTransfer);
+                        TransferService.MegaTransfers.Add(uploadTransfer);
                     }
-
-                    var uploadTransfer = new TransferObjectModel(
-                        this.FolderRootNode,
-                        TransferType.Upload, 
-                        tempUploadFilePath);
-
-                    TransferService.MegaTransfers.Add(uploadTransfer);
-                    uploadTransfer.StartTransfer();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name, e);
+
                     OnUiThread(async () =>
                     {
+                        if (uploadTransfer != null) uploadTransfer.TransferState = MTransferState.STATE_FAILED;
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
                             string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), file.Name));
                     });
+                }
+            }
+
+            // Second finish preparing transfers copying the files to the temporary upload folder
+            foreach (var upload in uploads)
+            {
+                if (upload.Key == null || upload.Value == null) continue; // To avoid null references
+
+                TransferObjectModel uploadTransfer = null;
+                try
+                {
+                    uploadTransfer = upload.Value;
+
+                    // If the upload isn´t already cancelled then copy the file to the temporary upload folder
+                    if(uploadTransfer?.PreparingUploadCancelToken?.Token.IsCancellationRequested == false)
+                    {
+                        using (var fs = new FileStream(Path.Combine(uploadDir, upload.Key.Name), FileMode.Create))
+                        {
+                            // Set buffersize to avoid copy failure of large files
+                            var stream = await upload.Key.OpenStreamForReadAsync();
+                            await stream.CopyToAsync(fs, 8192, uploadTransfer.PreparingUploadCancelToken.Token);
+                            await fs.FlushAsync(uploadTransfer.PreparingUploadCancelToken.Token);
+                        }
+
+                        uploadTransfer.StartTransfer();
+                    }
+                    else
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                        OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
+                    }
+                }
+                // If the upload is cancelled during the preparation process, 
+                // changes the status and delete the corresponding temporary file
+                catch (TaskCanceledException)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                    FileService.DeleteFile(uploadTransfer.TransferPath);
+                    OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name, e);
+                    OnUiThread(async () =>
+                    {
+                        uploadTransfer.TransferState = MTransferState.STATE_FAILED;
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_PrepareFileForUploadFailed"), upload.Key.Name));
+                    });
+                }
+                finally
+                {
+                    uploadTransfer.PreparingUploadCancelToken = null;
                 }
             }
         }
@@ -645,6 +920,8 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
+            CloseNodeDetails();
+
             MNode homeNode = null;
 
             switch (this.Type)
@@ -671,6 +948,8 @@ namespace MegaApp.ViewModels
         public void BrowseToFolder(IMegaNode node)
         {
             if (node == null) return;
+
+            CloseNodeDetails();
 
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
@@ -783,8 +1062,6 @@ namespace MegaApp.ViewModels
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
                     this.ItemCollection.Items.Add(megaNode);
-
-                OnPropertyChanged("HasChildNodesBinding");
             });
         }
 
@@ -853,13 +1130,12 @@ namespace MegaApp.ViewModels
             switch (this.ViewMode)
             {
                 case FolderContentViewMode.ListView:
-                    SetView(FolderContentViewMode.GridView);
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.GridView);
+                    SetView(FolderContentViewMode.GridView);
                     break;
-
                 case FolderContentViewMode.GridView:
-                    SetView(FolderContentViewMode.ListView);
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
+                    SetView(FolderContentViewMode.ListView);
                     break;
             }
 
@@ -870,7 +1146,7 @@ namespace MegaApp.ViewModels
         /// Sets the view mode for the folder content.
         /// </summary>
         /// <param name="viewMode">View mode to set.</param>
-        public void SetView(FolderContentViewMode viewMode)
+        public virtual void SetView(FolderContentViewMode viewMode)
         {
             switch (viewMode)
             {
@@ -897,12 +1173,22 @@ namespace MegaApp.ViewModels
             FolderNavigatedTo?.Invoke(this, EventArgs.Empty);
         }
 
+        protected virtual MNodeList GetChildren()
+        {
+            return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+        }
+
         #endregion
 
 
         #region Properties
 
-        public IMegaNode FocusedNode;
+        private IMegaNode _focusedNode;
+        public IMegaNode FocusedNode
+        {
+            get { return _focusedNode; }
+            set { SetField(ref _focusedNode, value); }
+        }
 
         public BreadCrumbViewModel BreadCrumb { get; }
 
@@ -979,6 +1265,13 @@ namespace MegaApp.ViewModels
         {
             get { return _nodeTemplateSelector; }
             private set { SetField(ref _nodeTemplateSelector, value); }
+        }
+
+        private bool _isNodeDetailsViewVisible;
+        public bool IsNodeDetailsViewVisible
+        {
+            get { return _isNodeDetailsViewVisible; }
+            set { SetField(ref _isNodeDetailsViewVisible, value); }
         }
 
         private bool _isMultiSelectActive;

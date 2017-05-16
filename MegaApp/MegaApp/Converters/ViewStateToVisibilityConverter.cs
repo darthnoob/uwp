@@ -30,6 +30,7 @@ namespace MegaApp.Converters
                         case "preview":
                             return (node.IsImage) ? 
                                 Visibility.Visible : Visibility.Collapsed;
+                        case "viewdetails":
                         case "download":
                         case "copyormove":
                         case "movetorubbish":
@@ -83,6 +84,7 @@ namespace MegaApp.Converters
                         case "preview":
                             return (node.IsImage) ?
                                 Visibility.Visible : Visibility.Collapsed;
+                        case "viewdetails":
                         case "download":
                         case "copyormove":
                         case "remove":

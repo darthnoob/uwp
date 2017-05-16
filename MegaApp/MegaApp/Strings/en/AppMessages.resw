@@ -478,7 +478,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file '{0}' for upload</value>
+    <value>Failed to prepare file '{0}' for upload. Please try again.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -749,5 +749,21 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
   <data name="AM_ShareLinkFromMega_Title" xml:space="preserve">
     <value>Link shared from MEGA</value>
     <comment>Title for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveLinkFailed" xml:space="preserve">
+    <value>Failed removing the link. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to disable export node (remove link) failed.</comment>
+  </data>
+  <data name="AM_RemoveLinkFailed_Title" xml:space="preserve">
+    <value>Remove link failed</value>
+    <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
+    <value>Failed setting the link expiration time. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
+  </data>
+  <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
+    <value>Set expiry time failed</value>
+    <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
 </root>

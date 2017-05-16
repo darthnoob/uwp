@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -133,10 +132,10 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Shows a dialog to allow copy a link to the clipboard or share it using other app
+        /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
-        /// <param name="link">Link to share</param>
-        public static async void ShowShareLink(string link)
+        /// <param name="node">Node to share the link</param>
+        public static async void ShowShareLink(NodeViewModel node)
         {
             var dialog = new ContentDialog
             {
@@ -154,14 +153,99 @@ namespace MegaApp.Services
 
             var messageText = new TextBlock
             {
-                Text = link,
-                Margin = new Thickness(0, 0, 0, 12),
+                Text = node.OriginalMNode.getPublicLink(true),
+                Margin = new Thickness(0, 20, 0, 12),
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
             };
 
-            stackPanel.Children.Add(messageText);            
+            var linkWithoutKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_LinkWithoutKey")
+            };
+            linkWithoutKey.Checked += (sender, args) => messageText.Text = node.OriginalMNode.getPublicLink(false);
+
+            var decryptionKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_DecryptionKey")
+            };
+            decryptionKey.Checked += (sender, args) => messageText.Text = node.OriginalMNode.getBase64Key();
+
+            var linkWithKey = new RadioButton
+            {
+                Content = ResourceService.UiResources.GetString("UI_LinkWithKey"),
+                IsChecked = true
+            };
+            linkWithKey.Checked += (sender, args) => messageText.Text = node.OriginalMNode.getPublicLink(true);
+
+            stackPanel.Children.Add(linkWithoutKey);
+            stackPanel.Children.Add(decryptionKey);
+            stackPanel.Children.Add(linkWithKey);
+
+            var stackPanelLinkWithExpirationDate = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+
+            var linkWithExpirationDateLabel = new TextBlock
+            {
+                Text = node.SetLinkExpirationDateText,
+                Margin = new Thickness(0, 20, 0, 8),
+                TextWrapping = TextWrapping.WrapWholeWords,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+            };
+
+            var enableLinkExpirationDateSwitch = new ToggleSwitch
+            {
+                IsOn = node.LinkWithExpirationTime,
+                IsEnabled = AccountService.AccountDetails.IsProAccount
+            };
+
+            var expirationDateCalendarDatePicker = new CalendarDatePicker
+            {
+                IsEnabled = enableLinkExpirationDateSwitch.IsOn,
+                DateFormat = "{day.integer(2)}‎/‎{month.integer(2)}‎/‎{year.full}",
+                Date = node.LinkExpirationDate
+            };
+            expirationDateCalendarDatePicker.Opened += (sender, args) =>
+            {
+                expirationDateCalendarDatePicker.LightDismissOverlayMode = LightDismissOverlayMode.On;
+                expirationDateCalendarDatePicker.MinDate = DateTime.Today.AddDays(1);                
+            };
+            expirationDateCalendarDatePicker.DateChanged += (sender, args) =>
+            {
+                expirationDateCalendarDatePicker.IsCalendarOpen = false;
+
+                if (expirationDateCalendarDatePicker.Date == null)
+                {
+                    enableLinkExpirationDateSwitch.IsOn = false;
+                    if (node.LinkExpirationTime > 0)
+                        node.SetLinkExpirationTime(0);
+                }
+                else if (node.LinkExpirationDate == null ||
+                    !node.LinkExpirationDate.Value.ToUniversalTime().Equals(expirationDateCalendarDatePicker.Date.Value.ToUniversalTime()))
+                {
+                    node.SetLinkExpirationTime(expirationDateCalendarDatePicker.Date.Value.ToUniversalTime().ToUnixTimeSeconds());
+                }
+            };
+
+            enableLinkExpirationDateSwitch.Toggled += (sender, args) =>
+            {
+                expirationDateCalendarDatePicker.IsEnabled = enableLinkExpirationDateSwitch.IsOn;
+                if (enableLinkExpirationDateSwitch.IsOn)
+                    expirationDateCalendarDatePicker.Date = node.LinkExpirationDate;
+                else
+                    expirationDateCalendarDatePicker.Date = null;
+            };
+
+            stackPanelLinkWithExpirationDate.Children.Add(enableLinkExpirationDateSwitch);
+            stackPanelLinkWithExpirationDate.Children.Add(expirationDateCalendarDatePicker);
+
+            stackPanel.Children.Add(linkWithExpirationDateLabel);
+            stackPanel.Children.Add(stackPanelLinkWithExpirationDate);
+            stackPanel.Children.Add(messageText);
             dialog.Content = stackPanel;
+
             var result = await dialog.ShowAsync();
             switch (result)
             {
@@ -169,48 +253,11 @@ namespace MegaApp.Services
                     break;
 
                 case ContentDialogResult.Primary:
-                    try
-                    {
-                        var data = new DataPackage();
-                        data.SetText(link);
-                        Clipboard.SetContent(data);
-
-                        UiService.OnUiThread(async () =>
-                        {
-                            await ShowAlertAsync(
-                                ResourceService.AppMessages.GetString("AM_LinkCopiedToClipboard_Title"),
-                                ResourceService.AppMessages.GetString("AM_LinkCopiedToClipboard"));
-                        });
-                    }
-                    catch (Exception)
-                    {
-                        UiService.OnUiThread(async () =>
-                        {
-                            await ShowAlertAsync(
-                                ResourceService.AppMessages.GetString("AM_CopyLinkToClipboardFailed_Title"),
-                                ResourceService.AppMessages.GetString("AM_CopyLinkToClipboardFailed"));
-                        });
-                    }
+                    ShareService.CopyLinkToClipboard(messageText.Text);
                     break;
 
                 case ContentDialogResult.Secondary:
-                    DataTransferManager.GetForCurrentView().DataRequested += (sender, args) =>
-                    {
-                        args.Request.Data.Properties.Title = ResourceService.AppMessages.GetString("AM_ShareLinkFromMega_Title");
-                        args.Request.Data.Properties.Description = ResourceService.AppMessages.GetString("AM_ShareLinkFromMega");
-                        args.Request.Data.SetText(link);
-                    };
-
-                    try { DataTransferManager.ShowShareUI(); }
-                    catch(Exception)
-                    {
-                        UiService.OnUiThread(async () =>
-                        {
-                            await ShowAlertAsync(
-                                ResourceService.AppMessages.GetString("AM_ShareLinkFromMegaFailed_Title"),
-                                ResourceService.AppMessages.GetString("AM_ShareLinkFromMegaFailed"));
-                        });
-                    }
+                    ShareService.ShareLink(messageText.Text);
                     break;
 
                 default:
@@ -225,7 +272,40 @@ namespace MegaApp.Services
         /// <returns>The flyout menu with the sort options.</returns>
         public static MenuFlyout CreateSortMenu(FolderViewModel folder)
         {
+            var isCameraUploadsGrid = (folder is CameraUploadsViewModel) &&
+                                      ((CameraUploadsViewModel) folder).IsGridViewMode;
+
             MenuFlyout menuFlyout = new MenuFlyout();
+
+            if (isCameraUploadsGrid)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                return menuFlyout;
+            }
+
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),

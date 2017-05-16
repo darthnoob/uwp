@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
 
