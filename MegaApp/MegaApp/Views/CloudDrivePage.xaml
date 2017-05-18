@@ -36,6 +36,7 @@
                         <Setter Target="GridViewRubbishBin.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -49,6 +50,7 @@
                         <Setter Target="GridViewRubbishBin.SelectionMode" Value="None" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -85,10 +87,10 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid 
-                    Grid.Row="0"
-                    HorizontalAlignment="Right">
+                    x:Name="TopRowGrid"
+                    Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
@@ -101,7 +103,7 @@
                         <!-- CLOUD DRIVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar
                             DataContext="{Binding ActiveFolderView}"
-                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                            Background="Transparent"
                             Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton 
@@ -146,7 +148,7 @@
 
                         <!-- RUBBISH BIN TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
-                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                            Background="Transparent"
                             Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton 
@@ -181,7 +183,7 @@
                         <!-- COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
                             DataContext="{Binding ActiveFolderView}"
-                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                            Background="Transparent"
                             Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton 
@@ -240,7 +242,7 @@
                         <!-- MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY) -->
                         <CommandBar 
                             DataContext="{Binding ActiveFolderView}"
-                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                            Background="Transparent"
                             Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
@@ -324,7 +326,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        Background="Transparent"
                         extensions:CommandBarExtensions.HideMoreButton="True">
                         <AppBarButton 
                             x:Name="BtnSort"
@@ -357,9 +359,10 @@
                     </CommandBar>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Pivot x:Name="MainPivot"
-                           HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" 
-                           SelectionChanged="OnPivotSelectionChanged">
+                    <Pivot 
+                        x:Name="MainPivot"
+                        HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" 
+                        SelectionChanged="OnPivotSelectionChanged">
                         <PivotItem 
                             x:Name="CloudDrivePivot" 
                             Header="{Binding CloudDriveNameText}" 

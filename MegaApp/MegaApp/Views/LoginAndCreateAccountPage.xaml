@@ -205,10 +205,15 @@
         <CommandBar 
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
-                Icon="Accept" 
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{Binding ConfirmText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{Binding ConfirmText, Mode=OneTime}"
                 IsEnabled="{Binding ActiveViewModel.ControlState}"
-                Click="OnAcceptClick"/>
+                Click="OnAcceptClick">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <SymbolIcon Symbol="Accept"/>
+                </Viewbox>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </views:BaseLoginAndCreateAccountPage>
