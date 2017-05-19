@@ -645,12 +645,4 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Set expiry date</value>
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Click the toggle below to automatically sync your photos and videos to MEGA.</value>
-    <comment>Label for any 'Camera Upload' sub title button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_CameraUploadsHeader" xml:space="preserve">
-    <value>Enable Camera Uploads</value>
-    <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
 </root>

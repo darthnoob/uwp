@@ -164,9 +164,9 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string EmptyContentHeaderText => ResourceService.UiResources.GetString("UI_CameraUploadsHeader");
+        public string EmptyContentHeaderText => ResourceService.EmptyStates.GetString("ES_CameraUploadsHeader");
 
-        public string EmptyContentSubHeaderText => ResourceService.UiResources.GetString("UI_CameraUploadsSubHeader");
+        public string EmptyContentSubHeaderText => ResourceService.EmptyStates.GetString("ES_CameraUploadsSubHeader");
 
         public string OnText => ResourceService.UiResources.GetString("UI_On");
 

@@ -157,7 +157,7 @@ namespace MegaApp.ViewModels
             var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
             var cameraUploadsRootNode = this.CameraUploads.FolderRootNode ??
                 NodeService.CreateNew(this.MegaSdk, App.AppInformation,
-                cameraUploadsNode, this.RubbishBin);
+                cameraUploadsNode, this.CameraUploads);
 
             UiService.OnUiThread(() =>
             {
