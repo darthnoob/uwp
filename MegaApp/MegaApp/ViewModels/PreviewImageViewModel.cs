@@ -27,9 +27,9 @@ namespace MegaApp.ViewModels
             ParentFolder = parentFolder;
 
             PreviewItems = new ObservableCollection<ImageNodeViewModel>(
-                ParentFolder.ChildNodes.Where(n => n is ImageNodeViewModel).Cast<ImageNodeViewModel>());
+                ParentFolder.ItemCollection.Items.Where(n => n is ImageNodeViewModel).Cast<ImageNodeViewModel>());
 
-            ParentFolder.ChildNodes.CollectionChanged += (sender, args) =>
+            ParentFolder.ItemCollection.Items.CollectionChanged += (sender, args) =>
             {
                 if (args.Action != NotifyCollectionChangedAction.Remove) return;
 

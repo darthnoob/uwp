@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ES_CameraUploadsHeader" xml:space="preserve">
+    <value>Enable Camera Uploads</value>
+    <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
+    <value>Click the toggle below to automatically sync your photos and videos to MEGA.</value>
+    <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
+  </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
     <value>No completed transfers</value>
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>

@@ -277,11 +277,11 @@ namespace MegaApp.ViewModels
             // nodes list is empty, we need add the current node to the selected nodes
             if (this.Parent != null && !this.Parent.IsMultiSelectActive)
             {
-                if (!this.Parent.SelectedNodes.Any())
-                    this.Parent.SelectedNodes.Add(this);
+                if (!this.Parent.ItemCollection.HasSelectedItems)
+                    this.Parent.ItemCollection.SelectedItems.Add(this);
             }
 
-            if (this.Parent.CopyOrMoveCommand.CanExecute(null))
+            if (this.Parent != null && this.Parent.CopyOrMoveCommand.CanExecute(null))
                 this.Parent.CopyOrMoveCommand.Execute(null);
         }
 

@@ -145,6 +145,20 @@ namespace MegaApp.ViewModels
             ResourceService.AppResources.GetString("AR_PreviewsDirectory"), 
             OriginalMNode.getBase64Handle());
 
+        public string ImageType
+        {
+            get
+            {
+                switch (Path.GetExtension(Name).ToLower())
+                {
+                    case ".jpg":
+                        return "Jpeg";
+                    default:
+                        return Path.GetExtension(Name).ToLower().Replace(".", string.Empty);
+                }
+            }
+        }
+
         #endregion
     }
 }
