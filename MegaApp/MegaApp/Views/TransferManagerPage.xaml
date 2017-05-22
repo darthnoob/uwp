@@ -49,98 +49,101 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid
-            Grid.Row="0"
-            Background="{StaticResource MegaAppBarBackgroundBrush}"
-            DataContext="{Binding ActiveViewModel}">
-            <Grid x:Name="TopCommandBar">
-                <!-- DOWNLOADS & UPLOADS TOP COMMAND BAR -->
-                <CommandBar
-                    x:Name="TopCommandBarStandard"
-                    Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"
-                    extensions:CommandBarExtensions.HideMoreButton="True">
-                    <AppBarButton 
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Command="{Binding PauseOrResumeCommand}"
-                        Label="{Binding PauseAllText}"
-                        ToolTipService.ToolTip="{Binding PauseAllText}"
-                        Visibility="{Binding AreTransfersPaused, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                Data="{Binding PausePathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton 
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Command="{Binding PauseOrResumeCommand}"
-                        Label="{Binding ResumeAllText}"
-                        ToolTipService.ToolTip="{Binding ResumeAllText}"
-                        Visibility="{Binding AreTransfersPaused, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                Data="{Binding ResumePathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Command="{Binding CancelCommand}"
-                        Label="{Binding CancelAllText}"
-                        ToolTipService.ToolTip="{Binding CancelAllText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                Data="{Binding CancelPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Command="{Binding CleanCommand}"
-                        Label="{Binding ClearAllText}"
-                        ToolTipService.ToolTip="{Binding ClearAllText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                Data="{Binding CleanPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                        <AppBarButton.CommandParameter>
-                            <x:Boolean>True</x:Boolean>
-                        </AppBarButton.CommandParameter>
-                    </AppBarButton>
-                </CommandBar>
+        <Grid Grid.Row="0" Background="{StaticResource MegaAppBarBackgroundBrush}"/>
 
-                <!-- COMPLETED TRANSFERS TOP COMMAND BAR -->
-                <CommandBar
-                    x:Name="TopCommandBarCompletedTransfers"
-                    Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource BoolToVisibilityConverter}}"
-                    extensions:CommandBarExtensions.HideMoreButton="True">
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Command="{Binding CleanCommand}"
-                        Label="{Binding ClearAllText}"
-                        ToolTipService.ToolTip="{Binding ClearAllText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                Data="{Binding CleanPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                        <AppBarButton.CommandParameter>
-                            <x:Boolean>True</x:Boolean>
-                        </AppBarButton.CommandParameter>
-                    </AppBarButton>
-                </CommandBar>
-            </Grid>
-        </Grid>        
         <Grid 
-            Grid.Row="1">
+            x:Name="TopCommandBar"
+            Grid.Row="0"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            DataContext="{Binding ActiveViewModel}">
+            
+            <!-- DOWNLOADS & UPLOADS TOP COMMAND BAR -->
+            <CommandBar
+                x:Name="TopCommandBarStandard"
+                Background="Transparent"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding PauseOrResumeCommand}"
+                    Label="{Binding PauseAllText}"
+                    ToolTipService.ToolTip="{Binding PauseAllText}"
+                    Visibility="{Binding AreTransfersPaused, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            Data="{Binding PausePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding PauseOrResumeCommand}"
+                    Label="{Binding ResumeAllText}"
+                    ToolTipService.ToolTip="{Binding ResumeAllText}"
+                    Visibility="{Binding AreTransfersPaused, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            Data="{Binding ResumePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding CancelCommand}"
+                    Label="{Binding CancelAllText}"
+                    ToolTipService.ToolTip="{Binding CancelAllText}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding CleanCommand}"
+                    Label="{Binding ClearAllText}"
+                    ToolTipService.ToolTip="{Binding ClearAllText}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            Data="{Binding CleanPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                </AppBarButton>
+            </CommandBar>
+
+            <!-- COMPLETED TRANSFERS TOP COMMAND BAR -->
+            <CommandBar
+                x:Name="TopCommandBarCompletedTransfers"
+                Background="Transparent"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource BoolToVisibilityConverter}}"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Command="{Binding CleanCommand}"
+                    Label="{Binding ClearAllText}"
+                    ToolTipService.ToolTip="{Binding ClearAllText}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            Data="{Binding CleanPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+        <Grid Grid.Row="1">
             <Pivot 
                 x:Name="TransfersPivot" 
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"                 
