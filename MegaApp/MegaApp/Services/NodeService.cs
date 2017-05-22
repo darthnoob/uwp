@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
 
@@ -107,6 +108,27 @@ namespace MegaApp.Services
             }
 
             return null;
+        }
+
+        public static string GetFolderName(IMegaNode node)
+        {
+            var folderName = string.Empty;
+            switch (node.Type)
+            {
+                case MNodeType.TYPE_ROOT:
+                    folderName = ResourceService.UiResources.GetString("UI_CloudDriveName");
+                    break;
+
+                case MNodeType.TYPE_RUBBISH:
+                    folderName = ResourceService.UiResources.GetString("UI_RubbishBinName");
+                    break;
+
+                case MNodeType.TYPE_FOLDER:
+                    folderName = node.Name;
+                    break;
+            }
+
+            return folderName;
         }
     }
 }

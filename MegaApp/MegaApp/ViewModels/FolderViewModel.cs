@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -51,9 +49,8 @@ namespace MegaApp.ViewModels
             this.FolderRootNode = null;
             this.IsBusy = false;
             this.BusyText = null;
-            this.ChildNodes = new ObservableCollection<IMegaNode>();
-            this.BreadCrumbs = new ObservableCollection<IBaseNode>();
-            this.SelectedNodes = new List<IMegaNode>();
+            this.BreadCrumb = new BreadCrumbViewModel();
+            this.ItemCollection = new NodeCollectionViewModel();           
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
@@ -77,9 +74,6 @@ namespace MegaApp.ViewModels
             //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
             //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
 
-            this.ChildNodes.CollectionChanged += ChildNodesOnCollectionChanged;
-            this.BreadCrumbs.CollectionChanged += BreadCrumbsOnCollectionChanged;
-
             SetViewDefaults();
 
             SetEmptyContent(true);
@@ -87,6 +81,7 @@ namespace MegaApp.ViewModels
             switch (containerType)
             {
                 case ContainerType.CloudDrive:
+                case ContainerType.CameraUploads:
                     this.CurrentViewState = FolderContentViewState.CloudDrive;
                     break;
                 case ContainerType.RubbishBin:
@@ -112,35 +107,19 @@ namespace MegaApp.ViewModels
         private void SelectionChanged()
         {
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.SelectedNodes.Count >= 1) || this.SelectedNodes.Count > 1;
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
+                    this.ItemCollection.MoreThanOneSelected;
             else
-                this.IsMultiSelectActive = this.SelectedNodes.Count > 0;
+                this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;
 
-            if(this.SelectedNodes?.Count > 0)
+            if(this.ItemCollection.HasSelectedItems)
             {
-                var focusedNode = (NodeViewModel)this.SelectedNodes.Last();
-                if((focusedNode is ImageNodeViewModel) && (focusedNode as ImageNodeViewModel != null))
+                var focusedNode = (NodeViewModel)this.ItemCollection.SelectedItems.Last();
+                if(focusedNode is ImageNodeViewModel)
                     (focusedNode as ImageNodeViewModel).InViewingRange = true;
 
                 this.FocusedNode = focusedNode;
             }
-        }
-
-        private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                // Start a new task to avoid freeze the UI
-                Task.Run(() =>
-                {
-                    foreach (var node in e.NewItems)
-                        (node as NodeViewModel)?.SetThumbnailImage();
-                });
-            }
-
-            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
-
-            OnPropertyChanged("IsEmpty");
         }
 
         public void OpenNodeDetails()
@@ -151,6 +130,177 @@ namespace MegaApp.ViewModels
         public void CloseNodeDetails()
         {
             CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnNodeAdded(object sender, MNode mNode)
+        {
+            if (mNode == null) return;
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            OnPropertyChanged("IsEmpty");
+
+            var isProcessed = false;
+
+            var parentNode = this.MegaSdk.getParentNode(mNode);
+
+            var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            if (nodeToUpdateInView != null)
+            {
+                var isMoved = !FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+
+                if (isMoved)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Remove(nodeToUpdateInView);
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+                else
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try { nodeToUpdateInView.Update(mNode, true); }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                    isProcessed = true;
+                }
+            }
+
+            if (parentNode == null || isProcessed) return;
+
+            var isAddedInFolder = FolderRootNode.Base64Handle.Equals(parentNode.getBase64Handle());
+
+            // If node is added in current folder, process the add action
+            if (isAddedInFolder)
+            {
+                // Retrieve the index from the SDK
+                // Substract -1 to get a valid list index
+                var insertIndex = this.MegaSdk.getIndex(mNode,
+                    UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
+
+                // If the insert position is higher than the ChilNodes size insert in the last position
+                if (insertIndex >= ItemCollection.Items.Count)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Add(NodeService.CreateNew(this.MegaSdk,
+                                App.AppInformation, mNode, this));
+
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+                // Insert the node at a specific position
+                else
+                {
+                    // Insert position can never be less then zero
+                    // Replace negative index with first possible index zero
+                    if (insertIndex < 0) insertIndex = 0;
+                        
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            ItemCollection.Items.Insert(insertIndex,
+                                NodeService.CreateNew(this.MegaSdk, App.AppInformation, mNode, this));
+
+                            ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
+                            FolderService.UpdateFolders(this);
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+            }
+
+            if (nodeToUpdateInView != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try
+                    {
+                        nodeToUpdateInView.Update(parentNode, true);
+                        var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                        folderNode?.SetFolderInfo();
+                    }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+            }
+
+            // Unconditional scenarios
+            // Move/delete/add actions in subfolders
+            UiService.OnUiThread(() =>
+            {
+                try { FolderService.UpdateFolders(this); }
+                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+            });
+        }
+
+        public void OnNodeRemoved(object sender, MNode mNode)
+        {
+            if (mNode == null) return;
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            OnPropertyChanged("IsEmpty");
+
+            var isProcessed = false;
+
+            var nodeToRemoveFromView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            // If node is found in current view, process the remove action
+            if (nodeToRemoveFromView != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try
+                    {
+                        ItemCollection.Items.Remove(nodeToRemoveFromView);
+                        ((FolderNodeViewModel) FolderRootNode).SetFolderInfo();
+                    }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+
+                isProcessed = true;
+            }
+
+            if (!isProcessed)
+            {
+                // REMOVED in subfolder scenario
+
+                var parentNode = this.MegaSdk.getParentNode(mNode);
+
+                if (parentNode == null) return;
+
+                var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                    node => node.Base64Handle.Equals(parentNode.getBase64Handle()));
+
+                // If parent folder is found, process the update action
+                if (nodeToUpdateInView != null)
+                {
+                    UiService.OnUiThread(() =>
+                    {
+                        try
+                        {
+                            nodeToUpdateInView.Update(parentNode, true);
+                            var folderNode = nodeToUpdateInView as FolderNodeViewModel;
+                            folderNode?.SetFolderInfo();
+                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    });
+                }
+            }
         }
 
         #region Commands
@@ -180,28 +330,9 @@ namespace MegaApp.ViewModels
 
         #region Public Methods
 
-        public void SelectAll()
-        {
-            foreach (var childNode in this.ChildNodes)
-            {
-                childNode.IsMultiSelected = true;
-            }
-        }
-
-        public void DeselectAll()
-        {
-            foreach (var childNode in this.ChildNodes)
-            {
-                childNode.IsMultiSelected = false;
-            }
-        }
-
-        public void ClearChildNodes()
-        {
-            if (this.ChildNodes == null || !this.ChildNodes.Any()) return;
-
-            OnUiThread(() => this.ChildNodes.Clear());
-        }
+        public void SelectAll() => this.ItemCollection.SelectAll();
+        public void DeselectAll() => this.ItemCollection.ClearSelection();
+        public void ClearChildNodes() => this.ItemCollection.Clear();
 
         /// <summary>
         /// Load the mega nodes for this specific folder using the Mega SDK
@@ -232,7 +363,7 @@ namespace MegaApp.ViewModels
             SetEmptyContent(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
-            MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+            MNodeList childList = GetChildren();
 
             if (childList == null)
             {
@@ -248,13 +379,13 @@ namespace MegaApp.ViewModels
             }
 
             // Clear the child nodes to make a fresh start
-            ClearChildNodes();
+            OnUiThread(this.ItemCollection.Clear);
 
             // Set the correct view. Do this after the childs are cleared to speed things up
             SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            OnUiThread(() => BuildBreadCrumbs());
+            OnUiThread(() => this.BreadCrumb.Create(this));
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -286,14 +417,14 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Refresh the current folder. Delete cached thumbnails and reload the nodes
         /// </summary>
-        private void Refresh()
+        private async void Refresh()
         {
             if (!NetworkService.IsNetworkAvailable(true)) return;
 
             CloseNodeDetails();
 
             FileService.ClearFiles(
-                NodeService.GetFiles(this.ChildNodes,
+                NodeService.GetFiles(this.ItemCollection.Items,
                 Path.Combine(ApplicationData.Current.LocalFolder.Path,
                 ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"))));
 
@@ -310,6 +441,12 @@ namespace MegaApp.ViewModels
                     case ContainerType.FolderLink:
                         this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
                             App.AppInformation, this.MegaSdk.getRootNode(), this);
+                        break;
+                    case ContainerType.CameraUploads:
+                        var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
+                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk,
+                            App.AppInformation, cameraUploadsNode, this);
+                        
                         break;
                 }
             }
@@ -369,8 +506,8 @@ namespace MegaApp.ViewModels
 
         private async void Download()
         {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
-            await MultipleDownloadAsync(this.SelectedNodes);
+            if (!this.ItemCollection.HasSelectedItems) return;
+            await MultipleDownloadAsync(this.ItemCollection.SelectedItems);
             this.IsMultiSelectActive = false;
         }
 
@@ -400,9 +537,9 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
-            int count = this.SelectedNodes.Count;
+            int count = this.ItemCollection.SelectedItems.Count;
 
             string title, message;
             switch(this.Type)
@@ -425,7 +562,7 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            MultipleRemoveAsync(this.SelectedNodes.ToList());
+            MultipleRemoveAsync(this.ItemCollection.SelectedItems);
 
             this.IsMultiSelectActive = false;
         }
@@ -491,15 +628,17 @@ namespace MegaApp.ViewModels
 
                     if(uploadTransfer != null)
                     {
+                        uploadTransfer.DisplayName = file.Name;
+                        uploadTransfer.TotalBytes = (await file.GetBasicPropertiesAsync()).Size;
                         uploadTransfer.PreparingUploadCancelToken = new CancellationTokenSource();
                         uploadTransfer.TransferState = MTransferState.STATE_NONE;
                         uploads.Add(file, uploadTransfer);
                         TransferService.MegaTransfers.Add(uploadTransfer);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name);
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name, e);
 
                     OnUiThread(async () =>
                     {
@@ -548,9 +687,9 @@ namespace MegaApp.ViewModels
                     FileService.DeleteFile(uploadTransfer.TransferPath);
                     OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name);
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name, e);
                     OnUiThread(async () =>
                     {
                         uploadTransfer.TransferState = MTransferState.STATE_FAILED;
@@ -728,7 +867,7 @@ namespace MegaApp.ViewModels
             if (parentNode == null || parentNode.getType() == MNodeType.TYPE_UNKNOWN)
                 return false;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this, this.ChildNodes);
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this, this.ItemCollection.Items);
 
             LoadChildNodes();
 
@@ -740,7 +879,7 @@ namespace MegaApp.ViewModels
             BrowseToFolder((IMegaNode)e.Item);
         }
 
-        public virtual void BrowseToHome()
+        public virtual async void BrowseToHome()
         {
             if (this.FolderRootNode == null) return;
 
@@ -759,11 +898,15 @@ namespace MegaApp.ViewModels
                     homeNode = this.MegaSdk.getRubbishNode();
                     homeFolder = new FolderViewModel(ContainerType.RubbishBin);
                     break;
+                case ContainerType.CameraUploads:
+                    homeNode = await SdkService.GetCameraUploadRootNodeAsync();
+                    homeFolder = new FolderViewModel(ContainerType.CameraUploads);
+                    break;
             }
 
             if (homeNode == null) return;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, homeFolder);
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, homeFolder, this.ItemCollection.Items);
             OnFolderNavigatedTo();
 
             LoadChildNodes();
@@ -832,7 +975,7 @@ namespace MegaApp.ViewModels
                 // To avoid pass null values to CreateNew
                 if (childList.get(i) == null) continue;
 
-                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this, this.ChildNodes);
+                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this, this.ItemCollection.Items);
 
                 // If node creation failed for some reason, continue with the rest and leave this one
                 if (node == null) continue;
@@ -854,7 +997,7 @@ namespace MegaApp.ViewModels
                     {
                         // If the task has been cancelled, stop processing
                         foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                            this.ChildNodes.Add(megaNode);
+                            this.ItemCollection.Items.Add(megaNode);
                     });
 
                     helperList.Clear();
@@ -868,7 +1011,7 @@ namespace MegaApp.ViewModels
                 {
                     // If the task has been cancelled, stop processing
                     foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                        this.ChildNodes.Add(megaNode);
+                        this.ItemCollection.Items.Add(megaNode);
                 });
 
                 helperList.Clear();
@@ -885,7 +1028,7 @@ namespace MegaApp.ViewModels
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
-                    this.ChildNodes.Add(megaNode);
+                    this.ItemCollection.Items.Add(megaNode);
 
                 OnPropertyChanged("IsEmpty");
             });
@@ -932,7 +1075,7 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
-        /// Sets the default view mode for the folder conten.
+        /// Sets the default view mode for the folder content.
         /// </summary>
         private void SetViewDefaults()
         {
@@ -957,13 +1100,12 @@ namespace MegaApp.ViewModels
             switch (this.ViewMode)
             {
                 case FolderContentViewMode.ListView:
-                    SetView(FolderContentViewMode.GridView);
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.GridView);
+                    SetView(FolderContentViewMode.GridView);
                     break;
-
                 case FolderContentViewMode.GridView:
-                    SetView(FolderContentViewMode.ListView);
                     UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
+                    SetView(FolderContentViewMode.ListView);
                     break;
             }
 
@@ -974,7 +1116,7 @@ namespace MegaApp.ViewModels
         /// Sets the view mode for the folder content.
         /// </summary>
         /// <param name="viewMode">View mode to set.</param>
-        public void SetView(FolderContentViewMode viewMode)
+        public virtual void SetView(FolderContentViewMode viewMode)
         {
             switch (viewMode)
             {
@@ -995,67 +1137,20 @@ namespace MegaApp.ViewModels
                     break;
             }
         }
-
-        public void BuildBreadCrumbs()
-        {
-            this.BreadCrumbs.Clear();
-
-            // Top root nodes have no breadcrumbs
-            if (this.FolderRootNode == null || 
-                this.FolderRootNode.Type == MNodeType.TYPE_ROOT || 
-                this.FolderRootNode.Type == MNodeType.TYPE_RUBBISH) return;
-
-            this.BreadCrumbs.Add(this.FolderRootNode);
-
-            MNode parentNode = this.MegaSdk.getParentNode(this.FolderRootNode.OriginalMNode);
-            while ((parentNode != null) && (parentNode.getType() != MNodeType.TYPE_ROOT) &&
-                (parentNode.getType() != MNodeType.TYPE_RUBBISH))
-            {
-                this.BreadCrumbs.Insert(0, NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, this));
-                parentNode = this.MegaSdk.getParentNode(parentNode);
-            }
-        }
+        
 
         protected virtual void OnFolderNavigatedTo()
         {
             FolderNavigatedTo?.Invoke(this, EventArgs.Empty);
         }
 
-        private void BreadCrumbsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        protected virtual MNodeList GetChildren()
         {
-            if (this.FolderRootNode == null) return;
-
-            string folderName = string.Empty;
-            switch (this.FolderRootNode.Type)
-            {
-                case MNodeType.TYPE_ROOT:
-                    folderName = ResourceService.UiResources.GetString("UI_CloudDriveName");
-                    break;
-
-                case MNodeType.TYPE_RUBBISH:
-                    folderName = ResourceService.UiResources.GetString("UI_RubbishBinName");
-                    break;
-
-                case MNodeType.TYPE_FOLDER:
-                    folderName = this.FolderRootNode.Name;
-                    break;
-            }
-
-            this.ImportLinkBorderText = string.Format(ResourceService.UiResources.GetString("UI_ImportLinkBorderText"), folderName);
+            return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
         }
 
         #endregion
 
-        #region IBreadCrumb
-
-        private ObservableCollection<IBaseNode> _breadCrumbs;
-        public ObservableCollection<IBaseNode> BreadCrumbs
-        {
-            get { return _breadCrumbs; }
-            set { SetField(ref _breadCrumbs, value); }
-        }
-
-        #endregion
 
         #region Properties
 
@@ -1080,12 +1175,9 @@ namespace MegaApp.ViewModels
             set { SetField(ref _focusedNode, value); }
         }
 
-        private List<IMegaNode> _selectedNodes;
-        public List<IMegaNode> SelectedNodes
-        {
-            get { return _selectedNodes; }
-            set { SetField(ref _selectedNodes, value); }
-        }
+        public BreadCrumbViewModel BreadCrumb { get; }
+
+        public NodeCollectionViewModel ItemCollection { get; }
 
         /// <summary>
         /// Property needed to store the selected nodes in a move/copy action 
@@ -1115,16 +1207,9 @@ namespace MegaApp.ViewModels
             set { SetField(ref _previousViewState, value); }
         }
 
-        public bool IsFlyoutActionAvailable => this.CurrentViewState != FolderContentViewState.CopyOrMove;
+        public bool IsFlyoutActionAvailable => this.CurrentViewState != FolderContentViewState.CopyOrMove;        
 
-        private ObservableCollection<IMegaNode> _childNodes;
-        public ObservableCollection<IMegaNode> ChildNodes
-        {
-            get { return _childNodes; }
-            set { SetField(ref _childNodes, value); }
-        }
-
-        public bool IsEmpty => (this.ChildNodes.Count == 0);
+        public bool IsEmpty => !this.ItemCollection.HasItems;
 
         public ContainerType Type { get; private set; }
 
@@ -1184,7 +1269,7 @@ namespace MegaApp.ViewModels
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
-            get { return _isMultiSelectActive || _selectedNodes.Count > 1; }
+            get { return _isMultiSelectActive || this.ItemCollection.MoreThanOneSelected; }
             set
             {
                 if (!SetField(ref _isMultiSelectActive, value)) return;
@@ -1205,7 +1290,7 @@ namespace MegaApp.ViewModels
                         this.PreviousViewState = FolderContentViewState.MultiSelect;
                     }
                         
-                    SelectedNodes.Clear();
+                    this.ItemCollection.ClearSelection();
                     DisableMultiSelect?.Invoke(this, EventArgs.Empty);                    
                 }
             }
@@ -1234,16 +1319,6 @@ namespace MegaApp.ViewModels
         {
             get { return _hasBusyText; }
             private set { SetField(ref _hasBusyText, value); }
-        }
-
-        /// <summary>
-        /// Property needed show a dynamic import text.
-        /// </summary>        
-        private string _importLinkBorderText;
-        public string ImportLinkBorderText
-        {
-            get { return _importLinkBorderText; }
-            private set { SetField(ref _importLinkBorderText, value); }
         }
 
         #endregion
@@ -1285,5 +1360,6 @@ namespace MegaApp.ViewModels
         public string UploadPathData => ResourceService.VisualResources.GetString("VR_UploadPathData");
 
         #endregion
+        
     }
 }

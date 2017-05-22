@@ -85,7 +85,15 @@ namespace BackgroundTaskService.Services
             // Check if the fingerprint is already in the subfolders of the Camera Uploads
             var mNode = MegaSdk.getNodeByFingerprint(fingerprint, rootNode);
 
-            return mNode != null;
+            if (mNode == null) return false;
+
+            if (MegaSdk.isInCloud(mNode))
+            {
+                var parent = MegaSdk.getParentNode(mNode);
+                return parent?.getHandle() == rootNode.getHandle();
+            }
+            
+            return !MegaSdk.isInRubbish(mNode);
         }
 
         /// <summary>
