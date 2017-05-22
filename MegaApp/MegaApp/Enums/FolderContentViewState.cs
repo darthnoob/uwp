@@ -14,6 +14,7 @@
         OutShares,
         ContactInShares,
         SavedForOffline,
-        FolderLink
+        FolderLink,
+        CameraUploads
     }
 }

@@ -81,7 +81,6 @@ namespace MegaApp.ViewModels
             switch (containerType)
             {
                 case ContainerType.CloudDrive:
-                case ContainerType.CameraUploads:
                     this.CurrentViewState = FolderContentViewState.CloudDrive;
                     break;
                 case ContainerType.RubbishBin:
@@ -98,6 +97,9 @@ namespace MegaApp.ViewModels
                     break;
                 case ContainerType.FolderLink:
                     this.CurrentViewState = FolderContentViewState.FolderLink;
+                    break;
+                case ContainerType.CameraUploads:
+                    this.CurrentViewState = FolderContentViewState.CameraUploads;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));

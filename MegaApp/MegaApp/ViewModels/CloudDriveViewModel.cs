@@ -219,8 +219,8 @@ namespace MegaApp.ViewModels
             RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
 
             CameraUploads.IsMultiSelectActive = false;
-            CameraUploads.CurrentViewState = FolderContentViewState.CloudDrive;
-            CameraUploads.PreviousViewState = FolderContentViewState.CloudDrive;
+            CameraUploads.CurrentViewState = FolderContentViewState.CameraUploads;
+            CameraUploads.PreviousViewState = FolderContentViewState.CameraUploads;
         }
 
         private void OnCopyOrMove(object sender, EventArgs e)
