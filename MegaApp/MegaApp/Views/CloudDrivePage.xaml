@@ -294,6 +294,7 @@
                     Background="Transparent"
                     DataContext="{Binding ActiveFolderView}"
                     extensions:CommandBarExtensions.HideMoreButton="True"
+                    IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Grid.Row="0"
                     Grid.Column="1">
                     <AppBarButton 
@@ -313,7 +314,6 @@
                         x:Name="BtnChangeView"
                         Click="OnButtonClick"
                         Command="{Binding ChangeViewCommand}"
-                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding NextViewButtonLabelText}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding NextViewButtonLabelText}">
@@ -677,6 +677,7 @@
                     <AppBarButton 
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText,Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
@@ -721,6 +722,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText,Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
@@ -752,6 +754,7 @@
                     <AppBarButton 
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText,Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
