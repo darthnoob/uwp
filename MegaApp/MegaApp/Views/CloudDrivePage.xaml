@@ -459,7 +459,6 @@
                                             Grid.Column="0"
                                             Margin="-12,0,6,0"
                                             DisplayMemberPath="Name"
-
                                             HomeCommand="{Binding HomeSelectedCommand}"
                                             HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
                                             ItemCommand="{Binding ItemSelectedCommand}"
@@ -534,6 +533,7 @@
                             Header="{Binding CameraUploadsNameText}">
                             <Grid
                                 x:Name="CameraUploadsRoot"
+                                DataContext="{Binding CameraUploads}"
                                 Margin="{StaticResource RootGridMargin}"
                                 Background="Transparent">
                                 <Grid.RowDefinitions>
@@ -547,29 +547,28 @@
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource MegaRedColorBrush}"
                                     IsIndeterminate="True"
-                                    Visibility="{Binding CameraUploads.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                                <Grid Grid.Row="1" Visibility="{Binding CameraUploads.IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                <Grid Grid.Row="1" Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                     <userControls:TogglePanel
                                         x:Name="CameraUploadsTogglePanelControl"
                                         VerticalAlignment="Center"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
                                         Foreground="{StaticResource MegaAppForegroundBrush}"
-                                        HeaderText="{Binding CameraUploads.EmptyContentHeaderText, Mode=OneTime}"
-                                        IsOn="{Binding CameraUploads.CameraUploadsTaskIsOn, Mode=TwoWay}"
-                                        IsVisible="{Binding CameraUploads.ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
-                                        SubHeaderMargin="0,14,50,0"
-                                        SubHeaderText="{Binding CameraUploads.EmptyContentSubHeaderText, Mode=OneTime}">
+                                        HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
+                                        IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
+                                        IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
+                                        SubHeaderMargin="0,14,0,28"
+                                        SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
                                         <userControls:TogglePanel.SubHeaderForeground>
                                             <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                                         </userControls:TogglePanel.SubHeaderForeground>
                                     </userControls:TogglePanel>
 
-                                    <Grid Visibility="{Binding CameraUploads.ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                         <ListView
                                             x:Name="ListViewCameraUploads"
                                             Background="{StaticResource MegaAppBackgroundBrush}"
-                                            DataContext="{Binding CameraUploads}"
                                             DoubleTapped="OnItemDoubleTapped"
                                             IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
@@ -586,7 +585,7 @@
                                             </interactivity:Interaction.Behaviors>
                                         </ListView>
 
-                                        <SemanticZoom ScrollViewer.ZoomMode="Enabled" Visibility="{Binding CameraUploads.IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <SemanticZoom ScrollViewer.ZoomMode="Enabled" Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
 
                                             <SemanticZoom.ZoomedOutView>
                                                 <ListView ItemTemplate="{StaticResource CameraUploadsGroupItem}" ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
@@ -598,7 +597,6 @@
                                                     Margin="12,0,0,0"
                                                     Padding="2,4"
                                                     Background="{StaticResource MegaAppBackgroundBrush}"
-                                                    DataContext="{Binding CameraUploads}"
                                                     DoubleTapped="OnItemDoubleTapped"
                                                     IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                                     ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
@@ -911,20 +909,33 @@
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Overlay" />
                         <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ProgressAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Top" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
+                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
+                        <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97, 0, 0, 16" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
+                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ProgressAlignment" Value="Right" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 0, 0, 16" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
                         <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="44" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="18" />

@@ -239,26 +239,26 @@ namespace MegaApp.UserControls
         }
 
         /// <summary>
-        /// Gets or sets the alignment of the progress ring relative to the texts.
+        /// Gets or sets the alignment of the toggle control relative to the texts.
         /// </summary>
-        /// <value>The icon to show as home button</value>
-        public RelativeAlignment ProgressAlignment
+        /// <value>Alignment of the toggle control</value>
+        public RelativeAlignment ToggleAlignment
         {
-            get { return (RelativeAlignment)GetValue(ProgressAlignmentProperty); }
-            set { SetValue(ProgressAlignmentProperty, value); }
+            get { return (RelativeAlignment)GetValue(ToggleAlignmentProperty); }
+            set { SetValue(ToggleAlignmentProperty, value); }
         }
 
         /// <summary>
-        /// Identifier for the<see cref="ProgressAlignment" /> dependency property.
+        /// Identifier for the<see cref="ToggleAlignment" /> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ProgressAlignmentProperty =
+        public static readonly DependencyProperty ToggleAlignmentProperty =
             DependencyProperty.Register(
-                nameof(ProgressAlignment),
+                nameof(ToggleAlignment),
                 typeof(RelativeAlignment),
                 typeof(TogglePanel),
-                new PropertyMetadata(RelativeAlignment.Below, ProgressAlignmentChangedCallback));
+                new PropertyMetadata(RelativeAlignment.Below, ToggleAlignmentChangedCallback));
 
-        private static void ProgressAlignmentChangedCallback(DependencyObject d, 
+        private static void ToggleAlignmentChangedCallback(DependencyObject d, 
             DependencyPropertyChangedEventArgs dpc)
         {
             var control = d as TogglePanel;
@@ -290,7 +290,7 @@ namespace MegaApp.UserControls
                 _toggle.Toggled -= ToggleOnToggled;
                 _toggle.Toggled += ToggleOnToggled;
             }
-            OnAlignmentChanged(this.ProgressAlignment);
+            OnAlignmentChanged(this.ToggleAlignment);
             OnIsVisibleChanged(this.IsVisible);
         }
 
