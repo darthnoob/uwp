@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Navigation;
+using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Views;
@@ -149,6 +151,37 @@ namespace MegaApp.Services
                 deviceInfo.SystemManufacturer,
                 deviceInfo.SystemProductName,
                 deviceInfo.OperatingSystem);
+        }
+
+        /// <summary>
+        /// Get the code of the language used by the app
+        /// </summary>
+        /// <returns>Code of the language used by the app or an empty string if fails</returns>
+        public static string GetAppLanguageCode()
+        {
+            try
+            {
+                CultureInfo ci = CultureInfo.CurrentUICulture;
+                var languageCode = ci.TwoLetterISOLanguageName;
+
+                switch (languageCode)
+                {
+                    case null:
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting the app language code");
+                        return string.Empty;
+                    case "pt":
+                        return (ci.Name.Equals("pt-BR")) ? ci.Name : languageCode;
+                    case "zh":
+                        return (ci.Name.Equals("zh-HANS") || ci.Name.Equals("zh-HANT")) ? ci.Name : languageCode;
+                    default:
+                        return languageCode;
+                }
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting the app language code", e);
+                return string.Empty;
+            }
         }
 
         /// <summary>
