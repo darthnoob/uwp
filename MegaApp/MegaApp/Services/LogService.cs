@@ -60,7 +60,8 @@ namespace MegaApp.Services
             }                
 
             MegaSDK.log(logLevel, String.Format("{0} [{1} - {2}] ({3}:{4})", message, 
-                e.GetType().ToString(), e.Message, Path.GetFileName(file), line));
+                e.GetType().ToString(), e.Message.Replace(Environment.NewLine, " "), 
+                Path.GetFileName(file), line));
         }
     }
 }
