@@ -54,10 +54,13 @@ namespace MegaApp.ViewModels
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
-                    var srcFile = await StorageFile.GetFileFromPathAsync(transferPath);
-                    var fileProperties = await srcFile.GetBasicPropertiesAsync();
-                    this.DisplayName = srcFile.Name;
-                    this.TotalBytes = fileProperties.Size;
+                    this.DisplayName = Path.GetFileName(transferPath);
+                    if (FileService.FileExists(transferPath))
+                    {
+                        var srcFile = await StorageFile.GetFileFromPathAsync(transferPath);
+                        var fileProperties = await srcFile?.GetBasicPropertiesAsync();
+                        this.TotalBytes = fileProperties.Size;
+                    }
                     break;
             }
 

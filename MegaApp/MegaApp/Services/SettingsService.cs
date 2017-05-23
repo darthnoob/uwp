@@ -11,6 +11,8 @@ namespace MegaApp.Services
 {
     static class SettingsService
     {
+        public const string ImageDateSetting = "ImageLastUploadDate";
+
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
 

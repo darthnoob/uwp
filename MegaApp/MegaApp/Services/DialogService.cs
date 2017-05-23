@@ -279,7 +279,40 @@ namespace MegaApp.Services
         /// <returns>The flyout menu with the sort options.</returns>
         public static MenuFlyout CreateSortMenu(FolderViewModel folder)
         {
+            var isCameraUploadsGrid = (folder is CameraUploadsViewModel) &&
+                                      ((CameraUploadsViewModel) folder).IsGridViewMode;
+
             MenuFlyout menuFlyout = new MenuFlyout();
+
+            if (isCameraUploadsGrid)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                return menuFlyout;
+            }
+
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),

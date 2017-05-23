@@ -190,7 +190,12 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
+    <Compile Include="UserControls\TogglePanel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BreadCrumbsViewModel.cs" />
+    <Compile Include="ViewModels\CameraUploadsViewModel.cs" />
+    <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />
+    <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />

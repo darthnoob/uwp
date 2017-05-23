@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -33,11 +34,13 @@ namespace MegaApp.ViewModels
         {
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
+            this.CameraUploads = new CameraUploadsViewModel();
 
             this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
             this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
+            this.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
 
-            // The Cloud Drive is always the first active folder on initalization
+            // The Cloud Drive is always the first active folder on initialization
             this.ActiveFolderView = this.CloudDrive;
         }
 
@@ -58,8 +61,15 @@ namespace MegaApp.ViewModels
         /// <param name="globalListener">Global notifications listener</param>
         public void Initialize(GlobalListener globalListener)
         {
-            globalListener?.Folders?.Add(this.CloudDrive);
-            globalListener?.Folders?.Add(this.RubbishBin);
+            //globalListener?.Folders?.Add(this.CloudDrive);
+            //globalListener?.Folders?.Add(this.RubbishBin);
+            if (globalListener == null) return;
+            globalListener.NodeAdded += CloudDrive.OnNodeAdded;
+            globalListener.NodeRemoved += CloudDrive.OnNodeRemoved;
+            globalListener.NodeAdded += RubbishBin.OnNodeAdded;
+            globalListener.NodeRemoved += RubbishBin.OnNodeRemoved;
+            globalListener.NodeAdded += CameraUploads.OnNodeAdded;
+            globalListener.NodeRemoved += CameraUploads.OnNodeRemoved;
         }
 
         /// <summary>
@@ -68,14 +78,21 @@ namespace MegaApp.ViewModels
         /// <param name="globalListener">Global notifications listener</param>
         public void Deinitialize(GlobalListener globalListener)
         {
-            globalListener?.Folders?.Remove(this.CloudDrive);
-            globalListener?.Folders?.Remove(this.RubbishBin);
+            //globalListener?.Folders?.Remove(this.CloudDrive);
+            //globalListener?.Folders?.Remove(this.RubbishBin);
+            if (globalListener == null) return;
+            globalListener.NodeAdded -= CloudDrive.OnNodeAdded;
+            globalListener.NodeRemoved -= CloudDrive.OnNodeRemoved;
+            globalListener.NodeAdded -= RubbishBin.OnNodeAdded;
+            globalListener.NodeRemoved -= RubbishBin.OnNodeRemoved;
+            globalListener.NodeAdded -= CameraUploads.OnNodeAdded;
+            globalListener.NodeRemoved -= CameraUploads.OnNodeRemoved;
         }
 
         /// <summary>
         /// Load folders of the view model
         /// </summary>
-        public void LoadFolders()
+        public async void LoadFolders()
         {
             if (this.CloudDrive?.FolderRootNode == null)
             {
@@ -94,6 +111,16 @@ namespace MegaApp.ViewModels
             }
 
             this.RubbishBin.LoadChildNodes();
+
+            if (this.CameraUploads?.FolderRootNode == null)
+            {
+                var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
+                this.CameraUploads.FolderRootNode =
+                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
+                        cameraUploadsNode, this.CameraUploads);
+            }
+
+            this.CameraUploads.LoadChildNodes();
         }
 
         /// <summary>
@@ -106,6 +133,9 @@ namespace MegaApp.ViewModels
 
             OnUiThread(() => this.RubbishBin?.SetEmptyContentTemplate(true));
             this.RubbishBin?.CancelLoad();
+
+            OnUiThread(() => this.CameraUploads?.SetEmptyContentTemplate(true));
+            this.CameraUploads?.CancelLoad();
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
             //fetchNodes.ServerBusy += OnServerBusy;
@@ -124,10 +154,16 @@ namespace MegaApp.ViewModels
                 NodeService.CreateNew(this.MegaSdk, App.AppInformation, 
                 this.MegaSdk.getRubbishNode(), this.RubbishBin);
 
+            var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
+            var cameraUploadsRootNode = this.CameraUploads.FolderRootNode ??
+                NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                cameraUploadsNode, this.CameraUploads);
+
             UiService.OnUiThread(() =>
             {
                 this.CloudDrive.FolderRootNode = cloudDriveRootNode;
                 this.RubbishBin.FolderRootNode = rubbishBinRootNode;
+                this.CameraUploads.FolderRootNode = cameraUploadsRootNode;
 
                 LoadFolders();
             });
@@ -135,7 +171,7 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Provate Methods
+        #region Private Methods
 
         private void ResetViewStates()
         {
@@ -146,18 +182,23 @@ namespace MegaApp.ViewModels
             RubbishBin.IsMultiSelectActive = false;
             RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
             RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
+
+            CameraUploads.IsMultiSelectActive = false;
+            CameraUploads.CurrentViewState = FolderContentViewState.CloudDrive;
+            CameraUploads.PreviousViewState = FolderContentViewState.CloudDrive;
         }
 
         private void CopyOrMove() => OnCopyOrMove(this, EventArgs.Empty);
 
         private void OnCopyOrMove(object sender, EventArgs e)
         {
-            if (this.ActiveFolderView.SelectedNodes == null || !this.ActiveFolderView.SelectedNodes.Any()) return;
+            if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
+                !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
 
-            foreach (var node in this.ActiveFolderView.SelectedNodes)
+            foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
-            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.SelectedNodes.ToList();            
+            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
             this.ActiveFolderView.IsMultiSelectActive = false;
 
             ResetViewStates();
@@ -166,6 +207,8 @@ namespace MegaApp.ViewModels
             this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
             this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
             this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
+            this.CameraUploads.PreviousViewState = this.CameraUploads.CurrentViewState;
+            this.CameraUploads.CurrentViewState = FolderContentViewState.CopyOrMove;
 
             this.SourceFolderView = this.ActiveFolderView;
 
@@ -177,7 +220,7 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void ResetCopyOrMove()
         {
-            SourceFolderView.SelectedNodes.Clear();
+            SourceFolderView.ItemCollection.SelectedItems.Clear();
             SourceFolderView.CopyOrMoveSelectedNodes.Clear();
             SourceFolderView = null;
             ResetViewStates();
@@ -288,6 +331,13 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _rubbishBin, value); }
         }
 
+        private CameraUploadsViewModel _cameraUploads;
+        public CameraUploadsViewModel CameraUploads
+        {
+            get { return _cameraUploads; }
+            private set { SetField(ref _cameraUploads, value); }
+        }
+
         private FolderViewModel _activeFolderView;
         public FolderViewModel ActiveFolderView
         {
@@ -327,6 +377,7 @@ namespace MegaApp.ViewModels
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
         public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
+        public string CameraUploadsNameText => ResourceService.UiResources.GetString("UI_CameraUploads");
 
         #endregion
 
