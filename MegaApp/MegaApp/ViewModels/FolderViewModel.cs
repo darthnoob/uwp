@@ -567,7 +567,8 @@ namespace MegaApp.ViewModels
 
             if (!result) return;
 
-            MultipleRemoveAsync(this.ItemCollection.SelectedItems);
+            // Use a temp variable to avoid InvalidOperationException
+            MultipleRemoveAsync(this.ItemCollection.SelectedItems.ToList());
 
             this.IsMultiSelectActive = false;
         }
