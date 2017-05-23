@@ -138,9 +138,6 @@ namespace MegaApp.ViewModels
         {
             if (mNode == null) return;
 
-            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
-            OnPropertyChanged("IsEmpty");
-
             var isProcessed = false;
 
             var parentNode = this.MegaSdk.getParentNode(mNode);
@@ -174,6 +171,9 @@ namespace MegaApp.ViewModels
                     });
                     isProcessed = true;
                 }
+
+                this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+                UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
             }
 
             if (parentNode == null || isProcessed) return;
@@ -247,14 +247,14 @@ namespace MegaApp.ViewModels
                 try { FolderService.UpdateFolders(this); }
                 catch (Exception) { /* Dummy catch, surpress possible exception */ }
             });
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
 
         public void OnNodeRemoved(object sender, MNode mNode)
         {
             if (mNode == null) return;
-
-            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
-            OnPropertyChanged("IsEmpty");
 
             var isProcessed = false;
 
@@ -303,6 +303,9 @@ namespace MegaApp.ViewModels
                     });
                 }
             }
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
 
         #region Commands

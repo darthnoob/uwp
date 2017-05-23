@@ -159,7 +159,7 @@ namespace MegaApp.ViewModels
                 NodeService.CreateNew(this.MegaSdk, App.AppInformation,
                 cameraUploadsNode, this.CameraUploads);
 
-            UiService.OnUiThread(() =>
+            OnUiThread(() =>
             {
                 this.CloudDrive.FolderRootNode = cloudDriveRootNode;
                 this.RubbishBin.FolderRootNode = rubbishBinRootNode;
@@ -200,12 +200,12 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            OnPropertyChanged("IsRubbishBinEmpty");
+            OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
         private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e)
         {
-            OnPropertyChanged("IsRubbishBinEmpty");
+            OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
         private void ResetViewStates()
