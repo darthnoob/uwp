@@ -420,8 +420,11 @@ namespace MegaApp.Services
         /// <returns>The brush object with the color.</returns>
         private static Brush GetSortMenuItemForeground(FolderViewModel folder, int sortOrder)
         {
-            if (UiService.GetSortOrder(folder.FolderRootNode.Base64Handle, folder.FolderRootNode.Name) == sortOrder)
-                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            if(folder?.FolderRootNode != null)
+            {
+                if (UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name) == sortOrder)
+                    return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            }
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }
