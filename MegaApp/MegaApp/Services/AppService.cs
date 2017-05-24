@@ -342,31 +342,17 @@ namespace MegaApp.Services
         /// </summary>
         public static void LogoutActions()
         {
-            //// Disable the "camera upload" service if is enabled
-            //if (MediaService.GetAutoCameraUploadStatus())
-            //{
-            //    MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (LOGOUT)");
-            //    MediaService.SetAutoCameraUpload(false);
-            //}
+            // Disable the "Camera Uploads" service if is enabled
+            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (LOGOUT)");
+                TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+            }
 
             // Clear settings, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
             SettingsService.ClearMegaLoginData();
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-            //    // Added extra checks preventing null reference exceptions
-            //    if (App.MainPageViewModel == null) return;
-
-            //    if (App.MainPageViewModel.CloudDrive != null)
-            //        App.MainPageViewModel.CloudDrive.ItemCollection.Clear();
-
-            //    if (App.MainPageViewModel.RubbishBin != null)
-            //        App.MainPageViewModel.RubbishBin.ItemCollection.Clear();
-            //});
-            AppService.ClearAppCache(false);
-
-            // Delete the User Data
-            //App.UserData = null;
+            ClearAppCache(false);
         }
 
         /// <summary>
