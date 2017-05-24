@@ -91,15 +91,35 @@ namespace MegaApp
         {
             if (e.Kind == ActivationKind.Protocol)
             {
+                // Handle URI activation
                 ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
-                // TODO: Handle URI activation
-                // The received URI is eventArgs.Uri.AbsoluteUri
-
+                
                 // Initialize the links information
                 if (LinkInformation == null)
                     LinkInformation = new LinkInformation();
 
-                LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+                bool validUri = true;
+                Exception exception = null;
+                try
+                {
+                    validUri = eventArgs.Uri.IsWellFormedOriginalString();
+                    if (validUri)
+                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.AbsoluteUri);
+                }
+                catch (UriFormatException ex)
+                {
+                    validUri = false;
+                    exception = ex;
+                }
+                finally
+                {
+                    if(!validUri)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Invalid URI detected during app activation", exception);
+                        await DialogService.ShowAlertAsync(ResourceService.AppMessages.GetString("AM_InvalidUri_Title"),
+                            ResourceService.AppMessages.GetString("AM_InvalidUri"));
+                    }
+                }
 
                 Frame rootFrame = CreateRootFrame();
 

@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
 using Windows.Foundation.Metadata;
-using Windows.System.Threading;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;
 
@@ -27,6 +24,9 @@ namespace MegaApp.Services
         /// <returns>Sort order. Possible values: <see cref="MSortOrderType"/></returns>
         public static int GetSortOrder(string folderBase64Handle, string folderName)
         {
+            if (string.IsNullOrWhiteSpace(folderBase64Handle) || string.IsNullOrWhiteSpace(folderName))
+                return (int)MSortOrderType.ORDER_NONE;
+
             if (_folderSorting == null)
                 _folderSorting = new Dictionary<string, int>();
 
@@ -44,6 +44,8 @@ namespace MegaApp.Services
         /// <param name="sortOrder">Sort order. Possible values: <see cref="MSortOrderType"/></param>
         public static void SetSortOrder(string folderBase64Handle, int sortOrder)
         {
+            if (string.IsNullOrWhiteSpace(folderBase64Handle)) return;
+
             if (_folderSorting == null)
                 _folderSorting = new Dictionary<string, int>();
 
