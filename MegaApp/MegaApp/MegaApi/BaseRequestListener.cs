@@ -29,7 +29,7 @@ namespace MegaApp.MegaApi
 
         #region MRequestListenerInterface
 
-        public virtual async void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             //Deployment.Current.Dispatcher.BeginInvoke(() =>
             //{
@@ -55,9 +55,8 @@ namespace MegaApp.MegaApi
                     UiService.OnUiThread(() => 
                         NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
             }
-            else if (e.getErrorCode() == MErrorType.API_EBLOCKED) 
+            else if (e.getErrorCode() == MErrorType.API_EBLOCKED) // If the account has been blocked
             {
-                // If the account has been blocked
                 api.logout(new LogOutRequestListener(false));
 
                 UiService.OnUiThread(() =>
@@ -66,23 +65,19 @@ namespace MegaApp.MegaApi
                         NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
                 });
             }
-            else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA) //Storage overquota error
             {
-                //Deployment.Current.Dispatcher.BeginInvoke(() =>
-                //{
-                //    // Stop all upload transfers
-                //    api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
-                                                            
-                //    // Disable the "camera upload" service if is enabled
-                //    if (MediaService.GetAutoCameraUploadStatus())
-                //    {
-                //        MegaSDK.log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (API_EOVERQUOTA)");
-                //        MediaService.SetAutoCameraUpload(false);
-                //        SettingsService.SaveSetting(SettingsResources.CameraUploadsIsEnabled, false);
-                //    }
+                UiService.OnUiThread(DialogService.ShowOverquotaAlert);
 
-                //    DialogService.ShowOverquotaAlert();
-                //});
+                // Stop all upload transfers
+                api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+
+                // Disable the "Camera Uploads" service if is enabled
+                if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                    TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                }
             }
             else if (e.getErrorCode() != MErrorType.API_EINCOMPLETE)
             {

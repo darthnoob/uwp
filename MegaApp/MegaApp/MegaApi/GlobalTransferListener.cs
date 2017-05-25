@@ -50,7 +50,7 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
-                case MErrorType.API_EOVERQUOTA:
+                case MErrorType.API_EOVERQUOTA: //Storage overquota error
                     ProcessOverquotaError(api);
                     break;
 
@@ -142,7 +142,7 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
-                case MErrorType.API_EOVERQUOTA:
+                case MErrorType.API_EOVERQUOTA: //Storage overquota error
                     ProcessOverquotaError(api);
                     break;
 
@@ -162,14 +162,17 @@ namespace MegaApp.MegaApi
         /// <param name="api">MegaApi object that started the transfer</param>
         private void ProcessOverquotaError(MegaSDK api)
         {
+            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+
             // Stop all upload transfers
             api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
 
-            // Disable the "camera upload" service
-            //MediaService.SetAutoCameraUpload(false);
-            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"), false);
-
-            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+            // Disable the "Camera Uploads" service if is enabled
+            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+            }
         }
 
         /// <summary>
@@ -250,6 +253,10 @@ namespace MegaApp.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
+            // Transfer overquota error
+            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+                UiService.OnUiThread(() => DialogService.ShowTransferOverquotaWarning());
+
             // Extra checking to avoid NullReferenceException
             if (transfer == null) return;
 
