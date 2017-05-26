@@ -410,5 +410,14 @@ namespace MegaApp.ViewModels
         public string RetryText => ResourceService.UiResources.GetString("UI_Retry");
 
         #endregion
+
+        #region VisualResources
+
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string PausePathData => ResourceService.VisualResources.GetString("VR_PausePathData");
+        public string ResumePathData => ResourceService.VisualResources.GetString("VR_PlayPathData");
+        public string RemovePathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+
+        #endregion
     }
 }

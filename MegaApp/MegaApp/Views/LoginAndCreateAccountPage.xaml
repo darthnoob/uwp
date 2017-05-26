@@ -193,9 +193,13 @@
         <CommandBar Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
                 Click="OnAcceptClick"
-                Icon="Accept"
                 IsEnabled="{Binding ActiveViewModel.ControlState}"
-                Label="{Binding ConfirmText, Mode=OneTime}" />
+                Label="{Binding ConfirmText, Mode=OneTime}"
+                ToolTipService.ToolTip="{Binding ConfirmText, Mode=OneTime}">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <SymbolIcon Symbol="Accept"/>
+                </Viewbox>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </views:BaseLoginAndCreateAccountPage>

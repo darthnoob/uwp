@@ -5,9 +5,10 @@
     xmlns:classes="using:MegaApp.Classes"
     xmlns:converters="using:MegaApp.Converters"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:userControls="using:MegaApp.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    xmlns:userControls="using:MegaApp.UserControls">
+    xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters">
 
     <!--  Resource dictionary entries should be defined here.  -->
 
@@ -229,10 +230,6 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -241,7 +238,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -373,10 +370,6 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -385,7 +378,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -481,10 +474,6 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -493,7 +482,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -605,10 +594,6 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -617,7 +602,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -706,7 +691,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.ColumnDefinitions>
@@ -739,7 +724,7 @@
                         VerticalAlignment="Center"
                         Canvas.ZIndex="1"
                         Stretch="UniformToFill"
-                        Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                         <Image.Source>
                             <BitmapImage
                                 DecodePixelHeight="36"
@@ -832,7 +817,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="True" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Path
@@ -852,7 +837,7 @@
                     Width="130"
                     Height="130"
                     Stretch="UniformToFill"
-                    Visibility="{Binding IsDefaultImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                     <Image.Source>
                         <BitmapImage
                             DecodePixelHeight="96"
@@ -1038,29 +1023,34 @@
                     TextWrapping="NoWrap"
                     Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
             </Grid>
-            <Button
-                Grid.Row="0"
+            
+            <CommandBar
+                Margin="8,0,0,0"
+                Grid.Row="0" 
+                Grid.Column="2" 
                 Grid.RowSpan="3"
-                Grid.Column="2"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding CancelTransferCommand}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Cancel"
-                        ToolTipService.ToolTip="{Binding CancelText}" />
-                </Viewbox>
-            </Button>
+                VerticalAlignment="Center"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Command="{Binding CancelTransferCommand}"
+                    Label="{Binding CancelText}"
+                    ToolTipService.ToolTip="{Binding CancelText}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaTransferItemContentDesktop">
-        <Grid Margin="0,8" Background="Transparent">
+        <Grid Margin="0,4" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1098,7 +1088,6 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="70" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -1207,8 +1196,8 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Grid.ColumnSpan="4"
-                Margin="0,0,0,8"
-                VerticalAlignment="Top"
+                Margin="0,-8,0,16"
+                VerticalAlignment="Top" 
                 Background="{ThemeResource MegaProgressBarBackgroundBrush}"
                 IsIndeterminate="False"
                 Maximum="{Binding TotalBytes}"
@@ -1219,104 +1208,80 @@
                     <SolidColorBrush Color="{StaticResource MegaRedColor}" />
                 </ProgressBar.Foreground>
             </ProgressBar>
-            <Button
-                Grid.Row="0"
+            <CommandBar
+                Margin="8,0,0,0"
+                Grid.Row="0" 
+                Grid.Column="5" 
                 Grid.RowSpan="2"
-                Grid.Column="5"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding PauseOrResumeTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Pause"
-                        ToolTipService.ToolTip="{Binding PauseText}" />
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="5"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding PauseOrResumeTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Play"
-                        ToolTipService.ToolTip="{Binding ResumeText}" />
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="5"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding RetryTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Refresh"
-                        ToolTipService.ToolTip="{Binding RetryText}" />
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="6"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding RemoveTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Delete"
-                        ToolTipService.ToolTip="{Binding RemoveText}" />
-                </Viewbox>
-            </Button>
-            <Button
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Grid.Column="6"
-                Width="36"
-                Height="36"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Background="Transparent"
-                BorderThickness="0"
-                Command="{Binding CancelTransferCommand}"
-                Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
-                <Viewbox MaxWidth="16" MaxHeight="16">
-                    <SymbolIcon
-                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                        Symbol="Cancel"
-                        ToolTipService.ToolTip="{Binding CancelText}" />
-                </Viewbox>
-            </Button>
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Command="{Binding PauseOrResumeTransferCommand}"
+                    Label="{Binding PauseText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding PauseText}"
+                    Visibility="{Binding TransferState, ConverterParameter='pause', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding PausePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding PauseOrResumeTransferCommand}"
+                    Label="{Binding ResumeText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding ResumeText}"
+                    Visibility="{Binding TransferState, ConverterParameter='resume', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding ResumePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding RetryTransferCommand}"
+                    Label="{Binding RetryText}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding RetryText}"
+                    Visibility="{Binding TransferState, ConverterParameter='retry', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <SymbolIcon
+                            Symbol="Refresh"
+                            ToolTipService.ToolTip="{Binding RetryText}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding RemoveTransferCommand}"
+                    Label="{Binding RemoveText}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding RemoveText}"
+                    Visibility="{Binding TransferState, ConverterParameter='remove', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding RemovePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding CancelTransferCommand}"
+                    Label="{Binding CancelText}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding CancelText}"
+                    Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
-
-
-

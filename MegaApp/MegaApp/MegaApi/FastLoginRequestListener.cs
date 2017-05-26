@@ -19,9 +19,12 @@ namespace MegaApp.MegaApi
         {
             _cloudDriveViewModel = cloudDriveViewModel;
 
-            timerAPI_EAGAIN = new DispatcherTimer();
-            timerAPI_EAGAIN.Tick += timerTickAPI_EAGAIN;
-            timerAPI_EAGAIN.Interval = new TimeSpan(0, 0, 10);            
+            UiService.OnUiThread(() =>
+            {
+                timerAPI_EAGAIN = new DispatcherTimer();
+                timerAPI_EAGAIN.Tick += timerTickAPI_EAGAIN;
+                timerAPI_EAGAIN.Interval = new TimeSpan(0, 0, 10);
+            });
         }
 
         // Method which is call when the timer event is triggered
@@ -29,7 +32,7 @@ namespace MegaApp.MegaApi
         {
             UiService.OnUiThread(() =>
             {
-                timerAPI_EAGAIN.Stop();
+                timerAPI_EAGAIN?.Stop();
                 //ProgressService.SetProgressIndicator(true, ProgressMessages.ServersTooBusy);
             });
         }
@@ -102,7 +105,7 @@ namespace MegaApp.MegaApi
 
         public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            UiService.OnUiThread(() => timerAPI_EAGAIN.Stop());
+            UiService.OnUiThread(() => timerAPI_EAGAIN?.Stop());
 
             if (e.getErrorCode() != MErrorType.API_OK)
             {
@@ -145,7 +148,7 @@ namespace MegaApp.MegaApi
             if (e.getErrorCode() == MErrorType.API_EAGAIN && isFirstAPI_EAGAIN)
             {
                 isFirstAPI_EAGAIN = false;
-                UiService.OnUiThread(() => timerAPI_EAGAIN.Start());
+                UiService.OnUiThread(() => timerAPI_EAGAIN?.Start());
             }
 
             base.onRequestTemporaryError(api, request, e);

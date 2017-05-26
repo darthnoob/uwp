@@ -44,7 +44,7 @@ namespace MegaApp.MegaApi
         {
             UiService.OnUiThread(() =>
             {
-                TimerApiEagain.Stop();
+                TimerApiEagain?.Stop();
                 ServerBusy?.Invoke(this, EventArgs.Empty);
             });
         }
@@ -74,13 +74,13 @@ namespace MegaApp.MegaApi
             if (e.getErrorCode() == MErrorType.API_EAGAIN && IsFirstApiEagain)
             {
                 IsFirstApiEagain = false;
-                UiService.OnUiThread(() => TimerApiEagain.Start());
+                UiService.OnUiThread(() => TimerApiEagain?.Start());
             }
         }
 
         public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            UiService.OnUiThread(() => TimerApiEagain.Stop());
+            UiService.OnUiThread(() => TimerApiEagain?.Stop());
 
             if (e.getErrorCode() == MErrorType.API_EBLOCKED) // If the account has been blocked
             {

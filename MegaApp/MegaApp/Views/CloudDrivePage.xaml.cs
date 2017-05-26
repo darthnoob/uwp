@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Foundation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -226,7 +225,8 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive)
+            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive &&
+                this.ViewModel.ActiveFolderView.CurrentViewState != FolderContentViewState.CopyOrMove)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
                 ((ListViewBase)sender).SelectedItems.Add(itemTapped);
@@ -551,7 +551,7 @@ namespace MegaApp.Views
             var sortButton = sender as Button;
 
             var buttonPosition = sortButton.TransformToVisual(BtnSort);
-            Point screenCoords = buttonPosition.TransformPoint(new Point(32, 32));
+            Point screenCoords = buttonPosition.TransformPoint(new Point(sortButton.ActualWidth, sortButton.ActualHeight));
 
             MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
             menuFlyout.ShowAt(sortButton, screenCoords);

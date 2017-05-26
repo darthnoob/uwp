@@ -6,6 +6,7 @@
     xmlns:breadcrumb="using:GoedWare.Controls.Breadcrumb"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:WindowsStateTriggers"
@@ -39,128 +40,447 @@
                 Node="{Binding ActiveFolderView.FocusedNode}" />
         </SplitView.Pane>
 
-        <Grid Background="{StaticResource MegaAppBackgroundBrush}">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid
+                x:Name="TopRowGrid"
+                Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid Background="{StaticResource MegaAppBarBackgroundBrush}" DataContext="{Binding ActiveFolderView}">
-                    <StackPanel
-                        Margin="0,0,12,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Background="{StaticResource MegaAppBarBackgroundBrush}"
-                        Orientation="Horizontal">
-                        <Button
-                            x:Name="BtnSort"
-                            Width="32"
-                            Height="32"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Click="OnSortClick">
+                <!-- TOP COMMAND BAR AREA (ONLY DESKTOP) -->
+                <Grid
+                    x:Name="TopCommandBar"
+                    Grid.Row="0"
+                    Grid.Column="0">
+
+                    <!-- CLOUD DRIVE TOP COMMAND BAR (DESKTOP ONLY) -->
+                    <CommandBar
+                        Background="Transparent"
+                        DataContext="{Binding ActiveFolderView}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding UploadCommand}"
+                            Label="{Binding UploadText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding UploadPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding AddFolderCommand}"
+                            Label="{Binding AddFolderText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding AddFolderPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnButtonClick"
+                            Command="{Binding RefreshCommand}"
+                            Label="{Binding RefreshText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Foreground="{StaticResource MegaAppForegroundBrush}" Symbol="Sort" />
+                                <SymbolIcon Symbol="Refresh"/>
                             </Viewbox>
-                        </Button>
-                        <Button
-                            x:Name="BtnChangeView"
-                            Width="32"
-                            Height="32"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding ChangeViewCommand}">
-                            <Path
-                                Width="14"
-                                Height="14"
-                                Data="{Binding NextViewButtonPathData}"
-                                Fill="{StaticResource MegaAppForegroundBrush}"
-                                Stretch="UniformToFill" />
-                        </Button>
-                    </StackPanel>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <Pivot
-                        x:Name="MainPivot"
-                        HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-                        SelectionChanged="OnPivotSelectionChanged">
-                        <PivotItem
-                            x:Name="CloudDrivePivot"
-                            CacheMode="{x:Null}"
-                            Header="{Binding CloudDriveNameText}">
-                            <Grid
-                                x:Name="CloudDriveRoot"
-                                Margin="{StaticResource RootGridMargin}"
-                                Background="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                        </AppBarButton>
+                    </CommandBar>
 
-                                <StackPanel Grid.Row="0">
-                                    <Grid Margin="24,0,12,5">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="16" />
-                                            <RowDefinition Height="24" />
-                                        </Grid.RowDefinitions>
-                                        <ProgressBar
-                                            Grid.ColumnSpan="2"
-                                            Height="8"
-                                            VerticalAlignment="Center"
-                                            Foreground="{StaticResource MegaRedColorBrush}"
-                                            IsIndeterminate="True"
-                                            Visibility="{Binding CloudDrive.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                        <breadcrumb:BreadcrumbControl
-                                            x:Name="CloudDriveBreadCrumb"
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            Margin="-12,0,6,0"
-                                            DisplayMemberPath="Name"
-                                            HomeCommand="{Binding CloudDrive.HomeSelectedCommand}"
-                                            HomeTemplate="{StaticResource BreadcrumbHomeMegaTemplate}"
-                                            ItemCommand="{Binding CloudDrive.ItemSelectedCommand}"
-                                            ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-                                            ItemsSource="{Binding CloudDrive.BreadCrumb.Items}"
-                                            OverFlow="..."
-                                            Seperator="&gt;" />
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            Style="{ThemeResource CaptionTextBlockStyle}"
-                                            Text="{Binding CloudDrive.EmptyInformationText}"
-                                            TextAlignment="Right"
-                                            Visibility="{Binding CloudDrive.ItemCollection.HasItems, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            Style="{ThemeResource CaptionTextBlockStyle}"
-                                            Text="{Binding CloudDrive.FolderRootNode.Information}"
-                                            TextAlignment="Right"
-                                            Visibility="{Binding CloudDrive.ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                    </Grid>
-                                </StackPanel>
-                                <Grid x:Name="CloudDriveContentPanel" Grid.Row="1">
+                    <!-- RUBBISH BIN TOP COMMAND BAR (DESKTOP ONLY) -->
+                    <CommandBar 
+                        Background="Transparent"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding CleanRubbishBinCommand}"
+                            IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                            Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            DataContext="{Binding ActiveFolderView}"
+                            Click="OnButtonClick"
+                            Command="{Binding RefreshCommand}"
+                            Label="{Binding RefreshText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="Refresh"/>
+                            </Viewbox>
+                        </AppBarButton>
+                    </CommandBar>
+
+                    <!-- CAMERA UPLOADS TOP COMMAND BAR (DESKTOP ONLY) -->
+                    <CommandBar
+                        Background="Transparent"
+                        DataContext="{Binding ActiveFolderView}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Visibility="{Binding CurrentViewState, ConverterParameter=CameraUploads, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        <AppBarButton
+                            Click="OnButtonClick"
+                            Command="{Binding RefreshCommand}"
+                            Label="{Binding RefreshText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="Refresh"/>
+                            </Viewbox>
+                        </AppBarButton>
+                    </CommandBar>
+
+                    <!-- COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY) -->
+                    <CommandBar 
+                        Background="Transparent"
+                        DataContext="{Binding ActiveFolderView}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding AddFolderCommand}"
+                            Label="{Binding AddFolderText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding AddFolderPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding AcceptCopyCommand}"
+                            Label="{Binding CopyText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding AcceptMoveCommand}"
+                            Label="{Binding MoveText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="MoveToFolder"/>
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Click="OnButtonClick"
+                            Command="{Binding CancelCopyOrMoveCommand}"
+                            Label="{Binding CancelText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding CancelPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+
+                    <!-- MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY) -->
+                    <CommandBar 
+                        Background="Transparent"
+                        DataContext="{Binding ActiveFolderView}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        <AppBarButton
+                            Click="OnButtonClick"
+                            Command="{Binding DownloadCommand}"
+                            Label="{Binding DownloadText, Mode=OneTime}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding DownloadPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnButtonClick"
+                            Command="{Binding CopyOrMoveCommand}"
+                            Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnButtonClick"
+                            Command="{Binding RemoveCommand}"
+                            Label="{Binding RemoveText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnSelectAllClick"
+                            Label="{Binding SelectAllText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding SelectAllText, Mode=OneTime}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="SelectAll"/>
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnDeselectAllClick"
+                            Label="{Binding DeselectAllText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding DeselectAllText, Mode=OneTime}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="ClearSelection"/>
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding MultiSelectCommand}"
+                            Label="{Binding CancelText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{Binding CancelPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+
+                <!-- PERMANENT TOP COMMAND BAR (ALL DEVICES) -->
+                <CommandBar 
+                    Background="Transparent"
+                    DataContext="{Binding ActiveFolderView}"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                    Grid.Row="0"
+                    Grid.Column="1">
+                    <AppBarButton 
+                        x:Name="BtnSort"
+                        Click="OnSortClick"
+                        Label="{Binding SortByText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding SortByText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding SortByPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        x:Name="BtnChangeView"
+                        Click="OnButtonClick"
+                        Command="{Binding ChangeViewCommand}"
+                        Label="{Binding NextViewButtonLabelText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding NextViewButtonLabelText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding NextViewButtonPathData, Mode=OneWay}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Pivot 
+                    x:Name="MainPivot"
+                    HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}" 
+                    SelectionChanged="OnPivotSelectionChanged">
+                    <PivotItem 
+                        x:Name="CloudDrivePivot" 
+                        Header="{Binding CloudDriveNameText}" 
+                        CacheMode="{x:Null}">
+                        <Grid x:Name="CloudDriveRoot" 
+                                Background="Transparent" 
+                                DataContext="{Binding CloudDrive}"
+                                Margin="{StaticResource RootGridMargin}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Row="0">
+                                <Grid Margin="24,0,12,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="16" />
+                                        <RowDefinition Height="24" />
+                                    </Grid.RowDefinitions>
+                                    <ProgressBar 
+                                        Grid.ColumnSpan="2"
+                                        Height="8"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource MegaRedColorBrush}"
+                                        IsIndeterminate="True"
+                                        Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <breadcrumb:BreadcrumbControl
+                                        x:Name="CloudDriveBreadCrumb"
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="-12,0,6,0"
+                                        DisplayMemberPath="Name"
+                                        HomeCommand="{Binding HomeSelectedCommand}"
+                                        HomeTemplate="{StaticResource BreadcrumbHomeMegaTemplate}"
+                                        ItemCommand="{Binding ItemSelectedCommand}"
+                                        ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
+                                        ItemsSource="{Binding BreadCrumb.Items}"
+                                        OverFlow="..."
+                                        Seperator="&gt;" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{Binding EmptyInformationText}"
+                                        TextAlignment="Right"
+                                        Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{Binding FolderRootNode.Information}"
+                                        TextAlignment="Right"
+                                        Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                </Grid>
+                            </StackPanel>
+                            <Grid x:Name="CloudDriveContentPanel" Grid.Row="1">
+                                <ListView
+                                    x:Name="ListViewCloudDrive"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
+                                    RightTapped="OnRightItemTapped"
+                                    Tapped="OnItemTapped"
+                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ListView>
+                                <GridView
+                                    x:Name="GridViewCloudDrive"
+                                    Margin="12,0,0,0"
+                                    Padding="2,4"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
+                                    Tapped="OnItemTapped"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </GridView>
+                                <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
+                            </Grid>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem
+                        x:Name="CameraUploadsPivot"
+                        CacheMode="{x:Null}"
+                        Header="{Binding CameraUploadsNameText}">
+                        <Grid
+                            x:Name="CameraUploadsRoot"
+                            DataContext="{Binding CameraUploads}"
+                            Margin="{StaticResource RootGridMargin}"
+                            Background="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <ProgressBar
+                                Grid.Row="0"
+                                Height="8"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource MegaRedColorBrush}"
+                                IsIndeterminate="True"
+                                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+                            <Grid Grid.Row="1" Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                <userControls:TogglePanel
+                                    x:Name="CameraUploadsTogglePanelControl"
+                                    VerticalAlignment="Center"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                                    HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
+                                    IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
+                                    IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
+                                    SubHeaderMargin="0,14,0,28"
+                                    SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
+                                    <userControls:TogglePanel.SubHeaderForeground>
+                                        <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+                                    </userControls:TogglePanel.SubHeaderForeground>
+                                </userControls:TogglePanel>
+
+                                <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                     <ListView
-                                        x:Name="ListViewCloudDrive"
+                                        x:Name="ListViewCameraUploads"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding CloudDrive}"
                                         DoubleTapped="OnItemDoubleTapped"
                                         IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                        ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                        ItemTemplate="{StaticResource CameraUploadsListViewFileItemContent}"
                                         ItemsSource="{Binding ItemCollection.Items}"
                                         RightTapped="OnRightItemTapped"
                                         Tapped="OnItemTapped"
@@ -172,362 +492,423 @@
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
                                     </ListView>
-                                    <GridView
-                                        x:Name="GridViewCloudDrive"
-                                        Margin="12,0,0,0"
-                                        Padding="2,4"
-                                        Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding CloudDrive}"
-                                        DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                        ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                        ItemsSource="{Binding ItemCollection.Items}"
-                                        Tapped="OnItemTapped"
-                                        Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
-                                    </GridView>
+
+                                    <SemanticZoom ScrollViewer.ZoomMode="Enabled" Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+
+                                        <SemanticZoom.ZoomedOutView>
+                                            <ListView ItemTemplate="{StaticResource CameraUploadsGroupItem}" ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
+                                        </SemanticZoom.ZoomedOutView>
+
+                                        <SemanticZoom.ZoomedInView>
+                                            <GridView
+                                                x:Name="GridViewCameraUploads"
+                                                Margin="12,0,0,0"
+                                                Padding="2,4"
+                                                Background="{StaticResource MegaAppBackgroundBrush}"
+                                                DoubleTapped="OnItemDoubleTapped"
+                                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                                ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
+                                                ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                                Tapped="OnItemTapped">
+                                                <interactivity:Interaction.Behaviors>
+                                                    <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                        <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                    </core:EventTriggerBehavior>
+                                                </interactivity:Interaction.Behaviors>
+                                                <GridView.GroupStyle>
+                                                    <GroupStyle
+                                                        HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
+                                                        HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
+                                                        HidesIfEmpty="True" />
+                                                </GridView.GroupStyle>
+                                            </GridView>
+                                        </SemanticZoom.ZoomedInView>
+
+                                    </SemanticZoom>
                                 </Grid>
                             </Grid>
-                        </PivotItem>
-                        <PivotItem
-                            x:Name="RubbishBinPivot"
-                            CacheMode="{x:Null}"
-                            Header="{Binding RubbishBinNameText}">
-                            <Grid
-                                x:Name="RubbishBinRoot"
-                                Margin="{StaticResource RootGridMargin}"
-                                Background="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                        </Grid>
+                    </PivotItem>
+                    <PivotItem
+                        x:Name="RubbishBinPivot"
+                        CacheMode="{x:Null}"
+                        Header="{Binding RubbishBinNameText}">
+                        <Grid
+                            x:Name="RubbishBinRoot"
+                            DataContext="{Binding RubbishBin}"
+                            Margin="{StaticResource RootGridMargin}"
+                            Background="Transparent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                                <StackPanel Grid.Row="0">
-                                    <Grid Margin="24,0,12,5">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="16" />
-                                            <RowDefinition Height="24" />
-                                        </Grid.RowDefinitions>
-                                        <ProgressBar
-                                            Grid.ColumnSpan="2"
-                                            Height="8"
-                                            VerticalAlignment="Center"
-                                            Foreground="{StaticResource MegaRedColorBrush}"
-                                            IsIndeterminate="True"
-                                            Visibility="{Binding RubbishBin.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                        <breadcrumb:BreadcrumbControl
-                                            x:Name="RubbishBinBreadCrumb"
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            Margin="-12,0,6,0"
-                                            DisplayMemberPath="Name"
-                                            HomeCommand="{Binding RubbishBin.HomeSelectedCommand}"
-                                            HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
-                                            ItemCommand="{Binding RubbishBin.ItemSelectedCommand}"
-                                            ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-                                            ItemsSource="{Binding RubbishBin.BreadCrumb.Items}"
-                                            OverFlow="..."
-                                            Seperator="&gt;" />
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            Style="{ThemeResource CaptionTextBlockStyle}"
-                                            Text="{Binding RubbishBin.EmptyInformationText}"
-                                            TextAlignment="Right"
-                                            Visibility="{Binding RubbishBin.ItemCollection.HasItems, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                        <TextBlock
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Center"
-                                            Style="{ThemeResource CaptionTextBlockStyle}"
-                                            Text="{Binding RubbishBin.FolderRootNode.Information}"
-                                            TextAlignment="Right"
-                                            Visibility="{Binding RubbishBin.ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                    </Grid>
-                                </StackPanel>
-
-                                <Grid x:Name="RubbishBinContentPanel" Grid.Row="1">
-                                    <ListView
-                                        x:Name="ListViewRubbishBin"
-                                        Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding RubbishBin}"
-                                        DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                        ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                        ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                        ItemsSource="{Binding ItemCollection.Items}"
-                                        Tapped="OnItemTapped"
-                                        Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
-                                    </ListView>
-                                    <GridView
-                                        x:Name="GridViewRubbishBin"
-                                        Margin="12,0,0,0"
-                                        Padding="2,4"
-                                        Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DataContext="{Binding RubbishBin}"
-                                        DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                        ItemTemplateSelector="{Binding NodeTemplateSelector}"
-                                        ItemsSource="{Binding ItemCollection.Items}"
-                                        Tapped="OnItemTapped"
-                                        Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
-                                    </GridView>
-                                </Grid>
-                            </Grid>
-                        </PivotItem>
-                        <PivotItem
-                            x:Name="CameraUploadsPivot"
-                            CacheMode="{x:Null}"
-                            Header="{Binding CameraUploadsNameText}">
-                            <Grid
-                                x:Name="CameraUploadsRoot"
-                                Margin="{StaticResource RootGridMargin}"
-                                Background="Transparent">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-
-                                <ProgressBar
-                                    Grid.Row="0"
-                                    Height="8"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource MegaRedColorBrush}"
-                                    IsIndeterminate="True"
-                                    Visibility="{Binding CameraUploads.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
-
-                                <Grid Grid.Row="1" Visibility="{Binding CameraUploads.IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                                    <userControls:TogglePanel
-                                        x:Name="CameraUploadsTogglePanelControl"
+                            <StackPanel Grid.Row="0">
+                                <Grid Margin="24,0,12,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="16" />
+                                        <RowDefinition Height="24" />
+                                    </Grid.RowDefinitions>
+                                    <ProgressBar
+                                        Grid.ColumnSpan="2"
+                                        Height="8"
                                         VerticalAlignment="Center"
-                                        Background="{StaticResource MegaAppBackgroundBrush}"
-                                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                                        HeaderText="{Binding CameraUploads.EmptyContentHeaderText, Mode=OneTime}"
-                                        IsOn="{Binding CameraUploads.CameraUploadsTaskIsOn, Mode=TwoWay}"
-                                        IsVisible="{Binding CameraUploads.ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
-                                        SubHeaderMargin="0,14,50,0"
-                                        SubHeaderText="{Binding CameraUploads.EmptyContentSubHeaderText, Mode=OneTime}">
-                                        <userControls:TogglePanel.SubHeaderForeground>
-                                            <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
-                                        </userControls:TogglePanel.SubHeaderForeground>
-                                    </userControls:TogglePanel>
-
-                                    <Grid Visibility="{Binding CameraUploads.ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <ListView
-                                            x:Name="ListViewCameraUploads"
-                                            Background="{StaticResource MegaAppBackgroundBrush}"
-                                            DataContext="{Binding CameraUploads}"
-                                            DoubleTapped="OnItemDoubleTapped"
-                                            IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                            ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                            ItemTemplate="{StaticResource CameraUploadsListViewFileItemContent}"
-                                            ItemsSource="{Binding ItemCollection.Items}"
-                                            RightTapped="OnRightItemTapped"
-                                            Tapped="OnItemTapped"
-                                            Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                            <interactivity:Interaction.Behaviors>
-                                                <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                                <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                                </core:EventTriggerBehavior>
-                                            </interactivity:Interaction.Behaviors>
-                                        </ListView>
-
-                                        <SemanticZoom ScrollViewer.ZoomMode="Enabled" Visibility="{Binding CameraUploads.IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-
-                                            <SemanticZoom.ZoomedOutView>
-                                                <ListView ItemTemplate="{StaticResource CameraUploadsGroupItem}" ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
-                                            </SemanticZoom.ZoomedOutView>
-
-                                            <SemanticZoom.ZoomedInView>
-                                                <GridView
-                                                    x:Name="GridViewCameraUploads"
-                                                    Margin="12,0,0,0"
-                                                    Padding="2,4"
-                                                    Background="{StaticResource MegaAppBackgroundBrush}"
-                                                    DataContext="{Binding CameraUploads}"
-                                                    DoubleTapped="OnItemDoubleTapped"
-                                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                                    ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
-                                                    ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
-                                                    Tapped="OnItemTapped">
-                                                    <interactivity:Interaction.Behaviors>
-                                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                                        <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                                        </core:EventTriggerBehavior>
-                                                    </interactivity:Interaction.Behaviors>
-                                                    <GridView.GroupStyle>
-                                                        <GroupStyle
-                                                            HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
-                                                            HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
-                                                            HidesIfEmpty="True" />
-                                                    </GridView.GroupStyle>
-                                                </GridView>
-                                            </SemanticZoom.ZoomedInView>
-
-                                        </SemanticZoom>
-                                    </Grid>
+                                        Foreground="{StaticResource MegaRedColorBrush}"
+                                        IsIndeterminate="True"
+                                        Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    <breadcrumb:BreadcrumbControl
+                                        x:Name="RubbishBinBreadCrumb"
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="-12,0,6,0"
+                                        DisplayMemberPath="Name"
+                                        HomeCommand="{Binding HomeSelectedCommand}"
+                                        HomeTemplate="{StaticResource BreadcrumbHomeRubbishBinTemplate}"
+                                        ItemCommand="{Binding ItemSelectedCommand}"
+                                        ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
+                                        ItemsSource="{Binding BreadCrumb.Items}"
+                                        OverFlow="..."
+                                        Seperator="&gt;" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{Binding EmptyInformationText}"
+                                        TextAlignment="Right"
+                                        Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="{Binding FolderRootNode.Information}"
+                                        TextAlignment="Right"
+                                        Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </Grid>
+                            </StackPanel>
+
+                            <Grid x:Name="RubbishBinContentPanel" Grid.Row="1">
+                                <ListView
+                                    x:Name="ListViewRubbishBin"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
+                                    Tapped="OnItemTapped"
+                                    Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ListView>
+                                <GridView
+                                    x:Name="GridViewRubbishBin"
+                                    Margin="12,0,0,0"
+                                    Padding="2,4"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    DoubleTapped="OnItemDoubleTapped"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemTemplateSelector="{Binding NodeTemplateSelector}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
+                                    Tapped="OnItemTapped"
+                                    Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </GridView>
+                                <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                             </Grid>
-                        </PivotItem>
-                    </Pivot>
-                </Grid>
+                        </Grid>
+                    </PivotItem>
+                </Pivot>
             </Grid>
 
-            <!--  CLOUD DRIVE COMMAND BAR  -->
-            <CommandBar
-                Grid.Row="1"
-                Style="{StaticResource MegaCommandBarStyle}"
-                Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.UploadCommand}"
-                    Icon="Upload"
-                    Label="{Binding UploadText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.AddFolderCommand}"
-                    Icon="Add"
-                    Label="{Binding AddFolderText}" />
-                <AppBarButton
-                    x:Name="MultiSelectButtonCloudDrive"
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                    Label="{Binding MultiSelectText}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.RefreshCommand}"
-                    Icon="Refresh"
-                    Label="{Binding RefreshText}" />
-            </CommandBar>
+            <!-- BOTTOM COMMAND BAR AREA (MOBILE DEVICES) -->
+            <Grid
+                x:Name="BottomCommandBar"
+                Grid.Row="2">
 
-            <!--  RUBBISH BIN COMMAND BAR  -->
-            <CommandBar
-                Grid.Row="1"
-                Style="{StaticResource MegaCommandBarStyle}"
-                Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.CleanRubbishBinCommand}"
-                    Icon="Delete"
-                    Label="{Binding EmptyRubbishBinText}" />
-                <AppBarButton
-                    x:Name="MultiSelectButtonRubbishBin"
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                    Label="{Binding MultiSelectText}">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.RefreshCommand}"
-                    Icon="Refresh"
-                    Label="{Binding RefreshText}" />
-            </CommandBar>
-
-            <!--  COPY OR MOVE COMMAND BAR  -->
-            <CommandBar
-                Grid.Row="1"
-                Style="{StaticResource MegaCommandBarStyle}"
-                Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.AddFolderCommand}"
-                    Icon="Add"
-                    Label="{Binding AddFolderText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding AcceptCopyCommand}"
-                    Icon="Copy"
-                    Label="{Binding CopyText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding AcceptMoveCommand}"
-                    Icon="MoveToFolder"
-                    Label="{Binding MoveText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding CancelCopyOrMoveCommand}"
-                    Icon="Cancel"
-                    Label="{Binding CancelText}" />
-            </CommandBar>
-
-            <!--  MULTI SELECT COMMAND BAR  -->
-            <CommandBar
-                Grid.Row="1"
-                Style="{StaticResource MegaCommandBarStyle}"
-                Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.DownloadCommand}"
-                    Icon="Download"
-                    Label="{Binding DownloadText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding CopyOrMoveCommand}"
-                    Icon="Copy"
-                    Label="{Binding CopyOrMoveText}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.MoveToRubbishBinCommand}"
-                    Icon="Delete"
-                    Label="{Binding MoveToRubbishBinText}"
-                    Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}" />
-                <AppBarButton
-                    Click="OnButtonClick"
-                    Command="{Binding ActiveFolderView.RemoveCommand}"
-                    Icon="Delete"
-                    Label="{Binding RemoveText}"
-                    Visibility="{Binding ActiveFolderView.PreviousViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}" />
-                <AppBarButton
-                    Command="{Binding ActiveFolderView.MultiSelectCommand}"
-                    Icon="Cancel"
-                    Label="{Binding CancelText}" />
-
-                <CommandBar.SecondaryCommands>
+                <!-- CLOUD DRIVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
+                <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding UploadCommand}"
+                        Label="{Binding UploadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding UploadPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding AddFolderCommand}"
+                        Label="{Binding AddFolderText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding AddFolderPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        Label="{Binding MultiSelectText,Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <AppBarButton
-                        Click="OnSelectAllClick"
-                        Icon="SelectAll"
-                        Label="{Binding SelectAllText}" />
+                        Click="OnButtonClick"
+                        Command="{Binding RefreshCommand}"
+                        Label="{Binding RefreshText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
+                        <Viewbox MaxWidth="14" MaxHeight="14">
+                            <SymbolIcon Symbol="Refresh"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!-- RUBBISH BIN BOTTOM COMMAND BAR (MOBILE DEVICES) -->
+                <CommandBar 
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding CleanRubbishBinCommand}"
+                        IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        DataContext="{Binding ActiveFolderView}"
+                        Click="OnButtonClick"
+                        Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        Label="{Binding MultiSelectText,Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <AppBarButton
-                        Click="OnDeselectAllClick"
-                        Icon="SelectAll"
-                        Label="{Binding DeselectAllText}" />
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
+                        DataContext="{Binding ActiveFolderView}"
+                        Click="OnButtonClick"
+                        Command="{Binding RefreshCommand}"
+                        Label="{Binding RefreshText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
+                        <Viewbox MaxWidth="14" MaxHeight="14">
+                            <SymbolIcon Symbol="Refresh"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!-- CAMRE UPLOADS BOTTOM COMMAND BAR (MOBILE DEVICES) -->
+                <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding CurrentViewState, ConverterParameter=CameraUploads, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding MultiSelectCommand}"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        Label="{Binding MultiSelectText,Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding MultiSelectText,Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding RefreshCommand}"
+                        Label="{Binding RefreshText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
+                        <Viewbox MaxWidth="14" MaxHeight="14">
+                            <SymbolIcon Symbol="Refresh"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!-- COPY OR MOVE BOTTOM COMMAND BAR (MOBILE DEVICES) -->
+                <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding AddFolderCommand}"
+                        Label="{Binding AddFolderText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding AddFolderPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding AcceptCopyCommand}"
+                        Label="{Binding CopyText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CopyText,Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding CopyPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding AcceptMoveCommand}"
+                        Label="{Binding MoveText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}">
+                        <Viewbox MaxWidth="14" MaxHeight="14">
+                            <SymbolIcon Symbol="MoveToFolder"/>
+                        </Viewbox>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding CancelCopyOrMoveCommand}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding CancelPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!-- MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES) -->
+                <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding CurrentViewState, ConverterParameter=MultiSelect, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding DownloadCommand}"
+                        Label="{Binding DownloadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding DownloadPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding CopyOrMoveCommand}"
+                        Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding RemoveCommand}"
+                        Label="{Binding RemoveText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding MultiSelectCommand}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                Data="{Binding CancelPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Click="OnSelectAllClick"
+                            Label="{Binding SelectAllText}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="SelectAll"/>
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton
+                            Click="OnDeselectAllClick"
+                            Label="{Binding DeselectAllText}">
+                            <Viewbox MaxWidth="14" MaxHeight="14">
+                                <SymbolIcon Symbol="ClearSelection"/>
+                            </Viewbox>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
+                </CommandBar>
+            </Grid>
         </Grid>
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Desktop">
@@ -541,6 +922,9 @@
                         <Setter Target="GridViewRubbishBin.SelectionMode" Value="Extended" />
                         <Setter Target="ListViewCameraUploads.SelectionMode" Value="Extended" />
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="Extended" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -554,6 +938,9 @@
                         <Setter Target="GridViewRubbishBin.SelectionMode" Value="None" />
                         <Setter Target="ListViewCameraUploads.SelectionMode" Value="None" />
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -566,20 +953,33 @@
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Overlay" />
                         <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ProgressAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Top" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
+                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
+                        <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97, 0, 0, 16" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
+                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ProgressAlignment" Value="Right" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 0, 0, 16" />
+                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
                         <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="44" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="18" />

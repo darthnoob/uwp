@@ -33,7 +33,7 @@ namespace MegaApp.Converters
                         case "viewdetails":
                         case "download":
                         case "copyormove":
-                        case "movetorubbish":
+                        case "remove":
                             return Visibility.Visible;
                         case "getlink":
                         case "rename":
@@ -51,29 +51,8 @@ namespace MegaApp.Converters
                     {
                         case "download":
                         case "copyormove":
-                            return Visibility.Visible;
                         case "remove":
-                        {
-                            switch (parentFolderType)
-                            {
-                                case ContainerType.CloudDrive:
-                                    return Visibility.Collapsed;
-                                case ContainerType.RubbishBin:
-                                    return Visibility.Visible;
-                            }
-                            return Visibility.Collapsed;;
-                        }
-                        case "movetorubbish":
-                        {
-                            switch (parentFolderType)
-                            {
-                                case ContainerType.CloudDrive:
-                                    return Visibility.Visible;
-                                case ContainerType.RubbishBin:
-                                    return Visibility.Collapsed;
-                            }
-                            return Visibility.Collapsed; ;
-                        }
+                            return Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
 

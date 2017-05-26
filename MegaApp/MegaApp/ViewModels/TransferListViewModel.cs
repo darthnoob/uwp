@@ -174,5 +174,14 @@ namespace MegaApp.ViewModels
         public string CancelTransfersDescriptionText { get; }
 
         #endregion
+
+        #region VisualResources
+
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string PausePathData => ResourceService.VisualResources.GetString("VR_PausePathData");
+        public string ResumePathData => ResourceService.VisualResources.GetString("VR_PlayPathData");
+        public string CleanPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
+
+        #endregion
     }
 }

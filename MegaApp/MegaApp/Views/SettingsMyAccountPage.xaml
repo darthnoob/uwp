@@ -2,11 +2,13 @@
     x:Class="MegaApp.Views.SettingsMyAccountPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:classes="using:MegaApp.Classes"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interfaces="using:MegaApp.Interfaces"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:classes="using:MegaApp.Classes"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:interfaces="using:MegaApp.Interfaces"
     xmlns:settings="using:MegaApp.ViewModels.Settings"
+    xmlns:triggers="using:WindowsStateTriggers"    
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
     d:DataContext="{d:DesignInstance viewModels:SettingsMyAccountViewModel}"
@@ -125,58 +127,102 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="48" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid Background="{StaticResource MegaAppBarBackgroundBrush}" />
-            <ListView
-                Grid.Row="1"
-                Padding="20"
-                HorizontalAlignment="Stretch"
-                ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
-                ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
-                ItemsSource="{Binding Source={StaticResource SettingsCollectionSource}}"
-                SelectionMode="None">
-                <ListView.GroupStyle>
-                    <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,16">
-                                    <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel
-                            MaxWidth="600"
-                            HorizontalAlignment="Left"
-                            AreStickyGroupHeadersEnabled="True"
-                            GroupPadding="0, 0, 0, 80"
-                            Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
-        </Grid>
+        <Grid Grid.Row="0" Background="{StaticResource MegaAppBarBackgroundBrush}"/>
 
-        <CommandBar Grid.Row="1" Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton
-                Click="OnButtonClick"
+        <CommandBar
+            x:Name="TopCommandBar"
+            Grid.Row="0"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            extensions:CommandBarExtensions.HideMoreButton="True"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton 
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{Binding LogOutText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
                 Command="{Binding LogOutCommand}"
-                Label="{Binding LogOutText, Mode=OneTime}">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE7E8;" />
-                </AppBarButton.Icon>
+                Click="OnButtonClick">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <FontIcon Glyph="&#xE7E8;"/>
+                </Viewbox>
             </AppBarButton>
         </CommandBar>
+        
+        <ListView
+            Grid.Row="1"
+            Padding="20"
+            HorizontalAlignment="Stretch"
+            ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
+            ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
+            ItemsSource="{Binding Source={StaticResource SettingsCollectionSource}}"
+            SelectionMode="None">
+            <ListView.GroupStyle>
+                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,16">
+                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsStackPanel
+                        MaxWidth="600"
+                        HorizontalAlignment="Left"
+                        AreStickyGroupHeadersEnabled="True"
+                        GroupPadding="0, 0, 0, 80"
+                        Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+
+        <CommandBar
+            x:Name="BottomCommandBar"
+            Grid.Row="2"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton 
+                Click="OnButtonClick"
+                Command="{Binding LogOutCommand}"
+                Label="{Binding LogOutText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <FontIcon Glyph="&#xE7E8;"/>
+                </Viewbox>
+            </AppBarButton>
+        </CommandBar>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>                        
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="Auto"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </views:BaseSettingsMyAccountPage>
 

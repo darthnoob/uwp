@@ -29,6 +29,9 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChangeViewEvent;
 
+        public event EventHandler AcceptCopyEvent;
+        public event EventHandler AcceptMoveEvent;
+        public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
         public event EventHandler EnableMultiSelect;
@@ -36,6 +39,8 @@ namespace MegaApp.ViewModels
 
         public event EventHandler OpenNodeDetailsEvent;
         public event EventHandler CloseNodeDetailsEvent;
+
+        public event EventHandler ChildNodesCollectionChanged;
 
         public FolderViewModel(ContainerType containerType)
         {
@@ -48,12 +53,13 @@ namespace MegaApp.ViewModels
             this.ItemCollection = new NodeCollectionViewModel();           
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
+            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
+            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
             this.AddFolderCommand = new RelayCommand(AddFolder);
+            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
-            this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
@@ -70,12 +76,11 @@ namespace MegaApp.ViewModels
 
             SetViewDefaults();
 
-            SetEmptyContentTemplate(true);
+            SetEmptyContent(true);
 
             switch (containerType)
             {
                 case ContainerType.CloudDrive:
-                case ContainerType.CameraUploads:
                     this.CurrentViewState = FolderContentViewState.CloudDrive;
                     break;
                 case ContainerType.RubbishBin:
@@ -92,6 +97,9 @@ namespace MegaApp.ViewModels
                     break;
                 case ContainerType.FolderLink:
                     this.CurrentViewState = FolderContentViewState.FolderLink;
+                    break;
+                case ContainerType.CameraUploads:
+                    this.CurrentViewState = FolderContentViewState.CameraUploads;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
@@ -115,21 +123,6 @@ namespace MegaApp.ViewModels
                 this.FocusedNode = focusedNode;
             }
         }
-
-        //private void ChildNodesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        //{
-        //    if (e.NewItems != null)
-        //    {
-        //        // Start a new task to avoid freeze the UI
-        //        Task.Run(() =>
-        //        {
-        //            foreach (var node in e.NewItems)
-        //                (node as NodeViewModel)?.SetThumbnailImage();
-        //        });
-        //    }
-
-        //    OnPropertyChanged("HasChildNodesBinding");
-        //}
 
         public void OpenNodeDetails()
         {
@@ -178,6 +171,9 @@ namespace MegaApp.ViewModels
                     });
                     isProcessed = true;
                 }
+
+                this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+                UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
             }
 
             if (parentNode == null || isProcessed) return;
@@ -228,9 +224,7 @@ namespace MegaApp.ViewModels
                         catch (Exception) { /* Dummy catch, surpress possible exception */ }
                     });
                 }
-                   
             }
-                
 
             if (nodeToUpdateInView != null)
             {
@@ -253,6 +247,9 @@ namespace MegaApp.ViewModels
                 try { FolderService.UpdateFolders(this); }
                 catch (Exception) { /* Dummy catch, surpress possible exception */ }
             });
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
 
         public void OnNodeRemoved(object sender, MNode mNode)
@@ -274,10 +271,7 @@ namespace MegaApp.ViewModels
                         ItemCollection.Items.Remove(nodeToRemoveFromView);
                         ((FolderNodeViewModel) FolderRootNode).SetFolderInfo();
                     }
-                    catch (Exception)
-                    {
-                        /* Dummy catch, surpress possible exception */
-                    }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
                 });
 
                 isProcessed = true;
@@ -305,25 +299,26 @@ namespace MegaApp.ViewModels
                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                             folderNode?.SetFolderInfo();
                         }
-                        catch (Exception)
-                        {
-                            /* Dummy catch, surpress possible exception */
-                        }
+                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
                     });
                 }
             }
+
+            this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
+            UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
 
         #region Commands
 
+        public ICommand AcceptCopyCommand { get; }
+        public ICommand AcceptMoveCommand { get; }
         public ICommand AddFolderCommand { get; private set; }
+        public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand ChangeViewCommand { get; }
-        public ICommand CleanRubbishBinCommand { get; }
         public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
-        public ICommand MoveToRubbishBinCommand { get; }
         public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -340,7 +335,10 @@ namespace MegaApp.ViewModels
 
         #region Public Methods
 
-        
+        public void SelectAll() => this.ItemCollection.SelectAll();
+        public void DeselectAll() => this.ItemCollection.ClearSelection();
+        public void ClearChildNodes() => this.ItemCollection.Clear();
+
         /// <summary>
         /// Load the mega nodes for this specific folder using the Mega SDK
         /// </summary>
@@ -367,7 +365,7 @@ namespace MegaApp.ViewModels
             SetProgressIndication(true);
 
             // Process is started so we can set the empty content template to loading already
-            SetEmptyContentTemplate(true);
+            SetEmptyContent(true);
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = GetChildren();
@@ -380,7 +378,7 @@ namespace MegaApp.ViewModels
                     App.AppInformation,
                     MessageDialogButtons.Ok).ShowDialog();
 
-                SetEmptyContentTemplate(false);
+                SetEmptyContent(false);
 
                 return;
             }
@@ -461,6 +459,10 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
+        private void AcceptCopy() => AcceptCopyEvent?.Invoke(this, EventArgs.Empty);
+
+        private void AcceptMove() => AcceptMoveEvent?.Invoke(this, EventArgs.Empty);
+
         /// <summary>
         /// Add a new sub-folder to the current folder
         /// </summary>
@@ -503,31 +505,9 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private async void CleanRubbishBin()
-        {
-            if (this.Type != ContainerType.RubbishBin || !this.ItemCollection.HasItems) return;
+        private void CancelCopyOrMove() => CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
-            var dialogResult = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
-                ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"));
-
-            if (!dialogResult) return;
-
-            var cleanRubbishBin = new CleanRubbishBinRequestListenerAsync();
-            var result = await cleanRubbishBin.ExecuteAsync(() =>
-            {
-                this.MegaSdk.cleanRubbishBin(cleanRubbishBin);
-            });
-
-            if (!result)
-            {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
-                    ResourceService.AppMessages.GetString("AM_CleanRubbishBinFailed"));
-            }
-        }
-
-        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);        
+        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
         private async void Download()
         {
@@ -555,47 +535,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private async void MoveToRubbishBin()
-        {
-            if (!this.ItemCollection.HasSelectedItems) return;
-
-            int count = this.ItemCollection.SelectedItems.Count;
-
-            var result = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count));
-
-            if (!result) return;
-
-            MultipleMoveToRubbishBin(this.ItemCollection.SelectedItems);
-
-            this.IsMultiSelectActive = false;
-        }
-
-        private void MultipleMoveToRubbishBin(ICollection<IMegaNode> nodes)
-        {
-            if (nodes == null || nodes.Count < 1) return;
-
-            Task.Run(async () =>
-            {
-                bool result = true;
-                foreach (var node in nodes)
-                {
-                    result = result & await node.MoveToRubbishBinAsync(true);
-                }
-
-                if (!result)
-                {
-                    OnUiThread(async () =>
-                    {
-                        await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed"));
-                    });
-                }
-            });
-        }
-
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
@@ -607,39 +546,64 @@ namespace MegaApp.ViewModels
 
             int count = this.ItemCollection.SelectedItems.Count;
 
-            var result = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title"),
-                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count));
+            string title, message;
+            switch(this.Type)
+            {
+                case ContainerType.CloudDrive:
+                    title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
+                    message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), count);
+                    break;
+
+                case ContainerType.RubbishBin:
+                    title = ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title");
+                    message = string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
+                    break;
+
+                default:
+                    return;
+            }
+
+            var result = await DialogService.ShowOkCancelAsync(title, message);
 
             if (!result) return;
 
-            MultipleRemoveAsync(this.ItemCollection.SelectedItems);
+            // Use a temp variable to avoid InvalidOperationException
+            MultipleRemoveAsync(this.ItemCollection.SelectedItems.ToList());
 
             this.IsMultiSelectActive = false;
         }
 
-        private void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
+        private async void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
         {
             if (nodes == null || nodes.Count < 1) return;
-
-            Task.Run(async () =>
+            
+            bool result = true;
+            foreach (var node in nodes)
             {
-                bool result = true;
-                foreach (var node in nodes)
+                result = result & (await node.RemoveAsync(true));
+            }
+
+            if(!result)
+            {
+                string title, message;
+                switch (this.Type)
                 {
-                    result = result & await node.RemoveAsync(true);
+                    case ContainerType.CloudDrive:
+                        title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
+                        message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
+                        break;
+
+                    case ContainerType.RubbishBin:
+                        title = ResourceService.AppMessages.GetString("AM_RemoveFailed_Title");
+                        message = ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed");
+                        break;
+
+                    default:
+                        return;
                 }
 
-                if(!result)
-                {
-                    OnUiThread(async () =>
-                    {
-                        await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_RemoveFailed_Title"),
-                            ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFailed"));
-                    });
-                }
-            });
+                OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
+            }            
         }
         
         /// <summary>
@@ -810,14 +774,15 @@ namespace MegaApp.ViewModels
             return false;
         }
 
-        public void SetEmptyContentTemplate(bool isLoading)
+        public void SetEmptyContent(bool isLoading)
         {
             if (isLoading)
             {
                 OnUiThread(() =>
                 {
-                    //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListLoadingContent"];
-                    this.EmptyInformationText = "";
+                    this.EmptyInformationText = string.Empty;
+                    this.EmptyStateHeaderText = string.Empty;
+                    this.EmptyStateSubHeaderText = string.Empty;
                 });
             }
             else
@@ -832,24 +797,31 @@ namespace MegaApp.ViewModels
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListCloudDriveEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyCloudDrive").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_CloudDriveHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_CloudDriveSubHeader");
                             });
                         }
                         else if (this.FolderRootNode != null && megaRubbishBin != null && this.FolderRootNode.Base64Handle.Equals(megaRubbishBin.getBase64Handle()))
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyRubbishBin").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_RubbishBinHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_RubbishBinSubHeader");
                             });
                         }
                         else
                         {
                             OnUiThread(() =>
                             {
-                                //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
                                 this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_FolderHeader");
+
+                                if (this.MegaSdk.isInRubbish(this.FolderRootNode.OriginalMNode))
+                                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderRubbishBinSubHeader");
+                                else
+                                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderSubHeader");
                             });
                         }
                         break;
@@ -858,7 +830,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.OutShares:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaSharedFoldersListEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
                         });
                         break;
@@ -869,7 +840,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.Offline:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListRubbishBinEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyOffline").ToLower();
                         });
                         break;
@@ -877,7 +847,6 @@ namespace MegaApp.ViewModels
                     case ContainerType.FolderLink:
                         OnUiThread(() =>
                         {
-                            //EmptyContentTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListEmptyContent"];
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptyFolder").ToLower();
                         });
                         break;
@@ -923,23 +892,27 @@ namespace MegaApp.ViewModels
             CloseNodeDetails();
 
             MNode homeNode = null;
+            FolderViewModel homeFolder = null;
 
             switch (this.Type)
             {
                 case ContainerType.CloudDrive:
                     homeNode = this.MegaSdk.getRootNode();
+                    homeFolder = new FolderViewModel(ContainerType.CloudDrive);
                     break;
                 case ContainerType.RubbishBin:
                     homeNode = this.MegaSdk.getRubbishNode();
+                    homeFolder = new FolderViewModel(ContainerType.RubbishBin);
                     break;
                 case ContainerType.CameraUploads:
                     homeNode = await SdkService.GetCameraUploadRootNodeAsync();
+                    homeFolder = new FolderViewModel(ContainerType.CameraUploads);
                     break;
             }
 
             if (homeNode == null) return;
 
-            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, this, this.ItemCollection.Items);
+            this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, homeFolder, this.ItemCollection.Items);
             OnFolderNavigatedTo();
 
             LoadChildNodes();
@@ -1057,11 +1030,13 @@ namespace MegaApp.ViewModels
                 SetProgressIndication(false);
 
                 // Set empty content to folder instead of loading view
-                SetEmptyContentTemplate(false);
+                SetEmptyContent(false);
 
                 // If the task has been cancelled, stop processing
                 foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
                     this.ItemCollection.Items.Add(megaNode);
+
+                OnPropertyChanged("IsEmpty");
             });
         }
 
@@ -1118,6 +1093,7 @@ namespace MegaApp.ViewModels
 
             this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
+            this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_GridView");
         }
 
         /// <summary>
@@ -1159,6 +1135,7 @@ namespace MegaApp.ViewModels
 
                     this.ViewMode = FolderContentViewMode.GridView;
                     this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
+                    this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_ListView");
                     break;
 
                 case FolderContentViewMode.ListView:
@@ -1183,6 +1160,20 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        private string _emptyStateHeaderText;
+        public string EmptyStateHeaderText
+        {
+            get { return _emptyStateHeaderText; }
+            set { SetField(ref _emptyStateHeaderText, value); }
+        }
+
+        private string _emptyStateSubHeaderText;
+        public string EmptyStateSubHeaderText
+        {
+            get { return _emptyStateSubHeaderText; }
+            set { SetField(ref _emptyStateSubHeaderText, value); }
+        }
+
         private IMegaNode _focusedNode;
         public IMegaNode FocusedNode
         {
@@ -1193,13 +1184,6 @@ namespace MegaApp.ViewModels
         public BreadCrumbViewModel BreadCrumb { get; }
 
         public NodeCollectionViewModel ItemCollection { get; }
-
-        //private List<IMegaNode> _selectedNodes;
-        //public List<IMegaNode> SelectedNodes
-        //{
-        //    get { return _selectedNodes; }
-        //    set { SetField(ref _selectedNodes, value); }
-        //}
 
         /// <summary>
         /// Property needed to store the selected nodes in a move/copy action 
@@ -1215,7 +1199,11 @@ namespace MegaApp.ViewModels
         public FolderContentViewState CurrentViewState
         {
             get { return _currentViewState; }
-            set { SetField(ref _currentViewState, value); }
+            set
+            {
+                SetField(ref _currentViewState, value);
+                OnPropertyChanged("IsFlyoutActionAvailable");
+            }
         }
 
         private FolderContentViewState _previousViewState;
@@ -1224,7 +1212,10 @@ namespace MegaApp.ViewModels
             get { return _previousViewState; }
             set { SetField(ref _previousViewState, value); }
         }
-        
+
+        public bool IsFlyoutActionAvailable => this.CurrentViewState != FolderContentViewState.CopyOrMove;        
+
+        public bool IsEmpty => !this.ItemCollection.HasItems;
 
         public ContainerType Type { get; private set; }
 
@@ -1258,6 +1249,13 @@ namespace MegaApp.ViewModels
         {
             get { return _nextViewButtonPathData; }
             set { SetField(ref _nextViewButtonPathData, value); }
+        }
+
+        private string _nextViewButtonLabelText;
+        public string NextViewButtonLabelText
+        {
+            get { return _nextViewButtonLabelText; }
+            set { SetField(ref _nextViewButtonLabelText, value); }
         }
 
         private DataTemplateSelector _nodeTemplateSelector;
@@ -1304,13 +1302,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private DataTemplate _emptyContentTemplate;
-        public DataTemplate EmptyContentTemplate
-        {
-            get { return _emptyContentTemplate; }
-            private set { SetField(ref _emptyContentTemplate, value); }
-        }
-
         private string _emptyInformationText;
         public string EmptyInformationText
         {
@@ -1340,13 +1331,39 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string GridViewText => ResourceService.UiResources.GetString("UI_GridView");
+        public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
-        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
+        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+        public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
+
+        #endregion
+
+        #region VisualResources
+
+        public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
+        public string BreadcrumbHomeMegaIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon");
+        public string BreadcrumbHomeRubbishBinIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon");
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
+        public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
+        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+        public string UploadPathData => ResourceService.VisualResources.GetString("VR_UploadPathData");
 
         #endregion
         
