@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using mega;
 using MegaApp.Services;
 using MegaApp.ViewModels;
@@ -122,8 +123,11 @@ namespace MegaApp.Classes
 
             try
             {
+                var existing = (transferObject.Transfer != null) ?
+                    TransferService.SearchTransfer(transferList, transferObject.Transfer) :
+                    transferList.FirstOrDefault(t => (t.TransferPath != null && t.TransferPath.Equals(transferObject.TransferPath)));
+
                 bool handled = false;
-                var existing = TransferService.SearchTransfer(transferList, transferObject.Transfer);
                 bool move = existing != null;
                 var index = transferList.IndexOf(existing);
                 var count = transferList.Count - 1;
