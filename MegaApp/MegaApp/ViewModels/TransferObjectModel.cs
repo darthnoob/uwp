@@ -309,8 +309,6 @@ namespace MegaApp.ViewModels
             get { return _transferState; }
             set
             {
-                if (_transferState == value) return;
-
                 SetField(ref _transferState, value);
 
                 this.IsBusy = (value == MTransferState.STATE_ACTIVE) ? true : false;
