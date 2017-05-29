@@ -218,10 +218,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Login</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_MoveToRubbishBin" xml:space="preserve">
-    <value>Move to rubbish bin</value>
-    <comment>Label for any 'Move to rubbish bin' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
     <value>Files</value>
     <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
@@ -419,7 +415,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
-    <value>Upload your photo's to your account.</value>
+    <value>Upload your photos to your account.</value>
     <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsTitle" xml:space="preserve">
@@ -644,5 +640,17 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_SetExpirationDate" xml:space="preserve">
     <value>Set expiry date</value>
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_GridView" xml:space="preserve">
+    <value>Grid view</value>
+    <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListView" xml:space="preserve">
+    <value>List view</value>
+    <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortBy" xml:space="preserve">
+    <value>Sort by</value>
+    <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

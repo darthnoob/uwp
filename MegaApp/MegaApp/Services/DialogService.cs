@@ -63,6 +63,13 @@ namespace MegaApp.Services
             //customMessageDialog.ShowDialog();
         }
 
+        public static async void ShowTransferOverquotaWarning()
+        {
+            await ShowAlertAsync(
+                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
+                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+        }
+
         /// <summary>
         /// Show an Input Dialog to the uses
         /// </summary>
@@ -272,7 +279,40 @@ namespace MegaApp.Services
         /// <returns>The flyout menu with the sort options.</returns>
         public static MenuFlyout CreateSortMenu(FolderViewModel folder)
         {
+            var isCameraUploadsGrid = (folder is CameraUploadsViewModel) &&
+                                      ((CameraUploadsViewModel) folder).IsGridViewMode;
+
             MenuFlyout menuFlyout = new MenuFlyout();
+
+            if (isCameraUploadsGrid)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
+                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                    Command = new RelayCommand(() =>
+                    {
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
+                            (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                        folder.LoadChildNodes();
+                    })
+                });
+
+                return menuFlyout;
+            }
+
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
@@ -380,8 +420,11 @@ namespace MegaApp.Services
         /// <returns>The brush object with the color.</returns>
         private static Brush GetSortMenuItemForeground(FolderViewModel folder, int sortOrder)
         {
-            if (UiService.GetSortOrder(folder.FolderRootNode.Base64Handle, folder.FolderRootNode.Name) == sortOrder)
-                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            if(folder?.FolderRootNode != null)
+            {
+                if (UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name) == sortOrder)
+                    return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            }
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }

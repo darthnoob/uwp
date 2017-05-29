@@ -58,7 +58,7 @@ namespace MegaApp.UserControls
                     Label = CloudDriveText,
                     SubLabel = CameraUploadsText + " & " + RubbishBinText,
                     ToolTip = CloudDriveText,
-                    Icon = new SymbolIcon(Symbol.Home),
+                    Icon = GetIconFromXamlPath(MenuCloudPathData),
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
 
@@ -129,6 +129,7 @@ namespace MegaApp.UserControls
 
         #region VisualResources
 
+        private static string MenuCloudPathData => ResourceService.VisualResources.GetString("VR_MenuCloudPathData");
         private static string MenuContactsPathData => ResourceService.VisualResources.GetString("VR_MenuContactsPathData");
         private static string MenuSaveForOfflinePathData => ResourceService.VisualResources.GetString("VR_MenuSaveForOfflinePathData");
         private static string MenuSettingsPathData => ResourceService.VisualResources.GetString("VR_MenuSettingsPathData");

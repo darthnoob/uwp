@@ -72,9 +72,14 @@
         <CommandBar 
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
-                Icon="Accept" 
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{Binding ConfirmAccountText, Mode=OneTime}" 
-                Command="{Binding ConfirmAccountCommand}"/>
+                ToolTipService.ToolTip="{Binding ConfirmAccountText, Mode=OneTime}"
+                Command="{Binding ConfirmAccountCommand}">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <SymbolIcon Symbol="Accept"/>
+                </Viewbox>
+            </AppBarButton>
         </CommandBar>
     </Page.BottomAppBar>
 </views:BaseConfirmAccountPage>

@@ -15,9 +15,6 @@ namespace MegaApp.ViewModels
         {
             DownloadCommand = new RelayCommand(Download);
             GetLinkCommand = new RelayCommand(GetLink);
-            MoveToRubbishBinCommand = new RelayCommand(MoveToRubbishBin);
-            NextCommand = new RelayCommand(Next);
-            PreviousCommand = new RelayCommand(Previous);
             RemoveCommand = new RelayCommand(Remove);
             RenameCommand = new RelayCommand(Rename);
         }
@@ -27,9 +24,9 @@ namespace MegaApp.ViewModels
             ParentFolder = parentFolder;
 
             PreviewItems = new ObservableCollection<ImageNodeViewModel>(
-                ParentFolder.ChildNodes.Where(n => n is ImageNodeViewModel).Cast<ImageNodeViewModel>());
+                ParentFolder.ItemCollection.Items.Where(n => n is ImageNodeViewModel).Cast<ImageNodeViewModel>());
 
-            ParentFolder.ChildNodes.CollectionChanged += (sender, args) =>
+            ParentFolder.ItemCollection.Items.CollectionChanged += (sender, args) =>
             {
                 if (args.Action != NotifyCollectionChangedAction.Remove) return;
 
@@ -46,9 +43,6 @@ namespace MegaApp.ViewModels
 
         public ICommand DownloadCommand { get; }
         public ICommand GetLinkCommand { get; }
-        public ICommand MoveToRubbishBinCommand { get; }
-        public ICommand NextCommand { get; }
-        public ICommand PreviousCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
 
@@ -64,27 +58,6 @@ namespace MegaApp.ViewModels
         private void GetLink()
         {
             SelectedPreview?.GetLinkAsync(true);
-        }
-
-        private async void MoveToRubbishBin()
-        {
-            await SelectedPreview?.MoveToRubbishBinAsync();
-        }
-
-        private void Next()
-        {
-            var currentPreviewIndex = PreviewItems.IndexOf(SelectedPreview);
-
-            if (currentPreviewIndex < PreviewItems.Count - 1)
-                SelectedPreview = PreviewItems[currentPreviewIndex + 1];
-        }
-
-        private void Previous()
-        {
-            var currentPreviewIndex = PreviewItems.IndexOf(SelectedPreview);
-
-            if (currentPreviewIndex > 0)
-                SelectedPreview = PreviewItems[currentPreviewIndex - 1];
         }
 
         private async void Remove()
@@ -211,12 +184,20 @@ namespace MegaApp.ViewModels
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
-        public string MoveToRubbishBinText => ResourceService.UiResources.GetString("UI_MoveToRubbishBin");
         public string NextText => ResourceService.UiResources.GetString("UI_Next");
         public string PreviousText => ResourceService.UiResources.GetString("UI_Previous");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
+
+        #endregion
+
+        #region VisualResources
+
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
 
         #endregion
     }

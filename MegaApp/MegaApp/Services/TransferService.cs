@@ -142,11 +142,23 @@ namespace MegaApp.Services
         public static TransferObjectModel SearchTransfer(IList<TransferObjectModel> transfersList, MTransfer transfer)
         {
             // Folder transfers are not included into the transfers list.
-            if (transfer == null || transfer.isFolderTransfer()) return null;
+            if (transfersList == null || transfer == null || transfer.isFolderTransfer()) return null;
 
-            var megaTransfer = transfersList.FirstOrDefault(
-                t => (t.Transfer != null && t.Transfer.getTag() == transfer.getTag()) ||
-                t.TransferPath.Equals(transfer.getPath()));
+            TransferObjectModel megaTransfer = null;
+            try
+            {
+                megaTransfer = transfersList.FirstOrDefault(
+                    t => (t.Transfer != null && t.Transfer.getTag() == transfer.getTag()) ||
+                        (t.TransferPath != null && t.TransferPath.Equals(transfer.getPath())));
+            }
+            catch (Exception e)
+            {
+                var fileName = transfer.getFileName();
+                var message = (fileName == null) ? "Error searching transfer" :
+                    string.Format("Error searching transfer. File: '{0}'", fileName);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, message, e);
+                return null;
+            }
 
             return megaTransfer;
         }

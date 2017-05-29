@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
@@ -14,39 +15,62 @@
     <Page.TopAppBar>
         <CommandBar
             Name="TopCommandBar"
-            Style="{StaticResource MegaCommandBarStyle}">
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            extensions:CommandBarExtensions.HideMoreButton="True">
             <CommandBar.Content>
                 <TextBlock 
                     Margin="12"
                     Text="{Binding SelectedPreview.Name}"/>
             </CommandBar.Content>
 
-            <AppBarButton 
-                Icon="Download" 
+            <AppBarButton
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{Binding DownloadText}" 
                 ToolTipService.ToolTip="{Binding DownloadText}"
-                Command="{Binding DownloadCommand}"/>
-            <AppBarButton 
-                Icon="Link"
+                Command="{Binding DownloadCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{Binding GetLinkText}" 
-                Command="{Binding GetLinkCommand}"/>
+                ToolTipService.ToolTip="{Binding GetLinkText}"
+                Command="{Binding GetLinkCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding LinkPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
-                Icon="Rename" 
-                Label="{Binding RenameText}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{Binding RenameText}" 
                 ToolTipService.ToolTip="{Binding RenameText}"
-                Command="{Binding RenameCommand}"/>
+                Command="{Binding RenameCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding RenamePathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
-                Icon="Delete" 
-                Label="{Binding MoveToRubbishBinText}"
-                ToolTipService.ToolTip="{Binding MoveToRubbishBinText}"
-                Command="{Binding MoveToRubbishBinCommand}"                
-                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-            <AppBarButton
-                Icon="Delete" 
-                Label="{Binding RemoveText}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{Binding RemoveText}" 
                 ToolTipService.ToolTip="{Binding RemoveText}"
-                Command="{Binding RemoveCommand}"
-                Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                Command="{Binding RemoveCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
         </CommandBar>
     </Page.TopAppBar>
 
@@ -164,39 +188,53 @@
             Name="BottomCommandBar"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
-                Name="PreviousButton"
-                Icon="Previous" 
-                Label="{Binding PreviousText}" 
-                Command="{Binding PreviousCommand}"/>
-            <AppBarButton 
-                Icon="Download" 
+                Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{Binding DownloadText}" 
-                Command="{Binding DownloadCommand}"/>
-            <AppBarButton 
-                Icon="Link"
-                Label="{Binding GetLinkText}" 
-                Command="{Binding GetLinkCommand}"/>
+                ToolTipService.ToolTip="{Binding DownloadText}"
+                Command="{Binding DownloadCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             <AppBarButton
-                Name="NextButton"
-                Icon="Next" 
-                Label="{Binding NextText}" 
-                Command="{Binding NextCommand}"/>
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{Binding GetLinkText}" 
+                ToolTipService.ToolTip="{Binding GetLinkText}"
+                Command="{Binding GetLinkCommand}">
+                <AppBarButton.Icon>
+                    <PathIcon 
+                        Data="{Binding LinkPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
-                    Icon="Rename" 
-                    Label="{Binding RenameText}"
-                    Command="{Binding RenameCommand}"/>
+                    Label="{Binding RenameText}" 
+                    ToolTipService.ToolTip="{Binding RenameText}"
+                    Command="{Binding RenameCommand}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding RenamePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton
-                    Icon="Delete" 
-                    Label="{Binding MoveToRubbishBinText}"
-                    Command="{Binding MoveToRubbishBinCommand}"
-                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=CloudDrive, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
-                <AppBarButton
-                    Icon="Delete" 
-                    Label="{Binding RemoveText}"
-                    Command="{Binding RemoveCommand}"
-                    Visibility="{Binding ParentFolder.CurrentViewState, ConverterParameter=RubbishBin, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}"/>
+                    Label="{Binding RemoveText}" 
+                    ToolTipService.ToolTip="{Binding RemoveText}"
+                    Command="{Binding RemoveCommand}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

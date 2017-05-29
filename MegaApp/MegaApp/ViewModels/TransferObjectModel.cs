@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels
             Initialize(selectedNode, transferType, transferPath, externalDownloadPath);
         }
 
-        private async void Initialize(IMegaNode selectedNode, MTransferType transferType,
+        private void Initialize(IMegaNode selectedNode, MTransferType transferType,
             string transferPath, string externalDownloadPath = null)
         {
             this.TypeAndState = new object[2];
@@ -54,10 +54,28 @@ namespace MegaApp.ViewModels
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
-                    var srcFile = await StorageFile.GetFileFromPathAsync(transferPath);
-                    var fileProperties = await srcFile.GetBasicPropertiesAsync();
-                    this.DisplayName = srcFile.Name;
-                    this.TotalBytes = fileProperties.Size;
+                    this.DisplayName = Path.GetFileName(transferPath);
+                    if (FileService.FileExists(transferPath))
+                    {
+                        Task.Run(async () =>
+                        {
+                            try
+                            {
+                                var srcFile = await StorageFile.GetFileFromPathAsync(transferPath);
+                                if (srcFile != null)
+                                {
+                                    var fileProperties = await srcFile.GetBasicPropertiesAsync();
+                                    this.TotalBytes = fileProperties.Size;
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                var message = (this.DisplayName == null) ? "Error getting transfer size" :
+                                    string.Format("Error getting transfer size. File: '{0}'", this.DisplayName);
+                                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, message, e);
+                            }
+                        });
+                    }
                     break;
             }
 
@@ -291,8 +309,6 @@ namespace MegaApp.ViewModels
             get { return _transferState; }
             set
             {
-                if (_transferState == value) return;
-
                 SetField(ref _transferState, value);
 
                 this.IsBusy = (value == MTransferState.STATE_ACTIVE) ? true : false;
@@ -405,6 +421,15 @@ namespace MegaApp.ViewModels
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string ResumeText => ResourceService.UiResources.GetString("UI_Resume");
         public string RetryText => ResourceService.UiResources.GetString("UI_Retry");
+
+        #endregion
+
+        #region VisualResources
+
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string PausePathData => ResourceService.VisualResources.GetString("VR_PausePathData");
+        public string ResumePathData => ResourceService.VisualResources.GetString("VR_PlayPathData");
+        public string RemovePathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
 
         #endregion
     }

@@ -120,6 +120,7 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
@@ -190,7 +191,12 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
+    <Compile Include="UserControls\TogglePanel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
+    <Compile Include="ViewModels\BreadCrumbsViewModel.cs" />
+    <Compile Include="ViewModels\CameraUploadsViewModel.cs" />
+    <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />
+    <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />

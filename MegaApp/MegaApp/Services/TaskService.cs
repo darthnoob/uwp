@@ -20,7 +20,8 @@ namespace MegaApp.Services
         public static async Task<bool> RequestBackgroundAccessAsync()
         {
             var result = await BackgroundExecutionManager.RequestAccessAsync();
-            return result != BackgroundAccessStatus.Denied && 
+            return result != BackgroundAccessStatus.DeniedByUser &&
+                   result != BackgroundAccessStatus.DeniedBySystemPolicy &&
                    result != BackgroundAccessStatus.Unspecified;
         }
 

@@ -11,6 +11,8 @@ namespace MegaApp.Services
 {
     static class SettingsService
     {
+        public const string ImageDateSetting = "ImageLastUploadDate";
+
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
 
@@ -346,7 +348,6 @@ namespace MegaApp.Services
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsConnectionType"));
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsFileType"));
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsFirstInit"));
-            DeleteSetting(ResourceService.SettingsResources.GetString("SR_CameraUploadsIsEnabled"));
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"));
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation"));
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_ExportImagesToPhotoAlbum"));
