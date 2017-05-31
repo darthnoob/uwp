@@ -999,11 +999,13 @@ namespace MegaApp.ViewModels
                 // First add the viewport items to show some data to the user will still loading
                 if (i == viewportItemCount)
                 {
+                    var viewPortList = helperList.ToList();
                     OnUiThread(() =>
                     {
                         // If the task has been cancelled, stop processing
-                        foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
+                        foreach (var megaNode in viewPortList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
                             this.ItemCollection.Items.Add(megaNode);
+                        viewPortList.Clear();
                     });
 
                     helperList.Clear();
@@ -1013,11 +1015,13 @@ namespace MegaApp.ViewModels
                 if (helperList.Count != backgroundItemCount || i <= viewportItemCount) continue;
 
                 // Add the rest of the items in the background to the list
+                var finalList = helperList.ToList();
                 OnUiThread(() =>
                 {
                     // If the task has been cancelled, stop processing
-                    foreach (var megaNode in helperList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
+                    foreach (var megaNode in finalList.TakeWhile(megaNode => !this.LoadingCancelToken.IsCancellationRequested))
                         this.ItemCollection.Items.Add(megaNode);
+                    finalList.Clear();
                 });
 
                 helperList.Clear();
