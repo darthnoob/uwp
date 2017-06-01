@@ -759,7 +759,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding ImageType}"
+                    Text="{Binding FileType}"
                     TextWrapping="NoWrap" />
                 <TextBlock
                     x:Name="txtCreated"

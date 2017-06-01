@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -36,6 +36,12 @@ namespace MegaApp.ViewModels
             else
                 DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
         }
+
+        #endregion
+
+        #region Properties
+
+        public string FileType => Path.GetExtension(Name).ToUpper().Replace(".", string.Empty);
 
         #endregion
     }
