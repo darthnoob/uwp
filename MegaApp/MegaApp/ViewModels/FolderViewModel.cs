@@ -390,7 +390,11 @@ namespace MegaApp.ViewModels
             SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            OnUiThread(() => this.BreadCrumb.Create(this));
+            OnUiThread(() =>
+            {
+                this.BreadCrumb.Create(this);
+                OnPropertyChanged("HasBreadCrumbPath");
+            });
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -1189,6 +1193,8 @@ namespace MegaApp.ViewModels
 
         public NodeCollectionViewModel ItemCollection { get; }
 
+        public bool HasBreadCrumbPath => this.BreadCrumb?.Items?.Count > 0;
+
         /// <summary>
         /// Property needed to store the selected nodes in a move/copy action 
         /// </summary>
@@ -1359,6 +1365,7 @@ namespace MegaApp.ViewModels
 
         public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
         public string BreadcrumbHomeMegaIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeMegaIcon");
+        public string BreadcrumbHomeCloudDriveIcon => ResourceService.VisualResources.GetString("VR_MenuCloudPathData");
         public string BreadcrumbHomeRubbishBinIcon => ResourceService.VisualResources.GetString("VR_BreadcrumbHomeRubbishBinIcon");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");

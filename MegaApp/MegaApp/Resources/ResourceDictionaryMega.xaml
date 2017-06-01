@@ -170,6 +170,21 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="BreadcrumbHomeCloudDriveTemplate">
+        <Grid>
+            <Viewbox MaxWidth="14" MaxHeight="14">
+                <Path
+                    x:Name="BreadcrumbHomeCloudDriveIcon"
+                    Data="{Binding BreadcrumbHomeCloudDriveIcon}"
+                    Stretch="UniformToFill">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+            </Viewbox>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="BreadcrumbHomeRubbishBinTemplate">
         <Grid>
             <Path
