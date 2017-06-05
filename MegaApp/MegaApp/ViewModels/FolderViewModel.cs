@@ -47,6 +47,7 @@ namespace MegaApp.ViewModels
             this.Type = containerType;
 
             this.FolderRootNode = null;
+            this.IsLoaded = false;
             this.IsBusy = false;
             this.BusyText = null;
             this.BreadCrumb = new BreadCrumbViewModel();
@@ -342,7 +343,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Load the mega nodes for this specific folder using the Mega SDK
         /// </summary>
-        public async void LoadChildNodes()
+        public void LoadChildNodes()
         {
             // User must be online to perform this operation
             if ((this.Type != ContainerType.FolderLink) && !IsUserOnline())
@@ -400,7 +401,7 @@ namespace MegaApp.ViewModels
             CreateLoadCancelOption();
 
             // Load and create the childnodes for the folder
-            await Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
                 try
                 {
@@ -976,6 +977,8 @@ namespace MegaApp.ViewModels
             try { helperList = new List<IMegaNode>(1024); }
             catch (ArgumentOutOfRangeException) { helperList = new List<IMegaNode>(); }
 
+            this.ItemCollection.DisableCollectionChangedDetection();
+
             for (int i = 0; i < listSize; i++)
             {
                 // If the task has been cancelled, stop processing
@@ -1045,7 +1048,10 @@ namespace MegaApp.ViewModels
                     this.ItemCollection.Items.Add(megaNode);
 
                 OnPropertyChanged("IsEmpty");
+                this.IsLoaded = true;
             });
+
+            this.ItemCollection.EnableCollectionChangedDetection();
         }
 
         private void InitializePerformanceParameters(out int viewportItemCount, out int backgroundItemCount)
@@ -1167,6 +1173,13 @@ namespace MegaApp.ViewModels
 
 
         #region Properties
+
+        private bool _isLoaded;
+        public bool IsLoaded
+        {
+            get { return _isLoaded; }
+            set { SetField(ref _isLoaded, value); }
+        }
 
         private string _emptyStateHeaderText;
         public string EmptyStateHeaderText

@@ -12,11 +12,21 @@ namespace MegaApp.ViewModels
         public NodeCollectionViewModel()
         {
             this.Items = new ObservableCollection<IMegaNode>();
-            this.Items.CollectionChanged += OnCollectionChanged;
+            this.EnableCollectionChangedDetection();
             this.SelectedItems = new List<IMegaNode>();
         }
 
         #region Public Methods
+
+        public void EnableCollectionChangedDetection()
+        {
+            this.Items.CollectionChanged += OnCollectionChanged;
+        }
+
+        public void DisableCollectionChangedDetection()
+        {
+            this.Items.CollectionChanged -= OnCollectionChanged;
+        }
 
         public void SelectAll()
         {
@@ -39,7 +49,6 @@ namespace MegaApp.ViewModels
             if (this.SelectedItems == null || !this.SelectedItems.Any()) return;
             this.SelectedItems.Clear();
         }
-
 
         #endregion
 

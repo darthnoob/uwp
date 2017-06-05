@@ -181,6 +181,9 @@ namespace MegaApp.Views
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
 
+            if (!this.ViewModel.ActiveFolderView.IsLoaded)
+                this.ViewModel.LoadFolders();
+
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
