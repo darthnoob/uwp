@@ -173,16 +173,20 @@ namespace MegaApp.Views
             this.NodeDetailsSplitView.IsPaneOpen = false;
 
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+            {
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
+            }
+            else
+            {
+                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                    this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
+                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                    this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
 
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-                this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
-
-            if (!this.ViewModel.ActiveFolderView.IsLoaded)
-                this.ViewModel.LoadFolders();
+                if (!this.ViewModel.ActiveFolderView.IsLoaded)
+                    this.ViewModel.LoadFolders();
+            }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
