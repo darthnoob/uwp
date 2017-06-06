@@ -101,7 +101,8 @@ namespace MegaApp.ViewModels
                     SdkService.MegaSdk.getRootNode(), this.CloudDrive);
             }
 
-            this.CloudDrive.LoadChildNodes();
+            if(this.ActiveFolderView.Equals(this.CloudDrive))
+                this.CloudDrive.LoadChildNodes();
 
             if (this.RubbishBin?.FolderRootNode == null)
             {
@@ -110,7 +111,8 @@ namespace MegaApp.ViewModels
                     SdkService.MegaSdk.getRubbishNode(), this.RubbishBin);
             }
 
-            this.RubbishBin.LoadChildNodes();
+            if (this.ActiveFolderView.Equals(this.RubbishBin))
+                this.RubbishBin.LoadChildNodes();
 
             if (this.CameraUploads?.FolderRootNode == null)
             {
@@ -120,7 +122,8 @@ namespace MegaApp.ViewModels
                         cameraUploadsNode, this.CameraUploads);
             }
 
-            this.CameraUploads.LoadChildNodes();
+            if (this.ActiveFolderView.Equals(this.CameraUploads))
+                this.CameraUploads.LoadChildNodes();
         }
 
         /// <summary>

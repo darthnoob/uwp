@@ -78,6 +78,8 @@ namespace MegaApp.ViewModels
         /// <exception cref="ArgumentOutOfRangeException"/>
         private void SetViewingRange(int viewRange, bool initialize)
         {
+            if (SelectedPreview == null) return;
+
             int currentIndex = PreviewItems.IndexOf(SelectedPreview);
             int lowIndex = currentIndex - viewRange;
             if (lowIndex < 0) lowIndex = 0;
@@ -116,6 +118,8 @@ namespace MegaApp.ViewModels
         /// <exception cref="ArgumentOutOfRangeException"/>
         private void CleanUpMemory(int cleanRange)
         {
+            if (SelectedPreview == null) return;
+
             int currentIndex = PreviewItems.IndexOf(SelectedPreview);
             int previewItemsCount = PreviewItems.Count - 1;
 
@@ -166,8 +170,12 @@ namespace MegaApp.ViewModels
             {
                 bool initialize = _selectedPreview == null;
                 SetField(ref _selectedPreview, value);
-                SetViewingRange(3, initialize);
-                CleanUpMemory(4);
+
+                if(_selectedPreview != null)
+                {
+                    SetViewingRange(3, initialize);
+                    CleanUpMemory(4);
+                }
             }
         }
 

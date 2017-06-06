@@ -61,7 +61,7 @@ namespace MegaApp.Views
         {
             if (args.Handled) return;
 
-            NavigateService.Instance.Navigate(typeof(MainPage), true);
+            NavigateService.Instance.GoBack(true);
 
             args.Handled = true;
         }
