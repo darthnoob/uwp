@@ -795,7 +795,7 @@
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderThickness="1">
-            <Grid Width="130" Background="Transparent">
+            <Grid Height="130" Width="130" Background="Transparent">
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
@@ -855,7 +855,7 @@
                     Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                     <Image.Source>
                         <BitmapImage
-                            DecodePixelHeight="96"
+                            DecodePixelHeight="130"
                             DecodePixelType="Logical"
                             UriSource="{Binding ThumbnailImageUri}" />
                     </Image.Source>
