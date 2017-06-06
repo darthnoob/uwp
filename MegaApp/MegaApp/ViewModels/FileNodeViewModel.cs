@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public string FileType => Path.GetExtension(Name).ToUpper().Replace(".", string.Empty);
+        public virtual string FileType => Path.GetExtension(Name).ToUpper().Replace(".", string.Empty);
 
         #endregion
     }

@@ -145,7 +145,7 @@ namespace MegaApp.ViewModels
             ResourceService.AppResources.GetString("AR_PreviewsDirectory"), 
             OriginalMNode.getBase64Handle());
 
-        public new string FileType
+        public override string FileType
         {
             get
             {
@@ -154,7 +154,7 @@ namespace MegaApp.ViewModels
                     case ".jpg":
                         return "Jpeg";
                     default:
-                        return Path.GetExtension(Name).ToUpper().Replace(".", string.Empty);
+                        return base.FileType;
                 }
             }
         }
