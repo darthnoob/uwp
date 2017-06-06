@@ -98,7 +98,8 @@ namespace MegaApp.Services
             // If no action defined then do nothing and return to save time
             if (action == null) return;
 
-            CoreApplication.MainView.Dispatcher.RunAsync(priority, action.Invoke);
+            // Start a task to avoid freeze the UI and the app
+            Task.Run(() => CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(priority, action.Invoke));
         }
 
         /// <summary>

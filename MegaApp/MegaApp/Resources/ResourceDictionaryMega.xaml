@@ -170,6 +170,21 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="BreadcrumbHomeCloudDriveTemplate">
+        <Grid>
+            <Viewbox MaxWidth="14" MaxHeight="14">
+                <Path
+                    x:Name="BreadcrumbHomeCloudDriveIcon"
+                    Data="{Binding BreadcrumbHomeCloudDriveIcon}"
+                    Stretch="UniformToFill">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+            </Viewbox>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="BreadcrumbHomeRubbishBinTemplate">
         <Grid>
             <Path
@@ -759,7 +774,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding ImageType}"
+                    Text="{Binding FileType}"
                     TextWrapping="NoWrap" />
                 <TextBlock
                     x:Name="txtCreated"
@@ -780,7 +795,7 @@
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
             BorderThickness="1">
-            <Grid Width="130" Background="Transparent">
+            <Grid Height="130" Width="130" Background="Transparent">
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
@@ -840,7 +855,7 @@
                     Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
                     <Image.Source>
                         <BitmapImage
-                            DecodePixelHeight="96"
+                            DecodePixelHeight="130"
                             DecodePixelType="Logical"
                             UriSource="{Binding ThumbnailImageUri}" />
                     </Image.Source>
