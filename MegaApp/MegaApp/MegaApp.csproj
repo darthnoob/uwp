@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Behaviors\MultiSelect.cs" />
     <Compile Include="Classes\AppInformation.cs" />
+    <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\FastLoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
@@ -176,7 +178,6 @@
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
     <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />

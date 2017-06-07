@@ -5,7 +5,7 @@ using MegaApp.UserControls;
 
 namespace MegaApp.ViewModels
 {
-    public class MainViewModel : BasePageViewModel
+    public class MainViewModel : LoginViewModel
     {
         public MainViewModel()
         {

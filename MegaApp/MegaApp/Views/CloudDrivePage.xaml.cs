@@ -106,7 +106,7 @@ namespace MegaApp.Views
             base.OnNavigatedFrom(e);
         }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
@@ -115,34 +115,7 @@ namespace MegaApp.Views
             this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;
 
-            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
-            var navActionType = navObj?.Action ?? NavigationActionType.Default;
-
-            // Need to check it always and no only in StartupMode, 
-            // because this is the first page loaded
-            if (!await AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
-
-            if (!NetworkService.IsNetworkAvailable())
-            {
-                //UpdateGUI(false);
-                return;
-            }
-
-            switch(navActionType)
-            {
-                case NavigationActionType.Login:
-                    if (!App.AppInformation.HasFetchedNodes)
-                        this.ViewModel.FetchNodes();
-                    else
-                        this.ViewModel.LoadFolders();
-                    break;
-                
-                default:
-                    Load();
-                    break;
-            }
-
-            await AppService.CheckSpecialNavigation();
+            this.ViewModel.LoadFolders();
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
@@ -150,43 +123,21 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
-        /// <summary>
-        /// Method to load properly the content of the Cloud Drive and the Rubbish Bin
-        /// </summary>
-        private async void Load()
-        {
-            // If user has an active and online session but is not logged in, resume the session
-            if (await AppService.CheckActiveAndOnlineSession() && !Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
-                SdkService.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
-                    ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
-                    new FastLoginRequestListener(this.ViewModel));
-            // If the user's nodes haven't been retrieved, do it
-            else if (!App.AppInformation.HasFetchedNodes)
-                this.ViewModel.FetchNodes();
-            // In other case load them
-            else
-                this.ViewModel.LoadFolders();
-        }
-       
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.NodeDetailsSplitView.IsPaneOpen = false;
 
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
-            }
-            else
-            {
-                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                    this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
 
-                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-                    this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                this.ViewModel.ActiveFolderView = this.ViewModel.RubbishBin;
 
-                if (!this.ViewModel.ActiveFolderView.IsLoaded)
-                    this.ViewModel.LoadFolders();
-            }
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                this.ViewModel.ActiveFolderView = this.ViewModel.CameraUploads;
+
+            if (!this.ViewModel.ActiveFolderView.IsLoaded)
+                this.ViewModel.LoadFolders();
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }

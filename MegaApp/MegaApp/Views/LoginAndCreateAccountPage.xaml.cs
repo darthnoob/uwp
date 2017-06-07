@@ -17,6 +17,11 @@ namespace MegaApp.Views
    
     public sealed partial class LoginAndCreateAccountPage : BaseLoginAndCreateAccountPage
     {
+        /// <summary>
+        /// Flag to try to avoid display duplicate alerts
+        /// </summary>
+        static private bool isAlertAlreadyDisplayed = false;
+
         public LoginAndCreateAccountPage()
         {
             InitializeComponent();
@@ -35,6 +40,10 @@ namespace MegaApp.Views
             if (e?.Parameter != null)
             {
                 NavigationActionType navActionType = NavigateService.GetNavigationObject(e.Parameter).Action;
+
+                // Try to avoid display duplicate alerts
+                if (isAlertAlreadyDisplayed) return;
+                isAlertAlreadyDisplayed = true;
 
                 switch (navActionType)
                 {
@@ -59,6 +68,8 @@ namespace MegaApp.Views
                             ResourceService.AppMessages.GetString("AM_SSLKeyError"));
                         break;
                 }
+
+                isAlertAlreadyDisplayed = false;
             }
         }
 
@@ -89,6 +100,9 @@ namespace MegaApp.Views
         private void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key != VirtualKey.Enter) return;
+
+            if (!NetworkService.IsNetworkAvailable(true)) return;
+
             // On enter in password box. Start the login process
             this.ViewModel?.LoginViewModel?.Login();
         }
