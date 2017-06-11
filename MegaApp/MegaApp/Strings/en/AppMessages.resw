@@ -217,7 +217,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
-    <value>Could not retrieve the account data from MEGA. Please try again.</value>
+    <value>Could not retrieve the account data from MEGA. Please, close the app and try again later.</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
   </data>
   <data name="AM_FetchNodesFailed_Title" xml:space="preserve">
@@ -781,5 +781,9 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
   <data name="AM_InvalidUri_Title" xml:space="preserve">
     <value>Invalid URI</value>
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ResumeSessionFailed" xml:space="preserve">
+    <value>Failed to resume your session. Please, close the app and try again later.</value>
+    <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
 </root>

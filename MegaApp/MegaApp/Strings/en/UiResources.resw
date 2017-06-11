@@ -653,4 +653,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Sort by</value>
     <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ResumeSession" xml:space="preserve">
+    <value>Resume session</value>
+    <comment>Label for any 'Resume session' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

@@ -15,21 +15,23 @@ namespace MegaApp.Services
         /// <returns>True if there is an available network connection., False in other case.</returns>
         public static bool IsNetworkAvailable(bool showMessageDialog = false)
         {
-            if (!NetworkInterface.GetIsNetworkAvailable())
+            if (NetworkInterface.GetIsNetworkAvailable())
             {
-                if (showMessageDialog)
-                {
-                    new CustomMessageDialog(
-                        ResourceService.UiResources.GetString("UI_NoInternetConnection"),
-                        ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
-                }
-
-                return false;
+                var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
+                if (connectionProfile?.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+                    return true;
             }
 
-            return true;
+            if (showMessageDialog)
+            {
+                new CustomMessageDialog(
+                    ResourceService.UiResources.GetString("UI_NoInternetConnection"),
+                    ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
+                    App.AppInformation,
+                    MessageDialogButtons.Ok).ShowDialog();
+            }
+
+            return false;
         }
 
         // Code to detect if the IP has changed and refresh all open connections on this case

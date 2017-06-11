@@ -65,6 +65,50 @@
             VisualStateWideMinWidth="1200">
             <userControls:FrameEx x:Name="ContentFrame"/>
         </userControls:HamburgerMenuEx>
+
+        <userControls:ProgressPanel
+            x:Name="ProgressPanelControl"
+            Grid.Row="1"
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HeaderText="{Binding Path=ProgressHeaderText}"
+            IsVisible="{Binding IsBusy}"
+            SubHeaderMargin="0, 14, 0 , 0"
+            SubHeaderText="{Binding Path=ProgressSubHeaderText}">
+            <userControls:ProgressPanel.SubHeaderForeground>
+                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ProgressPanel.SubHeaderForeground>
+        </userControls:ProgressPanel>
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProgressPanelControl.Padding" Value="16, 18, 0, 16" />
+                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Below" />
+                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Top" />
+                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="24" />
+                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="16" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ProgressPanelControl.Padding" Value="178, 18, 0, 16" />
+                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Right" />
+                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="44" />
+                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="18" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
     
 </views:BaseMainPage>

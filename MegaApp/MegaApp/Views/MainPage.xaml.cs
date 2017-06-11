@@ -30,7 +30,7 @@ namespace MegaApp.Views
             NavigateService.MainFrame = this.ContentFrame;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
@@ -38,7 +38,20 @@ namespace MegaApp.Views
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
-            this.ViewModel.Initialize(navObj?.Action ?? NavigationActionType.Default);
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
+
+            // Check if the user has an active and online session, because this is the first page loaded
+            if (!await AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
+
+            // If user has an active and online session but is not logged in, resume the session
+            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
+            {
+                if (!await this.ViewModel.FastLogin()) return;
+            }
+
+            await AppService.CheckSpecialNavigation();
+
+            this.ViewModel.Initialize(navActionType);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

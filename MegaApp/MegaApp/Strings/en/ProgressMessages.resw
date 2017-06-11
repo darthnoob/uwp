@@ -141,14 +141,9 @@
     <value>Deleting...</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_FastLogin" xml:space="preserve">
+  <data name="PM_FastLoginHeader" xml:space="preserve">
     <value>Resuming session...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
-  </data>
-  <data name="PM_FetchingNodes" xml:space="preserve">
-    <value>Fetching files and folders... [{0}]</value>
-    <comment>Progress indicator message when loading nodes from MEGA web service - (String as short as possible).
-Preserve the [{0}] code because is for include current number of fetched nodes.</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
     <value>Requesting account data.</value>
