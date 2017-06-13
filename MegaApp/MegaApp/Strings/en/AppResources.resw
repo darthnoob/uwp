@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/1c92bfc60dca2b6e0933eb14f14d329c923c4430</value>
+    <value>https://github.com/meganz/sdk/tree/7d45b1d92525aafc5cefdb25bdfa1c363cbb6345</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>1c92bfc</value>
+    <value>7d45b1d</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
 </root>
