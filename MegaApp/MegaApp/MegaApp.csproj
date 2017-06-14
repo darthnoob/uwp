@@ -197,6 +197,7 @@
     <Compile Include="ViewModels\BreadCrumbsViewModel.cs" />
     <Compile Include="ViewModels\CameraUploadsViewModel.cs" />
     <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />
+    <Compile Include="ViewModels\MyAccountViewModel.cs" />
     <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
@@ -265,6 +266,9 @@
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\ValidationService.cs" />
+    <Compile Include="Views\MyAccountPage.xaml.cs">
+      <DependentUpon>MyAccountPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsMyAccountPage.xaml.cs">
       <DependentUpon>SettingsMyAccountPage.xaml</DependentUpon>
     </Compile>
@@ -329,6 +333,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\MyAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsMyAccountPage.xaml">
       <SubType>Designer</SubType>

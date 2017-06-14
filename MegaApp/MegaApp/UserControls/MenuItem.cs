@@ -83,8 +83,15 @@ namespace MegaApp.UserControls
                 new MenuItem()
                 {
                     Label = MyAccountText,
-                    SubLabel = "& " + SettingsText,
                     ToolTip = MyAccountText,
+                    Icon = new SymbolIcon(Symbol.Contact),
+                    TargetViewModel = typeof(MyAccountViewModel)
+                },
+
+                new MenuItem()
+                {
+                    Label = SettingsText,
+                    ToolTip = SettingsText,
                     Icon = GetIconFromXamlPath(MenuSettingsPathData),
                     TargetViewModel = typeof(SettingsMyAccountViewModel)
                 },

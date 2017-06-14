@@ -1,0 +1,82 @@
+﻿<views:BaseMyAccountPage
+    x:Class="MegaApp.Views.MyAccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:views="using:MegaApp.Views"
+    d:DataContext="{d:DesignInstance viewModels:MyAccountViewModel}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="{StaticResource MegaAppBarBackgroundBrush}"/>
+
+        <CommandBar
+            x:Name="TopCommandBar"
+            Grid.Row="0"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            extensions:CommandBarExtensions.HideMoreButton="True"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton 
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{Binding LogOutText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
+                Command="{Binding LogOutCommand}"
+                Click="OnButtonClick">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <FontIcon Glyph="&#xE7E8;"/>
+                </Viewbox>
+            </AppBarButton>
+        </CommandBar>
+
+        <CommandBar
+            x:Name="BottomCommandBar"
+            Grid.Row="2"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton 
+                Click="OnButtonClick"
+                Command="{Binding LogOutCommand}"
+                Label="{Binding LogOutText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}">
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <FontIcon Glyph="&#xE7E8;"/>
+                </Viewbox>
+            </AppBarButton>
+        </CommandBar>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="TopRow.Height" Value="Auto"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</views:BaseMyAccountPage>

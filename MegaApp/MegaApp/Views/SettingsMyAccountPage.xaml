@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:classes="using:MegaApp.Classes"
-    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:interfaces="using:MegaApp.Interfaces"
     xmlns:settings="using:MegaApp.ViewModels.Settings"
     xmlns:triggers="using:WindowsStateTriggers"    
@@ -127,31 +126,12 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{StaticResource MegaAppBarBackgroundBrush}"/>
+        <Grid x:Name="TopRow" Grid.Row="0" />
 
-        <CommandBar
-            x:Name="TopCommandBar"
-            Grid.Row="0"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            extensions:CommandBarExtensions.HideMoreButton="True"
-            Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton 
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding LogOutText, Mode=OneTime}" 
-                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
-                Command="{Binding LogOutCommand}"
-                Click="OnButtonClick">
-                <Viewbox MaxWidth="14" MaxHeight="14">
-                    <FontIcon Glyph="&#xE7E8;"/>
-                </Viewbox>
-            </AppBarButton>
-        </CommandBar>
-        
         <ListView
             Grid.Row="1"
             Padding="20"
@@ -183,22 +163,6 @@
             </ListView.ItemsPanel>
         </ListView>
 
-        <CommandBar
-            x:Name="BottomCommandBar"
-            Grid.Row="2"
-            Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton 
-                Click="OnButtonClick"
-                Command="{Binding LogOutCommand}"
-                Label="{Binding LogOutText, Mode=OneTime}" 
-                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
-                Style="{StaticResource MegaAppBarButtonStyle}">
-                <Viewbox MaxWidth="14" MaxHeight="14">
-                    <FontIcon Glyph="&#xE7E8;"/>
-                </Viewbox>
-            </AppBarButton>
-        </CommandBar>
-
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Mobile">
@@ -206,9 +170,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}"/>
-                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>                        
+                        <Setter Target="TopRow.Background" Value="{StaticResource MegaAppBarBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -216,9 +178,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Height" Value="Auto"/>
-                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="TopRow.Background" Value="Transparent"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
