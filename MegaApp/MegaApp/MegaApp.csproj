@@ -240,7 +240,6 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingSectionViewModel.cs" />
-    <Compile Include="ViewModels\SettingsMyAccountViewModel.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
@@ -269,8 +268,8 @@
     <Compile Include="Views\MyAccountPage.xaml.cs">
       <DependentUpon>MyAccountPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsMyAccountPage.xaml.cs">
-      <DependentUpon>SettingsMyAccountPage.xaml</DependentUpon>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
@@ -338,7 +337,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SettingsMyAccountPage.xaml">
+    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

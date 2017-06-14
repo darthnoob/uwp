@@ -1,5 +1,5 @@
-﻿<views:BaseSettingsMyAccountPage
-    x:Class="MegaApp.Views.SettingsMyAccountPage"
+﻿<views:BaseSettingsPage
+    x:Class="MegaApp.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
     xmlns:triggers="using:WindowsStateTriggers"    
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
-    d:DataContext="{d:DesignInstance viewModels:SettingsMyAccountViewModel}"
+    d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,7 +18,7 @@
             x:Name="SettingsCollectionSource"
             IsSourceGrouped="true"
             ItemsPath="Items"
-            Source="{Binding Settings.SettingSections}" />
+            Source="{Binding SettingSections}" />
         <DataTemplate x:Key="BooleanItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel>
                 <TextBlock
@@ -184,7 +184,7 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-</views:BaseSettingsMyAccountPage>
+</views:BaseSettingsPage>
 
 
 

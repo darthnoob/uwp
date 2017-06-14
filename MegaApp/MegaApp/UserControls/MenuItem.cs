@@ -93,7 +93,7 @@ namespace MegaApp.UserControls
                     Label = SettingsText,
                     ToolTip = SettingsText,
                     Icon = GetIconFromXamlPath(MenuSettingsPathData),
-                    TargetViewModel = typeof(SettingsMyAccountViewModel)
+                    TargetViewModel = typeof(SettingsViewModel)
                 },
             };
         }

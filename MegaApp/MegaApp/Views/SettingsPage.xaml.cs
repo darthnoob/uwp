@@ -1,6 +1,4 @@
-﻿using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
-using MegaApp.Services;
+﻿using Windows.UI.Xaml.Navigation;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
 
@@ -8,11 +6,11 @@ namespace MegaApp.Views
 {
     // Helper class to define the viewmodel of this page
     // XAML cannot use generics in it's declaration.
-    public class BaseSettingsMyAccountPage : PageEx<SettingsMyAccountViewModel> { }
+    public class BaseSettingsPage : PageEx<SettingsViewModel> { }
 
-    public sealed partial class SettingsMyAccountPage : BaseSettingsMyAccountPage
+    public sealed partial class SettingsPage : BaseSettingsPage
     {
-        public SettingsMyAccountPage()
+        public SettingsPage()
         {
             this.InitializeComponent();
         }
