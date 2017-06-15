@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using mega;
+using BackgroundTaskService.MegaApi;
 
 namespace BackgroundTaskService.Services
 {
@@ -11,12 +12,35 @@ namespace BackgroundTaskService.Services
     internal static class LogService
     {
         /// <summary>
-        /// Set a MegaLogger implementation to receive logs
+        /// Main MegaLogger instance
+        /// </summary>
+        private static MegaLogger _megaLogger;
+        public static MegaLogger MegaLogger
+        {
+            get
+            {
+                if (_megaLogger != null) return _megaLogger;
+                _megaLogger = new MegaLogger();
+                return _megaLogger;
+            }
+        }
+
+        /// <summary>
+        /// Add a MegaLogger implementation to receive logs
         /// </summary>
         /// <param name="megaLogger">MegaLogger implementation</param>
-        public static void SetLoggerObject(MLoggerInterface megaLogger)
+        public static void AddLoggerObject(MLoggerInterface megaLogger)
         {
-            MegaSDK.setLoggerObject(megaLogger);
+            SdkService.MegaSdk.addLoggerObject(megaLogger);
+        }
+
+        /// <summary>
+        /// Remove a MegaLogger implementation to stop receiving SDK logs
+        /// </summary>
+        /// <param name="megaLogger">MegaLogger implementation</param>
+        public static void RemoveLoggerObject(MLoggerInterface megaLogger)
+        {
+            SdkService.MegaSdk.removeLoggerObject(megaLogger);
         }
 
         /// <summary>

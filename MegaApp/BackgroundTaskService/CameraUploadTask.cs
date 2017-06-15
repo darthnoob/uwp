@@ -3,9 +3,9 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
+using mega;
 using BackgroundTaskService.MegaApi;
 using BackgroundTaskService.Services;
-using mega;
 
 namespace BackgroundTaskService
 {
@@ -20,9 +20,6 @@ namespace BackgroundTaskService
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();
-
-            // Enable a custom logger
-            LogService.SetLoggerObject(new MegaLogger());
 
             SdkService.InitializeSdkParams();
 
