@@ -1,14 +1,22 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.ViewModels
 {
     public class MyAccountViewModel : BaseSdkViewModel
     {
+        public EventHandler GoToUpgrade;
+
         public MyAccountViewModel()
         {
+            this.GeneralViewModel = new GeneralViewModel();
+            this.GeneralViewModel.GoToUpgrade += (sender, args) =>
+                GoToUpgrade?.Invoke(this, EventArgs.Empty);
+
             this.LogOutCommand = new RelayCommand(LogOut);
         }
 
@@ -22,7 +30,7 @@ namespace MegaApp.ViewModels
 
         public void Initialize()
         {
-            
+            UiService.OnUiThread(() => AccountService.GetAccountDetails());
         }
 
         #endregion
@@ -35,6 +43,13 @@ namespace MegaApp.ViewModels
 
             this.MegaSdk.logout(new LogOutRequestListener());
         }
+
+        #endregion
+
+        #region Properties
+
+        //public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
+        public GeneralViewModel GeneralViewModel { get; }
 
         #endregion
 

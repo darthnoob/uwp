@@ -11,7 +11,7 @@
     d:DataContext="{d:DesignInstance viewModels:MyAccountViewModel}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
             <RowDefinition Height="*"/>
@@ -38,6 +38,241 @@
             </AppBarButton>
         </CommandBar>
 
+        <Grid Grid.Row="1" Margin="12,0">
+            <Pivot
+                x:Name="MyAccountPivot"
+                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
+                SelectionChanged="OnPivotSelectionChanged">
+                <PivotItem
+                    x:Name="GeneralPivot"
+                    DataContext="{Binding GeneralViewModel}"
+                    Header="General"
+                    CacheMode="{x:Null}">
+                    <ScrollViewer
+                        Margin="0,0,-12,0"
+                        VerticalScrollBarVisibility="Auto">
+                        <StackPanel 
+                            x:Name="GeneralStackPanel" 
+                            Height="Auto"
+                            HorizontalAlignment="Left">
+                            <TextBlock
+                                Margin="0,56,0,20"
+                                Style="{ThemeResource MegaHeaderFontStyle}"
+                                Text="Account overview" />
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock
+                                            x:Name="PlanTypeLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Plan type" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image
+                                                x:Name="PlanTypeIcon"
+                                                Height="16" Width="16"
+                                                Source="{Binding AccountDetails.AccountTypeUri}"
+                                                Stretch="None"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Visibility="{Binding AccountDetails.AccountTypeUri, Converter={StaticResource StringVisibilityConverter}}"/>
+                                            <TextBlock 
+                                                x:Name="PlanTypeText" 
+                                                Text="{Binding AccountDetails.AccountTypeText, Mode=OneWay}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <!--<StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            x:Name="MemberSinceLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Member since" />
+                                        <TextBlock x:Name="MemberSinceText" Text="" />
+                                    </StackPanel>-->
+                                </Grid>
+                                <Grid 
+                                    Grid.Row="1"
+                                    Margin="0,32,0,0"
+                                    Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock
+                                            x:Name="PaymentMethodLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Payment method" />
+                                        <TextBlock
+                                            x:Name="PaymentMethodText"
+                                            Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel 
+                                        Grid.Column="1"
+                                        Visibility="{Binding AccountDetails.ProExpirationDate, Converter={StaticResource StringVisibilityConverter}}">
+                                        <TextBlock
+                                            x:Name="SubscriptionEndsLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Subscription ends" />
+                                        <TextBlock
+                                            x:Name="SubscriptionEndsText"
+                                            Text="{Binding AccountDetails.ProExpirationDate, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel 
+                                        Grid.Column="1"
+                                        Visibility="{Binding AccountDetails.SubscriptionRenewDate, Converter={StaticResource StringVisibilityConverter}}">
+                                        <TextBlock
+                                            x:Name="SubscriptionRenewsLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Subscription renews" />
+                                        <TextBlock
+                                            x:Name="SubscriptionRenewsText"
+                                            Text="{Binding AccountDetails.SubscriptionRenewDate, Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
+                            <TextBlock
+                                Margin="0,64,0,12"
+                                Style="{ThemeResource MegaHeaderFontStyle}"
+                                Text="Overall usage" />
+                            <StackPanel>
+                                <TextBlock
+                                    Margin="0,0,0,28"
+                                    FontSize="14"
+                                    Opacity="0.7"
+                                    Text="Transfer quota is used for downloading and uploading files. If you exceed your transfer quota, you will have to wait until your quota resets."
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding AccountDetails.IsInOverquota, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                                <TextBlock
+                                    Margin="0,0,0,28"
+                                    FontSize="14"
+                                    Opacity="0.7"
+                                    Text="WARNING: You have exceed your alloated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space."
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                <ProgressBar
+                                    Background="{ThemeResource MegaProgressBarBackgroundBrush}"
+                                    IsIndeterminate="False"
+                                    Maximum="{Binding AccountDetails.TotalSpace, Mode=OneWay}"
+                                    Minimum="0"
+                                    Value="{Binding AccountDetails.UsedSpace, Mode=OneWay}">
+                                    <ProgressBar.Foreground>
+                                        <SolidColorBrush Color="{Binding AccountDetails.StorageProgressBarColor}" />
+                                    </ProgressBar.Foreground>
+                                </ProgressBar>
+                                <Grid Margin="0,20,0,32">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock
+                                            x:Name="TotalStorageLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Total storage" />
+                                        <TextBlock 
+                                            x:Name="TotalStorageText"
+                                            Text="{Binding AccountDetails.TotalSpaceWithUnits, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            x:Name="UsedStorageLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Used storage" />
+                                        <TextBlock
+                                            x:Name="UsedStorageText"
+                                            Text="{Binding AccountDetails.UsedSpaceWithUnits, Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                                <ProgressBar
+                                    Background="{ThemeResource MegaProgressBarBackgroundBrush}"
+                                    IsIndeterminate="False"
+                                    Margin="0,0,0,20"
+                                    Maximum="{Binding AccountDetails.TransferQuota, Mode=OneWay}"
+                                    Minimum="0"
+                                    Value="{Binding AccountDetails.UsedTransferQuota, Mode=OneWay}"
+                                    Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <ProgressBar.Foreground>
+                                        <SolidColorBrush Color="{Binding AccountDetails.TransferQuotaProgressBarColor}" />
+                                    </ProgressBar.Foreground>
+                                </ProgressBar>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock
+                                            x:Name="TotalTransferQuotaLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Total transfer quota" />
+                                        <TextBlock
+                                            x:Name="TotalTransferQuotaText"
+                                            Text="{Binding AccountDetails.TransferQuotaWithUnits, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            x:Name="UsedTransferQuotaLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="Used transfer quota" />
+                                        <TextBlock
+                                            x:Name="UsedTransferQuotaText"
+                                            Text="{Binding AccountDetails.UsedTransferQuotaWithUnits, Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                                <StackPanel 
+                                    Margin="0,36,0,0"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="136"
+                                        Margin="0,0,4,0"
+                                        Command="{Binding UpgradeCommand}"
+                                        Content="{Binding UpgradeText, Mode=OneTime}"
+                                        Visibility="{Binding AccountDetails.IsInOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                    <Button
+                                        Width="136"
+                                        Margin="4,0,0,0"
+                                        Command="{Binding RubbishBinCommand}"
+                                        Content="{Binding RecycleBinText, Mode=OneTime}"
+                                        Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem
+                    x:Name="ProfilePivot"
+                    Header="Profile"
+                    CacheMode="{x:Null}">
+                </PivotItem>
+                <PivotItem
+                    x:Name="StorageAndTransferPivot"
+                    Header="Storage &amp; Transfer"
+                    CacheMode="{x:Null}">
+                </PivotItem>
+                <PivotItem
+                    x:Name="PlansAndPaymentPivot"
+                    Header="Plans &amp; Payment"
+                    CacheMode="{x:Null}">
+                </PivotItem>
+                <PivotItem
+                    x:Name="UpgradePivot"
+                    Header="Upgrade"
+                    CacheMode="{x:Null}">
+                </PivotItem>
+            </Pivot>
+        </Grid>
+        
         <CommandBar
             x:Name="BottomCommandBar"
             Grid.Row="2"
@@ -53,7 +288,7 @@
                 </Viewbox>
             </AppBarButton>
         </CommandBar>
-
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Mobile">

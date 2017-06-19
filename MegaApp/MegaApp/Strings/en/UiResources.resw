@@ -657,4 +657,20 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Resume session</value>
     <comment>Label for any 'Resume session' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Dynamic" xml:space="preserve">
+    <value>Dynamic</value>
+    <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecycleBin" xml:space="preserve">
+    <value>Recycle bin</value>
+    <comment>Label for any 'Recycle bin' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Upgrade" xml:space="preserve">
+    <value>Upgrade</value>
+    <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NotAvailable" xml:space="preserve">
+    <value>Not available</value>
+    <comment>Label for any 'Not available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

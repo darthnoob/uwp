@@ -115,6 +115,11 @@ namespace MegaApp.Views
             this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;
 
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
+            if (navActionType == NavigationActionType.RubbishBin)
+                this.MainPivot.SelectedItem = this.RubbishBinPivot;
+
             this.ViewModel.LoadFolders();
         }
 

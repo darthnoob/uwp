@@ -28,7 +28,7 @@ namespace MegaApp.Extensions
 
         public static string ToReadableUnits(this UInt64 value)
         {
-            if (value == 0) { return " "; }
+            if (value == 0) { return "bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             

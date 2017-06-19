@@ -32,6 +32,7 @@
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="{StaticResource MegaAppForegroundBrush}" />
         <Setter Property="Opacity" Value=".4" />
+        <Setter Property="Padding" Value="0,0,0,4" />
     </Style>
 
     <Style TargetType="Button">
@@ -936,6 +937,8 @@
         <!--  COLOR PALETTE FOR THE DARK THEME  -->
         <ResourceDictionary x:Key="Dark">
             <Color x:Key="MegaRedColor">#EB4444</Color>
+            <Color x:Key="MegaGreenColor">#00B294</Color>
+            <Color x:Key="MegaBlueColor">#0078D7</Color>
             <Color x:Key="MegaAppBackground">#000000</Color>
             <Color x:Key="MegaAppForeground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarBackground">#111111</Color>
@@ -961,6 +964,8 @@
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
         <ResourceDictionary x:Key="Light">
             <Color x:Key="MegaRedColor">#EB4444</Color>
+            <Color x:Key="MegaGreenColor">#00B294</Color>
+            <Color x:Key="MegaBlueColor">#0078D7</Color>
             <Color x:Key="MegaAppBackground">#F7F7F7</Color>
             <Color x:Key="MegaAppForeground">#000000</Color>
             <Color x:Key="MegaAppBarBackground">#FFFFFF</Color>
