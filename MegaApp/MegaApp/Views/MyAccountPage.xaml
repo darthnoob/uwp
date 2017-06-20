@@ -243,7 +243,7 @@
                                         Width="136"
                                         Margin="4,0,0,0"
                                         Command="{Binding RubbishBinCommand}"
-                                        Content="{Binding RecycleBinText, Mode=OneTime}"
+                                        Content="{Binding RubbishBinText, Mode=OneTime}"
                                         Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </StackPanel>
                             </StackPanel>

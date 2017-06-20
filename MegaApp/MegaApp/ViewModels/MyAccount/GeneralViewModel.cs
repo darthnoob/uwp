@@ -50,7 +50,7 @@ namespace MegaApp.ViewModels.MyAccount
 
         #region UiResources
 
-        public string RecycleBinText => ResourceService.UiResources.GetString("UI_RecycleBin");
+        public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         public string UpgradeText => ResourceService.UiResources.GetString("UI_Upgrade");
 
         #endregion
