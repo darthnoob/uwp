@@ -353,6 +353,9 @@ namespace MegaApp.Services
             SettingsService.ClearSettings();
             SettingsService.ClearMegaLoginData();
             ClearAppCache(false);
+
+            // Clear all the user data info
+            AccountService.ClearUserData();
         }
 
         /// <summary>

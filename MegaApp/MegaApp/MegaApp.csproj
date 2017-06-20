@@ -173,6 +173,8 @@
     <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserAvatarRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="ViewModels\TransferListViewModel.cs" />
     <Compile Include="ViewModels\TransferManagerViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
+    <Compile Include="ViewModels\UserDataViewModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
     </Compile>

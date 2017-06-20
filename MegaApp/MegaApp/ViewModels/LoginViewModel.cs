@@ -20,12 +20,12 @@ namespace MegaApp.ViewModels
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
         /// <summary>

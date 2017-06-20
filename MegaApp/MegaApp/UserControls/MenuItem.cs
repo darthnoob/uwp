@@ -12,7 +12,7 @@ namespace MegaApp.UserControls
     /// <summary>
     /// Class that represents a menu item
     /// </summary>
-    public class MenuItem
+    public class MenuItem : BaseViewModel
     {
         #region Properties
 
@@ -24,12 +24,22 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Name to display as label for the menu item
         /// </summary>
-        public string Label { get; set; }
+        private string _label;
+        public string Label
+        {
+            get { return _label; }
+            set { SetField(ref _label, value); }
+        }
 
         /// <summary>
         /// Secondary label for the menu item
         /// </summary>
-        public string SubLabel { get; set; }
+        private string _subLabel;
+        public string SubLabel
+        {
+            get { return _subLabel; }
+            set { SetField(ref _subLabel, value); }
+        }
 
         /// <summary>
         /// Tooltip for the menu item
@@ -40,6 +50,10 @@ namespace MegaApp.UserControls
         /// Type of the viewmodel to navigate on selection
         /// </summary>
         public Type TargetViewModel { get; set; }
+
+        public bool IsMyAccountMenuItem => TargetViewModel.Equals(typeof(MyAccountViewModel));
+
+        public UserDataViewModel UserData => AccountService.UserData;
 
         #endregion
 
@@ -82,7 +96,8 @@ namespace MegaApp.UserControls
             {
                 new MenuItem()
                 {
-                    Label = MyAccountText,
+                    Label = AccountService.UserData.UserName,
+                    SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
                     Icon = new SymbolIcon(Symbol.Contact),
                     TargetViewModel = typeof(MyAccountViewModel)

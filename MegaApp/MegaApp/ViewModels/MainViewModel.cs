@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MegaApp.Enums;
+using MegaApp.Services;
 using MegaApp.UserControls;
 
 namespace MegaApp.ViewModels
@@ -11,6 +13,9 @@ namespace MegaApp.ViewModels
         {
             this.MenuItems = MenuItem.CreateMenuItems();
             this.OptionItems = MenuItem.CreateOptionItems();
+            
+            AccountService.UserData.UserEmailChanged += UserEmailChanged;
+            AccountService.UserData.UserNameChanged += UserNameChanged;
         }
 
         /// <summary>
@@ -24,6 +29,18 @@ namespace MegaApp.ViewModels
 
             // Set the default menu item to home/first item
             this.SelectedItem = this.MenuItems.FirstOrDefault();
+        }
+
+        private void UserNameChanged(object sender, EventArgs e)
+        {
+            if (MyAccountMenuItem == null) return;
+            OnUiThread(() => MyAccountMenuItem.Label = AccountService.UserData.UserName);
+        }
+
+        private void UserEmailChanged(object sender, EventArgs e)
+        {
+            if (MyAccountMenuItem == null) return;
+            OnUiThread(() => MyAccountMenuItem.SubLabel = AccountService.UserData.UserEmail);
         }
 
         #region Properties
@@ -63,6 +80,11 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
+        /// My account option menu item
+        /// </summary>
+        private MenuItem MyAccountMenuItem => OptionItems.First(m => m.TargetViewModel.Equals(typeof(MyAccountViewModel)));
+
+        /// <summary>
         /// State of the controls attached to this viewmodel
         /// </summary>
         private BasePageViewModel _contentViewModel;
@@ -76,7 +98,6 @@ namespace MegaApp.ViewModels
         /// List of default menu items
         /// </summary>
         public IList<MenuItem> MenuItems { get; }
-
 
         /// <summary>
         /// List of option menu items

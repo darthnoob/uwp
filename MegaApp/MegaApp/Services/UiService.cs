@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;
 
@@ -152,6 +154,49 @@ namespace MegaApp.Services
                 var statusbar = StatusBar.GetForCurrentView();
                 await statusbar.ShowAsync();
             }
+        }
+
+        /// <summary>
+        /// Regular expression to check and hexadecimal color string. 
+        /// <para>Supports both “argb” and “rgb” with or without “#” in front of it.</para>        
+        /// </summary>
+        private static Regex _hexColorMatchRegex =
+            new Regex("^#?(?<a>[a-z0-9][a-z0-9])?(?<r>[a-z0-9][a-z0-9])(?<g>[a-z0-9][a-z0-9])(?<b>[a-z0-9][a-z0-9])$",
+            RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        /// <summary>
+        /// Get a Color object from an hexadecimal color string (for example for the user avatar color).
+        /// <para>Supports both “argb” and “rgb” with or without “#” in front of it.</para>
+        /// <para>Meaning: The string “#rrggbb” or “#aarrggbb” or “rrggbb” or “aarrggbb” will be converted to a Color object.</para>
+        /// </summary>
+        /// <param name="hexColorString">Hexadecimal color string.</param>
+        /// <returns>
+        /// Color object corresponding to the hexadecimal color string.
+        /// </returns>
+        public static Color GetColorFromHex(string hexColorString)
+        {
+            if (string.IsNullOrWhiteSpace(hexColorString))
+                return Colors.Transparent;
+
+            // Regex match the string
+            var match = _hexColorMatchRegex.Match(hexColorString);
+
+            // If no matches return the MEGA red color.
+            if (!match.Success)
+                return Colors.Transparent;
+
+            byte a = 255, r = 0, b = 0, g = 0;
+
+            // a value is optional            
+            if (match.Groups["a"].Success)
+                a = Convert.ToByte(match.Groups["a"].Value, 16);
+
+            // r,g,b values are not optional
+            r = Convert.ToByte(match.Groups["r"].Value, 16);
+            g = Convert.ToByte(match.Groups["g"].Value, 16);
+            b = Convert.ToByte(match.Groups["b"].Value, 16);
+
+            return Color.FromArgb(a, r, g, b);
         }
     }
 }
