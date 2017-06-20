@@ -669,4 +669,52 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Not available</value>
     <comment>Label for any 'Not available' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_AccountOverview" xml:space="preserve">
+    <value>Account overview</value>
+    <comment>Label for the 'Account overview' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OverallUsage" xml:space="preserve">
+    <value>Overall usage</value>
+    <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OverallUsageStorageOverquotaText" xml:space="preserve">
+    <value>WARNING: You have exceed your alloated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
+    <comment>Text displayed in the 'Overall usage' section of My account when the user is in an storage overquota situation.</comment>
+  </data>
+  <data name="UI_OverallUsageText" xml:space="preserve">
+    <value>Transfer quota is used for downloading and uploading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
+    <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_PaymentMethod" xml:space="preserve">
+    <value>Payment method</value>
+    <comment>Label for any 'Payment method' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PlanType" xml:space="preserve">
+    <value>Plan type</value>
+    <comment>Label for any 'Plan type' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SubscriptionEnds" xml:space="preserve">
+    <value>Subscription ends</value>
+    <comment>Label for any 'Subscription ends' title/text of the My account section - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SubscriptionRenews" xml:space="preserve">
+    <value>Subscription renews</value>
+    <comment>Label for any 'Subscription renews' title/text of the My account section - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TotalStorage" xml:space="preserve">
+    <value>Total storage</value>
+    <comment>Label for any 'Total storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TotalTransferQuota" xml:space="preserve">
+    <value>Total transfer quota</value>
+    <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedStorage" xml:space="preserve">
+    <value>Used storage</value>
+    <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedTransferQuota" xml:space="preserve">
+    <value>Used transfer quota</value>
+    <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

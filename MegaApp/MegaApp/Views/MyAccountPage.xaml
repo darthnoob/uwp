@@ -58,7 +58,7 @@
                             <TextBlock
                                 Margin="0,56,0,20"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
-                                Text="Account overview" />
+                                Text="{Binding AccountOverviewTitle, Mode=OneTime}" />
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -74,7 +74,7 @@
                                         <TextBlock
                                             x:Name="PlanTypeLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Plan type" />
+                                            Text="{Binding PlanTypeText, Mode=OneTime}" />
                                         <StackPanel Orientation="Horizontal">
                                             <Image
                                                 x:Name="PlanTypeIcon"
@@ -89,13 +89,6 @@
                                                 Text="{Binding AccountDetails.AccountTypeText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
-                                    <!--<StackPanel Grid.Column="1">
-                                        <TextBlock
-                                            x:Name="MemberSinceLabelText"
-                                            Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Member since" />
-                                        <TextBlock x:Name="MemberSinceText" Text="" />
-                                    </StackPanel>-->
                                 </Grid>
                                 <Grid 
                                     Grid.Row="1"
@@ -109,7 +102,7 @@
                                         <TextBlock
                                             x:Name="PaymentMethodLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Payment method" />
+                                            Text="{Binding PaymentMethodText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="PaymentMethodText"
                                             Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
@@ -120,7 +113,7 @@
                                         <TextBlock
                                             x:Name="SubscriptionEndsLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Subscription ends" />
+                                            Text="{Binding SubscriptionEndsText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="SubscriptionEndsText"
                                             Text="{Binding AccountDetails.ProExpirationDate, Mode=OneWay}" />
@@ -131,7 +124,7 @@
                                         <TextBlock
                                             x:Name="SubscriptionRenewsLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Subscription renews" />
+                                            Text="{Binding SubscriptionRenewsText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="SubscriptionRenewsText"
                                             Text="{Binding AccountDetails.SubscriptionRenewDate, Mode=OneWay}" />
@@ -142,20 +135,20 @@
                             <TextBlock
                                 Margin="0,64,0,12"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
-                                Text="Overall usage" />
+                                Text="{Binding OverallUsageTitle, Mode=OneTime}" />
                             <StackPanel>
                                 <TextBlock
                                     Margin="0,0,0,28"
                                     FontSize="14"
                                     Opacity="0.7"
-                                    Text="Transfer quota is used for downloading and uploading files. If you exceed your transfer quota, you will have to wait until your quota resets."
+                                    Text="{Binding OverallUsageText, Mode=OneTime}"
                                     TextWrapping="Wrap"
                                     Visibility="{Binding AccountDetails.IsInOverquota, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                                 <TextBlock
                                     Margin="0,0,0,28"
                                     FontSize="14"
                                     Opacity="0.7"
-                                    Text="WARNING: You have exceed your alloated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space."
+                                    Text="{Binding OverallUsageStorageOverquotaText, Mode=OneTime}"
                                     TextWrapping="Wrap"
                                     Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <ProgressBar
@@ -178,7 +171,7 @@
                                         <TextBlock
                                             x:Name="TotalStorageLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Total storage" />
+                                            Text="{Binding TotalStorageText, Mode=OneTime}" />
                                         <TextBlock 
                                             x:Name="TotalStorageText"
                                             Text="{Binding AccountDetails.TotalSpaceWithUnits, Mode=OneWay}" />
@@ -187,7 +180,7 @@
                                         <TextBlock
                                             x:Name="UsedStorageLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Used storage" />
+                                            Text="{Binding UsedStorageText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="UsedStorageText"
                                             Text="{Binding AccountDetails.UsedSpaceWithUnits, Mode=OneWay}" />
@@ -215,7 +208,7 @@
                                         <TextBlock
                                             x:Name="TotalTransferQuotaLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Total transfer quota" />
+                                            Text="{Binding TotalTransferQuotaText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="TotalTransferQuotaText"
                                             Text="{Binding AccountDetails.TransferQuotaWithUnits, Mode=OneWay}" />
@@ -224,7 +217,7 @@
                                         <TextBlock
                                             x:Name="UsedTransferQuotaLabelText"
                                             Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="Used transfer quota" />
+                                            Text="{Binding UsedTransferQuotaText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="UsedTransferQuotaText"
                                             Text="{Binding AccountDetails.UsedTransferQuotaWithUnits, Mode=OneWay}" />

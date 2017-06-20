@@ -50,8 +50,23 @@ namespace MegaApp.ViewModels.MyAccount
 
         #region UiResources
 
-        public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        // Account overview
+        public string AccountOverviewTitle => ResourceService.UiResources.GetString("UI_AccountOverview");
+        public string PlanTypeText => ResourceService.UiResources.GetString("UI_PlanType");
+        public string PaymentMethodText => ResourceService.UiResources.GetString("UI_PaymentMethod");
+        public string SubscriptionEndsText => ResourceService.UiResources.GetString("UI_SubscriptionEnds");
+        public string SubscriptionRenewsText => ResourceService.UiResources.GetString("UI_SubscriptionRenews");
+
+        // Overall usage
+        public string OverallUsageTitle => ResourceService.UiResources.GetString("UI_OverallUsage");
+        public string OverallUsageText => ResourceService.UiResources.GetString("UI_OverallUsageText");
+        public string OverallUsageStorageOverquotaText => ResourceService.UiResources.GetString("UI_OverallUsageStorageOverquotaText");
+        public string TotalStorageText => ResourceService.UiResources.GetString("UI_TotalStorage");
+        public string UsedStorageText => ResourceService.UiResources.GetString("UI_UsedStorage");
+        public string TotalTransferQuotaText => ResourceService.UiResources.GetString("UI_TotalTransferQuota");
+        public string UsedTransferQuotaText => ResourceService.UiResources.GetString("UI_UsedTransferQuota");
         public string UpgradeText => ResourceService.UiResources.GetString("UI_Upgrade");
+        public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
 
         #endregion
     }
