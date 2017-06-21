@@ -30,7 +30,7 @@ namespace MegaApp.ViewModels.MyAccount
         {
             UiService.OnUiThread(() =>
             {
-                NavigateService.Instance.Navigate(typeof(MainPage), true,
+                NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
                     NavigationObject.Create(typeof(GeneralViewModel), NavigationActionType.RubbishBin));
             });
         }

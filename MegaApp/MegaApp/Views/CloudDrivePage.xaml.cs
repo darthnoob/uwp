@@ -10,7 +10,6 @@ using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
