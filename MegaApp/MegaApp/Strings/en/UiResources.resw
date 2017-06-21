@@ -678,7 +678,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_OverallUsageStorageOverquotaText" xml:space="preserve">
-    <value>WARNING: You have exceed your alloated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
+    <value>WARNING: You have exceeded your allocated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
     <comment>Text displayed in the 'Overall usage' section of My account when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
