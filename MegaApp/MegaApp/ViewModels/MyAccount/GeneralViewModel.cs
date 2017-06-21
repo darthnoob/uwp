@@ -61,6 +61,7 @@ namespace MegaApp.ViewModels.MyAccount
         public string OverallUsageTitle => ResourceService.UiResources.GetString("UI_OverallUsage");
         public string OverallUsageText => ResourceService.UiResources.GetString("UI_OverallUsageText");
         public string OverallUsageStorageOverquotaText => ResourceService.UiResources.GetString("UI_OverallUsageStorageOverquotaText");
+        public string OverallUsageTransferOverquotaText => ResourceService.UiResources.GetString("UI_OverallUsageTransferOverquotaText");
         public string TotalStorageText => ResourceService.UiResources.GetString("UI_TotalStorage");
         public string UsedStorageText => ResourceService.UiResources.GetString("UI_UsedStorage");
         public string TotalTransferQuotaText => ResourceService.UiResources.GetString("UI_TotalTransferQuota");

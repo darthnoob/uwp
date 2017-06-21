@@ -717,4 +717,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Used transfer quota</value>
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_OverallUsageTransferOverquotaText" xml:space="preserve">
+    <value>WARNING: You have exceeded your allocated transfer quota. You will not be able to download anymore files until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
+    <comment>Text displayed in the 'Overall usage' section of My account when the user is in a transfer overquota situation.</comment>
+  </data>
 </root>
