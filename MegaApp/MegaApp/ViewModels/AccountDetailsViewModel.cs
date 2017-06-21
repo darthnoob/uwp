@@ -196,7 +196,12 @@ namespace MegaApp.ViewModels
             UsedTransferQuota + " " + UsedTransferQuotaUnits :
             ResourceService.UiResources.GetString("UI_NotAvailable");
 
-        public bool IsInTransferOverquota => (UsedTransferQuota > TransferQuota);
+        private bool _isInTransferOverquota;
+        public bool IsInTransferOverquota
+        {
+            get { return _isInTransferOverquota || (UsedTransferQuota > TransferQuota); }
+            set { SetField(ref _isInTransferOverquota, value); }
+        }
 
         public Color TransferQuotaProgressBarColor
         {
