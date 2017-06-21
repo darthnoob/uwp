@@ -2,9 +2,11 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.ViewModels;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
+using MegaApp.ViewModels;
 
 namespace MegaApp.Views
 {
@@ -26,6 +28,11 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
             this.ViewModel.GoToUpgrade += GoToUpgrade;
+
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
+            if (navActionType == NavigationActionType.Upgrade)
+                this.MyAccountPivot.SelectedItem = this.UpgradePivot;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
