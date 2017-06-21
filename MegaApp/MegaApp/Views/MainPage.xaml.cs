@@ -90,12 +90,16 @@ namespace MegaApp.Views
             // Could be handy in the future
             this.ViewModel.ContentViewModel = (this.ContentFrame.Content as Page)?.DataContext as BasePageViewModel;
 
-            if (e.NavigationMode != NavigationMode.Back) return;
+            if (e.NavigationMode != NavigationMode.Back)
+                this.ViewModel.NavigateOnMenuItemSelected = false;
+
             // Set current menu or option item 
             this.ViewModel.SelectedItem = this.ViewModel.MenuItems.FirstOrDefault(
                 m => NavigateService.GetViewType(m.TargetViewModel) == ContentFrame.CurrentSourcePageType);
             this.ViewModel.SelectedOptionItem = this.ViewModel.OptionItems.FirstOrDefault(
                 m => NavigateService.GetViewType(m.TargetViewModel) == ContentFrame.CurrentSourcePageType);
+
+            this.ViewModel.NavigateOnMenuItemSelected = true;
         }
 
         private void OnHamburgerMenuControlItemClick(object sender, ItemClickEventArgs e)

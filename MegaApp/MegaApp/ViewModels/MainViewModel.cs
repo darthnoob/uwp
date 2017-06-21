@@ -45,6 +45,12 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
+        /// <summary>
+        /// Flag to temporarily disable the navigation when a menu item is selected
+        /// <para>Default value: TRUE</para>
+        /// </summary>
+        public bool NavigateOnMenuItemSelected = true;
+
         private MenuItem _selectedItem;
         /// <summary>
         /// Current selected default menu item
@@ -57,8 +63,10 @@ namespace MegaApp.ViewModels
                 if (!SetField(ref _selectedItem, value)) return;
                 if (_selectedItem == null) return; // exit else both item lists will be set to null
                 this.SelectedOptionItem = null;
-                // Navigate to destination with targetviewmodel type
-                NavigateTo(_selectedItem.TargetViewModel, this.NavActionType);
+
+                // Navigate to destination with TargetViewModel type
+                if(this.NavigateOnMenuItemSelected)
+                    NavigateTo(_selectedItem.TargetViewModel, this.NavActionType);
             }
         }
 
@@ -74,8 +82,10 @@ namespace MegaApp.ViewModels
                 if (!SetField(ref _selectedOptionItem, value)) return;
                 if (_selectedOptionItem == null) return; // exit else both item lists will be set to null
                 this.SelectedItem = null;
-                // Navigate to destination with targetviewmodel type
-                NavigateTo(_selectedOptionItem.TargetViewModel, this.NavActionType);
+
+                // Navigate to destination with TargetViewModel type
+                if (this.NavigateOnMenuItemSelected)
+                    NavigateTo(_selectedOptionItem.TargetViewModel, this.NavActionType);
             }
         }
 
