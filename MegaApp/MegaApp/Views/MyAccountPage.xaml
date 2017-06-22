@@ -76,16 +76,18 @@
                                             Style="{ThemeResource MegaTitleFontStyle}"
                                             Text="{Binding PlanTypeText, Mode=OneTime}" />
                                         <StackPanel Orientation="Horizontal">
-                                            <Image
-                                                x:Name="PlanTypeIcon"
-                                                Height="16" Width="16"
-                                                Source="{Binding AccountDetails.AccountTypeUri}"
-                                                Stretch="None"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Visibility="{Binding AccountDetails.AccountTypeUri, Converter={StaticResource StringVisibilityConverter}}"/>
+                                            <Viewbox
+                                                Margin="0,4,12,0"
+                                                MaxWidth="16" MaxHeight="16"
+                                                VerticalAlignment="Top"
+                                                Visibility="{Binding AccountDetails.AccountTypePathData, Converter={StaticResource StringVisibilityConverter}}">
+                                                <PathIcon
+                                                    Data="{Binding AccountDetails.AccountTypePathData, Mode=OneWay}"
+                                                    Foreground="{Binding AccountDetails.AccountTypePathDataColorBrush, Mode=OneWay}" />
+                                            </Viewbox>
                                             <TextBlock 
                                                 x:Name="PlanTypeText" 
+                                                Style="{ThemeResource MegaBodyFontStyle}"
                                                 Text="{Binding AccountDetails.AccountTypeText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
@@ -105,6 +107,7 @@
                                             Text="{Binding PaymentMethodText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="PaymentMethodText"
+                                            Style="{ThemeResource MegaBodyFontStyle}"
                                             Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
                                     </StackPanel>
                                     <StackPanel 
@@ -116,6 +119,7 @@
                                             Text="{Binding SubscriptionEndsText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="SubscriptionEndsText"
+                                            Style="{ThemeResource MegaBodyFontStyle}"
                                             Text="{Binding AccountDetails.ProExpirationDate, Mode=OneWay}" />
                                     </StackPanel>
                                     <StackPanel 
@@ -127,6 +131,7 @@
                                             Text="{Binding SubscriptionRenewsText, Mode=OneTime}" />
                                         <TextBlock
                                             x:Name="SubscriptionRenewsText"
+                                            Style="{ThemeResource MegaBodyFontStyle}"
                                             Text="{Binding AccountDetails.SubscriptionRenewDate, Mode=OneWay}" />
                                     </StackPanel>
                                 </Grid>
@@ -154,9 +159,9 @@
                                         Margin="0,4,12,0"
                                         MaxWidth="16" MaxHeight="16"
                                         VerticalAlignment="Top">
-                                        <FontIcon
-                                            Foreground="{StaticResource MegaRedColorBrush}"
-                                            Glyph="&#xE783;" />
+                                        <PathIcon 
+                                            Data="{Binding WarningIconPathData, Mode=OneTime}"
+                                            Foreground="{StaticResource MegaRedColorBrush}" />
                                     </Viewbox>
                                     <TextBlock
                                         Grid.Column="1"
@@ -176,9 +181,9 @@
                                         Margin="0,4,12,0"
                                         MaxWidth="16" MaxHeight="16"
                                         VerticalAlignment="Top">
-                                        <FontIcon
-                                            Foreground="{StaticResource MegaRedColorBrush}"
-                                            Glyph="&#xE783;" />
+                                        <PathIcon 
+                                            Data="{Binding WarningIconPathData, Mode=OneTime}"
+                                            Foreground="{StaticResource MegaRedColorBrush}" />
                                     </Viewbox>
                                     <TextBlock
                                         Grid.Column="1"
@@ -212,12 +217,13 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Viewbox
                                                 Margin="0,0,12,0"
-                                                MaxWidth="16" MaxHeight="16"
+                                                MaxWidth="14" MaxHeight="14"
                                                 Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                                                <FontIcon Glyph="&#xEDAD;"/>
+                                                <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                             </Viewbox>
                                             <TextBlock
                                                 x:Name="TotalStorageText"
+                                                Style="{ThemeResource MegaBodyFontStyle}"
                                                 Text="{Binding AccountDetails.TotalSpaceWithUnits, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
@@ -231,12 +237,13 @@
                                                 Margin="0,0,12,0"
                                                 MaxWidth="16" MaxHeight="16"
                                                 Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                <FontIcon
-                                                    Foreground="{StaticResource MegaRedColorBrush}"
-                                                    Glyph="&#xE783;" />
+                                                <PathIcon
+                                                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                                                    Foreground="{StaticResource MegaRedColorBrush}" />
                                             </Viewbox>
                                             <TextBlock
                                                 x:Name="UsedStorageText"
+                                                Style="{ThemeResource MegaBodyFontStyle}"
                                                 Text="{Binding AccountDetails.UsedSpaceWithUnits, Mode=OneWay}" />
                                         </StackPanel>                                        
                                     </StackPanel>
@@ -267,12 +274,13 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Viewbox
                                                 Margin="0,0,12,0"
-                                                MaxWidth="16" MaxHeight="16"
+                                                MaxWidth="14" MaxHeight="14"
                                                 Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                                                <FontIcon Glyph="&#xEDAD;"/>
+                                                <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                             </Viewbox>
                                             <TextBlock
                                                 x:Name="TotalTransferQuotaText"
+                                                Style="{ThemeResource MegaBodyFontStyle}"
                                                 Text="{Binding AccountDetails.TransferQuotaWithUnits, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
@@ -286,12 +294,13 @@
                                                 Margin="0,0,12,0"
                                                 MaxWidth="16" MaxHeight="16"
                                                 Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                                <FontIcon
-                                                    Foreground="{StaticResource MegaRedColorBrush}"
-                                                    Glyph="&#xE783;" />
+                                                <PathIcon
+                                                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                                                    Foreground="{StaticResource MegaRedColorBrush}" />
                                             </Viewbox>
                                             <TextBlock
                                                 x:Name="UsedTransferQuotaText"
+                                                Style="{ThemeResource MegaBodyFontStyle}"
                                                 Text="{Binding AccountDetails.UsedTransferQuotaWithUnits, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>

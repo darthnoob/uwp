@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Services;
 
@@ -49,22 +50,42 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public Uri AccountTypeUri
+        public string AccountTypePathData
         {
             get
             {
                 switch (AccountType)
                 {
                     case MAccountType.ACCOUNT_TYPE_FREE:
-                        return null;
+                        return ResourceService.VisualResources.GetString("VR_AccountTypeFreePathData");
                     case MAccountType.ACCOUNT_TYPE_LITE:
-                        return null;
+                        return ResourceService.VisualResources.GetString("VR_AccountTypeProLitePathData");
                     case MAccountType.ACCOUNT_TYPE_PROI:
-                        return null;
+                        return ResourceService.VisualResources.GetString("VR_AccountTypePro1PathData");
                     case MAccountType.ACCOUNT_TYPE_PROII:
-                        return null;
+                        return ResourceService.VisualResources.GetString("VR_AccountTypePro2PathData");
                     case MAccountType.ACCOUNT_TYPE_PROIII:
-                        return null;
+                        return ResourceService.VisualResources.GetString("VR_AccountTypePro3PathData");
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public Brush AccountTypePathDataColorBrush
+        {
+            get
+            {
+                switch (AccountType)
+                {
+                    case MAccountType.ACCOUNT_TYPE_FREE:
+                        return (Brush)Application.Current.Resources["MegaGreenColorBrush"];
+                    case MAccountType.ACCOUNT_TYPE_LITE:
+                        return (Brush)Application.Current.Resources["MegaOrangeColorBrush"];
+                    case MAccountType.ACCOUNT_TYPE_PROI:
+                    case MAccountType.ACCOUNT_TYPE_PROII:
+                    case MAccountType.ACCOUNT_TYPE_PROIII:
+                        return (Brush)Application.Current.Resources["MegaRedColorBrush"];
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

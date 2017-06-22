@@ -939,6 +939,7 @@
             <Color x:Key="MegaRedColor">#EB4444</Color>
             <Color x:Key="MegaGreenColor">#00B294</Color>
             <Color x:Key="MegaBlueColor">#0078D7</Color>
+            <Color x:Key="MegaOrangeColor">#FFC159</Color>
             <Color x:Key="MegaAppBackground">#000000</Color>
             <Color x:Key="MegaAppForeground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarBackground">#111111</Color>
@@ -947,6 +948,9 @@
             <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
+            <SolidColorBrush x:Key="MegaGreenColorBrush" Color="{ThemeResource MegaGreenColor}"/>
+            <SolidColorBrush x:Key="MegaBlueColorBrush" Color="{ThemeResource MegaBlueColor}"/>
+            <SolidColorBrush x:Key="MegaOrangeColorBrush" Color="{ThemeResource MegaOrangeColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>
@@ -966,6 +970,7 @@
             <Color x:Key="MegaRedColor">#EB4444</Color>
             <Color x:Key="MegaGreenColor">#00B294</Color>
             <Color x:Key="MegaBlueColor">#0078D7</Color>
+            <Color x:Key="MegaOrangeColor">#FFC159</Color>
             <Color x:Key="MegaAppBackground">#F7F7F7</Color>
             <Color x:Key="MegaAppForeground">#000000</Color>
             <Color x:Key="MegaAppBarBackground">#FFFFFF</Color>
@@ -974,6 +979,9 @@
             <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
+            <SolidColorBrush x:Key="MegaGreenColorBrush" Color="{ThemeResource MegaGreenColor}"/>
+            <SolidColorBrush x:Key="MegaBlueColorBrush" Color="{ThemeResource MegaBlueColor}"/>
+            <SolidColorBrush x:Key="MegaOrangeColorBrush" Color="{ThemeResource MegaOrangeColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>

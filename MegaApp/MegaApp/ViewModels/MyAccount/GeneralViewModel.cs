@@ -70,5 +70,12 @@ namespace MegaApp.ViewModels.MyAccount
         public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
 
         #endregion
+
+        #region VisualResources
+
+        public string NoteIconPathData => ResourceService.VisualResources.GetString("VR_NoteIconPathData");
+        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
+
+        #endregion
     }
 }
