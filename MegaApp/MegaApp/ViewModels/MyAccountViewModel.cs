@@ -55,6 +55,10 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");
+        public string StorageAndTransferTitle => ResourceService.UiResources.GetString("UI_StorageAndTransfer");
+        public string UpgradeTitle => ResourceService.UiResources.GetString("UI_Upgrade");
+
         public string LogOutText => ResourceService.UiResources.GetString("UI_Logout");
 
         #endregion

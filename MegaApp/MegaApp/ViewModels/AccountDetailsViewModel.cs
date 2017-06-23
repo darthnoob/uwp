@@ -3,6 +3,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using mega;
+using MegaApp.Extensions;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
@@ -23,8 +24,10 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _accountType, value);
-                OnPropertyChanged("AccountTypeText");
                 OnPropertyChanged("IsProAccount");
+                OnPropertyChanged("AccountTypeText");
+                OnPropertyChanged("AccountTypePathData");
+                OnPropertyChanged("AccountTypePathDataColorBrush");
             }
         }
 
@@ -101,25 +104,16 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _totalSpace, value);
-                OnPropertyChanged("TotalSpaceWithUnits");
+                OnPropertyChanged("TotalSpaceText");
+                OnPropertyChanged("FreeSpace");
+                OnPropertyChanged("FreeSpaceText");
                 OnPropertyChanged("IsInStorageOverquota");
                 OnPropertyChanged("IsInOverquota");
                 OnPropertyChanged("StorageProgressBarColor");
             }
         }
 
-        private string _totalSpaceUnits;
-        public string TotalSpaceUnits
-        {
-            get { return _totalSpaceUnits; }
-            set
-            {
-                SetField(ref _totalSpaceUnits, value);
-                OnPropertyChanged("TotalSpaceWithUnits");
-            }
-        }
-
-        public string TotalSpaceWithUnits => TotalSpace + " " + TotalSpaceUnits;
+        public string TotalSpaceText => TotalSpace.ToStringAndSuffix();
 
         private ulong _usedSpace;
         public ulong UsedSpace
@@ -128,27 +122,60 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _usedSpace, value);
-                OnPropertyChanged("UsedSpaceWithUnits");
+                OnPropertyChanged("UsedSpaceText");
+                OnPropertyChanged("FreeSpace");
+                OnPropertyChanged("FreeSpaceText");
                 OnPropertyChanged("IsInStorageOverquota");
                 OnPropertyChanged("IsInOverquota");
                 OnPropertyChanged("StorageProgressBarColor");
             }
         }
 
-        private string _usedSpaceUnits;
-        public string UsedSpaceUnits
+        public string UsedSpaceText => UsedSpace.ToStringAndSuffix(1);
+
+        public ulong FreeSpace => TotalSpace - UsedSpace;
+        public string FreeSpaceText => FreeSpace.ToStringAndSuffix(1);
+
+        public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
+
+        public ulong _cloudDriveUsedSpace;
+        public ulong CloudDriveUsedSpace
         {
-            get { return _usedSpaceUnits; }
+            get { return _cloudDriveUsedSpace; }
             set
             {
-                SetField(ref _usedSpaceUnits, value);
-                OnPropertyChanged("UsedSpaceWithUnits");
+                SetField(ref _cloudDriveUsedSpace, value);
+                OnPropertyChanged("CloudDriveUsedSpaceText");
             }
         }
 
-        public string UsedSpaceWithUnits => UsedSpace + " " + UsedSpaceUnits;
+        public string CloudDriveUsedSpaceText => CloudDriveUsedSpace.ToStringAndSuffix(1);
 
-        public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
+        public ulong _rubbishBinUsedSpace;
+        public ulong RubbishBinUsedSpace
+        {
+            get { return _rubbishBinUsedSpace; }
+            set
+            {
+                SetField(ref _rubbishBinUsedSpace, value);
+                OnPropertyChanged("RubbishBinUsedSpaceText");
+            }
+        }        
+
+        public string RubbishBinUsedSpaceText => RubbishBinUsedSpace.ToStringAndSuffix(1);
+
+        public ulong _inSharesUsedSpace;
+        public ulong InSharesUsedSpace
+        {
+            get { return _inSharesUsedSpace; }
+            set
+            {
+                SetField(ref _inSharesUsedSpace, value);
+                OnPropertyChanged("InSharesUsedSpaceText");
+            }
+        }
+
+        public string InSharesUsedSpaceText => InSharesUsedSpace.ToStringAndSuffix(1);
 
         public Color StorageProgressBarColor
         {
@@ -166,27 +193,15 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _transferQuota, value);
-                OnPropertyChanged("TransferQuotaWithUnits");
+                OnPropertyChanged("TransferQuotaText");
                 OnPropertyChanged("IsInTransferOverquota");
                 OnPropertyChanged("IsInOverquota");
                 OnPropertyChanged("TransferQuotaProgressBarColor");
             }
         }
 
-        private string _transferQuotaUnits;
-        public string TransferQuotaUnits
-        {
-            get { return _transferQuotaUnits; }
-            set
-            {
-                SetField(ref _transferQuotaUnits, value);
-                OnPropertyChanged("TransferQuotaWithUnits");
-            }
-        }
-
-        public string TransferQuotaWithUnits => IsProAccount ? 
-            TransferQuota + " " + TransferQuotaUnits : 
-            ResourceService.UiResources.GetString("UI_Dynamic");
+        public string TransferQuotaText => IsProAccount ? 
+            TransferQuota.ToStringAndSuffix() : ResourceService.UiResources.GetString("UI_Dynamic");
 
         private ulong _usedTransferQuota;
         public ulong UsedTransferQuota
@@ -195,33 +210,26 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _usedTransferQuota, value);
-                OnPropertyChanged("UsedTransferQuotaWithUnits");
+                OnPropertyChanged("UsedTransferQuotaText");
                 OnPropertyChanged("IsInTransferOverquota");
                 OnPropertyChanged("IsInOverquota");
                 OnPropertyChanged("TransferQuotaProgressBarColor");
             }
         }
 
-        private string _usedTransferQuotaUnits;
-        public string UsedTransferQuotaUnits
-        {
-            get { return _usedTransferQuotaUnits; }
-            set
-            {
-                SetField(ref _usedTransferQuotaUnits, value);
-                OnPropertyChanged("UsedTransferQuotaWithUnits");
-            }
-        }
-
-        public string UsedTransferQuotaWithUnits => IsProAccount ?
-            UsedTransferQuota + " " + UsedTransferQuotaUnits :
-            ResourceService.UiResources.GetString("UI_NotAvailable");
+        public string UsedTransferQuotaText => IsProAccount ?
+            UsedTransferQuota.ToStringAndSuffix(1) : ResourceService.UiResources.GetString("UI_NotAvailable");
 
         private bool _isInTransferOverquota;
         public bool IsInTransferOverquota
         {
             get { return _isInTransferOverquota || (UsedTransferQuota > TransferQuota); }
-            set { SetField(ref _isInTransferOverquota, value); }
+            set
+            {
+                SetField(ref _isInTransferOverquota, value);
+                OnPropertyChanged("IsInOverquota");
+                OnPropertyChanged("TransferQuotaProgressBarColor");
+            }
         }
 
         public Color TransferQuotaProgressBarColor
@@ -254,6 +262,13 @@ namespace MegaApp.ViewModels
         {
             get { return _proExpirationDate; }
             set { SetField(ref _proExpirationDate, value); }
+        }
+
+        private string _subscriptionType;
+        public string SubscriptionType
+        {
+            get { return _subscriptionType; }
+            set { SetField(ref _subscriptionType, value); }
         }
 
         #endregion

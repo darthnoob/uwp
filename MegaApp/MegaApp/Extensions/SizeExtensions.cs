@@ -6,14 +6,16 @@ namespace MegaApp.Extensions
     {
         private static readonly string[] SizeSuffixesBytes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
-        public static string ToStringAndSuffix(this UInt64 value)
+        public static string ToStringAndSuffix(this UInt64 value, int numDecimaDigits = 0)
         {
             if (value == 0) { return "0.0 bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
-            return string.Format("{0:n2} {1}", adjustedSize, SizeSuffixesBytes[mag]);
+            var formatString = "{0:n" + numDecimaDigits + "} {1}";
+
+            return string.Format(formatString, adjustedSize, SizeSuffixesBytes[mag]);
         }
 
         public static ulong ToReadableSize(this UInt64 value)

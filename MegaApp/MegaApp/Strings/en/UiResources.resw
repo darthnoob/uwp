@@ -721,4 +721,36 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>WARNING: You have exceeded your allocated transfer quota. You will not be able to download anymore files until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
     <comment>Text displayed in the 'Overall usage' section of My account when the user is in a transfer overquota situation.</comment>
   </data>
+  <data name="UI_PaymentInformation" xml:space="preserve">
+    <value>Payment information</value>
+    <comment>Label for the 'Payment information' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Annual" xml:space="preserve">
+    <value>Annual</value>
+    <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AnnualRecurring" xml:space="preserve">
+    <value>Annual recurring</value>
+    <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
+  </data>
+  <data name="UI_General" xml:space="preserve">
+    <value>General</value>
+    <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Monthly" xml:space="preserve">
+    <value>Monthly</value>
+    <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MonthlyRecurring" xml:space="preserve">
+    <value>Monthly recurring</value>
+    <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Profile" xml:space="preserve">
+    <value>Profile</value>
+    <comment>Title of the 'Profile' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageAndTransfer" xml:space="preserve">
+    <value>Storage &amp; Transfer</value>
+    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
 </root>

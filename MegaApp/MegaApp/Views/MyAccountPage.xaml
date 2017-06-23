@@ -46,7 +46,7 @@
                 <PivotItem
                     x:Name="GeneralPivot"
                     DataContext="{Binding GeneralViewModel}"
-                    Header="General"
+                    Header="{Binding Title, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <ScrollViewer
                         Margin="0,0,-12,0"
@@ -91,25 +91,6 @@
                                                 Text="{Binding AccountDetails.AccountTypeText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
-                                </Grid>
-                                <Grid 
-                                    Grid.Row="1"
-                                    Margin="0,32,0,0"
-                                    Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel Grid.Column="0">
-                                        <TextBlock
-                                            x:Name="PaymentMethodLabelText"
-                                            Style="{ThemeResource MegaTitleFontStyle}"
-                                            Text="{Binding PaymentMethodText, Mode=OneTime}" />
-                                        <TextBlock
-                                            x:Name="PaymentMethodText"
-                                            Style="{ThemeResource MegaBodyFontStyle}"
-                                            Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
-                                    </StackPanel>
                                     <StackPanel 
                                         Grid.Column="1"
                                         Visibility="{Binding AccountDetails.ProExpirationDate, Converter={StaticResource StringVisibilityConverter}}">
@@ -135,7 +116,59 @@
                                             Text="{Binding AccountDetails.SubscriptionRenewDate, Mode=OneWay}" />
                                     </StackPanel>
                                 </Grid>
+                                <StackPanel 
+                                    Grid.Row="1"
+                                    Margin="0,36,0,0"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Width="136"
+                                        Margin="0,0,4,0"
+                                        Command="{Binding UpgradeCommand}"
+                                        Content="{Binding UpgradeText, Mode=OneTime}"/>
+                                    <!--<Button
+                                        Width="136"
+                                        Margin="4,0,0,0"
+                                        Command="{Binding CancelSubscriptionCommand}"
+                                        Content="{Binding CancelSubscriptionText, Mode=OneTime}" />-->
+                                </StackPanel>
                             </Grid>
+
+                            <StackPanel Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock
+                                    Margin="0,64,0,20"
+                                    Style="{ThemeResource MegaHeaderFontStyle}"
+                                    Text="{Binding PaymentInformationTitle, Mode=OneTime}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Column="0" Grid.Row="0">
+                                        <TextBlock
+                                            x:Name="PaymentMethodLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="{Binding PaymentMethodText, Mode=OneTime}" />
+                                        <TextBlock
+                                            x:Name="PaymentMethodText"
+                                            Style="{ThemeResource MegaBodyFontStyle}"
+                                            Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Grid.Row="0">
+                                        <TextBlock
+                                            x:Name="SubscriptionTypeLabelText"
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="{Binding SubscriptionTypeText, Mode=OneTime}" />
+                                        <TextBlock
+                                            x:Name="SubscriptionTypeText"
+                                            Style="{ThemeResource MegaBodyFontStyle}"
+                                            Text="{Binding AccountDetails.SubscriptionType, Mode=OneWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
 
                             <TextBlock
                                 Margin="0,64,0,12"
@@ -224,7 +257,7 @@
                                             <TextBlock
                                                 x:Name="TotalStorageText"
                                                 Style="{ThemeResource MegaBodyFontStyle}"
-                                                Text="{Binding AccountDetails.TotalSpaceWithUnits, Mode=OneWay}" />
+                                                Text="{Binding AccountDetails.TotalSpaceText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1">
@@ -244,7 +277,7 @@
                                             <TextBlock
                                                 x:Name="UsedStorageText"
                                                 Style="{ThemeResource MegaBodyFontStyle}"
-                                                Text="{Binding AccountDetails.UsedSpaceWithUnits, Mode=OneWay}" />
+                                                Text="{Binding AccountDetails.UsedSpaceText, Mode=OneWay}" />
                                         </StackPanel>                                        
                                     </StackPanel>
                                 </Grid>
@@ -281,7 +314,7 @@
                                             <TextBlock
                                                 x:Name="TotalTransferQuotaText"
                                                 Style="{ThemeResource MegaBodyFontStyle}"
-                                                Text="{Binding AccountDetails.TransferQuotaWithUnits, Mode=OneWay}" />
+                                                Text="{Binding AccountDetails.TransferQuotaText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1">
@@ -301,7 +334,7 @@
                                             <TextBlock
                                                 x:Name="UsedTransferQuotaText"
                                                 Style="{ThemeResource MegaBodyFontStyle}"
-                                                Text="{Binding AccountDetails.UsedTransferQuotaWithUnits, Mode=OneWay}" />
+                                                Text="{Binding AccountDetails.UsedTransferQuotaText, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
@@ -327,22 +360,17 @@
                 </PivotItem>
                 <PivotItem
                     x:Name="ProfilePivot"
-                    Header="Profile"
+                    Header="{Binding ProfileTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                 </PivotItem>
                 <PivotItem
                     x:Name="StorageAndTransferPivot"
-                    Header="Storage &amp; Transfer"
-                    CacheMode="{x:Null}">
-                </PivotItem>
-                <PivotItem
-                    x:Name="PlansAndPaymentPivot"
-                    Header="Plans &amp; Payment"
+                    Header="{Binding StorageAndTransferTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                 </PivotItem>
                 <PivotItem
                     x:Name="UpgradePivot"
-                    Header="Upgrade"
+                    Header="{Binding UpgradeTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                 </PivotItem>
             </Pivot>

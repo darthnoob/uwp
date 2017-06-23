@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
-using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 
@@ -53,14 +52,14 @@ namespace MegaApp.Services
             UiService.OnUiThread(() =>
             {
                 AccountDetails.AccountType = accountDetails.getProLevel();
-                AccountDetails.TotalSpace = accountDetails.getStorageMax().ToReadableSize();
-                AccountDetails.TotalSpaceUnits = accountDetails.getStorageMax().ToReadableUnits();
-                AccountDetails.UsedSpace = accountDetails.getStorageUsed().ToReadableSize();
-                AccountDetails.UsedSpaceUnits = accountDetails.getStorageUsed().ToReadableUnits();
-                AccountDetails.TransferQuota = accountDetails.getTransferMax().ToReadableSize();
-                AccountDetails.TransferQuotaUnits = accountDetails.getTransferMax().ToReadableUnits();
-                AccountDetails.UsedTransferQuota = accountDetails.getTransferOwnUsed().ToReadableSize();
-                AccountDetails.UsedTransferQuotaUnits = accountDetails.getTransferOwnUsed().ToReadableUnits();
+                AccountDetails.TotalSpace = accountDetails.getStorageMax();
+                AccountDetails.UsedSpace = accountDetails.getStorageUsed();
+
+                AccountDetails.CloudDriveUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRootNode().getHandle());
+                AccountDetails.RubbishBinUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRubbishNode().getHandle());
+                
+                AccountDetails.TransferQuota = accountDetails.getTransferMax();
+                AccountDetails.UsedTransferQuota = accountDetails.getTransferOwnUsed();
 
                 AccountDetails.IsInTransferOverquota = SdkService.MegaSdk.getBandwidthOverquotaDelay() != 0;
 
@@ -79,11 +78,33 @@ namespace MegaApp.Services
                     {
                         date = start.AddSeconds(Convert.ToDouble(accountDetails.getSubscriptionRenewTime()));
                         UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString("dd MMM yyyy"));
+                        switch (accountDetails.getSubscriptionCycle())
+                        {
+                            case "1 M":
+                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_MonthlyRecurring"));
+                                break;
+                            case "1 Y":
+                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_AnnualRecurring"));
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
                     else
                     {
                         date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
                         UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString("dd MMM yyyy"));
+                        switch (accountDetails.getSubscriptionCycle())
+                        {
+                            case "1 M":
+                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Monthly"));
+                                break;
+                            case "1 Y":
+                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Annual"));
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
                     }
                 }
                 catch (ArgumentOutOfRangeException) { /* Do nothing*/ }
@@ -126,6 +147,24 @@ namespace MegaApp.Services
             var lastname = await userAttributeRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAttribute((int)MUserAttrType.USER_ATTR_LASTNAME, userAttributeRequestListener));
             UiService.OnUiThread(() => UserData.Lastname = lastname);
+        }
+
+        public static void ClearAccountDetails()
+        {
+            UiService.OnUiThread(() =>
+            {
+                AccountDetails.AccountType = MAccountType.ACCOUNT_TYPE_FREE;
+                AccountDetails.TotalSpace = 0;
+                AccountDetails.UsedSpace = 0;
+                AccountDetails.CloudDriveUsedSpace = 0;
+                AccountDetails.RubbishBinUsedSpace = 0;
+                AccountDetails.TransferQuota = 0;
+                AccountDetails.UsedTransferQuota = 0;
+                AccountDetails.IsInTransferOverquota = false;
+                AccountDetails.PaymentMethod = string.Empty;
+                AccountDetails.SubscriptionRenewDate = string.Empty;
+                AccountDetails.ProExpirationDate = string.Empty;
+            });
         }
 
         /// <summary>
