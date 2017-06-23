@@ -59,7 +59,7 @@
                     Margin="0,0,0,24"
                     Style="{ThemeResource MegaBodyFontStyle}"
                     Text="{x:Bind Description, Mode=OneTime}" />
-                <Grid HorizontalAlignment="Right">
+                <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
