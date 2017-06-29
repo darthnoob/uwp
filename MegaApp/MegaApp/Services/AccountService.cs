@@ -56,6 +56,7 @@ namespace MegaApp.Services
                 AccountDetails.UsedSpace = accountDetails.getStorageUsed();
 
                 AccountDetails.CloudDriveUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRootNode().getHandle());
+                AccountDetails.IncomingSharesUsedSpace = GetIncomingSharesUsedSpace();
                 AccountDetails.RubbishBinUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRubbishNode().getHandle());
                 
                 AccountDetails.TransferQuota = accountDetails.getTransferMax();
@@ -90,7 +91,7 @@ namespace MegaApp.Services
                                 throw new ArgumentOutOfRangeException();
                         }
                     }
-                    else
+                    else if (accountDetails.getProExpiration() != 0)
                     {
                         date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
                         UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString("dd MMM yyyy"));
@@ -109,6 +110,22 @@ namespace MegaApp.Services
                 }
                 catch (ArgumentOutOfRangeException) { /* Do nothing*/ }
             }
+        }
+
+        private static ulong GetIncomingSharesUsedSpace()
+        {
+            MNodeList inSharesList = SdkService.MegaSdk.getInShares();
+            int inSharesListSize = inSharesList.size();
+
+            ulong inSharesUsedSpace = 0;
+            for (int i = 0; i < inSharesListSize; i++)
+            {
+                MNode inShare = inSharesList.get(i);
+                if (inShare != null)
+                    inSharesUsedSpace += SdkService.MegaSdk.getSize(inShare);
+            }
+
+            return inSharesUsedSpace;
         }
 
         /// <summary>

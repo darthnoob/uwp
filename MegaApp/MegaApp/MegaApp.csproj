@@ -201,6 +201,8 @@
     <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />
     <Compile Include="ViewModels\MyAccountViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\GeneralViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\MyAccountBaseViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\StorageAndTransferViewModel.cs" />
     <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />

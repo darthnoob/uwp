@@ -1,55 +1,12 @@
-﻿using System;
-using System.Windows.Input;
-using MegaApp.Classes;
-using MegaApp.Enums;
-using MegaApp.Services;
-using MegaApp.Views;
+﻿using MegaApp.Services;
 
 namespace MegaApp.ViewModels.MyAccount
 {
-    public class GeneralViewModel : BaseViewModel
+    public class GeneralViewModel : MyAccountBaseViewModel
     {
-        public EventHandler GoToUpgrade;
-
-        public GeneralViewModel()
-        {
-            this.RubbishBinCommand = new RelayCommand(RubbishBin);
-            this.UpgradeCommand = new RelayCommand(Upgrade);
-        }
-
-        #region Commands
-
-        public ICommand RubbishBinCommand { get; }
-        public ICommand UpgradeCommand { get; }
-
-        #endregion
-
-        #region Private Methods
-
-        private void RubbishBin()
-        {
-            UiService.OnUiThread(() =>
-            {
-                NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
-                    NavigationObject.Create(typeof(GeneralViewModel), NavigationActionType.RubbishBin));
-            });
-        }
-
-        private void Upgrade()
-        {
-            GoToUpgrade?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
-        #region Properties
-
-        public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
-
-        #endregion
-
         #region UiResources
 
+        // Title
         public string Title => ResourceService.UiResources.GetString("UI_General");
 
         // Account overview
@@ -66,21 +23,10 @@ namespace MegaApp.ViewModels.MyAccount
         // Overall usage
         public string OverallUsageTitle => ResourceService.UiResources.GetString("UI_OverallUsage");
         public string OverallUsageText => ResourceService.UiResources.GetString("UI_OverallUsageText");
-        public string OverallUsageStorageOverquotaText => ResourceService.UiResources.GetString("UI_OverallUsageStorageOverquotaText");
-        public string OverallUsageTransferOverquotaText => ResourceService.UiResources.GetString("UI_OverallUsageTransferOverquotaText");
         public string TotalStorageText => ResourceService.UiResources.GetString("UI_TotalStorage");
         public string UsedStorageText => ResourceService.UiResources.GetString("UI_UsedStorage");
         public string TotalTransferQuotaText => ResourceService.UiResources.GetString("UI_TotalTransferQuota");
         public string UsedTransferQuotaText => ResourceService.UiResources.GetString("UI_UsedTransferQuota");
-        public string UpgradeText => ResourceService.UiResources.GetString("UI_Upgrade");
-        public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
-
-        #endregion
-
-        #region VisualResources
-
-        public string NoteIconPathData => ResourceService.VisualResources.GetString("VR_NoteIconPathData");
-        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }

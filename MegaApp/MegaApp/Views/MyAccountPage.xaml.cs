@@ -48,10 +48,20 @@ namespace MegaApp.Views
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if(e.NewSize.Width > 600)
-                this.GeneralStackPanel.Width = e.NewSize.Width * 2 / 3;
+            if (e.NewSize.Width > 600)
+            {
+                this.GeneralStackPanel.Width = 600;
+
+                this.StorageAndTransferStackPanel.Width = 600;
+                this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+            }
             else
+            {
                 this.GeneralStackPanel.Width = this.MyAccountPivot.Width;
+
+                this.StorageAndTransferStackPanel.Width = this.MyAccountPivot.Width;
+                this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+            }
         }
 
         private void GoToUpgrade(object sender, EventArgs e)

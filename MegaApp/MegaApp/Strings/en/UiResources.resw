@@ -677,9 +677,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Overall usage</value>
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
-  <data name="UI_OverallUsageStorageOverquotaText" xml:space="preserve">
-    <value>WARNING: You have exceeded your allocated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
-    <comment>Text displayed in the 'Overall usage' section of My account when the user is in an storage overquota situation.</comment>
+  <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
+    <value>You have exceeded your allocated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
+    <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
     <value>Transfer quota is used for downloading and uploading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
@@ -717,9 +717,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Used transfer quota</value>
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_OverallUsageTransferOverquotaText" xml:space="preserve">
-    <value>WARNING: You have exceeded your allocated transfer quota. You will not be able to download anymore files until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
-    <comment>Text displayed in the 'Overall usage' section of My account when the user is in a transfer overquota situation.</comment>
+  <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
+    <value>You have exceeded your allocated transfer quota. You will not be able to download anymore files until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
+    <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
     <value>Payment information</value>
@@ -752,5 +752,21 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>Storage &amp; Transfer</value>
     <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AvailableStorage" xml:space="preserve">
+    <value>Available storage</value>
+    <comment>Label for any 'Available storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AvailableTransferQuota" xml:space="preserve">
+    <value>Available transfer quota</value>
+    <comment>Label for any 'Available transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferQuota" xml:space="preserve">
+    <value>Transfer quota</value>
+    <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_IncomingShares" xml:space="preserve">
+    <value>Incoming shares</value>
+    <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

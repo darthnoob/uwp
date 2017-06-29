@@ -10,6 +10,11 @@ namespace MegaApp.ViewModels
 {
     public class AccountDetailsViewModel : BaseViewModel
     {
+        public EventHandler CloudDriveUsedSpaceChanged;
+        public EventHandler IncomingSharesUsedSpaceChanged;
+        public EventHandler RubbishBinUsedSpaceChanged;
+        public EventHandler IsInStorageOverquotaChanged;
+
         public AccountDetailsViewModel()
         {
             AccountType = MAccountType.ACCOUNT_TYPE_FREE; // Default value
@@ -105,11 +110,7 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _totalSpace, value);
                 OnPropertyChanged("TotalSpaceText");
-                OnPropertyChanged("FreeSpace");
-                OnPropertyChanged("FreeSpaceText");
-                OnPropertyChanged("IsInStorageOverquota");
-                OnPropertyChanged("IsInOverquota");
-                OnPropertyChanged("StorageProgressBarColor");
+                this.UpdateUsedSpaceValues();
             }
         }
 
@@ -123,17 +124,23 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _usedSpace, value);
                 OnPropertyChanged("UsedSpaceText");
-                OnPropertyChanged("FreeSpace");
-                OnPropertyChanged("FreeSpaceText");
-                OnPropertyChanged("IsInStorageOverquota");
-                OnPropertyChanged("IsInOverquota");
-                OnPropertyChanged("StorageProgressBarColor");
+                this.UpdateUsedSpaceValues();
             }
         }
 
         public string UsedSpaceText => UsedSpace.ToStringAndSuffix(1);
 
-        public ulong FreeSpace => TotalSpace - UsedSpace;
+        private void UpdateUsedSpaceValues()
+        {
+            OnPropertyChanged("FreeSpace");
+            OnPropertyChanged("FreeSpaceText");
+            OnPropertyChanged("IsInStorageOverquota");
+            OnPropertyChanged("IsInOverquota");
+            OnPropertyChanged("StorageProgressBarColor");
+            this.IsInStorageOverquotaChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public ulong FreeSpace => UsedSpace < TotalSpace ? TotalSpace - UsedSpace : 0;
         public string FreeSpaceText => FreeSpace.ToStringAndSuffix(1);
 
         public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
@@ -146,10 +153,25 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _cloudDriveUsedSpace, value);
                 OnPropertyChanged("CloudDriveUsedSpaceText");
+                this.CloudDriveUsedSpaceChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         public string CloudDriveUsedSpaceText => CloudDriveUsedSpace.ToStringAndSuffix(1);
+
+        public ulong _incomingSharesUsedSpace;
+        public ulong IncomingSharesUsedSpace
+        {
+            get { return _incomingSharesUsedSpace; }
+            set
+            {
+                SetField(ref _incomingSharesUsedSpace, value);
+                OnPropertyChanged("IncomingSharesUsedSpaceText");
+                this.IncomingSharesUsedSpaceChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public string IncomingSharesUsedSpaceText => IncomingSharesUsedSpace.ToStringAndSuffix(1);
 
         public ulong _rubbishBinUsedSpace;
         public ulong RubbishBinUsedSpace
@@ -159,6 +181,7 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _rubbishBinUsedSpace, value);
                 OnPropertyChanged("RubbishBinUsedSpaceText");
+                this.RubbishBinUsedSpaceChanged?.Invoke(this, EventArgs.Empty);
             }
         }        
 
@@ -194,9 +217,7 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _transferQuota, value);
                 OnPropertyChanged("TransferQuotaText");
-                OnPropertyChanged("IsInTransferOverquota");
-                OnPropertyChanged("IsInOverquota");
-                OnPropertyChanged("TransferQuotaProgressBarColor");
+                this.UpdateUsedTransferQuotaValues();
             }
         }
 
@@ -211,14 +232,24 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _usedTransferQuota, value);
                 OnPropertyChanged("UsedTransferQuotaText");
-                OnPropertyChanged("IsInTransferOverquota");
-                OnPropertyChanged("IsInOverquota");
-                OnPropertyChanged("TransferQuotaProgressBarColor");
+                this.UpdateUsedTransferQuotaValues();
             }
         }
 
         public string UsedTransferQuotaText => IsProAccount ?
             UsedTransferQuota.ToStringAndSuffix(1) : ResourceService.UiResources.GetString("UI_NotAvailable");
+
+        private void UpdateUsedTransferQuotaValues()
+        {
+            OnPropertyChanged("AvailableTransferQuota");
+            OnPropertyChanged("AvailableTransferQuotaText");
+            OnPropertyChanged("IsInTransferOverquota");
+            OnPropertyChanged("IsInOverquota");
+            OnPropertyChanged("TransferQuotaProgressBarColor");
+        }
+
+        public ulong AvailableTransferQuota => UsedTransferQuota < TransferQuota ? TransferQuota - UsedTransferQuota : 0;
+        public string AvailableTransferQuotaText => AvailableTransferQuota.ToStringAndSuffix(1);
 
         private bool _isInTransferOverquota;
         public bool IsInTransferOverquota
@@ -246,7 +277,11 @@ namespace MegaApp.ViewModels
         private string _paymentMethod;
         public string PaymentMethod
         {
-            get { return _paymentMethod; }
+            get
+            {
+                return string.IsNullOrWhiteSpace(_paymentMethod) ? 
+                    ResourceService.UiResources.GetString("UI_NotAvailable") : _paymentMethod;
+            }
             set { SetField(ref _paymentMethod, value); }
         }
 
@@ -267,7 +302,11 @@ namespace MegaApp.ViewModels
         private string _subscriptionType;
         public string SubscriptionType
         {
-            get { return _subscriptionType; }
+            get
+            {
+                return string.IsNullOrWhiteSpace(_subscriptionType) ?
+                    ResourceService.UiResources.GetString("UI_NotAvailable") : _subscriptionType;
+            }
             set { SetField(ref _subscriptionType, value); }
         }
 
