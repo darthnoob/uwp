@@ -32,7 +32,7 @@ namespace MegaApp.ViewModels
                 OnPropertyChanged("IsProAccount");
                 OnPropertyChanged("AccountTypeText");
                 OnPropertyChanged("AccountTypePathData");
-                OnPropertyChanged("AccountTypePathDataColorBrush");
+                OnPropertyChanged("AccountTypePathDataColor");
             }
         }
 
@@ -80,20 +80,20 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public Brush AccountTypePathDataColorBrush
+        public Color AccountTypePathDataColor
         {
             get
             {
                 switch (AccountType)
                 {
                     case MAccountType.ACCOUNT_TYPE_FREE:
-                        return (Brush)Application.Current.Resources["MegaGreenColorBrush"];
+                        return (Color)Application.Current.Resources["MegaFreeAccountColor"];
                     case MAccountType.ACCOUNT_TYPE_LITE:
-                        return (Brush)Application.Current.Resources["MegaOrangeColorBrush"];
+                        return (Color)Application.Current.Resources["MegaProLiteAccountColor"];
                     case MAccountType.ACCOUNT_TYPE_PROI:
                     case MAccountType.ACCOUNT_TYPE_PROII:
                     case MAccountType.ACCOUNT_TYPE_PROIII:
-                        return (Brush)Application.Current.Resources["MegaRedColorBrush"];
+                        return (Color)Application.Current.Resources["MegaProAccountColor"];
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -205,7 +205,7 @@ namespace MegaApp.ViewModels
             get
             {
                 return IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["MegaBlueColor"];
+                    (Color)Application.Current.Resources["UsedStorageQuotaColor"];
             }
         }
 
@@ -268,7 +268,7 @@ namespace MegaApp.ViewModels
             get
             {
                 return IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["MegaGreenColor"];
+                    (Color)Application.Current.Resources["UsedTransferQuotaColor"];
             }
         }
 

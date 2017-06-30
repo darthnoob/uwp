@@ -3,6 +3,20 @@
     <!--  OVERRIDE SYSTEM ACCENT COLOR  -->
     <Color x:Key="SystemAccentColor">#EB4444</Color>
 
+    <!--  COLORS  -->
+    <Color x:Key="MegaRedColor">#EB4444</Color>
+    <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
+    
+    <Color x:Key="MegaFreeAccountColor">#00B294</Color>
+    <Color x:Key="MegaProLiteAccountColor">#FFC159</Color>
+    <Color x:Key="MegaProAccountColor">#EB4444</Color>
+    <Color x:Key="UsedStorageQuotaColor">#0078D7</Color>
+    <Color x:Key="UsedTransferQuotaColor">#1DBA9F</Color>
+    <Color x:Key="CloudDriveColor">#EB4444</Color>
+    <Color x:Key="IncomingSharesColor">#FF8B01</Color>
+    <Color x:Key="RubbishBinColor">#00CC6A</Color>
+    <Color x:Key="InboxColor">#6B69D6</Color>
+
     <!--  STYLES  -->
     <Style x:Key="StretchedListviewItemStyle" TargetType="ListViewItem">
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -936,10 +950,6 @@
     <ResourceDictionary.ThemeDictionaries>
         <!--  COLOR PALETTE FOR THE DARK THEME  -->
         <ResourceDictionary x:Key="Dark">
-            <Color x:Key="MegaRedColor">#EB4444</Color>
-            <Color x:Key="MegaGreenColor">#00B294</Color>
-            <Color x:Key="MegaBlueColor">#0078D7</Color>
-            <Color x:Key="MegaOrangeColor">#FFC159</Color>
             <Color x:Key="MegaAppBackground">#000000</Color>
             <Color x:Key="MegaAppForeground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarBackground">#111111</Color>
@@ -947,10 +957,6 @@
 
             <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
-            <SolidColorBrush x:Key="MegaGreenColorBrush" Color="{ThemeResource MegaGreenColor}"/>
-            <SolidColorBrush x:Key="MegaBlueColorBrush" Color="{ThemeResource MegaBlueColor}"/>
-            <SolidColorBrush x:Key="MegaOrangeColorBrush" Color="{ThemeResource MegaOrangeColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>
@@ -967,10 +973,6 @@
 
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
         <ResourceDictionary x:Key="Light">
-            <Color x:Key="MegaRedColor">#EB4444</Color>
-            <Color x:Key="MegaGreenColor">#00B294</Color>
-            <Color x:Key="MegaBlueColor">#0078D7</Color>
-            <Color x:Key="MegaOrangeColor">#FFC159</Color>
             <Color x:Key="MegaAppBackground">#F7F7F7</Color>
             <Color x:Key="MegaAppForeground">#000000</Color>
             <Color x:Key="MegaAppBarBackground">#FFFFFF</Color>
@@ -978,10 +980,6 @@
 
             <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
-            <SolidColorBrush x:Key="MegaGreenColorBrush" Color="{ThemeResource MegaGreenColor}"/>
-            <SolidColorBrush x:Key="MegaBlueColorBrush" Color="{ThemeResource MegaBlueColor}"/>
-            <SolidColorBrush x:Key="MegaOrangeColorBrush" Color="{ThemeResource MegaOrangeColor}"/>
             <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
             <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
             <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>

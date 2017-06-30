@@ -11,6 +11,70 @@
     d:DataContext="{d:DesignInstance viewModels:MyAccountViewModel}"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ControlTemplate x:Name="StorageOverquotaWarning">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,4,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
+                    <PathIcon 
+                        Data="{Binding WarningIconPathData, Mode=OneTime}"
+                        Foreground="{StaticResource MegaRedColorBrush}" />
+                </Viewbox>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="0,0,0,28"
+                    FontSize="14"
+                    Opacity="0.7"
+                    Text="{Binding StorageOverquotaWarningText, Mode=OneTime}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Name="TransferOverquotaWarning">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,4,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
+                    <PathIcon 
+                        Data="{Binding WarningIconPathData, Mode=OneTime}"
+                        Foreground="{StaticResource MegaRedColorBrush}" />
+                </Viewbox>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="0,0,0,28"
+                    FontSize="14"
+                    Opacity="0.7"
+                    Text="{Binding TransferOverquotaWarningText, Mode=OneTime}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Name="TransferQuotaProgressBar">
+            <ProgressBar
+                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
+                IsIndeterminate="False"
+                Margin="0,0,0,20"
+                Maximum="{Binding AccountDetails.TransferQuota, Mode=OneWay}"
+                Minimum="0"
+                Value="{Binding AccountDetails.UsedTransferQuota, Mode=OneWay}">
+                <ProgressBar.Foreground>
+                    <SolidColorBrush Color="{Binding AccountDetails.TransferQuotaProgressBarColor}" />
+                </ProgressBar.Foreground>
+            </ProgressBar>
+        </ControlTemplate>
+    </Page.Resources>
+    
     <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
@@ -81,8 +145,11 @@
                                                 VerticalAlignment="Top"
                                                 Visibility="{Binding AccountDetails.AccountTypePathData, Converter={StaticResource StringVisibilityConverter}}">
                                                 <PathIcon
-                                                    Data="{Binding AccountDetails.AccountTypePathData, Mode=OneWay}"
-                                                    Foreground="{Binding AccountDetails.AccountTypePathDataColorBrush, Mode=OneWay}" />
+                                                    Data="{Binding AccountDetails.AccountTypePathData, Mode=OneWay}">
+                                                    <PathIcon.Foreground>
+                                                        <SolidColorBrush Color="{Binding AccountDetails.AccountTypePathDataColor, Mode=OneWay}"/>
+                                                    </PathIcon.Foreground>
+                                                </PathIcon>
                                             </Viewbox>
                                             <TextBlock 
                                                 x:Name="PlanTypeText" 
@@ -170,7 +237,7 @@
                             </StackPanel>
 
                             <TextBlock
-                                Margin="0,64,0,12"
+                                Margin="0,64,0,20"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
                                 Text="{Binding OverallUsageTitle, Mode=OneTime}" />
                             <StackPanel>
@@ -181,50 +248,12 @@
                                     Text="{Binding OverallUsageText, Mode=OneTime}"
                                     TextWrapping="Wrap"
                                     Visibility="{Binding AccountDetails.IsInOverquota, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-                                <Grid Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Viewbox
-                                        Grid.Column="0"
-                                        Margin="0,4,12,0"
-                                        MaxWidth="16" MaxHeight="16"
-                                        VerticalAlignment="Top">
-                                        <PathIcon 
-                                            Data="{Binding WarningIconPathData, Mode=OneTime}"
-                                            Foreground="{StaticResource MegaRedColorBrush}" />
-                                    </Viewbox>
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Margin="0,0,0,28"
-                                        FontSize="14"
-                                        Opacity="0.7"
-                                        Text="{Binding StorageOverquotaWarningText, Mode=OneTime}"
-                                        TextWrapping="Wrap" />
-                                </Grid>
-                                <Grid Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Viewbox
-                                        Grid.Column="0"
-                                        Margin="0,4,12,0"
-                                        MaxWidth="16" MaxHeight="16"
-                                        VerticalAlignment="Top">
-                                        <PathIcon 
-                                            Data="{Binding WarningIconPathData, Mode=OneTime}"
-                                            Foreground="{StaticResource MegaRedColorBrush}" />
-                                    </Viewbox>
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Margin="0,0,0,28"
-                                        FontSize="14"
-                                        Opacity="0.7"
-                                        Text="{Binding TransferOverquotaWarningText, Mode=OneTime}"
-                                        TextWrapping="Wrap" />
-                                </Grid>
+                                <ContentControl 
+                                    Template="{StaticResource StorageOverquotaWarning}"
+                                    Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <ContentControl 
+                                    Template="{StaticResource TransferOverquotaWarning}"
+                                    Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 <ProgressBar
                                     Background="{ThemeResource MegaProgressBarBackgroundBrush}"
                                     IsIndeterminate="False"
@@ -280,18 +309,9 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
-                                <ProgressBar
-                                    Background="{ThemeResource MegaProgressBarBackgroundBrush}"
-                                    IsIndeterminate="False"
-                                    Margin="0,0,0,20"
-                                    Maximum="{Binding AccountDetails.TransferQuota, Mode=OneWay}"
-                                    Minimum="0"
-                                    Value="{Binding AccountDetails.UsedTransferQuota, Mode=OneWay}"
-                                    Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <ProgressBar.Foreground>
-                                        <SolidColorBrush Color="{Binding AccountDetails.TransferQuotaProgressBarColor}" />
-                                    </ProgressBar.Foreground>
-                                </ProgressBar>
+                                <ContentControl
+                                    Template="{StaticResource TransferQuotaProgressBar}"
+                                    Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -387,30 +407,10 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid 
-                                    Margin="0,0,0,28"
+                                <ContentControl 
                                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                    Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Viewbox
-                                        Grid.Column="0"
-                                        Margin="0,4,12,0"
-                                        MaxWidth="16" MaxHeight="16"
-                                        VerticalAlignment="Top">
-                                        <PathIcon 
-                                            Data="{Binding WarningIconPathData, Mode=OneTime}"
-                                            Foreground="{StaticResource MegaRedColorBrush}" />
-                                    </Viewbox>
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        FontSize="14"
-                                        Opacity="0.7"
-                                        Text="{Binding StorageOverquotaWarningText, Mode=OneTime}"
-                                        TextWrapping="Wrap" />
-                                </Grid>
+                                    Template="{StaticResource StorageOverquotaWarning}"
+                                    Visibility="{Binding AccountDetails.IsInStorageOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,0,32">
                                     <TextBlock
                                         Style="{ThemeResource MegaTitleFontStyle}"
@@ -566,45 +566,17 @@
                                     Content="{Binding RubbishBinText, Mode=OneTime}"/>
                             </StackPanel>
                             <TextBlock
-                                Margin="0,64,0,0"
+                                Margin="0,64,0,20"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
                                 Text="{Binding TransferQuotaTitle, Mode=OneTime}" />
-                            <Grid 
-                                Margin="0,20,0,0"
-                                Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Viewbox
-                                    Grid.Column="0"
-                                    Margin="0,4,12,0"
-                                    MaxWidth="16" MaxHeight="16"
-                                    VerticalAlignment="Top">
-                                    <PathIcon 
-                                        Data="{Binding WarningIconPathData, Mode=OneTime}"
-                                        Foreground="{StaticResource MegaRedColorBrush}" />
-                                </Viewbox>
-                                <TextBlock
-                                    Grid.Column="1"
-                                    FontSize="14"
-                                    Opacity="0.7"
-                                    Text="{Binding TransferOverquotaWarningText, Mode=OneTime}"
-                                    TextWrapping="Wrap" />
-                            </Grid>
-                            <ProgressBar
-                                Background="{ThemeResource MegaProgressBarBackgroundBrush}"
-                                IsIndeterminate="False"
-                                Margin="0,28,0,0"
-                                Maximum="{Binding AccountDetails.TransferQuota, Mode=OneWay}"
-                                Minimum="0"
-                                Value="{Binding AccountDetails.UsedTransferQuota, Mode=OneWay}"
-                                Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <ProgressBar.Foreground>
-                                    <SolidColorBrush Color="{Binding AccountDetails.TransferQuotaProgressBarColor}" />
-                                </ProgressBar.Foreground>
-                            </ProgressBar>
-                            <Grid Margin="0,24,0,0">
+                            <ContentControl 
+                                Template="{StaticResource TransferOverquotaWarning}"
+                                Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            <ContentControl
+                                Margin="0,8,0,0"
+                                Template="{StaticResource TransferQuotaProgressBar}"
+                                Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Grid Margin="0,0,0,36">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
@@ -613,7 +585,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,0,32">
+                                <StackPanel Grid.Column="0" Grid.Row="0">
                                     <TextBlock
                                         Style="{ThemeResource MegaTitleFontStyle}"
                                         Text="{Binding TotalTransferQuotaText, Mode=OneTime}" />
@@ -648,6 +620,7 @@
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel 
+                                    Margin="0,32,0,0"
                                     Grid.Column="0" Grid.Row="1"
                                     Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <TextBlock
@@ -660,7 +633,6 @@
                             </Grid>
                             <Button
                                 Width="136"
-                                Margin="0,36,4,0"
                                 Command="{Binding UpgradeCommand}"
                                 Content="{Binding UpgradeText, Mode=OneTime}"
                                 Visibility="{Binding AccountDetails.IsInTransferOverquota, Converter={StaticResource BoolToVisibilityConverter}}"/>

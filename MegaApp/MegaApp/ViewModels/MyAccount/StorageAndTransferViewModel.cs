@@ -50,7 +50,7 @@ namespace MegaApp.ViewModels.MyAccount
             get
             {
                 return AccountDetails.IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["MegaOrangeColor"];
+                    (Color)Application.Current.Resources["IncomingSharesColor"];
             }
         }
 
@@ -66,7 +66,7 @@ namespace MegaApp.ViewModels.MyAccount
             get
             {
                 return AccountDetails.IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["MegaGreenColor"];
+                    (Color)Application.Current.Resources["RubbishBinColor"];
             }
         }
 
