@@ -769,4 +769,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Incoming shares</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_PleaseWait" xml:space="preserve">
+    <value>Please wait</value>
+    <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
+  </data>
 </root>

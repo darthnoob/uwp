@@ -1,7 +1,6 @@
 ﻿using System;
 using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Extensions;
 using MegaApp.Services;
@@ -15,9 +14,28 @@ namespace MegaApp.ViewModels
         public EventHandler RubbishBinUsedSpaceChanged;
         public EventHandler IsInStorageOverquotaChanged;
 
+        public DispatcherTimer TimerTransferOverquota;
+
         public AccountDetailsViewModel()
         {
             AccountType = MAccountType.ACCOUNT_TYPE_FREE; // Default value
+
+            UiService.OnUiThread(() =>
+            {
+                TimerTransferOverquota = new DispatcherTimer();
+                TimerTransferOverquota.Tick += TimerTransferOverquotaOnTick;
+                TimerTransferOverquota.Interval = new TimeSpan(0, 0, 1);
+            });
+        }
+
+        private void TimerTransferOverquotaOnTick(object sender, object o)
+        {
+            TransferOverquotaDelay--;
+            if(TransferOverquotaDelay == 0)
+            {
+                UiService.OnUiThread(() => TimerTransferOverquota?.Stop());
+                AccountService.GetAccountDetails();
+            }
         }
 
         #region Properties
@@ -262,6 +280,20 @@ namespace MegaApp.ViewModels
                 OnPropertyChanged("TransferQuotaProgressBarColor");
             }
         }
+
+        private ulong _transferOverquotaDelay;
+        public ulong TransferOverquotaDelay
+        {
+            get { return _transferOverquotaDelay; }
+            set
+            {
+                SetField(ref _transferOverquotaDelay, value);
+                OnPropertyChanged("TransferOverquotaDelayText");
+            }
+        }
+
+        public string TransferOverquotaDelayText =>
+            new TimeSpan(0, 0, Convert.ToInt32(TransferOverquotaDelay)).ToString();
 
         public Color TransferQuotaProgressBarColor
         {

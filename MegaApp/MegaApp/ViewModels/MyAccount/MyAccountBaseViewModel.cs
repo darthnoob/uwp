@@ -54,6 +54,7 @@ namespace MegaApp.ViewModels.MyAccount
         public string TransferOverquotaWarningText => ResourceService.UiResources.GetString("UI_TransferOverquotaWarningText");
         public string UpgradeText => ResourceService.UiResources.GetString("UI_Upgrade");
         public string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string PleaseWaitText => ResourceService.UiResources.GetString("UI_PleaseWait");
 
         #endregion
 
