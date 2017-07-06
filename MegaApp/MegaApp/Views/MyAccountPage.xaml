@@ -695,36 +695,50 @@
                                 Margin="0,16,0,0"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
                                 Text="{Binding StepTitleText, Mode=OneWay}" />
-                            <GridView
-                                x:Name="PlansGrid"
+                            <StackPanel
                                 Margin="0,32,0,64"
-                                Tapped="OnProPlanSelected"
-                                ItemTemplate="{StaticResource ProductItemTemplateDesktop}"
-                                ItemsSource="{Binding UpgradeAccount.Plans}"
-                                ScrollViewer.HorizontalScrollMode="Enabled"
-                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                ScrollViewer.IsHorizontalRailEnabled="True"
-                                ScrollViewer.VerticalScrollMode="Disabled"
                                 Visibility="{Binding CurrentStep, ConverterParameter=1, Converter={StaticResource IntValueToVisibilityConverter}}">
-                                <GridView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top"/>
-                                    </ItemsPanelTemplate>
-                                </GridView.ItemsPanel>
-                            </GridView>
-                            <Grid 
-                                Margin="0,32,0,64"
+                                <GridView
+                                    x:Name="PlansGrid"
+                                    Tapped="OnProPlanSelected"
+                                    ItemTemplate="{StaticResource ProductItemTemplateDesktop}"
+                                    ItemsSource="{Binding UpgradeAccount.Plans}"
+                                    ScrollViewer.HorizontalScrollMode="Enabled"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.IsHorizontalRailEnabled="True"
+                                    ScrollViewer.VerticalScrollMode="Disabled">
+                                    <GridView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top"/>
+                                        </ItemsPanelTemplate>
+                                    </GridView.ItemsPanel>
+                                </GridView>
+                                <ListView
+                                    x:Name="PlansList"
+                                    Margin="-12,0,0,0"
+                                    Tapped="OnProPlanSelected"
+                                    ItemTemplate="{StaticResource ProductItemTemplateMobile}"
+                                    ItemsSource="{Binding UpgradeAccount.Plans}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="Margin" Value="0,0,0,12"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </ListView>
+                            </StackPanel>
+                            <StackPanel 
+                                x:Name="UpgradeStep2StackPanel"
+                                Margin="0,32,12,64"
+                                Orientation="Horizontal"
                                 Visibility="{Binding CurrentStep, ConverterParameter=2, Converter={StaticResource IntValueToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
                                 <ContentControl
-                                    Grid.Column="0"
+                                    x:Name="UpgradeStep2ProductViewer"
                                     Margin="0,0,40,0"
                                     Content="{Binding SelectedPlan, Mode=OneWay}"
-                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"/>
-                                <Grid Grid.Column="1">
+                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"
+                                    HorizontalContentAlignment="Stretch"/>
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="Auto"/>
@@ -746,7 +760,7 @@
                                         </RadioButton>
                                         <RadioButton 
                                             x:Name="AnnualRadioButton"
-                                            Margin="0,40,0,0"
+                                            Margin="0,36,0,0"
                                             GroupName="MembershipDuration"
                                             Checked="OnMembershipRadioButtonChecked"
                                             Tag="Annual">
@@ -764,24 +778,25 @@
                                         </RadioButton>
                                     </StackPanel>
                                     <Button 
+                                        x:Name="UpgradeStep2NextButton"
                                         Grid.Row="1"
                                         Width="136"
                                         Command="{Binding MembershipDurationSelectedCommand}"
                                         Content="{Binding NextText, Mode=OneTime}"/>
                                 </Grid>
-                            </Grid>
-                            <Grid 
-                                Margin="0,32,0,64"
+                            </StackPanel>
+                            <StackPanel
+                                x:Name="UpgradeStep3StackPanel"
+                                Margin="0,32,12,64"
+                                Orientation="Horizontal"
                                 Visibility="{Binding CurrentStep, ConverterParameter=3, Converter={StaticResource IntValueToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
                                 <ContentControl
+                                    x:Name="UpgradeStep3ProductViewer"
                                     Grid.Column="0"
                                     Margin="0,0,40,0"
                                     Content="{Binding SelectedProduct, Mode=OneWay}"
-                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"/>
+                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"
+                                    HorizontalContentAlignment="Stretch"/>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -831,13 +846,14 @@
                                         </RadioButton>
                                     </StackPanel>
                                     <Button 
+                                        x:Name="UpgradeStep3PurchaseButton"
                                         Grid.Row="1"
                                         Width="136"
                                         Command="{Binding PaymentMethodSelectedCommand}"
                                         Content="{Binding PurchaseText, Mode=OneTime}"
                                         IsEnabled="{Binding IsPurchaseButtonEnabled, Mode=OneWay}"/>
                                 </Grid>
-                            </Grid>
+                            </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </PivotItem>
@@ -880,6 +896,49 @@
                         <Setter Target="TopRow.Height" Value="Auto"/>
                         <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UpgradeStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="PlansGrid.Visibility" Value="Collapsed" />
+                        <Setter Target="PlansList.Visibility" Value="Visible" />
+                        <Setter Target="UpgradeStep2StackPanel.Orientation" Value="Vertical" />
+                        <Setter Target="UpgradeStep2StackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="UpgradeStep3StackPanel.Orientation" Value="Vertical" />
+                        <Setter Target="UpgradeStep3StackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="UpgradeStep2ProductViewer.ContentTemplate" Value="{StaticResource ProductItemTemplateMobile}" />
+                        <Setter Target="UpgradeStep2ProductViewer.Margin" Value="0,0,0,24" />
+                        <Setter Target="UpgradeStep2NextButton.Margin" Value="0,40,0,0" />
+                        <Setter Target="UpgradeStep3ProductViewer.ContentTemplate" Value="{StaticResource ProductItemTemplateMobile}" />
+                        <Setter Target="UpgradeStep3ProductViewer.Margin" Value="0,0,0,24" />
+                        <Setter Target="UpgradeStep3PurchaseButton.Margin" Value="0,40,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="UpgradeStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="PlansGrid.Visibility" Value="Visible" />
+                        <Setter Target="PlansList.Visibility" Value="Collapsed" />
+                        <Setter Target="UpgradeStep2StackPanel.Orientation" Value="Horizontal" />
+                        <Setter Target="UpgradeStep2StackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="UpgradeStep3StackPanel.Orientation" Value="Horizontal" />
+                        <Setter Target="UpgradeStep3StackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="UpgradeStep2ProductViewer.ContentTemplate" Value="{StaticResource ProductItemTemplateDesktop}" />
+                        <Setter Target="UpgradeStep2ProductViewer.Margin" Value="0,0,40,0" />
+                        <Setter Target="UpgradeStep2NextButton.Margin" Value="0,0,0,0" />
+                        <Setter Target="UpgradeStep3ProductViewer.ContentTemplate" Value="{StaticResource ProductItemTemplateDesktop}" />
+                        <Setter Target="UpgradeStep3ProductViewer.Margin" Value="0,0,40,0" />
+                        <Setter Target="UpgradeStep3PurchaseButton.Margin" Value="0,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

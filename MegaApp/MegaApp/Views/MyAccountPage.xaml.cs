@@ -82,11 +82,15 @@ namespace MegaApp.Views
 
         private void OnProPlanSelected(object sender, TappedRoutedEventArgs e)
         {
-            this.ViewModel.UpgradeViewModel.SelectedPlan = ((ProductBase)PlansGrid.SelectedItem);
+            var selector = sender as ListViewBase;
+            if (selector == null) return;
+
+            this.ViewModel.UpgradeViewModel.SelectedPlan = ((ProductBase)selector.SelectedItem);
             this.ViewModel.UpgradeViewModel.Step2();
 
             // Set the monthly product as the default option
             this.MonthlyRadioButton.IsChecked = true;
+            this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.MonthlyProduct;
         }
 
         private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
@@ -95,6 +99,7 @@ namespace MegaApp.Views
             {
                 case 2:
                     this.ViewModel.UpgradeViewModel.Step1();
+                    this.PlansGrid.SelectedItem = this.PlansList.SelectedItem = null;
                     break;
                 case 3:
                     this.ViewModel.UpgradeViewModel.Step2();
