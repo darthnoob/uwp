@@ -21,6 +21,8 @@ namespace MegaApp.ViewModels
             this.StorageAndTransferViewModel.GoToUpgrade += (sender, args) =>
                 GoToUpgrade?.Invoke(this, EventArgs.Empty);
 
+            this.UpgradeViewModel = new UpgradeViewModel();
+
             this.LogOutCommand = new RelayCommand(LogOut);
         }
 
@@ -34,7 +36,8 @@ namespace MegaApp.ViewModels
 
         public void Initialize()
         {
-            UiService.OnUiThread(() => AccountService.GetAccountDetails());
+            AccountService.GetAccountDetails();
+            AccountService.GetPricing();
         }
 
         #endregion
@@ -54,14 +57,14 @@ namespace MegaApp.ViewModels
 
         public GeneralViewModel GeneralViewModel { get; }
         public StorageAndTransferViewModel StorageAndTransferViewModel { get; }
+        public UpgradeViewModel UpgradeViewModel { get; }
 
         #endregion
 
         #region UiResources
 
         public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");
-        public string UpgradeTitle => ResourceService.UiResources.GetString("UI_Upgrade");
-
+        
         public string LogOutText => ResourceService.UiResources.GetString("UI_Logout");
 
         #endregion

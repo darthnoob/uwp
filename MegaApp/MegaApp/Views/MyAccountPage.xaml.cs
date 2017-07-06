@@ -1,8 +1,10 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
+using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
@@ -54,6 +56,8 @@ namespace MegaApp.Views
 
                 this.StorageAndTransferStackPanel.Width = 600;
                 this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+
+                this.UpgradeStackPanel.Width = 600;
             }
             else
             {
@@ -61,6 +65,8 @@ namespace MegaApp.Views
 
                 this.StorageAndTransferStackPanel.Width = this.MyAccountPivot.Width;
                 this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                this.UpgradeStackPanel.Width = this.MyAccountPivot.Width;
             }
         }
 
@@ -72,6 +78,84 @@ namespace MegaApp.Views
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void OnProPlanSelected(object sender, TappedRoutedEventArgs e)
+        {
+            this.ViewModel.UpgradeViewModel.SelectedPlan = ((ProductBase)PlansGrid.SelectedItem);
+            this.ViewModel.UpgradeViewModel.Step2();
+
+            // Set the monthly product as the default option
+            this.MonthlyRadioButton.IsChecked = true;
+        }
+
+        private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            switch(this.ViewModel.UpgradeViewModel.CurrentStep)
+            {
+                case 2:
+                    this.ViewModel.UpgradeViewModel.Step1();
+                    break;
+                case 3:
+                    this.ViewModel.UpgradeViewModel.Step2();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void OnMembershipRadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton == null) return;
+
+            switch(radioButton.Tag.ToString())
+            {
+                case "Monthly":
+                    this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.MonthlyProduct;
+                    break;
+                case "Annual":
+                    this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.AnnualProduct;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            SetDefaultPaymentMethod();
+        }
+
+        private void OnPaymentMethodRadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            var radioButton = sender as RadioButton;
+            if (radioButton == null) return;
+
+            switch (radioButton.Tag.ToString())
+            {
+                case "Centili":
+                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_CENTILI;
+                    break;
+                case "Fortumo":
+                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_FORTUMO;
+                    break;
+                case "InAppPurchase":
+                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void SetDefaultPaymentMethod()
+        {
+            var selectedProduct = this.ViewModel.UpgradeViewModel.SelectedProduct;
+            if (selectedProduct == null) return;
+
+            if (selectedProduct.IsInAppPaymentMethodAvailable)
+                this.InAppPurchaseRadioButton.IsChecked = true;
+            else if (selectedProduct.IsFortumoPaymentMethodAvailable)
+                this.FortumoRadioButton.IsChecked = true;
+            else if (selectedProduct.IsCentiliPaymentMethodAvailable)
+                this.CentiliRadioButton.IsChecked = true;
         }
     }
 }

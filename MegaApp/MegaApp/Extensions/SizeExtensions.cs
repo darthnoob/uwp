@@ -69,7 +69,7 @@ namespace MegaApp.Extensions
 
         public static ulong FromGBToBytes(this UInt64 value)
         {
-            return (value * 1024).FromMBToBytes().FromKBToBytes();
+            return (value * 1024).FromMBToBytes();
         }
     }
 }

@@ -661,8 +661,185 @@
                 </PivotItem>
                 <PivotItem
                     x:Name="UpgradePivot"
-                    Header="{Binding UpgradeTitle, Mode=OneTime}"
+                    DataContext="{Binding UpgradeViewModel}"
+                    Header="{Binding Title, Mode=OneTime}"
                     CacheMode="{x:Null}">
+                    <ScrollViewer
+                        Margin="0,0,-12,0"
+                        VerticalScrollBarVisibility="Auto">
+                        <StackPanel 
+                            x:Name="UpgradeStackPanel"
+                            HorizontalAlignment="Left">
+                            <StackPanel
+                                Height="17"
+                                Margin="0,22,0,16"
+                                Orientation="Horizontal">
+                                <Button
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Tapped="OnUpgradeBackButtonTapped"
+                                    Visibility="{Binding BackButtonVisibility, Mode=OneWay}">
+                                    <Viewbox MaxWidth="16" MaxHeight="12">
+                                        <PathIcon
+                                            Data="{Binding BackIconPathData, Mode=OneTime}"
+                                            Foreground="{StaticResource MegaRedColorBrush}" />
+                                    </Viewbox>
+                                </Button>
+                                <TextBlock
+                                    Foreground="{StaticResource MegaRedColorBrush}"
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    Text="{Binding StepBreadcrumText, Mode=OneWay}"
+                                    VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock
+                                Margin="0,16,0,0"
+                                Style="{ThemeResource MegaHeaderFontStyle}"
+                                Text="{Binding StepTitleText, Mode=OneWay}" />
+                            <GridView
+                                x:Name="PlansGrid"
+                                Margin="0,32,0,64"
+                                Tapped="OnProPlanSelected"
+                                ItemTemplate="{StaticResource ProductItemTemplateDesktop}"
+                                ItemsSource="{Binding UpgradeAccount.Plans}"
+                                ScrollViewer.HorizontalScrollMode="Enabled"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.IsHorizontalRailEnabled="True"
+                                ScrollViewer.VerticalScrollMode="Disabled"
+                                Visibility="{Binding CurrentStep, ConverterParameter=1, Converter={StaticResource IntValueToVisibilityConverter}}">
+                                <GridView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top"/>
+                                    </ItemsPanelTemplate>
+                                </GridView.ItemsPanel>
+                            </GridView>
+                            <Grid 
+                                Margin="0,32,0,64"
+                                Visibility="{Binding CurrentStep, ConverterParameter=2, Converter={StaticResource IntValueToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl
+                                    Grid.Column="0"
+                                    Margin="0,0,40,0"
+                                    Content="{Binding SelectedPlan, Mode=OneWay}"
+                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0">
+                                        <TextBlock
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="{Binding MembershipDurationText, Mode=OneTime}" />
+                                        <RadioButton 
+                                            x:Name="MonthlyRadioButton"
+                                            GroupName="MembershipDuration"
+                                            Tag="Monthly"
+                                            Checked="OnMembershipRadioButtonChecked">
+                                            <RadioButton.Content>
+                                                <TextBlock
+                                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                                    Text="{Binding MonthlyProductPrice, Mode=OneWay}"/>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                        <RadioButton 
+                                            x:Name="AnnualRadioButton"
+                                            Margin="0,40,0,0"
+                                            GroupName="MembershipDuration"
+                                            Checked="OnMembershipRadioButtonChecked"
+                                            Tag="Annual">
+                                            <RadioButton.Content>
+                                                <StackPanel>
+                                                    <TextBlock 
+                                                        Style="{ThemeResource MegaBodyFontStyle}"
+                                                        Text="{Binding AnnualProductPrice, Mode=OneWay}"/>
+                                                    <TextBlock 
+                                                        Style="{ThemeResource MegaBodyFontStyle}"
+                                                        Foreground="{StaticResource MegaRedColorBrush}"
+                                                        Text="{Binding SavedMoney, Mode=OneWay}"/>
+                                                </StackPanel>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                    </StackPanel>
+                                    <Button 
+                                        Grid.Row="1"
+                                        Width="136"
+                                        Command="{Binding MembershipDurationSelectedCommand}"
+                                        Content="{Binding NextText, Mode=OneTime}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid 
+                                Margin="0,32,0,64"
+                                Visibility="{Binding CurrentStep, ConverterParameter=3, Converter={StaticResource IntValueToVisibilityConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentControl
+                                    Grid.Column="0"
+                                    Margin="0,0,40,0"
+                                    Content="{Binding SelectedProduct, Mode=OneWay}"
+                                    ContentTemplate="{StaticResource ProductItemTemplateDesktop}"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Grid.Row="0">
+                                        <TextBlock
+                                            Style="{ThemeResource MegaTitleFontStyle}"
+                                            Text="{Binding PaymentMethodText, Mode=OneTime}" />
+                                        <RadioButton 
+                                            x:Name="InAppPurchaseRadioButton"
+                                            GroupName="PaymentMethod"
+                                            Tag="InAppPurchase"
+                                            Checked="OnPaymentMethodRadioButtonChecked"
+                                            Visibility="{Binding IsInAppPaymentMethodAvailable, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <RadioButton.Content>
+                                                <TextBlock
+                                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                                    Text="{Binding InAppPurchaseText, Mode=OneTime}"/>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                        <RadioButton 
+                                            x:Name="FortumoRadioButton"
+                                            Margin="0,0,0,36"
+                                            GroupName="PaymentMethod"
+                                            Tag="Fortumo"
+                                            Checked="OnPaymentMethodRadioButtonChecked"
+                                            Visibility="{Binding IsFortumoPaymentMethodAvailable, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <RadioButton.Content>
+                                                <TextBlock
+                                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                                    Text="{Binding FortumoText, Mode=OneTime}"/>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                        <RadioButton 
+                                            x:Name="CentiliRadioButton"
+                                            Margin="0,0,0,36"
+                                            GroupName="PaymentMethod"
+                                            Tag="Centili"
+                                            Checked="OnPaymentMethodRadioButtonChecked"
+                                            Visibility="{Binding IsCentiliPaymentMethodAvailable, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <RadioButton.Content>
+                                                <TextBlock
+                                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                                    Text="{Binding CentiliText, Mode=OneTime}"/>
+                                            </RadioButton.Content>
+                                        </RadioButton>
+                                    </StackPanel>
+                                    <Button 
+                                        Grid.Row="1"
+                                        Width="136"
+                                        Command="{Binding PaymentMethodSelectedCommand}"
+                                        Content="{Binding PurchaseText, Mode=OneTime}"
+                                        IsEnabled="{Binding IsPurchaseButtonEnabled, Mode=OneWay}"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
                 </PivotItem>
             </Pivot>
         </Grid>

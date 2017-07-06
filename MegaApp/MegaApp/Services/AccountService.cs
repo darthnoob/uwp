@@ -1,6 +1,9 @@
 ﻿using System;
+using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
+using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 
@@ -33,6 +36,20 @@ namespace MegaApp.Services
                 if (_userData != null) return _userData;
                 _userData = new UserDataViewModel();
                 return _userData;
+            }
+        }
+
+        /// <summary>
+        /// Storages all the info to upgrade an account
+        /// </summary>
+        private static UpgradeAccountViewModel _upgradeAccount;
+        public static UpgradeAccountViewModel UpgradeAccount
+        {
+            get
+            {
+                if (_upgradeAccount != null) return _upgradeAccount;
+                _upgradeAccount = new UpgradeAccountViewModel();
+                return _upgradeAccount;
             }
         }
 
@@ -169,6 +186,124 @@ namespace MegaApp.Services
             var lastname = await userAttributeRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAttribute((int)MUserAttrType.USER_ATTR_LASTNAME, userAttributeRequestListener));
             UiService.OnUiThread(() => UserData.Lastname = lastname);
+        }
+
+        public static void GetPricing()
+        {
+            GetPaymentMethods();
+            GetPricingDetails();
+        }
+
+        private static async void GetPaymentMethods()
+        {
+            var paymentMethodsRequestListener = new GetPaymentMethodsRequestListenerAsync();
+            var availablePaymentMethods = await paymentMethodsRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getPaymentMethods(paymentMethodsRequestListener));
+
+            UpgradeAccount.IsCentiliPaymentMethodAvailable = Convert.ToBoolean(availablePaymentMethods & (1 << (int)MPaymentMethod.PAYMENT_METHOD_CENTILI));
+            UpgradeAccount.IsFortumoPaymentMethodAvailable = Convert.ToBoolean(availablePaymentMethods & (1 << (int)MPaymentMethod.PAYMENT_METHOD_FORTUMO));
+            //UpgradeAccount.IsCreditCardPaymentMethodAvailable = Convert.ToBoolean(availablePaymentMethods & (1 << (int)MPaymentMethod.PAYMENT_METHOD_CREDIT_CARD));
+        }
+
+        private static async void GetPricingDetails()
+        {
+            await UiService.OnUiThreadAsync(() =>
+            {
+                UpgradeAccount.Plans.Clear();
+                UpgradeAccount.Products.Clear();
+            });
+
+            var pricingRequestListener = new GetPricingRequestListenerAsync();
+            var pricingDetails = await pricingRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getPricing(pricingRequestListener));
+
+            if (pricingDetails == null) return;
+
+            int numberOfProducts = pricingDetails.getNumProducts();
+
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                var accountType = (MAccountType)Enum.Parse(typeof(MAccountType),
+                    pricingDetails.getProLevel(i).ToString());
+
+                var product = new Product
+                {
+                    AccountType = accountType,
+                    Amount = pricingDetails.getAmount(i),
+                    Currency = pricingDetails.getCurrency(i),
+                    GbStorage = pricingDetails.getGBStorage(i),
+                    GbTransfer = pricingDetails.getGBTransfer(i),
+                    Months = pricingDetails.getMonths(i),
+                    Handle = pricingDetails.getHandle(i)
+                };
+
+                switch (accountType)
+                {
+                    case MAccountType.ACCOUNT_TYPE_FREE:
+                        product.Name = ResourceService.AppResources.GetString("AR_AccountTypeFree");
+                        product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypeFreePathData");
+                        break;
+
+                    case MAccountType.ACCOUNT_TYPE_LITE:
+                        product.Name = ResourceService.AppResources.GetString("AR_AccountTypeLite");
+                        product.ProductColor = (Color)Application.Current.Resources["MegaProLiteAccountColor"];
+                        product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypeProLitePathData");
+
+                        // If Centili payment method is active, and product is LITE monthly include it into the product
+                        product.IsCentiliPaymentMethodAvailable = UpgradeAccount.IsCentiliPaymentMethodAvailable && product.Months == 1;
+
+                        // If Fortumo payment method is active, and product is LITE monthly include it into the product
+                        product.IsFortumoPaymentMethodAvailable = UpgradeAccount.IsFortumoPaymentMethodAvailable && product.Months == 1;
+                        break;
+
+                    case MAccountType.ACCOUNT_TYPE_PROI:
+                        product.Name = ResourceService.AppResources.GetString("AR_AccountTypePro1");
+                        product.ProductColor = (Color)Application.Current.Resources["MegaProAccountColor"];
+                        product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypePro1PathData");
+                        break;
+
+                    case MAccountType.ACCOUNT_TYPE_PROII:
+                        product.Name = ResourceService.AppResources.GetString("AR_AccountTypePro2");
+                        product.ProductColor = (Color)Application.Current.Resources["MegaProAccountColor"];
+                        product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypePro2PathData");
+                        break;
+
+                    case MAccountType.ACCOUNT_TYPE_PROIII:
+                        product.Name = ResourceService.AppResources.GetString("AR_AccountTypePro3");
+                        product.ProductColor = (Color)Application.Current.Resources["MegaProAccountColor"];
+                        product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypePro3PathData");
+                        break;
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                // If CC payment method is active, include it into the product
+                //product.IsCreditCardPaymentMethodAvailable = UpgradeAccount.IsCreditCardPaymentMethodAvailable;
+
+                // If in-app payment method is active, include it into the product
+                product.IsInAppPaymentMethodAvailable = UpgradeAccount.IsInAppPaymentMethodAvailable;
+
+                await UiService.OnUiThreadAsync(() => UpgradeAccount.Products.Add(product));
+
+                // Plans show only the information off the monthly plans
+                if (pricingDetails.getMonths(i) == 1)
+                {
+                    var plan = new ProductBase
+                    {
+                        AccountType = accountType,
+                        Name = product.Name,
+                        Amount = product.Amount,
+                        Currency = product.Currency,
+                        GbStorage = product.GbStorage,
+                        GbTransfer = product.GbTransfer,
+                        ProductPathData = product.ProductPathData,
+                        ProductColor = product.ProductColor
+                    };
+
+                    await UiService.OnUiThreadAsync(() => UpgradeAccount.Plans.Add(plan));
+                }
+            }
         }
 
         public static void ClearAccountDetails()

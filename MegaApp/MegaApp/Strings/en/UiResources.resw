@@ -773,4 +773,70 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Please wait</value>
     <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
   </data>
+  <data name="UI_Annually" xml:space="preserve">
+    <value>Annually</value>
+    <comment>Label for any 'Annually' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CreditCard" xml:space="preserve">
+    <value>Credit card</value>
+    <comment>Label for any 'Credit card' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Free" xml:space="preserve">
+    <value>Free</value>
+    <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InAppPurchase" xml:space="preserve">
+    <value>In app purchase</value>
+    <comment>Label for any 'In app purchase' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MicrosoftStore" xml:space="preserve">
+    <value>Microsoft store</value>
+    <comment>Label for any 'Microsoft store' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Month" xml:space="preserve">
+    <value>Month</value>
+    <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PhoneBill" xml:space="preserve">
+    <value>Phone bill</value>
+    <comment>Label for any 'Phone bill' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Storage" xml:space="preserve">
+    <value>Storage</value>
+    <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UpgradeStep1" xml:space="preserve">
+    <value>Step 1. Select a PRO plan</value>
+    <comment>Text to describe the step 1 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_UpgradeStep2" xml:space="preserve">
+    <value>Step 2. Select membership duration</value>
+    <comment>Text to describe the step 2 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_UpgradeStep3" xml:space="preserve">
+    <value>Step 3. Select payment method</value>
+    <comment>Text to describe the step 3 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_Year" xml:space="preserve">
+    <value>Year</value>
+    <comment>Label for any 'Year' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MembershipDuration" xml:space="preserve">
+    <value>Membership duration</value>
+    <comment>Label for any 'Membership duration' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Purchase" xml:space="preserve">
+    <value>Purchase</value>
+    <comment>Label for any 'Purchase' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveMoney" xml:space="preserve">
+    <value>Save {0}</value>
+    <comment>Label to indicate the saved money if the user purchase an annual subscription instead of a monthly subscription.
+Preserve the {0} code because is for include the saved money and the currency.</comment>
+  </data>
+  <data name="UI_UpgradeStepCounter" xml:space="preserve">
+    <value>Step {0}/{1}</value>
+    <comment>Text to count the steps of the upgrade account process.
+Preserve the {0} and {1} codes because is for include current step number and total steps number.</comment>
+  </data>
 </root>

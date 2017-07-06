@@ -117,10 +117,13 @@
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Classes\ProductBase.cs" />
     <Compile Include="Classes\SettingTemplateSelector.cs" />
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
@@ -171,7 +174,10 @@
     <Compile Include="MegaApi\FastLoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPaymentMethodsRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPaymentUrlRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPricingRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetUserAvatarRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetUserAttributeRequestListenerAsync.cs" />
@@ -203,6 +209,8 @@
     <Compile Include="ViewModels\MyAccount\GeneralViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\MyAccountBaseViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\StorageAndTransferViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\UpgradeViewModel.cs" />
+    <Compile Include="ViewModels\UpgradeAccountViewModel.cs" />
     <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
