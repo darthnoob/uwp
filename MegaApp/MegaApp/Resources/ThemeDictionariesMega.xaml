@@ -44,6 +44,7 @@
 
     <Style x:Key="MegaTitleFontStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextWrapping" Value="WrapWholeWords" />
         <Setter Property="Foreground" Value="{StaticResource MegaAppForegroundBrush}" />
         <Setter Property="Opacity" Value=".4" />
         <Setter Property="Padding" Value="0,0,0,4" />
@@ -974,7 +975,7 @@
 
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
         <ResourceDictionary x:Key="Light">
-            <Color x:Key="MegaAppBackground">#F7F7F7</Color>
+            <Color x:Key="MegaAppBackground">#F6F7F8</Color>
             <Color x:Key="MegaAppForeground">#000000</Color>
             <Color x:Key="MegaAppBarBackground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarForeground">#000000</Color>

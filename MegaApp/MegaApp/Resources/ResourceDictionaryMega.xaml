@@ -1325,7 +1325,7 @@
                 <TextBlock
                     Margin="0,11,0,12"
                     Style="{ThemeResource MegaBodyFontStyle}"
-                    HorizontalAlignment="Center"
+                    TextAlignment="Center"
                     Text="{Binding Name, Mode=OneTime}">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
@@ -1346,13 +1346,11 @@
                     <TextBlock
                         Style="{ThemeResource MegaTitleFontStyle}"
                         Text="{Binding PricePeriod, Mode=OneTime}"
-                        HorizontalAlignment="Center" />
+                        TextAlignment="Center" />
                     <TextBlock 
-                        HorizontalAlignment="Center"
+                        TextAlignment="Center"
                         Foreground="{StaticResource MegaAppForegroundBrush}">
-                        <Run Text="{Binding PriceIntegerPart, Mode=OneTime}" FontSize="26"/>
-                        <Run Text="." FontSize="16"/>
-                        <Run Text="{Binding PriceDecimalPart, Mode=OneTime}" FontSize="16"/>
+                        <Run Text="{Binding PriceIntegerPart, Mode=OneTime}" FontSize="26"/><Run Text="." FontSize="18"/><Run Text="{Binding PriceDecimalPart, Mode=OneTime}" FontSize="18"/>
                         <Run Text="{Binding Currency, Mode=OneTime}" FontSize="16"/>
                     </TextBlock>
                 </StackPanel>
@@ -1362,11 +1360,11 @@
                     <TextBlock
                         Style="{ThemeResource MegaTitleFontStyle}"
                         Text="{Binding StorageText, Mode=OneTime}"
-                        HorizontalAlignment="Center" />
+                        TextAlignment="Center" />
                     <TextBlock
                         Style="{ThemeResource MegaBodyFontStyle}"
                         Text="{Binding Storage, Mode=OneTime}"
-                        HorizontalAlignment="Center" />
+                        TextAlignment="Center" />
                 </StackPanel>
                 <StackPanel 
                     Grid.Row="2"
@@ -1374,11 +1372,11 @@
                     <TextBlock
                         Style="{ThemeResource MegaTitleFontStyle}"
                         Text="{Binding TransferQuotaText, Mode=OneTime}"
-                        HorizontalAlignment="Center" />
+                        TextAlignment="Center" />
                     <TextBlock
                         Style="{ThemeResource MegaBodyFontStyle}"
                         Text="{Binding Transfer, Mode=OneTime}"
-                        HorizontalAlignment="Center" />
+                        TextAlignment="Center" />
                 </StackPanel>
             </Grid>
         </Grid>
@@ -1408,7 +1406,7 @@
                 <TextBlock
                     Margin="0,9,0,9"
                     Style="{ThemeResource MegaBodyFontStyle}"
-                    HorizontalAlignment="Center"
+                    TextAlignment="Center"
                     Text="{Binding Name, Mode=OneTime}">
                     <TextBlock.Foreground>
                         <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
@@ -1427,12 +1425,12 @@
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,4,0"
-                            HorizontalAlignment="Left"
+                            TextAlignment="Left"
                             Style="{ThemeResource MegaTitleFontStyle}"
                             Text="{Binding StorageText, Mode=OneTime}"/>
                         <TextBlock
                             Grid.Column="1"
-                            HorizontalAlignment="Right"
+                            TextAlignment="Right"
                             Style="{ThemeResource MegaBodyFontStyle}"
                             Text="{Binding Storage, Mode=OneTime}"/>
                     </Grid>
@@ -1444,12 +1442,12 @@
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,4,0"
-                            HorizontalAlignment="Left"
+                            TextAlignment="Left"
                             Style="{ThemeResource MegaTitleFontStyle}"
                             Text="{Binding TransferQuotaText, Mode=OneTime}"/>
                         <TextBlock
                             Grid.Column="1"
-                            HorizontalAlignment="Right"
+                            TextAlignment="Right"
                             Style="{ThemeResource MegaBodyFontStyle}"
                             Text="{Binding Transfer, Mode=OneTime}"/>
                     </Grid>
@@ -1461,12 +1459,12 @@
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,4,0"
-                            HorizontalAlignment="Left"
+                            TextAlignment="Left"
                             Style="{ThemeResource MegaTitleFontStyle}"
                             Text="{Binding PricePeriod, Mode=OneTime}"/>
                         <TextBlock
                             Grid.Column="1"
-                            HorizontalAlignment="Right"
+                            TextAlignment="Right"
                             Style="{ThemeResource MegaBodyFontStyle}"
                             Text="{Binding PriceAndCurrency, Mode=OneTime}">
                             <TextBlock.Foreground>

@@ -773,10 +773,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Please wait</value>
     <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
   </data>
-  <data name="UI_Annually" xml:space="preserve">
-    <value>Annually</value>
-    <comment>Label for any 'Annually' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_CreditCard" xml:space="preserve">
     <value>Credit card</value>
     <comment>Label for any 'Credit card' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -785,21 +781,14 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Free</value>
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_InAppPurchase" xml:space="preserve">
-    <value>In app purchase</value>
-    <comment>Label for any 'In app purchase' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_MicrosoftStore" xml:space="preserve">
-    <value>Microsoft store</value>
-    <comment>Label for any 'Microsoft store' button, link, text, title, etc. - (String as short as possible).</comment>
+  <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
+    <value>In app purchase (Microsoft store)</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Maybe do not translate 'Microsoft store' because it is a trademark.</comment>
   </data>
   <data name="UI_Month" xml:space="preserve">
     <value>Month</value>
     <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_PhoneBill" xml:space="preserve">
-    <value>Phone bill</value>
-    <comment>Label for any 'Phone bill' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Storage" xml:space="preserve">
     <value>Storage</value>
@@ -838,5 +827,27 @@ Preserve the {0} code because is for include the saved money and the currency.</
     <value>Step {0}/{1}</value>
     <comment>Text to count the steps of the upgrade account process.
 Preserve the {0} and {1} codes because is for include current step number and total steps number.</comment>
+  </data>
+  <data name="UI_Price" xml:space="preserve">
+    <value>Price</value>
+    <comment>Label for any 'Price' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CentiliPaymentMethod" xml:space="preserve">
+    <value>Centili (Phone bill)</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Don't translate 'Centili' because is the payment method name.</comment>
+  </data>
+  <data name="UI_FortumoPaymentMethod" xml:space="preserve">
+    <value>Fortumo (Phone bill)</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Don't translate 'Fortumo' because is the payment method name.</comment>
+  </data>
+  <data name="UI_PriceAnnual" xml:space="preserve">
+    <value>Price (annual)</value>
+    <comment>Label for any 'Price (annual)' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PriceMonthly" xml:space="preserve">
+    <value>Price (monthly)</value>
+    <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

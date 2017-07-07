@@ -230,7 +230,7 @@ namespace MegaApp.Services
                 {
                     AccountType = accountType,
                     Amount = pricingDetails.getAmount(i),
-                    Currency = pricingDetails.getCurrency(i),
+                    Currency = GetCurrencySymbol(pricingDetails.getCurrency(i)),
                     GbStorage = pricingDetails.getGBStorage(i),
                     GbTransfer = pricingDetails.getGBTransfer(i),
                     Months = pricingDetails.getMonths(i),
@@ -303,6 +303,18 @@ namespace MegaApp.Services
 
                     await UiService.OnUiThreadAsync(() => UpgradeAccount.Plans.Add(plan));
                 }
+            }
+        }
+
+        private static string GetCurrencySymbol(string currenci)
+        {
+            if (string.IsNullOrWhiteSpace(currenci)) return string.Empty;
+
+            switch(currenci)
+            {
+                case "EUR": return "€";
+                case "USD": return "$";
+                default:    return currenci;
             }
         }
 

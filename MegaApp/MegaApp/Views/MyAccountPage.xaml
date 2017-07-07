@@ -692,7 +692,6 @@
                                     VerticalAlignment="Center" />
                             </StackPanel>
                             <TextBlock
-                                Margin="0,16,0,0"
                                 Style="{ThemeResource MegaHeaderFontStyle}"
                                 Text="{Binding StepTitleText, Mode=OneWay}" />
                             <StackPanel
@@ -735,7 +734,7 @@
                                 <ContentControl
                                     x:Name="UpgradeStep2ProductViewer"
                                     Margin="0,0,40,0"
-                                    Content="{Binding SelectedPlan, Mode=OneWay}"
+                                    Content="{Binding SelectedProduct, Mode=OneWay}"
                                     ContentTemplate="{StaticResource ProductItemTemplateDesktop}"
                                     HorizontalContentAlignment="Stretch"/>
                                 <Grid>

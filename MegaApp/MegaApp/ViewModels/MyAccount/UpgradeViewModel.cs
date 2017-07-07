@@ -183,10 +183,10 @@ namespace MegaApp.ViewModels.MyAccount
         }
 
         public string MonthlyProductPrice => (MonthlyProduct == null) ? string.Empty :
-            string.Format("{0} {1}", MonthlyProduct.PriceAndCurrency, MonthlyProduct.PricePeriod.ToLower());
+            string.Format("{0} {1}", MonthlyProduct.PriceAndCurrency, MonthlyProduct.Period.ToLower());
 
         public string AnnualProductPrice => (AnnualProduct == null) ? string.Empty :
-            string.Format("{0} {1}", AnnualProduct.PriceAndCurrency, AnnualProduct.PricePeriod.ToLower());
+            string.Format("{0} {1}", AnnualProduct.PriceAndCurrency, AnnualProduct.Period.ToLower());
 
         public string SavedMoney => (MonthlyProduct == null) || (AnnualProduct == null) ? string.Empty :
             string.Format(ResourceService.UiResources.GetString("UI_SaveMoney"),
@@ -248,11 +248,10 @@ namespace MegaApp.ViewModels.MyAccount
         // Step 3. Select payment method
         public string PaymentMethodText => ResourceService.UiResources.GetString("UI_PaymentMethod");
         public string PurchaseText => ResourceService.UiResources.GetString("UI_Purchase");
-        public string CentiliText => string.Format("Centili ({0})", ResourceService.UiResources.GetString("UI_PhoneBill"));
-        public string FortumoText => string.Format("Fortumo ({0})", ResourceService.UiResources.GetString("UI_PhoneBill"));
+        public string CentiliText => ResourceService.UiResources.GetString("UI_CentiliPaymentMethod");
+        public string FortumoText => ResourceService.UiResources.GetString("UI_FortumoPaymentMethod");
         public string CreditCardText => ResourceService.UiResources.GetString("UI_CreditCard");
-        public string InAppPurchaseText => string.Format("{0} ({1})", ResourceService.UiResources.GetString("UI_InAppPurchase"), 
-            ResourceService.UiResources.GetString("UI_MicrosoftStore"));
+        public string InAppPurchasePaymentMethodText => ResourceService.UiResources.GetString("UI_InAppPurchasePaymentMethod");
 
         #endregion
 

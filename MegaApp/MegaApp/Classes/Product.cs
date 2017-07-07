@@ -21,12 +21,12 @@ namespace MegaApp.Classes
         }
         
         public string Period => Months == 1 ?
-            ResourceService.UiResources.GetString("UI_Monthly") :
-            ResourceService.UiResources.GetString("UI_Annually");
-
-        public override string PricePeriod => Months == 1 ? 
-            ResourceService.UiResources.GetString("UI_Month") : 
+            ResourceService.UiResources.GetString("UI_Month") :
             ResourceService.UiResources.GetString("UI_Year");
+
+        public override string PricePeriod => Months == 1 ?
+            ResourceService.UiResources.GetString("UI_PriceMonthly") :
+            ResourceService.UiResources.GetString("UI_PriceAnnual");
 
         public bool IsCentiliPaymentMethodAvailable;
         public bool IsFortumoPaymentMethodAvailable;

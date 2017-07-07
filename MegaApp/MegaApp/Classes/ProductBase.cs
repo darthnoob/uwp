@@ -43,7 +43,7 @@ namespace MegaApp.Classes
 
         #region UiResources
 
-        public virtual string PricePeriod => ResourceService.UiResources.GetString("UI_Month");
+        public virtual string PricePeriod => ResourceService.UiResources.GetString("UI_PriceMonthly");
         public string StorageText => ResourceService.UiResources.GetString("UI_Storage");
         public string TransferQuotaText => ResourceService.UiResources.GetString("UI_TransferQuota");
 
