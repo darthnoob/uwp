@@ -198,6 +198,15 @@
     <Compile Include="Services\AudioService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
+    <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
+      <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\StorageAndTransferView.xaml.cs">
+      <DependentUpon>StorageAndTransferView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\UpgradeView.xaml.cs">
+      <DependentUpon>UpgradeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="UserControls\TogglePanel.cs" />
@@ -325,6 +334,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\MyAccount\GeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\StorageAndTransferView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\UpgradeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CloudDrivePage.xaml">
       <SubType>Designer</SubType>

@@ -23,6 +23,11 @@ namespace MegaApp.Views
             this.InitializeComponent();
 
             this.MainGrid.SizeChanged += OnSizeChanged;
+
+            this.UpgradeView.UpgradeBackButtonTapped += OnUpgradeBackButtonTapped;
+            this.UpgradeView.ProPlanSelected += OnProPlanSelected;
+            this.UpgradeView.MembershipRadioButtonChecked += OnMembershipRadioButtonChecked;
+            this.UpgradeView.PaymentMethodRadioButtonChecked += OnPaymentMethodRadioButtonChecked;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -52,21 +57,21 @@ namespace MegaApp.Views
         {
             if (e.NewSize.Width > 600)
             {
-                this.GeneralStackPanel.Width = 600;
+                this.GeneralView.MainStackPanel.Width = 600;
 
-                this.StorageAndTransferStackPanel.Width = 600;
-                this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                this.StorageAndTransferView.MainStackPanel.Width = 600;
+                this.StorageAndTransferView.MainStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
 
-                this.UpgradeStackPanel.Width = 600;
+                this.UpgradeView.MainStackPanel.Width = 600;
             }
             else
             {
-                this.GeneralStackPanel.Width = this.MyAccountPivot.Width;
+                this.GeneralView.MainStackPanel.Width = this.MyAccountPivot.Width;
 
-                this.StorageAndTransferStackPanel.Width = this.MyAccountPivot.Width;
-                this.StorageAndTransferStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+                this.StorageAndTransferView.MainStackPanel.Width = this.MyAccountPivot.Width;
+                this.StorageAndTransferView.MainStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
 
-                this.UpgradeStackPanel.Width = this.MyAccountPivot.Width;
+                this.UpgradeView.MainStackPanel.Width = this.MyAccountPivot.Width;
             }
         }
 
@@ -89,7 +94,7 @@ namespace MegaApp.Views
             this.ViewModel.UpgradeViewModel.Step2();
 
             // Set the monthly product as the default option
-            this.MonthlyRadioButton.IsChecked = true;
+            this.UpgradeView.MonthlyRadioButton.IsChecked = true;
             this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.MonthlyProduct;
         }
 
@@ -99,7 +104,7 @@ namespace MegaApp.Views
             {
                 case 2:
                     this.ViewModel.UpgradeViewModel.Step1();
-                    this.PlansGrid.SelectedItem = this.PlansList.SelectedItem = null;
+                    this.UpgradeView.PlansGrid.SelectedItem = this.UpgradeView.PlansList.SelectedItem = null;
                     break;
                 case 3:
                     this.ViewModel.UpgradeViewModel.Step2();
@@ -156,11 +161,11 @@ namespace MegaApp.Views
             if (selectedProduct == null) return;
 
             if (selectedProduct.IsInAppPaymentMethodAvailable)
-                this.InAppPurchaseRadioButton.IsChecked = true;
+                this.UpgradeView.InAppPurchaseRadioButton.IsChecked = true;
             else if (selectedProduct.IsFortumoPaymentMethodAvailable)
-                this.FortumoRadioButton.IsChecked = true;
+                this.UpgradeView.FortumoRadioButton.IsChecked = true;
             else if (selectedProduct.IsCentiliPaymentMethodAvailable)
-                this.CentiliRadioButton.IsChecked = true;
+                this.UpgradeView.CentiliRadioButton.IsChecked = true;
         }
     }
 }

@@ -1301,6 +1301,56 @@
         </Grid>
     </DataTemplate>
 
+    <ControlTemplate x:Name="StorageOverquotaWarning">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox
+                Grid.Column="0"
+                Margin="0,4,12,0"
+                MaxWidth="16" MaxHeight="16"
+                VerticalAlignment="Top">
+                <PathIcon 
+                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                    Foreground="{StaticResource MegaRedColorBrush}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,0,28"
+                FontSize="14"
+                Opacity="0.7"
+                Text="{Binding StorageOverquotaWarningText, Mode=OneTime}"
+                TextWrapping="Wrap" />
+        </Grid>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Name="TransferOverquotaWarning">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox
+                Grid.Column="0"
+                Margin="0,4,12,0"
+                MaxWidth="16" MaxHeight="16"
+                VerticalAlignment="Top">
+                <PathIcon 
+                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                    Foreground="{StaticResource MegaRedColorBrush}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,0,28"
+                FontSize="14"
+                Opacity="0.7"
+                Text="{Binding TransferOverquotaWarningText, Mode=OneTime}"
+                TextWrapping="Wrap" />
+        </Grid>
+    </ControlTemplate>
+
     <DataTemplate x:Key="ProductItemTemplateDesktop">
         <Grid 
             Width="144"
