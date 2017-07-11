@@ -5,7 +5,8 @@
     xmlns:local="using:MegaApp.Views.MyAccount"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="using:MegaApp.Views"
+    xmlns:myAccountViewModels="using:MegaApp.ViewModels.MyAccount"
+    d:DataContext="{d:DesignInstance myAccountViewModels:GeneralViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -13,7 +14,7 @@
             Margin="0,0,-12,0"
             VerticalScrollBarVisibility="Auto">
             <StackPanel 
-                x:Name="PART_MainStackPanel" 
+                x:Name="MainStackPanel" 
                 HorizontalAlignment="Left">
                 <TextBlock
                     Margin="0,56,0,20"
@@ -32,7 +33,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock
-                                x:Name="PART_PlanTypeLabelText"
+                                x:Name="PlanTypeLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding PlanTypeText, Mode=OneTime}" />
                             <StackPanel Orientation="Horizontal">
@@ -49,7 +50,7 @@
                                     </PathIcon>
                                 </Viewbox>
                                 <TextBlock 
-                                    x:Name="PART_PlanTypeText" 
+                                    x:Name="PlanTypeText" 
                                     Style="{ThemeResource MegaBodyFontStyle}"
                                     Text="{Binding AccountDetails.AccountTypeText, Mode=OneWay}" />
                             </StackPanel>
@@ -58,11 +59,11 @@
                             Grid.Column="1"
                             Visibility="{Binding AccountDetails.ProExpirationDate, Converter={StaticResource StringVisibilityConverter}}">
                             <TextBlock
-                                x:Name="PART_SubscriptionEndsLabelText"
+                                x:Name="SubscriptionEndsLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding SubscriptionEndsText, Mode=OneTime}" />
                             <TextBlock
-                                x:Name="PART_SubscriptionEndsText"
+                                x:Name="SubscriptionEndsText"
                                 Style="{ThemeResource MegaBodyFontStyle}"
                                 Text="{Binding AccountDetails.ProExpirationDate, Mode=OneWay}" />
                         </StackPanel>
@@ -70,11 +71,11 @@
                             Grid.Column="1"
                             Visibility="{Binding AccountDetails.SubscriptionRenewDate, Converter={StaticResource StringVisibilityConverter}}">
                             <TextBlock
-                                x:Name="PART_SubscriptionRenewsLabelText"
+                                x:Name="SubscriptionRenewsLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding SubscriptionRenewsText, Mode=OneTime}" />
                             <TextBlock
-                                x:Name="PART_SubscriptionRenewsText"
+                                x:Name="SubscriptionRenewsText"
                                 Style="{ThemeResource MegaBodyFontStyle}"
                                 Text="{Binding AccountDetails.SubscriptionRenewDate, Mode=OneWay}" />
                         </StackPanel>
@@ -112,21 +113,21 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0" Grid.Row="0">
                             <TextBlock
-                                x:Name="PART_PaymentMethodLabelText"
+                                x:Name="PaymentMethodLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding PaymentMethodText, Mode=OneTime}" />
                             <TextBlock
-                                x:Name="PART_PaymentMethodText"
+                                x:Name="PaymentMethodText"
                                 Style="{ThemeResource MegaBodyFontStyle}"
                                 Text="{Binding AccountDetails.PaymentMethod, Mode=OneWay}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Grid.Row="0">
                             <TextBlock
-                                x:Name="PART_SubscriptionTypeLabelText"
+                                x:Name="SubscriptionTypeLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding SubscriptionTypeText, Mode=OneTime}" />
                             <TextBlock
-                                x:Name="PART_SubscriptionTypeText"
+                                x:Name="SubscriptionTypeText"
                                 Style="{ThemeResource MegaBodyFontStyle}"
                                 Text="{Binding AccountDetails.SubscriptionType, Mode=OneWay}" />
                         </StackPanel>
@@ -169,7 +170,7 @@
 
                         <StackPanel Grid.Column="0">
                             <TextBlock
-                                x:Name="PART_TotalStorageLabelText"
+                                x:Name="TotalStorageLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding TotalStorageText, Mode=OneTime}" />
                             <StackPanel Orientation="Horizontal">
@@ -180,14 +181,14 @@
                                     <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                 </Viewbox>
                                 <TextBlock
-                                    x:Name="PART_TotalStorageText"
+                                    x:Name="TotalStorageText"
                                     Style="{ThemeResource MegaBodyFontStyle}"
                                     Text="{Binding AccountDetails.TotalSpaceText, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock
-                                x:Name="PART_UsedStorageLabelText"
+                                x:Name="UsedStorageLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding UsedStorageText, Mode=OneTime}" />
                             <StackPanel Orientation="Horizontal">
@@ -200,7 +201,7 @@
                                         Foreground="{StaticResource MegaRedColorBrush}" />
                                 </Viewbox>
                                 <TextBlock
-                                    x:Name="PART_UsedStorageText"
+                                    x:Name="UsedStorageText"
                                     Style="{ThemeResource MegaBodyFontStyle}"
                                     Text="{Binding AccountDetails.UsedSpaceText, Mode=OneWay}" />
                             </StackPanel>
@@ -226,7 +227,7 @@
 
                         <StackPanel Grid.Column="0">
                             <TextBlock
-                                x:Name="PART_TotalTransferQuotaLabelText"
+                                x:Name="TotalTransferQuotaLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding TotalTransferQuotaText, Mode=OneTime}" />
                             <StackPanel Orientation="Horizontal">
@@ -237,14 +238,14 @@
                                     <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                 </Viewbox>
                                 <TextBlock
-                                    x:Name="PART_TotalTransferQuotaText"
+                                    x:Name="TotalTransferQuotaText"
                                     Style="{ThemeResource MegaBodyFontStyle}"
                                     Text="{Binding AccountDetails.TransferQuotaText, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Grid.Column="1">
                             <TextBlock
-                                x:Name="PART_UsedTransferQuotaLabelText"
+                                x:Name="UsedTransferQuotaLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
                                 Text="{Binding UsedTransferQuotaText, Mode=OneTime}" />
                             <StackPanel Orientation="Horizontal">
@@ -257,7 +258,7 @@
                                         Foreground="{StaticResource MegaRedColorBrush}" />
                                 </Viewbox>
                                 <TextBlock
-                                    x:Name="PART_UsedTransferQuotaText"
+                                    x:Name="UsedTransferQuotaText"
                                     Style="{ThemeResource MegaBodyFontStyle}"
                                     Text="{Binding AccountDetails.UsedTransferQuotaText, Mode=OneWay}" />
                             </StackPanel>

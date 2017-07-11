@@ -1,10 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
-using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
@@ -23,18 +21,14 @@ namespace MegaApp.Views
             this.InitializeComponent();
 
             this.MainGrid.SizeChanged += OnSizeChanged;
-
-            this.UpgradeView.UpgradeBackButtonTapped += OnUpgradeBackButtonTapped;
-            this.UpgradeView.ProPlanSelected += OnProPlanSelected;
-            this.UpgradeView.MembershipRadioButtonChecked += OnMembershipRadioButtonChecked;
-            this.UpgradeView.PaymentMethodRadioButtonChecked += OnPaymentMethodRadioButtonChecked;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
-            this.ViewModel.GoToUpgrade += GoToUpgrade;
+            this.GeneralView.ViewModel.GoToUpgrade += GoToUpgrade;
+            this.StorageAndTransferView.ViewModel.GoToUpgrade += GoToUpgrade;
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
@@ -44,7 +38,8 @@ namespace MegaApp.Views
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.ViewModel.GoToUpgrade -= GoToUpgrade;
+            this.GeneralView.ViewModel.GoToUpgrade -= GoToUpgrade;
+            this.StorageAndTransferView.ViewModel.GoToUpgrade -= GoToUpgrade;
             base.OnNavigatedTo(e);
         }
 
@@ -57,21 +52,25 @@ namespace MegaApp.Views
         {
             if (e.NewSize.Width > 600)
             {
-                this.GeneralView.MainStackPanel.Width = 600;
+                this.GeneralView.ViewArea.Width = 600;
 
-                this.StorageAndTransferView.MainStackPanel.Width = 600;
-                this.StorageAndTransferView.MainStackPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                this.ProfileView.ViewArea.Width = 600;
 
-                this.UpgradeView.MainStackPanel.Width = 600;
+                this.StorageAndTransferView.ViewArea.Width = 600;
+                this.StorageAndTransferView.ViewArea.HorizontalAlignment = HorizontalAlignment.Left;
+
+                this.UpgradeView.ViewArea.Width = 600;
             }
             else
             {
-                this.GeneralView.MainStackPanel.Width = this.MyAccountPivot.Width;
+                this.GeneralView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
 
-                this.StorageAndTransferView.MainStackPanel.Width = this.MyAccountPivot.Width;
-                this.StorageAndTransferView.MainStackPanel.HorizontalAlignment = HorizontalAlignment.Stretch;
+                this.ProfileView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
 
-                this.UpgradeView.MainStackPanel.Width = this.MyAccountPivot.Width;
+                this.StorageAndTransferView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
+                this.StorageAndTransferView.ViewArea.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                this.UpgradeView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
             }
         }
 
@@ -83,89 +82,6 @@ namespace MegaApp.Views
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-        }
-
-        private void OnProPlanSelected(object sender, TappedRoutedEventArgs e)
-        {
-            var selector = sender as ListViewBase;
-            if (selector == null) return;
-
-            this.ViewModel.UpgradeViewModel.SelectedPlan = ((ProductBase)selector.SelectedItem);
-            this.ViewModel.UpgradeViewModel.Step2();
-
-            // Set the monthly product as the default option
-            this.UpgradeView.MonthlyRadioButton.IsChecked = true;
-            this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.MonthlyProduct;
-        }
-
-        private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
-        {
-            switch(this.ViewModel.UpgradeViewModel.CurrentStep)
-            {
-                case 2:
-                    this.ViewModel.UpgradeViewModel.Step1();
-                    this.UpgradeView.PlansGrid.SelectedItem = this.UpgradeView.PlansList.SelectedItem = null;
-                    break;
-                case 3:
-                    this.ViewModel.UpgradeViewModel.Step2();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void OnMembershipRadioButtonChecked(object sender, RoutedEventArgs e)
-        {
-            var radioButton = sender as RadioButton;
-            if (radioButton == null) return;
-
-            switch(radioButton.Tag.ToString())
-            {
-                case "Monthly":
-                    this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.MonthlyProduct;
-                    break;
-                case "Annual":
-                    this.ViewModel.UpgradeViewModel.SelectedProduct = this.ViewModel.UpgradeViewModel.AnnualProduct;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            SetDefaultPaymentMethod();
-        }
-
-        private void OnPaymentMethodRadioButtonChecked(object sender, RoutedEventArgs e)
-        {
-            var radioButton = sender as RadioButton;
-            if (radioButton == null) return;
-
-            switch (radioButton.Tag.ToString())
-            {
-                case "Centili":
-                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_CENTILI;
-                    break;
-                case "Fortumo":
-                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_FORTUMO;
-                    break;
-                case "InAppPurchase":
-                    this.ViewModel.UpgradeViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void SetDefaultPaymentMethod()
-        {
-            var selectedProduct = this.ViewModel.UpgradeViewModel.SelectedProduct;
-            if (selectedProduct == null) return;
-
-            if (selectedProduct.IsInAppPaymentMethodAvailable)
-                this.UpgradeView.InAppPurchaseRadioButton.IsChecked = true;
-            else if (selectedProduct.IsFortumoPaymentMethodAvailable)
-                this.UpgradeView.FortumoRadioButton.IsChecked = true;
-            else if (selectedProduct.IsCentiliPaymentMethodAvailable)
-                this.UpgradeView.CentiliRadioButton.IsChecked = true;
         }
     }
 }

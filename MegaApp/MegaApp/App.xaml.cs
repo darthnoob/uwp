@@ -214,7 +214,7 @@ namespace MegaApp
             SdkService.InitializeSdkParams();
 
             // Add a global notifications listener
-            GlobalListener = new GlobalListener(AppInformation);
+            GlobalListener = new GlobalListener();
             SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
             // Add a global request listener to process all.

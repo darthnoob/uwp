@@ -2,47 +2,108 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using mega;
+using MegaApp.Classes;
+using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Views.MyAccount
 {
     public sealed partial class UpgradeView : UserControl
     {
-        public EventHandler<TappedRoutedEventArgs> UpgradeBackButtonTapped;
-        public EventHandler<TappedRoutedEventArgs> ProPlanSelected;
-        public EventHandler<RoutedEventArgs> MembershipRadioButtonChecked;
-        public EventHandler<RoutedEventArgs> PaymentMethodRadioButtonChecked;
-
         public UpgradeView()
         {
             this.InitializeComponent();
+
+            this.ViewModel = new UpgradeViewModel();
+
+            this.DataContext = this.ViewModel;
         }
 
-        public StackPanel MainStackPanel => this.PART_MainStackPanel;
-        public GridView PlansGrid => this.PART_PlansGrid;
-        public ListView PlansList => this.PART_PlansList;
-        public RadioButton MonthlyRadioButton => this.PART_MonthlyRadioButton;
-        public RadioButton InAppPurchaseRadioButton => this.PART_InAppPurchaseRadioButton;
-        public RadioButton FortumoRadioButton => this.PART_FortumoRadioButton;
-        public RadioButton CentiliRadioButton => this.PART_CentiliRadioButton;
+        public UpgradeViewModel ViewModel { get; }
+
+        public StackPanel ViewArea => this.MainStackPanel;
 
         private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
         {
-            UpgradeBackButtonTapped?.Invoke(sender, e);
+            switch (this.ViewModel.CurrentStep)
+            {
+                case 2:
+                    this.ViewModel.Step1();
+                    this.PlansGrid.SelectedItem = this.PlansList.SelectedItem = null;
+                    break;
+                case 3:
+                    this.ViewModel.Step2();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private void OnProPlanSelected(object sender, TappedRoutedEventArgs e)
         {
-            ProPlanSelected?.Invoke(sender, e);
+            var selector = sender as ListViewBase;
+            if (selector == null) return;
+
+            this.ViewModel.SelectedPlan = ((ProductBase)selector.SelectedItem);
+            this.ViewModel.Step2();
+
+            // Set the monthly product as the default option
+            this.MonthlyRadioButton.IsChecked = true;
+            this.ViewModel.SelectedProduct = this.ViewModel.MonthlyProduct;
         }
 
         private void OnMembershipRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            MembershipRadioButtonChecked?.Invoke(sender, e);
+            var radioButton = sender as RadioButton;
+            if (radioButton == null) return;
+
+            switch (radioButton.Tag.ToString())
+            {
+                case "Monthly":
+                    this.ViewModel.SelectedProduct = this.ViewModel.MonthlyProduct;
+                    break;
+                case "Annual":
+                    this.ViewModel.SelectedProduct = this.ViewModel.AnnualProduct;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            SetDefaultPaymentMethod();
         }
 
         private void OnPaymentMethodRadioButtonChecked(object sender, RoutedEventArgs e)
         {
-            PaymentMethodRadioButtonChecked?.Invoke(sender, e);
+            var radioButton = sender as RadioButton;
+            if (radioButton == null) return;
+
+            switch (radioButton.Tag.ToString())
+            {
+                case "Centili":
+                    this.ViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_CENTILI;
+                    break;
+                case "Fortumo":
+                    this.ViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_FORTUMO;
+                    break;
+                case "InAppPurchase":
+                    this.ViewModel.SelectedPaymentMethod = MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void SetDefaultPaymentMethod()
+        {
+            var selectedProduct = this.ViewModel.SelectedProduct;
+            if (selectedProduct == null) return;
+
+            if (selectedProduct.IsInAppPaymentMethodAvailable)
+                this.InAppPurchaseRadioButton.IsChecked = true;
+            else if (selectedProduct.IsFortumoPaymentMethodAvailable)
+                this.FortumoRadioButton.IsChecked = true;
+            else if (selectedProduct.IsCentiliPaymentMethodAvailable)
+                this.CentiliRadioButton.IsChecked = true;
         }
     }
 }

@@ -46,8 +46,7 @@
                 SelectionChanged="OnPivotSelectionChanged">
                 <PivotItem
                     x:Name="GeneralPivot"
-                    DataContext="{Binding GeneralViewModel}"
-                    Header="{Binding Title, Mode=OneTime}"
+                    Header="{Binding GeneralTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <myAccountViews:GeneralView x:Name="GeneralView" />
                 </PivotItem>
@@ -55,18 +54,17 @@
                     x:Name="ProfilePivot"
                     Header="{Binding ProfileTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
+                    <myAccountViews:ProfileView x:Name="ProfileView" />
                 </PivotItem>
                 <PivotItem
                     x:Name="StorageAndTransferPivot"
-                    DataContext="{Binding StorageAndTransferViewModel}"
-                    Header="{Binding Title, Mode=OneTime}"
+                    Header="{Binding StorageAndTransferTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <myAccountViews:StorageAndTransferView x:Name="StorageAndTransferView" />
                 </PivotItem>
                 <PivotItem
                     x:Name="UpgradePivot"
-                    DataContext="{Binding UpgradeViewModel}"
-                    Header="{Binding Title, Mode=OneTime}"
+                    Header="{Binding UpgradeTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <myAccountViews:UpgradeView x:Name="UpgradeView" />
                 </PivotItem>

@@ -194,12 +194,17 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\SetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AudioService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
+    <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\StorageAndTransferView.xaml.cs">
       <DependentUpon>StorageAndTransferView.xaml</DependentUpon>
@@ -336,6 +341,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

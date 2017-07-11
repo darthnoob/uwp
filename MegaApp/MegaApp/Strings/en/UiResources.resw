@@ -842,6 +842,22 @@ Don't translate 'Centili' because is the payment method name.</comment>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Fortumo' because is the payment method name.</comment>
   </data>
+  <data name="UI_EmailAndPassword" xml:space="preserve">
+    <value>Email &amp; Password</value>
+    <comment>Label for the 'Email &amp; Password' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FirstName" xml:space="preserve">
+    <value>First name</value>
+    <comment>Label for any 'First name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LastName" xml:space="preserve">
+    <value>Last name</value>
+    <comment>Label for any 'Last name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PersonalInformation" xml:space="preserve">
+    <value>Personal information</value>
+    <comment>Label for the 'Personal information' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
   <data name="UI_PriceAnnual" xml:space="preserve">
     <value>Price (annual)</value>
     <comment>Label for any 'Price (annual)' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -849,5 +865,9 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
   <data name="UI_PriceMonthly" xml:space="preserve">
     <value>Price (monthly)</value>
     <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>Save</value>
+    <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

@@ -45,6 +45,7 @@ namespace MegaApp.ViewModels.MyAccount
         #region Properties
 
         public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
+        public UserDataViewModel UserData => AccountService.UserData;
 
         #endregion
 

@@ -6,6 +6,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
+using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
@@ -155,11 +156,35 @@ namespace MegaApp.Services
         /// </summary>
         public static async void GetUserData()
         {
-            await UiService.OnUiThreadAsync(() => UserData.UserEmail = SdkService.MegaSdk.getMyEmail());
+            await GetUserEmail();
+            GetUserAvatarColor();
+            GetUserAvatar();
+            GetUserFirstname();
+            GetUserLastname();
+        }
 
+        /// <summary>
+        /// Gets the user email
+        /// </summary>
+        public static async Task GetUserEmail()
+        {
+            await UiService.OnUiThreadAsync(() => UserData.UserEmail = SdkService.MegaSdk.getMyEmail());
+        }
+
+        /// <summary>
+        /// Gets the user avatar color
+        /// </summary>
+        public static void GetUserAvatarColor()
+        {
             var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(SdkService.MegaSdk.getMyUser()));
             UiService.OnUiThread(() => UserData.AvatarColor = avatarColor);
+        }
 
+        /// <summary>
+        /// Gets the user avatar
+        /// </summary>
+        public static async void GetUserAvatar()
+        {
             var userAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
             var userAvatarResult = await userAvatarRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAvatar(UserData.AvatarPath, userAvatarRequestListener));
@@ -178,11 +203,25 @@ namespace MegaApp.Services
             {
                 UiService.OnUiThread(() => UserData.AvatarUri = null);
             }
+        }
 
+        /// <summary>
+        /// Gets the user first name attribute
+        /// </summary>
+        public static async void GetUserFirstname()
+        {
             var userAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var firstname = await userAttributeRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAttribute((int)MUserAttrType.USER_ATTR_FIRSTNAME, userAttributeRequestListener));
             UiService.OnUiThread(() => UserData.Firstname = firstname);
+        }
+
+        /// <summary>
+        /// Gets the user last name attribute
+        /// </summary>
+        public static async void GetUserLastname()
+        {
+            var userAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var lastname = await userAttributeRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAttribute((int)MUserAttrType.USER_ATTR_LASTNAME, userAttributeRequestListener));
             UiService.OnUiThread(() => UserData.Lastname = lastname);

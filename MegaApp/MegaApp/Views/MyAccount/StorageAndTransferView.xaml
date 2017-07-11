@@ -5,6 +5,8 @@
     xmlns:local="using:MegaApp.Views.MyAccount"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myAccountViewModels="using:MegaApp.ViewModels.MyAccount"
+    d:DataContext="{d:DesignInstance myAccountViewModels:StorageAndTransferViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -12,7 +14,7 @@
             Margin="0,0,-12,0"
             VerticalScrollBarVisibility="Auto">
             <StackPanel 
-                x:Name="PART_MainStackPanel"
+                x:Name="MainStackPanel"
                 HorizontalAlignment="Left">
                 <TextBlock
                     Margin="0,56,0,20"
