@@ -236,6 +236,12 @@ namespace MegaApp.ViewModels.MyAccount
 
         #endregion
 
+        #region AppResources
+
+        public Uri RefundPolicyUri => new Uri(ResourceService.AppResources.GetString("AR_RefundPolicyUri"));
+
+        #endregion
+
         #region UiResources
 
         // Title
@@ -252,6 +258,11 @@ namespace MegaApp.ViewModels.MyAccount
         public string FortumoText => ResourceService.UiResources.GetString("UI_FortumoPaymentMethod");
         public string CreditCardText => ResourceService.UiResources.GetString("UI_CreditCard");
         public string InAppPurchasePaymentMethodText => ResourceService.UiResources.GetString("UI_InAppPurchasePaymentMethod");
+
+        // Refund policy
+        public string RefundPolicyText => ResourceService.UiResources.GetString("UI_RefundPolicy");
+        public string RefundPolicyDescriptionText => ResourceService.UiResources.GetString("UI_RefundPolicyDescription");
+        public string SeeMoreInfoText => ResourceService.UiResources.GetString("UI_SeeMoreInfo");
 
         #endregion
 

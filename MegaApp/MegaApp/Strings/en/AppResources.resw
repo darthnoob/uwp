@@ -237,4 +237,8 @@
     <value>7d45b1d</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
+  <data name="AR_RefundPolicyUri" xml:space="preserve">
+    <value>https://mega.nz/general</value>
+    <comment>URL to the 'Refund policy' information web page - (NO-TRANSLATION).</comment>
+  </data>
 </root>

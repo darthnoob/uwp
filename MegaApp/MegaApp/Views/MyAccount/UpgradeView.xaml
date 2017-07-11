@@ -41,10 +41,11 @@
                     Style="{ThemeResource MegaHeaderFontStyle}"
                     Text="{Binding StepTitleText, Mode=OneWay}" />
                 <StackPanel
-                    Margin="0,32,0,64"
+                    Margin="0,32,0,0"
                     Visibility="{Binding CurrentStep, ConverterParameter=1, Converter={StaticResource IntValueToVisibilityConverter}}">
                     <GridView
                         x:Name="PlansGrid"
+                        Margin="0,0,0,-12"
                         Tapped="OnProPlanSelected"
                         ItemTemplate="{StaticResource ProductItemTemplateDesktop}"
                         ItemsSource="{Binding UpgradeAccount.Plans}"
@@ -74,7 +75,7 @@
                 </StackPanel>
                 <StackPanel 
                     x:Name="UpgradeStep2StackPanel"
-                    Margin="0,32,12,64"
+                    Margin="0,32,12,0"
                     Orientation="Horizontal"
                     Visibility="{Binding CurrentStep, ConverterParameter=2, Converter={StaticResource IntValueToVisibilityConverter}}">
                     <ContentControl
@@ -132,7 +133,7 @@
                 </StackPanel>
                 <StackPanel
                     x:Name="UpgradeStep3StackPanel"
-                    Margin="0,32,12,64"
+                    Margin="0,32,12,0"
                     Orientation="Horizontal"
                     Visibility="{Binding CurrentStep, ConverterParameter=3, Converter={StaticResource IntValueToVisibilityConverter}}">
                     <ContentControl
@@ -198,6 +199,24 @@
                             Content="{Binding PurchaseText, Mode=OneTime}"
                             IsEnabled="{Binding IsPurchaseButtonEnabled, Mode=OneWay}"/>
                     </Grid>
+                </StackPanel>
+                <StackPanel Margin="0,64,12,0">
+                    <TextBlock
+                        Margin="0,0,0,20"
+                        Style="{ThemeResource MegaHeaderFontStyle}"
+                        Text="{Binding RefundPolicyText, Mode=OneTime}"
+                        TextWrapping="WrapWholeWords" />
+                    <TextBlock
+                        FontSize="14"
+                        Text="{Binding RefundPolicyDescriptionText, Mode=OneTime}"
+                        TextWrapping="WrapWholeWords" />
+                    <TextBlock 
+                        FontSize="14"
+                        TextWrapping="WrapWholeWords">
+                        <Hyperlink NavigateUri="{Binding RefundPolicyUri, Mode=OneTime}">
+                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding SeeMoreInfoText, Mode=OneTime}" />
+                        </Hyperlink>
+                    </TextBlock>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

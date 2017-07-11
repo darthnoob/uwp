@@ -870,4 +870,16 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Save</value>
     <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_RefundPolicy" xml:space="preserve">
+    <value>Refund policy</value>
+    <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RefundPolicyDescription" xml:space="preserve">
+    <value>Click here for more details on recurring payments, our refund policy, or how to cancel your subscription.</value>
+    <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
+  </data>
+  <data name="UI_SeeMoreInfo" xml:space="preserve">
+    <value>See more info</value>
+    <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
