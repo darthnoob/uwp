@@ -64,7 +64,7 @@ namespace MegaApp
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
             // Load product xml for IAP testing
-            await LicenseService.LoadSimulator();
+            await LicenseService.LoadSimulatorAsync();
 #endif
             Frame rootFrame = CreateRootFrame();
 

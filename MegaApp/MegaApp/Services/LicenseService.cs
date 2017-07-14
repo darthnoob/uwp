@@ -39,7 +39,7 @@ namespace MegaApp.Services
         /// Current listing information retrieved from the Windows Store
         /// </summary>
         /// <returns>Current Windows Store listing information</returns>
-        public static async Task<ListingInformation> GetListingInformation()
+        public static async Task<ListingInformation> GetListingInformationAsync()
         {
             try
             {
@@ -61,7 +61,7 @@ namespace MegaApp.Services
         /// <summary>
         /// ONLY DEBUG: Load WindowsStoreProxy.xml file for debug/simulation purposes 
         /// </summary>
-        public static async Task LoadSimulator()
+        public static async Task LoadSimulatorAsync()
         {
             await CurrentAppSimulator.ReloadSimulatorAsync(
                 await StorageFile.GetFileFromApplicationUriAsync(
@@ -74,11 +74,11 @@ namespace MegaApp.Services
         /// Get value if Windows Store & listing information is available
         /// </summary>
         /// <returns>True if information is available, else false</returns>
-        public static async Task<bool> IsAvailable()
+        public static async Task<bool> GetIsAvailableAsync()
         {
             try
             {
-                var listing = await GetListingInformation();
+                var listing = await GetListingInformationAsync();
                 return listing != null &&
                        listing.ProductListings.Any();
             }
@@ -97,13 +97,13 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="megaProductId">MEGA product identifier to match</param>
         /// <returns>Windows Store product identifier or NULL if none available</returns>
-        public static async Task<string> GetProductId(string megaProductId)
+        public static async Task<string> GetProductIdAsync(string megaProductId)
         {
             try
             {
                 if (string.IsNullOrEmpty(megaProductId)) return null;
 
-                var listing = await GetListingInformation();
+                var listing = await GetListingInformationAsync();
 
                 if (listing == null || !listing.ProductListings.Any()) return null;
 
@@ -120,7 +120,7 @@ namespace MegaApp.Services
            
         }
 
-        public static async Task<PurchaseResponse> PurchaseProduct(string productId)
+        public static async Task<PurchaseResponse> PurchaseProductAsync(string productId)
         {
             var purchaseReponse = new PurchaseResponse();
 
@@ -132,7 +132,7 @@ namespace MegaApp.Services
             }
 
             // Check if Windows Store product list is available
-            var available = await IsAvailable();
+            var available = await GetIsAvailableAsync();
             if (!available)
             {
                 purchaseReponse.Type = PurchaseResponseType.UnAvailable;
@@ -147,7 +147,7 @@ namespace MegaApp.Services
             }
 
             // Check if product exists in the Windows Store
-            var listing = await GetListingInformation();
+            var listing = await GetListingInformationAsync();
             if (!listing.ProductListings.ContainsKey(productId))
             {
                 purchaseReponse.Type = PurchaseResponseType.UnAvailable;
@@ -194,7 +194,7 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="receipt">Windows Store product purchase receipt</param>
         /// <returns>True if activation has been successful, False if not succeeded</returns>
-        public static async Task<bool> ActivateMegaLicense(string receipt)
+        public static async Task<bool> ActivateMegaLicenseAsync(string receipt)
         {
             if (string.IsNullOrEmpty(receipt)) return false;
 
@@ -217,18 +217,18 @@ namespace MegaApp.Services
         /// <summary>
         /// (Re-)validate all the current user product licenses
         /// </summary>
-        public static async Task ValidateLicenses()
+        public static async Task ValidateLicensesAsync()
         {
             // If no Internet connection, stop the check
             if(!NetworkService.IsNetworkAvailable()) return;
             // If the Windows Store product listing is not available, stop the check
-            var available = await IsAvailable();
+            var available = await GetIsAvailableAsync();
             if (!available) return;
 
             foreach (var productLicense in CurrentLicenseInformation.ProductLicenses)
             {
                 if(!productLicense.Value.IsActive) continue;
-                await CheckLicense(productLicense.Key);
+                await CheckLicenseAsync(productLicense.Key);
             }
         }
 
@@ -236,7 +236,7 @@ namespace MegaApp.Services
         /// Check if the product is already activated on MEGA license server
         /// </summary>
         /// <param name="productId">Product identifier</param>
-        private static async Task CheckLicense(string productId)
+        private static async Task CheckLicenseAsync(string productId)
         {
             try
             {
@@ -250,7 +250,7 @@ namespace MegaApp.Services
 
                 if (!CheckReceiptIdStatus(receipt))
                 {
-                    await ActivateMegaLicense(receipt);
+                    await ActivateMegaLicenseAsync(receipt);
                 }
             }
             catch (Exception e)

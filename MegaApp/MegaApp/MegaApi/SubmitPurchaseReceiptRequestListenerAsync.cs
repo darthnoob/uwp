@@ -13,11 +13,12 @@ namespace MegaApp.MegaApi
 
             if (Tcs.Task.IsFaulted) return;
 
-            if (request.getType() == MRequestType.TYPE_CREATE_ACCOUNT)
+            if (request.getType() == MRequestType.TYPE_SUBMIT_PURCHASE_RECEIPT)
             {
                 switch(e.getErrorCode())
                 {
-                    case MErrorType.API_OK: // Successful create account process
+                    case MErrorType.API_OK:// Successful submit of receipt
+                    case MErrorType.API_EEXIST: // already validated. Return true to save receipt id
                         Tcs?.TrySetResult(true);
                         break;
                     default: // Default error processing
