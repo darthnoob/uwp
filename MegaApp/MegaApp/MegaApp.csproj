@@ -132,6 +132,9 @@
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="Dialogs\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -164,6 +167,7 @@
     <Compile Include="Interfaces\ISetting.cs" />
     <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
+    <Compile Include="MegaApi\ChangePasswordRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
@@ -330,6 +334,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ThemeDictionariesMega.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

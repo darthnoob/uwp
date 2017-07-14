@@ -1,5 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using mega;
+using MegaApp.Classes;
+using MegaApp.Dialogs;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -7,6 +11,19 @@ namespace MegaApp.ViewModels.MyAccount
 {
     public class ProfileViewModel : MyAccountBaseViewModel
     {
+        public ProfileViewModel()
+        {
+            this.ChangeEmailCommand = new RelayCommand(this.ChangeEmail);
+            this.ChangePasswordCommand = new RelayCommand(this.ChangePassword);
+        }
+
+        #region Commands
+
+        public ICommand ChangeEmailCommand { get; }
+        public ICommand ChangePasswordCommand { get; }
+
+        #endregion
+
         #region Public Methods
 
         public async Task<bool> SetFirstName(string newFirstName)
@@ -37,6 +54,21 @@ namespace MegaApp.ViewModels.MyAccount
 
         #endregion
 
+        #region Private Methods
+
+        private void ChangeEmail()
+        {
+            
+        }
+
+        private async void ChangePassword()
+        {
+            var changePasswordDialog = new ChangePasswordDialog();
+            await changePasswordDialog.ShowAsync();
+        }
+
+        #endregion
+
         #region UiResources
 
         // Personal information
@@ -48,6 +80,8 @@ namespace MegaApp.ViewModels.MyAccount
 
         // Email & Password
         public string EmailAndPasswordTitle => ResourceService.UiResources.GetString("UI_EmailAndPassword");
+        public string ChangeEmailText => ResourceService.UiResources.GetString("UI_ChangeEmail");
+        public string ChangePasswordText => ResourceService.UiResources.GetString("UI_ChangePassword");
 
         #endregion
     }

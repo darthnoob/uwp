@@ -34,7 +34,7 @@
             <TextBlock
                 x:Name="AvatarLetter"
                 Text="{Binding UserData.AvatarLetter, Mode=OneWay}"
-                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                Foreground="White"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Visibility="{Binding UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
@@ -114,10 +114,25 @@
                         Content="{Binding CancelText, Mode=OneTime}"
                         Tapped="OnCancelButtonTapped"/>
                 </StackPanel>
-                <!--<TextBlock
+                <TextBlock
                     Margin="0,64,0,20"
                     Style="{ThemeResource MegaHeaderFontStyle}"
-                    Text="{Binding EmailAndPasswordTitle, Mode=OneTime}" />-->
+                    Text="{Binding EmailAndPasswordTitle, Mode=OneTime}" />
+                <StackPanel 
+                    Margin="0,36,0,0"
+                    Orientation="Horizontal">
+                    <Button
+                        MinWidth="136"
+                        Margin="0,0,4,0"
+                        Command="{Binding ChangeEmailCommand}"
+                        Content="{Binding ChangeEmailText, Mode=OneTime}"
+                        IsEnabled="False"/>
+                    <Button
+                        MinWidth="136"
+                        Margin="4,0,0,0"
+                        Command="{Binding ChangePasswordCommand}"
+                        Content="{Binding ChangePasswordText, Mode=OneTime}"/>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 

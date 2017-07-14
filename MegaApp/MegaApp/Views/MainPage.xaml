@@ -46,7 +46,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontWeight="Bold"
-                        Foreground="{ThemeResource MegaAppForeground}"
+                        Foreground="White"
                         Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
                     <Ellipse
                         Width="33" Height="33"

@@ -870,6 +870,30 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Save</value>
     <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ChangeEmail" xml:space="preserve">
+    <value>Change email</value>
+    <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>Change password</value>
+    <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangePasswordDescription" xml:space="preserve">
+    <value>Enter and confirm your new password and click save.</value>
+    <comment>Text to describe the change password process.</comment>
+  </data>
+  <data name="UI_CurrentPassword" xml:space="preserve">
+    <value>Current  password</value>
+    <comment>Placeholder text to insert the current password during the process to change the password - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NewPassword" xml:space="preserve">
+    <value>New password</value>
+    <comment>Placeholder text to insert the new password during the process to change the password - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReEnterNewPassword" xml:space="preserve">
+    <value>Re-enter new password</value>
+    <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
+  </data>
   <data name="UI_RefundPolicy" xml:space="preserve">
     <value>Refund policy</value>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
