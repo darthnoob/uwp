@@ -119,6 +119,7 @@
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\ProductBase.cs" />
+    <Compile Include="Classes\PurchaseResponse.cs" />
     <Compile Include="Classes\SettingTemplateSelector.cs" />
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
+    <Compile Include="Enums\PurchaseResponseType.cs" />
     <Compile Include="Enums\RelativeAlignment.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\SubmitPurchaseReceiptRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
@@ -201,6 +204,7 @@
     <Compile Include="MegaApi\SetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\LicenseService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
@@ -317,6 +321,7 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\WindowsStoreProxy.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
