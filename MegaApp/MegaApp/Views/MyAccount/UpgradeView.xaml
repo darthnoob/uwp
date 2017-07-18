@@ -154,6 +154,7 @@
                                 Text="{Binding PaymentMethodText, Mode=OneTime}" />
                             <RadioButton 
                                 x:Name="InAppPurchaseRadioButton"
+                                Margin="0,0,0,36"
                                 GroupName="PaymentMethod"
                                 Tag="InAppPurchase"
                                 Checked="OnPaymentMethodRadioButtonChecked"

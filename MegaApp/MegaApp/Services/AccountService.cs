@@ -235,6 +235,8 @@ namespace MegaApp.Services
 
         private static async void GetPaymentMethods()
         {
+            UpgradeAccount.IsInAppPaymentMethodAvailable = await LicenseService.GetIsAvailableAsync();
+
             var paymentMethodsRequestListener = new GetPaymentMethodsRequestListenerAsync();
             var availablePaymentMethods = await paymentMethodsRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getPaymentMethods(paymentMethodsRequestListener));

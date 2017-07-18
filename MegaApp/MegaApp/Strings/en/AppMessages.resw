@@ -798,4 +798,44 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Password changed</value>
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
+  <data name="AM_AccountUpdate" xml:space="preserve">
+    <value>Your account has been updated. Do you want to check the new account details?</value>
+    <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
+  </data>
+  <data name="AM_AccountUpdated_Title" xml:space="preserve">
+    <value>Updated account</value>
+    <comment>Title of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
+  </data>
+  <data name="AM_AlreadyPurchased" xml:space="preserve">
+    <value>Your purchase of a MEGA subscription has failed because you have already purchased this item.</value>
+    <comment>Message of the dialog displayed when a user already has purchased an item from the store</comment>
+  </data>
+  <data name="AM_AlreadyPurchased_Title" xml:space="preserve">
+    <value>Already purchased</value>
+    <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
+  </data>
+  <data name="AM_ProductUnAvailable" xml:space="preserve">
+    <value>The selected MEGA subscription is temporarily unavailable. Please try again or contact Microsoft Store support.</value>
+    <comment>Message of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
+  </data>
+  <data name="AM_ProductUnAvailable_Title" xml:space="preserve">
+    <value>Product unavailable</value>
+    <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
+  </data>
+  <data name="AM_PurchaseFailed" xml:space="preserve">
+    <value>Your purchase of a MEGA subscription has failed or has been cancelled. Please try again or contact Windows Store support.</value>
+    <comment>Message of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
+  </data>
+  <data name="AM_PurchaseFailed_Title" xml:space="preserve">
+    <value>Purchase failed or cancelled</value>
+    <comment>Title of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
+  </data>
+  <data name="AM_PurchaseSucceeded" xml:space="preserve">
+    <value>Your MEGA subscription purchase has succeeded.</value>
+    <comment>Message of the dialog displayed when a user has purchased an item from the store</comment>
+  </data>
+  <data name="AM_PurchaseSucceeded_Title" xml:space="preserve">
+    <value>Purchase succeeded</value>
+    <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
+  </data>
 </root>

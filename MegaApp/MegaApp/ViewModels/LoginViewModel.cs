@@ -62,6 +62,9 @@ namespace MegaApp.ViewModels
                 case LoginResult.Success:
                     SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
 
+                    // Validate product subscription license on background thread
+                    Task.Run(() => LicenseService.ValidateLicensesAsync());
+
                     // Fetch nodes from MEGA
                     if (!await this.FetchNodes()) return;
                     
@@ -160,6 +163,9 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_ResumeSessionFailed"));
                 return false;
             }
+
+            // Validate product subscription license on background thread
+            Task.Run(() => LicenseService.ValidateLicensesAsync());
 
             // Fetch nodes from MEGA
             return await this.FetchNodes();

@@ -5,6 +5,7 @@ using Windows.System;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -85,6 +86,38 @@ namespace MegaApp.ViewModels.MyAccount
                     break;
 
                 case MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE:
+                    var purchaseResponse = await LicenseService.PurchaseProductAsync(
+                        await LicenseService.GetProductIdAsync(this.SelectedProduct.MicrosoftStoreId));
+
+                    string title = string.Empty, message = string.Empty;
+                    switch(purchaseResponse.Type)
+                    {
+                        case PurchaseResponseType.Unknown:
+                        case PurchaseResponseType.PurchaseFailed:
+                            title = ResourceService.AppMessages.GetString("AM_PurchaseFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_PurchaseFailed");
+                            break;
+
+                        case PurchaseResponseType.UnAvailable:
+                            title = ResourceService.AppMessages.GetString("AM_ProductUnAvailable_Title");
+                            message = ResourceService.AppMessages.GetString("AM_ProductUnAvailable");
+                            break;
+
+                        case PurchaseResponseType.AlreadyPurchased:
+                            title = ResourceService.AppMessages.GetString("AM_AlreadyPurchased_Title");
+                            message = ResourceService.AppMessages.GetString("AM_AlreadyPurchased");
+                            break;
+
+                        case PurchaseResponseType.Succeeded:
+                            title = ResourceService.AppMessages.GetString("AM_PurchaseSucceeded_Title");
+                            message = ResourceService.AppMessages.GetString("AM_PurchaseSucceeded");
+                            break;
+
+                        default:
+                            throw new ArgumentOutOfRangeException("PurchaseResponse.Type");
+                    }
+
+                    this.OnUiThread(() => new CustomMessageDialog(title, message, App.AppInformation).ShowDialog());
                     break;
             }
         }
@@ -257,7 +290,7 @@ namespace MegaApp.ViewModels.MyAccount
         public string CentiliText => ResourceService.UiResources.GetString("UI_CentiliPaymentMethod");
         public string FortumoText => ResourceService.UiResources.GetString("UI_FortumoPaymentMethod");
         public string CreditCardText => ResourceService.UiResources.GetString("UI_CreditCard");
-        public string InAppPurchasePaymentMethodText => ResourceService.UiResources.GetString("UI_InAppPurchasePaymentMethod");
+        public string InAppPurchaseText => ResourceService.UiResources.GetString("UI_InAppPurchasePaymentMethod");
 
         // Refund policy
         public string RefundPolicyText => ResourceService.UiResources.GetString("UI_RefundPolicy");

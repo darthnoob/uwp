@@ -1,6 +1,10 @@
 ﻿using System;
 using mega;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
+using MegaApp.Views;
+using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -40,7 +44,7 @@ namespace MegaApp.MegaApi
                     }
                 }                
             }
-            catch (Exception) { /* Dummy catch, surpress possible exception */ }
+            catch (Exception) { /* Dummy catch, suppress possible exception */ }
         }
 
         public void onReloadNeeded(MegaSDK api)
@@ -50,21 +54,22 @@ namespace MegaApp.MegaApi
 
         public void onAccountUpdate(MegaSDK api)
         {
-            //UiService.OnUiThread(() =>
-            //{
-            //    var customMessageDialog = new CustomMessageDialog(
-            //        AppMessages.AccountUpdated_Title,
-            //        AppMessages.AccountUpdate,
-            //        App.AppInformation,
-            //        MessageDialogButtons.YesNo);
+            UiService.OnUiThread(() =>
+            {
+                var customMessageDialog = new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_AccountUpdated_Title"),
+                    ResourceService.AppMessages.GetString("AM_AccountUpdate"),
+                    App.AppInformation,
+                    MessageDialogButtons.YesNo);
 
-            //    customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-            //    {
-            //        NavigateService.NavigateTo(typeof(MyAccountPage), NavigationParameter.Normal);
-            //    };                
+                customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+                {
+                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Default));
+                };
 
-            //    customMessageDialog.ShowDialog();
-            //});
+                customMessageDialog.ShowDialog();
+            });
         }
 
         public void onContactRequestsUpdate(MegaSDK api, MContactRequestList requests)
