@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
@@ -6,7 +7,6 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
-using System.Threading.Tasks;
 
 namespace MegaApp.Services
 {
@@ -90,51 +90,94 @@ namespace MegaApp.Services
                 AccountDetails.PaymentMethod = accountDetails.getSubscriptionMethod();
             });
 
-            DateTime date;
-            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-            // If there is a valid subscription get the renew time
+            // If there is a valid subscription
             if (accountDetails.getSubscriptionStatus() == MSubscriptionStatus.SUBSCRIPTION_STATUS_VALID)
             {
-                try
-                {
-                    if (accountDetails.getSubscriptionRenewTime() != 0)
-                    {
-                        date = start.AddSeconds(Convert.ToDouble(accountDetails.getSubscriptionRenewTime()));
-                        UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString("dd MMM yyyy"));
-                        switch (accountDetails.getSubscriptionCycle())
-                        {
-                            case "1 M":
-                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_MonthlyRecurring"));
-                                break;
-                            case "1 Y":
-                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_AnnualRecurring"));
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    else if (accountDetails.getProExpiration() != 0)
-                    {
-                        date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
-                        UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString("dd MMM yyyy"));
-                        switch (accountDetails.getSubscriptionCycle())
-                        {
-                            case "1 M":
-                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Monthly"));
-                                break;
-                            case "1 Y":
-                                UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Annual"));
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                }
-                catch (ArgumentOutOfRangeException) { /* Do nothing*/ }
+                // If is a valid and active subscription (auto renewable subscription)
+                if (accountDetails.getSubscriptionRenewTime() != 0)
+                    GetSubscriptionDetails(accountDetails);
+                // If is a valid but non active subscription (canceled subscription)
+                else if (accountDetails.getProExpiration() != 0)
+                    GetNonSubscriptionDetails(accountDetails);
+            }
+            // If is a pro account without subscription
+            else if (accountDetails.getProExpiration() != 0)
+            {
+                GetNonSubscriptionDetails(accountDetails);
             }
         }
 
+        /// <summary>
+        /// Get the specific details of valid and active subscription (auto renewable subscription)
+        /// </summary>
+        /// <param name="accountDetails">Details related to the MEGA account</param>
+        private static void GetSubscriptionDetails(MAccountDetails accountDetails)
+        {
+            DateTime date;
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            try
+            {
+                date = start.AddSeconds(Convert.ToDouble(accountDetails.getSubscriptionRenewTime()));
+                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString("dd MMM yyyy"));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = ResourceService.UiResources.GetString("UI_NotAvailable"));
+            }
+
+            switch (accountDetails.getSubscriptionCycle())
+            {
+                case "1 M":
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_MonthlyRecurring"));
+                    break;
+                case "1 Y":
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_AnnualRecurring"));
+                    break;
+                default:
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_NotAvailable"));
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Get the specific details of valid but non active subscription (canceled subscription) or
+        /// of a pro account without subscription.
+        /// </summary>
+        /// <param name="accountDetails">Details related to the MEGA account</param>
+        private static void GetNonSubscriptionDetails(MAccountDetails accountDetails)
+        {
+            DateTime date;
+            DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
+            try
+            {
+                date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
+                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString("dd MMM yyyy"));
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = ResourceService.UiResources.GetString("UI_NotAvailable"));
+            }
+
+            switch (accountDetails.getSubscriptionCycle())
+            {
+                case "1 M":
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Monthly"));
+                    break;
+                case "1 Y":
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_Annual"));
+                    break;
+                default:
+                    UiService.OnUiThread(() => AccountDetails.SubscriptionType = ResourceService.UiResources.GetString("UI_NotAvailable"));
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Get the account used space by the incoming shared folders
+        /// </summary>
+        /// <returns>Used space by the incoming shared folders</returns>
         private static ulong GetIncomingSharesUsedSpace()
         {
             MNodeList inSharesList = SdkService.MegaSdk.getInShares();
@@ -227,12 +270,18 @@ namespace MegaApp.Services
             UiService.OnUiThread(() => UserData.Lastname = lastname);
         }
 
+        /// <summary>
+        /// Gets all the pricing info
+        /// </summary>
         public static void GetPricing()
         {
             GetPaymentMethods();
             GetPricingDetails();
         }
 
+        /// <summary>
+        /// Gets the available payment methods
+        /// </summary>
         private static async void GetPaymentMethods()
         {
             UpgradeAccount.IsInAppPaymentMethodAvailable = await LicenseService.GetIsAvailableAsync();
@@ -246,6 +295,9 @@ namespace MegaApp.Services
             //UpgradeAccount.IsCreditCardPaymentMethodAvailable = Convert.ToBoolean(availablePaymentMethods & (1 << (int)MPaymentMethod.PAYMENT_METHOD_CREDIT_CARD));
         }
 
+        /// <summary>
+        /// Gets all pricing details info
+        /// </summary>
         private static async void GetPricingDetails()
         {
             await UiService.OnUiThreadAsync(() =>
@@ -347,18 +399,26 @@ namespace MegaApp.Services
             }
         }
 
-        private static string GetCurrencySymbol(string currenci)
+        /// <summary>
+        /// Gets the currency symbol corresponding to a currency ISO code
+        /// </summary>
+        /// <param name="currencyCode">Currency ISO code</param>
+        /// <returns></returns>
+        private static string GetCurrencySymbol(string currencyCode)
         {
-            if (string.IsNullOrWhiteSpace(currenci)) return string.Empty;
+            if (string.IsNullOrWhiteSpace(currencyCode)) return string.Empty;
 
-            switch(currenci)
+            switch(currencyCode)
             {
                 case "EUR": return "€";
                 case "USD": return "$";
-                default:    return currenci;
+                default:    return currencyCode;
             }
         }
 
+        /// <summary>
+        /// Clear all the account details info
+        /// </summary>
         public static void ClearAccountDetails()
         {
             UiService.OnUiThread(() =>
