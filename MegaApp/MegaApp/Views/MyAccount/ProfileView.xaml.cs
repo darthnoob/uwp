@@ -2,26 +2,25 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Views.MyAccount
 {
-    public sealed partial class ProfileView : UserControl
+    // Helper class to define the viewmodel of this view
+    // XAML cannot use generics in it's declaration.
+    public class BaseProfileView : UserControlEx<ProfileViewModel> { }
+
+    public sealed partial class ProfileView : BaseProfileView
     {
         public ProfileView()
         {
             this.InitializeComponent();
-
-            this.ViewModel = new ProfileViewModel();
-
-            this.DataContext = this.ViewModel;
         }
 
         #region Properties
 
         public StackPanel ViewArea => this.MainStackPanel;
-
-        public ProfileViewModel ViewModel { get; }
 
         private bool IsFirstNameChanged => 
             !this.FirstNameTextBox.Text.Equals(AccountService.UserData.Firstname);

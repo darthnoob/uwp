@@ -4,22 +4,21 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Views.MyAccount
 {
-    public sealed partial class UpgradeView : UserControl
+    // Helper class to define the viewmodel of this view
+    // XAML cannot use generics in it's declaration.
+    public class BaseUpgradeView : UserControlEx<UpgradeViewModel> { }
+
+    public sealed partial class UpgradeView : BaseUpgradeView
     {
         public UpgradeView()
         {
             this.InitializeComponent();
-
-            this.ViewModel = new UpgradeViewModel();
-
-            this.DataContext = this.ViewModel;
         }
-
-        public UpgradeViewModel ViewModel { get; }
 
         public StackPanel ViewArea => this.MainStackPanel;
 
