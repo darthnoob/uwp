@@ -28,7 +28,7 @@ namespace MegaApp.Dialogs
 
         #region Properties
 
-        private Brush DefaultBoxBorderBrush;
+        private readonly Brush DefaultBoxBorderBrush;
 
         private string CurrentPassword => this.CurrentPasswordBox.Password;
         private string NewPassword => this.NewPasswordBox.Password;

@@ -12,6 +12,8 @@ namespace MegaApp.Services
 {
     public static class AccountService
     {
+        private const string DateFormat = "dd MMM yyyy";
+
         /// <summary>
         /// Storages all the account details info
         /// </summary>
@@ -119,7 +121,7 @@ namespace MegaApp.Services
             try
             {
                 date = start.AddSeconds(Convert.ToDouble(accountDetails.getSubscriptionRenewTime()));
-                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString("dd MMM yyyy"));
+                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString(DateFormat));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -153,7 +155,7 @@ namespace MegaApp.Services
             try
             {
                 date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
-                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString("dd MMM yyyy"));
+                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString(DateFormat));
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -236,9 +238,11 @@ namespace MegaApp.Services
             {
                 UiService.OnUiThread(() =>
                 {
-                    var img = new BitmapImage();
-                    img.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                    img.UriSource = new Uri(UserData.AvatarPath);
+                    var img = new BitmapImage()
+                    {
+                        CreateOptions = BitmapCreateOptions.IgnoreImageCache,
+                        UriSource = new Uri(UserData.AvatarPath)
+                    };
                     UserData.AvatarUri = img.UriSource;
                 });
             }
@@ -445,7 +449,7 @@ namespace MegaApp.Services
             UiService.OnUiThread(() =>
             {
                 UserData.UserEmail = string.Empty;
-                UserData.AvatarColor = UiService.GetColorFromHex("#00000000");
+                UserData.AvatarColor = (Color)Application.Current.Resources["MegaRedColor"];
                 UserData.AvatarUri = null;
                 UserData.Firstname = string.Empty;
                 UserData.Lastname = string.Empty;

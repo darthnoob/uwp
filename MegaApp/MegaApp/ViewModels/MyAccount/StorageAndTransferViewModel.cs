@@ -45,14 +45,9 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _incomingSharesUsedSpaceProgressVarValue, value); }
         }
 
-        public Color IncomingSharesColor
-        {
-            get
-            {
-                return AccountDetails.IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["IncomingSharesColor"];
-            }
-        }
+        public Color IncomingSharesColor => AccountDetails.IsInStorageOverquota ? 
+            (Color)Application.Current.Resources["MegaRedColor"] :
+            (Color)Application.Current.Resources["IncomingSharesColor"];
 
         private ulong _rubbishBinUsedSpaceProgressVarValue;
         public ulong RubbishBinUsedSpaceProgressVarValue
@@ -61,14 +56,9 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _rubbishBinUsedSpaceProgressVarValue, value); }
         }
 
-        public Color RubbishBinColor
-        {
-            get
-            {
-                return AccountDetails.IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["RubbishBinColor"];
-            }
-        }
+        public Color RubbishBinColor => AccountDetails.IsInStorageOverquota ? 
+            (Color)Application.Current.Resources["MegaRedColor"] :
+            (Color)Application.Current.Resources["RubbishBinColor"];
 
         #endregion
 

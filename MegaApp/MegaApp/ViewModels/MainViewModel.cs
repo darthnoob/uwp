@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MegaApp.Enums;
 using MegaApp.Services;
-using MegaApp.UserControls;
 
 namespace MegaApp.ViewModels
 {
@@ -11,8 +10,8 @@ namespace MegaApp.ViewModels
     {
         public MainViewModel()
         {
-            this.MenuItems = MenuItem.CreateMenuItems();
-            this.OptionItems = MenuItem.CreateOptionItems();
+            this.MenuItems = MenuItemViewModel.CreateMenuItems();
+            this.OptionItems = MenuItemViewModel.CreateOptionItems();
             
             AccountService.UserData.UserEmailChanged += UserEmailChanged;
             AccountService.UserData.UserNameChanged += UserNameChanged;
@@ -51,11 +50,11 @@ namespace MegaApp.ViewModels
         /// </summary>
         public bool NavigateOnMenuItemSelected = true;
 
-        private MenuItem _selectedItem;
+        private MenuItemViewModel _selectedItem;
         /// <summary>
         /// Current selected default menu item
         /// </summary>
-        public MenuItem SelectedItem
+        public MenuItemViewModel SelectedItem
         {
             get { return _selectedItem; }
             set
@@ -70,11 +69,11 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private MenuItem _selectedOptionItem;
+        private MenuItemViewModel _selectedOptionItem;
         /// <summary>
         /// Current selected option menu item
         /// </summary>
-        public MenuItem SelectedOptionItem
+        public MenuItemViewModel SelectedOptionItem
         {
             get { return _selectedOptionItem; }
             set
@@ -92,7 +91,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// My account option menu item
         /// </summary>
-        private MenuItem MyAccountMenuItem => OptionItems.First(m => m.TargetViewModel.Equals(typeof(MyAccountViewModel)));
+        private MenuItemViewModel MyAccountMenuItem => OptionItems.First(m => m.TargetViewModel == typeof(MyAccountViewModel));
 
         /// <summary>
         /// State of the controls attached to this viewmodel
@@ -107,12 +106,12 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// List of default menu items
         /// </summary>
-        public IList<MenuItem> MenuItems { get; }
+        public IList<MenuItemViewModel> MenuItems { get; }
 
         /// <summary>
         /// List of option menu items
         /// </summary>
-        public IList<MenuItem> OptionItems { get; }
+        public IList<MenuItemViewModel> OptionItems { get; }
 
         /// <summary>
         /// Navigation action used to arrive to the MainPage

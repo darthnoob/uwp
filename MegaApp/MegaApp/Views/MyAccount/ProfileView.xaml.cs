@@ -50,6 +50,14 @@ namespace MegaApp.Views.MyAccount
             if (IsLastNameChanged)
                 result = result & await this.ViewModel.SetLastName(this.LastNameTextBox.Text);
 
+            if(!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_UpdateProfileFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_UpdateProfileFailed"));
+                return;
+            }
+
             this.AttributesModifiedButtons.Visibility = Visibility.Collapsed;
         }
 

@@ -838,4 +838,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Purchase succeeded</value>
     <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
+  <data name="AM_UpdateProfileFailed" xml:space="preserve">
+    <value>Failed to update your profile. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to update the user profile fails.</comment>
+  </data>
+  <data name="AM_UpdateProfileFailed_Title" xml:space="preserve">
+    <value>Update profile failed</value>
+    <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
+  </data>
 </root>

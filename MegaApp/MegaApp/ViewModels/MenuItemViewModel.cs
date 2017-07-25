@@ -5,14 +5,13 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using MegaApp.Services;
-using MegaApp.ViewModels;
 
-namespace MegaApp.UserControls
+namespace MegaApp.ViewModels
 {
     /// <summary>
     /// Class that represents a menu item
     /// </summary>
-    public class MenuItem : BaseViewModel
+    public class MenuItemViewModel : BaseViewModel
     {
         #region Properties
 
@@ -63,11 +62,11 @@ namespace MegaApp.UserControls
         /// Create list of default menu items
         /// </summary>
         /// <returns>Default menu item list</returns>
-        public static IList<MenuItem> CreateMenuItems()
+        public static IList<MenuItemViewModel> CreateMenuItems()
         {
-            return new List<MenuItem>()
+            return new List<MenuItemViewModel>()
             {
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = CloudDriveText,
                     SubLabel = CameraUploadsText + " & " + RubbishBinText,
@@ -76,7 +75,7 @@ namespace MegaApp.UserControls
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
 
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = TransferManagerText,
                     ToolTip = TransferManagerText,
@@ -90,11 +89,11 @@ namespace MegaApp.UserControls
         /// Create list of option menu items
         /// </summary>
         /// <returns>Option menu items list</returns>
-        public static IList<MenuItem> CreateOptionItems()
+        public static IList<MenuItemViewModel> CreateOptionItems()
         {
-            return new List<MenuItem>()
+            return new List<MenuItemViewModel>()
             {
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = AccountService.UserData.UserName,
                     SubLabel = AccountService.UserData.UserEmail,
@@ -103,7 +102,7 @@ namespace MegaApp.UserControls
                     TargetViewModel = typeof(MyAccountViewModel)
                 },
 
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = SettingsText,
                     ToolTip = SettingsText,

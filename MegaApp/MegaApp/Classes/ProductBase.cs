@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
@@ -38,8 +39,8 @@ namespace MegaApp.Classes
         public double Price => (double)Amount/100;
         public string PriceAndCurrency => string.Format("{0:N} {1}", Price, Currency);
 
-        public string PriceIntegerPart => Price.ToString().Split('.')[0];
-        public string PriceDecimalPart => Price.ToString().Split('.')[1];
+        public string PriceIntegerPart => Price.ToString(CultureInfo.InvariantCulture).Split('.')[0];
+        public string PriceDecimalPart => Price.ToString(CultureInfo.InvariantCulture).Split('.')[1];
 
         #region UiResources
 

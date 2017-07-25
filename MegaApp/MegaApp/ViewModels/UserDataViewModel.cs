@@ -22,9 +22,25 @@ namespace MegaApp.ViewModels
         public event EventHandler UserEmailChanged;
 
         /// <summary>
+        /// Event invocator method called when the user email is changed.
+        /// </summary>
+        protected virtual void OnUserEmailChanged()
+        {
+            UserEmailChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Event triggered when the user name is changed.
         /// </summary>
         public event EventHandler UserNameChanged;
+
+        /// <summary>
+        /// Event invocator method called when the user name is changed.
+        /// </summary>
+        protected virtual void OnUserNameChanged()
+        {
+            UserNameChanged?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
 
@@ -41,7 +57,7 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _userEmail, value);
                 OnPropertyChanged("AvatarLetter");
-                UserEmailChanged?.Invoke(this, EventArgs.Empty);
+                OnUserEmailChanged();
             }
         }
 
@@ -54,10 +70,9 @@ namespace MegaApp.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(Firstname) && !string.IsNullOrWhiteSpace(Lastname))
                     return string.Format("{0} {1}", Firstname, Lastname);
-                else if (!string.IsNullOrWhiteSpace(Firstname))
+                if (!string.IsNullOrWhiteSpace(Firstname))
                     return Firstname;
-                else
-                    return ResourceService.UiResources.GetString("UI_MyAccount");
+                return ResourceService.UiResources.GetString("UI_MyAccount");
             }
         }
         /// <summary>
@@ -72,7 +87,7 @@ namespace MegaApp.ViewModels
                 SetField(ref _firstname, value);
                 OnPropertyChanged("UserName");
                 OnPropertyChanged("AvatarLetter");
-                UserNameChanged?.Invoke(this, EventArgs.Empty);
+                OnUserNameChanged();
             }
         }
 
@@ -88,7 +103,7 @@ namespace MegaApp.ViewModels
                 SetField(ref _lastname, value);
                 OnPropertyChanged("UserName");
                 OnPropertyChanged("AvatarLetter");
-                UserNameChanged?.Invoke(this, EventArgs.Empty);
+                OnUserNameChanged();
             }
         }
 
@@ -125,10 +140,9 @@ namespace MegaApp.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(UserName))
                     return UserName.Substring(0, 1).ToUpper();
-                else if (!string.IsNullOrWhiteSpace(UserEmail))
+                if (!string.IsNullOrWhiteSpace(UserEmail))
                     return UserEmail.Substring(0, 1).ToUpper();
-                else
-                    return "M"; // If no data available, return "M" of MEGA
+                return "M"; // If no data available, return "M" of MEGA
             }
         }
 

@@ -78,9 +78,9 @@ namespace MegaApp.ViewModels.MyAccount
                         SdkService.MegaSdk.getPaymentId(SelectedProduct.Handle, paymentUrlRequestListener));
 
                     if (this.SelectedPaymentMethod == MPaymentMethod.PAYMENT_METHOD_CENTILI)
-                        paymentUrl = "https://www.centili.com/widget/WidgetModule?api=9e8eee856f4c048821954052a8d734ac&clientid=" + paymentUrl;
+                        paymentUrl = ResourceService.AppResources.GetString("AR_CentiliUrl") + paymentUrl;
                     if (this.SelectedPaymentMethod == MPaymentMethod.PAYMENT_METHOD_FORTUMO)
-                        paymentUrl = "http://fortumo.com/mobile_payments/f250460ec5d97fd27e361afaa366db0f?cuid=" + paymentUrl;
+                        paymentUrl = ResourceService.AppResources.GetString("AR_FortumoUrl") + paymentUrl;
 
                     await Launcher.LaunchUriAsync(new Uri(paymentUrl, UriKind.RelativeOrAbsolute));
                     break;
@@ -89,7 +89,7 @@ namespace MegaApp.ViewModels.MyAccount
                     var purchaseResponse = await LicenseService.PurchaseProductAsync(
                         await LicenseService.GetProductIdAsync(this.SelectedProduct.MicrosoftStoreId));
 
-                    string title = string.Empty, message = string.Empty;
+                    string title, message;
                     switch(purchaseResponse.Type)
                     {
                         case PurchaseResponseType.Unknown:
@@ -239,14 +239,14 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        public bool IsCentiliPaymentMethodAvailable => SelectedProduct == null ? false :
-            this.SelectedProduct.IsCentiliPaymentMethodAvailable;
+        public bool IsCentiliPaymentMethodAvailable => 
+            SelectedProduct?.IsCentiliPaymentMethodAvailable ?? false;
 
-        public bool IsFortumoPaymentMethodAvailable => SelectedProduct == null ? false :
-            this.SelectedProduct.IsFortumoPaymentMethodAvailable;
+        public bool IsFortumoPaymentMethodAvailable => 
+            SelectedProduct?.IsFortumoPaymentMethodAvailable ?? false;
 
-        public bool IsInAppPaymentMethodAvailable => SelectedProduct == null ? false :
-            this.SelectedProduct.IsInAppPaymentMethodAvailable;
+        public bool IsInAppPaymentMethodAvailable => 
+            SelectedProduct?.IsInAppPaymentMethodAvailable ?? false;
 
         private MPaymentMethod _selectedPaymentMethod;
         public MPaymentMethod SelectedPaymentMethod
@@ -255,17 +255,8 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _selectedPaymentMethod, value); }
         }
 
-        public bool IsPurchaseButtonEnabled
-        {
-            get
-            {
-                if (!IsCentiliPaymentMethodAvailable && !IsFortumoPaymentMethodAvailable &&
-                    !IsInAppPaymentMethodAvailable)
-                    return false;
-
-                return true;
-            }
-        }
+        public bool IsPurchaseButtonEnabled => IsCentiliPaymentMethodAvailable || 
+            IsFortumoPaymentMethodAvailable || IsInAppPaymentMethodAvailable;
 
         #endregion
 

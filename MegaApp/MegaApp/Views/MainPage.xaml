@@ -15,7 +15,7 @@
         <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
         <DataTemplate 
             x:Key="MenuItemTemplate" 
-            x:DataType="userControls:MenuItem">
+            x:DataType="viewModels:MenuItemViewModel">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
@@ -34,7 +34,7 @@
                         Width="33" Height="33"
                         ToolTipService.ToolTip="{x:Bind ToolTip}"
                         HorizontalAlignment="Stretch"
-                        Stroke="{ThemeResource MegaAppForeground}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
                         AutomationProperties.AccessibilityView="Raw"
                         Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
                         <Ellipse.Fill>
@@ -52,7 +52,7 @@
                         Width="33" Height="33"
                         ToolTipService.ToolTip="{x:Bind ToolTip}"
                         HorizontalAlignment="Stretch"
-                        Stroke="{ThemeResource MegaAppForeground}"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
                         AutomationProperties.AccessibilityView="Raw"
                         Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                         <Ellipse.Fill>
