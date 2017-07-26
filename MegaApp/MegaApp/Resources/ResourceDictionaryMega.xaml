@@ -18,6 +18,7 @@
     <GridLength x:Key="MegaPageHeaderLogoRowHeight">44</GridLength>
     <x:Double x:Key="InputHeight">40</x:Double>
     <GridLength x:Key="PageHeaderRowHeight">48</GridLength>
+    <x:Double x:Key="ViewAreaMaxWidth">600</x:Double>
 
     <!--  Margins  -->
     <Thickness x:Key="StackedInputMargin">0,0,0,8</Thickness>

@@ -20,8 +20,6 @@ namespace MegaApp.Views.MyAccount
             this.InitializeComponent();
         }
 
-        public StackPanel ViewArea => this.MainStackPanel;
-
         private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
         {
             switch (this.ViewModel.CurrentStep)

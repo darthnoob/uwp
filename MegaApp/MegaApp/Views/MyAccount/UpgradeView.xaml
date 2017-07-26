@@ -16,6 +16,7 @@
             VerticalScrollBarVisibility="Auto">
             <StackPanel 
                 x:Name="MainStackPanel"
+                MaxWidth="{StaticResource ViewAreaMaxWidth}"
                 HorizontalAlignment="Left">
                 <StackPanel
                     Height="17"

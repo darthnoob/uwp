@@ -16,6 +16,8 @@
             VerticalScrollBarVisibility="Auto">
             <StackPanel 
                 x:Name="MainStackPanel" 
+                Margin="0,0,12,0"
+                MaxWidth="{StaticResource ViewAreaMaxWidth}"
                 HorizontalAlignment="Left">
                 <TextBlock
                     Margin="0,56,0,20"

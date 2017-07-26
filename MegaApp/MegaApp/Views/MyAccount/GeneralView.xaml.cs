@@ -14,7 +14,5 @@ namespace MegaApp.Views.MyAccount
         {
             this.InitializeComponent();
         }
-
-        public StackPanel ViewArea => this.MainStackPanel;
     }
 }

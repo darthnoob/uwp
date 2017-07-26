@@ -20,8 +20,6 @@ namespace MegaApp.Views.MyAccount
 
         #region Properties
 
-        public StackPanel ViewArea => this.MainStackPanel;
-
         private bool IsFirstNameChanged => 
             !this.FirstNameTextBox.Text.Equals(AccountService.UserData.Firstname);
 

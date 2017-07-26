@@ -19,8 +19,6 @@ namespace MegaApp.Views
         public MyAccountPage()
         {
             this.InitializeComponent();
-
-            this.MainGrid.SizeChanged += OnSizeChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -46,32 +44,6 @@ namespace MegaApp.Views
         private void OnButtonClick(object sender, RoutedEventArgs e)
         {
             SdkService.MegaSdk.retryPendingConnections();
-        }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (e.NewSize.Width > 600)
-            {
-                this.GeneralView.ViewArea.Width = 600;
-
-                this.ProfileView.ViewArea.Width = 600;
-
-                this.StorageAndTransferView.ViewArea.Width = 600;
-                this.StorageAndTransferView.ViewArea.HorizontalAlignment = HorizontalAlignment.Left;
-
-                this.UpgradeView.ViewArea.Width = 600;
-            }
-            else
-            {
-                this.GeneralView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
-
-                this.ProfileView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
-
-                this.StorageAndTransferView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
-                this.StorageAndTransferView.ViewArea.HorizontalAlignment = HorizontalAlignment.Stretch;
-
-                this.UpgradeView.ViewArea.Width = this.MyAccountPivot.ActualWidth;
-            }
         }
 
         private void GoToUpgrade(object sender, EventArgs e)

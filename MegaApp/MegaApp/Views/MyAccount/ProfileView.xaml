@@ -10,6 +10,10 @@
     d:DataContext="{d:DesignInstance myAccountViewModels:ProfileViewModel}"
     mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <x:Double x:Key="ButtonMinWidth">136</x:Double>
+    </UserControl.Resources>
+    
     <Grid Margin="0,66,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -72,7 +76,8 @@
             VerticalScrollBarVisibility="Auto">
             <StackPanel 
                 x:Name="MainStackPanel" 
-                HorizontalAlignment="Left">
+                HorizontalAlignment="Left"
+                MaxWidth="{StaticResource ViewAreaMaxWidth}">
                 <TextBlock
                     Margin="0,48,0,20"
                     Style="{ThemeResource MegaHeaderFontStyle}"
@@ -105,31 +110,29 @@
                     Orientation="Horizontal"
                     Visibility="Collapsed">
                     <Button
-                        Width="136"
+                        MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="0,0,4,0"
                         Content="{Binding SaveText, Mode=OneTime}"
                         Tapped="OnSaveButtonTapped" />
                     <Button
-                        Width="136"
+                        MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="4,0,0,0"
                         Content="{Binding CancelText, Mode=OneTime}"
                         Tapped="OnCancelButtonTapped"/>
                 </StackPanel>
                 <TextBlock
-                    Margin="0,64,0,20"
+                    Margin="0,64,0,28"
                     Style="{ThemeResource MegaHeaderFontStyle}"
                     Text="{Binding EmailAndPasswordTitle, Mode=OneTime}" />
-                <StackPanel 
-                    Margin="0,36,0,0"
-                    Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
                     <Button
-                        MinWidth="136"
+                        MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="0,0,4,0"
                         Command="{Binding ChangeEmailCommand}"
                         Content="{Binding ChangeEmailText, Mode=OneTime}"
                         IsEnabled="False"/>
                     <Button
-                        MinWidth="136"
+                        MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="4,0,0,0"
                         Command="{Binding ChangePasswordCommand}"
                         Content="{Binding ChangePasswordText, Mode=OneTime}"/>
@@ -149,17 +152,18 @@
                         <Setter Target="AvatarUri.Width" Value="74" />
                         <Setter Target="AvatarUri.Height" Value="74" />
                         <Setter Target="AvatarLetter.FontSize" Value="37" />
+                        <Setter Target="MainStackPanel.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="UserNameText.FontSize" Value="24" />
                         <Setter Target="UserEmailText.FontSize" Value="14" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.Below)" Value="FirstNameTitle" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="FirstNameTextBox.Margin" Value="0,0,24,0" />
+                        <Setter Target="FirstNameTextBox.Margin" Value="0,0,12,0" />
                         <Setter Target="LastNameTitle.(RelativePanel.Below)" Value="FirstNameTextBox" />
                         <Setter Target="LastNameTextBox.(RelativePanel.Below)" Value="LastNameTitle" />
                         <Setter Target="LastNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="LastNameTextBox.(RelativePanel.AlignRightWith)" Value="FirstNameTextBox" />
-                        <Setter Target="LastNameTextBox.Margin" Value="0,0,24,0" />
+                        <Setter Target="LastNameTextBox.Margin" Value="0,0,12,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Medium">
@@ -172,19 +176,21 @@
                         <Setter Target="AvatarUri.Width" Value="122" />
                         <Setter Target="AvatarUri.Height" Value="122" />
                         <Setter Target="AvatarLetter.FontSize" Value="61" />
+                        <Setter Target="MainStackPanel.HorizontalAlignment" Value="Left" />
                         <Setter Target="UserNameText.FontSize" Value="40" />
                         <Setter Target="UserEmailText.FontSize" Value="18" />
-                        <Setter Target="FirstNameTitle.(RelativePanel.LeftOf)" Value="LastNameTitle" />
                         <Setter Target="FirstNameTitle.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="FirstNameTitle.Width" Value="275" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.Below)" Value="FirstNameTitle" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.AlignRightWith)" Value="FirstNameTitle" />
                         <Setter Target="FirstNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="FirstNameTextBox.Margin" Value="0,0,24,0" />
-                        <Setter Target="LastNameTitle.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                        <Setter Target="LastNameTitle.(RelativePanel.RightOf)" Value="FirstNameTitle" />
+                        <Setter Target="LastNameTitle.Width" Value="275" />
                         <Setter Target="LastNameTextBox.(RelativePanel.Below)" Value="LastNameTitle" />
                         <Setter Target="LastNameTextBox.(RelativePanel.AlignLeftWith)" Value="LastNameTitle" />
-                        <Setter Target="LastNameTextBox.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="LastNameTextBox.Margin" Value="0,0,24,0" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.AlignRightWith)" Value="LastNameTitle" />
+                        <Setter Target="LastNameTextBox.Margin" Value="0,0,12,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
