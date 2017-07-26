@@ -133,7 +133,9 @@
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
-    <Compile Include="Dialogs\ChangePasswordDialog.xaml.cs">
+    <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
+    <Compile Include="Views\Dialogs\ChangePasswordDialog.xaml.cs">
       <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
@@ -340,7 +342,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Dialogs\ChangePasswordDialog.xaml">
+    <Page Include="Views\Dialogs\ChangePasswordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

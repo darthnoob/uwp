@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Dialogs;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.MyAccount
 {
