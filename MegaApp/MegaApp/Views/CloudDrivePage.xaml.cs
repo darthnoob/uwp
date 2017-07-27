@@ -7,10 +7,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -23,6 +21,8 @@ namespace MegaApp.Views
 
     public sealed partial class CloudDrivePage : BaseCloudDrivePage
     {
+        private const double NodeDetailsMinWidth = 435;
+
         public CloudDrivePage()
         {
             InitializeComponent();
@@ -67,7 +67,7 @@ namespace MegaApp.Views
                     return;
                 }
 
-                this.NodeDetailsSplitView.OpenPaneLength = this.NodeDetailsSplitView.MinWidth;
+                this.NodeDetailsSplitView.OpenPaneLength = NodeDetailsMinWidth;
             }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);

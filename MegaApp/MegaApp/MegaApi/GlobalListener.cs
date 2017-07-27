@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Interfaces;
-using MegaApp.Services;
 using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
