@@ -10,7 +10,6 @@ using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -114,6 +113,11 @@ namespace MegaApp.Views
 
             this.ViewModel.CloudDrive.FolderNavigatedTo += OnFolderNavigatedTo;
             this.ViewModel.RubbishBin.FolderNavigatedTo += OnFolderNavigatedTo;
+
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
+            if (navActionType == NavigationActionType.RubbishBin)
+                this.MainPivot.SelectedItem = this.RubbishBinPivot;
 
             this.ViewModel.LoadFolders();
         }

@@ -5,14 +5,13 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using MegaApp.Services;
-using MegaApp.ViewModels;
 
-namespace MegaApp.UserControls
+namespace MegaApp.ViewModels
 {
     /// <summary>
     /// Class that represents a menu item
     /// </summary>
-    public class MenuItem
+    public class MenuItemViewModel : BaseViewModel
     {
         #region Properties
 
@@ -24,12 +23,22 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Name to display as label for the menu item
         /// </summary>
-        public string Label { get; set; }
+        private string _label;
+        public string Label
+        {
+            get { return _label; }
+            set { SetField(ref _label, value); }
+        }
 
         /// <summary>
         /// Secondary label for the menu item
         /// </summary>
-        public string SubLabel { get; set; }
+        private string _subLabel;
+        public string SubLabel
+        {
+            get { return _subLabel; }
+            set { SetField(ref _subLabel, value); }
+        }
 
         /// <summary>
         /// Tooltip for the menu item
@@ -41,6 +50,10 @@ namespace MegaApp.UserControls
         /// </summary>
         public Type TargetViewModel { get; set; }
 
+        public bool IsMyAccountMenuItem => TargetViewModel.Equals(typeof(MyAccountViewModel));
+
+        public UserDataViewModel UserData => AccountService.UserData;
+
         #endregion
 
         #region Public Methods
@@ -49,11 +62,11 @@ namespace MegaApp.UserControls
         /// Create list of default menu items
         /// </summary>
         /// <returns>Default menu item list</returns>
-        public static IList<MenuItem> CreateMenuItems()
+        public static IList<MenuItemViewModel> CreateMenuItems()
         {
-            return new List<MenuItem>()
+            return new List<MenuItemViewModel>()
             {
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = CloudDriveText,
                     SubLabel = CameraUploadsText + " & " + RubbishBinText,
@@ -62,7 +75,7 @@ namespace MegaApp.UserControls
                     TargetViewModel = typeof(CloudDriveViewModel)
                 },
 
-                new MenuItem()
+                new MenuItemViewModel()
                 {
                     Label = TransferManagerText,
                     ToolTip = TransferManagerText,
@@ -76,17 +89,25 @@ namespace MegaApp.UserControls
         /// Create list of option menu items
         /// </summary>
         /// <returns>Option menu items list</returns>
-        public static IList<MenuItem> CreateOptionItems()
+        public static IList<MenuItemViewModel> CreateOptionItems()
         {
-            return new List<MenuItem>()
+            return new List<MenuItemViewModel>()
             {
-                new MenuItem()
+                new MenuItemViewModel()
                 {
-                    Label = MyAccountText,
-                    SubLabel = "& " + SettingsText,
+                    Label = AccountService.UserData.UserName,
+                    SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
+                    Icon = new SymbolIcon(Symbol.Contact),
+                    TargetViewModel = typeof(MyAccountViewModel)
+                },
+
+                new MenuItemViewModel()
+                {
+                    Label = SettingsText,
+                    ToolTip = SettingsText,
                     Icon = GetIconFromXamlPath(MenuSettingsPathData),
-                    TargetViewModel = typeof(SettingsMyAccountViewModel)
+                    TargetViewModel = typeof(SettingsViewModel)
                 },
             };
         }

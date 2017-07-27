@@ -6,17 +6,19 @@ namespace MegaApp.Extensions
     {
         private static readonly string[] SizeSuffixesBytes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
-        public static string ToStringAndSuffix(this UInt64 value)
+        public static string ToStringAndSuffix(this ulong value, int numDecimaDigits = 0)
         {
             if (value == 0) { return "0.0 bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
-            return string.Format("{0:n2} {1}", adjustedSize, SizeSuffixesBytes[mag]);
+            var formatString = "{0:n" + numDecimaDigits + "} {1}";
+
+            return string.Format(formatString, adjustedSize, SizeSuffixesBytes[mag]);
         }
 
-        public static ulong ToReadableSize(this UInt64 value)
+        public static ulong ToReadableSize(this ulong value)
         {
             if (value == 0) { return value; }
 
@@ -26,16 +28,16 @@ namespace MegaApp.Extensions
             return (ulong)adjustedSize;
         }
 
-        public static string ToReadableUnits(this UInt64 value)
+        public static string ToReadableUnits(this ulong value)
         {
-            if (value == 0) { return " "; }
+            if (value == 0) { return "bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             
             return SizeSuffixesBytes[mag];
         }
 
-        public static string ToStringAndSuffixPerSecond(this UInt64 value)
+        public static string ToStringAndSuffixPerSecond(this ulong value)
         {
             if (value == 0) { return "0.0 bytes/s"; }
 
@@ -45,7 +47,7 @@ namespace MegaApp.Extensions
             return string.Format("{0:n2} {1}/s", adjustedSize, SizeSuffixesBytes[mag]);
         }
 
-        public static decimal ToEqualSize(this UInt64 value, UInt64 refValue)
+        public static decimal ToEqualSize(this ulong value, ulong refValue)
         {
             if (value == 0 || refValue == 0) { return value; }
 
@@ -55,19 +57,19 @@ namespace MegaApp.Extensions
             return adjustedSize;
         }
 
-        public static ulong FromKBToBytes (this UInt64 value)
+        public static ulong FromKBToBytes (this ulong value)
         {
             return value*1024;
         }
 
-        public static ulong FromMBToBytes(this UInt64 value)
+        public static ulong FromMBToBytes(this ulong value)
         {
             return (value *1024).FromKBToBytes();
         }
 
-        public static ulong FromGBToBytes(this UInt64 value)
+        public static ulong FromGBToBytes(this ulong value)
         {
-            return (value * 1024).FromMBToBytes().FromKBToBytes();
+            return (value * 1024).FromMBToBytes();
         }
     }
 }

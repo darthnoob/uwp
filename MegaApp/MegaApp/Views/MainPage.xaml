@@ -15,7 +15,7 @@
         <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
         <DataTemplate 
             x:Key="MenuItemTemplate" 
-            x:DataType="userControls:MenuItem">
+            x:DataType="viewModels:MenuItemViewModel">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
@@ -27,20 +27,53 @@
                     ToolTipService.ToolTip="{x:Bind ToolTip}"
                     HorizontalAlignment="Stretch"
                     AutomationProperties.AccessibilityView="Raw"/>
+                <Grid 
+                    Grid.Column="0"
+                    Visibility="{x:Bind IsMyAccountMenuItem, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                    <Ellipse
+                        Width="33" Height="33"
+                        ToolTipService.ToolTip="{x:Bind ToolTip}"
+                        HorizontalAlignment="Stretch"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        AutomationProperties.AccessibilityView="Raw"
+                        Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="{x:Bind UserData.AvatarColor, Mode=OneWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <TextBlock
+                        Text="{x:Bind UserData.AvatarLetter, Mode=OneWay}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
+                    <Ellipse
+                        Width="33" Height="33"
+                        ToolTipService.ToolTip="{x:Bind ToolTip}"
+                        HorizontalAlignment="Stretch"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        AutomationProperties.AccessibilityView="Raw"
+                        Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding UserData.AvatarUri, Mode=OneWay}"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Grid>                
                 <StackPanel 
                     Orientation="Vertical"
                     VerticalAlignment="Center"
                     Grid.Column="1"
                     Margin="10,5,10,6">
                     <TextBlock
-                        Text="{x:Bind Label}" 
+                        Text="{x:Bind Label, Mode=OneWay}" 
                         FontSize="16" 
                         VerticalAlignment="Center"/>
                     <TextBlock
-                        Text="{x:Bind SubLabel}" 
+                        Text="{x:Bind SubLabel, Mode=OneWay}" 
                         FontSize="12" 
                         VerticalAlignment="Center"
-                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}}"
+                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}"
                         Opacity="0.6"/>
                 </StackPanel>                
             </Grid>

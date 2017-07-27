@@ -20,12 +20,12 @@ namespace MegaApp.ViewModels
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
         /// <summary>
@@ -61,6 +61,9 @@ namespace MegaApp.ViewModels
             {
                 case LoginResult.Success:
                     SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+
+                    // Validate product subscription license on background thread
+                    Task.Run(() => LicenseService.ValidateLicensesAsync());
 
                     // Fetch nodes from MEGA
                     if (!await this.FetchNodes()) return;
@@ -160,6 +163,9 @@ namespace MegaApp.ViewModels
                     ResourceService.AppMessages.GetString("AM_ResumeSessionFailed"));
                 return false;
             }
+
+            // Validate product subscription license on background thread
+            Task.Run(() => LicenseService.ValidateLicensesAsync());
 
             // Fetch nodes from MEGA
             return await this.FetchNodes();

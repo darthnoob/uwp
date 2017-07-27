@@ -50,14 +50,19 @@ namespace MegaApp.ViewModels
             {
                 settingSection.Initialize();
             }
-        }
-       
+        }       
 
         #region Properties
 
         public IList<SettingSectionViewModel> SettingSections { get; }
 
         #endregion
-       
+
+        #region UiResources
+
+        public string OnText => ResourceService.UiResources.GetString("UI_On");
+        public string OffText => ResourceService.UiResources.GetString("UI_Off");
+
+        #endregion
     }
 }

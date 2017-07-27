@@ -67,6 +67,15 @@ namespace MegaApp.Converters
                             return Visibility.Collapsed;
                     }
 
+                case MTransferState.STATE_RETRYING:
+                    switch(command)
+                    {
+                        case "cancel":
+                            return Visibility.Visible;
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
                 case MTransferState.STATE_COMPLETING:
                     return Visibility.Collapsed;
 
