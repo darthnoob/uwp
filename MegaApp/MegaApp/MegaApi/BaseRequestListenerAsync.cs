@@ -42,11 +42,8 @@ namespace MegaApp.MegaApi
 
         private void TimerApiEagainOnTick(object sender, object o)
         {
-            UiService.OnUiThread(() =>
-            {
-                TimerApiEagain?.Stop();
-                ServerBusy?.Invoke(this, EventArgs.Empty);
-            });
+            UiService.OnUiThread(() => TimerApiEagain?.Stop());
+            ServerBusy?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task<T> ExecuteAsync(Action action)
@@ -82,32 +79,34 @@ namespace MegaApp.MegaApi
         {
             UiService.OnUiThread(() => TimerApiEagain?.Stop());
 
-            if (e.getErrorCode() == MErrorType.API_EBLOCKED) // If the account has been blocked
+            switch(e.getErrorCode())
             {
-                api.logout(new LogOutRequestListener(false));
+                case MErrorType.API_EBLOCKED: // If the account has been blocked
+                    api.logout(new LogOutRequestListener(false));
 
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-                });
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
+                    });
 
-                // Throw task exception to catch and do nothing on logging out
-                Tcs?.TrySetException(new BlockedAccountException());
-            }
-            else if (e.getErrorCode() == MErrorType.API_EOVERQUOTA) //Storage overquota error
-            {
-                UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+                    // Throw task exception to catch and do nothing on logging out
+                    Tcs?.TrySetException(new BlockedAccountException());
+                    break;
 
-                // Stop all upload transfers
-                api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+                case MErrorType.API_EOVERQUOTA: // Storage overquota error
+                    UiService.OnUiThread(DialogService.ShowOverquotaAlert);
 
-                // Disable the "Camera Uploads" service if is enabled
-                if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
-                    TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
-                }
+                    // Stop all upload transfers
+                    api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+
+                    // Disable the "Camera Uploads" service if is enabled
+                    if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                        TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                    }
+                    break;
             }
         }
     }

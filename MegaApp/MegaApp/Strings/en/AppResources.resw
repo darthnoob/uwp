@@ -230,11 +230,23 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/1c92bfc60dca2b6e0933eb14f14d329c923c4430</value>
+    <value>https://github.com/meganz/sdk/tree/57a6ee2d210683a4a947bbcd0f611789169ac13f</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>1c92bfc</value>
+    <value>57a6ee2</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_RefundPolicyUri" xml:space="preserve">
+    <value>https://mega.nz/general</value>
+    <comment>URL to the 'Refund policy' information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_CentiliUrl" xml:space="preserve">
+    <value>https://www.centili.com/widget/WidgetModule?api=9e8eee856f4c048821954052a8d734ac&amp;clientid=</value>
+    <comment>URL for the Centili payment method. Need to add the 'clientid' at the end of this string - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_FortumoUrl" xml:space="preserve">
+    <value>http://fortumo.com/mobile_payments/f250460ec5d97fd27e361afaa366db0f?cuid=</value>
+    <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
   </data>
 </root>

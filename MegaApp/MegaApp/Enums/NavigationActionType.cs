@@ -4,6 +4,8 @@
     {
         Default,
         Login,
+        RubbishBin,
+        Upgrade,
 
         API_ESID            = -15,
         API_EBLOCKED        = -16,

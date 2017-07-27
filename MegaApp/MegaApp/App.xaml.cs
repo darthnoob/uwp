@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -56,13 +57,15 @@ namespace MegaApp
         /// application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
+            // Load product xml for IAP testing
+            await LicenseService.LoadSimulatorAsync();
 #endif
             Frame rootFrame = CreateRootFrame();
 
@@ -139,6 +142,9 @@ namespace MegaApp
                 // Check session and special navigation
                 if (await AppService.CheckActiveAndOnlineSession())
                     await AppService.CheckSpecialNavigation();
+
+                // Validate product subscription license on background thread
+                Task.Run(() => LicenseService.ValidateLicensesAsync());
             }
         }
 
@@ -214,7 +220,7 @@ namespace MegaApp
             SdkService.InitializeSdkParams();
 
             // Add a global notifications listener
-            GlobalListener = new GlobalListener(AppInformation);
+            GlobalListener = new GlobalListener();
             SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
             // Add a global request listener to process all.

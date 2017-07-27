@@ -11,6 +11,14 @@ namespace MegaApp.MegaApi
         /// </summary>
         public EventHandler DecryptNodes;
 
+        /// <summary>
+        /// Event invocator method called when start to decrypt nodes.
+        /// </summary>
+        protected virtual void OnDecryptNodes()
+        {
+            DecryptNodes?.Invoke(this, EventArgs.Empty);
+        }
+
         #region MRequestListenerInterface
 
         public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
@@ -25,7 +33,8 @@ namespace MegaApp.MegaApi
                 {
                     case MErrorType.API_OK: // Successfull fetch nodes process
                         App.AppInformation.HasFetchedNodes = true;
-                        UiService.OnUiThread(() => AccountService.GetAccountDetails());
+                        AccountService.GetUserData();
+                        AccountService.GetAccountDetails();
                         Tcs?.TrySetResult(true);
                         break;
                     default: // Default error processing
@@ -46,7 +55,7 @@ namespace MegaApp.MegaApi
                     double progressValue = 100.0 * request.getTransferredBytes() / request.getTotalBytes();
                     if ((progressValue > 99) || (progressValue < 0))
                     {
-                        UiService.OnUiThread(() => DecryptNodes?.Invoke(this, EventArgs.Empty));
+                        OnDecryptNodes();
                     }
                 }
             }

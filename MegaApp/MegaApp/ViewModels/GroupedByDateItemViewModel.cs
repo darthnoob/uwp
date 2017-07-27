@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
 {

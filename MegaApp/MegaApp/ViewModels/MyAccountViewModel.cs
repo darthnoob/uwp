@@ -5,12 +5,11 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    public class SettingsMyAccountViewModel: BaseSdkViewModel
+    public class MyAccountViewModel : BaseSdkViewModel
     {
-        public SettingsMyAccountViewModel()
+        public MyAccountViewModel()
         {
             this.LogOutCommand = new RelayCommand(LogOut);
-            this.Settings = new SettingsViewModel();
         }
 
         #region Commands
@@ -23,7 +22,8 @@ namespace MegaApp.ViewModels
 
         public void Initialize()
         {
-            this.Settings.Initialize();
+            AccountService.GetAccountDetails();
+            AccountService.GetPricing();
         }
 
         #endregion
@@ -39,17 +39,14 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Properties
-
-        public SettingsViewModel Settings { get; }
-
-        #endregion
-
         #region UiResources
 
+        public string GeneralTitle => ResourceService.UiResources.GetString("UI_General");
+        public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");
+        public string StorageAndTransferTitle => ResourceService.UiResources.GetString("UI_StorageAndTransfer");
+        public string UpgradeTitle => ResourceService.UiResources.GetString("UI_Upgrade");
+
         public string LogOutText => ResourceService.UiResources.GetString("UI_Logout");
-        public string OnText => ResourceService.UiResources.GetString("UI_On");
-        public string OffText => ResourceService.UiResources.GetString("UI_Off");
 
         #endregion
     }

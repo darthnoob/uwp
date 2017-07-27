@@ -217,7 +217,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
-    <value>Could not retrieve the account data from MEGA. Please try again.</value>
+    <value>Could not retrieve the account data from MEGA. Please, close the app and try again later.</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
   </data>
   <data name="AM_FetchNodesFailed_Title" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when the process to open a file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
-    <value>Your passwords do not match. Please try again.</value>
+    <value>Passwords do not match. Please try again.</value>
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
@@ -393,7 +393,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
   </data>
   <data name="AM_EmptyRequiredFields" xml:space="preserve">
-    <value>Empty fields. Please fill out all fields and try again.</value>
+    <value>Fill the required fields and try again.</value>
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
@@ -449,7 +449,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account but the confirm link is incomplete because it has less characters than it should (probably because the user hasn't copied and pasted the entire link).</comment>
   </data>
   <data name="AM_WrongPassword" xml:space="preserve">
-    <value>The typed password is incorrect</value>
+    <value>Incorrect password. Please try again.</value>
     <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
@@ -781,5 +781,69 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
   <data name="AM_InvalidUri_Title" xml:space="preserve">
     <value>Invalid URI</value>
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ResumeSessionFailed" xml:space="preserve">
+    <value>Failed to resume your session. Please, close the app and try again later.</value>
+    <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
+  </data>
+  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
+    <value>The new and the old password must not match.</value>
+    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
+  </data>
+  <data name="AM_PasswordChanged" xml:space="preserve">
+    <value>We have sent you an email confirming your password change.</value>
+    <comment>Message of the dialog displayed when the change password process finish successful.</comment>
+  </data>
+  <data name="AM_PasswordChanged_Title" xml:space="preserve">
+    <value>Password changed</value>
+    <comment>Title of the dialog displayed when the change password process finish successful.</comment>
+  </data>
+  <data name="AM_AccountUpdate" xml:space="preserve">
+    <value>Your account has been updated. Do you want to check the new account details?</value>
+    <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
+  </data>
+  <data name="AM_AccountUpdated_Title" xml:space="preserve">
+    <value>Updated account</value>
+    <comment>Title of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
+  </data>
+  <data name="AM_AlreadyPurchased" xml:space="preserve">
+    <value>Your purchase of a MEGA subscription has failed because you have already purchased this item.</value>
+    <comment>Message of the dialog displayed when a user already has purchased an item from the store</comment>
+  </data>
+  <data name="AM_AlreadyPurchased_Title" xml:space="preserve">
+    <value>Already purchased</value>
+    <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
+  </data>
+  <data name="AM_ProductUnAvailable" xml:space="preserve">
+    <value>The selected MEGA subscription is temporarily unavailable. Please try again or contact Microsoft Store support.</value>
+    <comment>Message of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
+  </data>
+  <data name="AM_ProductUnAvailable_Title" xml:space="preserve">
+    <value>Product unavailable</value>
+    <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
+  </data>
+  <data name="AM_PurchaseFailed" xml:space="preserve">
+    <value>Your purchase of a MEGA subscription has failed or has been cancelled. Please try again or contact Windows Store support.</value>
+    <comment>Message of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
+  </data>
+  <data name="AM_PurchaseFailed_Title" xml:space="preserve">
+    <value>Purchase failed or cancelled</value>
+    <comment>Title of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
+  </data>
+  <data name="AM_PurchaseSucceeded" xml:space="preserve">
+    <value>Your MEGA subscription purchase has succeeded.</value>
+    <comment>Message of the dialog displayed when a user has purchased an item from the store</comment>
+  </data>
+  <data name="AM_PurchaseSucceeded_Title" xml:space="preserve">
+    <value>Purchase succeeded</value>
+    <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
+  </data>
+  <data name="AM_UpdateProfileFailed" xml:space="preserve">
+    <value>Failed to update your profile. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to update the user profile fails.</comment>
+  </data>
+  <data name="AM_UpdateProfileFailed_Title" xml:space="preserve">
+    <value>Update profile failed</value>
+    <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
 </root>

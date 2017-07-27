@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -546,7 +545,7 @@ namespace MegaApp.ViewModels
             this.Type = megaNode.getType();
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
-            this.SizeText = this.Size.ToStringAndSuffix();
+            this.SizeText = this.Size.ToStringAndSuffix(1);
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();

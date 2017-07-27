@@ -1,6 +1,4 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Services;

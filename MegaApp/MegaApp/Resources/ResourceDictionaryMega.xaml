@@ -18,6 +18,7 @@
     <GridLength x:Key="MegaPageHeaderLogoRowHeight">44</GridLength>
     <x:Double x:Key="InputHeight">40</x:Double>
     <GridLength x:Key="PageHeaderRowHeight">48</GridLength>
+    <x:Double x:Key="ViewAreaMaxWidth">600</x:Double>
 
     <!--  Margins  -->
     <Thickness x:Key="StackedInputMargin">0,0,0,8</Thickness>
@@ -28,6 +29,7 @@
     <x:String x:Key="MegaIconVector">F1 M 18.092,16.246 C 18.092,16.450 17.927,16.615 17.725,16.615 L 16.168,16.615 C 15.966,16.615 15.802,16.450 15.802,16.246 L 15.802,11.419 C 15.802,11.378 15.752,11.357 15.723,11.387 L 12.427,14.709 C 12.140,14.997 11.676,14.997 11.390,14.709 L 8.094,11.387 C 8.065,11.357 8.015,11.378 8.015,11.419 L 8.015,16.246 C 8.015,16.450 7.851,16.615 7.649,16.615 L 6.092,16.615 C 5.889,16.615 5.725,16.450 5.725,16.246 L 5.725,7.754 C 5.725,7.550 5.889,7.385 6.092,7.385 L 7.162,7.385 C 7.356,7.385 7.543,7.462 7.680,7.601 L 11.779,11.731 C 11.850,11.803 11.966,11.803 12.038,11.731 L 16.136,7.601 C 16.274,7.462 16.460,7.385 16.655,7.385 L 17.725,7.385 C 17.927,7.385 18.092,7.550 18.092,7.754 L 18.092,16.246 Z M 12.000,0.000 C 5.373,0.000 0.000,5.373 0.000,12.000 C 0.000,18.627 5.373,24.000 12.000,24.000 C 18.627,24.000 24.000,18.627 24.000,12.000 C 24.000,5.373 18.627,0.000 12.000,0.000 Z</x:String>
 
     <!--  CONVERTERS  -->
+    <converters:IntValueToVisibilityConverter x:Key="IntValueToVisibilityConverter" />
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter" />
@@ -1297,6 +1299,232 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
+        </Grid>
+    </DataTemplate>
+
+    <ControlTemplate x:Name="StorageOverquotaWarning">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox
+                Grid.Column="0"
+                Margin="0,4,12,0"
+                MaxWidth="16" MaxHeight="16"
+                VerticalAlignment="Top">
+                <PathIcon 
+                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                    Foreground="{StaticResource MegaRedColorBrush}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,0,28"
+                FontSize="14"
+                Opacity="0.7"
+                Text="{Binding StorageOverquotaWarningText, Mode=OneTime}"
+                TextWrapping="Wrap" />
+        </Grid>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Name="TransferOverquotaWarning">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Viewbox
+                Grid.Column="0"
+                Margin="0,4,12,0"
+                MaxWidth="16" MaxHeight="16"
+                VerticalAlignment="Top">
+                <PathIcon 
+                    Data="{Binding WarningIconPathData, Mode=OneTime}"
+                    Foreground="{StaticResource MegaRedColorBrush}" />
+            </Viewbox>
+            <TextBlock
+                Grid.Column="1"
+                Margin="0,0,0,28"
+                FontSize="14"
+                Opacity="0.7"
+                Text="{Binding TransferOverquotaWarningText, Mode=OneTime}"
+                TextWrapping="Wrap" />
+        </Grid>
+    </ControlTemplate>
+
+    <DataTemplate x:Key="ProductItemTemplateDesktop">
+        <Grid 
+            Width="144"
+            Background="{ThemeResource MegaAppBackgroundBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel 
+                Grid.Row="0"
+                Margin="0,0,0,2"
+                Background="{ThemeResource MegaProductBackgroundBrush}">
+                <Viewbox 
+                    MaxWidth="24" MaxHeight="24"
+                    Margin="0,20,0,0">
+                    <PathIcon Data="{Binding ProductPathData, Mode=OneTime}">
+                        <PathIcon.Foreground>
+                            <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
+                        </PathIcon.Foreground>
+                    </PathIcon>
+                </Viewbox>
+                <TextBlock
+                    Margin="0,11,0,12"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    TextAlignment="Center"
+                    Text="{Binding Name, Mode=OneTime}">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </StackPanel>
+            <Grid 
+                Grid.Row="1"
+                Background="{ThemeResource MegaProductBackgroundBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel 
+                    Grid.Row="0"
+                    Margin="0,10,0,0">
+                    <TextBlock
+                        Style="{ThemeResource MegaTitleFontStyle}"
+                        Text="{Binding PricePeriod, Mode=OneTime}"
+                        TextAlignment="Center" />
+                    <TextBlock 
+                        TextAlignment="Center"
+                        Foreground="{StaticResource MegaAppForegroundBrush}">
+                        <Run Text="{Binding PriceIntegerPart, Mode=OneTime}" FontSize="26"/><Run Text="." FontSize="18"/><Run Text="{Binding PriceDecimalPart, Mode=OneTime}" FontSize="18"/>
+                        <Run Text="{Binding Currency, Mode=OneTime}" FontSize="16"/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel 
+                    Grid.Row="1"
+                    Margin="0,20,0,0">
+                    <TextBlock
+                        Style="{ThemeResource MegaTitleFontStyle}"
+                        Text="{Binding StorageText, Mode=OneTime}"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Style="{ThemeResource MegaBodyFontStyle}"
+                        Text="{Binding Storage, Mode=OneTime}"
+                        TextAlignment="Center" />
+                </StackPanel>
+                <StackPanel 
+                    Grid.Row="2"
+                    Margin="0,20,0,26">
+                    <TextBlock
+                        Style="{ThemeResource MegaTitleFontStyle}"
+                        Text="{Binding TransferQuotaText, Mode=OneTime}"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        Style="{ThemeResource MegaBodyFontStyle}"
+                        Text="{Binding Transfer, Mode=OneTime}"
+                        TextAlignment="Center" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ProductItemTemplateMobile">
+        <Grid 
+            MinWidth="280" Height="76"
+            Background="{ThemeResource MegaAppBackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="93"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel 
+                Grid.Column="0"
+                Margin="0,0,2,0"
+                Background="{ThemeResource MegaProductBackgroundBrush}">
+                <Viewbox 
+                    MaxWidth="24" MaxHeight="24"
+                    Margin="0,15,0,0">
+                    <PathIcon Data="{Binding ProductPathData, Mode=OneTime}">
+                        <PathIcon.Foreground>
+                            <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
+                        </PathIcon.Foreground>
+                    </PathIcon>
+                </Viewbox>
+                <TextBlock
+                    Margin="0,9,0,9"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    TextAlignment="Center"
+                    Text="{Binding Name, Mode=OneTime}">
+                    <TextBlock.Foreground>
+                        <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
+                    </TextBlock.Foreground>
+                </TextBlock>
+            </StackPanel>
+            <Grid 
+                Grid.Column="1"
+                Background="{ThemeResource MegaProductBackgroundBrush}">
+                <StackPanel Margin="12,0,12,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,4,0"
+                            TextAlignment="Left"
+                            Style="{ThemeResource MegaTitleFontStyle}"
+                            Text="{Binding StorageText, Mode=OneTime}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            TextAlignment="Right"
+                            Style="{ThemeResource MegaBodyFontStyle}"
+                            Text="{Binding Storage, Mode=OneTime}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,4,0"
+                            TextAlignment="Left"
+                            Style="{ThemeResource MegaTitleFontStyle}"
+                            Text="{Binding TransferQuotaText, Mode=OneTime}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            TextAlignment="Right"
+                            Style="{ThemeResource MegaBodyFontStyle}"
+                            Text="{Binding Transfer, Mode=OneTime}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="0,0,4,0"
+                            TextAlignment="Left"
+                            Style="{ThemeResource MegaTitleFontStyle}"
+                            Text="{Binding PricePeriod, Mode=OneTime}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            TextAlignment="Right"
+                            Style="{ThemeResource MegaBodyFontStyle}"
+                            Text="{Binding PriceAndCurrency, Mode=OneTime}">
+                            <TextBlock.Foreground>
+                                <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

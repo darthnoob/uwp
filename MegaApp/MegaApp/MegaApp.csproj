@@ -111,15 +111,20 @@
     </Compile>
     <Compile Include="Behaviors\MultiSelect.cs" />
     <Compile Include="Classes\AppInformation.cs" />
+    <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
+    <Compile Include="Classes\Product.cs" />
+    <Compile Include="Classes\ProductBase.cs" />
+    <Compile Include="Classes\PurchaseResponse.cs" />
     <Compile Include="Classes\SettingTemplateSelector.cs" />
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
     <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
@@ -128,6 +133,11 @@
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
+    <Compile Include="Views\Dialogs\ChangePasswordDialog.xaml.cs">
+      <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
@@ -145,6 +155,7 @@
     <Compile Include="Enums\NavigationParamType.cs" />
     <Compile Include="Enums\NodeActionResult.cs" />
     <Compile Include="Enums\NodeDisplayMode.cs" />
+    <Compile Include="Enums\PurchaseResponseType.cs" />
     <Compile Include="Enums\RelativeAlignment.cs" />
     <Compile Include="Enums\UriLinkType.cs" />
     <Compile Include="Enums\FolderContentViewMode.cs" />
@@ -160,23 +171,30 @@
     <Compile Include="Interfaces\ISetting.cs" />
     <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
+    <Compile Include="MegaApi\ChangePasswordRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\SubmitPurchaseReceiptRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\FastLoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FetchNodesRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetAccountDetailsRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPaymentMethodsRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPaymentUrlRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPreviewRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetPricingRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetThumbnailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserAvatarRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\PauseTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MoveNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RenameNodeRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\FastLoginRequestListener.cs" />
     <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
     <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
@@ -185,10 +203,26 @@
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\SetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AudioService.cs" />
+    <Compile Include="Services\LicenseService.cs" />
     <Compile Include="Services\ShareService.cs" />
     <Compile Include="Services\VideoService.cs" />
+    <Compile Include="UserControls\UserControlEx.cs" />
+    <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
+    <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
+      <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\ProfileView.xaml.cs">
+      <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\StorageAndTransferView.xaml.cs">
+      <DependentUpon>StorageAndTransferView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\UpgradeView.xaml.cs">
+      <DependentUpon>UpgradeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="UserControls\TogglePanel.cs" />
@@ -196,6 +230,12 @@
     <Compile Include="ViewModels\BreadCrumbsViewModel.cs" />
     <Compile Include="ViewModels\CameraUploadsViewModel.cs" />
     <Compile Include="ViewModels\GroupedByDateItemViewModel.cs" />
+    <Compile Include="ViewModels\MyAccountViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\GeneralViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\MyAccountBaseViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\StorageAndTransferViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\UpgradeViewModel.cs" />
+    <Compile Include="ViewModels\UpgradeAccountViewModel.cs" />
     <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
@@ -220,7 +260,7 @@
     <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
     <Compile Include="UserControls\ProgressPanel.cs" />
-    <Compile Include="UserControls\MenuItem.cs" />
+    <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="UserControls\PageEx.cs" />
     <Compile Include="ViewModels\BaseNavigableViewModel.cs" />
     <Compile Include="ViewModels\BasePageViewModel.cs" />
@@ -238,13 +278,13 @@
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingSectionViewModel.cs" />
-    <Compile Include="ViewModels\SettingsMyAccountViewModel.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\NodeViewModel.cs" />
     <Compile Include="ViewModels\TransferListViewModel.cs" />
     <Compile Include="ViewModels\TransferManagerViewModel.cs" />
     <Compile Include="ViewModels\TransferObjectModel.cs" />
+    <Compile Include="ViewModels\UserDataViewModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
     </Compile>
@@ -264,8 +304,11 @@
     <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\ValidationService.cs" />
-    <Compile Include="Views\SettingsMyAccountPage.xaml.cs">
-      <DependentUpon>SettingsMyAccountPage.xaml</DependentUpon>
+    <Compile Include="Views\MyAccountPage.xaml.cs">
+      <DependentUpon>MyAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
@@ -281,6 +324,7 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\WindowsStoreProxy.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -298,6 +342,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Dialogs\ChangePasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ThemeDictionariesMega.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -307,6 +355,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\MyAccount\GeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\ProfileView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\StorageAndTransferView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\UpgradeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CloudDrivePage.xaml">
       <SubType>Designer</SubType>
@@ -329,7 +393,11 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\SettingsMyAccountPage.xaml">
+    <Page Include="Views\MyAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

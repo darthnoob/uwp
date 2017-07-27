@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
@@ -19,14 +20,17 @@ namespace MegaApp.ViewModels
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader");
+            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
+        /// <summary>
+        /// Log in to a MEGA account.
+        /// </summary>
         public async void Login()
         {
             if (!CheckInputParametersAsync()) return;
@@ -40,6 +44,7 @@ namespace MegaApp.ViewModels
                 this.ControlState = false;
                 this.IsBusy = true;
 
+                this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
                 this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
@@ -56,6 +61,9 @@ namespace MegaApp.ViewModels
             {
                 case LoginResult.Success:
                     SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+
+                    // Validate product subscription license on background thread
+                    Task.Run(() => LicenseService.ValidateLicensesAsync());
 
                     // Fetch nodes from MEGA
                     if (!await this.FetchNodes()) return;
@@ -119,6 +127,51 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
+        /// Log in to a MEGA account using a session key and show an alert if something went wrong.
+        /// </summary>
+        /// <returns>TRUE if all was well or FALSE in other case.</returns>
+        public async Task<bool> FastLogin()
+        {
+            var fastLogin = new FastLoginRequestListenerAsync();
+            fastLogin.ServerBusy += OnServerBusy;
+
+            bool fastLoginResult;
+            try
+            {
+                this.ControlState = false;
+                this.IsBusy = true;
+
+                this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
+                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+
+                fastLoginResult = await fastLogin.ExecuteAsync(() =>
+                {
+                    SdkService.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
+                        ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
+                        fastLogin);
+                });
+            }
+            // Do nothing, app is already logging out
+            catch (BadSessionIdException) { return false; }
+            catch (BlockedAccountException) { return false; }
+
+            if (!fastLoginResult)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Resume session failed.");
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_ResumeSession"),
+                    ResourceService.AppMessages.GetString("AM_ResumeSessionFailed"));
+                return false;
+            }
+
+            // Validate product subscription license on background thread
+            Task.Run(() => LicenseService.ValidateLicensesAsync());
+
+            // Fetch nodes from MEGA
+            return await this.FetchNodes();
+        }
+
+        /// <summary>
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
@@ -131,16 +184,19 @@ namespace MegaApp.ViewModels
                 var fetchNodes = new FetchNodesRequestListenerAsync();
                 fetchNodes.DecryptNodes += OnDecryptNodes;
                 fetchNodes.ServerBusy += OnServerBusy;
-                if (!await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes)))
-                {
-                    this.ControlState = true;
-                    this.IsBusy = false;
 
+                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
+                if (!fetchNodesResult)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
                     return false;
                 }
+
+                this.ControlState = true;
+                this.IsBusy = false;
 
                 return true;
             }
@@ -171,7 +227,12 @@ namespace MegaApp.ViewModels
 
         #region ProgressMessages
        
-        public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_LoginHeader");
+        private string _progressHeaderText;
+        public string ProgressHeaderText
+        {
+            get { return _progressHeaderText; }
+            set { SetField(ref _progressHeaderText, value); }
+        }
 
         private string _progressSubHeaderText;
         public string ProgressSubHeaderText
