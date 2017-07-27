@@ -11,6 +11,14 @@ namespace MegaApp.MegaApi
         /// </summary>
         public EventHandler DecryptNodes;
 
+        /// <summary>
+        /// Event invocator method called when start to decrypt nodes.
+        /// </summary>
+        protected virtual void OnDecryptNodes()
+        {
+            DecryptNodes?.Invoke(this, EventArgs.Empty);
+        }
+
         #region MRequestListenerInterface
 
         public override void onRequestFinish(MegaSDK api, MRequest request, MError e)
@@ -47,7 +55,7 @@ namespace MegaApp.MegaApi
                     double progressValue = 100.0 * request.getTransferredBytes() / request.getTotalBytes();
                     if ((progressValue > 99) || (progressValue < 0))
                     {
-                        DecryptNodes?.Invoke(this, EventArgs.Empty);
+                        OnDecryptNodes();
                     }
                 }
             }
