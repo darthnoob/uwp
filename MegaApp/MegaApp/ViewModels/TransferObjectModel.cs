@@ -333,7 +333,7 @@ namespace MegaApp.ViewModels
             set { SetField(ref _totalBytes, value); }
         }
 
-        public string TotalBytesText => this.TotalBytes.ToStringAndSuffix();
+        public string TotalBytesText => this.TotalBytes.ToStringAndSuffix(1);
 
         private ulong _transferedBytes;
         public ulong TransferedBytes
@@ -349,7 +349,7 @@ namespace MegaApp.ViewModels
         }
 
         public string TransferedAndTotalBytes => string.Format("{0:n2} / {1}",
-            this.TransferedBytes.ToEqualSize(this.TotalBytes), this.TotalBytes.ToStringAndSuffix());
+            this.TransferedBytes.ToEqualSize(this.TotalBytes), this.TotalBytes.ToStringAndSuffix(1));
 
         public string TransferedPercentage => string.Format("{0}%", TransferedBytes * 100 / TotalBytes);
 

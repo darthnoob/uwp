@@ -255,7 +255,13 @@ namespace MegaApp.MegaApi
         {
             // Transfer overquota error
             if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
-                UiService.OnUiThread(() => DialogService.ShowTransferOverquotaWarning());
+            {
+                UiService.OnUiThread(() =>
+                {
+                    AccountService.AccountDetails.IsInTransferOverquota = true;
+                    DialogService.ShowTransferOverquotaWarning();
+                });
+            }
 
             // Extra checking to avoid NullReferenceException
             if (transfer == null) return;

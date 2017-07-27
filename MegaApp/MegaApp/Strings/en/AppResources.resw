@@ -237,4 +237,16 @@
     <value>7d45b1d</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
+  <data name="AR_RefundPolicyUri" xml:space="preserve">
+    <value>https://mega.nz/general</value>
+    <comment>URL to the 'Refund policy' information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_CentiliUrl" xml:space="preserve">
+    <value>https://www.centili.com/widget/WidgetModule?api=9e8eee856f4c048821954052a8d734ac&amp;clientid=</value>
+    <comment>URL for the Centili payment method. Need to add the 'clientid' at the end of this string - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_FortumoUrl" xml:space="preserve">
+    <value>http://fortumo.com/mobile_payments/f250460ec5d97fd27e361afaa366db0f?cuid=</value>
+    <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
+  </data>
 </root>

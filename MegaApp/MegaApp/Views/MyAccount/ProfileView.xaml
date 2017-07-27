@@ -1,0 +1,199 @@
+﻿<myAccountViews:BaseProfileView
+    x:Class="MegaApp.Views.MyAccount.ProfileView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.MyAccount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myAccountViews="using:MegaApp.Views.MyAccount"
+    xmlns:myAccountViewModels="using:MegaApp.ViewModels.MyAccount"
+    d:DataContext="{d:DesignInstance myAccountViewModels:ProfileViewModel}"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <x:Double x:Key="ButtonMinWidth">136</x:Double>
+    </UserControl.Resources>
+    
+    <Grid Margin="0,66,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid 
+            Grid.Column="0" Grid.Row="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <Rectangle
+                x:Name="AvatarRectangle"
+                Stroke="{ThemeResource MegaAppForegroundBrush}"
+                AutomationProperties.AccessibilityView="Raw"
+                Visibility="{Binding UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding UserData.AvatarColor, Mode=OneWay}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock
+                x:Name="AvatarLetter"
+                Text="{Binding UserData.AvatarLetter, Mode=OneWay}"
+                Foreground="White"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="{Binding UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
+            <Rectangle
+                x:Name="AvatarUri"
+                Stroke="{ThemeResource MegaAppForegroundBrush}"
+                AutomationProperties.AccessibilityView="Raw"
+                Visibility="{Binding UserData.AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{Binding UserData.AvatarUri, Mode=OneWay}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+        <StackPanel 
+            Grid.Column="1" Grid.Row="0"
+            Margin="24,0,0,0"
+            VerticalAlignment="Center">
+            <TextBlock
+                x:Name="UserNameText"
+                Margin="0,0,0,8"
+                Text="{Binding UserData.UserName, Mode=OneWay}"
+                TextWrapping="WrapWholeWords"/>
+            <TextBlock
+                x:Name="UserEmailText"
+                Opacity="0.4"
+                Text="{Binding UserData.UserEmail, Mode=OneWay}" 
+                TextWrapping="WrapWholeWords" />
+        </StackPanel>
+        
+        <ScrollViewer
+            Grid.Column="0" Grid.Row="3"
+            Grid.ColumnSpan="2"
+            Margin="0,0,-12,0"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel 
+                x:Name="MainStackPanel" 
+                HorizontalAlignment="Left"
+                MaxWidth="{StaticResource ViewAreaMaxWidth}">
+                <TextBlock
+                    Margin="0,48,0,20"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{Binding PersonalInformationTitle, Mode=OneTime}" />
+                <RelativePanel>
+                    <TextBlock
+                        x:Name="FirstNameTitle"
+                        Style="{ThemeResource MegaTitleFontStyle}"
+                        Text="{Binding FirstNameText, Mode=OneTime}" />
+                    <TextBox 
+                        x:Name="FirstNameTextBox"
+                        Style="{StaticResource MegaTextBoxStyle}"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding UserData.Firstname, Mode=OneWay}"
+                        TextChanged="OnUserAttributeChanged"/>
+                    <TextBlock
+                        x:Name="LastNameTitle"
+                        Style="{ThemeResource MegaTitleFontStyle}"
+                        Text="{Binding LastNameText, Mode=OneTime}" />
+                    <TextBox 
+                        x:Name="LastNameTextBox"
+                        Style="{StaticResource MegaTextBoxStyle}"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding UserData.Lastname, Mode=OneWay}"
+                        TextChanged="OnUserAttributeChanged" />
+                </RelativePanel>
+                <StackPanel 
+                    x:Name="AttributesModifiedButtons"
+                    Margin="0,36,0,0"
+                    Orientation="Horizontal"
+                    Visibility="Collapsed">
+                    <Button
+                        MinWidth="{StaticResource ButtonMinWidth}"
+                        Margin="0,0,4,0"
+                        Content="{Binding SaveText, Mode=OneTime}"
+                        Tapped="OnSaveButtonTapped" />
+                    <Button
+                        MinWidth="{StaticResource ButtonMinWidth}"
+                        Margin="4,0,0,0"
+                        Content="{Binding CancelText, Mode=OneTime}"
+                        Tapped="OnCancelButtonTapped"/>
+                </StackPanel>
+                <TextBlock
+                    Margin="0,64,0,28"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{Binding EmailAndPasswordTitle, Mode=OneTime}" />
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        MinWidth="{StaticResource ButtonMinWidth}"
+                        Margin="0,0,4,0"
+                        Command="{Binding ChangeEmailCommand}"
+                        Content="{Binding ChangeEmailText, Mode=OneTime}"
+                        IsEnabled="False"/>
+                    <Button
+                        MinWidth="{StaticResource ButtonMinWidth}"
+                        Margin="4,0,0,0"
+                        Command="{Binding ChangePasswordCommand}"
+                        Content="{Binding ChangePasswordText, Mode=OneTime}"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AvatarRectangle.Width" Value="74" />
+                        <Setter Target="AvatarRectangle.Height" Value="74" />
+                        <Setter Target="AvatarUri.Width" Value="74" />
+                        <Setter Target="AvatarUri.Height" Value="74" />
+                        <Setter Target="AvatarLetter.FontSize" Value="37" />
+                        <Setter Target="MainStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="UserNameText.FontSize" Value="24" />
+                        <Setter Target="UserEmailText.FontSize" Value="14" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.Below)" Value="FirstNameTitle" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="FirstNameTextBox.Margin" Value="0,0,12,0" />
+                        <Setter Target="LastNameTitle.(RelativePanel.Below)" Value="FirstNameTextBox" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.Below)" Value="LastNameTitle" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.AlignRightWith)" Value="FirstNameTextBox" />
+                        <Setter Target="LastNameTextBox.Margin" Value="0,0,12,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Medium">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AvatarRectangle.Width" Value="122" />
+                        <Setter Target="AvatarRectangle.Height" Value="122" />
+                        <Setter Target="AvatarUri.Width" Value="122" />
+                        <Setter Target="AvatarUri.Height" Value="122" />
+                        <Setter Target="AvatarLetter.FontSize" Value="61" />
+                        <Setter Target="MainStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="UserNameText.FontSize" Value="40" />
+                        <Setter Target="UserEmailText.FontSize" Value="18" />
+                        <Setter Target="FirstNameTitle.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="FirstNameTitle.Width" Value="275" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.Below)" Value="FirstNameTitle" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.AlignRightWith)" Value="FirstNameTitle" />
+                        <Setter Target="FirstNameTextBox.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="FirstNameTextBox.Margin" Value="0,0,24,0" />
+                        <Setter Target="LastNameTitle.(RelativePanel.RightOf)" Value="FirstNameTitle" />
+                        <Setter Target="LastNameTitle.Width" Value="275" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.Below)" Value="LastNameTitle" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.AlignLeftWith)" Value="LastNameTitle" />
+                        <Setter Target="LastNameTextBox.(RelativePanel.AlignRightWith)" Value="LastNameTitle" />
+                        <Setter Target="LastNameTextBox.Margin" Value="0,0,12,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</myAccountViews:BaseProfileView>

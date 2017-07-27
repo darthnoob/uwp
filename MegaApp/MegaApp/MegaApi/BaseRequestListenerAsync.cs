@@ -42,11 +42,8 @@ namespace MegaApp.MegaApi
 
         private void TimerApiEagainOnTick(object sender, object o)
         {
-            UiService.OnUiThread(() =>
-            {
-                TimerApiEagain?.Stop();
-                ServerBusy?.Invoke(this, EventArgs.Empty);
-            });
+            UiService.OnUiThread(() => TimerApiEagain?.Stop());
+            ServerBusy?.Invoke(this, EventArgs.Empty);
         }
 
         public async Task<T> ExecuteAsync(Action action)

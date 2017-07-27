@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
@@ -177,8 +178,8 @@ namespace MegaApp.MegaApi
             SettingsService.SaveMegaLoginData(_loginViewModel.Email, 
                 _loginViewModel.SessionKey);
 
-            //// Validate product subscription license on background thread
-            //Task.Run(() => LicenseService.ValidateLicensesAsync());
+            // Validate product subscription license on background thread
+            Task.Run(() => LicenseService.ValidateLicensesAsync());
         }
 
         #endregion

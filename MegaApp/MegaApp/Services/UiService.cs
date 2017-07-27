@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;
 
@@ -151,6 +153,24 @@ namespace MegaApp.Services
             {
                 var statusbar = StatusBar.GetForCurrentView();
                 await statusbar.ShowAsync();
+            }
+        }
+
+        /// <summary>
+        /// Get a Color object from an hexadecimal color string (for example for the user avatar color).
+        /// </summary>
+        /// <param name="hexColorString">Hexadecimal color string.</param>
+        /// <returns>Color object corresponding to the hexadecimal color string.</returns>
+        public static Color GetColorFromHex(string hexColorString)
+        {
+            try
+            {
+                return Microsoft.Toolkit.Uwp.ColorHelper.ToColor(hexColorString);
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting color from hexadecimal string.", e);
+                return Colors.Transparent;
             }
         }
     }

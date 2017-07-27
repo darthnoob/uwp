@@ -7,7 +7,9 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.ViewModels;
+using MegaApp.Views;
 
 namespace MegaApp.Services
 {
@@ -46,21 +48,21 @@ namespace MegaApp.Services
 
         public static async void ShowOverquotaAlert()
         {
-            await ShowAlertAsync("Overquota Alert!",
-                "Operation not allowed, you will exceed the storage limit of your account.");
+            var customMessageDialog = new CustomMessageDialog(
+                ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
+                ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
+                App.AppInformation, MessageDialogButtons.YesNo);
 
-            //var customMessageDialog = new CustomMessageDialog(
-            //    ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
-            //    ResourceService.AppMessages.GetString("AM_OverquotaAlert")
-            //    App.AppInformation, MessageDialogButtons.YesNo);
+            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            {
+                UiService.OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
+                });
+            };
 
-            //customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-            //{
-            //    ((PhoneApplicationFrame)Application.Current.RootVisual).Navigate(
-            //        new Uri("/Pages/MyAccountPage.xaml?Pivot=1", UriKind.RelativeOrAbsolute));
-            //};
-
-            //customMessageDialog.ShowDialog();
+            await customMessageDialog.ShowDialogAsync();
         }
 
         public static async void ShowTransferOverquotaWarning()

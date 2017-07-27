@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -141,6 +142,9 @@ namespace MegaApp
                 // Check session and special navigation
                 if (await AppService.CheckActiveAndOnlineSession())
                     await AppService.CheckSpecialNavigation();
+
+                // Validate product subscription license on background thread
+                Task.Run(() => LicenseService.ValidateLicensesAsync());
             }
         }
 
@@ -216,7 +220,7 @@ namespace MegaApp
             SdkService.InitializeSdkParams();
 
             // Add a global notifications listener
-            GlobalListener = new GlobalListener(AppInformation);
+            GlobalListener = new GlobalListener();
             SdkService.MegaSdk.addGlobalListener(GlobalListener);
 
             // Add a global request listener to process all.
