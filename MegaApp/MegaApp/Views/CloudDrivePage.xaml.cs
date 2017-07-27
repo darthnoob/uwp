@@ -22,6 +22,8 @@ namespace MegaApp.Views
 
     public sealed partial class CloudDrivePage : BaseCloudDrivePage
     {
+        private const double NodeDetailsMinWidth = 435;
+
         public CloudDrivePage()
         {
             InitializeComponent();
@@ -66,7 +68,7 @@ namespace MegaApp.Views
                     return;
                 }
 
-                this.NodeDetailsSplitView.OpenPaneLength = this.NodeDetailsSplitView.MinWidth;
+                this.NodeDetailsSplitView.OpenPaneLength = NodeDetailsMinWidth;
             }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);

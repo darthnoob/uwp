@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 

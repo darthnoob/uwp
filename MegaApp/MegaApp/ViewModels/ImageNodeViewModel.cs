@@ -4,7 +4,6 @@ using System.IO;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
