@@ -1,0 +1,51 @@
+﻿<dialogViews:BaseChangeEmailDialog
+    x:Class="MegaApp.Views.Dialogs.ChangeEmailDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    d:DataContext="{d:DesignInstance dialogViewModels:ChangeEmailDialogViewModel}"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.SaveText, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
+    PrimaryButtonCommand="{x:Bind ViewModel.SaveButtonCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelButtonCommand}"
+    Closing="OnClosing">
+    <dialogViews:BaseChangeEmailDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
+    </dialogViews:BaseChangeEmailDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <StackPanel>
+            <TextBlock 
+                x:Name="Description"
+                Margin="0,16,0,24"
+                Style="{StaticResource MegaDialogContentFontStyle}"
+                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"/>
+            <TextBox
+                x:Name="NewEmailTextBox"
+                FontSize="15"
+                InputScope="EmailNameOrAddress"
+                PlaceholderText="{x:Bind ViewModel.EnterNewEmailText, Mode=OneTime}"
+                Text="{x:Bind ViewModel.NewEmail, Mode=TwoWay}"
+                TextChanged="OnNewEmailChanged"
+                TextWrapping="NoWrap"
+                Style="{StaticResource MegaTextBoxStyle}"/>
+            <TextBlock 
+                x:Name="ErrorMessage"
+                Margin="0,4,0,0"
+                Style="{StaticResource MegaDialogErrorFontStyle}"
+                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseChangeEmailDialog>

@@ -107,7 +107,10 @@ namespace MegaApp
                 {
                     validUri = eventArgs.Uri.IsWellFormedOriginalString();
                     if (validUri)
-                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.AbsoluteUri);
+                    {
+                        // Use OriginalString to keep uppercase and lowercase letters
+                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+                    }
                 }
                 catch (UriFormatException ex)
                 {

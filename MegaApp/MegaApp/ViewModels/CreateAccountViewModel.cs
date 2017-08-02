@@ -85,7 +85,7 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    messageContent = ResourceService.AppMessages.GetString("AM_MalformedEmail");
+                    messageContent = ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat");
                 }
             }
             else
