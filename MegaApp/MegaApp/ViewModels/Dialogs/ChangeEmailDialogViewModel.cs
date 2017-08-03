@@ -88,7 +88,7 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Properties
 
-        public bool CanClose = false;
+        public bool CanClose { get; set; }
 
         private string _newEmail;
         public string NewEmail

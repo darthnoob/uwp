@@ -18,30 +18,38 @@ namespace MegaApp.Views
         {
             this.InitializeComponent();
 
-            this.DefaultBoxBorderBrush = this.PasswordBox.BorderBrush;
+            this.defaultBoxBorderBrush = this.PasswordBox.BorderBrush;
 
             this.ViewModel.HeaderText = ResourceService.UiResources.GetString("UI_VerifyEmailHeader");
             this.ViewModel.SubHeaderText = ResourceService.UiResources.GetString("UI_VerifyEmailSubHeader");
 
             this.EmailChangedText.Visibility = Visibility.Collapsed;
             this.OkButton.Visibility = Visibility.Collapsed;
-
-            this.ViewModel.EmailChanged += OnEmailChanged;
-            this.ViewModel.PasswordError += OnPasswordError;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
+            this.ViewModel.EmailChanged += OnEmailChanged;
+            this.ViewModel.PasswordError += OnPasswordError;
+
             DialogService.CloseAwaitEmailConfirmationDialog();
 
             this.ViewModel.ProcessVerifyEmailLink();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.ViewModel.EmailChanged -= OnEmailChanged;
+            this.ViewModel.PasswordError -= OnPasswordError;
+
+            base.OnNavigatedFrom(e);
+        }
+
         #region Properties
 
-        private readonly Brush DefaultBoxBorderBrush;
+        private readonly Brush defaultBoxBorderBrush;
 
         #endregion
 
@@ -66,7 +74,7 @@ namespace MegaApp.Views
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            this.PasswordBox.BorderBrush = DefaultBoxBorderBrush;
+            this.PasswordBox.BorderBrush = defaultBoxBorderBrush;
             this.ViewModel.ErrorMessage = string.Empty;
         }
 

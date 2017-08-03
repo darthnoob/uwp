@@ -104,13 +104,15 @@ namespace MegaApp.Services
                     NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                 return true;
             }
-            else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
+
+            if (App.LinkInformation.ActiveLink.Contains("#confirm"))
             {
                 UiService.OnUiThread(() =>
                     NavigateService.Instance.Navigate(typeof(ConfirmAccountPage), true));
                 return true;
             }
-            else if (App.LinkInformation.ActiveLink.Contains("#verify"))
+
+            if (App.LinkInformation.ActiveLink.Contains("#verify"))
             {
                 UiService.OnUiThread(() =>
                     NavigateService.Instance.Navigate(typeof(ConfirmChangeEmailPage), true));

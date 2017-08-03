@@ -17,7 +17,9 @@
     SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.SaveButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.CancelButtonCommand}"
-    Closing="OnClosing">
+    Opened="OnOpened"
+    Closing="OnClosing"
+    Closed="OnClosed">
     <dialogViews:BaseChangeEmailDialog.Title>
         <TextBlock
             Margin="24, 24, 0, 0"

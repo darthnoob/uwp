@@ -17,16 +17,12 @@ namespace MegaApp.Views.Dialogs
         {
             this.InitializeComponent();
 
-            this.DefaultBoxBorderBrush = this.NewEmailTextBox.BorderBrush;
-
-            this.ViewModel.Saved += OnSaved;
-            this.ViewModel.Canceled += OnCanceled;
-            this.ViewModel.EmailError += OnEmailError;
+            this.defaultBoxBorderBrush = this.NewEmailTextBox.BorderBrush;
         }
 
         #region Properties
 
-        private Brush DefaultBoxBorderBrush;
+        private Brush defaultBoxBorderBrush;
 
         public bool DialogResult;
 
@@ -55,14 +51,28 @@ namespace MegaApp.Views.Dialogs
 
         private void OnNewEmailChanged(object sender, RoutedEventArgs e)
         {
-            this.NewEmailTextBox.BorderBrush = DefaultBoxBorderBrush;
+            this.NewEmailTextBox.BorderBrush = defaultBoxBorderBrush;
             this.ErrorMessage.Text = string.Empty;
+        }
+
+        private void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+        {
+            this.ViewModel.Saved += OnSaved;
+            this.ViewModel.Canceled += OnCanceled;
+            this.ViewModel.EmailError += OnEmailError;
         }
 
         private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
             if (!this.ViewModel.CanClose)
                 args.Cancel = true;
+        }
+
+        private void OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            this.ViewModel.Saved -= OnSaved;
+            this.ViewModel.Canceled -= OnCanceled;
+            this.ViewModel.EmailError -= OnEmailError;
         }
 
         #endregion

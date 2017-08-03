@@ -125,45 +125,44 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void ProcessVerifyEmailLink()
         {
-            if (!string.IsNullOrWhiteSpace(App.LinkInformation.ActiveLink) && 
-                App.LinkInformation.ActiveLink.Contains("#verify"))
+            if (string.IsNullOrWhiteSpace(App.LinkInformation.ActiveLink) ||
+                !App.LinkInformation.ActiveLink.Contains("#verify")) return;
+
+            this.VerifyEmailLink = App.LinkInformation.ActiveLink;
+            App.LinkInformation.Reset();
+
+            var verifyEmail = new QueryChangeEmailLinkRequestListenerAsync();
+            var result = await verifyEmail.ExecuteAsync(() =>
+                SdkService.MegaSdk.queryChangeEmailLink(this.VerifyEmailLink, verifyEmail));
+
+            switch (result)
             {
-                this.VerifyEmailLink = App.LinkInformation.ActiveLink;
-                App.LinkInformation.Reset();
+                case QueryChangeEmailLinkResult.Success:
+                    this.Email = verifyEmail.Email;
+                    return;
 
-                var verifyEmail = new QueryChangeEmailLinkRequestListenerAsync();
-                var result = await verifyEmail.ExecuteAsync(() =>
-                    SdkService.MegaSdk.queryChangeEmailLink(this.VerifyEmailLink, verifyEmail));
+                case QueryChangeEmailLinkResult.InvalidLink:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                        ResourceService.AppMessages.GetString("AM_ChangeEmailInvalidLink"));
+                    break;
 
-                switch(result)
-                {
-                    case QueryChangeEmailLinkResult.Success:
-                        this.Email = verifyEmail.Email;
-                        return;
+                case QueryChangeEmailLinkResult.UserNotLoggedIn:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+                    break;
 
-                    case QueryChangeEmailLinkResult.InvalidLink:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_ChangeEmailInvalidLink"));
-                        break;
-
-                    case QueryChangeEmailLinkResult.UserNotLoggedIn:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_UserNotOnline"));
-                        break;
-
-                    case QueryChangeEmailLinkResult.Unknown:
-                    default:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError"));
-                        break;
-                }
-
-                OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MainPage), true,
-                        NavigationObject.Create(typeof(ConfirmChangeEmailViewModel), NavigationActionType.Default));
-                });
+                case QueryChangeEmailLinkResult.Unknown:
+                default:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                        ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError"));
+                    break;
             }
+
+            OnUiThread(() =>
+            {
+                NavigateService.Instance.Navigate(typeof(MainPage), true,
+                    NavigationObject.Create(typeof(ConfirmChangeEmailViewModel), NavigationActionType.Default));
+            });
         }
 
         #endregion
@@ -219,7 +218,7 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
-        public string MegaIconPathData { get { return ResourceService.VisualResources.GetString("VR_MegaIconPathData"); } }
+        public string MegaIconPathData => ResourceService.VisualResources.GetString("VR_MegaIconPathData");
 
         #endregion
     }
