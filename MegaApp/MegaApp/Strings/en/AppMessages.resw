@@ -846,4 +846,8 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Update profile failed</value>
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
+  <data name="AM_DownloadFailed" xml:space="preserve">
+    <value>One download has failed. Please review your downloads list and try again..</value>
+    <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
+  </data>
 </root>
