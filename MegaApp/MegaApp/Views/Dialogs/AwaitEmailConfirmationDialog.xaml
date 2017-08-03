@@ -1,0 +1,42 @@
+﻿<dialogViews:BaseAwaitEmailConfirmationDialog
+    x:Class="MegaApp.Views.Dialogs.AwaitEmailConfirmationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    d:DataContext="{d:DesignInstance dialogViewModels:AwaitEmailConfirmationDialogViewModel}"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 8"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}">
+    <dialogViews:BaseAwaitEmailConfirmationDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"/>
+    </dialogViews:BaseAwaitEmailConfirmationDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <StackPanel>
+            <TextBlock 
+                x:Name="Description"
+                Margin="0,16,0,20"
+                Style="{StaticResource MegaDialogContentFontStyle}"
+                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"/>
+            <TextBlock 
+                x:Name="NewEmailTitleText"
+                FontSize="16"
+                Opacity="0.4"
+                Text="{x:Bind ViewModel.NewEmailTitleText, Mode=OneTime}"/>
+            <TextBlock 
+                x:Name="NewEmaiAddressText"
+                FontSize="18"
+                Opacity="0.8"
+                Text="{x:Bind ViewModel.Email, Mode=OneWay}"/>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseAwaitEmailConfirmationDialog>

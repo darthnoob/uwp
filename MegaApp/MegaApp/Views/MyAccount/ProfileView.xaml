@@ -129,8 +129,7 @@
                         MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="0,0,4,0"
                         Command="{Binding ChangeEmailCommand}"
-                        Content="{Binding ChangeEmailText, Mode=OneTime}"
-                        IsEnabled="False"/>
+                        Content="{Binding ChangeEmailText, Mode=OneTime}"/>
                     <Button
                         MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="4,0,0,0"

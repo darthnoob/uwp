@@ -10,6 +10,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.ViewModels;
 using MegaApp.Views;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.Services
 {
@@ -19,13 +20,17 @@ namespace MegaApp.Services
     internal static class DialogService
     {
         /// <summary>
-        /// Show an Alert Dialog that can be dismissed by the "OK" button.
+        /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
         /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
-        public static async Task ShowAlertAsync(string title, string content)
+        /// <param name="message">Content message of the dialog</param>
+        /// <param name="button">Label of the dialog button</param>
+        public static async Task ShowAlertAsync(string title, string message, string button = null)
         {
-            var dialog = new MessageDialog(content, title);
+            if (button == null)
+                button = ResourceService.UiResources.GetString("UI_Ok");
+
+            var dialog = new AlertDialog(title, message, button);
             await dialog.ShowAsync();
         }
 
@@ -70,6 +75,33 @@ namespace MegaApp.Services
             await ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+        }
+
+        /// <summary>
+        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// </summary>
+        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+
+        /// <summary>
+        /// Show a dialog indicating that is waiting for an email confirmation
+        /// </summary>
+        /// <param name="email">Email for which is waiting confirmation</param>
+        public static async void ShowAwaitEmailConfirmationDialog(string email)
+        {
+            if (awaitEmailConfirmationDialog == null)
+                awaitEmailConfirmationDialog = new AwaitEmailConfirmationDialog(email);
+            else
+                awaitEmailConfirmationDialog.ViewModel.Email = email;
+
+            await awaitEmailConfirmationDialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// Close the await email confirmation dialog if exists
+        /// </summary>
+        public static void CloseAwaitEmailConfirmationDialog()
+        {
+            awaitEmailConfirmationDialog?.Hide();
         }
 
         /// <summary>

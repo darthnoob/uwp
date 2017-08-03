@@ -407,7 +407,9 @@
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
-                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
                                 </ListView>
@@ -425,7 +427,9 @@
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
-                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
                                 </GridView>
@@ -486,7 +490,9 @@
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                <core:EventTriggerBehavior.Actions>
+                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                </core:EventTriggerBehavior.Actions>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
                                     </ListView>
@@ -511,7 +517,9 @@
                                                 <interactivity:Interaction.Behaviors>
                                                     <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                                     <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                        <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                        <core:EventTriggerBehavior.Actions>
+                                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                        </core:EventTriggerBehavior.Actions>                                                        
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                                 <GridView.GroupStyle>
@@ -608,7 +616,9 @@
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
-                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
                                 </ListView>
@@ -626,7 +636,9 @@
                                     <interactivity:Interaction.Behaviors>
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
-                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
                                 </GridView>
