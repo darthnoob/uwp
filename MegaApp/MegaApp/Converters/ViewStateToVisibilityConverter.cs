@@ -7,7 +7,7 @@ using MegaApp.ViewModels;
 namespace MegaApp.Converters
 {
     /// <summary>
-    /// Class to convert from a viewstate  value to a Visibility state (Visible/Collapsed)
+    /// Class to convert from a viewstate value to a Visibility state (Visible/Collapsed)
     /// </summary>
     public class ViewStateToVisibilityConverter: IValueConverter
     {
@@ -25,6 +25,7 @@ namespace MegaApp.Converters
             switch (viewState)
             {
                 case FolderContentViewState.CloudDrive:
+                case FolderContentViewState.CameraUploads:
                     switch (command)
                     {
                         case "preview":
