@@ -113,6 +113,12 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
+    <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
+    <Compile Include="UserControls\ButtonPanel.cs" />
+    <Compile Include="ViewModels\ContactRequestViewModel.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
@@ -138,11 +144,19 @@
     <Compile Include="MegaApi\ConfirmChangeEmailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\QueryChangeEmailLinkRequestListenerAsync.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="ViewModels\ContactsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AddContactDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="Views\ContactsPage.xaml.cs">
+      <DependentUpon>ContactsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AddContactDialog.xaml.cs">
+      <DependentUpon>AddContactDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
     </Compile>
@@ -364,6 +378,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ContactsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddContactDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\AlertDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -177,4 +177,12 @@
     <value>Manage your uploads on this panel.</value>
     <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
+  <data name="ES_ContactsHeader" xml:space="preserve">
+    <value>Welcome to your Contacts manager</value>
+    <comment>Header text for the empty state of the contacts list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_ContactsSubHeader" xml:space="preserve">
+    <value>You can add and manage your contacts on this panel.</value>
+    <comment>Sub header text for the empty state of the contacts list.</comment>
+  </data>
 </root>

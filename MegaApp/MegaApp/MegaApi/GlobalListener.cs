@@ -12,7 +12,10 @@ namespace MegaApp.MegaApi
     {
         public event EventHandler<MNode> NodeAdded;
         public event EventHandler<MNode> NodeRemoved;
-        
+
+        public event EventHandler IncomingContactRequestUpdated;
+        public event EventHandler OutgoingContactRequestUpdated;
+
         #region MGlobalListenerInterface
 
         public void onNodesUpdate(MegaSDK api, MNodeList nodes)
@@ -73,15 +76,37 @@ namespace MegaApp.MegaApi
         }
 
         public void onContactRequestsUpdate(MegaSDK api, MContactRequestList requests)
-        {            
-            //foreach (var contacts in Contacts)
-            //{
-            //    UiService.OnUiThread(() =>
-            //    {
-            //        contacts.GetReceivedContactRequests();
-            //        contacts.GetSentContactRequests();
-            //    });
-            //}
+        {
+            // Exit methods when contact request list is incorrect
+            if (requests == null || requests.size() < 1) return;
+
+            try
+            {
+                bool isIncomingContactRequestUpdate = false;
+                bool isOutgoingContactRequestUpdate = false;
+
+                // Retrieve the listsize for performance reasons and store local
+                int listSize = requests.size();
+
+                for (int i = 0; i < listSize; i++)
+                {
+                    // Get the specific contact request that has an update. 
+                    // If null exit the method and process no notification.
+                    MContactRequest megaContactRequest = requests.get(i);
+                    if (megaContactRequest == null) return;
+
+                    if (megaContactRequest.isOutgoing())
+                        isOutgoingContactRequestUpdate = true;
+                    else
+                        isIncomingContactRequestUpdate = true;
+                }
+
+                if (isIncomingContactRequestUpdate)
+                    OnIncomingContactRequestUpdated();
+                if (isOutgoingContactRequestUpdate)
+                    OnOutgoingContactRequestUpdated();
+            }
+            catch (Exception) { /* Dummy catch, suppress possible exception */ }
         }
 
         public async void onUsersUpdate(MegaSDK api, MUserList users)
@@ -230,6 +255,16 @@ namespace MegaApp.MegaApi
         protected virtual void OnNodeRemoved(MNode e)
         {
             NodeRemoved?.Invoke(this, e);
+        }
+
+        protected virtual void OnIncomingContactRequestUpdated()
+        {
+            IncomingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnOutgoingContactRequestUpdated()
+        {
+            OutgoingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

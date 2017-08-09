@@ -51,6 +51,15 @@
         x:Key="InverseStringVisibilityConverter"
         EmptyValue="Visible"
         NotEmptyValue="Collapsed" />
+    <toolkit:EmptyCollectionToObjectConverter
+        x:Key="CollectionToBoolConverter"
+        EmptyValue="False"
+        NotEmptyValue="True"/>
+    <toolkit:EmptyCollectionToObjectConverter
+        x:Key="InverseCollectionToBoolConverter"
+        EmptyValue="True"
+        NotEmptyValue="False" />
+    <toolkit:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
     <!--  SELECTORS  -->
     <classes:NodeTemplateSelector
@@ -791,7 +800,6 @@
         </Border>
     </DataTemplate>
 
-
     <DataTemplate x:Key="CameraUploadsGridViewFileItemContent">
         <Border
             Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
@@ -1293,6 +1301,193 @@
                     Visibility="{Binding TransferState, ConverterParameter='cancel', Converter={StaticResource TransferStateToVisibilityConverter}}">
                     <AppBarButton.Icon>
                         <PathIcon 
+                            Data="{Binding CancelPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaContactItemContent">
+        <Grid Margin="0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <Image 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Width="36" Height="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill" 
+                Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelWidth="36"
+                        DecodePixelType="Logical"
+                        UriSource="{Binding AvatarUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="14"
+                Text="{Binding FullName}"
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Email}"
+                VerticalAlignment="Center"/>
+            <TextBlock
+                Grid.Row="0" Grid.Column="2"
+                Grid.RowSpan="2"
+                FontSize="14"
+                Text="{Binding NumberOfInSharesText}"
+                Opacity="0.9"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaContactRequestItemContent">
+        <Grid Margin="0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"  
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0"
+                FontSize="14"
+                Text="{Binding Email}" 
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Date}"
+                VerticalAlignment="Center" />
+            <CommandBar
+                Grid.Row="0" Grid.Column="2" 
+                Grid.RowSpan="2"
+                Margin="8,0,0,0"
+                Height="36"
+                Background="Transparent"
+                VerticalAlignment="Center"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding AcceptContactRequestCommand}"
+                    Label="{Binding AcceptText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding AcceptText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="14" MaxWidth="14">
+                        <PathIcon 
+                            Margin="0,-12,0,0"
+                            Data="{Binding AcceptPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding DeclineContactRequestCommand}"
+                    Label="{Binding DeclineText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding DeclineText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Margin="0,-12,0,0"
+                            Data="{Binding DeclinePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding RemindContactRequestCommand}"
+                    Label="{Binding RemindText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding RemindText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="12" MaxWidth="12">
+                        <SymbolIcon
+                            Margin="0,-16,0,0"
+                            Symbol="Refresh"
+                            ToolTipService.ToolTip="{Binding RemindText}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding CancelContactRequestCommand}"
+                    Label="{Binding CancelText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding CancelText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Margin="0,-12,0,0"
                             Data="{Binding CancelPathData, Mode=OneTime}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>

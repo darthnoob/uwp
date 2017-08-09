@@ -875,4 +875,21 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <value>Incorrect account. Please login into the right account and try again.</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
+  <data name="AM_ContactAlreadyExists" xml:space="preserve">
+    <value>You already have a contact with that email address</value>
+    <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
+  </data>
+  <data name="AM_InviteContactFailed" xml:space="preserve">
+    <value>The contact invitation could not be sent. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
+  </data>
+  <data name="AM_InviteContactSuccessfully" xml:space="preserve">
+    <value>User {0} has been invited and will appear on your contact list once they have accepted the invitation.</value>
+    <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
+Preserve the [{0}] code because is for include the contact email in runtime.</comment>
+  </data>
+  <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
+    <value>You are trying to add your own email as a contact.</value>
+    <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
+  </data>
 </root>

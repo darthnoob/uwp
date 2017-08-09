@@ -77,6 +77,14 @@ namespace MegaApp.ViewModels
 
                 new MenuItemViewModel()
                 {
+                    Label = ContactsText,
+                    ToolTip = ContactsText,
+                    Icon = GetIconFromXamlPath(MenuContactsPathData),
+                    TargetViewModel = typeof(ContactsViewModel)
+                },
+
+                new MenuItemViewModel()
+                {
                     Label = TransferManagerText,
                     ToolTip = TransferManagerText,
                     Icon = GetIconFromXamlPath(MenuTransfersPathData),
@@ -140,6 +148,7 @@ namespace MegaApp.ViewModels
         #region Ui_Resources
 
         private static string CameraUploadsText => ResourceService.UiResources.GetString("UI_CameraUploads");
+        private static string ContactsText => ResourceService.UiResources.GetString("UI_Contacts");
         private static string CloudDriveText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");

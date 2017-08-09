@@ -934,4 +934,44 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Please enter your password to verify your email address</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
+  <data name="UI_Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContact" xml:space="preserve">
+    <value>Add contact</value>
+    <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Contacts" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Label for any 'Contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Incoming" xml:space="preserve">
+    <value>Incoming</value>
+    <comment>Label for any 'Incoming' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Outgoing" xml:space="preserve">
+    <value>Outgoing</value>
+    <comment>Label for any 'Outgoing' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContactEmailDefaultText" xml:space="preserve">
+    <value>Hello, join me on MEGA and get access to encrypted storage and communication. Get 50 GB free!</value>
+    <comment>Default text to attach in the email to invite a contact.</comment>
+  </data>
+  <data name="UI_Email" xml:space="preserve">
+    <value>Email</value>
+    <comment>Label for any 'Email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Accept" xml:space="preserve">
+    <value>Accept</value>
+    <comment>Label for any 'Accept' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Decline" xml:space="preserve">
+    <value>Decline</value>
+    <comment>Label for any 'Decline' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Remind" xml:space="preserve">
+    <value>Remind</value>
+    <comment>Label for any 'Remind' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>
