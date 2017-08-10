@@ -319,10 +319,10 @@ namespace MegaApp.UserControls
             if (isVisible)
             {
                 this.Visibility = Visibility.Visible;
-                this.Fade(1.0f, 250.0d).Start();
+                this.Fade(1.0f, 250.0).Start();
                 return;
             }
-            await this.Fade(0.0f, 250.0d).StartAsync();
+            await this.Fade(0.0f, 250.0).StartAsync();
             this.Visibility = Visibility.Collapsed;
         }
 
