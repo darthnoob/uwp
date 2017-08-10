@@ -3,12 +3,13 @@ using System.Windows.Input;
 using Windows.UI;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    public class ContactRequestViewModel : BaseViewModel
+    public class ContactRequestViewModel : BaseViewModel, IMegaContactRequest
     {
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -43,9 +44,12 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region PrivateMethods
+        #region Public Methods
 
-        private async void AcceptContactRequest()
+        /// <summary>
+        /// Accept the contact request
+        /// </summary>
+        public async void AcceptContactRequest()
         {
             var acceptContactRequest = new ReplyContactRequestListenerAsync();
             await acceptContactRequest.ExecuteAsync(() =>
@@ -53,7 +57,10 @@ namespace MegaApp.ViewModels
                 MContactRequestReplyActionType.REPLY_ACTION_ACCEPT, acceptContactRequest));
         }
 
-        private async void DeclineContactRequest()
+        /// <summary>
+        /// Decline the contact request
+        /// </summary>
+        public async void DeclineContactRequest()
         {
             var declineContactRequest = new ReplyContactRequestListenerAsync();
             await declineContactRequest.ExecuteAsync(() =>
@@ -61,7 +68,10 @@ namespace MegaApp.ViewModels
                 MContactRequestReplyActionType.REPLY_ACTION_DENY, declineContactRequest));
         }
 
-        private async void RemindContactRequest()
+        /// <summary>
+        /// Remind the contact request
+        /// </summary>
+        public async void RemindContactRequest()
         {
             var remindContactRequest = new InviteContactRequestListenerAsync();
             await remindContactRequest.ExecuteAsync(() =>
@@ -69,7 +79,10 @@ namespace MegaApp.ViewModels
                 MContactRequestInviteActionType.INVITE_ACTION_REMIND, remindContactRequest));
         }
 
-        private async void CancelContactRequest()
+        /// <summary>
+        /// Cancel the contact request
+        /// </summary>
+        public async void CancelContactRequest()
         {
             var cancelContactRequest = new InviteContactRequestListenerAsync();
             await cancelContactRequest.ExecuteAsync(() =>
@@ -81,24 +94,35 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public MContactRequest MegaContactRequest { get; set; }
-        public ulong Handle { get; set; }
-        public string SourceMessage { get; set; }
-        public int Status { get; set; }
+        /// <summary>
+        /// Original MContactRequest from the Mega SDK that is the base of the contact request
+        /// </summary>
+        public MContactRequest MegaContactRequest { get; private set; }
 
-        private bool _isOutgoing;
-        public bool IsOutgoing
-        {
-            get { return _isOutgoing; }
-            set
-            {
-                SetField(ref _isOutgoing, value);
-                OnPropertyChanged("Email");
-                OnPropertyChanged("AvatarLetter");
-            }
-        }
+        /// <summary>
+        /// Unique identifier of the contact request
+        /// </summary>
+        public ulong Handle { get; private set; }
 
+        /// <summary>
+        /// Status of the contact request
+        /// </summary>
+        public int Status { get; private set; }
+
+        /// <summary>
+        /// Returns if the request is an incoming contact request
+        /// </summary>
+        public bool IsOutgoing { get; private set; }
+
+        /// <summary>
+        /// The message that the creator of the contact request has added
+        /// </summary>
+        public string SourceMessage { get; private set; }
+        
         private string _sourceEmail;
+        /// <summary>
+        /// The email of the request creator
+        /// </summary>
         public string SourceEmail
         {
             get { return _sourceEmail; }
@@ -111,6 +135,9 @@ namespace MegaApp.ViewModels
         }
 
         private string _targetEmail;
+        /// <summary>
+        /// The email of the recipient
+        /// </summary>
         public string TargetEmail
         {
             get { return _targetEmail; }
@@ -122,36 +149,47 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Email to display
+        /// </summary>
         public string Email => IsOutgoing ? this.TargetEmail : this.SourceEmail;
 
+        /// <summary>
+        /// Avatar letter for the contact request
+        /// </summary>
         public string AvatarLetter => !string.IsNullOrWhiteSpace(this.Email) ?
             this.Email.Substring(0, 1).ToUpper() : null;
 
         /// <summary>
-        /// Background color for the avatar
+        /// Color for the contact request avatar
         /// </summary>
-        private Color _avatarColor;
-        public Color AvatarColor
-        {
-            get { return _avatarColor; }
-            set { SetField(ref _avatarColor, value); }
-        }
+        public Color AvatarColor { get; private set; }
 
-        private long _creationTime;
-        public long CreationTime
-        {
-            get { return _creationTime; }
-            set { SetField(ref _creationTime, value); }
-        }
+        /// <summary>
+        /// The creation time of the contact request
+        /// </summary>
+        public long CreationTime { get; private set; }
 
-        private long _modificationTime;
-        public long ModificationTime
-        {
-            get { return _modificationTime; }
-            set { SetField(ref _modificationTime, value); }
-        }
+        /// <summary>
+        /// The last update time of the contact request
+        /// </summary>
+        public long ModificationTime { get; private set; }
 
+        /// <summary>
+        /// Formatted date of the las update time of the contact request
+        /// </summary>
         public string Date => OriginalDateTime.AddSeconds(this.ModificationTime).ToString("dd/MM/yy");
+
+        private bool _isMultiSelected;
+        /// <summary>
+        /// Indicates if the contact request is currently selected in a multi-select scenario
+        /// Needed as path for the ListView to auto select/deselect
+        /// </summary>
+        public bool IsMultiSelected
+        {
+            get { return _isMultiSelected; }
+            set { SetField(ref _isMultiSelected, value); }
+        }
 
         #endregion
 

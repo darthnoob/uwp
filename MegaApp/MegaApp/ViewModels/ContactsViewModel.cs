@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
@@ -19,16 +20,16 @@ namespace MegaApp.ViewModels
         {
             this.AddContactCommand = new RelayCommand(AddContact);
 
-            this.MegaContactsList = new ObservableCollection<ContactViewModel>();
-            this.MegaContactsList.CollectionChanged += (sender,args) => 
+            this.MegaContactsList = new CollectionViewModel<IMegaContact>();
+            this.MegaContactsList.Items.CollectionChanged += (sender,args) => 
                 OnPropertyChanged("MegaContactsList");
 
-            this.IncomingContactRequestList = new ObservableCollection<ContactRequestViewModel>();
-            this.IncomingContactRequestList.CollectionChanged += (sender, args) => 
+            this.IncomingContactRequestList = new CollectionViewModel<IMegaContactRequest>();
+            this.IncomingContactRequestList.Items.CollectionChanged += (sender, args) => 
                 OnPropertyChanged("IncomingContactRequestList");
 
-            this.OutgoingContactRequestList = new ObservableCollection<ContactRequestViewModel>();
-            this.OutgoingContactRequestList.CollectionChanged += (sender, args) => 
+            this.OutgoingContactRequestList = new CollectionViewModel<IMegaContactRequest>();
+            this.OutgoingContactRequestList.Items.CollectionChanged += (sender, args) => 
                 OnPropertyChanged("OutgoingContactRequestList");
         }
 
@@ -100,7 +101,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Gets the contact first name attribute
         /// </summary>
-        private async void GetContactFirstname(ContactViewModel contact)
+        private async void GetContactFirstname(IMegaContact contact)
         {
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
@@ -112,7 +113,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Gets the contact last name attribute
         /// </summary>
-        private async void GetContactLastname(ContactViewModel contact)
+        private async void GetContactLastname(IMegaContact contact)
         {
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
@@ -124,7 +125,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Gets the contact avatar color
         /// </summary>
-        private void GetContactAvatarColor(ContactViewModel contact)
+        private void GetContactAvatarColor(IMegaContact contact)
         {
             var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact.MegaUser));
             UiService.OnUiThread(() => contact.AvatarColor = avatarColor);
@@ -133,7 +134,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Gets the contact avatar
         /// </summary>
-        private async void GetContactAvatar(ContactViewModel contact)
+        private async void GetContactAvatar(IMegaContact contact)
         {
             var contactAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
             var contactAvatarResult = await contactAvatarRequestListener.ExecuteAsync(() =>
@@ -159,7 +160,7 @@ namespace MegaApp.ViewModels
 
         private void OnContactUpdated(object sender, MUser user)
         {
-            var existingContact = MegaContactsList.FirstOrDefault(
+            var existingContact = MegaContactsList.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));
 
             // If the contact exists in the contact list
@@ -169,7 +170,7 @@ namespace MegaApp.ViewModels
                 if (!existingContact.Visibility.Equals(user.getVisibility()) &&
                     !(user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE)))
                 {
-                    OnUiThread(() => MegaContactsList.Remove(existingContact));
+                    OnUiThread(() => MegaContactsList.Items.Remove(existingContact));
                 }
                 // If the contact has been changed (UPDATE CONTACT SCENARIO) and is not an own change
                 else if (!Convert.ToBoolean(user.isOwnChange()))
@@ -195,7 +196,7 @@ namespace MegaApp.ViewModels
             {
                 var megaContact = new ContactViewModel(user);
 
-                OnUiThread(() => MegaContactsList.Add(megaContact));
+                OnUiThread(() => MegaContactsList.Items.Add(megaContact));
 
                 this.GetContactFirstname(megaContact);
                 this.GetContactLastname(megaContact);
@@ -239,7 +240,7 @@ namespace MegaApp.ViewModels
                         {
                             var megaContact = new ContactViewModel(contactsList.get(i));
 
-                            OnUiThread(() => MegaContactsList.Add(megaContact));
+                            OnUiThread(() => MegaContactsList.Items.Add(megaContact));
 
                             this.GetContactFirstname(megaContact);
                             this.GetContactLastname(megaContact);
@@ -292,7 +293,7 @@ namespace MegaApp.ViewModels
                 if (inContactRequest.get(i) == null) continue;
 
                 var contactRequest = new ContactRequestViewModel(inContactRequest.get(i));
-                OnUiThread(()=> this.IncomingContactRequestList.Add(contactRequest));
+                OnUiThread(()=> this.IncomingContactRequestList.Items.Add(contactRequest));
             }
         }
 
@@ -312,7 +313,7 @@ namespace MegaApp.ViewModels
                 if (outContactRequest.get(i) == null) continue;
 
                 var contactRequest = new ContactRequestViewModel(outContactRequest.get(i));
-                OnUiThread(() => this.OutgoingContactRequestList.Add(contactRequest));
+                OnUiThread(() => this.OutgoingContactRequestList.Items.Add(contactRequest));
             }
         }
 
@@ -323,22 +324,22 @@ namespace MegaApp.ViewModels
         private CancellationTokenSource LoadingCancelTokenSource { get; set; }
         private CancellationToken LoadingCancelToken { get; set; }
 
-        private ObservableCollection<ContactViewModel> _megaContactsList;
-        public ObservableCollection<ContactViewModel> MegaContactsList
+        private CollectionViewModel<IMegaContact> _megaContactsList;
+        public CollectionViewModel<IMegaContact> MegaContactsList
         {
             get { return _megaContactsList; }
             set { SetField(ref _megaContactsList, value); }
         }
 
-        private ObservableCollection<ContactRequestViewModel> _incomingContactRequestList;
-        public ObservableCollection<ContactRequestViewModel> IncomingContactRequestList
+        private CollectionViewModel<IMegaContactRequest> _incomingContactRequestList;
+        public CollectionViewModel<IMegaContactRequest> IncomingContactRequestList
         {
             get { return _incomingContactRequestList; }
             set { SetField(ref _incomingContactRequestList, value); }
         }
 
-        private ObservableCollection<ContactRequestViewModel> _outgoingContactRequestList;
-        public ObservableCollection<ContactRequestViewModel> OutgoingContactRequestList
+        private CollectionViewModel<IMegaContactRequest> _outgoingContactRequestList;
+        public CollectionViewModel<IMegaContactRequest> OutgoingContactRequestList
         {
             get { return _outgoingContactRequestList; }
             set { SetField(ref _outgoingContactRequestList, value); }

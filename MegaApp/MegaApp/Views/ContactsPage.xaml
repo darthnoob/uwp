@@ -2,10 +2,13 @@
     x:Class="MegaApp.Views.ContactsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MegaApp.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:MegaApp.Views"
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:views="using:MegaApp.Views"
@@ -59,7 +62,7 @@
                 Grid.Column="1"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Background="Transparent"
-                IsEnabled="{Binding MegaContactsList, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                IsEnabled="{Binding MegaContactsList.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
                 <AppBarButton
                     x:Name="BtnSort"
                     Label="{Binding SortByText}"
@@ -91,7 +94,7 @@
                             Foreground="{StaticResource MegaAppForegroundBrush}"
                             VerticalAlignment="Center"
                             HeaderText="{Binding EmptyContactsHeaderText, Mode=OneTime}"
-                            IsVisible="{Binding MegaContactsList, Converter={StaticResource InverseCollectionToBoolConverter}}"
+                            IsVisible="{Binding MegaContactsList.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
                             SubHeaderMargin="0,14,0,28"
                             SubHeaderText="{Binding EmptyContactsSubHeaderText, Mode=OneTime}"
                             ButtonText="{Binding AddContactText, Mode=OneTime}"
@@ -101,7 +104,7 @@
                                 <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                             </userControls:ButtonPanel.SubHeaderForeground>
                         </userControls:ButtonPanel>
-                        <StackPanel Visibility="{Binding MegaContactsList, Converter={StaticResource CollectionVisibilityConverter}}">
+                        <StackPanel Visibility="{Binding MegaContactsList.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                             <!--<StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0,24,12,20"
@@ -113,9 +116,19 @@
                                 x:Name="ListViewContacts"
                                 Margin="-12,0,0,0"
                                 Background="{StaticResource MegaAppBackgroundBrush}"
+                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                 ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                 ItemTemplate="{StaticResource MegaContactItemContent}"
-                                ItemsSource="{Binding MegaContactsList}" />
+                                ItemsSource="{Binding MegaContactsList.Items}">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:MultiSelect SelectedItems="{Binding MegaContactsList.SelectedItems, Mode=TwoWay}" />
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:EventTriggerBehavior.Actions>
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior.Actions>
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ListView>
                         </StackPanel>
                     </Grid>
                 </PivotItem>
@@ -130,8 +143,8 @@
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                             ItemTemplate="{StaticResource MegaContactRequestItemContent}"
-                            ItemsSource="{Binding IncomingContactRequestList}"
-                            Visibility="{Binding IncomingContactRequestList, Converter={StaticResource CollectionVisibilityConverter}}" />
+                            ItemsSource="{Binding IncomingContactRequestList.Items}"
+                            Visibility="{Binding IncomingContactRequestList.Items, Converter={StaticResource CollectionVisibilityConverter}}" />
                     </Grid>
                 </PivotItem>
                 <PivotItem
@@ -145,8 +158,8 @@
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                             ItemTemplate="{StaticResource MegaContactRequestItemContent}"
-                            ItemsSource="{Binding OutgoingContactRequestList}"
-                            Visibility="{Binding OutgoingContactRequestList, Converter={StaticResource CollectionVisibilityConverter}}" />
+                            ItemsSource="{Binding OutgoingContactRequestList.Items}"
+                            Visibility="{Binding OutgoingContactRequestList.Items, Converter={StaticResource CollectionVisibilityConverter}}" />
                     </Grid>
                 </PivotItem>                
             </Pivot>
@@ -180,6 +193,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
@@ -190,6 +204,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="ListViewContacts.SelectionMode" Value="None" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />

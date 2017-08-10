@@ -12,6 +12,8 @@ namespace MegaApp.ViewModels
     /// </summary>
     /// <typeparam name="T">
     /// Type of the collection items. Supported types:
+    /// - IMegaContact
+    /// - IMegaContactRequest
     /// - IMegaNode
     /// </typeparam>
     public class CollectionViewModel<T> : BaseSdkViewModel
@@ -65,7 +67,11 @@ namespace MegaApp.ViewModels
         {
             foreach (var item in this.Items)
             {
-                if(item is IMegaNode)
+                if (item is IMegaContact)
+                    (item as IMegaContact).IsMultiSelected = onOff;
+                if (item is IMegaContactRequest)
+                    (item as IMegaContactRequest).IsMultiSelected = onOff;
+                if (item is IMegaNode)
                     (item as IMegaNode).IsMultiSelected = onOff;
             }
         }

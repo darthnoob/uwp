@@ -33,12 +33,12 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Original MUser from the Mega SDK that is the base of the contact
         /// </summary>
-        MUser MegaUser { get; set; }
+        MUser MegaUser { get;  }
 
         /// <summary>
         /// Unique identifier of the contact
         /// </summary>
-        ulong Handle { get; set; }
+        ulong Handle { get;  }
 
         /// <summary>
         /// Email associated with the contact
@@ -56,24 +56,14 @@ namespace MegaApp.Interfaces
         string LastName { get; set; }
 
         /// <summary>
-        /// Full name of the contact
-        /// </summary>
-        string FullName { get; }
-
-        /// <summary>
         /// Timestamp when the contact was added to the contact list (in seconds since the epoch)
         /// </summary>
-        ulong Timestamp { get; set; }
+        ulong Timestamp { get; }
 
         /// <summary>
-        /// Visibility of the contact
+        /// Returns the visibility of the contact
         /// </summary>
-        MUserVisibility Visibility { get; set; }
-
-        /// <summary>
-        /// Avatar letter for the contact avatar in case of the contact has not an avatar image
-        /// </summary>
-        string AvatarLetter { get; }
+        MUserVisibility Visibility { get; }
 
         /// <summary>
         /// Background color for the contact avatar in case of the contact has not an avatar image
@@ -86,7 +76,7 @@ namespace MegaApp.Interfaces
         Uri AvatarUri { get; set; }
 
         /// <summary>
-        /// Path to store the contact avatar image
+        /// Returns the path to store the contact avatar image
         /// </summary>
         string AvatarPath { get; }
 
@@ -94,6 +84,12 @@ namespace MegaApp.Interfaces
         /// List of folders shared by the contact
         /// </summary>
         MNodeList InSharesList { get; set; }
+
+        /// <summary>
+        /// Indicates if the contact is currently selected in a multi-select scenario
+        /// Needed as path for the ListView to auto select/deselect
+        /// </summary>
+        bool IsMultiSelected { get; set; }
 
         #endregion
     }

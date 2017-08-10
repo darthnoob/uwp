@@ -115,6 +115,7 @@
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
+    <Compile Include="Interfaces\IMegaContactRequest.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />

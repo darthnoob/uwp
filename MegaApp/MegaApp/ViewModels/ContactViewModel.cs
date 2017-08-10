@@ -83,22 +83,22 @@ namespace MegaApp.Classes
         /// <summary>
         /// Original MUser from the Mega SDK that is the base of the contact
         /// </summary>
-        public MUser MegaUser { get; set; }
+        public MUser MegaUser { get; private set; }
 
         /// <summary>
         /// Unique identifier of the contact
         /// </summary>
-        public ulong Handle { get; set; }
+        public ulong Handle { get; private set; }
 
         /// <summary>
         /// Timestamp when the contact was added to the contact list (in seconds since the epoch)
         /// </summary>
-        public ulong Timestamp { get; set; }
+        public ulong Timestamp { get; private set; }
 
         /// <summary>
         /// Visibility of the contact
         /// </summary>
-        public MUserVisibility Visibility { get; set; }
+        public MUserVisibility Visibility { get; private set; }
 
         private string _email;
         /// <summary>
@@ -176,7 +176,7 @@ namespace MegaApp.Classes
         }
 
         /// <summary>
-        /// Path to store the contact avatar image
+        /// Returns the path to store the contact avatar image
         /// </summary>
         public string AvatarPath => string.IsNullOrWhiteSpace(Email) ? null :
             Path.Combine(ApplicationData.Current.LocalFolder.Path, 
@@ -208,6 +208,17 @@ namespace MegaApp.Classes
         public string NumberOfInSharesText => string.Format("{0} {1}", NumberOfInShares, NumberOfInShares == 1 ? 
             ResourceService.UiResources.GetString("UI_Folder").ToLower() : 
             ResourceService.UiResources.GetString("UI_Folders").ToLower());
+
+        private bool _isMultiSelected;
+        /// <summary>
+        /// Indicates if the contact is currently selected in a multi-select scenario
+        /// Needed as path for the ListView to auto select/deselect
+        /// </summary>
+        public bool IsMultiSelected
+        {
+            get { return _isMultiSelected; }
+            set { SetField(ref _isMultiSelected, value); }
+        }
 
         #endregion
 
