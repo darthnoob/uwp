@@ -4,13 +4,14 @@ using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
 using mega;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Classes
 {
-    public class ContactViewModel : BaseViewModel
+    public class ContactViewModel : BaseViewModel, IMegaContact
     {
         public ContactViewModel(MUser contact)
         {
@@ -31,9 +32,28 @@ namespace MegaApp.Classes
 
         #endregion
 
-        #region Private Methods
+        #region Public Methods
 
-        private async void RemoveContact()
+        /// <summary>
+        /// View the profile of the contact
+        /// </summary>
+        public void ViewProfile()
+        {
+            
+        }
+
+        /// <summary>
+        /// Share a folder with the contact
+        /// </summary>
+        public void ShareFolder()
+        {
+            
+        }
+
+        /// <summary>
+        /// Remove the contact from the contact list
+        /// </summary>
+        public async void RemoveContact()
         {
             var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                 this.RemoveContactText,
@@ -60,12 +80,30 @@ namespace MegaApp.Classes
 
         #region Properties
 
+        /// <summary>
+        /// Original MUser from the Mega SDK that is the base of the contact
+        /// </summary>
         public MUser MegaUser { get; set; }
+
+        /// <summary>
+        /// Unique identifier of the contact
+        /// </summary>
         public ulong Handle { get; set; }
+
+        /// <summary>
+        /// Timestamp when the contact was added to the contact list (in seconds since the epoch)
+        /// </summary>
         public ulong Timestamp { get; set; }
+
+        /// <summary>
+        /// Visibility of the contact
+        /// </summary>
         public MUserVisibility Visibility { get; set; }
 
         private string _email;
+        /// <summary>
+        /// Email associated with the contact
+        /// </summary>
         public string Email
         {
             get { return _email; }
@@ -77,6 +115,9 @@ namespace MegaApp.Classes
         }
 
         private string _fistName;
+        /// <summary>
+        /// Firstname of the contact
+        /// </summary>
         public string FirstName
         {
             get { return _fistName; }
@@ -89,6 +130,9 @@ namespace MegaApp.Classes
         }
 
         private string _lastName;
+        /// <summary>
+        /// Lastname of the contact
+        /// </summary>
         public string LastName
         {
             get { return _lastName; }
@@ -100,26 +144,21 @@ namespace MegaApp.Classes
             }
         }
 
+        /// <summary>
+        /// Full name of the contact
+        /// </summary>
         public string FullName => string.Format(FirstName + " " + LastName);
 
         /// <summary>
-        /// Avatar letter for the avatar in case of the contact has not an avatar image.
+        /// Avatar letter for the contact avatar in case of the contact has not an avatar image
         /// </summary>
-        public string AvatarLetter
-        {
-            get
-            {
-                if (!string.IsNullOrWhiteSpace(FullName))
-                    return FullName.Substring(0, 1).ToUpper();
+        public string AvatarLetter => string.IsNullOrWhiteSpace(FullName) ?
+            Email.Substring(0, 1).ToUpper() : FullName.Substring(0, 1).ToUpper();
 
-                return Email.Substring(0, 1).ToUpper();
-            }
-        }
-
-        /// <summary>
-        /// Background color for the avatar in case of the contact has not an avatar image.
-        /// </summary>
         private Color _avatarColor;
+        /// <summary>
+        /// Background color for the contact avatar in case of the contact has not an avatar image
+        /// </summary>
         public Color AvatarColor
         {
             get { return _avatarColor; }
@@ -127,24 +166,26 @@ namespace MegaApp.Classes
         }
 
         private Uri _avatarUri;
+        /// <summary>
+        /// The uniform resource identifier of the avatar image of the contact
+        /// </summary>
         public Uri AvatarUri
         {
             get { return _avatarUri; }
             set { SetField(ref _avatarUri, value); }
         }
 
-        public string AvatarPath
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(Email)) return null;
-
-                return Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), Email);
-            }
-        }
+        /// <summary>
+        /// Path to store the contact avatar image
+        /// </summary>
+        public string AvatarPath => string.IsNullOrWhiteSpace(Email) ? null :
+            Path.Combine(ApplicationData.Current.LocalFolder.Path, 
+                ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), Email);
 
         private MNodeList _inSharesList;
+        /// <summary>
+        /// List of folders shared by the contact
+        /// </summary>
         public MNodeList InSharesList
         {
             get { return _inSharesList; }
@@ -156,8 +197,14 @@ namespace MegaApp.Classes
             }
         }
 
+        /// <summary>
+        /// Number of folders shared by the contact
+        /// </summary>
         public int NumberOfInShares => InSharesList.size();
 
+        /// <summary>
+        /// Number of folders shared by the contact as a formatted text string
+        /// </summary>
         public string NumberOfInSharesText => string.Format("{0} {1}", NumberOfInShares, NumberOfInShares == 1 ? 
             ResourceService.UiResources.GetString("UI_Folder").ToLower() : 
             ResourceService.UiResources.GetString("UI_Folders").ToLower());
