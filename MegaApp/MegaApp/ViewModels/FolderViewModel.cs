@@ -51,7 +51,7 @@ namespace MegaApp.ViewModels
             this.IsBusy = false;
             this.BusyText = null;
             this.BreadCrumb = new BreadCrumbViewModel();
-            this.ItemCollection = new NodeCollectionViewModel();           
+            this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
@@ -1204,7 +1204,7 @@ namespace MegaApp.ViewModels
 
         public BreadCrumbViewModel BreadCrumb { get; }
 
-        public NodeCollectionViewModel ItemCollection { get; }
+        public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
         public bool HasBreadCrumbPath => this.BreadCrumb?.Items?.Count > 0;
 

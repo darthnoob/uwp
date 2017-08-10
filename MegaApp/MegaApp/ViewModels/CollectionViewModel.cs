@@ -7,13 +7,20 @@ using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
 {
-    public class NodeCollectionViewModel: BaseSdkViewModel
+    /// <summary>
+    /// View model to extend the possibilities of a collection of items
+    /// </summary>
+    /// <typeparam name="T">
+    /// Type of the collection items. Supported types:
+    /// - IMegaNode
+    /// </typeparam>
+    public class CollectionViewModel<T> : BaseSdkViewModel
     {
-        public NodeCollectionViewModel()
+        public CollectionViewModel()
         {
-            this.Items = new ObservableCollection<IMegaNode>();
+            this.Items = new ObservableCollection<T>();
             this.EnableCollectionChangedDetection();
-            this.SelectedItems = new List<IMegaNode>();
+            this.SelectedItems = new List<T>();
         }
 
         #region Public Methods
@@ -58,7 +65,8 @@ namespace MegaApp.ViewModels
         {
             foreach (var item in this.Items)
             {
-                item.IsMultiSelected = onOff;
+                if(item is IMegaNode)
+                    (item as IMegaNode).IsMultiSelected = onOff;
             }
         }
 
@@ -69,8 +77,11 @@ namespace MegaApp.ViewModels
                 // Start a new task to avoid freeze the UI
                 Task.Run(() =>
                 {
-                    foreach (var node in e.NewItems)
-                        (node as NodeViewModel)?.SetThumbnailImage();
+                    foreach (var item in e.NewItems)
+                    {
+                        if (item is IMegaNode)
+                            (item as IMegaNode)?.SetThumbnailImage();
+                    }
                 });
             }
 
@@ -81,15 +92,15 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        private ObservableCollection<IMegaNode> _items;
-        public ObservableCollection<IMegaNode> Items
+        private ObservableCollection<T> _items;
+        public ObservableCollection<T> Items
         {
             get { return _items; }
             set { SetField(ref _items, value); }
         }
 
-        private IList<IMegaNode> _selectedItems;
-        public IList<IMegaNode> SelectedItems
+        private IList<T> _selectedItems;
+        public IList<T> SelectedItems
         {
             get { return _selectedItems; }
             set { SetField(ref _selectedItems, value); }

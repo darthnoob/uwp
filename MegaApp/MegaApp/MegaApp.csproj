@@ -274,7 +274,7 @@
     <Compile Include="ViewModels\MyAccount\StorageAndTransferViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\UpgradeViewModel.cs" />
     <Compile Include="ViewModels\UpgradeAccountViewModel.cs" />
-    <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
+    <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />
