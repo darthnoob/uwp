@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
@@ -47,6 +47,7 @@ namespace MegaApp.ViewModels
             this.GetOutgoingContactRequests();
 
             if (globalListener == null) return;
+            globalListener.ContactUpdated += this.OnContactUpdated;
             globalListener.IncomingContactRequestUpdated += (sender, args) => this.GetIncomingContactRequests();
             globalListener.OutgoingContactRequestUpdated += (sender, args) => this.GetOutgoingContactRequests();
         }
@@ -54,6 +55,7 @@ namespace MegaApp.ViewModels
         public void Deinitialize(GlobalListener globalListener)
         {
             if (globalListener == null) return;
+            globalListener.ContactUpdated -= this.OnContactUpdated;
             globalListener.IncomingContactRequestUpdated -= (sender, args) => this.GetIncomingContactRequests();
             globalListener.OutgoingContactRequestUpdated -= (sender, args) => this.GetOutgoingContactRequests();
         }
@@ -152,6 +154,53 @@ namespace MegaApp.ViewModels
             else
             {
                 UiService.OnUiThread(() => contact.AvatarUri = null);
+            }
+        }
+
+        private void OnContactUpdated(object sender, MUser user)
+        {
+            var existingContact = MegaContactsList.FirstOrDefault(
+                contact => contact.Handle.Equals(user.getHandle()));
+
+            // If the contact exists in the contact list
+            if (existingContact != null)
+            {
+                //If the contact is no longer a contact(REMOVE CONTACT SCENARIO)
+                if (!existingContact.Visibility.Equals(user.getVisibility()) &&
+                    !(user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE)))
+                {
+                    OnUiThread(() => MegaContactsList.Remove(existingContact));
+                }
+                // If the contact has been changed (UPDATE CONTACT SCENARIO) and is not an own change
+                else if (!Convert.ToBoolean(user.isOwnChange()))
+                {
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_AVATAR) &&
+                        !string.IsNullOrWhiteSpace(existingContact.AvatarPath))
+                    {
+                        this.GetContactAvatar(existingContact);
+                    }
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_EMAIL))
+                        OnUiThread(() => existingContact.Email = user.getEmail());
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_FIRSTNAME))
+                        this.GetContactFirstname(existingContact);
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_LASTNAME))
+                        this.GetContactLastname(existingContact);
+                }
+            }
+            // If is a new contact (ADD CONTACT SCENARIO - REQUEST ACCEPTED)
+            else if (user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE))
+            {
+                var megaContact = new ContactViewModel(user);
+
+                OnUiThread(() => MegaContactsList.Add(megaContact));
+
+                this.GetContactFirstname(megaContact);
+                this.GetContactLastname(megaContact);
+                this.GetContactAvatarColor(megaContact);
+                this.GetContactAvatar(megaContact);
             }
         }
 
