@@ -1312,6 +1312,20 @@
 
     <DataTemplate x:Key="MegaContactItemContent">
         <Grid Margin="0,6">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactCommand}"
+                            Text="{Binding RemoveContactText}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

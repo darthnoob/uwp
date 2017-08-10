@@ -892,4 +892,23 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
     <value>You are trying to add your own email as a contact.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
+  <data name="AM_RemoveContactFailed" xml:space="preserve">
+    <value>Failed to remove the contact {0}. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
+Keep the {0} code because is for include the contact email or name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveContactQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} from your contact-list?</value>
+    <comment>Question of the dialog displayed when the user is trying to remove one contact.
+Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveContactWarning" xml:space="preserve">
+    <value>Access to any folders shared with you by selected contacts will be lost.</value>
+    <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
+  </data>
+  <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} users from your contact-list?</value>
+    <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
+Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
+  </data>
 </root>

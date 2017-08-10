@@ -115,6 +115,7 @@
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="ViewModels\ContactRequestViewModel.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
     <Compile Include="Views\ContactsPage.xaml.cs">
       <DependentUpon>ContactsPage.xaml</DependentUpon>
     </Compile>
@@ -244,6 +246,9 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\UserControlEx.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
+    <Compile Include="Views\Dialogs\OkCancelAndWarningDialog.xaml.cs">
+      <DependentUpon>OkCancelAndWarningDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
     </Compile>
@@ -411,6 +416,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\OkCancelAndWarningDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>

@@ -974,6 +974,10 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Remind contact</value>
     <comment>Label for any 'Remind contact' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_RemoveContact" xml:space="preserve">
+    <value>Remove contact</value>
+    <comment>Label for any 'Remove contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_CancelInvite" xml:space="preserve">
     <value>Cancel invite</value>
     <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>

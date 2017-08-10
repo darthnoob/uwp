@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
 using mega;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels;
 
@@ -19,7 +21,44 @@ namespace MegaApp.Classes
             Visibility = contact.getVisibility();
             AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
             InSharesList = SdkService.MegaSdk.getInShares(contact);
+
+            this.RemoveContactCommand = new RelayCommand(RemoveContact);
         }
+
+        #region Commands
+
+        public ICommand RemoveContactCommand { get; }
+
+        #endregion
+
+        #region Private Methods
+
+        private async void RemoveContact()
+        {
+            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                this.RemoveContactText,
+                string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
+                ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
+                this.RemoveText, this.CancelText);
+
+            if(dialogResult)
+            {
+                var removeContact = new RemoveContactRequestListenerAsync();
+                var result = await removeContact.ExecuteAsync(() =>
+                    SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
+                if(!result)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, 
+                        string.Format("Error removing the contact {0}", this.Email));
+                    await DialogService.ShowAlertAsync(this.RemoveContactText,
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactFailed"), this.Email));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Properties
 
         public MUser MegaUser { get; set; }
         public ulong Handle { get; set; }
@@ -122,5 +161,16 @@ namespace MegaApp.Classes
         public string NumberOfInSharesText => string.Format("{0} {1}", NumberOfInShares, NumberOfInShares == 1 ? 
             ResourceService.UiResources.GetString("UI_Folder").ToLower() : 
             ResourceService.UiResources.GetString("UI_Folders").ToLower());
+
+        #endregion
+
+        #region UiResources
+
+        public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
+
+        private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        private string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+
+        #endregion
     }
 }

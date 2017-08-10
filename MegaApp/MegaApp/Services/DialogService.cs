@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -35,20 +34,40 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Show a dialog that has an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and an "OK" and a "Cancel" button option
         /// </summary>
         /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
+        /// <param name="message">Message of the dialog</param>
+        /// <param name="okButton">Label for the "Ok" button</param>
+        /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string content)
+        public static async Task<bool> ShowOkCancelAsync(string title, string message,
+            string acceptButton = null, string cancelButton = null)
         {
-            var dialog = new MessageDialog(content, title);
-            dialog.Commands.Add(new UICommand() { Id = true, Label = ResourceService.UiResources.GetString("UI_Ok") });
-            dialog.Commands.Add(new UICommand() { Id = false, Label = ResourceService.UiResources.GetString("UI_Cancel") });
-            dialog.CancelCommandIndex = 1;
-            dialog.DefaultCommandIndex = 1;
-            var result = await dialog.ShowAsync();
-            return (bool) result.Id;
+            return await ShowOkCancelAndWarningAsync(title, message, null, acceptButton, cancelButton);
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and an "OK" and a "Cancel" button option
+        /// </summary>
+        /// <param name="title">Title of the dialog</param>
+        /// <param name="message">Message of the dialog</param>
+        /// <param name="warning">Warning of the dialog</param>
+        /// <param name="okButton">Label for the "Ok" button</param>
+        /// <param name="cancelButton">Label for the "Cancel" button</param>
+        /// <returns>True if the "OK" button is pressed, else False</returns>
+        public static async Task<bool> ShowOkCancelAndWarningAsync(string title, string message, 
+            string warning, string acceptButton = null, string cancelButton = null)
+        {
+            if (acceptButton == null)
+                acceptButton = ResourceService.UiResources.GetString("UI_Ok");
+            if (cancelButton == null)
+                cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
+
+            var dialog = new OkCancelAndWarningDialog(title, message, warning, acceptButton, cancelButton);
+            await dialog.ShowAsync();
+
+            return dialog.DialogResult;
         }
 
         public static async void ShowOverquotaAlert()
