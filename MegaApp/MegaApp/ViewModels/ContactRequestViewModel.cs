@@ -157,10 +157,10 @@ namespace MegaApp.ViewModels
 
         #region Ui_Resources
 
-        public string AcceptText => ResourceService.UiResources.GetString("UI_Accept");
-        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string DeclineText => ResourceService.UiResources.GetString("UI_Decline");
-        public string RemindText => ResourceService.UiResources.GetString("UI_Remind");
+        public string AcceptContactText => ResourceService.UiResources.GetString("UI_AcceptContact");
+        public string CancelInviteText => ResourceService.UiResources.GetString("UI_CancelInvite");
+        public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
+        public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
 
         #endregion
 

@@ -3,7 +3,7 @@ using MegaApp.Enums;
 
 namespace MegaApp.MegaApi
 {
-    class InviteContactRequestListenerAsync : BaseRequestListenerAsync<InviteContactResult>
+    internal class InviteContactRequestListenerAsync : BaseRequestListenerAsync<InviteContactResult>
     {
         #region MRequestListenerInterface
 

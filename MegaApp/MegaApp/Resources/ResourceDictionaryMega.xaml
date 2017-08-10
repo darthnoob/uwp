@@ -1436,9 +1436,9 @@
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding AcceptContactRequestCommand}"
-                    Label="{Binding AcceptText}" 
+                    Label="{Binding AcceptContactText}" 
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{Binding AcceptText}"
+                    ToolTipService.ToolTip="{Binding AcceptContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="14" MaxWidth="14">
                         <PathIcon 
@@ -1451,9 +1451,9 @@
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding DeclineContactRequestCommand}"
-                    Label="{Binding DeclineText}" 
+                    Label="{Binding DenyContactText}" 
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{Binding DeclineText}"
+                    ToolTipService.ToolTip="{Binding DenyContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <AppBarButton.Icon>
                         <PathIcon 
@@ -1466,24 +1466,24 @@
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding RemindContactRequestCommand}"
-                    Label="{Binding RemindText}" 
+                    Label="{Binding RemindContactText}" 
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{Binding RemindText}"
+                    ToolTipService.ToolTip="{Binding RemindContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="12" MaxWidth="12">
                         <SymbolIcon
                             Margin="0,-16,0,0"
                             Symbol="Refresh"
-                            ToolTipService.ToolTip="{Binding RemindText}"
+                            ToolTipService.ToolTip="{Binding RemindContactText}"
                             Foreground="{StaticResource MegaAppForegroundBrush}"/>
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding CancelContactRequestCommand}"
-                    Label="{Binding CancelText}" 
+                    Label="{Binding CancelInviteText}" 
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{Binding CancelText}"
+                    ToolTipService.ToolTip="{Binding CancelInviteText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
                     <AppBarButton.Icon>
                         <PathIcon 

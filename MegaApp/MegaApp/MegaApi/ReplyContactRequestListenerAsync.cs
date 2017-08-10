@@ -2,7 +2,7 @@
 
 namespace MegaApp.MegaApi
 {
-    class ReplyContactRequestListenerAsync : BaseRequestListenerAsync<bool>
+    internal class ReplyContactRequestListenerAsync : BaseRequestListenerAsync<bool>
     {
         #region MRequestListenerInterface
 
