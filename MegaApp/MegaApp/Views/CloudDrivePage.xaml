@@ -161,7 +161,8 @@
                             Command="{Binding AddFolderCommand}"
                             Label="{Binding AddFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                            Visibility="{Binding Type, ConverterParameter=CloudDrive, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -174,7 +175,8 @@
                             Command="{Binding AcceptCopyCommand}"
                             Label="{Binding CopyText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}">
+                            ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -187,7 +189,8 @@
                             Command="{Binding AcceptMoveCommand}"
                             Label="{Binding MoveText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}">
+                            ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="MoveToFolder" />
                             </Viewbox>
@@ -794,7 +797,8 @@
                         Command="{Binding AddFolderCommand}"
                         Label="{Binding AddFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                        Visibility="{Binding Type, ConverterParameter=CloudDrive, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -807,7 +811,8 @@
                         Command="{Binding AcceptCopyCommand}"
                         Label="{Binding CopyText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                        Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -820,7 +825,8 @@
                         Command="{Binding AcceptMoveCommand}"
                         Label="{Binding MoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                        Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                         <Viewbox MaxWidth="14" MaxHeight="14">
                             <SymbolIcon Symbol="MoveToFolder" />
                         </Viewbox>

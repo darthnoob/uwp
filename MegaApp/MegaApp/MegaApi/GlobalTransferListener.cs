@@ -96,7 +96,7 @@ namespace MegaApp.MegaApi
                     switch (megaTransfer.Type)
                     {
                         case MTransferType.TYPE_DOWNLOAD:
-                            bool result = true;
+                            bool result = false;
 
                             //If is download transfer of an image file 
                             var imageNode = megaTransfer.SelectedNode as ImageNodeViewModel;

@@ -71,10 +71,6 @@ namespace MegaApp.ViewModels
             this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
             this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
-            //this.ImportItemCommand = new DelegateCommand(this.ImportItem);
-            //this.CreateShortCutCommand = new DelegateCommand(this.CreateShortCut);            
-            //this.GetLinkCommand = new DelegateCommand(this.GetLink);            
-
             SetViewDefaults();
 
             SetEmptyContent(true);
@@ -328,10 +324,6 @@ namespace MegaApp.ViewModels
         public ICommand OpenNodeDetailsCommand { get; private set; }
         public ICommand CloseNodeDetailsCommand { get; }
 
-        //public ICommand GetLinkCommand { get; private set; }        
-        //public ICommand ImportItemCommand { get; private set; }
-        //public ICommand CreateShortCutCommand { get; private set; }        
-
         #endregion
 
         #region Public Methods
@@ -555,6 +547,7 @@ namespace MegaApp.ViewModels
             switch(this.Type)
             {
                 case ContainerType.CloudDrive:
+                case ContainerType.CameraUploads:
                     title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
                     message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), count);
                     break;
@@ -594,6 +587,7 @@ namespace MegaApp.ViewModels
                 switch (this.Type)
                 {
                     case ContainerType.CloudDrive:
+                    case ContainerType.CameraUploads:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
                         message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
                         break;
@@ -829,6 +823,9 @@ namespace MegaApp.ViewModels
                                     this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderSubHeader");
                             });
                         }
+                        break;
+
+                    case ContainerType.CameraUploads:
                         break;
 
                     case ContainerType.InShares:

@@ -7,29 +7,26 @@ using MegaApp.ViewModels;
 namespace MegaApp.Converters
 {
     /// <summary>
-    /// Class to convert from a viewstate  value to a Visibility state (Visible/Collapsed)
+    /// Class to convert from a viewstate value to a Visibility state (Visible/Collapsed)
     /// </summary>
     public class ViewStateToVisibilityConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             var node = value as NodeViewModel;
-            if (node == null) return Visibility.Collapsed;
-
-            var parentFolder = node.Parent;
+            var parentFolder = node?.Parent;
             if (parentFolder == null) return Visibility.Collapsed;
 
             var viewState = parentFolder.CurrentViewState;
-            var parentFolderType = parentFolder.Type;
             var command = parameter as string;
             switch (viewState)
             {
                 case FolderContentViewState.CloudDrive:
+                case FolderContentViewState.CameraUploads:
                     switch (command)
                     {
                         case "preview":
-                            return (node.IsImage) ? 
-                                Visibility.Visible : Visibility.Collapsed;
+                            return node.IsImage ? Visibility.Visible : Visibility.Collapsed;
                         case "viewdetails":
                         case "download":
                         case "copyormove":
@@ -37,7 +34,7 @@ namespace MegaApp.Converters
                             return Visibility.Visible;
                         case "getlink":
                         case "rename":
-                            return (parentFolder.ItemCollection.MoreThanOneSelected) ? 
+                            return parentFolder.ItemCollection.MoreThanOneSelected ? 
                                 Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
@@ -61,15 +58,14 @@ namespace MegaApp.Converters
                     switch (command)
                     {
                         case "preview":
-                            return (node.IsImage) ?
-                                Visibility.Visible : Visibility.Collapsed;
+                            return node.IsImage ? Visibility.Visible : Visibility.Collapsed;
                         case "viewdetails":
                         case "download":
                         case "copyormove":
                         case "remove":
                             return Visibility.Visible;
                         case "rename":
-                            return (parentFolder.ItemCollection.MoreThanOneSelected) ?
+                            return parentFolder.ItemCollection.MoreThanOneSelected ?
                                 Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
@@ -93,7 +89,7 @@ namespace MegaApp.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }
