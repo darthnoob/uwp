@@ -17,23 +17,23 @@ namespace MegaApp.Converters
         /// <returns>Visibility display state.</returns>
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            var paramString = parameter as string;
+
             // If parameters are not valid, visibility will be "collapsed"
-            if (value == null || !(value is ContainerType))
+            if (!(value is ContainerType))
                 return Visibility.Collapsed;
-            if (parameter == null || string.IsNullOrWhiteSpace(parameter as string))
+            if (string.IsNullOrWhiteSpace(paramString))
                 return Visibility.Collapsed;
 
             // Convert "parameter" string to a ContainerType
-            var paramConvert = (ContainerType)Enum.Parse(typeof(ContainerType), parameter as string);
+            var paramConvert = (ContainerType)Enum.Parse(typeof(ContainerType), paramString);
 
-            return ((ContainerType)value == paramConvert) ? Visibility.Visible : Visibility.Collapsed;
+            return (ContainerType)value == paramConvert ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            // Not yet needed in this application
-            // Throw exception to check in testing if anything uses this method
-            throw new NotImplementedException();
+            return value;
         }
     }
 }
