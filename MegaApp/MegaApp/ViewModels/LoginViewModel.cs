@@ -118,7 +118,7 @@ namespace MegaApp.ViewModels
                 OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(this.LoginText,
-                        ResourceService.AppMessages.GetString("AM_MalformedEmail"));
+                        ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat"));
                 });
                 return false;
             }

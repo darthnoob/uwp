@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
@@ -56,9 +57,39 @@ namespace MegaApp.ViewModels.MyAccount
 
         #region Private Methods
 
-        private void ChangeEmail()
+        private async void ChangeEmail()
         {
-            
+            var changeEmailDialog = new ChangeEmailDialog();
+            await changeEmailDialog.ShowAsync();
+
+            if(changeEmailDialog.DialogResult)
+            {
+                var changeEmail = new ChangeEmailRequestListenerAsync();
+                var result = await changeEmail.ExecuteAsync(() =>
+                    SdkService.MegaSdk.changeEmail(changeEmailDialog.NewEmail, changeEmail));
+
+                switch (result)
+                {
+                    case ChangeEmailResult.Success:
+                        DialogService.ShowAwaitEmailConfirmationDialog(changeEmailDialog.NewEmail);
+                        break;
+
+                    case ChangeEmailResult.AlreadyRequested:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                            ResourceService.AppMessages.GetString("AM_ChangeEmailAlreadyRequested"));
+                        break;
+
+                    case ChangeEmailResult.UserNotLoggedIn:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                            ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+                        break;
+
+                    case ChangeEmailResult.Unknown:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                            ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError"));
+                        break;
+                }
+            }
         }
 
         private async void ChangePassword()

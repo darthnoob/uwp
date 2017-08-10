@@ -78,6 +78,15 @@ namespace MegaApp.Services
                         return SpecialNavigation();
                     }
                 }
+                else if (App.LinkInformation.ActiveLink.Contains("#verify"))
+                {
+                    if (hasActiveAndOnlineSession)
+                        return SpecialNavigation();
+
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+                }
             }
 
             return false;
@@ -95,10 +104,18 @@ namespace MegaApp.Services
                     NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                 return true;
             }
-            else if (App.LinkInformation.ActiveLink.Contains("#confirm"))
+
+            if (App.LinkInformation.ActiveLink.Contains("#confirm"))
             {
                 UiService.OnUiThread(() =>
                     NavigateService.Instance.Navigate(typeof(ConfirmAccountPage), true));
+                return true;
+            }
+
+            if (App.LinkInformation.ActiveLink.Contains("#verify"))
+            {
+                UiService.OnUiThread(() =>
+                    NavigateService.Instance.Navigate(typeof(ConfirmChangeEmailPage), true));
                 return true;
             }
 

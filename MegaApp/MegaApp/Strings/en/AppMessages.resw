@@ -287,9 +287,9 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <value>Logout failed</value>
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
-  <data name="AM_MalformedEmail" xml:space="preserve">
-    <value>Malformed email. Please try again.</value>
-    <comment>Message of the dialog displayed when the user types a malformed email address.</comment>
+  <data name="AM_IncorrectEmailFormat" xml:space="preserve">
+    <value>Incorrect email format. Please try again.</value>
+    <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
     <value>Not enough free memory space to complete this operation. The app will shut down now</value>
@@ -421,11 +421,11 @@ Preserve the {0} code because is for include the exact time until the user has t
   </data>
   <data name="AM_UserNotOnline" xml:space="preserve">
     <value>You are not logged into MEGA. Please re-login.</value>
-    <comment>Message of the dialog displayed when the user is online and is trying to do any operation that requires connection.</comment>
+    <comment>Message of the dialog displayed when the user is not online and is trying to do any operation that requires connection.</comment>
   </data>
   <data name="AM_UserNotOnline_Title" xml:space="preserve">
     <value>Not online</value>
-    <comment>Title of the dialog displayed when the user is online and is trying to do any operation that requires connection - (String as short as possible).</comment>
+    <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
     <value>Incorrect email and/or password. Please try again.</value>
@@ -849,5 +849,34 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
   <data name="AM_DownloadFailed" xml:space="preserve">
     <value>One download has failed. Please review your downloads list and try again..</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
+  </data>
+  <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
+    <value>Awaiting email confirmation</value>
+    <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
+  </data>
+  <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
+    <value>Please go to your inbox and click the link to confirm your new email address.</value>
+    <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
+  </data>
+  <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
+    <value>You have already requested a confirmation link for that email address.</value>
+    <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
+  </data>
+  <data name="AM_ChangeEmailGenericError" xml:space="preserve">
+    <value>Failed to change your email. Please try again later.</value>
+    <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
+  </data>
+  <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
+    <value>Congratulations, your new e-mail address for this MEGA account is: {0}</value>
+    <comment>Message of the dialog displayed when a user changes the email successfully.
+Preserve the {0} code because is for include the email address in runtime.</comment>
+  </data>
+  <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
+    <value>The link you are using for change the email is not valid.</value>
+    <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
+  </data>
+  <data name="AM_WrongAccount" xml:space="preserve">
+    <value>Incorrect account. Please login into the right account and try again.</value>
+    <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
 </root>

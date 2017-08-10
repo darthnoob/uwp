@@ -906,4 +906,32 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>See more info</value>
     <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ChangeEmailDescription" xml:space="preserve">
+    <value>Enter your new email address in the text field above and click Save. Following that, please go to your email inbox and confirm this email change.</value>
+    <comment>Text to describe the change email process.</comment>
+  </data>
+  <data name="UI_NewEmail" xml:space="preserve">
+    <value>New email</value>
+    <comment>Label for any 'New email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnterNewEmail" xml:space="preserve">
+    <value>Enter new email address</value>
+    <comment>Placeholder text to insert the new email during the process to change the email - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmEmail" xml:space="preserve">
+    <value>Confirm email</value>
+    <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmailChangedSuccessful" xml:space="preserve">
+    <value>Congratulation, your new email address for this MEGA account is</value>
+    <comment>Text displayed to inform that the email was successfully changed.</comment>
+  </data>
+  <data name="UI_VerifyEmailHeader" xml:space="preserve">
+    <value>Verify your email address</value>
+    <comment>Header of the text displayed to verify an email address. - String as short as possible).</comment>
+  </data>
+  <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
+    <value>Please enter your password to verify your email address</value>
+    <comment>Subheader of the text displayed to verify an email address.</comment>
+  </data>
 </root>
