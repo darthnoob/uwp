@@ -80,7 +80,7 @@ namespace MegaApp.ViewModels
                     Label = ContactsText,
                     ToolTip = ContactsText,
                     Icon = GetIconFromXamlPath(MenuContactsPathData),
-                    TargetViewModel = typeof(ContactsViewModel)
+                    TargetViewModel = typeof(ContactsManagerViewModel)
                 },
 
                 new MenuItemViewModel()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,25 +11,15 @@ using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.Contacts
 {
-    public class ContactsViewModel : BaseSdkViewModel
+    public class ContactsListViewModel : BaseSdkViewModel
     {
-        public ContactsViewModel()
+        public ContactsListViewModel()
         {
-            this.AddContactCommand = new RelayCommand(AddContact);
-
             this.MegaContactsList = new CollectionViewModel<IMegaContact>();
-            this.MegaContactsList.Items.CollectionChanged += (sender,args) => 
-                OnPropertyChanged("MegaContactsList");
 
-            this.IncomingContactRequestList = new CollectionViewModel<IMegaContactRequest>();
-            this.IncomingContactRequestList.Items.CollectionChanged += (sender, args) => 
-                OnPropertyChanged("IncomingContactRequestList");
-
-            this.OutgoingContactRequestList = new CollectionViewModel<IMegaContactRequest>();
-            this.OutgoingContactRequestList.Items.CollectionChanged += (sender, args) => 
-                OnPropertyChanged("OutgoingContactRequestList");
+            this.AddContactCommand = new RelayCommand(AddContact);
         }
 
         #region Commands
@@ -39,45 +28,35 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Public Methods
+        #region Methods
 
         public void Initialize(GlobalListener globalListener)
         {
             this.GetMegaContacts();
-            this.GetIncomingContactRequests();
-            this.GetOutgoingContactRequests();
 
-            if (globalListener == null) return;
+            if (App.GlobalListener == null) return;
             globalListener.ContactUpdated += this.OnContactUpdated;
-            globalListener.IncomingContactRequestUpdated += (sender, args) => this.GetIncomingContactRequests();
-            globalListener.OutgoingContactRequestUpdated += (sender, args) => this.GetOutgoingContactRequests();
         }
 
         public void Deinitialize(GlobalListener globalListener)
         {
             if (globalListener == null) return;
             globalListener.ContactUpdated -= this.OnContactUpdated;
-            globalListener.IncomingContactRequestUpdated -= (sender, args) => this.GetIncomingContactRequests();
-            globalListener.OutgoingContactRequestUpdated -= (sender, args) => this.GetOutgoingContactRequests();
         }
 
-        #endregion
-
-        #region Private Methods
-
-        private async void AddContact()
+        public async void AddContact()
         {
             var addContactDialog = new AddContactDialog();
             await addContactDialog.ShowAsync();
 
-            if(addContactDialog.DialogResult)
+            if (addContactDialog.DialogResult)
             {
                 var inviteContact = new InviteContactRequestListenerAsync();
                 var result = await inviteContact.ExecuteAsync(() =>
                     SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
                         MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
 
-                switch(result)
+                switch (result)
                 {
                     case Enums.InviteContactResult.Success:
                         await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
@@ -98,6 +77,74 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public async void GetMegaContacts()
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            // First cancel any other loading task that is busy
+            CancelLoad();
+
+            // Create the option to cancel
+            CreateLoadCancelOption();
+
+            await OnUiThreadAsync(() => MegaContactsList.Clear());
+            MUserList contactsList = SdkService.MegaSdk.getContacts();
+
+            await Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    for (int i = 0; i < contactsList.size(); i++)
+                    {
+                        // If the task has been cancelled, stop processing
+                        if (LoadingCancelToken.IsCancellationRequested)
+                            LoadingCancelToken.ThrowIfCancellationRequested();
+
+                        // To avoid null values
+                        if (contactsList.get(i) == null) continue;
+
+                        if ((contactsList.get(i).getVisibility() == MUserVisibility.VISIBILITY_VISIBLE))
+                        {
+                            var megaContact = new ContactViewModel(contactsList.get(i));
+
+                            OnUiThread(() => MegaContactsList.Items.Add(megaContact));
+
+                            this.GetContactFirstname(megaContact);
+                            this.GetContactLastname(megaContact);
+                            this.GetContactAvatarColor(megaContact);
+                            this.GetContactAvatar(megaContact);
+                        }
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    // Do nothing. Just exit this background process because a cancellation exception has been thrown
+                }
+
+            }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
+        }
+
+        /// <summary>
+        /// Cancel any running load process of contacts
+        /// </summary>
+        public void CancelLoad()
+        {
+            if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
+                LoadingCancelTokenSource.Cancel();
+        }
+
+        private void CreateLoadCancelOption()
+        {
+            if (this.LoadingCancelTokenSource != null)
+            {
+                this.LoadingCancelTokenSource.Dispose();
+                this.LoadingCancelTokenSource = null;
+            }
+            this.LoadingCancelTokenSource = new CancellationTokenSource();
+            this.LoadingCancelToken = LoadingCancelTokenSource.Token;
+        }
+
         /// <summary>
         /// Gets the contact first name attribute
         /// </summary>
@@ -105,7 +152,7 @@ namespace MegaApp.ViewModels
         {
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(contact.MegaUser, 
+                SdkService.MegaSdk.getUserAttribute(contact.MegaUser,
                 (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
             UiService.OnUiThread(() => contact.FirstName = firstName);
         }
@@ -207,118 +254,6 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Public Methods
-
-        public async void GetMegaContacts()
-        {
-            // User must be online to perform this operation
-            if (!IsUserOnline()) return;
-
-            // First cancel any other loading task that is busy
-            CancelLoad();
-
-            // Create the option to cancel
-            CreateLoadCancelOption();
-
-            await OnUiThreadAsync(() => MegaContactsList.Clear());
-            MUserList contactsList = this.MegaSdk.getContacts();
-
-            await Task.Factory.StartNew(() =>
-            {
-                try
-                {
-                    for (int i = 0; i < contactsList.size(); i++)
-                    {
-                        // If the task has been cancelled, stop processing
-                        if (LoadingCancelToken.IsCancellationRequested)
-                            LoadingCancelToken.ThrowIfCancellationRequested();
-
-                        // To avoid null values
-                        if (contactsList.get(i) == null) continue;
-
-                        if ((contactsList.get(i).getVisibility() == MUserVisibility.VISIBILITY_VISIBLE))
-                        {
-                            var megaContact = new ContactViewModel(contactsList.get(i));
-
-                            OnUiThread(() => MegaContactsList.Items.Add(megaContact));
-
-                            this.GetContactFirstname(megaContact);
-                            this.GetContactLastname(megaContact);
-                            this.GetContactAvatarColor(megaContact);
-                            this.GetContactAvatar(megaContact);
-                        }
-                    }
-                }
-                catch (OperationCanceledException)
-                {
-                    // Do nothing. Just exit this background process because a cancellation exception has been thrown
-                }
-
-            }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
-        }
-
-        /// <summary>
-        /// Cancel any running load process of contacts
-        /// </summary>
-        public void CancelLoad()
-        {
-            if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
-                LoadingCancelTokenSource.Cancel();
-        }
-
-        private void CreateLoadCancelOption()
-        {
-            if (this.LoadingCancelTokenSource != null)
-            {
-                this.LoadingCancelTokenSource.Dispose();
-                this.LoadingCancelTokenSource = null;
-            }
-            this.LoadingCancelTokenSource = new CancellationTokenSource();
-            this.LoadingCancelToken = LoadingCancelTokenSource.Token;
-        }
-
-        public async void GetIncomingContactRequests()
-        {
-            // User must be online to perform this operation
-            if (!IsUserOnline()) return;
-
-            await OnUiThreadAsync(() => this.IncomingContactRequestList.Clear());
-
-            var inContactRequest = SdkService.MegaSdk.getIncomingContactRequests();
-            var inContactRequestSize = inContactRequest.size();
-
-            for (int i = 0; i < inContactRequestSize; i++)
-            {
-                // To avoid null values
-                if (inContactRequest.get(i) == null) continue;
-
-                var contactRequest = new ContactRequestViewModel(inContactRequest.get(i));
-                OnUiThread(()=> this.IncomingContactRequestList.Items.Add(contactRequest));
-            }
-        }
-
-        public async void GetOutgoingContactRequests()
-        {
-            // User must be online to perform this operation
-            if (!IsUserOnline()) return;
-
-            await OnUiThreadAsync(() => this.OutgoingContactRequestList.Clear());
-
-            var outContactRequest = SdkService.MegaSdk.getOutgoingContactRequests();
-            var outContactRequestSize = outContactRequest.size();
-
-            for (int i = 0; i < outContactRequestSize; i++)
-            {
-                // To avoid null values
-                if (outContactRequest.get(i) == null) continue;
-
-                var contactRequest = new ContactRequestViewModel(outContactRequest.get(i));
-                OnUiThread(() => this.OutgoingContactRequestList.Items.Add(contactRequest));
-            }
-        }
-
-        #endregion
-
         #region Properties
 
         private CancellationTokenSource LoadingCancelTokenSource { get; set; }
@@ -331,40 +266,14 @@ namespace MegaApp.ViewModels
             set { SetField(ref _megaContactsList, value); }
         }
 
-        private CollectionViewModel<IMegaContactRequest> _incomingContactRequestList;
-        public CollectionViewModel<IMegaContactRequest> IncomingContactRequestList
-        {
-            get { return _incomingContactRequestList; }
-            set { SetField(ref _incomingContactRequestList, value); }
-        }
-
-        private CollectionViewModel<IMegaContactRequest> _outgoingContactRequestList;
-        public CollectionViewModel<IMegaContactRequest> OutgoingContactRequestList
-        {
-            get { return _outgoingContactRequestList; }
-            set { SetField(ref _outgoingContactRequestList, value); }
-        }
-
         #endregion
 
         #region UiResources
 
-        public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
-        public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
-        public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");
-
         public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
-        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
-
+        
         public string EmptyContactsHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsHeader");
         public string EmptyContactsSubHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsSubHeader");
-
-        #endregion
-
-        #region VisualResources
-
-        public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
-        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
 
         #endregion
     }

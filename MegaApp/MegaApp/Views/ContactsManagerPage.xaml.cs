@@ -9,11 +9,11 @@ namespace MegaApp.Views
 {
     // Helper class to define the viewmodel of this page
     // XAML cannot use generic in it's declaration.
-    public class BaseContactsPage : PageEx<ContactsViewModel> { }
+    public class BaseContactsManagerPage : PageEx<ContactsManagerViewModel> { }
 
-    public sealed partial class ContactsPage : BaseContactsPage
+    public sealed partial class ContactsManagerPage : BaseContactsManagerPage
     {
-        public ContactsPage()
+        public ContactsManagerPage()
         {
             this.InitializeComponent();
         }
@@ -32,12 +32,12 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.ContactsPagePivot.SelectedItem.Equals(this.ContactsPivot) ||
-                this.ContactsPagePivot.SelectedItem.Equals(this.OutgoingPivot))
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot) ||
+                this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
             {
                 this.AddContactCommandBarButton.Visibility = Visibility.Visible;
             }
-            else if (this.ContactsPagePivot.SelectedItem.Equals(this.IncomingPivot))
+            else if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
             {
                 this.AddContactCommandBarButton.Visibility = Visibility.Collapsed;
             }

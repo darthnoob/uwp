@@ -4,12 +4,12 @@ using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
 using mega;
+using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels;
 
-namespace MegaApp.Classes
+namespace MegaApp.ViewModels
 {
     public class ContactViewModel : BaseViewModel, IMegaContact
     {

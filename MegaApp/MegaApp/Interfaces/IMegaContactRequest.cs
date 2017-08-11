@@ -47,7 +47,7 @@ namespace MegaApp.Interfaces
         int Status { get; }
 
         /// <summary>
-        /// Returns if the request is an incoming contact request
+        /// Returns if the request is an outgoing contact request
         /// </summary>
         bool IsOutgoing { get; }
 

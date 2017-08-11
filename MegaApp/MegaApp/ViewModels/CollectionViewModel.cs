@@ -92,6 +92,7 @@ namespace MegaApp.ViewModels
             }
 
             OnPropertyChanged("HasItems");
+            OnPropertyChanged("Items");
         }
 
         #endregion
