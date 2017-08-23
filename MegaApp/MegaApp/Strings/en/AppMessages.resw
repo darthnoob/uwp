@@ -911,4 +911,8 @@ Keep the '{0}' code because is for include the contact email or name in runtime.
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
+  <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
+    <value>Failed removing contacts. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
+  </data>
 </root>

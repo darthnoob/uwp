@@ -1,8 +1,9 @@
-﻿using System.Windows.Input;
-using MegaApp.Classes;
+﻿using System;
+using mega;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
 {
@@ -11,17 +12,13 @@ namespace MegaApp.ViewModels
         public ContactsManagerViewModel()
         {
             this.MegaContacts = new ContactsListViewModel();
+            this.MegaContacts.AddContactTapped += OnAddContactTapped;
+
             this.IncomingContactRequests = new ContactRequestsListViewModel(false);
+
             this.OutgoingContactRequests = new ContactRequestsListViewModel(true);
-
-            this.AddContactCommand = new RelayCommand(AddContact);
+            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
         }
-
-        #region Commands
-
-        public ICommand AddContactCommand { get; }
-
-        #endregion
 
         #region Methods
 
@@ -39,14 +36,49 @@ namespace MegaApp.ViewModels
             this.OutgoingContactRequests.Deinitialize(globalListener);
         }
 
-        private void AddContact()
+        private async void OnAddContactTapped(object sender, EventArgs e)
         {
-            this.MegaContacts.AddContact();
+            var addContactDialog = new AddContactDialog();
+            await addContactDialog.ShowAsync();
+
+            if (addContactDialog.DialogResult)
+            {
+                var inviteContact = new InviteContactRequestListenerAsync();
+                var result = await inviteContact.ExecuteAsync(() =>
+                    SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
+                        MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
+
+                switch (result)
+                {
+                    case Enums.InviteContactResult.Success:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
+                            addContactDialog.ContactEmail));
+                        break;
+
+                    case Enums.InviteContactResult.AlreadyExists:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                            ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
+                        break;
+
+                    case Enums.InviteContactResult.Unknown:
+                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                            ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
+                        break;
+                }
+            }
         }
 
         #endregion
 
         #region Properties
+
+        private object _activeView;
+        public object ActiveView
+        {
+            get { return _activeView; }
+            set { SetField(ref _activeView, value); }
+        }
 
         private ContactsListViewModel _megaContacts;
         public ContactsListViewModel MegaContacts
@@ -76,17 +108,7 @@ namespace MegaApp.ViewModels
         public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
         public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
         public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");
-
-        public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
-        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
-
-        #endregion
-
-        #region VisualResources
-
-        public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
-        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
-
+        
         #endregion
     }
 }

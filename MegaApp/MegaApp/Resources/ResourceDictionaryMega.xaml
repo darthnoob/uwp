@@ -29,6 +29,7 @@
     <x:String x:Key="MegaIconVector">F1 M 18.092,16.246 C 18.092,16.450 17.927,16.615 17.725,16.615 L 16.168,16.615 C 15.966,16.615 15.802,16.450 15.802,16.246 L 15.802,11.419 C 15.802,11.378 15.752,11.357 15.723,11.387 L 12.427,14.709 C 12.140,14.997 11.676,14.997 11.390,14.709 L 8.094,11.387 C 8.065,11.357 8.015,11.378 8.015,11.419 L 8.015,16.246 C 8.015,16.450 7.851,16.615 7.649,16.615 L 6.092,16.615 C 5.889,16.615 5.725,16.450 5.725,16.246 L 5.725,7.754 C 5.725,7.550 5.889,7.385 6.092,7.385 L 7.162,7.385 C 7.356,7.385 7.543,7.462 7.680,7.601 L 11.779,11.731 C 11.850,11.803 11.966,11.803 12.038,11.731 L 16.136,7.601 C 16.274,7.462 16.460,7.385 16.655,7.385 L 17.725,7.385 C 17.927,7.385 18.092,7.550 18.092,7.754 L 18.092,16.246 Z M 12.000,0.000 C 5.373,0.000 0.000,5.373 0.000,12.000 C 0.000,18.627 5.373,24.000 12.000,24.000 C 18.627,24.000 24.000,18.627 24.000,12.000 C 24.000,5.373 18.627,0.000 12.000,0.000 Z</x:String>
 
     <!--  CONVERTERS  -->
+    <converters:ContactsViewStateToVisibilityConverter x:Key="ContactsViewStateToVisibilityConverter" />
     <converters:IntValueToVisibilityConverter x:Key="IntValueToVisibilityConverter" />
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
@@ -1317,7 +1318,14 @@
                     <MenuFlyout.Items>
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
-                            Text="{Binding RemoveContactText}" />
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveContactText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveMultipleContactsText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -1333,7 +1341,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" MinWidth="116"/>
             </Grid.ColumnDefinitions>
             <Rectangle 
                 Grid.Row="0" Grid.Column="0" 
@@ -1384,19 +1392,59 @@
                 Opacity="0.5"
                 Text="{Binding Email}"
                 VerticalAlignment="Center"/>
-            <TextBlock
+            <StackPanel
                 Grid.Row="0" Grid.Column="2"
                 Grid.RowSpan="2"
-                FontSize="14"
-                Text="{Binding NumberOfInSharesText}"
-                Opacity="0.9"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center" />
+                Orientation="Horizontal">
+                <Viewbox MaxHeight="14" MaxWidth="14">
+                    <PathIcon 
+                        Data="{Binding IncomingSharedFolderPathData, Mode=OneTime}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Opacity="0.9"/>
+                </Viewbox>
+                <TextBlock
+                    Margin="8,0,0,0"
+                    FontSize="13"
+                    Text="{Binding NumberOfInSharesText}"
+                    Opacity="0.9"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+            </StackPanel>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactRequestItemContent">
         <Grid Margin="0,6">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding AcceptContactRequestCommand}"
+                            Text="{Binding AcceptContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding DeclineContactRequestCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding DenyContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemindContactRequestCommand}"
+                            Text="{Binding RemindContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding CancelContactRequestCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding CancelInviteText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1446,7 +1494,8 @@
                 Height="36"
                 Background="Transparent"
                 VerticalAlignment="Center"
-                extensions:CommandBarExtensions.HideMoreButton="True">
+                extensions:CommandBarExtensions.HideMoreButton="True"
+                Visibility="{Binding ContactRequestsList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding AcceptContactRequestCommand}"

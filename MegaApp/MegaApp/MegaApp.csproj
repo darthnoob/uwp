@@ -113,6 +113,8 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
+    <Compile Include="Converters\ContactsViewStateToVisibilityConverter.cs" />
+    <Compile Include="Enums\ContactsViewState.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
@@ -177,7 +180,6 @@
     </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ChangeEmailResult.cs" />
-    <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />

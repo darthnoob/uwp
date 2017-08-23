@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using mega;
 using Windows.UI;
 
@@ -24,7 +25,9 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Remove the contact from the contact list
         /// </summary>
-        void RemoveContact();
+        /// <param name="isMultiSelect">True if the contact is in a multi-select scenario</param>
+        /// <returns>Result of the action</returns>
+        Task<bool> RemoveContactAsync(bool isMultiSelect = false);
 
         #endregion
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
@@ -9,11 +10,11 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.Contacts
 {
-    public class ContactViewModel : BaseViewModel, IMegaContact
+    public class ContactViewModel : BaseSdkViewModel, IMegaContact
     {
-        public ContactViewModel(MUser contact)
+        public ContactViewModel(MUser contact, ContactsListViewModel contactList)
         {
             MegaUser = contact;
             Handle = contact.getHandle();
@@ -22,6 +23,7 @@ namespace MegaApp.ViewModels
             Visibility = contact.getVisibility();
             AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
             InSharesList = SdkService.MegaSdk.getInShares(contact);
+            this.ContactList = contactList;
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
         }
@@ -50,30 +52,56 @@ namespace MegaApp.ViewModels
             
         }
 
+        private async void RemoveContact()
+        {
+            if (this.ContactList != null && this.ContactList.IsMultiSelectActive)
+            {
+                if (this.ContactList.RemoveContactCommand.CanExecute(null))
+                    this.ContactList.RemoveContactCommand.Execute(null);
+                return;
+            }
+
+            await RemoveContactAsync();
+        }
+
         /// <summary>
         /// Remove the contact from the contact list
         /// </summary>
-        public async void RemoveContact()
+        /// <param name="isMultiSelect">True if the contact is in a multi-select scenario</param>
+        /// <returns>Result of the action</returns>
+        public async Task<bool> RemoveContactAsync(bool isMultiSelect = false)
         {
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
-                this.RemoveContactText,
-                string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
-                ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
-                this.RemoveText, this.CancelText);
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return false;
 
-            if(dialogResult)
+            if (this.MegaUser == null) return false;
+
+            if(!isMultiSelect)
             {
-                var removeContact = new RemoveContactRequestListenerAsync();
-                var result = await removeContact.ExecuteAsync(() =>
-                    SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
-                if(!result)
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    this.RemoveContactText,
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
+                    ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
+                    this.RemoveText, this.CancelText);
+
+                if (!dialogResult) return true;
+            }
+
+            var removeContact = new RemoveContactRequestListenerAsync();
+            var result = await removeContact.ExecuteAsync(() =>
+                SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
+            if (!result)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                    string.Format("Error removing the contact {0}", this.Email));
+                if(!isMultiSelect)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, 
-                        string.Format("Error removing the contact {0}", this.Email));
                     await DialogService.ShowAlertAsync(this.RemoveContactText,
                         string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactFailed"), this.Email));
                 }
             }
+
+            return result;
         }
 
         #endregion
@@ -206,8 +234,15 @@ namespace MegaApp.ViewModels
         /// Number of folders shared by the contact as a formatted text string
         /// </summary>
         public string NumberOfInSharesText => string.Format("{0} {1}", NumberOfInShares, NumberOfInShares == 1 ? 
-            ResourceService.UiResources.GetString("UI_Folder").ToLower() : 
-            ResourceService.UiResources.GetString("UI_Folders").ToLower());
+            ResourceService.UiResources.GetString("UI_SharedFolder").ToLower() : 
+            ResourceService.UiResources.GetString("UI_SharedFolders").ToLower());
+
+        private ContactsListViewModel _contactList;
+        public ContactsListViewModel ContactList
+        {
+            get { return _contactList; }
+            set { SetField(ref _contactList, value); }
+        }
 
         private bool _isMultiSelected;
         /// <summary>
@@ -225,9 +260,16 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
+        public string RemoveMultipleContactsText => ResourceService.UiResources.GetString("UI_RemoveMultipleContacts");
 
         private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         private string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+
+        #endregion
+
+        #region VisualResources
+
+        public string IncomingSharedFolderPathData => ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
 
         #endregion
     }

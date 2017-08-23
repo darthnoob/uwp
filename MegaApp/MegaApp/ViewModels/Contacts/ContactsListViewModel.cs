@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,26 +7,29 @@ using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
 {
-    public class ContactsListViewModel : BaseSdkViewModel
+    public class ContactsListViewModel : ContactsBaseViewModel<IMegaContact>
     {
         public ContactsListViewModel()
         {
-            this.MegaContactsList = new CollectionViewModel<IMegaContact>();
+            this.ViewState = ContactsViewState.Contacts;
+            this.List = new CollectionViewModel<IMegaContact>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
+            this.RemoveContactCommand = new RelayCommand(RemoveContact);
         }
 
         #region Commands
 
         public ICommand AddContactCommand { get; }
-
+        public ICommand RemoveContactCommand { get; }
+        
         #endregion
 
         #region Methods
@@ -44,36 +48,46 @@ namespace MegaApp.ViewModels.Contacts
             globalListener.ContactUpdated -= this.OnContactUpdated;
         }
 
-        public async void AddContact()
+        private void AddContact()
         {
-            var addContactDialog = new AddContactDialog();
-            await addContactDialog.ShowAsync();
+            this.OnAddContactTapped();
+        }
 
-            if (addContactDialog.DialogResult)
+        private async void RemoveContact()
+        {
+            if (!this.List.HasSelectedItems) return;
+
+            int count = this.List.SelectedItems.Count;
+
+            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                this.RemoveContactText,
+                string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
+                ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
+                this.RemoveText, this.CancelText);
+
+            if (!dialogResult) return;
+
+            // Use a temp variable to avoid InvalidOperationException
+            RemoveMultipleContacts(this.List.SelectedItems.ToList());
+        }
+
+        private async void RemoveMultipleContacts(ICollection<IMegaContact> contacts)
+        {
+            if (contacts?.Count < 1) return;
+
+            bool result = true;
+            foreach (var contact in contacts)
             {
-                var inviteContact = new InviteContactRequestListenerAsync();
-                var result = await inviteContact.ExecuteAsync(() =>
-                    SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
-                        MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
+                result = result & (await contact.RemoveContactAsync());
+            }
 
-                switch (result)
+            if (!result)
+            {
+                OnUiThread(async () =>
                 {
-                    case Enums.InviteContactResult.Success:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                            string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
-                            addContactDialog.ContactEmail));
-                        break;
-
-                    case Enums.InviteContactResult.AlreadyExists:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                            ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
-                        break;
-
-                    case Enums.InviteContactResult.Unknown:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                            ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
-                        break;
-                }
+                    await DialogService.ShowAlertAsync(this.RemoveContactText,
+                        ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsFailed"));
+                });
             }
         }
 
@@ -88,7 +102,7 @@ namespace MegaApp.ViewModels.Contacts
             // Create the option to cancel
             CreateLoadCancelOption();
 
-            await OnUiThreadAsync(() => MegaContactsList.Clear());
+            await OnUiThreadAsync(() => this.List.Clear());
             MUserList contactsList = SdkService.MegaSdk.getContacts();
 
             await Task.Factory.StartNew(() =>
@@ -106,9 +120,9 @@ namespace MegaApp.ViewModels.Contacts
 
                         if ((contactsList.get(i).getVisibility() == MUserVisibility.VISIBILITY_VISIBLE))
                         {
-                            var megaContact = new ContactViewModel(contactsList.get(i));
+                            var megaContact = new ContactViewModel(contactsList.get(i), this);
 
-                            OnUiThread(() => MegaContactsList.Items.Add(megaContact));
+                            OnUiThread(() => this.List.Items.Add(megaContact));
 
                             this.GetContactFirstname(megaContact);
                             this.GetContactLastname(megaContact);
@@ -207,7 +221,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private void OnContactUpdated(object sender, MUser user)
         {
-            var existingContact = MegaContactsList.Items.FirstOrDefault(
+            var existingContact = this.List.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));
 
             // If the contact exists in the contact list
@@ -217,7 +231,7 @@ namespace MegaApp.ViewModels.Contacts
                 if (!existingContact.Visibility.Equals(user.getVisibility()) &&
                     !(user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE)))
                 {
-                    OnUiThread(() => MegaContactsList.Items.Remove(existingContact));
+                    OnUiThread(() => this.List.Items.Remove(existingContact));
                 }
                 // If the contact has been changed (UPDATE CONTACT SCENARIO) and is not an own change
                 else if (!Convert.ToBoolean(user.isOwnChange()))
@@ -241,9 +255,9 @@ namespace MegaApp.ViewModels.Contacts
             // If is a new contact (ADD CONTACT SCENARIO - REQUEST ACCEPTED)
             else if (user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE))
             {
-                var megaContact = new ContactViewModel(user);
+                var megaContact = new ContactViewModel(user, this);
 
-                OnUiThread(() => MegaContactsList.Items.Add(megaContact));
+                OnUiThread(() => this.List.Items.Add(megaContact));
 
                 this.GetContactFirstname(megaContact);
                 this.GetContactLastname(megaContact);
@@ -259,21 +273,23 @@ namespace MegaApp.ViewModels.Contacts
         private CancellationTokenSource LoadingCancelTokenSource { get; set; }
         private CancellationToken LoadingCancelToken { get; set; }
 
-        private CollectionViewModel<IMegaContact> _megaContactsList;
-        public CollectionViewModel<IMegaContact> MegaContactsList
-        {
-            get { return _megaContactsList; }
-            set { SetField(ref _megaContactsList, value); }
-        }
-
         #endregion
 
         #region UiResources
 
-        public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
+        public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
+        public string RemoveMultipleContactsText => ResourceService.UiResources.GetString("UI_RemoveMultipleContacts");
         
+        private string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+
         public string EmptyContactsHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsHeader");
         public string EmptyContactsSubHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsSubHeader");
+
+        #endregion
+
+        #region VisualResources
+
+        public string RemovePathData => ResourceService.VisualResources.GetString("VR_RemovePathData");
 
         #endregion
     }

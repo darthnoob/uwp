@@ -982,4 +982,18 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Cancel invite</value>
     <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_RemoveMultipleContacts" xml:space="preserve">
+    <value>Remove contacts</value>
+    <comment>Label for any 'Remove contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedFolder" xml:space="preserve">
+    <value>Shared folder</value>
+    <comment>Label for any 'Shared folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_SharedFolders" xml:space="preserve">
+    <value>Shared folders</value>
+    <comment>Label for any 'Shared folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
 </root>

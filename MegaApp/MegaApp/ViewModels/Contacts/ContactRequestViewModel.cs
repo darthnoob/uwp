@@ -6,6 +6,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels
 {
@@ -14,13 +15,8 @@ namespace MegaApp.ViewModels
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
-        public ContactRequestViewModel(MContactRequest contactRequest)
+        public ContactRequestViewModel(MContactRequest contactRequest, ContactRequestsListViewModel contactRequestsList)
         {
-            this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
-            this.DeclineContactRequestCommand = new RelayCommand(DeclineContactRequest);
-            this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
-            this.CancelContactRequestCommand = new RelayCommand(CancelContactRequest);
-
             MegaContactRequest = contactRequest;
             Handle = contactRequest.getHandle();
             SourceEmail = contactRequest.getSourceEmail();
@@ -33,6 +29,13 @@ namespace MegaApp.ViewModels
 
             AvatarColor = UiService.GetColorFromHex(
                 SdkService.MegaSdk.getUserHandleAvatarColor(Handle.ToString()));
+
+            this.ContactRequestsList = contactRequestsList;
+
+            this.AcceptContactRequestCommand = new RelayCommand(AcceptContact);
+            this.DeclineContactRequestCommand = new RelayCommand(DeclineContact);
+            this.RemindContactRequestCommand = new RelayCommand(RemindContact);
+            this.CancelContactRequestCommand = new RelayCommand(CancelContact);
         }
 
         #region Commands
@@ -44,7 +47,19 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Public Methods
+        #region Methods
+
+        private void AcceptContact()
+        {
+            if (this.ContactRequestsList != null && this.ContactRequestsList.IsMultiSelectActive)
+            {
+                if (this.ContactRequestsList.AcceptContactRequestCommand.CanExecute(null))
+                    this.ContactRequestsList.AcceptContactRequestCommand.Execute(null);
+                return;
+            }
+
+            AcceptContactRequest();
+        }
 
         /// <summary>
         /// Accept the contact request
@@ -55,6 +70,18 @@ namespace MegaApp.ViewModels
             await acceptContactRequest.ExecuteAsync(() =>
                 SdkService.MegaSdk.replyContactRequest(this.MegaContactRequest,
                 MContactRequestReplyActionType.REPLY_ACTION_ACCEPT, acceptContactRequest));
+        }
+
+        private void DeclineContact()
+        {
+            if (this.ContactRequestsList != null && this.ContactRequestsList.IsMultiSelectActive)
+            {
+                if (this.ContactRequestsList.DeclineContactRequestCommand.CanExecute(null))
+                    this.ContactRequestsList.DeclineContactRequestCommand.Execute(null);
+                return;
+            }
+
+            DeclineContactRequest();
         }
 
         /// <summary>
@@ -68,6 +95,18 @@ namespace MegaApp.ViewModels
                 MContactRequestReplyActionType.REPLY_ACTION_DENY, declineContactRequest));
         }
 
+        private void RemindContact()
+        {
+            if (this.ContactRequestsList != null && this.ContactRequestsList.IsMultiSelectActive)
+            {
+                if (this.ContactRequestsList.RemindContactRequestCommand.CanExecute(null))
+                    this.ContactRequestsList.RemindContactRequestCommand.Execute(null);
+                return;
+            }
+
+            RemindContactRequest();
+        }
+
         /// <summary>
         /// Remind the contact request
         /// </summary>
@@ -77,6 +116,18 @@ namespace MegaApp.ViewModels
             await remindContactRequest.ExecuteAsync(() =>
                 SdkService.MegaSdk.inviteContact(this.TargetEmail, this.SourceMessage,
                 MContactRequestInviteActionType.INVITE_ACTION_REMIND, remindContactRequest));
+        }
+
+        private void CancelContact()
+        {
+            if (this.ContactRequestsList != null && this.ContactRequestsList.IsMultiSelectActive)
+            {
+                if (this.ContactRequestsList.CancelContactRequestCommand.CanExecute(null))
+                    this.ContactRequestsList.CancelContactRequestCommand.Execute(null);
+                return;
+            }
+
+            CancelContactRequest();
         }
 
         /// <summary>
@@ -179,6 +230,13 @@ namespace MegaApp.ViewModels
         /// Formatted date of the las update time of the contact request
         /// </summary>
         public string Date => OriginalDateTime.AddSeconds(this.ModificationTime).ToString("dd/MM/yy");
+
+        private ContactRequestsListViewModel _contactRequestsList;
+        public ContactRequestsListViewModel ContactRequestsList
+        {
+            get { return _contactRequestsList; }
+            set { SetField(ref _contactRequestsList, value); }
+        }
 
         private bool _isMultiSelected;
         /// <summary>

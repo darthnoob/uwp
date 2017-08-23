@@ -16,6 +16,37 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ContactsManagerViewModel}">
 
+    <Page.Resources>
+        <ControlTemplate x:Name="SelectAllCheckBox">
+            <CheckBox
+                Margin="0,8,0,10"
+                Tapped="SelectAllCheckBoxTapped"
+                Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel 
+                    Margin="4,0,0,0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        FontSize="13"
+                        Foreground="{StaticResource MegaRedColorBrush}"
+                        Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
+                        Opacity="0.8"/>
+                </StackPanel>
+            </CheckBox>
+        </ControlTemplate>
+        <ControlTemplate x:Name="OrderTypeAndNumberOfItems">
+            <StackPanel 
+                Orientation="Horizontal"
+                Visibility="{Binding IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <TextBlock
+                    Margin="0,12,12,20"
+                    FontSize="13"
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Text="{Binding OrderTypeAndNumberOfItems, Mode=OneWay}"
+                    Opacity="0.8"/>
+            </StackPanel>
+        </ControlTemplate>        
+    </Page.Resources>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
@@ -36,11 +67,12 @@
 
                 <!--  CONTACTS TOP COMMAND BAR (DESKTOP ONLY)  -->
                 <CommandBar
+                    DataContext="{Binding ActiveView}"
                     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                     extensions:CommandBarExtensions.HideMoreButton="True"
-                    Style="{StaticResource MegaCommandBarStyle}">
-                    <AppBarButton 
-                        x:Name="AddContactCommandBarButton"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding ViewState, ConverterParameter=Contacts, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                    <AppBarButton
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         Label="{Binding AddContactText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
@@ -54,15 +86,169 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                 </CommandBar>
+
+                <!--  OUTGOING CONTACT REQUESTS TOP COMMAND BAR (DESKTOP ONLY)  -->
+                <CommandBar
+                    DataContext="{Binding ActiveView}"
+                    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Style="{StaticResource MegaCommandBarStyle}"
+                    Visibility="{Binding ViewState, ConverterParameter=OutgoingRequests, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                    <AppBarButton
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Label="{Binding AddContactText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
+                        Command="{Binding AddContactCommand}"
+                        Click="OnButtonClick">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding AddContactPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!--  CONTACTS MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY)  -->
+                <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=ContactsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                    <CommandBar
+                        DataContext="{Binding MegaContacts}"
+                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Style="{StaticResource MegaCommandBarStyle}">
+                        <AppBarButton 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding RemoveMultipleContactsText, Mode=OneTime}" 
+                            ToolTipService.ToolTip="{Binding RemoveMultipleContactsText, Mode=OneTime}"
+                            Command="{Binding RemoveContactCommand}"
+                            Click="OnButtonClick">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding RemovePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding MultiSelectCommand}"
+                            Label="{Binding CancelText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+
+                <!--  INCOMING CONTACT REQUESTS MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY)  -->
+                <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=IncomingRequestsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                    <CommandBar
+                        DataContext="{Binding IncomingContactRequests}"
+                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Style="{StaticResource MegaCommandBarStyle}">
+                        <AppBarButton 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding AcceptContactText, Mode=OneTime}" 
+                            ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
+                            Command="{Binding AcceptContactRequestCommand}"
+                            Click="OnButtonClick">
+                            <Viewbox MaxHeight="14" MaxWidth="14">
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding AcceptPathData, Mode=OneTime}" />
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding DenyContactText, Mode=OneTime}" 
+                            ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
+                            Command="{Binding DeclineContactRequestCommand}"
+                            Click="OnButtonClick">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding CancelPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding MultiSelectCommand}"
+                            Label="{Binding CancelText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+
+                <!--  OUTGOING CONTACT REQUESTS MULTI SELECT TOP COMMAND BAR (DESKTOP ONLY)  -->
+                <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=OutgoingRequestsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                    <CommandBar
+                        DataContext="{Binding OutgoingContactRequests}"
+                        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Style="{StaticResource MegaCommandBarStyle}">
+                        <AppBarButton 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding RemindContactText, Mode=OneTime}" 
+                            ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
+                            Command="{Binding RemindContactRequestCommand}"
+                            Click="OnButtonClick">
+                            <Viewbox MaxHeight="12" MaxWidth="12">
+                                <SymbolIcon 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Symbol="Refresh" />
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding CancelInviteText, Mode=OneTime}" 
+                            ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
+                            Command="{Binding CancelContactRequestCommand}"
+                            Click="OnButtonClick">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding CancelPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding MultiSelectCommand}"
+                            Label="{Binding CancelText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
             </Grid>
 
             <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
             <CommandBar
+                DataContext="{Binding ActiveView}"
                 Grid.Row="0"
                 Grid.Column="1"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Background="Transparent"
-                IsEnabled="{Binding MegaContacts.MegaContactsList.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
                 <AppBarButton
                     x:Name="BtnSort"
                     Label="{Binding SortByText}"
@@ -94,7 +280,7 @@
                             Foreground="{StaticResource MegaAppForegroundBrush}"
                             VerticalAlignment="Center"
                             HeaderText="{Binding EmptyContactsHeaderText, Mode=OneTime}"
-                            IsVisible="{Binding MegaContactsList.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
+                            IsVisible="{Binding List.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
                             SubHeaderMargin="0,14,0,28"
                             SubHeaderText="{Binding EmptyContactsSubHeaderText, Mode=OneTime}"
                             ButtonText="{Binding AddContactText, Mode=OneTime}"
@@ -104,14 +290,9 @@
                                 <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                             </userControls:ButtonPanel.SubHeaderForeground>
                         </userControls:ButtonPanel>
-                        <StackPanel Visibility="{Binding MegaContactsList.Items, Converter={StaticResource CollectionVisibilityConverter}}">
-                            <!--<StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0,24,12,20"
-                                    FontSize="13"
-                                    Foreground="{StaticResource MegaAppForegroundBrush}"
-                                    Text="{Binding SortByText, Mode=OneTime}" />
-                            </StackPanel>-->
+                        <StackPanel Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                            <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
+                            <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
                             <ListView
                                 x:Name="ListViewContacts"
                                 Margin="-12,0,0,0"
@@ -119,9 +300,11 @@
                                 IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                 ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                 ItemTemplate="{StaticResource MegaContactItemContent}"
-                                ItemsSource="{Binding MegaContactsList.Items}">
+                                ItemsSource="{Binding List.Items}"
+                                Tapped="OnContactTapped"
+                                RightTapped="OnContactRightTapped">
                                 <interactivity:Interaction.Behaviors>
-                                    <behaviors:MultiSelect SelectedItems="{Binding MegaContactsList.SelectedItems, Mode=TwoWay}" />
+                                    <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
                                     <core:EventTriggerBehavior EventName="SelectionChanged">
                                         <core:EventTriggerBehavior.Actions>
                                             <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
@@ -137,14 +320,30 @@
                     Header="{Binding IncomingTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <Grid DataContext="{Binding IncomingContactRequests}">
-                        <ListView
-                            x:Name="ListViewIncomingContactRequests"
-                            Margin="-12,0,0,0"
-                            Background="{StaticResource MegaAppBackgroundBrush}"
-                            ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                            ItemTemplate="{StaticResource MegaContactRequestItemContent}"
-                            ItemsSource="{Binding MegaContactRequestsList.Items}"
-                            Visibility="{Binding MegaContactRequestsList.Items, Converter={StaticResource CollectionVisibilityConverter}}" />
+                        <StackPanel>
+                            <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
+                            <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                            <ListView
+                                x:Name="ListViewIncomingContactRequests"
+                                Margin="-12,0,0,0"
+                                Background="{StaticResource MegaAppBackgroundBrush}"
+                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                ItemTemplate="{StaticResource MegaContactRequestItemContent}"
+                                ItemsSource="{Binding List.Items}"
+                                Tapped="OnContactRequestTapped"
+                                RightTapped="OnContactRequestRightTapped"
+                                Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:EventTriggerBehavior.Actions>
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior.Actions>
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ListView>
+                        </StackPanel>
                     </Grid>
                 </PivotItem>
                 <PivotItem
@@ -152,14 +351,30 @@
                     Header="{Binding OutgoingTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <Grid DataContext="{Binding OutgoingContactRequests}">
-                        <ListView
-                            x:Name="ListViewOutgoingContactRequests"
-                            Margin="-12,0,0,0"
-                            Background="{StaticResource MegaAppBackgroundBrush}"
-                            ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                            ItemTemplate="{StaticResource MegaContactRequestItemContent}"
-                            ItemsSource="{Binding MegaContactRequestsList.Items}"
-                            Visibility="{Binding MegaContactRequestsList.Items, Converter={StaticResource CollectionVisibilityConverter}}" />
+                        <StackPanel>
+                            <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
+                            <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                            <ListView
+                                x:Name="ListViewOutgoingContactRequests"
+                                Margin="-12,0,0,0"
+                                Background="{StaticResource MegaAppBackgroundBrush}"
+                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                ItemTemplate="{StaticResource MegaContactRequestItemContent}"
+                                ItemsSource="{Binding List.Items}"
+                                Tapped="OnContactRequestTapped"
+                                RightTapped="OnContactRequestRightTapped"
+                                Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                                <interactivity:Interaction.Behaviors>
+                                    <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                    <core:EventTriggerBehavior EventName="SelectionChanged">
+                                        <core:EventTriggerBehavior.Actions>
+                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                        </core:EventTriggerBehavior.Actions>
+                                    </core:EventTriggerBehavior>
+                                </interactivity:Interaction.Behaviors>
+                            </ListView>
+                        </StackPanel>
                     </Grid>
                 </PivotItem>                
             </Pivot>
@@ -169,7 +384,10 @@
         <Grid x:Name="BottomCommandBar" Grid.Row="2">
             
             <!--  CONTACTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
-            <CommandBar Style="{StaticResource MegaCommandBarStyle}">
+            <CommandBar 
+                DataContext="{Binding ActiveView}"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding ViewState, ConverterParameter=Contacts, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
                 <AppBarButton
                     Click="OnButtonClick"
                     Command="{Binding AddContactCommand}"
@@ -183,7 +401,201 @@
                             Data="{Binding AddContactPathData, Mode=OneTime}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
+                <AppBarButton
+                    Click="OnButtonClick"
+                    Command="{Binding MultiSelectCommand}"
+                    IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                    Label="{Binding MultiSelectText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </CommandBar>
+
+            <!--  INCOMING CONTACT REQUESTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+            <CommandBar 
+                DataContext="{Binding ActiveView}"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding ViewState, ConverterParameter=IncomingRequests, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                <AppBarButton
+                    Click="OnButtonClick"
+                    Command="{Binding MultiSelectCommand}"
+                    IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                    Label="{Binding MultiSelectText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+
+            <!--  OUTGOING CONTACT REQUESTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+            <CommandBar 
+                DataContext="{Binding ActiveView}"
+                Style="{StaticResource MegaCommandBarStyle}"
+                Visibility="{Binding ViewState, ConverterParameter=OutgoingRequests, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                <AppBarButton
+                    Click="OnButtonClick"
+                    Command="{Binding AddContactCommand}"
+                    Label="{Binding AddContactText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding AddContactPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Click="OnButtonClick"
+                    Command="{Binding MultiSelectCommand}"
+                    IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                    Label="{Binding MultiSelectText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+
+            <!--  CONTACTS MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+            <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=ContactsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                <CommandBar
+                    DataContext="{Binding MegaContacts}"
+                    Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton 
+                        Click="OnButtonClick"
+                        Command="{Binding RemoveContactCommand}"
+                        Label="{Binding RemoveMultipleContactsText, Mode=OneTime}" 
+                        Style="{StaticResource MegaAppBarButtonStyle}"                        
+                        ToolTipService.ToolTip="{Binding RemoveMultipleContactsText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding RemovePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding MultiSelectCommand}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+
+            <!--  INCOMING CONTACT REQUEST MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+            <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=IncomingRequestsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                <CommandBar
+                    DataContext="{Binding IncomingContactRequests}"
+                    Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton 
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Label="{Binding AcceptContactText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
+                        Command="{Binding AcceptContactRequestCommand}"
+                        Click="OnButtonClick">
+                        <Viewbox MaxHeight="14" MaxWidth="14">
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding AcceptPathData, Mode=OneTime}" />
+                        </Viewbox>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Label="{Binding DenyContactText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
+                        Command="{Binding DeclineContactRequestCommand}"
+                        Click="OnButtonClick">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding CancelPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding MultiSelectCommand}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+
+            <!--  OUTGOING CONTACT REQUEST MULTI SELECT BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+            <Grid Visibility="{Binding ActiveView.ViewState, ConverterParameter=OutgoingRequestsMultiSelect, Converter={StaticResource ContactsViewStateToVisibilityConverter}}">
+                <CommandBar
+                    DataContext="{Binding OutgoingContactRequests}"
+                    Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Label="{Binding RemindContactText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
+                        Command="{Binding RemindContactRequestCommand}"
+                        Click="OnButtonClick">
+                        <Viewbox MaxHeight="12" MaxWidth="12">
+                            <SymbolIcon 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Symbol="Refresh" />
+                        </Viewbox>
+                    </AppBarButton>
+                    <AppBarButton 
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        Label="{Binding CancelInviteText, Mode=OneTime}" 
+                        ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
+                        Command="{Binding CancelContactRequestCommand}"
+                        Click="OnButtonClick">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding CancelPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding MultiSelectCommand}"
+                        Label="{Binding CancelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -194,6 +606,8 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
+                        <Setter Target="ListViewIncomingContactRequests.SelectionMode" Value="Extended" />
+                        <Setter Target="ListViewOutgoingContactRequests.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
@@ -205,6 +619,8 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ListViewContacts.SelectionMode" Value="None" />
+                        <Setter Target="ListViewIncomingContactRequests.SelectionMode" Value="None" />
+                        <Setter Target="ListViewOutgoingContactRequests.SelectionMode" Value="None" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
