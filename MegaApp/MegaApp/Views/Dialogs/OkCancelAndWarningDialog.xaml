@@ -33,24 +33,30 @@
                 Style="{StaticResource MegaDialogContentFontStyle}"
                 Text="{x:Bind ViewModel.MessageText, Mode=OneWay}"
                 TextWrapping="WrapWholeWords"/>
-            <StackPanel 
+            <Grid
                 Margin="0,16,0,0"
-                Orientation="Horizontal"
                 Visibility="{x:Bind ViewModel.WarningText, Converter={StaticResource StringVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Viewbox
-                    Margin="0,0,12,0"
-                    MaxWidth="16" MaxHeight="16">
+                    Grid.Column="0"
+                    Margin="0,4,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
                     <PathIcon 
                         Data="{x:Bind ViewModel.WarningIconPathData, Mode=OneTime}"
                         Foreground="{StaticResource MegaRedColorBrush}" />
                 </Viewbox>
                 <TextBlock 
                     x:Name="WarningText"
+                    Grid.Column="1"
                     Opacity="0.8"
                     Style="{StaticResource MegaDialogContentFontStyle}"
                     Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"
                     TextWrapping="WrapWholeWords"/>
-            </StackPanel>
+            </Grid>
         </StackPanel>
     </Grid>
 </dialogViews:BaseOkCancelAndWarningDialog>
