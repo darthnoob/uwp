@@ -1311,7 +1311,112 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaContactItemContent">
+    <DataTemplate x:Key="MegaContactItemContentMobile">
+        <Grid Margin="0,6">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveContactText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveMultipleContactsText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <Image 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Width="36" Height="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill" 
+                Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelWidth="36"
+                        DecodePixelType="Logical"
+                        UriSource="{Binding AvatarUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="14"
+                Text="{Binding FullName}"
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Email}"
+                VerticalAlignment="Center"/>
+            <StackPanel
+                Grid.Row="0" Grid.Column="2"
+                Grid.RowSpan="2"
+                Orientation="Horizontal">
+                <Viewbox MaxHeight="15" MaxWidth="15">
+                    <StackPanel
+                        Margin="0,4,0,0"
+                        Opacity="0.9"
+                        Orientation="Horizontal">
+                        <FontIcon Glyph="&#xEC52;"/>
+                        <FontIcon Glyph="&#xEBE7;"/>
+                    </StackPanel>
+                </Viewbox>
+                <TextBlock
+                    Margin="8,0,0,0"
+                    FontSize="13"
+                    Text="{Binding NumberOfInShares}"
+                    Opacity="0.9"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="MegaContactItemContentDesktop">
         <Grid Margin="0,6">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
@@ -1396,12 +1501,14 @@
                 Grid.Row="0" Grid.Column="2"
                 Grid.RowSpan="2"
                 Orientation="Horizontal">
-                <Viewbox MaxHeight="14" MaxWidth="14">
-                    <PathIcon 
-                        Data="{Binding IncomingSharedFolderPathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Opacity="0.9"/>
+                <Viewbox MaxHeight="15" MaxWidth="15">
+                    <StackPanel
+                        Margin="0,4,0,0"
+                        Opacity="0.9"
+                        Orientation="Horizontal">
+                        <FontIcon Glyph="&#xEC52;"/>
+                        <FontIcon Glyph="&#xEBE7;"/>
+                    </StackPanel>
                 </Viewbox>
                 <TextBlock
                     Margin="8,0,0,0"
@@ -1414,7 +1521,119 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaContactRequestItemContent">
+    <DataTemplate x:Key="MegaContactRequestItemContentMobile">
+        <Grid Margin="0,6">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding AcceptContactRequestCommand}"
+                            Text="{Binding AcceptContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding DeclineContactRequestCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding DenyContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemindContactRequestCommand}"
+                            Text="{Binding RemindContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding CancelContactRequestCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding CancelInviteText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"  
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}"/>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0"
+                FontSize="14"
+                Text="{Binding Email}" 
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Date}"
+                VerticalAlignment="Center" />
+            <CommandBar
+                Grid.Row="0" Grid.Column="2" 
+                Grid.RowSpan="2"
+                Margin="8,0,0,0"
+                Height="36"
+                Background="Transparent"
+                VerticalAlignment="Center"
+                extensions:CommandBarExtensions.HideMoreButton="True"
+                Visibility="{Binding ContactRequestsList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding AcceptContactRequestCommand}"
+                    Label="{Binding AcceptContactText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding AcceptContactText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="14" MaxWidth="14">
+                        <PathIcon 
+                            Margin="0,-12,0,0"
+                            Data="{Binding AcceptPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Height="36" Width="36"
+                    Command="{Binding RemindContactRequestCommand}"
+                    Label="{Binding RemindContactText}" 
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding RemindContactText}"
+                    Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;"/>
+                    </Viewbox>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="MegaContactRequestItemContentDesktop">
         <Grid Margin="0,6">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
@@ -1533,12 +1752,8 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding RemindContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="12" MaxWidth="12">
-                        <SymbolIcon
-                            Margin="0,-16,0,0"
-                            Symbol="Refresh"
-                            ToolTipService.ToolTip="{Binding RemindContactText}"
-                            Foreground="{StaticResource MegaAppForegroundBrush}"/>
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;"/>
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton

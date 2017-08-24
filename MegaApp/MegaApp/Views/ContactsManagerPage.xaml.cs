@@ -100,14 +100,28 @@ namespace MegaApp.Views
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                this.ListViewContacts.SelectionMode = ListViewSelectionMode.Extended;
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
+                    this.ListViewContacts.SelectionMode = ListViewSelectionMode.Extended;
 
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
+                    this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
 
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
+                    this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
+            }
+            else
+            {
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
+                    this.ListViewContacts.SelectionMode = ListViewSelectionMode.Single;
+
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
+                    this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Single;
+
+                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
+                    this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Single;
+            }
         }
 
         /// <summary>

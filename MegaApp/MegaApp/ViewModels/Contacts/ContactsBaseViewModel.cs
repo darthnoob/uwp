@@ -85,7 +85,7 @@ namespace MegaApp.ViewModels.Contacts
                 this.IsMultiSelectActive = (this.IsMultiSelectActive && this.List.OneOrMoreSelected) ||
                     this.List.MoreThanOneSelected;
             else
-                this.IsMultiSelectActive = this.List.HasSelectedItems;
+                this.IsMultiSelectActive = this.IsMultiSelectActive && this.List.OneOrMoreSelected;
 
             if (this.List.HasSelectedItems)
             {

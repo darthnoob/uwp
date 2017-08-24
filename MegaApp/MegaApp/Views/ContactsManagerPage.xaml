@@ -205,11 +205,8 @@
                             ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
                             Command="{Binding RemindContactRequestCommand}"
                             Click="OnButtonClick">
-                            <Viewbox MaxHeight="12" MaxWidth="12">
-                                <SymbolIcon 
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Symbol="Refresh" />
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE1F2;"/>
                             </Viewbox>
                         </AppBarButton>
                         <AppBarButton 
@@ -277,42 +274,52 @@
                         <userControls:ButtonPanel
                             x:Name="ContactsButtonPanelControl"
                             Background="{StaticResource MegaAppBackgroundBrush}"
+                            ButtonAlignment="Below"
+                            ButtonCommand="{Binding AddContactCommand}"
+                            ButtonMinWidth="130"
+                            ButtonText="{Binding AddContactText, Mode=OneTime}"
                             Foreground="{StaticResource MegaAppForegroundBrush}"
-                            VerticalAlignment="Center"
                             HeaderText="{Binding EmptyContactsHeaderText, Mode=OneTime}"
                             IsVisible="{Binding List.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
                             SubHeaderMargin="0,14,0,28"
                             SubHeaderText="{Binding EmptyContactsSubHeaderText, Mode=OneTime}"
-                            ButtonText="{Binding AddContactText, Mode=OneTime}"
-                            ButtonMinWidth="130"
-                            ButtonCommand="{Binding AddContactCommand}">
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center">
                             <userControls:ButtonPanel.SubHeaderForeground>
                                 <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                             </userControls:ButtonPanel.SubHeaderForeground>
                         </userControls:ButtonPanel>
-                        <StackPanel Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
-                            <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
-                            <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
-                            <ListView
-                                x:Name="ListViewContacts"
-                                Margin="-12,0,0,0"
-                                Background="{StaticResource MegaAppBackgroundBrush}"
-                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                ItemTemplate="{StaticResource MegaContactItemContent}"
-                                ItemsSource="{Binding List.Items}"
-                                Tapped="OnContactTapped"
-                                RightTapped="OnContactRightTapped">
-                                <interactivity:Interaction.Behaviors>
-                                    <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
-                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:EventTriggerBehavior.Actions>
-                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                        </core:EventTriggerBehavior.Actions>
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </ListView>
-                        </StackPanel>
+                        <Grid Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
+                                <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                            </Grid>
+                            <Grid Margin="0,0,-12,0" Grid.Row="1">
+                                <ListView
+                                    x:Name="ListViewContacts"
+                                    Margin="-12,0,0,0"
+                                    Background="{StaticResource MegaAppBackgroundBrush}"
+                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                    ItemTemplate="{StaticResource MegaContactItemContentDesktop}"
+                                    ItemsSource="{Binding List.Items}"
+                                    Tapped="OnContactTapped"
+                                    RightTapped="OnContactRightTapped">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ListView>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </PivotItem>
                 <PivotItem
@@ -320,16 +327,22 @@
                     Header="{Binding IncomingTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <Grid DataContext="{Binding IncomingContactRequests}">
-                        <StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
                             <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
                             <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                        </Grid>
+                        <Grid Margin="0,0,-12,0" Grid.Row="1">
                             <ListView
                                 x:Name="ListViewIncomingContactRequests"
                                 Margin="-12,0,0,0"
                                 Background="{StaticResource MegaAppBackgroundBrush}"
                                 IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                 ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                ItemTemplate="{StaticResource MegaContactRequestItemContent}"
+                                ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
                                 ItemsSource="{Binding List.Items}"
                                 Tapped="OnContactRequestTapped"
                                 RightTapped="OnContactRequestRightTapped"
@@ -343,7 +356,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </ListView>
-                        </StackPanel>
+                        </Grid>
                     </Grid>
                 </PivotItem>
                 <PivotItem
@@ -351,16 +364,22 @@
                     Header="{Binding OutgoingTitle, Mode=OneTime}"
                     CacheMode="{x:Null}">
                     <Grid DataContext="{Binding OutgoingContactRequests}">
-                        <StackPanel>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
                             <ContentControl Template="{StaticResource SelectAllCheckBox}"/>
                             <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                        </Grid>
+                        <Grid Margin="0,0,-12,0" Grid.Row="1">
                             <ListView
                                 x:Name="ListViewOutgoingContactRequests"
                                 Margin="-12,0,0,0"
                                 Background="{StaticResource MegaAppBackgroundBrush}"
                                 IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                 ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                ItemTemplate="{StaticResource MegaContactRequestItemContent}"
+                                ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
                                 ItemsSource="{Binding List.Items}"
                                 Tapped="OnContactRequestTapped"
                                 RightTapped="OnContactRequestRightTapped"
@@ -374,7 +393,7 @@
                                     </core:EventTriggerBehavior>
                                 </interactivity:Interaction.Behaviors>
                             </ListView>
-                        </StackPanel>
+                        </Grid>                        
                     </Grid>
                 </PivotItem>                
             </Pivot>
@@ -563,10 +582,7 @@
                         Command="{Binding RemindContactRequestCommand}"
                         Click="OnButtonClick">
                         <Viewbox MaxHeight="12" MaxWidth="12">
-                            <SymbolIcon 
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Symbol="Refresh" />
+                            <FontIcon Glyph="&#xE1F2;"/>
                         </Viewbox>
                     </AppBarButton>
                     <AppBarButton 
@@ -618,9 +634,9 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListViewContacts.SelectionMode" Value="None" />
-                        <Setter Target="ListViewIncomingContactRequests.SelectionMode" Value="None" />
-                        <Setter Target="ListViewOutgoingContactRequests.SelectionMode" Value="None" />
+                        <Setter Target="ListViewContacts.SelectionMode" Value="Single" />
+                        <Setter Target="ListViewIncomingContactRequests.SelectionMode" Value="Single" />
+                        <Setter Target="ListViewOutgoingContactRequests.SelectionMode" Value="Single" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
@@ -635,10 +651,11 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ContactsButtonPanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="ContactsButtonPanelControl.ButtonAlignment" Value="Below" />
-                        <Setter Target="ContactsButtonPanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="ContactsButtonPanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="ContactsButtonPanelControl.SubHeaderFontSize" Value="16" />
+                        <Setter Target="ListViewContacts.ItemTemplate" Value="{StaticResource MegaContactItemContentMobile}" />
+                        <Setter Target="ListViewIncomingContactRequests.ItemTemplate" Value="{StaticResource MegaContactRequestItemContentMobile}" />
+                        <Setter Target="ListViewOutgoingContactRequests.ItemTemplate" Value="{StaticResource MegaContactRequestItemContentMobile}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Normal">
@@ -647,8 +664,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ContactsButtonPanelControl.Padding" Value="97, 0, 0, 16" />
-                        <Setter Target="ContactsButtonPanelControl.ButtonAlignment" Value="Below" />
-                        <Setter Target="ContactsButtonPanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="ContactsButtonPanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="ContactsButtonPanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
@@ -659,8 +674,6 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ContactsButtonPanelControl.Padding" Value="178, 0, 0, 16" />
-                        <Setter Target="ContactsButtonPanelControl.ButtonAlignment" Value="Below" />
-                        <Setter Target="ContactsButtonPanelControl.VerticalContentAlignment" Value="Center" />
                         <Setter Target="ContactsButtonPanelControl.HeaderFontSize" Value="44" />
                         <Setter Target="ContactsButtonPanelControl.SubHeaderFontSize" Value="18" />
                     </VisualState.Setters>
