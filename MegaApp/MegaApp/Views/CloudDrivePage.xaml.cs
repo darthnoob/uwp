@@ -5,6 +5,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
@@ -513,12 +514,12 @@ namespace MegaApp.Views
         private void OnSortClick(object sender, RoutedEventArgs e)
         {
             var sortButton = sender as Button;
+            if (sortButton == null) return;
 
-            var buttonPosition = sortButton.TransformToVisual(BtnSort);
-            Point screenCoords = buttonPosition.TransformPoint(new Point(sortButton.ActualWidth, sortButton.ActualHeight));
+            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);
 
-            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.ActiveFolderView);            
-            menuFlyout.ShowAt(sortButton, screenCoords);
+            menuFlyout.Placement = FlyoutPlacementMode.Bottom;
+            menuFlyout.ShowAt(sortButton);
         }
     }
 }

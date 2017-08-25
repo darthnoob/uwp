@@ -59,6 +59,11 @@ namespace MegaApp.Interfaces
         string LastName { get; set; }
 
         /// <summary>
+        /// Full name of the contact
+        /// </summary>
+        string FullName { get; }
+
+        /// <summary>
         /// Timestamp when the contact was added to the contact list (in seconds since the epoch)
         /// </summary>
         ulong Timestamp { get; }

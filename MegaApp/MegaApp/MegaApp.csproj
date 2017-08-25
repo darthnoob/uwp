@@ -114,6 +114,7 @@
     <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsViewStateToVisibilityConverter.cs" />
+    <Compile Include="Enums\ContactsSortOptions.cs" />
     <Compile Include="Enums\ContactsViewState.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />

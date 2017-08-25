@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace MegaApp.ViewModels.Contacts
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
+
+            this.CurrentOrder = ContactsSortOptions.NameAscending;
         }
 
         #region Commands
@@ -137,6 +140,8 @@ namespace MegaApp.ViewModels.Contacts
                 }
 
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
+
+            this.SortBy(this.CurrentOrder);
         }
 
         /// <summary>
@@ -263,6 +268,31 @@ namespace MegaApp.ViewModels.Contacts
                 this.GetContactLastname(megaContact);
                 this.GetContactAvatarColor(megaContact);
                 this.GetContactAvatar(megaContact);
+            }
+        }
+
+        public void SortBy(ContactsSortOptions sortOption)
+        {
+            switch (sortOption)
+            {
+                case ContactsSortOptions.NameAscending:
+                    OnUiThread(() =>
+                    {
+                        this.List.Items = new ObservableCollection<IMegaContact>(
+                            this.List.Items.OrderBy(item => item.FullName ?? item.Email));
+                    });
+                    break;
+
+                case ContactsSortOptions.NameDescending:
+                    OnUiThread(() =>
+                    {
+                        this.List.Items = new ObservableCollection<IMegaContact>(
+                            this.List.Items.OrderByDescending(item => item.FullName ?? item.Email));
+                    });
+                    break;
+
+                default:
+                    return;
             }
         }
 

@@ -21,8 +21,9 @@ namespace MegaApp.ViewModels
         public CollectionViewModel()
         {
             this.Items = new ObservableCollection<T>();
-            this.EnableCollectionChangedDetection();
             this.SelectedItems = new List<T>();
+
+            this.EnableCollectionChangedDetection();            
         }
 
         #region Public Methods

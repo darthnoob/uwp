@@ -136,10 +136,49 @@ namespace MegaApp.ViewModels.Contacts
             set { SetField(ref _viewState, value); }
         }
 
-        public string OrderTypeAndNumberOfItems => string.Format("Name ({0})", this.List.Items.Count);
+        public string OrderTypeAndNumberOfItems
+        {
+            get
+            {
+                switch(this.CurrentOrder)
+                {
+                    case ContactsSortOptions.EmailAscending:
+                    case ContactsSortOptions.EmailDescending:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmail"), 
+                            this.List.Items.Count);
 
-        public string OrderTypeAndNumberOfSelectedItems => string.Format("Name ({0} of {1})",
-            this.List.SelectedItems.Count, this.List.Items.Count);
+                    case ContactsSortOptions.NameAscending:
+                    case ContactsSortOptions.NameDescending:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
+                            this.List.Items.Count);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        public string OrderTypeAndNumberOfSelectedItems
+        {
+            get
+            {
+                switch (this.CurrentOrder)
+                {
+                    case ContactsSortOptions.EmailAscending:
+                    case ContactsSortOptions.EmailDescending:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmailMultiSelect"),
+                            this.List.SelectedItems.Count, this.List.Items.Count);
+
+                    case ContactsSortOptions.NameAscending:
+                    case ContactsSortOptions.NameDescending:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
+                            this.List.SelectedItems.Count, this.List.Items.Count);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
 
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
@@ -171,6 +210,18 @@ namespace MegaApp.ViewModels.Contacts
                     OnPropertyChanged("IsMultiSelectActive");
                     this.OnMultiSelectDisabled();
                 }
+            }
+        }
+
+        private ContactsSortOptions _currentOrder;
+        public ContactsSortOptions CurrentOrder
+        {
+            get { return _currentOrder; }
+            set
+            {
+                SetField(ref _currentOrder, value);
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
             }
         }
 

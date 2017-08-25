@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
@@ -25,7 +26,9 @@ namespace MegaApp.ViewModels.Contacts
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
             this.CancelContactRequestCommand = new RelayCommand(CancelContactRequest);
             this.DeclineContactRequestCommand = new RelayCommand(DeclineContactRequest);
-            this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);            
+            this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
+
+            this.CurrentOrder = ContactsSortOptions.EmailAscending;          
         }
 
         #region Commands
@@ -88,8 +91,10 @@ namespace MegaApp.ViewModels.Contacts
                 if (contactRequestsList.get(i) == null) continue;
 
                 var contactRequest = new ContactRequestViewModel(contactRequestsList.get(i), this);
-                OnUiThread(() => this.List.Items.Add(contactRequest));
+                await OnUiThreadAsync(() => this.List.Items.Add(contactRequest));
             }
+
+            this.SortBy(this.CurrentOrder);
         }
 
         private void AddContact()
@@ -139,6 +144,33 @@ namespace MegaApp.ViewModels.Contacts
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.CancelContactRequest();
+        }
+
+        public void SortBy(ContactsSortOptions sortOption)
+        {
+            switch (sortOption)
+            {
+                case ContactsSortOptions.EmailAscending:
+                    OnUiThread(() =>
+                    {
+                        this.List.Items = new ObservableCollection<IMegaContactRequest>(
+                            this.List.Items.OrderBy(item => this.isOutgoing ?
+                            item.TargetEmail : item.SourceEmail));
+                    });
+                    break;
+
+                case ContactsSortOptions.EmailDescending:
+                    OnUiThread(() =>
+                    {
+                        this.List.Items = new ObservableCollection<IMegaContactRequest>(
+                            this.List.Items.OrderByDescending(item => this.isOutgoing ?
+                            item.TargetEmail : item.SourceEmail));
+                    });
+                    break;
+
+                default:
+                    return;
+            }
         }
 
         #endregion

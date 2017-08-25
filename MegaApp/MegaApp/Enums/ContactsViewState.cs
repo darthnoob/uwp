@@ -1,7 +1,7 @@
 ﻿namespace MegaApp.Enums
 {
     /// <summary>
-    /// Possible contacts view states.
+    /// Possible contacts and contact requests view states.
     /// </summary>
     public enum ContactsViewState
     {

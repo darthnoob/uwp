@@ -10,6 +10,7 @@ using MegaApp.Enums;
 using MegaApp.ViewModels;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.Services
 {
@@ -477,6 +478,89 @@ namespace MegaApp.Services
             {
                 if (UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name) == sortOrder)
                     return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            }
+
+            return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contacts.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
+                Foreground = GetContactsSortMenuItemForeground(contacts, ContactsSortOptions.NameAscending),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOptions.NameAscending;
+                    contacts.SortBy(ContactsSortOptions.NameAscending);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
+                Foreground = GetContactsSortMenuItemForeground(contacts, ContactsSortOptions.NameDescending),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOptions.NameDescending;
+                    contacts.SortBy(ContactsSortOptions.NameDescending);
+                })
+            });
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contact requests.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateContactRequestsSortMenu(ContactRequestsListViewModel contactRequests)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionEmailAscending"),
+                Foreground = GetContactsSortMenuItemForeground(contactRequests, ContactsSortOptions.EmailAscending),
+                Command = new RelayCommand(() =>
+                {
+                    contactRequests.CurrentOrder = ContactsSortOptions.EmailAscending;
+                    contactRequests.SortBy(ContactsSortOptions.EmailAscending);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionEmailDescending"),
+                Foreground = GetContactsSortMenuItemForeground(contactRequests, ContactsSortOptions.EmailDescending),
+                Command = new RelayCommand(() =>
+                {
+                    contactRequests.CurrentOrder = ContactsSortOptions.EmailDescending;
+                    contactRequests.SortBy(ContactsSortOptions.EmailDescending);
+                })
+            });
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Gets the sort <see cref="ContactsListViewModel"/> or <see cref="ContactRequestsListViewModel"/> menu item foreground color depending on the current sort order.
+        /// </summary>
+        /// <param name="list"><see cref="ContactsListViewModel"/> or <see cref="ContactRequestsListViewModel"/> to check the current sort order.</param>
+        /// <param name="sortOrder">Sort order to check.</param>
+        /// <returns>The brush object with the color.</returns>
+        private static Brush GetContactsSortMenuItemForeground(object list, ContactsSortOptions sortOrder)
+        {
+            if ((list as ContactsListViewModel)?.CurrentOrder == sortOrder || 
+                (list as ContactRequestsListViewModel)?.CurrentOrder == sortOrder)
+            {
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
             }
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];

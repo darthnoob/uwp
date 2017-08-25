@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Xaml.Interactivity;
@@ -241,6 +243,23 @@ namespace MegaApp.Views
                 listView?.SelectAll();
             else
                 listView?.SelectedItems.Clear();
+        }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+            var sortButton = sender as Button;
+            if (sortButton == null) return;
+
+            MenuFlyout menuFlyout = null;
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
+                menuFlyout = DialogService.CreateContactsSortMenu(this.ViewModel.MegaContacts);
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
+                menuFlyout = DialogService.CreateContactRequestsSortMenu(this.ViewModel.IncomingContactRequests);
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
+                menuFlyout = DialogService.CreateContactRequestsSortMenu(this.ViewModel.OutgoingContactRequests);
+
+            menuFlyout.Placement = FlyoutPlacementMode.Bottom;
+            menuFlyout?.ShowAt(sortButton);
         }
     }
 }

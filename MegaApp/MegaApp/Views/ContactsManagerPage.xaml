@@ -248,6 +248,7 @@
                 IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
                 <AppBarButton
                     x:Name="BtnSort"
+                    Click="OnSortClick"
                     Label="{Binding SortByText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding SortByText}">
