@@ -62,7 +62,7 @@ namespace MegaApp.ViewModels.Contacts
         #endregion
 
         #region Commands
-
+        
         public ICommand MultiSelectCommand { get; }
         public ICommand SelectionChangedCommand { get; }
 
@@ -220,8 +220,28 @@ namespace MegaApp.ViewModels.Contacts
             set
             {
                 SetField(ref _currentOrder, value);
+
+                OnPropertyChanged(nameof(this.IsCurrentOrderAscending));
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
+            }
+        }
+
+        public bool IsCurrentOrderAscending
+        {
+            get
+            {
+                switch(this.CurrentOrder)
+                {
+                    case ContactsSortOptions.EmailAscending:
+                    case ContactsSortOptions.NameAscending:
+                    default:
+                        return true;
+
+                    case ContactsSortOptions.EmailDescending:
+                    case ContactsSortOptions.NameDescending:
+                        return false;
+                }
             }
         }
 

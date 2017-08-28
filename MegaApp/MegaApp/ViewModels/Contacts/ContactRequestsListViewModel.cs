@@ -27,6 +27,7 @@ namespace MegaApp.ViewModels.Contacts
             this.CancelContactRequestCommand = new RelayCommand(CancelContactRequest);
             this.DeclineContactRequestCommand = new RelayCommand(DeclineContactRequest);
             this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
+            this.InvertOrderCommand = new RelayCommand(InvertOrder);
 
             this.CurrentOrder = ContactsSortOptions.EmailAscending;          
         }
@@ -38,7 +39,8 @@ namespace MegaApp.ViewModels.Contacts
         public ICommand CancelContactRequestCommand { get; }
         public ICommand DeclineContactRequestCommand { get; }
         public ICommand RemindContactRequestCommand { get; }
-        
+        public ICommand InvertOrderCommand { get; }
+
         #endregion
 
         #region Methods
@@ -171,6 +173,23 @@ namespace MegaApp.ViewModels.Contacts
                 default:
                     return;
             }
+        }
+
+        private void InvertOrder()
+        {
+            switch (this.CurrentOrder)
+            {
+                case ContactsSortOptions.EmailAscending:
+                    this.CurrentOrder = ContactsSortOptions.EmailDescending;
+                    break;
+                case ContactsSortOptions.EmailDescending:
+                    this.CurrentOrder = ContactsSortOptions.EmailAscending;
+                    break;
+                default:
+                    return;
+            }
+
+            this.SortBy(this.CurrentOrder);
         }
 
         #endregion

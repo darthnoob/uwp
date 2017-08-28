@@ -24,6 +24,7 @@ namespace MegaApp.ViewModels.Contacts
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
+            this.InvertOrderCommand = new RelayCommand(InvertOrder);
 
             this.CurrentOrder = ContactsSortOptions.NameAscending;
         }
@@ -32,7 +33,8 @@ namespace MegaApp.ViewModels.Contacts
 
         public ICommand AddContactCommand { get; }
         public ICommand RemoveContactCommand { get; }
-        
+        public ICommand InvertOrderCommand { get; }
+
         #endregion
 
         #region Methods
@@ -294,6 +296,23 @@ namespace MegaApp.ViewModels.Contacts
                 default:
                     return;
             }
+        }
+
+        private void InvertOrder()
+        {
+            switch (this.CurrentOrder)
+            {
+                case ContactsSortOptions.NameAscending:
+                    this.CurrentOrder = ContactsSortOptions.NameDescending;
+                    break;
+                case ContactsSortOptions.NameDescending:
+                    this.CurrentOrder = ContactsSortOptions.NameAscending;
+                    break;
+                default:
+                    return;
+            }
+
+            this.SortBy(this.CurrentOrder);
         }
 
         #endregion
