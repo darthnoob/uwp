@@ -37,6 +37,7 @@
                 </AppBarButton>
             </CommandBar>
         </ControlTemplate>
+        
         <ControlTemplate x:Name="DescendingOrderIcon">
             <CommandBar
                 Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -57,6 +58,7 @@
                 </AppBarButton>
             </CommandBar>
         </ControlTemplate>
+        
         <ControlTemplate x:Name="SelectAllCheckBoxWithOrderTypeAndNumberOfItems">
             <CheckBox
                 Margin="0,8,0,0"
@@ -90,6 +92,7 @@
                 </Grid>
             </CheckBox>
         </ControlTemplate>
+        
         <ControlTemplate x:Name="OrderTypeAndNumberOfItems">
             <Grid 
                 Margin="0,6,0,0"
@@ -117,7 +120,7 @@
                     Opacity="0.8"
                     VerticalAlignment="Center" />
             </Grid>
-        </ControlTemplate>        
+        </ControlTemplate>
     </Page.Resources>
     
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -306,6 +309,10 @@
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Background="Transparent"
                 IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                <AppBarSeparator 
+                    x:Name="PermanentTopCommandBarSeparator"
+                    Margin="-12,0"
+                    VerticalAlignment="Center"/>
                 <AppBarButton
                     x:Name="BtnSort"
                     Click="OnSortClick"
@@ -687,6 +694,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -700,6 +708,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
