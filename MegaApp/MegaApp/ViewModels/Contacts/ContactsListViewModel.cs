@@ -19,7 +19,7 @@ namespace MegaApp.ViewModels.Contacts
     {
         public ContactsListViewModel()
         {
-            this.ViewState = ContactsViewState.Contacts;
+            this.ContentType = ContactsContentType.Contacts;
             this.List = new CollectionViewModel<IMegaContact>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
@@ -31,9 +31,10 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Commands
 
-        public ICommand AddContactCommand { get; }
-        public ICommand RemoveContactCommand { get; }
-        public ICommand InvertOrderCommand { get; }
+        public override ICommand AddContactCommand { get; }
+        public override ICommand RemoveContactCommand { get; }
+
+        public override ICommand InvertOrderCommand { get; }
 
         #endregion
 
@@ -62,18 +63,26 @@ namespace MegaApp.ViewModels.Contacts
         {
             if (!this.List.HasSelectedItems) return;
 
-            int count = this.List.SelectedItems.Count;
+            if (this.List.OnlyOneSelectedItem)
+            {
+                var contact = this.List.SelectedItems.First();
+                await contact.RemoveContactAsync();
+            }
+            else
+            {
+                int count = this.List.SelectedItems.Count;
 
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
-                this.RemoveContactText,
-                string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
-                ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
-                this.RemoveText, this.CancelText);
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    this.RemoveContactText,
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
+                    ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
+                    this.RemoveText, this.CancelText);
 
-            if (!dialogResult) return;
+                if (!dialogResult) return;
 
-            // Use a temp variable to avoid InvalidOperationException
-            RemoveMultipleContacts(this.List.SelectedItems.ToList());
+                // Use a temp variable to avoid InvalidOperationException
+                RemoveMultipleContacts(this.List.SelectedItems.ToList());
+            }
         }
 
         private async void RemoveMultipleContacts(ICollection<IMegaContact> contacts)
@@ -83,7 +92,7 @@ namespace MegaApp.ViewModels.Contacts
             bool result = true;
             foreach (var contact in contacts)
             {
-                result = result & (await contact.RemoveContactAsync());
+                result = result & (await contact.RemoveContactAsync(true));
             }
 
             if (!result)
@@ -326,19 +335,12 @@ namespace MegaApp.ViewModels.Contacts
 
         #region UiResources
 
-        public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
         public string RemoveMultipleContactsText => ResourceService.UiResources.GetString("UI_RemoveMultipleContacts");
         
         private string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
 
         public string EmptyContactsHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsHeader");
         public string EmptyContactsSubHeaderText => ResourceService.EmptyStates.GetString("ES_ContactsSubHeader");
-
-        #endregion
-
-        #region VisualResources
-
-        public string RemovePathData => ResourceService.VisualResources.GetString("VR_RemovePathData");
 
         #endregion
     }

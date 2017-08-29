@@ -19,7 +19,7 @@ namespace MegaApp.ViewModels.Contacts
         public ContactRequestsListViewModel(bool isOutgoing) : base(isOutgoing)
         {
             this.isOutgoing = isOutgoing;
-            this.ViewState = this.isOutgoing ? ContactsViewState.OutgoingRequests : ContactsViewState.IncomingRequests;
+            this.ContentType = this.isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
             this.List = new CollectionViewModel<IMegaContactRequest>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
@@ -34,12 +34,14 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Commands
 
-        public ICommand AddContactCommand { get; }
-        public ICommand AcceptContactRequestCommand { get; }
-        public ICommand CancelContactRequestCommand { get; }
-        public ICommand DeclineContactRequestCommand { get; }
-        public ICommand RemindContactRequestCommand { get; }
-        public ICommand InvertOrderCommand { get; }
+        public override ICommand AddContactCommand { get; }
+        
+        public override ICommand AcceptContactRequestCommand { get; }
+        public override ICommand CancelContactRequestCommand { get; }
+        public override ICommand DeclineContactRequestCommand { get; }
+        public override ICommand RemindContactRequestCommand { get; }
+
+        public override ICommand InvertOrderCommand { get; }
 
         #endregion
 
@@ -197,22 +199,6 @@ namespace MegaApp.ViewModels.Contacts
         #region Properties
 
         private bool isOutgoing { get; set; }
-
-        #endregion
-
-        #region Ui_Resources
-
-        public string AcceptContactText => ResourceService.UiResources.GetString("UI_AcceptContact");
-        public string CancelInviteText => ResourceService.UiResources.GetString("UI_CancelInvite");
-        public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
-        public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
-
-        #endregion
-
-        #region VisualResources
-
-        public string AcceptPathData => ResourceService.VisualResources.GetString("VR_ConfirmPathData");
-        public string DeclinePathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
 
         #endregion
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -228,21 +227,38 @@ namespace MegaApp.Views
             }
         }
 
+        private ListView GetSelectedListView()
+        {
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
+                return this.ListViewContacts;
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
+                return this.ListViewIncomingContactRequests;
+            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
+                return this.ListViewOutgoingContactRequests;
+            return null;
+        }
+
         private void SelectAllCheckBoxTapped(object sender, TappedRoutedEventArgs e)
         {
-            ListView listView = null;
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                listView = this.ListViewContacts;
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                listView = this.ListViewIncomingContactRequests;
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                listView = this.ListViewOutgoingContactRequests;
+            var listView = this.GetSelectedListView();
+            var checkBox = sender as CheckBox;
 
-            CheckBox checkBox = sender as CheckBox;
             if (checkBox?.IsChecked == true)
                 listView?.SelectAll();
             else
                 listView?.SelectedItems.Clear();
+        }
+
+        private void OnSelectAllTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var listView = this.GetSelectedListView();
+            listView?.SelectAll();
+        }
+
+        private void OnDeselectAllTapped(object sender, TappedRoutedEventArgs e)
+        {
+            var listView = this.GetSelectedListView();
+            listView?.SelectedItems.Clear();
         }
 
         private void OnSortClick(object sender, RoutedEventArgs e)

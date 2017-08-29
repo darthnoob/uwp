@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace MegaApp.ViewModels
         public CollectionViewModel()
         {
             this.Items = new ObservableCollection<T>();
-            this.SelectedItems = new List<T>();
+            this.SelectedItems = new ObservableCollection<T>();
 
             this.EnableCollectionChangedDetection();            
         }
@@ -30,12 +29,14 @@ namespace MegaApp.ViewModels
 
         public void EnableCollectionChangedDetection()
         {
-            this.Items.CollectionChanged += OnCollectionChanged;
+            this.Items.CollectionChanged += OnItemsCollectionChanged;
+            this.SelectedItems.CollectionChanged += OnSelectedItemsCollectionChanged;
         }
 
         public void DisableCollectionChangedDetection()
         {
-            this.Items.CollectionChanged -= OnCollectionChanged;
+            this.Items.CollectionChanged -= OnItemsCollectionChanged;
+            this.SelectedItems.CollectionChanged -= OnSelectedItemsCollectionChanged;
         }
 
         public void SelectAll()
@@ -77,7 +78,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
             {
@@ -92,8 +93,15 @@ namespace MegaApp.ViewModels
                 });
             }
 
-            OnPropertyChanged("HasItems");
-            OnPropertyChanged("Items");
+            OnPropertyChanged(nameof(this.Items), nameof(this.HasItems), 
+                nameof(this.HasAllItemsSelected));
+        }
+
+        private void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
+                nameof(this.OnlyOneSelectedItem), nameof(this.OneOrMoreSelected), 
+                nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
         }
 
         #endregion
@@ -107,8 +115,8 @@ namespace MegaApp.ViewModels
             set { SetField(ref _items, value); }
         }
 
-        private IList<T> _selectedItems;
-        public IList<T> SelectedItems
+        private ObservableCollection<T> _selectedItems;
+        public ObservableCollection<T> SelectedItems
         {
             get { return _selectedItems; }
             set { SetField(ref _selectedItems, value); }
@@ -118,9 +126,13 @@ namespace MegaApp.ViewModels
 
         public bool HasSelectedItems => this.SelectedItems?.Count > 0;
 
+        public bool OnlyOneSelectedItem => this.SelectedItems?.Count == 1;
+
         public bool OneOrMoreSelected => this.SelectedItems?.Count >= 1;
 
         public bool MoreThanOneSelected => this.SelectedItems?.Count > 1;
+
+        public bool HasAllItemsSelected => this.SelectedItems?.Count == this.Items?.Count;
 
         #endregion
     }

@@ -3,13 +3,10 @@
     /// <summary>
     /// Possible contacts and contact requests view states.
     /// </summary>
-    public enum ContactsViewState
+    public enum ContactsContentType
     {
         Contacts,
-        ContactsMultiSelect,
         IncomingRequests,
-        IncomingRequestsMultiSelect,
-        OutgoingRequests,
-        OutgoingRequestsMultiSelect
+        OutgoingRequests
     }
 }

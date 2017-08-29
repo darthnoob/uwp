@@ -5,12 +5,12 @@ using MegaApp.Enums;
 
 namespace MegaApp.Converters
 {
-    public class ContactsViewStateToVisibilityConverter : IValueConverter
+    public class ContactsContentTypeToVisibilityConverter : IValueConverter
     {
         /// <summary>
-        /// Convert from <see cref="ContactsViewState"/> to a Visibility state.
+        /// Convert from <see cref="ContactsContentType"/> to a Visibility state.
         /// </summary>
-        /// <param name="value">Input <see cref="ContactsViewState"/> parameter.</param>
+        /// <param name="value">Input <see cref="ContactsContentType"/> parameter.</param>
         /// <param name="targetType"></param>
         /// <param name="parameter">String with the view state name to compare.</param>
         /// <param name="language">Any specific culture information for the current thread.</param>
@@ -20,15 +20,15 @@ namespace MegaApp.Converters
             var paramString = parameter as string;
 
             // If parameters are not valid, visibility will be "collapsed"
-            if (!(value is ContactsViewState))
+            if (!(value is ContactsContentType))
                 return Visibility.Collapsed;
             if (string.IsNullOrWhiteSpace(paramString))
                 return Visibility.Collapsed;
 
             // Convert "parameter" string to a ContactsViewState
-            var paramConvert = (ContactsViewState)Enum.Parse(typeof(ContactsViewState), parameter as string);
+            var paramConvert = (ContactsContentType)Enum.Parse(typeof(ContactsContentType), parameter as string);
 
-            return ((ContactsViewState)value == paramConvert) ? Visibility.Visible : Visibility.Collapsed;
+            return ((ContactsContentType)value == paramConvert) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

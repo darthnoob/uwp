@@ -66,6 +66,16 @@ namespace MegaApp.ViewModels.Contacts
         public ICommand MultiSelectCommand { get; }
         public ICommand SelectionChangedCommand { get; }
 
+        public virtual ICommand AddContactCommand { get; }
+        public virtual ICommand RemoveContactCommand { get; }
+
+        public virtual ICommand AcceptContactRequestCommand { get; }
+        public virtual ICommand CancelContactRequestCommand { get; }
+        public virtual ICommand DeclineContactRequestCommand { get; }
+        public virtual ICommand RemindContactRequestCommand { get; }
+
+        public virtual ICommand InvertOrderCommand { get; }
+
         #endregion
 
         #region Methods
@@ -129,11 +139,11 @@ namespace MegaApp.ViewModels.Contacts
             set { SetField(ref _focusedItem, value); }
         }
 
-        private ContactsViewState _viewState;
-        public ContactsViewState ViewState
+        private ContactsContentType _contentType;
+        public ContactsContentType ContentType
         {
-            get { return _viewState; }
-            set { SetField(ref _viewState, value); }
+            get { return _contentType; }
+            set { SetField(ref _contentType, value); }
         }
 
         public string OrderTypeAndNumberOfItems
@@ -190,24 +200,12 @@ namespace MegaApp.ViewModels.Contacts
 
                 if (_isMultiSelectActive)
                 {
-                    if (this.isOutgoing == null)
-                        this.ViewState = ContactsViewState.ContactsMultiSelect;
-                    else
-                        this.ViewState = this.isOutgoing == true ? ContactsViewState.OutgoingRequestsMultiSelect :
-                            ContactsViewState.IncomingRequestsMultiSelect;
-
                     this.OnMultiSelectEnabled();
                 }
                 else
                 {
-                    if (this.isOutgoing == null)
-                        this.ViewState = ContactsViewState.Contacts;
-                    else
-                        this.ViewState = this.isOutgoing == true ? ContactsViewState.OutgoingRequests :
-                            ContactsViewState.IncomingRequests;
-
                     this.List.ClearSelection();
-                    OnPropertyChanged("IsMultiSelectActive");
+                    OnPropertyChanged(nameof(this.IsMultiSelectActive));
                     this.OnMultiSelectDisabled();
                 }
             }
@@ -252,7 +250,16 @@ namespace MegaApp.ViewModels.Contacts
         public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+
+        public string AcceptContactText => ResourceService.UiResources.GetString("UI_AcceptContact");
+        public string CancelInviteText => ResourceService.UiResources.GetString("UI_CancelInvite");
+        public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
+        public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
+
+        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
+        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
 
         #endregion
 
@@ -261,7 +268,11 @@ namespace MegaApp.ViewModels.Contacts
         public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string RemovePathData => ResourceService.VisualResources.GetString("VR_RemovePathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+
+        public string AcceptPathData => ResourceService.VisualResources.GetString("VR_ConfirmPathData");
+        public string DeclinePathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
 
         #endregion
     }
