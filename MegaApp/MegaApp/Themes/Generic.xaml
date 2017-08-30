@@ -362,12 +362,9 @@
                                     Command="{Binding Parent.CloseNodeDetailsCommand}"
                                     Style="{StaticResource MegaAppBarButtonStyle}"
                                     ToolTipService.ToolTip="{Binding CloseText}">
-                                    <AppBarButton.Icon>
-                                        <PathIcon 
-                                            Data="{Binding ClosePanelPathData, Mode=OneTime}"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"/>
-                                    </AppBarButton.Icon>
+                                    <Viewbox MaxHeight="16" MaxWidth="16">
+                                        <FontIcon Glyph="&#xEA5B;"/>
+                                    </Viewbox>
                                 </AppBarButton>
                             </CommandBar.Content>
                         </CommandBar>
@@ -376,7 +373,7 @@
                             x:Name="PivotControl"
                             Grid.Row="1"
                             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
-                            <PivotItem x:Name="NodeDetailsPivot" Header="Details">
+                            <PivotItem x:Name="NodeDetailsPivot" Header="{Binding DetailsText}">
                                 <ScrollViewer Margin="-12,0" VerticalScrollBarVisibility="Auto">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -473,7 +470,7 @@
                                     </Grid>
                                 </ScrollViewer>
                             </PivotItem>
-                            <PivotItem x:Name="NodeLinkPivot" Header="Link">
+                            <PivotItem x:Name="NodeLinkPivot" Header="{Binding LinkText}">
                                 <ScrollViewer Margin="-12,0" VerticalScrollBarVisibility="Auto">
                                     <Grid Margin="0,0,0,48">
                                         <Grid.RowDefinitions>
@@ -758,6 +755,226 @@
                                         <Setter Target="FoldersLabelText.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
                                         <Setter Target="ChildFolders.(RelativePanel.Below)" Value="FoldersLabelText" />
                                         <Setter Target="ChildFolders.(RelativePanel.AlignLeftWith)" Value="TypeLabelText" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="userControls:ContactProfilePanel">
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="userControls:ContactProfilePanel">
+                    <Grid Background="{ThemeResource MegaContactProfileBackgroundBrush}" DataContext="{TemplateBinding Contact}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <CommandBar
+                            x:Name="TopCommandBar"
+                            Grid.Row="0"
+                            extensions:CommandBarExtensions.HideMoreButton="True"
+                            Style="{StaticResource MegaCommandBarStyle}">
+                            <CommandBar.Content>
+                                <AppBarButton
+                                    x:Name="CloseContactProfilePanelButton"
+                                    Command="{Binding ContactList.CloseContactProfileCommand}"
+                                    Style="{StaticResource MegaAppBarButtonStyle}"
+                                    ToolTipService.ToolTip="{Binding CloseText}">
+                                    <Viewbox MaxHeight="16" MaxWidth="16">
+                                        <FontIcon Glyph="&#xEA5B;" />
+                                    </Viewbox>
+                                </AppBarButton>
+                            </CommandBar.Content>
+                        </CommandBar>
+
+                        <Pivot
+                            x:Name="PivotControl"
+                            Grid.Row="1"
+                            Margin="12,0,0,0"
+                            HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
+                            <PivotItem x:Name="ContactProfilePivot" Header="{Binding ProfileText}">
+                                <ScrollViewer
+                                    x:Name="ProfileScrollView"
+                                    Margin="0,28,-12,0"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <StackPanel>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid
+                                                Grid.Column="0" Grid.Row="0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center">
+                                                <Rectangle
+                                                    x:Name="PART_AvatarRectangle"
+                                                    Stroke="{ThemeResource MegaAppForegroundBrush}"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
+                                                    <Rectangle.Fill>
+                                                        <SolidColorBrush Color="{Binding AvatarColor, Mode=OneWay}"/>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <TextBlock
+                                                    x:Name="PART_AvatarLetter"
+                                                    Text="{Binding AvatarLetter, Mode=OneWay}"
+                                                    Foreground="White"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
+                                                <Image
+                                                    x:Name="PART_AvatarUri"
+                                                    Height="96" Width="96"
+                                                    AutomationProperties.AccessibilityView="Raw"
+                                                    Stretch="Uniform"
+                                                    Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}}">
+                                                    <Image.Source>
+                                                        <BitmapImage UriSource="{Binding AvatarUri, Mode=OneWay}" />
+                                                    </Image.Source>
+                                                </Image>
+                                            </Grid>
+                                            <StackPanel 
+                                                Grid.Column="1" Grid.Row="0"
+                                                Margin="20,0,0,0"
+                                                VerticalAlignment="Top">
+                                                <TextBlock
+                                                    x:Name="PART_NameText"
+                                                    FontSize="28"
+                                                    FontWeight="SemiLight"
+                                                    Margin="0,0,0,8"
+                                                    Text="{Binding FullName, Mode=OneWay}"
+                                                    TextWrapping="WrapWholeWords"/>
+                                                <TextBlock
+                                                    x:Name="PART_EmailText"
+                                                    FontSize="16"
+                                                    Opacity="0.4"
+                                                    Text="{Binding Email, Mode=OneWay}"
+                                                    TextWrapping="WrapWholeWords" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <StackPanel Margin="0,36,0,0">
+                                            <TextBlock
+                                                x:Name="PART_RemoveContactText"
+                                                FontSize="20"
+                                                FontWeight="SemiLight"
+                                                Text="{Binding RemoveContactText, Mode=OneWay}"
+                                                TextWrapping="WrapWholeWords"/>
+                                            <Grid Margin="0,20,0,24">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Viewbox
+                                                    Grid.Column="0"
+                                                    Margin="0,4,12,0"
+                                                    MaxWidth="16" MaxHeight="16"
+                                                    VerticalAlignment="Top">
+                                                    <PathIcon 
+                                                        Data="{Binding WarningIconPathData, Mode=OneTime}"
+                                                        Foreground="{StaticResource MegaRedColorBrush}" />
+                                                </Viewbox>
+                                                <TextBlock
+                                                    x:Name="PART_RemoveContactWarningText"
+                                                    Grid.Column="1"
+                                                    FontSize="14"
+                                                    Text="{Binding RemoveContactWarningText, Mode=OneTime}"
+                                                    TextWrapping="WrapWholeWords"
+                                                    Opacity="0.4"/>
+                                            </Grid>
+                                            <Button
+                                                x:Name="PART_RemoveContactButton"
+                                                Width="136">
+                                                <TextBlock Text="{Binding RemoveText, Mode=OneTime}" />
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </PivotItem>
+                            <!--<PivotItem x:Name="SharedItemsPivot" Header="{Binding SharedItemsText}">
+                                <ScrollViewer 
+                                    x:Name="SharedItemsScrollView"
+                                    Margin="0,28,-12,0"
+                                    VerticalScrollBarVisibility="Auto">
+                                    
+                                </ScrollViewer>
+                            </PivotItem>-->
+                        </Pivot>
+
+                        <CommandBar
+                            x:Name="BottomCommandBar"
+                            Grid.Row="2"
+                            Style="{StaticResource MegaCommandBarStyle}">
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton
+                                    Command="{Binding ContactList.CloseContactProfileCommand}"
+                                    Icon="Cancel"
+                                    Label="{Binding CancelText}"
+                                    ToolTipService.ToolTip="{Binding CancelText}" />
+                            </CommandBar.SecondaryCommands>
+                        </CommandBar>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Desktop">
+                                    <VisualState.StateTriggers>
+                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="TopRow.Height" Value="Auto" />
+                                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Mobile">
+                                    <VisualState.StateTriggers>
+                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}" />
+                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Small">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="0" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Medium">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="360" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Wide">
+                                    <VisualState.StateTriggers>
+                                        <AdaptiveTrigger MinWindowWidth="600" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Visible" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

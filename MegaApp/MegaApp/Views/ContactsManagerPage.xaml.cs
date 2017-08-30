@@ -22,9 +22,14 @@ namespace MegaApp.Views
 
     public sealed partial class ContactsManagerPage : BaseContactsManagerPage
     {
+        private const double ContactProfilePanelMinWidth = 886;
+
         public ContactsManagerPage()
         {
             this.InitializeComponent();
+
+            this.ContactProfileSplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsProfileViewOpenPropertyChanged);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -34,6 +39,9 @@ namespace MegaApp.Views
 
             this.ViewModel.MegaContacts.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.ContactsSorted += OnContactsSorted;
+            this.ViewModel.MegaContacts.OpenContactProfileEvent += OnOpenContactProfile;
+            this.ViewModel.MegaContacts.CloseContactProfileEvent += OnCloseContactProfile;
 
             this.ViewModel.IncomingContactRequests.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.IncomingContactRequests.MultiSelectDisabled += OnMultiSelectDisabled;
@@ -46,6 +54,8 @@ namespace MegaApp.Views
         {
             this.ViewModel.MegaContacts.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.OpenContactProfileEvent -= OnOpenContactProfile;
+            this.ViewModel.MegaContacts.CloseContactProfileEvent -= OnCloseContactProfile;
 
             this.ViewModel.IncomingContactRequests.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.IncomingContactRequests.MultiSelectDisabled -= OnMultiSelectDisabled;
@@ -57,8 +67,27 @@ namespace MegaApp.Views
             base.OnNavigatedFrom(e);
         }
 
+        private void IsProfileViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (this.ContactProfileSplitView.IsPaneOpen)
+            {
+                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.ContactProfileSplitView.ActualWidth < 600)
+                {
+                    this.ContactProfileSplitView.OpenPaneLength = this.ContactProfileSplitView.ActualWidth;
+                    AppService.SetAppViewBackButtonVisibility(true);
+                    return;
+                }
+
+                this.ContactProfileSplitView.OpenPaneLength = ContactProfilePanelMinWidth;
+            }
+
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
+        }
+
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
+            this.ContactProfileSplitView.IsPaneOpen = false;
+
             // Needed to avoid extrange behaviors during the view update
             DisableViewsBehaviors();
 
@@ -157,6 +186,8 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.ContactProfileSplitView.IsPaneOpen = false;
+
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
                 this.ViewModel.ActiveView = this.ViewModel.MegaContacts;
 
@@ -188,12 +219,15 @@ namespace MegaApp.Views
             IMegaContact itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContact;
             if (itemTapped == null) return;
 
-            this.ViewModel.MegaContacts.FocusedItem = itemTapped;
+            if (this.ViewModel.ActiveView is ContactsListViewModel)
+            {
+                this.ViewModel.MegaContacts.FocusedItem = itemTapped;
 
-            if (!this.ViewModel.MegaContacts.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems.Clear();
+                if (!this.ViewModel.MegaContacts.IsMultiSelectActive)
+                    ((ListViewBase)sender).SelectedItems?.Clear();
 
-            ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+                ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            }
         }
 
         private void OnContactRequestTapped(object sender, TappedRoutedEventArgs e)
@@ -221,9 +255,9 @@ namespace MegaApp.Views
                 activeView.FocusedItem = itemTapped;
 
                 if (!activeView.IsMultiSelectActive)
-                    ((ListViewBase)sender).SelectedItems.Clear();
+                    ((ListViewBase)sender).SelectedItems?.Clear();
 
-                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+                ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
             }
         }
 
@@ -276,6 +310,21 @@ namespace MegaApp.Views
 
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout?.ShowAt(sortButton);
+        }
+
+        private void OnContactsSorted(object sender, EventArgs e)
+        {
+            this.ContactProfileSplitView.IsPaneOpen = false;
+        }
+
+        private void OnOpenContactProfile(object sender, EventArgs e)
+        {
+            this.ContactProfileSplitView.IsPaneOpen = true;
+        }
+
+        private void OnCloseContactProfile(object sender, EventArgs e)
+        {
+            this.ContactProfileSplitView.IsPaneOpen = false;
         }
     }
 }

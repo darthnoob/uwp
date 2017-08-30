@@ -25,6 +25,8 @@ namespace MegaApp.ViewModels.Contacts
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
             this.InvertOrderCommand = new RelayCommand(InvertOrder);
+            this.OpenContactProfileCommand = new RelayCommand(OpenContactProfile);
+            this.CloseContactProfileCommand = new RelayCommand(CloseContactProfile);
 
             this.CurrentOrder = ContactsSortOptions.NameAscending;
         }
@@ -33,8 +35,53 @@ namespace MegaApp.ViewModels.Contacts
 
         public override ICommand AddContactCommand { get; }
         public override ICommand RemoveContactCommand { get; }
+        public override ICommand OpenContactProfileCommand { get; }
+        public override ICommand CloseContactProfileCommand { get; }
 
         public override ICommand InvertOrderCommand { get; }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Event triggered when the contacts are sorted
+        /// </summary>
+        public event EventHandler ContactsSorted;
+
+        /// <summary>
+        /// Event invocator method called when the contacts are sorted
+        /// </summary>
+        protected virtual void OnContactsSorted()
+        {
+            this.ContactsSorted?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when the 'view profile' option is tapped
+        /// </summary>
+        public event EventHandler OpenContactProfileEvent;
+
+        /// <summary>
+        /// Event invocator method called when the 'view profile' option is tapped
+        /// </summary>
+        protected virtual void OnOpenContactProfile()
+        {
+            this.OpenContactProfileEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when the 'close profile panel' option is tapped
+        /// </summary>
+        public event EventHandler CloseContactProfileEvent;
+
+        /// <summary>
+        /// Event invocator method called when the 'close profile panel' option is tapped
+        /// </summary>
+        protected virtual void OnCloseContactProfile()
+        {
+            this.CloseContactProfileEvent?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
 
@@ -305,6 +352,8 @@ namespace MegaApp.ViewModels.Contacts
                 default:
                     return;
             }
+
+            this.OnContactsSorted();
         }
 
         private void InvertOrder()
@@ -322,6 +371,16 @@ namespace MegaApp.ViewModels.Contacts
             }
 
             this.SortBy(this.CurrentOrder);
+        }
+
+        private void OpenContactProfile()
+        {
+            this.OnOpenContactProfile();
+        }
+
+        private void CloseContactProfile()
+        {
+            this.OnCloseContactProfile();
         }
 
         #endregion

@@ -123,6 +123,7 @@
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
+    <Compile Include="UserControls\ContactProfilePanel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />

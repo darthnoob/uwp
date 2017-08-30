@@ -26,11 +26,13 @@ namespace MegaApp.ViewModels.Contacts
             this.ContactList = contactList;
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
+            this.ViewProfileCommand = new RelayCommand(ViewProfile);
         }
 
         #region Commands
 
         public ICommand RemoveContactCommand { get; }
+        public ICommand ViewProfileCommand { get; }
 
         #endregion
 
@@ -41,7 +43,12 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public void ViewProfile()
         {
-            
+            if (this.ContactList != null && !this.ContactList.IsMultiSelectActive)
+            {
+                if (this.ContactList.OpenContactProfileCommand.CanExecute(null))
+                    this.ContactList.OpenContactProfileCommand.Execute(null);
+                return;
+            }
         }
 
         /// <summary>
@@ -81,8 +88,7 @@ namespace MegaApp.ViewModels.Contacts
                 var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
-                    ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
-                    this.RemoveText, this.CancelText);
+                    this.RemoveContactWarningText, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return true;
             }
@@ -259,17 +265,23 @@ namespace MegaApp.ViewModels.Contacts
 
         #region UiResources
 
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
+        public string ProfileText => ResourceService.UiResources.GetString("UI_Profile");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
+        public string RemoveContactWarningText => ResourceService.AppMessages.GetString("AM_RemoveContactWarning");
         public string RemoveMultipleContactsText => ResourceService.UiResources.GetString("UI_RemoveMultipleContacts");
+        public string SharedItemsText => ResourceService.UiResources.GetString("UI_SharedItems");
+        public string ViewProfileText => ResourceService.UiResources.GetString("UI_ViewProfile");
 
         private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        private string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
 
         #endregion
 
         #region VisualResources
 
         public string IncomingSharedFolderPathData => ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
+        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }

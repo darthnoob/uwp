@@ -747,6 +747,7 @@ namespace MegaApp.ViewModels
 
         public string AddedLabelText => ResourceService.UiResources.GetString("UI_Added");
         public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
+        public string DetailsText => ResourceService.UiResources.GetString("UI_Details");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
@@ -760,6 +761,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
@@ -780,7 +782,6 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
-        public string ClosePanelPathData => ResourceService.VisualResources.GetString("VR_ClosePanelPathData");
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");

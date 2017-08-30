@@ -1317,6 +1317,10 @@
                 <MenuFlyout>
                     <MenuFlyout.Items>
                         <MenuFlyoutItem
+                            Command="{Binding ViewProfileCommand}"
+                            Text="{Binding ViewProfileText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             Text="{Binding RemoveContactText}"
@@ -1421,6 +1425,10 @@
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding ViewProfileCommand}"
+                            Text="{Binding ViewProfileText}"
+                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"

@@ -1028,4 +1028,21 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Email (descending)</value>
     <comment>Label for the menu option to sort contacts or contact requests in descending order by email - (String as short as possible).</comment>
   </data>
+  <data name="UI_ViewProfile" xml:space="preserve">
+    <value>View profile</value>
+    <comment>Label for any 'View profile' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedItems" xml:space="preserve">
+    <value>Shared items</value>
+    <comment>Label for any 'Shared items' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Details" xml:space="preserve">
+    <value>Details</value>
+    <comment>Label for any 'Details' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Link" xml:space="preserve">
+    <value>Link</value>
+    <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

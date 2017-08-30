@@ -74,6 +74,9 @@ namespace MegaApp.ViewModels.Contacts
         public virtual ICommand DeclineContactRequestCommand { get; }
         public virtual ICommand RemindContactRequestCommand { get; }
 
+        public virtual ICommand OpenContactProfileCommand { get; }
+        public virtual ICommand CloseContactProfileCommand { get; }
+
         public virtual ICommand InvertOrderCommand { get; }
 
         #endregion
@@ -252,6 +255,7 @@ namespace MegaApp.ViewModels.Contacts
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+        public string ViewProfileText => ResourceService.UiResources.GetString("UI_ViewProfile");
 
         public string AcceptContactText => ResourceService.UiResources.GetString("UI_AcceptContact");
         public string CancelInviteText => ResourceService.UiResources.GetString("UI_CancelInvite");
@@ -270,6 +274,7 @@ namespace MegaApp.ViewModels.Contacts
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string RemovePathData => ResourceService.VisualResources.GetString("VR_RemovePathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+        public string ViewProfilePathData => ResourceService.VisualResources.GetString("VR_ViewProfilePathData");
 
         public string AcceptPathData => ResourceService.VisualResources.GetString("VR_ConfirmPathData");
         public string DeclinePathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
