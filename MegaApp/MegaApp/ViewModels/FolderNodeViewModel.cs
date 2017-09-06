@@ -17,9 +17,6 @@ namespace MegaApp.ViewModels
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_default");
 
-            if (megaSdk.isShared(megaNode))
-                this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_shared");
-
             if (!megaNode.getName().ToLower().Equals("camera uploads")) return;
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_photo");
         }

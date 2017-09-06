@@ -16,113 +16,6 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance viewModels:ContactsManagerViewModel}">
 
-    <Page.Resources>
-        <ControlTemplate x:Name="AscendingOrderIcon">
-            <CommandBar
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                extensions:CommandBarExtensions.HideMoreButton="True"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton
-                    Height="36" Width="36"
-                    Command="{Binding InvertOrderCommand}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Click="OnButtonClick">
-                    <Viewbox 
-                        Margin="0,0,0,12"
-                        Height="10" Width="36"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE70E;"/>
-                    </Viewbox>
-                </AppBarButton>
-            </CommandBar>
-        </ControlTemplate>
-        
-        <ControlTemplate x:Name="DescendingOrderIcon">
-            <CommandBar
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-                extensions:CommandBarExtensions.HideMoreButton="True"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton
-                    Height="36" Width="36"
-                    Command="{Binding InvertOrderCommand}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Click="OnButtonClick">
-                    <Viewbox 
-                        Margin="0,0,0,12"
-                        Height="10" Width="36"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                        <FontIcon Glyph="&#xE70D;"/>
-                    </Viewbox>
-                </AppBarButton>
-            </CommandBar>
-        </ControlTemplate>
-        
-        <ControlTemplate x:Name="SelectAllCheckBoxWithOrderTypeAndNumberOfItems">
-            <CheckBox
-                Margin="0,8,0,0"
-                IsChecked="{Binding List.HasAllItemsSelected}"
-                Tapped="SelectAllCheckBoxTapped"
-                Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid 
-                    Margin="4,-8,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <ContentControl
-                        Grid.Column="0"
-                        Template="{StaticResource AscendingOrderIcon}"
-                        Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <ContentControl 
-                        Grid.Column="0"
-                        Template="{StaticResource DescendingOrderIcon}"
-                        Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="8,0,0,12"
-                        FontSize="13"
-                        Foreground="{StaticResource MegaRedColorBrush}"
-                        Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
-                        Opacity="0.8"
-                        VerticalAlignment="Center" />
-                </Grid>
-            </CheckBox>
-        </ControlTemplate>
-        
-        <ControlTemplate x:Name="OrderTypeAndNumberOfItems">
-            <Grid 
-                Margin="0,6,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Visibility="{Binding IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <ContentControl
-                    Grid.Column="0"
-                    Template="{StaticResource AscendingOrderIcon}"
-                    Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <ContentControl 
-                    Grid.Column="0"
-                    Template="{StaticResource DescendingOrderIcon}"
-                    Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                <TextBlock
-                    Grid.Column="1"
-                    Margin="8,0,0,12"
-                    FontSize="13"
-                    Foreground="{StaticResource MegaRedColorBrush}"
-                    Text="{Binding OrderTypeAndNumberOfItems, Mode=OneWay}"
-                    Opacity="0.8"
-                    VerticalAlignment="Center" />
-            </Grid>
-        </ControlTemplate>
-    </Page.Resources>
-
     <SplitView
         x:Name="ContactProfileSplitView"
         DisplayMode="Inline"
@@ -180,7 +73,7 @@
                             ToolTipService.ToolTip="{Binding ViewProfileText, Mode=OneTime}"
                             Command="{Binding OpenContactProfileCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -194,7 +87,7 @@
                             ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
                             Command="{Binding RemoveContactCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -230,7 +123,7 @@
                             ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
                             Command="{Binding AcceptContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxHeight="14" MaxWidth="14">
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -244,7 +137,7 @@
                             ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                             Command="{Binding DeclineContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -293,7 +186,7 @@
                             ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
                             Command="{Binding RemindContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxHeight="16" MaxWidth="16">
                                 <FontIcon Glyph="&#xE1F2;"/>
                             </Viewbox>
@@ -304,7 +197,7 @@
                             ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
                             Command="{Binding CancelContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -335,7 +228,7 @@
                     Grid.Column="1"
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Background="Transparent"
-                    IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                    IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
                     <AppBarSeparator 
                         x:Name="PermanentTopCommandBarSeparator"
                         Margin="-12,0"
@@ -375,7 +268,7 @@
                                 ButtonText="{Binding AddContactText, Mode=OneTime}"
                                 Foreground="{StaticResource MegaAppForegroundBrush}"
                                 HeaderText="{Binding EmptyContactsHeaderText, Mode=OneTime}"
-                                IsVisible="{Binding List.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
+                                IsVisible="{Binding ItemCollection.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
                                 SubHeaderMargin="0,14,0,28"
                                 SubHeaderText="{Binding EmptyContactsSubHeaderText, Mode=OneTime}"
                                 VerticalAlignment="Center"
@@ -384,12 +277,12 @@
                                     <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                                 </userControls:ButtonPanel.SubHeaderForeground>
                             </userControls:ButtonPanel>
-                            <Grid Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                            <Grid Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
+                                <Grid Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                     <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
                                     <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
                                 </Grid>
@@ -401,11 +294,11 @@
                                         IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                         ItemTemplate="{StaticResource MegaContactItemContentDesktop}"
-                                        ItemsSource="{Binding List.Items}"
+                                        ItemsSource="{Binding ItemCollection.Items}"
                                         Tapped="OnContactTapped"
                                         RightTapped="OnContactRightTapped">
                                         <interactivity:Interaction.Behaviors>
-                                            <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                            <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:EventTriggerBehavior.Actions>
                                                     <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
@@ -438,12 +331,12 @@
                                     IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
-                                    ItemsSource="{Binding List.Items}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
                                     Tapped="OnContactRequestTapped"
                                     RightTapped="OnContactRequestRightTapped"
-                                    Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                                    Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <interactivity:Interaction.Behaviors>
-                                        <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
                                             <core:EventTriggerBehavior.Actions>
                                                 <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
@@ -475,12 +368,12 @@
                                     IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
-                                    ItemsSource="{Binding List.Items}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
                                     Tapped="OnContactRequestTapped"
                                     RightTapped="OnContactRequestRightTapped"
-                                    Visibility="{Binding List.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                                    Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <interactivity:Interaction.Behaviors>
-                                        <behaviors:MultiSelect SelectedItems="{Binding List.SelectedItems, Mode=TwoWay}" />
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
                                             <core:EventTriggerBehavior.Actions>
                                                 <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
@@ -521,7 +414,7 @@
                         Label="{Binding RemoveContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"                    
                         ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
-                        Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -532,7 +425,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
-                        IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
@@ -574,7 +467,7 @@
                         Label="{Binding AcceptContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
-                        Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="14" MaxWidth="14">
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -588,7 +481,7 @@
                         Label="{Binding DenyContactText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -599,7 +492,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
-                        IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
@@ -654,7 +547,7 @@
                         Label="{Binding RemindContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
-                        Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="12" MaxWidth="12">
                             <FontIcon Glyph="&#xE1F2;"/>
                         </Viewbox>
@@ -665,7 +558,7 @@
                         Label="{Binding CancelInviteText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
-                        Visibility="{Binding List.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -676,7 +569,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding MultiSelectCommand}"
-                        IsEnabled="{Binding List.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">

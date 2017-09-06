@@ -20,7 +20,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             this.isOutgoing = isOutgoing;
             this.ContentType = this.isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
-            this.List = new CollectionViewModel<IMegaContactRequest>();
+            this.ItemCollection = new CollectionViewModel<IMegaContactRequest>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
@@ -69,7 +69,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private void ListOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.List.Items))
+            if (e.PropertyName == nameof(this.ItemCollection.Items))
             {
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
@@ -81,7 +81,7 @@ namespace MegaApp.ViewModels.Contacts
             // User must be online to perform this operation
             if (!IsUserOnline()) return;
 
-            await OnUiThreadAsync(() => this.List.Clear());
+            await OnUiThreadAsync(() => this.ItemCollection.Clear());
 
             var contactRequestsList = isOutgoing ?
                 SdkService.MegaSdk.getOutgoingContactRequests() : 
@@ -95,7 +95,7 @@ namespace MegaApp.ViewModels.Contacts
                 if (contactRequestsList.get(i) == null) continue;
 
                 var contactRequest = new ContactRequestViewModel(contactRequestsList.get(i), this);
-                await OnUiThreadAsync(() => this.List.Items.Add(contactRequest));
+                await OnUiThreadAsync(() => this.ItemCollection.Items.Add(contactRequest));
             }
 
             this.SortBy(this.CurrentOrder);
@@ -108,10 +108,10 @@ namespace MegaApp.ViewModels.Contacts
 
         private void AcceptContactRequest()
         {
-            if (!this.List.HasSelectedItems) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var selectedContactRequests = this.List.SelectedItems.ToList();
+            var selectedContactRequests = this.ItemCollection.SelectedItems.ToList();
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.AcceptContactRequest();
@@ -119,10 +119,10 @@ namespace MegaApp.ViewModels.Contacts
 
         private void DeclineContactRequest()
         {
-            if (!this.List.HasSelectedItems) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var selectedContactRequests = this.List.SelectedItems.ToList();
+            var selectedContactRequests = this.ItemCollection.SelectedItems.ToList();
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.DeclineContactRequest();
@@ -130,10 +130,10 @@ namespace MegaApp.ViewModels.Contacts
 
         private void RemindContactRequest()
         {
-            if (!this.List.HasSelectedItems) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var selectedContactRequests = this.List.SelectedItems.ToList();
+            var selectedContactRequests = this.ItemCollection.SelectedItems.ToList();
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.RemindContactRequest();
@@ -141,10 +141,10 @@ namespace MegaApp.ViewModels.Contacts
 
         private void CancelContactRequest()
         {
-            if (!this.List.HasSelectedItems) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
             // Use a temp variable to avoid InvalidOperationException
-            var selectedContactRequests = this.List.SelectedItems.ToList();
+            var selectedContactRequests = this.ItemCollection.SelectedItems.ToList();
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.CancelContactRequest();
@@ -157,8 +157,8 @@ namespace MegaApp.ViewModels.Contacts
                 case ContactsSortOptions.EmailAscending:
                     OnUiThread(() =>
                     {
-                        this.List.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.List.Items.OrderBy(item => this.isOutgoing ?
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
+                            this.ItemCollection.Items.OrderBy(item => this.isOutgoing ?
                             item.TargetEmail : item.SourceEmail));
                     });
                     break;
@@ -166,8 +166,8 @@ namespace MegaApp.ViewModels.Contacts
                 case ContactsSortOptions.EmailDescending:
                     OnUiThread(() =>
                     {
-                        this.List.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.List.Items.OrderByDescending(item => this.isOutgoing ?
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
+                            this.ItemCollection.Items.OrderByDescending(item => this.isOutgoing ?
                             item.TargetEmail : item.SourceEmail));
                     });
                     break;

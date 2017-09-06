@@ -565,6 +565,75 @@ namespace MegaApp.Services
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }
+
+        /// <summary>
+        /// Creates a sort menu for contacts.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateContactSharedItemsSortMenu(ContactSharedItemsViewModel sharedItems)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
+                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
+                    sharedItems.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
+                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
+                    sharedItems.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionLastModifiedAscending"),
+                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_MODIFICATION_ASC),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = MSortOrderType.ORDER_MODIFICATION_ASC;
+                    sharedItems.SortBy(MSortOrderType.ORDER_MODIFICATION_ASC);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionLastModifiedDescending"),
+                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_MODIFICATION_DESC),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = MSortOrderType.ORDER_MODIFICATION_DESC;
+                    sharedItems.SortBy(MSortOrderType.ORDER_MODIFICATION_DESC);
+                })
+            });
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Gets the sort <see cref="ContactSharedItemsViewModel"/> menu item foreground color depending on the current sort order.
+        /// </summary>
+        /// <param name="sharedItems"><see cref="ContactSharedItemsViewModel"/> to check the current sort order.</param>
+        /// <param name="sortOrder">Sort order to check.</param>
+        /// <returns>The brush object with the color.</returns>
+        private static Brush GetContactInSharesSortMenuItemForeground(ContactSharedItemsViewModel sharedItems, MSortOrderType sortOrder)
+        {
+            if (sharedItems?.CurrentOrder == sortOrder)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
+        }
     }
 
     public class InputDialogSettings

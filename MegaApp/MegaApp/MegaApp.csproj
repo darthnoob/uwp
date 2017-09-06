@@ -127,6 +127,7 @@
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactSharedItemsViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
@@ -162,6 +163,9 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
+    <Compile Include="ViewModels\IncomingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\OutgoingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedItemsViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>

@@ -122,6 +122,13 @@ namespace MegaApp.ViewModels
             set { SetField(ref _selectedItems, value); }
         }
 
+        private T _focusedItem;
+        public T FocusedItem
+        {
+            get { return _focusedItem; }
+            set { SetField(ref _focusedItem, value); }
+        }
+
         public bool HasItems => this.Items?.Count > 0;
 
         public bool HasSelectedItems => this.SelectedItems?.Count > 0;

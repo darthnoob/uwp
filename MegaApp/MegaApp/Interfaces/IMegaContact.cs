@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using mega;
 using Windows.UI;
+using mega;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.Interfaces
 {
@@ -89,9 +90,9 @@ namespace MegaApp.Interfaces
         string AvatarPath { get; }
 
         /// <summary>
-        /// List of folders shared by the contact
+        /// Folders shared with or by the contact
         /// </summary>
-        MNodeList InSharesList { get; set; }
+        ContactSharedItemsViewModel SharedItems { get; set; }
 
         /// <summary>
         /// Indicates if the contact is currently selected in a multi-select scenario

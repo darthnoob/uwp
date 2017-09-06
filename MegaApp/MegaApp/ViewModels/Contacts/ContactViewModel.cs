@@ -16,14 +16,15 @@ namespace MegaApp.ViewModels.Contacts
     {
         public ContactViewModel(MUser contact, ContactsListViewModel contactList)
         {
-            MegaUser = contact;
-            Handle = contact.getHandle();
-            Email = contact.getEmail();
-            Timestamp = contact.getTimestamp();
-            Visibility = contact.getVisibility();
-            AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
-            InSharesList = SdkService.MegaSdk.getInShares(contact);
+            this.MegaUser = contact;
             this.ContactList = contactList;
+
+            this.Handle = contact.getHandle();
+            this.Email = contact.getEmail();
+            this.Timestamp = contact.getTimestamp();
+            this.Visibility = contact.getVisibility();
+            this.AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
+            this.SharedItems = new ContactSharedItemsViewModel(this.MegaUser);
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
             this.ViewProfileCommand = new RelayCommand(ViewProfile);
@@ -108,7 +109,7 @@ namespace MegaApp.ViewModels.Contacts
             }
 
             return result;
-        }
+        }        
 
         #endregion
 
@@ -216,32 +217,15 @@ namespace MegaApp.ViewModels.Contacts
             Path.Combine(ApplicationData.Current.LocalFolder.Path, 
                 ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), Email);
 
-        private MNodeList _inSharesList;
+        private ContactSharedItemsViewModel _sharedItems;
         /// <summary>
-        /// List of folders shared by the contact
+        /// Folders shared with or by the contact
         /// </summary>
-        public MNodeList InSharesList
+        public ContactSharedItemsViewModel SharedItems
         {
-            get { return _inSharesList; }
-            set
-            {
-                SetField(ref _inSharesList, value);
-                OnPropertyChanged("NumberOfInShares");
-                OnPropertyChanged("NumberOfInSharesText");
-            }
+            get { return _sharedItems; }
+            set { SetField(ref _sharedItems, value); }
         }
-
-        /// <summary>
-        /// Number of folders shared by the contact
-        /// </summary>
-        public int NumberOfInShares => InSharesList.size();
-
-        /// <summary>
-        /// Number of folders shared by the contact as a formatted text string
-        /// </summary>
-        public string NumberOfInSharesText => string.Format("{0} {1}", NumberOfInShares, NumberOfInShares == 1 ? 
-            ResourceService.UiResources.GetString("UI_SharedFolder").ToLower() : 
-            ResourceService.UiResources.GetString("UI_SharedFolders").ToLower());
 
         private ContactsListViewModel _contactList;
         public ContactsListViewModel ContactList
@@ -271,6 +255,7 @@ namespace MegaApp.ViewModels.Contacts
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
         public string RemoveContactWarningText => ResourceService.AppMessages.GetString("AM_RemoveContactWarning");
         public string RemoveMultipleContactsText => ResourceService.UiResources.GetString("UI_RemoveMultipleContacts");
+        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
         public string SharedItemsText => ResourceService.UiResources.GetString("UI_SharedItems");
         public string ViewProfileText => ResourceService.UiResources.GetString("UI_ViewProfile");
 
@@ -280,7 +265,8 @@ namespace MegaApp.ViewModels.Contacts
 
         #region VisualResources
 
-        public string IncomingSharedFolderPathData => ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
+        public string ShareIconPathData => ResourceService.VisualResources.GetString("VR_ShareIconPathData");
+        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
         public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion

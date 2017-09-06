@@ -38,19 +38,27 @@ namespace MegaApp.Services
                 {
                     case MNodeType.TYPE_UNKNOWN:
                         break;
-                    case MNodeType.TYPE_FILE:
-                        {
-                            if (megaNode.hasThumbnail() || megaNode.hasPreview() || ImageService.IsImage(megaNode.getName()))
-                                return new ImageNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
 
-                            return new FileNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
-                        }
-                    case MNodeType.TYPE_FOLDER:
+                    case MNodeType.TYPE_FILE:
+                        if (megaNode.hasThumbnail() || megaNode.hasPreview() || ImageService.IsImage(megaNode.getName()))
+                            return new ImageNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
+                        return new FileNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
                     case MNodeType.TYPE_ROOT:
                     case MNodeType.TYPE_RUBBISH:
+                        return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
+                    case MNodeType.TYPE_FOLDER:
+                        if (megaSdk.isShared(megaNode))
                         {
-                            return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+                            if (megaSdk.isInShare(megaNode))
+                                return new IncomingSharedFolderNodeViewModel(megaNode);
+                            if (megaSdk.isOutShare(megaNode))
+                                return new OutgoingSharedFolderNodeViewModel(megaNode, folder);
                         }
+                        return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
                     case MNodeType.TYPE_INCOMING:
                         break;
                 }

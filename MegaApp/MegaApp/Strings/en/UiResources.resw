@@ -1045,4 +1045,34 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Link</value>
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_SortOptionLastModifiedAscending" xml:space="preserve">
+    <value>Last modified (ascending)</value>
+    <comment>Label for the menu option to sort the nodes in ascending order by modification date (from newer to older) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLastModifiedDescending" xml:space="preserve">
+    <value>Last modified (descending)</value>
+    <comment>Label for the menu option to sort the nodes in descending order by modification date (from older to newer) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByLastModification" xml:space="preserve">
+    <value>Last modified ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByLastModificationMultiSelect" xml:space="preserve">
+    <value>Last modified ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by modification date and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_PermissionFullAccess" xml:space="preserve">
+    <value>Full access</value>
+    <comment>Label for the 'Full access' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadAndWrite" xml:space="preserve">
+    <value>Read &amp; write</value>
+    <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadOnly" xml:space="preserve">
+    <value>Read only</value>
+    <comment>Label for the 'Read only' permission for shared items.</comment>
+  </data>
 </root>

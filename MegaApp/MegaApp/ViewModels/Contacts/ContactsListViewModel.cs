@@ -20,7 +20,7 @@ namespace MegaApp.ViewModels.Contacts
         public ContactsListViewModel()
         {
             this.ContentType = ContactsContentType.Contacts;
-            this.List = new CollectionViewModel<IMegaContact>();
+            this.ItemCollection = new CollectionViewModel<IMegaContact>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
@@ -108,16 +108,16 @@ namespace MegaApp.ViewModels.Contacts
 
         private async void RemoveContact()
         {
-            if (!this.List.HasSelectedItems) return;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
-            if (this.List.OnlyOneSelectedItem)
+            if (this.ItemCollection.OnlyOneSelectedItem)
             {
-                var contact = this.List.SelectedItems.First();
+                var contact = this.ItemCollection.SelectedItems.First();
                 await contact.RemoveContactAsync();
             }
             else
             {
-                int count = this.List.SelectedItems.Count;
+                int count = this.ItemCollection.SelectedItems.Count;
 
                 var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                     this.RemoveContactText,
@@ -128,7 +128,7 @@ namespace MegaApp.ViewModels.Contacts
                 if (!dialogResult) return;
 
                 // Use a temp variable to avoid InvalidOperationException
-                RemoveMultipleContacts(this.List.SelectedItems.ToList());
+                RemoveMultipleContacts(this.ItemCollection.SelectedItems.ToList());
             }
         }
 
@@ -163,7 +163,7 @@ namespace MegaApp.ViewModels.Contacts
             // Create the option to cancel
             CreateLoadCancelOption();
 
-            await OnUiThreadAsync(() => this.List.Clear());
+            await OnUiThreadAsync(() => this.ItemCollection.Clear());
             MUserList contactsList = SdkService.MegaSdk.getContacts();
 
             await Task.Factory.StartNew(() =>
@@ -183,7 +183,7 @@ namespace MegaApp.ViewModels.Contacts
                         {
                             var megaContact = new ContactViewModel(contactsList.get(i), this);
 
-                            OnUiThread(() => this.List.Items.Add(megaContact));
+                            OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
 
                             this.GetContactFirstname(megaContact);
                             this.GetContactLastname(megaContact);
@@ -284,7 +284,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private void OnContactUpdated(object sender, MUser user)
         {
-            var existingContact = this.List.Items.FirstOrDefault(
+            var existingContact = this.ItemCollection.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));
 
             // If the contact exists in the contact list
@@ -294,7 +294,7 @@ namespace MegaApp.ViewModels.Contacts
                 if (!existingContact.Visibility.Equals(user.getVisibility()) &&
                     !(user.getVisibility().Equals(MUserVisibility.VISIBILITY_VISIBLE)))
                 {
-                    OnUiThread(() => this.List.Items.Remove(existingContact));
+                    OnUiThread(() => this.ItemCollection.Items.Remove(existingContact));
                 }
                 // If the contact has been changed (UPDATE CONTACT SCENARIO) and is not an own change
                 else if (!Convert.ToBoolean(user.isOwnChange()))
@@ -320,7 +320,7 @@ namespace MegaApp.ViewModels.Contacts
             {
                 var megaContact = new ContactViewModel(user, this);
 
-                OnUiThread(() => this.List.Items.Add(megaContact));
+                OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
 
                 this.GetContactFirstname(megaContact);
                 this.GetContactLastname(megaContact);
@@ -336,16 +336,16 @@ namespace MegaApp.ViewModels.Contacts
                 case ContactsSortOptions.NameAscending:
                     OnUiThread(() =>
                     {
-                        this.List.Items = new ObservableCollection<IMegaContact>(
-                            this.List.Items.OrderBy(item => item.FullName ?? item.Email));
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContact>(
+                            this.ItemCollection.Items.OrderBy(item => item.FullName ?? item.Email));
                     });
                     break;
 
                 case ContactsSortOptions.NameDescending:
                     OnUiThread(() =>
                     {
-                        this.List.Items = new ObservableCollection<IMegaContact>(
-                            this.List.Items.OrderByDescending(item => item.FullName ?? item.Email));
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContact>(
+                            this.ItemCollection.Items.OrderByDescending(item => item.FullName ?? item.Email));
                     });
                     break;
 

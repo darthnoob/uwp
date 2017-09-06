@@ -85,7 +85,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private void ListOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.List.Items))
+            if (e.PropertyName == nameof(this.ItemCollection.Items))
             {
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
@@ -95,14 +95,14 @@ namespace MegaApp.ViewModels.Contacts
         private void SelectionChanged()
         {
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.List.OneOrMoreSelected) ||
-                    this.List.MoreThanOneSelected;
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
+                    this.ItemCollection.MoreThanOneSelected;
             else
-                this.IsMultiSelectActive = this.IsMultiSelectActive && this.List.OneOrMoreSelected;
+                this.IsMultiSelectActive = this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected;
 
-            if (this.List.HasSelectedItems)
+            if (this.ItemCollection.HasSelectedItems)
             {
-                var focusedItem = this.List.SelectedItems.Last();
+                var focusedItem = this.ItemCollection.SelectedItems.Last();
                 this.FocusedItem = focusedItem;
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
             }
@@ -119,19 +119,19 @@ namespace MegaApp.ViewModels.Contacts
 
         private bool? isOutgoing { get; set; }
 
-        private CollectionViewModel<T> _list;
-        public CollectionViewModel<T> List
+        private CollectionViewModel<T> _itemCollection;
+        public CollectionViewModel<T> ItemCollection
         {
-            get { return _list; }
+            get { return _itemCollection; }
             set
             {
-                if (_list != null)
-                    _list.PropertyChanged -= ListOnPropertyChanged;
+                if (_itemCollection != null)
+                    _itemCollection.PropertyChanged -= ListOnPropertyChanged;
 
-                SetField(ref _list, value);
+                SetField(ref _itemCollection, value);
 
-                if (_list != null)
-                    _list.PropertyChanged += ListOnPropertyChanged;
+                if (_itemCollection != null)
+                    _itemCollection.PropertyChanged += ListOnPropertyChanged;
             }
         }
 
@@ -158,12 +158,12 @@ namespace MegaApp.ViewModels.Contacts
                     case ContactsSortOptions.EmailAscending:
                     case ContactsSortOptions.EmailDescending:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmail"), 
-                            this.List.Items.Count);
+                            this.ItemCollection.Items.Count);
 
                     case ContactsSortOptions.NameAscending:
                     case ContactsSortOptions.NameDescending:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
-                            this.List.Items.Count);
+                            this.ItemCollection.Items.Count);
 
                     default:
                         return string.Empty;
@@ -180,12 +180,12 @@ namespace MegaApp.ViewModels.Contacts
                     case ContactsSortOptions.EmailAscending:
                     case ContactsSortOptions.EmailDescending:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmailMultiSelect"),
-                            this.List.SelectedItems.Count, this.List.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
 
                     case ContactsSortOptions.NameAscending:
                     case ContactsSortOptions.NameDescending:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
-                            this.List.SelectedItems.Count, this.List.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
 
                     default:
                         return string.Empty;
@@ -196,7 +196,7 @@ namespace MegaApp.ViewModels.Contacts
         private bool _isMultiSelectActive;
         public bool IsMultiSelectActive
         {
-            get { return _isMultiSelectActive || this.List.MoreThanOneSelected; }
+            get { return _isMultiSelectActive || this.ItemCollection.MoreThanOneSelected; }
             set
             {
                 if (!SetField(ref _isMultiSelectActive, value)) return;
@@ -207,7 +207,7 @@ namespace MegaApp.ViewModels.Contacts
                 }
                 else
                 {
-                    this.List.ClearSelection();
+                    this.ItemCollection.ClearSelection();
                     OnPropertyChanged(nameof(this.IsMultiSelectActive));
                     this.OnMultiSelectDisabled();
                 }

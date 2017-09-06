@@ -218,6 +218,111 @@
         </Grid>
     </DataTemplate>
 
+    <ControlTemplate x:Name="AscendingOrderIcon">
+        <CommandBar
+            Background="{TemplateBinding Background}"
+            extensions:CommandBarExtensions.HideMoreButton="True"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton
+                Height="36" Width="36"
+                Command="{Binding InvertOrderCommand}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Click="OnButtonClick">
+                <Viewbox 
+                    Margin="0,0,0,12"
+                    Height="10" Width="36"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE70E;"/>
+                </Viewbox>
+            </AppBarButton>
+        </CommandBar>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Name="DescendingOrderIcon">
+        <CommandBar
+            Background="{TemplateBinding Background}"
+            extensions:CommandBarExtensions.HideMoreButton="True"
+            Style="{StaticResource MegaCommandBarStyle}">
+            <AppBarButton
+                Height="36" Width="36"
+                Command="{Binding InvertOrderCommand}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Click="OnButtonClick">
+                <Viewbox 
+                    Margin="0,0,0,12"
+                    Height="10" Width="36"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE70D;"/>
+                </Viewbox>
+            </AppBarButton>
+        </CommandBar>
+    </ControlTemplate>
+
+    <ControlTemplate x:Name="SelectAllCheckBoxWithOrderTypeAndNumberOfItems">
+        <CheckBox
+            Margin="0,8,0,0"
+            IsChecked="{Binding ItemCollection.HasAllItemsSelected}"
+            Tapped="SelectAllCheckBoxTapped"
+            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid 
+                Margin="4,-8,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ContentControl
+                    Grid.Column="0"
+                    Template="{StaticResource AscendingOrderIcon}"
+                    Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <ContentControl 
+                    Grid.Column="0"
+                    Template="{StaticResource DescendingOrderIcon}"
+                    Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="8,0,0,12"
+                    FontSize="13"
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
+                    Opacity="0.8"
+                    VerticalAlignment="Center" />
+            </Grid>
+        </CheckBox>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Name="OrderTypeAndNumberOfItems">
+        <Grid 
+            Margin="0,6,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ContentControl
+                Grid.Column="0"
+                Template="{StaticResource AscendingOrderIcon}"
+                Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <ContentControl 
+                Grid.Column="0"
+                Template="{StaticResource DescendingOrderIcon}"
+                Visibility="{Binding IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+            <TextBlock
+                Grid.Column="1"
+                Margin="8,0,0,12"
+                FontSize="13"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{Binding OrderTypeAndNumberOfItems, Mode=OneWay}"
+                Opacity="0.8"
+                VerticalAlignment="Center" />
+        </Grid>
+    </ControlTemplate>
+    
     <DataTemplate x:Key="MegaNodeListViewFileItemContent">
         <Border
             Margin="-12,1"
@@ -875,6 +980,81 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="MegaContactSharedItemListViewDesktop">
+        <Grid Margin="0,6,0,7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="80" />
+            </Grid.ColumnDefinitions>
+            <Path
+                Grid.Column="0"
+                Width="36" Height="36"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding DefaultImagePathData}"
+                Stretch="Uniform">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="{Binding Name}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+                <TextBlock
+                    Grid.Row="1"
+                    FontSize="13"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="{Binding Information}"
+                    TextWrapping="NoWrap"
+                    Opacity="0.5"/>
+            </Grid>
+            <TextBlock
+                Grid.Column="2"
+                FontSize="14"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Text="{Binding ModificationTime}"
+                TextWrapping="NoWrap"
+                Opacity="0.9" />
+            <Path
+                Grid.Column="3"
+                Width="12" Height="12"
+                Margin="46,0,18,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding AccessLevelPathData}"
+                Stretch="Uniform"
+                Opacity="0.9" >
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
+            <TextBlock
+                Grid.Column="4"
+                FontSize="14"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{Binding AccessLevelText}"
+                TextWrapping="NoWrap"
+                Opacity="0.9" />
+        </Grid>
+    </DataTemplate>
+
     <Style x:Key="MegaCleanListViewItemStyle" TargetType="ListViewItem">
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
@@ -1400,19 +1580,21 @@
                 Grid.Row="0" Grid.Column="2"
                 Grid.RowSpan="2"
                 Orientation="Horizontal">
-                <Viewbox MaxHeight="15" MaxWidth="15">
-                    <StackPanel
-                        Margin="0,4,0,0"
-                        Opacity="0.9"
-                        Orientation="Horizontal">
-                        <FontIcon Glyph="&#xEC52;"/>
-                        <FontIcon Glyph="&#xEBE7;"/>
-                    </StackPanel>
-                </Viewbox>
+                <Path
+                    Width="15" Height="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding ShareIconPathData}"
+                    Stretch="Uniform"
+                    Opacity="0.9">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
                 <TextBlock
                     Margin="8,0,0,0"
                     FontSize="13"
-                    Text="{Binding NumberOfInShares}"
+                    Text="{Binding SharedItems.NumberOfSharedItems}"
                     Opacity="0.9"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center" />
@@ -1509,19 +1691,21 @@
                 Grid.Row="0" Grid.Column="2"
                 Grid.RowSpan="2"
                 Orientation="Horizontal">
-                <Viewbox MaxHeight="15" MaxWidth="15">
-                    <StackPanel
-                        Margin="0,4,0,0"
-                        Opacity="0.9"
-                        Orientation="Horizontal">
-                        <FontIcon Glyph="&#xEC52;"/>
-                        <FontIcon Glyph="&#xEBE7;"/>
-                    </StackPanel>
-                </Viewbox>
+                <Path
+                    Width="15" Height="15"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding ShareIconPathData}"
+                    Stretch="Uniform"
+                    Opacity="0.9">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
                 <TextBlock
                     Margin="8,0,0,0"
                     FontSize="13"
-                    Text="{Binding NumberOfInSharesText}"
+                    Text="{Binding SharedItems.NumberOfSharedItemsText}"
                     Opacity="0.9"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center" />

@@ -1,7 +1,10 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:userControls="using:MegaApp.UserControls">
 
@@ -781,33 +784,78 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
+                        <Grid x:Name="TopRowGrid" Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <CommandBar
-                            x:Name="TopCommandBar"
-                            Grid.Row="0"
-                            extensions:CommandBarExtensions.HideMoreButton="True"
-                            Style="{StaticResource MegaCommandBarStyle}">
-                            <CommandBar.Content>
-                                <AppBarButton
-                                    x:Name="CloseContactProfilePanelButton"
-                                    Command="{Binding ContactList.CloseContactProfileCommand}"
-                                    Style="{StaticResource MegaAppBarButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding CloseText}">
-                                    <Viewbox MaxHeight="16" MaxWidth="16">
-                                        <FontIcon Glyph="&#xEA5B;" />
-                                    </Viewbox>
-                                </AppBarButton>
-                            </CommandBar.Content>
-                        </CommandBar>
+                            <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+                            <CommandBar
+                                Grid.Row="0" Grid.Column="0"
+                                extensions:CommandBarExtensions.HideMoreButton="True"
+                                Style="{StaticResource MegaCommandBarStyle}">
+                                <CommandBar.Content>
+                                    <AppBarButton
+                                        x:Name="CloseContactProfilePanelButton"
+                                        Command="{Binding ContactList.CloseContactProfileCommand}"
+                                        Style="{StaticResource MegaAppBarButtonStyle}"
+                                        ToolTipService.ToolTip="{Binding CloseText}">
+                                        <Viewbox MaxHeight="16" MaxWidth="16">
+                                            <FontIcon Glyph="&#xEA5B;" />
+                                        </Viewbox>
+                                    </AppBarButton>
+                                </CommandBar.Content>
+                            </CommandBar>
+
+                            <!--  SHARED ITEMS TOP COMMAND BAR AREA (DESKTOP ONLY)  -->
+                            <Grid 
+                                x:Name="PART_SharedItemsTopCommandBarArea"
+                                Grid.Row="0" Grid.Column="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <!--  SHARED ITEMS TOP COMMAND BAR (DESKTOP ONLY)  -->
+                                <CommandBar
+                                    x:Name="TopCommandBar"
+                                    Grid.Row="0" Grid.Column="0"
+                                    extensions:CommandBarExtensions.HideMoreButton="True"
+                                    Style="{StaticResource MegaCommandBarStyle}">
+                                    <AppBarSeparator 
+                                        Margin="-12,0"
+                                        VerticalAlignment="Center"/>
+                                </CommandBar>
+
+                                <!--  PERMANENT SHARED ITEMS TOP COMMAND BAR (ALL DEVICES)  -->
+                                <CommandBar
+                                    Grid.Row="0" Grid.Column="1"
+                                    extensions:CommandBarExtensions.HideMoreButton="True"
+                                    Style="{StaticResource MegaCommandBarStyle}">
+                                    <AppBarButton
+                                        x:Name="PART_BtnSortSharedItems"
+                                        Label="{Binding SortByText}"
+                                        Style="{StaticResource MegaAppBarButtonStyle}"
+                                        ToolTipService.ToolTip="{Binding SortByText}">
+                                        <AppBarButton.Icon>
+                                            <PathIcon
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{Binding SortByPathData, Mode=OneTime}" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
+                                </CommandBar>
+                            </Grid>
+                        </Grid>
 
                         <Pivot
-                            x:Name="PivotControl"
+                            x:Name="PART_PivotControl"
                             Grid.Row="1"
                             Margin="12,0,0,0"
                             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
-                            <PivotItem x:Name="ContactProfilePivot" Header="{Binding ProfileText}">
+                            <PivotItem x:Name="PART_ContactProfilePivot" Header="{Binding ProfileText}">
                                 <ScrollViewer
-                                    x:Name="ProfileScrollView"
+                                    x:Name="PART_ProfileScrollView"
                                     Margin="0,28,-12,0"
                                     VerticalScrollBarVisibility="Auto">
                                     <StackPanel>
@@ -904,16 +952,39 @@
                                     </StackPanel>
                                 </ScrollViewer>
                             </PivotItem>
-                            <!--<PivotItem x:Name="SharedItemsPivot" Header="{Binding SharedItemsText}">
-                                <ScrollViewer 
-                                    x:Name="SharedItemsScrollView"
-                                    Margin="0,28,-12,0"
-                                    VerticalScrollBarVisibility="Auto">
-                                    
-                                </ScrollViewer>
-                            </PivotItem>-->
+                            <PivotItem x:Name="PART_SharedItemsPivot" Header="{Binding SharedItemsText}">
+                                <Grid DataContext="{Binding SharedItems}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0" Background="{ThemeResource MegaContactProfileBackgroundBrush}">
+                                        <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
+                                        <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="-12,-8,0,0">
+                                        <ListView
+                                            x:Name="PART_ListViewSharedItems"
+                                            Background="{ThemeResource MegaContactProfileBackgroundBrush}"
+                                            IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                            ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                            ItemsSource="{Binding ItemCollection.Items}"
+                                            ItemTemplate="{StaticResource MegaContactSharedItemListViewDesktop}">
+                                            <interactivity:Interaction.Behaviors>
+                                                <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:EventTriggerBehavior.Actions>
+                                                        <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                    </core:EventTriggerBehavior.Actions>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                        </ListView>
+                                    </Grid>
+                                </Grid>
+                            </PivotItem>
                         </Pivot>
 
+                        <!--  SHARED ITEMS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
                         <CommandBar
                             x:Name="BottomCommandBar"
                             Grid.Row="2"

@@ -94,7 +94,7 @@ namespace MegaApp.Views
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
             {
                 // First save the current selected contacts to restore them after enable the multi select
-                var selectedContacts = this.ViewModel.MegaContacts.List.SelectedItems.ToList();
+                var selectedContacts = this.ViewModel.MegaContacts.ItemCollection.SelectedItems.ToList();
 
                 this.ListViewContacts.SelectionMode = ListViewSelectionMode.Multiple;
 
@@ -109,7 +109,7 @@ namespace MegaApp.Views
 
                 if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
                 {
-                    selectedContactRequest =  this.ViewModel.IncomingContactRequests.List.SelectedItems.ToList();
+                    selectedContactRequest =  this.ViewModel.IncomingContactRequests.ItemCollection.SelectedItems.ToList();
                     this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Multiple;
                     foreach (var contactRequest in selectedContactRequest)
                         this.ListViewIncomingContactRequests.SelectedItems.Add(contactRequest);
@@ -117,7 +117,7 @@ namespace MegaApp.Views
 
                 if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
                 {
-                    selectedContactRequest = this.ViewModel.OutgoingContactRequests.List.SelectedItems.ToList();
+                    selectedContactRequest = this.ViewModel.OutgoingContactRequests.ItemCollection.SelectedItems.ToList();
                     this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Multiple;
                     foreach (var contactRequest in selectedContactRequest)
                         this.ListViewOutgoingContactRequests.SelectedItems.Add(contactRequest);
