@@ -9,9 +9,18 @@ namespace MegaApp.ViewModels
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
         {
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
-
-            this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
+            this.Update();            
         }
+
+        #region Methods
+
+        public void Update(bool externalUpdate = false)
+        {
+            this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode);
+            base.Update(this.OriginalMNode, externalUpdate);
+        }
+
+        #endregion
 
         #region Properties
 

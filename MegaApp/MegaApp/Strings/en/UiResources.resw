@@ -1075,4 +1075,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Read only</value>
     <comment>Label for the 'Read only' permission for shared items.</comment>
   </data>
+  <data name="UI_LeaveShared" xml:space="preserve">
+    <value>Leave shared</value>
+    <comment>Label for any 'Leave shared' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

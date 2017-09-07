@@ -13,6 +13,8 @@ namespace MegaApp.MegaApi
         public event EventHandler<MNode> NodeAdded;
         public event EventHandler<MNode> NodeRemoved;
 
+        public event EventHandler<MNode> SharedItemUpdated;
+
         public event EventHandler<MUser> ContactUpdated;
         public event EventHandler IncomingContactRequestUpdated;
         public event EventHandler OutgoingContactRequestUpdated;
@@ -35,6 +37,9 @@ namespace MegaApp.MegaApi
                     // and process no notification
                     MNode megaNode = nodes.get(i);
                     if (megaNode == null) return;
+
+                    if (megaNode.isShared())
+                        OnSharedItemUpdated(megaNode);
 
                     if (megaNode.isRemoved())
                     {
@@ -156,6 +161,11 @@ namespace MegaApp.MegaApi
         protected virtual void OnNodeRemoved(MNode e)
         {
             NodeRemoved?.Invoke(this, e);
+        }
+
+        protected virtual void OnSharedItemUpdated(MNode e)
+        {
+            SharedItemUpdated?.Invoke(this, e);
         }
 
         protected virtual void OnContactUpdated(MUser e)

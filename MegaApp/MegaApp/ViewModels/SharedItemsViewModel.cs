@@ -16,6 +16,7 @@ namespace MegaApp.ViewModels
         public SharedItemsViewModel()
         {
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
+            this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
 
             this.InvertOrderCommand = new RelayCommand(InvertOrder);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
@@ -76,6 +77,9 @@ namespace MegaApp.ViewModels
                 }
 
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
+
+            this.SortBy(this.CurrentOrder);
+            OnItemCollectionChanged();
         }
 
         /// <summary>
@@ -167,6 +171,17 @@ namespace MegaApp.ViewModels
 
         }
 
+        private void OnItemCollectionChanged()
+        {
+            OnUiThread(() =>
+            {
+                OnPropertyChanged(nameof(this.NumberOfSharedItems),
+                    nameof(this.NumberOfSharedItemsText),
+                    nameof(this.OrderTypeAndNumberOfItems),
+                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+            });
+        }
+
         #endregion
 
         #region Properties
@@ -184,10 +199,7 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _itemCollection, value);
-                OnPropertyChanged(nameof(this.NumberOfSharedItems),
-                    nameof(this.NumberOfSharedItemsText),
-                    nameof(this.OrderTypeAndNumberOfItems),
-                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+                this.OnItemCollectionChanged();
             }
         }
 

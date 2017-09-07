@@ -376,10 +376,10 @@ namespace MegaApp.ViewModels
 
             if (this.OriginalMNode == null) return false;
 
-            if (!isMultiSelect)
+            if (!isMultiSelect && !(this is IncomingSharedFolderNodeViewModel))
             {
                 string title, message;
-                switch (this.Parent.Type)
+                switch (this.Parent?.Type)
                 {
                     case ContainerType.CloudDrive:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
@@ -401,26 +401,36 @@ namespace MegaApp.ViewModels
             }
 
             bool result;
-            switch (this.Parent.Type)
+
+            if(this is IncomingSharedFolderNodeViewModel)
             {
-                case ContainerType.CloudDrive:
-                    var moveNode = new MoveNodeRequestListenerAsync();
-                    result = await moveNode.ExecuteAsync(() =>
-                        this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
-                    break;
-
-                case ContainerType.RubbishBin:
-                    var removeNode = new RemoveNodeRequestListenerAsync();
-                    result = await removeNode.ExecuteAsync(() =>
-                        this.MegaSdk.remove(this.OriginalMNode, removeNode));
-                    break;
-
-                default:
-                    return false;
+                var removeNode = new RemoveNodeRequestListenerAsync();
+                result = await removeNode.ExecuteAsync(() =>
+                    this.MegaSdk.remove(this.OriginalMNode, removeNode));
             }
+            else
+            {
+                switch (this.Parent?.Type)
+                {
+                    case ContainerType.CloudDrive:
+                        var moveNode = new MoveNodeRequestListenerAsync();
+                        result = await moveNode.ExecuteAsync(() =>
+                            this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
+                        break;
 
-            if (result)
-                this.Parent.CloseNodeDetails();
+                    case ContainerType.RubbishBin:
+                        var removeNode = new RemoveNodeRequestListenerAsync();
+                        result = await removeNode.ExecuteAsync(() =>
+                            this.MegaSdk.remove(this.OriginalMNode, removeNode));
+                        break;
+
+                    default:
+                        return false;
+                }
+
+                if (result)
+                    this.Parent.CloseNodeDetails();
+            }
 
             return result;
         }

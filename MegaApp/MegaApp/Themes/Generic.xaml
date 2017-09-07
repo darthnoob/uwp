@@ -811,7 +811,8 @@
                             <!--  SHARED ITEMS TOP COMMAND BAR AREA (DESKTOP ONLY)  -->
                             <Grid 
                                 x:Name="PART_SharedItemsTopCommandBarArea"
-                                Grid.Row="0" Grid.Column="1">
+                                Grid.Row="0" Grid.Column="1"
+                                DataContext="{Binding SharedItems}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
@@ -822,9 +823,36 @@
                                     Grid.Row="0" Grid.Column="0"
                                     extensions:CommandBarExtensions.HideMoreButton="True"
                                     Style="{StaticResource MegaCommandBarStyle}">
+                                    <AppBarButton
+                                        Command="{Binding DownloadCommand}"
+                                        Label="{Binding DownloadText, Mode=OneTime}"
+                                        Style="{StaticResource MegaAppBarButtonStyle}"
+                                        ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <AppBarButton.Icon>
+                                            <PathIcon
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
+                                    <AppBarButton
+                                        Command="{Binding LeaveSharedCommand}"
+                                        Label="{Binding LeaveSharedText, Mode=OneTime}"
+                                        Style="{StaticResource MegaAppBarButtonStyle}"
+                                        ToolTipService.ToolTip="{Binding LeaveSharedText, Mode=OneTime}"
+                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <AppBarButton.Icon>
+                                            <PathIcon
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{Binding LeaveSharedPathData, Mode=OneTime}" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
                                     <AppBarSeparator 
-                                        Margin="-12,0"
-                                        VerticalAlignment="Center"/>
+                                        Margin="-12,-12,-12,0"
+                                        VerticalAlignment="Center"
+                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </CommandBar>
 
                                 <!--  PERMANENT SHARED ITEMS TOP COMMAND BAR (ALL DEVICES)  -->
@@ -836,7 +864,8 @@
                                         x:Name="PART_BtnSortSharedItems"
                                         Label="{Binding SortByText}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding SortByText}">
+                                        ToolTipService.ToolTip="{Binding SortByText}"
+                                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
                                         <AppBarButton.Icon>
                                             <PathIcon
                                                 HorizontalAlignment="Center"
@@ -953,19 +982,21 @@
                                 </ScrollViewer>
                             </PivotItem>
                             <PivotItem x:Name="PART_SharedItemsPivot" Header="{Binding SharedItemsText}">
-                                <Grid DataContext="{Binding SharedItems}">
+                                <Grid 
+                                    DataContext="{Binding SharedItems}"
+                                    Background="{ThemeResource MegaContactProfileBackgroundBrush}"
+                                    Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Background="{ThemeResource MegaContactProfileBackgroundBrush}">
+                                    <Grid Grid.Row="0">
                                         <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
                                         <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
                                     </Grid>
                                     <Grid Grid.Row="1" Margin="-12,-8,0,0">
                                         <ListView
                                             x:Name="PART_ListViewSharedItems"
-                                            Background="{ThemeResource MegaContactProfileBackgroundBrush}"
                                             IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
                                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                             ItemsSource="{Binding ItemCollection.Items}"
@@ -1015,7 +1046,7 @@
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}" />
-                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                                     </VisualState.Setters>
@@ -1027,7 +1058,7 @@
                                         <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
@@ -1036,7 +1067,7 @@
                                         <AdaptiveTrigger MinWindowWidth="360" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>

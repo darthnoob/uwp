@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,36 @@ namespace MegaApp.ViewModels
 
             this.EnableCollectionChangedDetection();            
         }
+
+        #region Events
+
+        /// <summary>
+        /// Event triggered when the item collection changes
+        /// </summary>
+        public event EventHandler ItemCollectionChanged;
+
+        /// <summary>
+        /// Event invocator method called when the item collection changes
+        /// </summary>
+        protected void OnItemsCollectionChanged()
+        {
+            this.ItemCollectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when the selected items collection changes
+        /// </summary>
+        public event EventHandler SelectedItemsCollectionChanged;
+
+        /// <summary>
+        /// Event invocator method called when the selected items collection changes
+        /// </summary>
+        protected void OnSelectedItemsCollectionChanged()
+        {
+            this.SelectedItemsCollectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        #endregion
 
         #region Public Methods
 
@@ -95,6 +126,8 @@ namespace MegaApp.ViewModels
 
             OnPropertyChanged(nameof(this.Items), nameof(this.HasItems), 
                 nameof(this.HasAllItemsSelected));
+
+            this.OnItemsCollectionChanged();
         }
 
         private void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -102,6 +135,8 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.OneOrMoreSelected), 
                 nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
+
+            this.OnSelectedItemsCollectionChanged();
         }
 
         #endregion
