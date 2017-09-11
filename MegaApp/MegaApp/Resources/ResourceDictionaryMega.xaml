@@ -264,8 +264,9 @@
         <CheckBox
             Margin="0,8,0,0"
             IsChecked="{Binding ItemCollection.HasAllItemsSelected}"
-            Tapped="SelectAllCheckBoxTapped"
-            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            Command="{Binding ItemCollection.SelectAllCommand}"
+            CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid 
                 Margin="4,-8,0,0"
                 HorizontalAlignment="Left"
@@ -299,7 +300,7 @@
             Margin="0,6,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
@@ -1610,17 +1611,17 @@
                         <MenuFlyoutItem
                             Command="{Binding ViewProfileCommand}"
                             Text="{Binding ViewProfileText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             Text="{Binding RemoveContactText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             Text="{Binding RemoveMultipleContactsText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -1794,7 +1795,7 @@
                 Background="Transparent"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
-                Visibility="{Binding ContactRequestsList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding AcceptContactRequestCommand}"
@@ -1906,7 +1907,7 @@
                 Background="Transparent"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
-                Visibility="{Binding ContactRequestsList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Height="36" Width="36"
                     Command="{Binding AcceptContactRequestCommand}"

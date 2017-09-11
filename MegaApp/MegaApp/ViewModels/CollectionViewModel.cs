@@ -3,7 +3,11 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -22,6 +26,10 @@ namespace MegaApp.ViewModels
         {
             this.Items = new ObservableCollection<T>();
             this.SelectedItems = new ObservableCollection<T>();
+
+            this.MultiSelectCommand = new RelayCommand(MultiSelect);
+            this.SelectAllCommand = new RelayCommand<bool>(SelectAll);
+            this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
 
             this.EnableCollectionChangedDetection();            
         }
@@ -54,6 +62,53 @@ namespace MegaApp.ViewModels
             this.SelectedItemsCollectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Event triggered when the multi select scenario is enabled
+        /// </summary>
+        public event EventHandler MultiSelectEnabled;
+
+        /// <summary>
+        /// Event invocator method called when the multi select scenario is enabled
+        /// </summary>
+        protected virtual void OnMultiSelectEnabled()
+        {
+            this.MultiSelectEnabled?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when the multi select scenario is disabled
+        /// </summary>
+        public event EventHandler MultiSelectDisabled;
+
+        /// <summary>
+        /// Event invocator method called when the multi select scenario is disabled
+        /// </summary>
+        protected virtual void OnMultiSelectDisabled()
+        {
+            this.MultiSelectDisabled?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when user choose to select/deselect all the items
+        /// </summary>
+        public event EventHandler<bool> AllSelected;
+
+        /// <summary>
+        /// Event invocator method called when user choose to select/deselect all the items
+        /// </summary>
+        protected virtual void OnAllSelected(bool value)
+        {
+            this.AllSelected?.Invoke(this, value);
+        }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand MultiSelectCommand { get; }
+        public ICommand SelectAllCommand { get; }
+        public ICommand SelectionChangedCommand { get; }
+
         #endregion
 
         #region Public Methods
@@ -61,23 +116,19 @@ namespace MegaApp.ViewModels
         public void EnableCollectionChangedDetection()
         {
             this.Items.CollectionChanged += OnItemsCollectionChanged;
-            this.SelectedItems.CollectionChanged += OnSelectedItemsCollectionChanged;
         }
 
         public void DisableCollectionChangedDetection()
         {
             this.Items.CollectionChanged -= OnItemsCollectionChanged;
-            this.SelectedItems.CollectionChanged -= OnSelectedItemsCollectionChanged;
         }
 
-        public void SelectAll()
+        public void SelectAll(bool value)
         {
-            Select(true);
-        }
+            Select(value);
+            this.OnAllSelected(value);
 
-        public void DeselectAll()
-        {
-            Select(false);
+            if (!value) ClearSelection();
         }
 
         public void Clear()
@@ -91,6 +142,29 @@ namespace MegaApp.ViewModels
             if (this.SelectedItems == null || !this.SelectedItems.Any()) return;
             this.SelectedItems.Clear();
         }
+
+        protected void SelectionChanged()
+        {
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.OneOrMoreSelected) ||
+                    this.MoreThanOneSelected;
+            else
+                this.IsMultiSelectActive = this.IsMultiSelectActive && this.OneOrMoreSelected;
+
+            if (this.HasSelectedItems)
+                this.FocusedItem = this.SelectedItems.Last();
+
+            OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
+                nameof(this.OnlyOneSelectedItem), nameof(this.OneOrMoreSelected),
+                nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
+
+            this.OnSelectedItemsCollectionChanged();
+        }
+
+        /// <summary>
+        /// Sets if multiselect is active or not.
+        /// </summary>
+        protected void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
 
         #endregion
 
@@ -130,15 +204,6 @@ namespace MegaApp.ViewModels
             this.OnItemsCollectionChanged();
         }
 
-        private void OnSelectedItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
-                nameof(this.OnlyOneSelectedItem), nameof(this.OneOrMoreSelected), 
-                nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
-
-            this.OnSelectedItemsCollectionChanged();
-        }
-
         #endregion
 
         #region Properties
@@ -162,6 +227,27 @@ namespace MegaApp.ViewModels
         {
             get { return _focusedItem; }
             set { SetField(ref _focusedItem, value); }
+        }
+
+        private bool _isMultiSelectActive;
+        public bool IsMultiSelectActive
+        {
+            get { return _isMultiSelectActive || this.MoreThanOneSelected; }
+            set
+            {
+                if (!SetField(ref _isMultiSelectActive, value)) return;
+
+                if (_isMultiSelectActive)
+                {
+                    this.OnMultiSelectEnabled();
+                }
+                else
+                {
+                    this.ClearSelection();
+                    OnPropertyChanged(nameof(this.IsMultiSelectActive));
+                    this.OnMultiSelectDisabled();
+                }
+            }
         }
 
         public bool HasItems => this.Items?.Count > 0;

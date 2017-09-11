@@ -44,7 +44,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public void ViewProfile()
         {
-            if (this.ContactList != null && !this.ContactList.IsMultiSelectActive)
+            if ((bool)!this.ContactList?.ItemCollection?.IsMultiSelectActive)
             {
                 if (this.ContactList.OpenContactProfileCommand.CanExecute(null))
                     this.ContactList.OpenContactProfileCommand.Execute(null);
@@ -62,7 +62,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private async void RemoveContact()
         {
-            if (this.ContactList != null && this.ContactList.IsMultiSelectActive)
+            if ((bool)this.ContactList?.ItemCollection?.IsMultiSelectActive)
             {
                 if (this.ContactList.RemoveContactCommand.CanExecute(null))
                     this.ContactList.RemoveContactCommand.Execute(null);
@@ -249,6 +249,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region UiResources
 
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string ProfileText => ResourceService.UiResources.GetString("UI_Profile");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
@@ -258,8 +259,6 @@ namespace MegaApp.ViewModels.Contacts
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
         public string SharedItemsText => ResourceService.UiResources.GetString("UI_SharedItems");
         public string ViewProfileText => ResourceService.UiResources.GetString("UI_ViewProfile");
-
-        private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
 
         #endregion
 

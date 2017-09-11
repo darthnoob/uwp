@@ -99,7 +99,7 @@ namespace MegaApp.Services
 
         public static MNodeList GetChildren(MegaSDK megaSdk, IMegaNode rootNode)
         {
-            return megaSdk.getChildren(rootNode.OriginalMNode, UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name));
+            return megaSdk.getChildren(rootNode.OriginalMNode, (int)UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name));
         }
 
         public static MNode FindCameraUploadNode(MegaSDK megaSdk, MNode rootNode)

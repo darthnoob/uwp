@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -29,7 +30,7 @@ namespace MegaApp.ViewModels.Contacts
             this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
             this.InvertOrderCommand = new RelayCommand(InvertOrder);
 
-            this.CurrentOrder = ContactsSortOptions.EmailAscending;          
+            this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
 
         #region Commands
@@ -150,11 +151,11 @@ namespace MegaApp.ViewModels.Contacts
                 contactRequest.CancelContactRequest();
         }
 
-        public void SortBy(ContactsSortOptions sortOption)
+        public void SortBy(MSortOrderType sortOption)
         {
             switch (sortOption)
             {
-                case ContactsSortOptions.EmailAscending:
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
@@ -163,7 +164,7 @@ namespace MegaApp.ViewModels.Contacts
                     });
                     break;
 
-                case ContactsSortOptions.EmailDescending:
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
@@ -181,11 +182,11 @@ namespace MegaApp.ViewModels.Contacts
         {
             switch (this.CurrentOrder)
             {
-                case ContactsSortOptions.EmailAscending:
-                    this.CurrentOrder = ContactsSortOptions.EmailDescending;
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
                     break;
-                case ContactsSortOptions.EmailDescending:
-                    this.CurrentOrder = ContactsSortOptions.EmailAscending;
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
                     break;
                 default:
                     return;

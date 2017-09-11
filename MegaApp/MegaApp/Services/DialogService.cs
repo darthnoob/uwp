@@ -336,6 +336,8 @@ namespace MegaApp.Services
             var isCameraUploadsGrid = (folder is CameraUploadsViewModel) &&
                                       ((CameraUploadsViewModel) folder).IsGridViewMode;
 
+            var currentSortOrder = UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name);
+
             MenuFlyout menuFlyout = new MenuFlyout();
 
             if (isCameraUploadsGrid)
@@ -343,11 +345,10 @@ namespace MegaApp.Services
                 menuFlyout.Items.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
-                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                    Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_DESC),
                     Command = new RelayCommand(() =>
                     {
-                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                            (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
                         folder.LoadChildNodes();
                     })
                 });
@@ -355,11 +356,10 @@ namespace MegaApp.Services
                 menuFlyout.Items.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
-                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                    Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_ASC),
                     Command = new RelayCommand(() =>
                     {
-                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                            (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_ASC);
                         folder.LoadChildNodes();
                     })
                 });
@@ -370,11 +370,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_ALPHABETICAL_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_ALPHABETICAL_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -382,11 +381,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_ALPHABETICAL_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -394,11 +392,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionLargest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_SIZE_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_SIZE_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_SIZE_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_SIZE_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -406,11 +403,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionSmallest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_SIZE_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_SIZE_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_SIZE_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_SIZE_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -418,11 +414,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -430,11 +425,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -442,11 +436,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionFilesAscending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_DEFAULT_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_DEFAULT_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_DEFAULT_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_DEFAULT_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -454,11 +447,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionFilesDescending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_DEFAULT_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_DEFAULT_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_DEFAULT_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_DEFAULT_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -467,18 +459,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Gets the sort menu item foreground color depending on the current sort order of the folder.
+        /// Gets the sort menu item foreground color depending on the current sort order.
         /// </summary>
-        /// <param name="folder">Folder to check the current sort order.</param>
-        /// <param name="sortOrder">Sort order to check.</param>
+        /// <param name="currentSortOrder">Current sort order of the list/collection.</param>
+        /// <param name="sortOrderToCheck">Sort order to check.</param>
         /// <returns>The brush object with the color.</returns>
-        private static Brush GetSortMenuItemForeground(FolderViewModel folder, int sortOrder)
+        private static Brush GetSortMenuItemForeground(MSortOrderType currentSortOrder, MSortOrderType sortOrderToCheck)
         {
-            if(folder?.FolderRootNode != null)
-            {
-                if (UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name) == sortOrder)
-                    return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
-            }
+            if (currentSortOrder == sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }
@@ -494,22 +483,22 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetContactsSortMenuItemForeground(contacts, ContactsSortOptions.NameAscending),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = ContactsSortOptions.NameAscending;
-                    contacts.SortBy(ContactsSortOptions.NameAscending);
+                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
+                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
                 })
             });
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetContactsSortMenuItemForeground(contacts, ContactsSortOptions.NameDescending),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = ContactsSortOptions.NameDescending;
-                    contacts.SortBy(ContactsSortOptions.NameDescending);
+                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
+                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
                 })
             });
 
@@ -526,44 +515,27 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionEmailAscending"),
-                Foreground = GetContactsSortMenuItemForeground(contactRequests, ContactsSortOptions.EmailAscending),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
+                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    contactRequests.CurrentOrder = ContactsSortOptions.EmailAscending;
-                    contactRequests.SortBy(ContactsSortOptions.EmailAscending);
+                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
+                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
                 })
             });
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionEmailDescending"),
-                Foreground = GetContactsSortMenuItemForeground(contactRequests, ContactsSortOptions.EmailDescending),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
+                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    contactRequests.CurrentOrder = ContactsSortOptions.EmailDescending;
-                    contactRequests.SortBy(ContactsSortOptions.EmailDescending);
+                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
+                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
                 })
             });
 
             return menuFlyout;
-        }
-
-        /// <summary>
-        /// Gets the sort <see cref="ContactsListViewModel"/> or <see cref="ContactRequestsListViewModel"/> menu item foreground color depending on the current sort order.
-        /// </summary>
-        /// <param name="list"><see cref="ContactsListViewModel"/> or <see cref="ContactRequestsListViewModel"/> to check the current sort order.</param>
-        /// <param name="sortOrder">Sort order to check.</param>
-        /// <returns>The brush object with the color.</returns>
-        private static Brush GetContactsSortMenuItemForeground(object list, ContactsSortOptions sortOrder)
-        {
-            if ((list as ContactsListViewModel)?.CurrentOrder == sortOrder || 
-                (list as ContactRequestsListViewModel)?.CurrentOrder == sortOrder)
-            {
-                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
-            }
-
-            return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }
 
         /// <summary>
@@ -577,7 +549,7 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
                 Command = new RelayCommand(() =>
                 {
                     sharedItems.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
@@ -588,7 +560,7 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
                 Command = new RelayCommand(() =>
                 {
                     sharedItems.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
@@ -599,7 +571,7 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionLastModifiedAscending"),
-                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_MODIFICATION_ASC),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, MSortOrderType.ORDER_MODIFICATION_ASC),
                 Command = new RelayCommand(() =>
                 {
                     sharedItems.CurrentOrder = MSortOrderType.ORDER_MODIFICATION_ASC;
@@ -610,7 +582,7 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionLastModifiedDescending"),
-                Foreground = GetContactInSharesSortMenuItemForeground(sharedItems, MSortOrderType.ORDER_MODIFICATION_DESC),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, MSortOrderType.ORDER_MODIFICATION_DESC),
                 Command = new RelayCommand(() =>
                 {
                     sharedItems.CurrentOrder = MSortOrderType.ORDER_MODIFICATION_DESC;
@@ -619,20 +591,6 @@ namespace MegaApp.Services
             });
 
             return menuFlyout;
-        }
-
-        /// <summary>
-        /// Gets the sort <see cref="ContactSharedItemsViewModel"/> menu item foreground color depending on the current sort order.
-        /// </summary>
-        /// <param name="sharedItems"><see cref="ContactSharedItemsViewModel"/> to check the current sort order.</param>
-        /// <param name="sortOrder">Sort order to check.</param>
-        /// <returns>The brush object with the color.</returns>
-        private static Brush GetContactInSharesSortMenuItemForeground(ContactSharedItemsViewModel sharedItems, MSortOrderType sortOrder)
-        {
-            if (sharedItems?.CurrentOrder == sortOrder)
-                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
-
-            return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
         }
     }
 

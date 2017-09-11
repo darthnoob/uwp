@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel;
 using System.Windows.Input;
-using MegaApp.Classes;
+using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 
@@ -13,9 +12,6 @@ namespace MegaApp.ViewModels.Contacts
         public ContactsBaseViewModel(bool? isOutgoing = null)
         {
             this.isOutgoing = isOutgoing;
-
-            this.MultiSelectCommand = new RelayCommand(MultiSelect);
-            this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
         }
 
         #region Events
@@ -33,39 +29,10 @@ namespace MegaApp.ViewModels.Contacts
             this.AddContactTapped?.Invoke(this, EventArgs.Empty);
         }
 
-        /// <summary>
-        /// Event triggered when the multi select scenario is enabled
-        /// </summary>
-        public event EventHandler MultiSelectEnabled;
-
-        /// <summary>
-        /// Event invocator method called when the multi select scenario is enabled
-        /// </summary>
-        protected virtual void OnMultiSelectEnabled()
-        {
-            this.MultiSelectEnabled?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Event triggered when the multi select scenario is disabled
-        /// </summary>
-        public event EventHandler MultiSelectDisabled;
-
-        /// <summary>
-        /// Event invocator method called when the multi select scenario is disabled
-        /// </summary>
-        protected virtual void OnMultiSelectDisabled()
-        {
-            this.MultiSelectDisabled?.Invoke(this, EventArgs.Empty);
-        }
-
         #endregion
 
         #region Commands
         
-        public ICommand MultiSelectCommand { get; }
-        public ICommand SelectionChangedCommand { get; }
-
         public virtual ICommand AddContactCommand { get; }
         public virtual ICommand RemoveContactCommand { get; }
 
@@ -90,28 +57,12 @@ namespace MegaApp.ViewModels.Contacts
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
             }
-        }
 
-        private void SelectionChanged()
-        {
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
-                    this.ItemCollection.MoreThanOneSelected;
-            else
-                this.IsMultiSelectActive = this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected;
-
-            if (this.ItemCollection.HasSelectedItems)
+            if (e.PropertyName == nameof(this.ItemCollection.SelectedItems))
             {
-                var focusedItem = this.ItemCollection.SelectedItems.Last();
-                this.FocusedItem = focusedItem;
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
             }
         }
-
-        /// <summary>
-        /// Sets if multiselect is active or not.
-        /// </summary>
-        private void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
 
         #endregion
 
@@ -155,13 +106,8 @@ namespace MegaApp.ViewModels.Contacts
             {
                 switch(this.CurrentOrder)
                 {
-                    case ContactsSortOptions.EmailAscending:
-                    case ContactsSortOptions.EmailDescending:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmail"), 
-                            this.ItemCollection.Items.Count);
-
-                    case ContactsSortOptions.NameAscending:
-                    case ContactsSortOptions.NameDescending:
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
                             this.ItemCollection.Items.Count);
 
@@ -177,13 +123,8 @@ namespace MegaApp.ViewModels.Contacts
             {
                 switch (this.CurrentOrder)
                 {
-                    case ContactsSortOptions.EmailAscending:
-                    case ContactsSortOptions.EmailDescending:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmailMultiSelect"),
-                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
-
-                    case ContactsSortOptions.NameAscending:
-                    case ContactsSortOptions.NameDescending:
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
 
@@ -193,29 +134,8 @@ namespace MegaApp.ViewModels.Contacts
             }
         }
 
-        private bool _isMultiSelectActive;
-        public bool IsMultiSelectActive
-        {
-            get { return _isMultiSelectActive || this.ItemCollection.MoreThanOneSelected; }
-            set
-            {
-                if (!SetField(ref _isMultiSelectActive, value)) return;
-
-                if (_isMultiSelectActive)
-                {
-                    this.OnMultiSelectEnabled();
-                }
-                else
-                {
-                    this.ItemCollection.ClearSelection();
-                    OnPropertyChanged(nameof(this.IsMultiSelectActive));
-                    this.OnMultiSelectDisabled();
-                }
-            }
-        }
-
-        private ContactsSortOptions _currentOrder;
-        public ContactsSortOptions CurrentOrder
+        private MSortOrderType _currentOrder;
+        public MSortOrderType CurrentOrder
         {
             get { return _currentOrder; }
             set
@@ -234,13 +154,11 @@ namespace MegaApp.ViewModels.Contacts
             {
                 switch(this.CurrentOrder)
                 {
-                    case ContactsSortOptions.EmailAscending:
-                    case ContactsSortOptions.NameAscending:
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
                     default:
                         return true;
 
-                    case ContactsSortOptions.EmailDescending:
-                    case ContactsSortOptions.NameDescending:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                         return false;
                 }
             }

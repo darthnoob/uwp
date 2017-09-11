@@ -28,7 +28,7 @@ namespace MegaApp.ViewModels.Contacts
             this.OpenContactProfileCommand = new RelayCommand(OpenContactProfile);
             this.CloseContactProfileCommand = new RelayCommand(CloseContactProfile);
 
-            this.CurrentOrder = ContactsSortOptions.NameAscending;
+            this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
 
         #region Commands
@@ -337,11 +337,11 @@ namespace MegaApp.ViewModels.Contacts
                 item?.SharedItems?.GetIncomingSharedItems();
         }
 
-        public void SortBy(ContactsSortOptions sortOption)
+        public void SortBy(MSortOrderType sortOption)
         {
             switch (sortOption)
             {
-                case ContactsSortOptions.NameAscending:
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContact>(
@@ -349,7 +349,7 @@ namespace MegaApp.ViewModels.Contacts
                     });
                     break;
 
-                case ContactsSortOptions.NameDescending:
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContact>(
@@ -368,11 +368,11 @@ namespace MegaApp.ViewModels.Contacts
         {
             switch (this.CurrentOrder)
             {
-                case ContactsSortOptions.NameAscending:
-                    this.CurrentOrder = ContactsSortOptions.NameDescending;
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
                     break;
-                case ContactsSortOptions.NameDescending:
-                    this.CurrentOrder = ContactsSortOptions.NameAscending;
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
                     break;
                 default:
                     return;

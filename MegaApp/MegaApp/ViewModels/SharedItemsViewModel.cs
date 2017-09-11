@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
@@ -168,7 +169,17 @@ namespace MegaApp.ViewModels
 
         private void SelectionChanged()
         {
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
+                    this.ItemCollection.MoreThanOneSelected;
+            else
+                this.IsMultiSelectActive = this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected;
 
+            if (this.ItemCollection.HasSelectedItems)
+            {
+                this.ItemCollection.FocusedItem = this.ItemCollection.SelectedItems.Last();
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
+            }
         }
 
         private void OnItemCollectionChanged()

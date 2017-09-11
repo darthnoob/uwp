@@ -37,31 +37,37 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize(App.GlobalListener);
 
-            this.ViewModel.MegaContacts.MultiSelectEnabled += OnMultiSelectEnabled;
-            this.ViewModel.MegaContacts.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.ItemCollection.AllSelected += OnAllSelected;
             this.ViewModel.MegaContacts.ContactsSorted += OnContactsSorted;
             this.ViewModel.MegaContacts.OpenContactProfileEvent += OnOpenContactProfile;
             this.ViewModel.MegaContacts.CloseContactProfileEvent += OnCloseContactProfile;
 
-            this.ViewModel.IncomingContactRequests.MultiSelectEnabled += OnMultiSelectEnabled;
-            this.ViewModel.IncomingContactRequests.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.AllSelected += OnAllSelected;
 
-            this.ViewModel.OutgoingContactRequests.MultiSelectEnabled += OnMultiSelectEnabled;
-            this.ViewModel.OutgoingContactRequests.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.AllSelected += OnAllSelected;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            this.ViewModel.MegaContacts.MultiSelectEnabled -= OnMultiSelectEnabled;
-            this.ViewModel.MegaContacts.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+            this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.MegaContacts.ItemCollection.AllSelected -= OnAllSelected;
             this.ViewModel.MegaContacts.OpenContactProfileEvent -= OnOpenContactProfile;
             this.ViewModel.MegaContacts.CloseContactProfileEvent -= OnCloseContactProfile;
 
-            this.ViewModel.IncomingContactRequests.MultiSelectEnabled -= OnMultiSelectEnabled;
-            this.ViewModel.IncomingContactRequests.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.IncomingContactRequests.ItemCollection.AllSelected -= OnAllSelected;
 
-            this.ViewModel.OutgoingContactRequests.MultiSelectEnabled -= OnMultiSelectEnabled;
-            this.ViewModel.OutgoingContactRequests.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.OutgoingContactRequests.ItemCollection.AllSelected -= OnAllSelected;
 
             this.ViewModel.Deinitialize(App.GlobalListener);
             base.OnNavigatedFrom(e);
@@ -184,6 +190,16 @@ namespace MegaApp.Views
                 Interaction.GetBehaviors(this.ListViewOutgoingContactRequests).Detach();
         }
 
+        private void OnAllSelected(object sender, bool value)
+        {
+            var listView = this.GetSelectedListView();
+            
+            if (value)
+                listView?.SelectAll();
+            else
+                listView?.SelectedItems.Clear();
+        }
+
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.ContactProfileSplitView.IsPaneOpen = false;
@@ -214,8 +230,6 @@ namespace MegaApp.Views
 
         private void OnContactRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaContact itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContact;
             if (itemTapped == null) return;
 
@@ -223,10 +237,10 @@ namespace MegaApp.Views
             {
                 this.ViewModel.MegaContacts.FocusedItem = itemTapped;
 
-                if (!this.ViewModel.MegaContacts.IsMultiSelectActive)
-                    ((ListViewBase)sender).SelectedItems?.Clear();
+                if (!this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
+                    ((ListView)sender).SelectedItems?.Clear();
 
-                ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+                ((ListView)sender).SelectedItems?.Add(itemTapped);
             }
         }
 
@@ -254,7 +268,7 @@ namespace MegaApp.Views
                 var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
                 activeView.FocusedItem = itemTapped;
 
-                if (!activeView.IsMultiSelectActive)
+                if (!activeView.ItemCollection.IsMultiSelectActive)
                     ((ListViewBase)sender).SelectedItems?.Clear();
 
                 ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
@@ -270,18 +284,7 @@ namespace MegaApp.Views
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
                 return this.ListViewOutgoingContactRequests;
             return null;
-        }
-
-        private void SelectAllCheckBoxTapped(object sender, TappedRoutedEventArgs e)
-        {
-            var listView = this.GetSelectedListView();
-            var checkBox = sender as CheckBox;
-
-            if (checkBox?.IsChecked == true)
-                listView?.SelectAll();
-            else
-                listView?.SelectedItems.Clear();
-        }
+        }        
 
         private void OnSelectAllTapped(object sender, TappedRoutedEventArgs e)
         {

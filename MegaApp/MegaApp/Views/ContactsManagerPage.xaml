@@ -99,8 +99,8 @@
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             Label="{Binding CancelText, Mode=OneTime}"                        
                             ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
-                            Command="{Binding MultiSelectCommand}"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -149,8 +149,8 @@
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             Label="{Binding CancelText, Mode=OneTime}"                        
                             ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
-                            Command="{Binding MultiSelectCommand}"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -209,8 +209,8 @@
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             Label="{Binding CancelText, Mode=OneTime}"                        
                             ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
-                            Command="{Binding MultiSelectCommand}"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -291,7 +291,7 @@
                                         x:Name="ListViewContacts"
                                         Margin="-12,0,0,0"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                        IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                         ItemTemplate="{StaticResource MegaContactItemContentDesktop}"
                                         ItemsSource="{Binding ItemCollection.Items}"
@@ -301,7 +301,7 @@
                                             <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:EventTriggerBehavior.Actions>
-                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                    <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                                 </core:EventTriggerBehavior.Actions>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
@@ -328,7 +328,7 @@
                                     x:Name="ListViewIncomingContactRequests"
                                     Margin="-12,0,0,0"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
-                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
                                     ItemsSource="{Binding ItemCollection.Items}"
@@ -339,7 +339,7 @@
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
                                             <core:EventTriggerBehavior.Actions>
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                             </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
@@ -365,7 +365,7 @@
                                     x:Name="ListViewOutgoingContactRequests"
                                     Margin="-12,0,0,0"
                                     Background="{StaticResource MegaAppBackgroundBrush}"
-                                    IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                    IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                     ItemTemplate="{StaticResource MegaContactRequestItemContentDesktop}"
                                     ItemsSource="{Binding ItemCollection.Items}"
@@ -376,7 +376,7 @@
                                         <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                         <core:EventTriggerBehavior EventName="SelectionChanged">
                                             <core:EventTriggerBehavior.Actions>
-                                                <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                             </core:EventTriggerBehavior.Actions>
                                         </core:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
@@ -424,7 +424,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -440,7 +440,7 @@
                         <AppBarButton 
                             Label="{Binding SelectAllText}"
                             Tapped="OnSelectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="SelectAll" />
                             </Viewbox>
@@ -448,7 +448,7 @@
                         <AppBarButton 
                             Label="{Binding DeselectAllText}"
                             Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="ClearSelection" />
                             </Viewbox>
@@ -491,7 +491,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -507,7 +507,7 @@
                         <AppBarButton 
                             Label="{Binding SelectAllText}"
                             Tapped="OnSelectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="SelectAll" />
                             </Viewbox>
@@ -515,7 +515,7 @@
                         <AppBarButton 
                             Label="{Binding DeselectAllText}"
                             Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="ClearSelection" />
                             </Viewbox>
@@ -568,7 +568,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -584,7 +584,7 @@
                         <AppBarButton 
                             Label="{Binding SelectAllText}"
                             Tapped="OnSelectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="SelectAll" />
                             </Viewbox>
@@ -592,7 +592,7 @@
                         <AppBarButton 
                             Label="{Binding DeselectAllText}"
                             Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxWidth="14" MaxHeight="14">
                                 <SymbolIcon Symbol="ClearSelection" />
                             </Viewbox>

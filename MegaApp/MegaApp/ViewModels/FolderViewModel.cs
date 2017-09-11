@@ -187,7 +187,7 @@ namespace MegaApp.ViewModels
                 // Retrieve the index from the SDK
                 // Substract -1 to get a valid list index
                 var insertIndex = this.MegaSdk.getIndex(mNode,
-                    UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
+                    (int)UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
 
                 // If the insert position is higher than the ChilNodes size insert in the last position
                 if (insertIndex >= ItemCollection.Items.Count)
@@ -336,8 +336,8 @@ namespace MegaApp.ViewModels
 
         #region Public Methods
 
-        public void SelectAll() => this.ItemCollection.SelectAll();
-        public void DeselectAll() => this.ItemCollection.ClearSelection();
+        public void SelectAll() => this.ItemCollection.SelectAll(true);
+        public void DeselectAll() => this.ItemCollection.SelectAll(false);
         public void ClearChildNodes() => this.ItemCollection.Clear();
 
         /// <summary>

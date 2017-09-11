@@ -996,16 +996,6 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Shared folders' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
-  <data name="UI_ListSortedByEmail" xml:space="preserve">
-    <value>Email ({0})</value>
-    <comment>Label to indicate that a list of items is sorted by email and the total number of items.
-Keep the {0} code because is for include the total number of items in runtime.</comment>
-  </data>
-  <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
-    <value>Email ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
-Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
-  </data>
   <data name="UI_ListSortedByName" xml:space="preserve">
     <value>Name ({0})</value>
     <comment>Label to indicate that a list of items is sorted by name and the total number of items.
@@ -1019,14 +1009,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_Name" xml:space="preserve">
     <value>Name</value>
     <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionEmailAscending" xml:space="preserve">
-    <value>Email (ascending)</value>
-    <comment>Label for the menu option to sort contacts or contact requests in ascending order by email - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionEmailDescending" xml:space="preserve">
-    <value>Email (descending)</value>
-    <comment>Label for the menu option to sort contacts or contact requests in descending order by email - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewProfile" xml:space="preserve">
     <value>View profile</value>
