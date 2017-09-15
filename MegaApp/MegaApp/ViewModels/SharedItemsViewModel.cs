@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -6,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
@@ -18,17 +18,22 @@ namespace MegaApp.ViewModels
         {
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
+            this.ItemCollection.SelectedItemsCollectionChanged += (sender, args) => OnSelectedItemsCollectionChanged();
+
+            this.DownloadCommand = new RelayCommand(Download);
+            this.LeaveSharedCommand = new RelayCommand(LeaveShared);
 
             this.InvertOrderCommand = new RelayCommand(InvertOrder);
-            this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
 
             this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
 
         #region Commands
 
+        public ICommand DownloadCommand { get; }
+        public ICommand LeaveSharedCommand { get; }
+
         public ICommand InvertOrderCommand { get; }
-        public ICommand SelectionChangedCommand { get; }
 
         #endregion
 
@@ -63,8 +68,8 @@ namespace MegaApp.ViewModels
                         // To avoid null values
                         if (inSharedItems.get(i) == null) continue;
 
-                        var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
-                            inSharedItems.get(i), null);
+                        var node = NodeService.CreateNewSharedItem(SdkService.MegaSdk, App.AppInformation,
+                            inSharedItems.get(i), this);
 
                         // If node creation failed for some reason, continue with the rest and leave this one
                         if (node == null) continue;
@@ -144,6 +149,40 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private async void Download()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+            await MultipleDownloadAsync(this.ItemCollection.SelectedItems);
+            this.ItemCollection.IsMultiSelectActive = false;
+        }
+
+        private async Task MultipleDownloadAsync(ICollection<IMegaNode> nodes)
+        {
+            if (nodes?.Count < 1) return;
+
+            var downloadFolder = await FolderService.SelectFolder();
+            if (downloadFolder != null)
+            {
+                if (await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
+                {
+                    foreach (var node in nodes)
+                    {
+                        node.Transfer.ExternalDownloadPath = downloadFolder.Path;
+                        TransferService.MegaTransfers.Add(node.Transfer);
+                        node.Transfer.StartTransfer();
+                    }
+                }
+            }
+        }
+
+        private void LeaveShared()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+
+            foreach (var node in this.ItemCollection.SelectedItems)
+                node.RemoveAsync();
+        }
+
         private void InvertOrder()
         {
             switch (this.CurrentOrder)
@@ -167,21 +206,6 @@ namespace MegaApp.ViewModels
             this.SortBy(this.CurrentOrder);
         }
 
-        private void SelectionChanged()
-        {
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
-                    this.ItemCollection.MoreThanOneSelected;
-            else
-                this.IsMultiSelectActive = this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected;
-
-            if (this.ItemCollection.HasSelectedItems)
-            {
-                this.ItemCollection.FocusedItem = this.ItemCollection.SelectedItems.Last();
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
-            }
-        }
-
         private void OnItemCollectionChanged()
         {
             OnUiThread(() =>
@@ -189,6 +213,15 @@ namespace MegaApp.ViewModels
                 OnPropertyChanged(nameof(this.NumberOfSharedItems),
                     nameof(this.NumberOfSharedItemsText),
                     nameof(this.OrderTypeAndNumberOfItems),
+                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+            });
+        }
+
+        private void OnSelectedItemsCollectionChanged()
+        {
+            OnUiThread(() =>
+            {
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
             });
         }
@@ -270,27 +303,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private bool _isMultiSelectActive;
-        public bool IsMultiSelectActive
-        {
-            get { return _isMultiSelectActive || this.ItemCollection.MoreThanOneSelected; }
-            set
-            {
-                if (!SetField(ref _isMultiSelectActive, value)) return;
-
-                if (_isMultiSelectActive)
-                {
-                    //this.OnMultiSelectEnabled();
-                }
-                else
-                {
-                    this.ItemCollection.ClearSelection();
-                    OnPropertyChanged(nameof(this.IsMultiSelectActive));
-                    //this.OnMultiSelectDisabled();
-                }
-            }
-        }
-
         private MSortOrderType _currentOrder;
         public MSortOrderType CurrentOrder
         {
@@ -322,6 +334,24 @@ namespace MegaApp.ViewModels
                 }
             }
         }
+
+        #endregion
+
+        #region UiResources
+
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+
+        #endregion
+
+        #region VisualResources
+
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LeaveSharedPathData => ResourceService.VisualResources.GetString("VR_LeaveSharedPathData");
+        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
 
         #endregion
     }

@@ -981,8 +981,26 @@
         </Border>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaContactSharedItemListViewDesktop">
+    <DataTemplate x:Key="MegaSharedItemListViewDesktop">
         <Grid Margin="0,6,0,7">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding DownloadCommand}"
+                            Text="{Binding DownloadText}" />
+                        <MenuFlyoutItem
+                            Command="{Binding LeaveSharedCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding LeaveSharedText}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />

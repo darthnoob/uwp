@@ -849,6 +849,19 @@
                                                 Data="{Binding LeaveSharedPathData, Mode=OneTime}" />
                                         </AppBarButton.Icon>
                                     </AppBarButton>
+                                    <AppBarButton
+                                        Command="{Binding ItemCollection.MultiSelectCommand}"
+                                        Label="{Binding MultiSelectText, Mode=OneTime}"                        
+                                        Style="{StaticResource MegaAppBarButtonStyle}"
+                                        ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
+                                        Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <AppBarButton.Icon>
+                                            <PathIcon
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
                                     <AppBarSeparator 
                                         Margin="-12,-12,-12,0"
                                         VerticalAlignment="Center"
@@ -997,15 +1010,15 @@
                                     <Grid Grid.Row="1" Margin="-12,-8,0,0">
                                         <ListView
                                             x:Name="PART_ListViewSharedItems"
-                                            IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                            IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                             ItemsSource="{Binding ItemCollection.Items}"
-                                            ItemTemplate="{StaticResource MegaContactSharedItemListViewDesktop}">
+                                            ItemTemplate="{StaticResource MegaSharedItemListViewDesktop}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                                 <core:EventTriggerBehavior EventName="SelectionChanged">
                                                     <core:EventTriggerBehavior.Actions>
-                                                        <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                        <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                                     </core:EventTriggerBehavior.Actions>
                                                 </core:EventTriggerBehavior>
                                             </interactivity:Interaction.Behaviors>
@@ -1020,6 +1033,19 @@
                             x:Name="BottomCommandBar"
                             Grid.Row="2"
                             Style="{StaticResource MegaCommandBarStyle}">
+                            <AppBarButton
+                                Command="{Binding ItemCollection.MultiSelectCommand}"
+                                IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                                Label="{Binding MultiSelectText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
                                     Command="{Binding ContactList.CloseContactProfileCommand}"
@@ -1038,6 +1064,7 @@
                                         <Setter Target="TopRow.Height" Value="Auto" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="Extended" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Mobile">
@@ -1049,6 +1076,7 @@
                                         <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="None" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

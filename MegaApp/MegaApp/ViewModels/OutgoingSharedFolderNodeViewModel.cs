@@ -5,8 +5,8 @@ namespace MegaApp.ViewModels
 {
     public class OutgoingSharedFolderNodeViewModel : FolderNodeViewModel
     {
-        public OutgoingSharedFolderNodeViewModel(MNode megaNode, FolderViewModel parent)
-            : base(SdkService.MegaSdk, App.AppInformation, megaNode, parent)
+        public OutgoingSharedFolderNodeViewModel(MNode megaNode, SharedItemsViewModel parent)
+            : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
         {
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
         }

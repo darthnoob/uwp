@@ -50,17 +50,36 @@ namespace MegaApp.Services
                         return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
 
                     case MNodeType.TYPE_FOLDER:
-                        if (megaSdk.isShared(megaNode))
-                        {
-                            if (megaSdk.isInShare(megaNode))
-                                return new IncomingSharedFolderNodeViewModel(megaNode);
-                            if (megaSdk.isOutShare(megaNode))
-                                return new OutgoingSharedFolderNodeViewModel(megaNode, folder);
-                        }
                         return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
 
                     case MNodeType.TYPE_INCOMING:
                         break;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return null;
+        }
+
+        public static NodeViewModel CreateNewSharedItem(MegaSDK megaSdk, AppInformation appInformation, 
+            MNode megaNode, SharedItemsViewModel parent)
+        {
+            if (megaNode == null) return null;
+
+            try
+            {
+                if (megaNode.getType() == MNodeType.TYPE_FOLDER)
+                {
+                    if (megaSdk.isShared(megaNode))
+                    {
+                        if (megaSdk.isInShare(megaNode))
+                            return new IncomingSharedFolderNodeViewModel(megaNode, parent);
+                        if (megaSdk.isOutShare(megaNode))
+                            return new OutgoingSharedFolderNodeViewModel(megaNode, parent);
+                    }
                 }
             }
             catch (Exception)

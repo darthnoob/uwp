@@ -1,16 +1,30 @@
-﻿using mega;
+﻿using System.Windows.Input;
+using mega;
+using MegaApp.Classes;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
     public class IncomingSharedFolderNodeViewModel : FolderNodeViewModel
     {
-        public IncomingSharedFolderNodeViewModel(MNode megaNode)
+        public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedItemsViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
         {
+            this.Parent = parent;
+
+            this.DownloadCommand = new RelayCommand(Download);
+            this.LeaveSharedCommand = new RelayCommand(LeaveShared);
+
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update();            
         }
+
+        #region Commands
+
+        public new ICommand DownloadCommand { get; }
+        public ICommand LeaveSharedCommand { get; }
+
+        #endregion
 
         #region Methods
 
@@ -18,6 +32,30 @@ namespace MegaApp.ViewModels
         {
             this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode);
             base.Update(this.OriginalMNode, externalUpdate);
+        }
+
+        private void Download()
+        {
+            if (this.Parent.ItemCollection.IsMultiSelectActive)
+            {
+                if (this.Parent.DownloadCommand.CanExecute(null))
+                    this.Parent.DownloadCommand.Execute(null);
+                return;
+            }
+
+            this.Download(TransferService.MegaTransfers);
+        }
+
+        private void LeaveShared()
+        {
+            if (this.Parent.ItemCollection.IsMultiSelectActive)
+            {
+                if (this.Parent.LeaveSharedCommand.CanExecute(null))
+                    this.Parent.LeaveSharedCommand.Execute(null);
+                return;
+            }
+
+            this.RemoveAsync();
         }
 
         #endregion
@@ -75,6 +113,19 @@ namespace MegaApp.ViewModels
                 }
             }
         }
+
+        private SharedItemsViewModel _parent;
+        public new SharedItemsViewModel Parent
+        {
+            get { return _parent; }
+            set { SetField(ref _parent, value); }
+        }
+
+        #endregion
+
+        #region UiResources
+
+        public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
 
         #endregion
     }

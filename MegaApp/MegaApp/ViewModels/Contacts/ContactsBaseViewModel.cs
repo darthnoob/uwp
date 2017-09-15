@@ -86,13 +86,6 @@ namespace MegaApp.ViewModels.Contacts
             }
         }
 
-        private T _focusedItem;
-        public T FocusedItem
-        {
-            get { return _focusedItem; }
-            set { SetField(ref _focusedItem, value); }
-        }
-
         private ContactsContentType _contentType;
         public ContactsContentType ContentType
         {

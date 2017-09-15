@@ -1,7 +1,10 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Microsoft.Xaml.Interactivity;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -38,7 +41,8 @@ namespace MegaApp.UserControls
             if (control == null) return;
             if (dpc.NewValue != null)
             {
-                control.OnContactChanged((ContactViewModel)dpc.NewValue);
+                control.OnContactChanged((ContactViewModel)dpc.OldValue,
+                    (ContactViewModel)dpc.NewValue);
             }
         }
 
@@ -86,9 +90,21 @@ namespace MegaApp.UserControls
 
         }
 
-        protected void OnContactChanged(ContactViewModel contact)
+        protected void OnContactChanged(ContactViewModel oldContact, ContactViewModel newContact)
         {
-            
+            if(oldContact?.SharedItems?.ItemCollection != null)
+            {
+                oldContact.SharedItems.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+                oldContact.SharedItems.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+                oldContact.SharedItems.ItemCollection.AllSelected -= OnAllSelected;
+            }
+
+            if (newContact?.SharedItems?.ItemCollection != null)
+            {
+                newContact.SharedItems.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+                newContact.SharedItems.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+                newContact.SharedItems.ItemCollection.AllSelected += OnAllSelected;
+            }
         }
 
         private async void OnRemoveContactTapped()
@@ -124,17 +140,63 @@ namespace MegaApp.UserControls
 
             this.Contact.SharedItems.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.Contact.SharedItems.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            if (!this.Contact.SharedItems.ItemCollection.IsMultiSelectActive)
+                ((ListView)sender)?.SelectedItems?.Clear();
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            ((ListView)sender)?.SelectedItems?.Add(itemTapped);
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this._sharedItemsTopCommandBarArea.Visibility =
-                this._pivotControl != null && this._pivotControl.SelectedItem.Equals(this._sharedItemsPivot) ?
-                Visibility.Visible : Visibility.Collapsed;
+            if(this._sharedItemsTopCommandBarArea != null)
+            {
+                this._sharedItemsTopCommandBarArea.Visibility =
+                    this._pivotControl != null && this._sharedItemsPivot != null && this._pivotControl.SelectedItem.Equals(this._sharedItemsPivot) ?
+                    Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void OnMultiSelectEnabled(object sender, EventArgs e)
+        {
+            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
+            {
+                // Disable the view behaviors to avoid extrange behaviors during the view update
+                Interaction.GetBehaviors(this._sharedItems).Detach();
+                
+                // First save the current selection to restore after enable the multi select
+                var selection = this.Contact.SharedItems.ItemCollection.SelectedItems.ToList();
+
+                this._sharedItems.SelectionMode = ListViewSelectionMode.Multiple;
+
+                // Update the selection
+                foreach (var item in selection)
+                    this._sharedItems.SelectedItems.Add(item);
+
+                // Restore the view behaviors again
+                Interaction.GetBehaviors(this._sharedItems).Attach(this._sharedItems);
+            }
+        }
+
+        private void OnMultiSelectDisabled(object sender, EventArgs e)
+        {
+            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
+            {
+                if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                    this._sharedItems.SelectionMode = ListViewSelectionMode.Extended;
+                else
+                    this._sharedItems.SelectionMode = ListViewSelectionMode.None;
+            }
+        }
+
+        private void OnAllSelected(object sender, bool value)
+        {
+            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
+            {
+                if (value)
+                    this._sharedItems?.SelectAll();
+                else
+                    this._sharedItems?.SelectedItems.Clear();
+            }
         }
     }
 }

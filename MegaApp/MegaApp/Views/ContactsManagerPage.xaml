@@ -26,7 +26,7 @@
                 x:Name="ContactProfilePanelControl"
                 Background="{StaticResource MegaAppBackgroundBrush}"
                 Foreground="{StaticResource MegaAppForegroundBrush}"
-                Contact="{Binding MegaContacts.FocusedItem}" />
+                Contact="{Binding MegaContacts.ItemCollection.FocusedItem}" />
         </SplitView.Pane>
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
