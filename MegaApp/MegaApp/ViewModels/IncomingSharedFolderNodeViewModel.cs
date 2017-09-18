@@ -121,6 +121,8 @@ namespace MegaApp.ViewModels
             set { SetField(ref _parent, value); }
         }
 
+        public bool AllowRename => (this.AccessLevel == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
+
         #endregion
 
         #region UiResources
