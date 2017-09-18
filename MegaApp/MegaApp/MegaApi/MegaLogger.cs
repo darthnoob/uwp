@@ -3,8 +3,11 @@
 //Only debug levels FATAL, ERROR, WARNING and INFO can be shown in Release builds
 //DEBUG and MAX are reserved for Debug builds
 
+using System;
 using System.Diagnostics;
+using System.IO;
 using mega;
+using MegaApp.Services;
 
 namespace MegaApp.MegaApi
 {
@@ -50,18 +53,17 @@ namespace MegaApp.MegaApi
 
             Debug.WriteLine("{0}{1}{2}", time, logLevelString, message);
 
-            //if (DebugService.DebugSettings != null &&
-            //    DebugService.DebugSettings.IsDebugMode)
-            //{
-            //    try 
-            //    {
-            //        using (StreamWriter sw = File.AppendText(AppService.GetFileLogPath()))
-            //        {
-            //            sw.WriteLine("{0}{1}{2}", time, logLevelString, message);
-            //        }
-            //    }
-            //    catch (Exception) { }                
-            //}
+            if (DebugService.DebugSettings != null && DebugService.DebugSettings.IsDebugMode)
+            {
+                try
+                {
+                    using (StreamWriter sw = File.AppendText(AppService.GetFileLogPath()))
+                    {
+                        sw.WriteLine("{0}{1}{2}", time, logLevelString, message);
+                    }
+                }
+                catch (Exception) { }
+            }
         }
     }
 }

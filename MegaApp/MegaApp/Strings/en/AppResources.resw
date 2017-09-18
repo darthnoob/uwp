@@ -154,7 +154,7 @@
     <comment>Path of the 'downloads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_LogFileName" xml:space="preserve">
-    <value>MEGA_WP.log</value>
+    <value>MEGA_UWP.log</value>
     <comment>Name of the log file created in DEBUG mode - (NO-TRANSLATION)</comment>
   </data>
   <data name="AR_MegaSdkUrl" xml:space="preserve">
@@ -248,5 +248,9 @@
   <data name="AR_FortumoUrl" xml:space="preserve">
     <value>http://fortumo.com/mobile_payments/f250460ec5d97fd27e361afaa366db0f?cuid=</value>
     <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_OfflineDirectory" xml:space="preserve">
+    <value>offline\</value>
+    <comment>Path of the 'offline' folder of the application - (NO-TRANSLATION).</comment>
   </data>
 </root>

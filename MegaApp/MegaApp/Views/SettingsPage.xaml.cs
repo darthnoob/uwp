@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Navigation;
 using MegaApp.UserControls;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Views
@@ -19,6 +21,11 @@ namespace MegaApp.Views
         {
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
+        }
+
+        private void OnSdkVersionTapped(object sender, TappedRoutedEventArgs e)
+        {
+            DebugService.ChangeStatusAction();
         }
     }
 }
