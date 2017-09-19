@@ -1061,4 +1061,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Leave shared</value>
     <comment>Label for any 'Leave shared' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_IgnoreContact" xml:space="preserve">
+    <value>Ignore contact</value>
+    <comment>Label for any 'Ignore contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>

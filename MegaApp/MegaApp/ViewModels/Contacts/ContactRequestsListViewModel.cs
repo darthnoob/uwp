@@ -25,6 +25,7 @@ namespace MegaApp.ViewModels.Contacts
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
+            this.IgnoreContactRequestCommand = new RelayCommand(IgnoreContactRequest);
             this.CancelContactRequestCommand = new RelayCommand(CancelContactRequest);
             this.DeclineContactRequestCommand = new RelayCommand(DeclineContactRequest);
             this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
@@ -38,6 +39,7 @@ namespace MegaApp.ViewModels.Contacts
         public override ICommand AddContactCommand { get; }
         
         public override ICommand AcceptContactRequestCommand { get; }
+        public override ICommand IgnoreContactRequestCommand { get; }
         public override ICommand CancelContactRequestCommand { get; }
         public override ICommand DeclineContactRequestCommand { get; }
         public override ICommand RemindContactRequestCommand { get; }
@@ -116,6 +118,17 @@ namespace MegaApp.ViewModels.Contacts
 
             foreach (var contactRequest in selectedContactRequests)
                 contactRequest.AcceptContactRequest();
+        }
+
+        private void IgnoreContactRequest()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+
+            // Use a temp variable to avoid InvalidOperationException
+            var selectedContactRequests = this.ItemCollection.SelectedItems.ToList();
+
+            foreach (var contactRequest in selectedContactRequests)
+                contactRequest.IgnoreContactRequest();
         }
 
         private void DeclineContactRequest()

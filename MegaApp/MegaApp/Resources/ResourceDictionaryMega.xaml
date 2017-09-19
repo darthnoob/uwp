@@ -1746,6 +1746,10 @@
                             Text="{Binding AcceptContactText}"
                             Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
+                            Command="{Binding IgnoreContactRequestCommand}"
+                            Text="{Binding IgnoreContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
                             Command="{Binding DeclineContactRequestCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             Text="{Binding DenyContactText}"
@@ -1856,6 +1860,10 @@
                         <MenuFlyoutItem
                             Command="{Binding AcceptContactRequestCommand}"
                             Text="{Binding AcceptContactText}"
+                            Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                        <MenuFlyoutItem
+                            Command="{Binding IgnoreContactRequestCommand}"
+                            Text="{Binding IgnoreContactText}"
                             Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding DeclineContactRequestCommand}"

@@ -13,6 +13,11 @@ namespace MegaApp.Interfaces
         void AcceptContactRequest();
 
         /// <summary>
+        /// Ignore the contact request
+        /// </summary>
+        void IgnoreContactRequest();
+
+        /// <summary>
         /// Decline the contact request
         /// </summary>
         void DeclineContactRequest();

@@ -37,6 +37,7 @@ namespace MegaApp.ViewModels.Contacts
         public virtual ICommand RemoveContactCommand { get; }
 
         public virtual ICommand AcceptContactRequestCommand { get; }
+        public virtual ICommand IgnoreContactRequestCommand { get; }
         public virtual ICommand CancelContactRequestCommand { get; }
         public virtual ICommand DeclineContactRequestCommand { get; }
         public virtual ICommand RemindContactRequestCommand { get; }

@@ -33,18 +33,21 @@ namespace MegaApp.ViewModels
             this.ContactRequestsList = contactRequestsList;
 
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContact);
+            this.IgnoreContactRequestCommand = new RelayCommand(IgnoreContact);
             this.DeclineContactRequestCommand = new RelayCommand(DeclineContact);
             this.RemindContactRequestCommand = new RelayCommand(RemindContact);
             this.CancelContactRequestCommand = new RelayCommand(CancelContact);
+            
         }
 
         #region Commands
 
         public ICommand AcceptContactRequestCommand { get; }
+        public ICommand IgnoreContactRequestCommand { get; }
         public ICommand DeclineContactRequestCommand { get; }
         public ICommand RemindContactRequestCommand { get; }
         public ICommand CancelContactRequestCommand { get; }
-
+        
         #endregion
 
         #region Methods
@@ -70,6 +73,29 @@ namespace MegaApp.ViewModels
             await acceptContactRequest.ExecuteAsync(() =>
                 SdkService.MegaSdk.replyContactRequest(this.MegaContactRequest,
                 MContactRequestReplyActionType.REPLY_ACTION_ACCEPT, acceptContactRequest));
+        }
+
+        private void IgnoreContact()
+        {
+            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            {
+                if (this.ContactRequestsList.IgnoreContactRequestCommand.CanExecute(null))
+                    this.ContactRequestsList.IgnoreContactRequestCommand.Execute(null);
+                return;
+            }
+
+            IgnoreContactRequest();
+        }
+
+        /// <summary>
+        /// Ignore the contact request
+        /// </summary>
+        public async void IgnoreContactRequest()
+        {
+            var ignoreContactRequest = new InviteContactRequestListenerAsync();
+            await ignoreContactRequest.ExecuteAsync(() =>
+                SdkService.MegaSdk.replyContactRequest(this.MegaContactRequest,
+                MContactRequestReplyActionType.REPLY_ACTION_IGNORE, ignoreContactRequest));
         }
 
         private void DeclineContact()
@@ -139,7 +165,7 @@ namespace MegaApp.ViewModels
             await cancelContactRequest.ExecuteAsync(() =>
                 SdkService.MegaSdk.inviteContact(this.TargetEmail, this.SourceMessage,
                 MContactRequestInviteActionType.INVITE_ACTION_DELETE, cancelContactRequest));
-        }
+        }        
 
         #endregion
 
@@ -256,6 +282,7 @@ namespace MegaApp.ViewModels
         public string AcceptContactText => ResourceService.UiResources.GetString("UI_AcceptContact");
         public string CancelInviteText => ResourceService.UiResources.GetString("UI_CancelInvite");
         public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
+        public string IgnoreContactText => ResourceService.UiResources.GetString("UI_IgnoreContact");
         public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
 
         #endregion
