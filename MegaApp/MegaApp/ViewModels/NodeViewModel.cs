@@ -382,6 +382,7 @@ namespace MegaApp.ViewModels
                 switch (this.Parent?.Type)
                 {
                     case ContainerType.CloudDrive:
+                    case ContainerType.CameraUploads:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
                         message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name);
                         break;
@@ -401,18 +402,18 @@ namespace MegaApp.ViewModels
             }
 
             bool result;
-
             if(this is IncomingSharedFolderNodeViewModel)
             {
-                var removeNode = new RemoveNodeRequestListenerAsync();
-                result = await removeNode.ExecuteAsync(() =>
-                    this.MegaSdk.remove(this.OriginalMNode, removeNode));
+                var leaveShare = new RemoveNodeRequestListenerAsync();
+                result = await leaveShare.ExecuteAsync(() =>
+                    this.MegaSdk.remove(this.OriginalMNode, leaveShare));
             }
             else
             {
                 switch (this.Parent?.Type)
                 {
                     case ContainerType.CloudDrive:
+                    case ContainerType.CameraUploads:
                         var moveNode = new MoveNodeRequestListenerAsync();
                         result = await moveNode.ExecuteAsync(() =>
                             this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));

@@ -30,7 +30,9 @@
 
     <!--  CONVERTERS  -->
     <converters:ContactsContentTypeToVisibilityConverter x:Key="ContactsContentTypeToVisibilityConverter" />
+    <converters:ContainerTypeToVisibilityConverter x:Key="ContainerTypeToVisibilityConverter" />
     <converters:IntValueToVisibilityConverter x:Key="IntValueToVisibilityConverter" />
+    <converters:InverseContainerTypeToVisibilityConverter x:Key="InverseContainerTypeToVisibilityConverter" />
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter" />
@@ -792,6 +794,10 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -802,7 +808,11 @@
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
@@ -811,10 +821,6 @@
                                 Command="{Binding CopyOrMoveCommand}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"
@@ -917,6 +923,10 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
+                                Command="{Binding ViewDetailsCommand}"
+                                Text="{Binding ViewDetailsText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource ViewStateToVisibilityConverter}}" />
@@ -927,7 +937,11 @@
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource ViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
@@ -936,10 +950,6 @@
                                 Command="{Binding CopyOrMoveCommand}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource ViewStateToVisibilityConverter}}" />
-                            <MenuFlyoutItem
-                                Command="{Binding MoveToRubbishBinCommand}"
-                                Text="{Binding MoveToRubbishBinText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='movetorubbish', Converter={StaticResource ViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
                                 Text="{Binding RemoveText}"

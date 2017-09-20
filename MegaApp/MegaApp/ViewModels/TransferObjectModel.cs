@@ -232,20 +232,35 @@ namespace MegaApp.ViewModels
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                string message = string.Empty;
-                if (this.Transfer.isFolderTransfer())
-                    message = ResourceService.AppMessages.GetString("AM_DownloadFolderFailed");
+                string alertMessage, logMessage;
+                if(this.Transfer == null || string.IsNullOrWhiteSpace(destName))
+                {
+                    logMessage = "Error finishing a download to an external location";
+                    alertMessage = ResourceService.AppMessages.GetString("AM_DownloadFailed");
+                }
                 else
-                    message = ResourceService.AppMessages.GetString("AM_DownloadFileFailed");
+                {
+                    if (this.Transfer.isFolderTransfer())
+                    {
+                        logMessage = string.Format("Error finishing download folder '{0}'", destName);
+                        alertMessage = string.Format(ResourceService.AppMessages.GetString("AM_DownloadFolderFailed"), destName);
+                    }
+                    else
+                    {
+                        logMessage = string.Format("Error finishing download file '{0}'", destName);
+                        alertMessage = string.Format(ResourceService.AppMessages.GetString("AM_DownloadFileFailed"), destName);
+                    }
+                }
 
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, logMessage, e);
                 UiService.OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"),
-                        string.Format(message, destName));
+                        ResourceService.AppMessages.GetString("AM_DownloadFailed_Title"), alertMessage);
                 });
+
                 return false;
             }
         }

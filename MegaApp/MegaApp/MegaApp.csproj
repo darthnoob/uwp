@@ -140,6 +140,8 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\ContainerTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseContainerTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />

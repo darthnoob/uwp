@@ -31,6 +31,7 @@ namespace MegaApp.ViewModels.Settings
             try
             {
                 await FileIO.WriteTextAsync(file, this.Value);
+                SdkService.MegaSdk.masterKeyExported();
                 await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_SavedFile_Title"),
                     string.Format(
@@ -56,6 +57,7 @@ namespace MegaApp.ViewModels.Settings
             try
             {
                 Clipboard.SetContent(data);
+                SdkService.MegaSdk.masterKeyExported();
                 await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyCopied_Title"),
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyCopied"));
