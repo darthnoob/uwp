@@ -40,7 +40,6 @@ namespace MegaApp.Views
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.MegaContacts.ItemCollection.AllSelected += OnAllSelected;
-            this.ViewModel.MegaContacts.ContactsSorted += OnContactsSorted;
             this.ViewModel.MegaContacts.OpenContactProfileEvent += OnOpenContactProfile;
             this.ViewModel.MegaContacts.CloseContactProfileEvent += OnCloseContactProfile;
 
@@ -313,11 +312,6 @@ namespace MegaApp.Views
 
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout?.ShowAt(sortButton);
-        }
-
-        private void OnContactsSorted(object sender, EventArgs e)
-        {
-            this.ContactProfileSplitView.IsPaneOpen = false;
         }
 
         private void OnOpenContactProfile(object sender, EventArgs e)

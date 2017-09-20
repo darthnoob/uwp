@@ -45,19 +45,6 @@ namespace MegaApp.ViewModels.Contacts
         #region Events
 
         /// <summary>
-        /// Event triggered when the contacts are sorted
-        /// </summary>
-        public event EventHandler ContactsSorted;
-
-        /// <summary>
-        /// Event invocator method called when the contacts are sorted
-        /// </summary>
-        protected virtual void OnContactsSorted()
-        {
-            this.ContactsSorted?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
         /// Event triggered when the 'view profile' option is tapped
         /// </summary>
         public event EventHandler OpenContactProfileEvent;
@@ -361,7 +348,7 @@ namespace MegaApp.ViewModels.Contacts
                     return;
             }
 
-            this.OnContactsSorted();
+            this.CloseContactProfile();
         }
 
         private void InvertOrder()
