@@ -175,12 +175,66 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void LeaveShared()
+        private async void LeaveShared()
         {
             if (!this.ItemCollection.HasSelectedItems) return;
 
-            foreach (var node in this.ItemCollection.SelectedItems)
-                node.RemoveAsync();
+            if (this.ItemCollection.OnlyOneSelectedItem)
+            {
+                var node = this.ItemCollection.SelectedItems.First();
+
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), node.Name),
+                    ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
+                    this.LeaveText, this.CancelText);
+
+                if (!dialogResult) return;
+
+                if (!await node.RemoveAsync())
+                {
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderFailed"), node.Name));
+                    });
+                }
+            }
+            else
+            {
+                var count = this.ItemCollection.SelectedItems.Count;
+
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFolders_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFoldersQuestion"), count),
+                    ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
+                    this.LeaveText, this.CancelText);
+
+                if (!dialogResult) return;
+
+                // Use a temp variable to avoid InvalidOperationException
+                LeaveMultipleSharedFolders(this.ItemCollection.SelectedItems.ToList());
+            }
+        }
+
+        private async void LeaveMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
+        {
+            if (sharedFolders?.Count < 1) return;
+
+            bool result = true;
+            foreach (var node in sharedFolders)
+                result = result & (await node.RemoveAsync(true));
+
+            if (!result)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFolder_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsFailed"));
+                });
+            }
         }
 
         private void InvertOrder()
@@ -343,6 +397,9 @@ namespace MegaApp.ViewModels
         public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+
+        private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
         #endregion
 

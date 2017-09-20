@@ -915,4 +915,35 @@ Keep the '{0}' code because is for include the number of contacts in runtime.</c
     <value>Failed removing contacts. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
+  <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
+    <value>Are you sure you want to leave {0} shared folders?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
+Preserve the {0} code because is for include the number of shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_LeaveMultipleSharedFolders_Title" xml:space="preserve">
+    <value>Leave shared folders</value>
+    <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
+    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
+    <value>Are you sure you want to leave “{0}”?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderWarning" xml:space="preserve">
+    <value>Access to shared folder content will be lost.</value>
+    <comment>Warning message of the dialog displayed when the user is trying to leave one or multiple shared folders.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolder_Title" xml:space="preserve">
+    <value>Leave shared folder</value>
+    <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
+    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
+  </data>
 </root>

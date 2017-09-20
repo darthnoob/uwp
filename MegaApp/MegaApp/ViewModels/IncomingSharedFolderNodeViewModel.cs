@@ -46,7 +46,7 @@ namespace MegaApp.ViewModels
             this.Download(TransferService.MegaTransfers);
         }
 
-        private void LeaveShared()
+        private async void LeaveShared()
         {
             if (this.Parent.ItemCollection.IsMultiSelectActive)
             {
@@ -55,7 +55,23 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            this.RemoveAsync();
+            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), this.Name),
+                ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
+                ResourceService.UiResources.GetString("UI_Leave"), this.CancelText);
+
+            if (!dialogResult) return;
+
+            if (!await this.RemoveAsync())
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderFailed"), this.Name));
+                });
+            }
         }
 
         #endregion
