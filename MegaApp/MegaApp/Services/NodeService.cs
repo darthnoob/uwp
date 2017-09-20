@@ -64,8 +64,8 @@ namespace MegaApp.Services
             return null;
         }
 
-        public static NodeViewModel CreateNewSharedItem(MegaSDK megaSdk, AppInformation appInformation, 
-            MNode megaNode, SharedItemsViewModel parent)
+        public static NodeViewModel CreateNewSharedFolder(MegaSDK megaSdk, AppInformation appInformation, 
+            MNode megaNode, SharedFoldersListViewModel parent)
         {
             if (megaNode == null) return null;
 

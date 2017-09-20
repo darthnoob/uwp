@@ -7,7 +7,7 @@ namespace MegaApp.ViewModels
 {
     public class IncomingSharedFolderNodeViewModel : FolderNodeViewModel
     {
-        public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedItemsViewModel parent)
+        public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
         {
             this.Parent = parent;
@@ -130,8 +130,8 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private SharedItemsViewModel _parent;
-        public new SharedItemsViewModel Parent
+        private SharedFoldersListViewModel _parent;
+        public new SharedFoldersListViewModel Parent
         {
             get { return _parent; }
             set { SetField(ref _parent, value); }

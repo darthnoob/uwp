@@ -12,9 +12,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
-    public class SharedItemsViewModel : BaseSdkViewModel
+    public class SharedFoldersListViewModel : BaseSdkViewModel
     {
-        public SharedItemsViewModel()
+        public SharedFoldersListViewModel()
         {
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
@@ -68,7 +68,7 @@ namespace MegaApp.ViewModels
                         // To avoid null values
                         if (inSharedItems.get(i) == null) continue;
 
-                        var node = NodeService.CreateNewSharedItem(SdkService.MegaSdk, App.AppInformation,
+                        var node = NodeService.CreateNewSharedFolder(SdkService.MegaSdk, App.AppInformation,
                             inSharedItems.get(i), this);
 
                         // If node creation failed for some reason, continue with the rest and leave this one

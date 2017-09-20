@@ -2,7 +2,7 @@
 
 namespace MegaApp.ViewModels.Contacts
 {
-    public class ContactSharedItemsViewModel : SharedItemsViewModel
+    public class ContactSharedItemsViewModel : SharedFoldersListViewModel
     {
         public ContactSharedItemsViewModel(MUser contact)
         {

@@ -162,9 +162,9 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
-    <Compile Include="ViewModels\IncomingSharedFolderNodeViewModel.cs" />
-    <Compile Include="ViewModels\OutgoingSharedFolderNodeViewModel.cs" />
-    <Compile Include="ViewModels\SharedItemsViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\OutgoingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -359,6 +359,9 @@
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SharedFoldersPage.xaml.cs">
+      <DependentUpon>SharedFoldersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
     </Compile>
@@ -474,6 +477,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SharedFoldersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
