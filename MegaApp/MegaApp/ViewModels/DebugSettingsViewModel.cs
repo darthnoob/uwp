@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Services;
@@ -37,9 +38,24 @@ namespace MegaApp.ViewModels
             this._isDebugMode = true;
             SettingsService.Save(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"), true);
             LogService.SetLogLevel(MLogLevel.LOG_LEVEL_MAX);
-            try { File.Create(AppService.GetFileLogPath()); }
-            catch (IOException)
-            { /* No problem, because it will be created when writes the first line if not exists. */ }
+            try
+            {
+                using (StreamWriter sw = File.AppendText(AppService.GetFileLogPath()))
+                {
+                    sw.WriteLine(string.Format("######## LOG FILE - {0} - VERSION: {1} ########",
+                        AppService.GetAppName(), AppService.GetAppVersion()));
+                    sw.Flush();
+                }
+            }
+            catch (Exception e)
+            {
+                /* No problem, because it will be created when writes the first line if not exists. */
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error creating the log file", e);
+            }
+            finally
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Enabling DEBUG mode");
+            }
         }
 
         /// <summary>
@@ -48,27 +64,33 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void DisableDebugMode()
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling DEBUG mode");
+
             this._isDebugMode = false;
             SettingsService.Save(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"), false);
             LogService.SetLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
 
-
             // Need force to false to show the options dialog
             App.AppInformation.PickerOrAsyncDialogIsOpen = false;
 
-            var result = await new OkCancelDialog(ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
-                ResourceService.AppMessages.GetString("AM_SaveLogFile"),
-                ResourceService.UiResources.GetString("UI_Yes"), 
-                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
+            // Only ask to save the log file if it contents anything
+            var logFile = await StorageFile.GetFileFromPathAsync(AppService.GetFileLogPath());
+            if((await logFile?.GetBasicPropertiesAsync()).Size > 0)
             {
-                // Ask the user a save location
-                var folder = await FolderService.SelectFolder();
-                if(folder != null)
+                var result = await new OkCancelDialog(ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
+                    ResourceService.AppMessages.GetString("AM_SaveLogFile"),
+                    ResourceService.UiResources.GetString("UI_Yes"),
+                    ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+
+                if (result == ContentDialogResult.Primary)
                 {
-                    await Task.Run(async () => await FileService.MoveFile(AppService.GetFileLogPath(), folder.Path));
-                    return;
+                    // Ask the user a save location
+                    var folder = await FolderService.SelectFolder();
+                    if (folder != null)
+                    {
+                        await Task.Run(async () => await FileService.MoveFile(AppService.GetFileLogPath(), folder.Path));
+                        return;
+                    }
                 }
             }
 

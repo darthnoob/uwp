@@ -60,6 +60,7 @@ namespace MegaApp.MegaApi
                     using (StreamWriter sw = File.AppendText(AppService.GetFileLogPath()))
                     {
                         sw.WriteLine("{0}{1}{2}", time, logLevelString, message);
+                        sw.Flush();
                     }
                 }
                 catch (Exception) { }

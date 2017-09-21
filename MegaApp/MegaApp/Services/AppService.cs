@@ -123,6 +123,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Get the app name
+        /// </summary>
+        /// <returns>App name</returns>
+        public static string GetAppName()
+        {
+            return ResourceService.AppResources.GetString("AR_ApplicationTitle");
+        }
+
+        /// <summary>
         /// Get the app version number
         /// </summary>
         /// <returns>App version number</returns>
