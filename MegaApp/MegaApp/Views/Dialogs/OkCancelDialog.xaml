@@ -1,0 +1,33 @@
+﻿<dialogViews:BaseOkCancelDialog
+    x:Class="MegaApp.Views.Dialogs.OkCancelDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonLabel, Mode=OneWay}"
+    PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
+    SecondaryButtonText="{x:Bind ViewModel.SecondaryButtonLabel, Mode=OneWay}"
+    SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}">
+    <dialogViews:BaseOkCancelDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.Title, Mode=OneWay}"/>
+    </dialogViews:BaseOkCancelDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <TextBlock
+            x:Name="Message"
+            Margin="0, 16, 0, 24"
+            Style="{StaticResource MegaDialogContentFontStyle}"
+            Text="{x:Bind ViewModel.Message, Mode=OneWay}"/>
+    </Grid>
+</dialogViews:BaseOkCancelDialog>

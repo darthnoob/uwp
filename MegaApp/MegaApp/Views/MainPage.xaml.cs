@@ -51,6 +51,9 @@ namespace MegaApp.Views
             await AppService.CheckSpecialNavigation();
 
             this.ViewModel.Initialize(navActionType);
+
+            if (DebugService.DebugSettings.IsDebugMode && DebugService.DebugSettings.ShowDebugAlert)
+                DialogService.ShowDebugModeAlert();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

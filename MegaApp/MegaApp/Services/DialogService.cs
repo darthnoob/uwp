@@ -78,6 +78,24 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Shows an alert dialog to inform that the DEBUG mode is enabled.
+        /// <para>Also asks if the user wants to disable it.</para>
+        /// </summary>
+        public static async void ShowDebugModeAlert()
+        {
+            var result = await new OkCancelDialog(
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
+                ResourceService.UiResources.GetString("UI_Yes"),
+                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+
+            if(result == ContentDialogResult.Primary)
+                DebugService.DebugSettings.DisableDebugMode();
+
+            DebugService.DebugSettings.ShowDebugAlert = false;
+        }
+
+        /// <summary>
         /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
         /// </summary>
         private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
