@@ -75,7 +75,8 @@ namespace MegaApp.ViewModels
 
             // Only ask to save the log file if it contents anything
             var logFile = await StorageFile.GetFileFromPathAsync(AppService.GetFileLogPath());
-            if((await logFile?.GetBasicPropertiesAsync()).Size > 0)
+            var basicPropertiesAsync = logFile?.GetBasicPropertiesAsync();
+            if (basicPropertiesAsync != null && (await basicPropertiesAsync).Size > 0)
             {
                 var result = await new OkCancelDialog(ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
                     ResourceService.AppMessages.GetString("AM_SaveLogFile"),
