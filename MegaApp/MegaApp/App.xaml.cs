@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -204,6 +205,10 @@ namespace MegaApp
             deferral.Complete();
         }
 
+        /// <summary>
+        /// Variable which indicates if the app is being forcing to crash
+        /// after manage an unhnadled exception
+        /// </summary>
         private bool isAborting = false;
 
         /// <summary>
@@ -213,6 +218,10 @@ namespace MegaApp
         /// <param name="e">Details about the unhandled exception.</param>
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
+            // An unhandled exception has occurred. Break into the debugger
+            if (Debugger.IsAttached)
+                Debugger.Break();
+
             if (isAborting) return;
 
             e.Handled = true;
