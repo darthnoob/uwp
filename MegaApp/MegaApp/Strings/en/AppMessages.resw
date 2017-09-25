@@ -913,4 +913,16 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <value>Debug mode</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
+  <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
+    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
+  </data>
+  <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
+    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
+  </data>
+  <data name="AM_ApplicationError_Title" xml:space="preserve">
+    <value>Application Error</value>
+    <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
+  </data>
 </root>
