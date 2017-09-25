@@ -87,7 +87,10 @@
         </DataTemplate>
         <DataTemplate x:Key="InfoActionItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
-                <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{x:Bind Title, Mode=OneTime}" />
+                <TextBlock 
+                    Style="{ThemeResource MegaTitleFontStyle}" 
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Tapped="OnSdkVersionTapped"/>
                 <HyperlinkButton
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind Value, Mode=OneTime}"
