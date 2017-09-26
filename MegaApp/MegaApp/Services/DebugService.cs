@@ -96,8 +96,8 @@ namespace MegaApp.Services
             body.AppendLine(string.Format("[OSVersion]:[{0}]", DeviceService.GetOperatingSystemVersion()));
             body.AppendLine(string.Format("[DeviceType]:[{0}]", DeviceService.GetDeviceFamily()));
             body.AppendLine(string.Format("[NetworkType]:[{0}]", NetworkService.GetNetworkType()));
-            body.AppendLine(string.Format("[AppCurrentMemoryUsage]:[{0}]", SizeExtensions.ToStringAndSuffix(MemoryManager.AppMemoryUsage, 2)));
-            body.AppendLine(string.Format("[IsoStorageAvailableSpace]:[{0}]", SizeExtensions.ToStringAndSuffix(await DeviceService.GetFreeSpace(), 2)));
+            body.AppendLine(string.Format("[AppCurrentMemoryUsage]:[{0}]", MemoryManager.AppMemoryUsage.ToStringAndSuffix(2)));
+            body.AppendLine(string.Format("[IsoStorageAvailableSpace]:[{0}]", (await DeviceService.GetFreeSpace()).ToStringAndSuffix(2)));
 
             emailMessage.Body = body.ToString();
 

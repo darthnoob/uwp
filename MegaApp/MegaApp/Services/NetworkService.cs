@@ -44,13 +44,13 @@ namespace MegaApp.Services
             if (NetworkInterface.GetIsNetworkAvailable())
             {
                 var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                
-                if ((bool)connectionProfile?.IsWlanConnectionProfile)
+
+                if (connectionProfile?.IsWlanConnectionProfile != null && connectionProfile.IsWlanConnectionProfile)
                     return "WiFi";
-                    
-                if ((bool)connectionProfile?.IsWwanConnectionProfile)
+
+                if (connectionProfile?.IsWwanConnectionProfile != null && connectionProfile.IsWwanConnectionProfile)
                 {
-                    switch(connectionProfile?.WwanConnectionProfileDetails?.GetCurrentDataClass())
+                    switch(connectionProfile.WwanConnectionProfileDetails?.GetCurrentDataClass())
                     {
                         // Not connected
                         case WwanDataClass.None:

@@ -209,7 +209,7 @@ namespace MegaApp
         /// Variable which indicates if the app is being forcing to crash
         /// after manage an unhnadled exception
         /// </summary>
-        private bool isAborting = false;
+        private bool isAborting;
 
         /// <summary>
         /// Invoked when occurs an unhandled exception.

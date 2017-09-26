@@ -193,11 +193,10 @@ namespace MegaApp.Services
             var result = await dialog.ShowAsync();
             switch (result)
             {
-                case ContentDialogResult.None:
-                    return null;
                 case ContentDialogResult.Primary:
                     return input.Text;
                 case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();
