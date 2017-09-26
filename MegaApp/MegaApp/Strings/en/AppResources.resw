@@ -146,8 +146,8 @@
     <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
-    <value>windowsphone@mega.nz</value>
-    <comment>Windows Phone Team email for contact and/or support - (NO-TRANSLATION).</comment>
+    <value>uwp.alpha@mega.nz</value>
+    <comment>UWP Team email for contact and/or support - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DownloadsDirectory" xml:space="preserve">
     <value>downloads\</value>
