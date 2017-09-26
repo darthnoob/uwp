@@ -382,6 +382,7 @@ namespace MegaApp.ViewModels
                 switch (this.Parent.Type)
                 {
                     case ContainerType.CloudDrive:
+                    case ContainerType.CameraUploads:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
                         message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name);
                         break;
@@ -404,6 +405,7 @@ namespace MegaApp.ViewModels
             switch (this.Parent.Type)
             {
                 case ContainerType.CloudDrive:
+                case ContainerType.CameraUploads:
                     var moveNode = new MoveNodeRequestListenerAsync();
                     result = await moveNode.ExecuteAsync(() =>
                         this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));

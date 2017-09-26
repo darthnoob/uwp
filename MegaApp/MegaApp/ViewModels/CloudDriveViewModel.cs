@@ -40,6 +40,7 @@ namespace MegaApp.ViewModels
 
             this.CloudDrive.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
             this.RubbishBin.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
+            this.CameraUploads.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
 
             this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
             this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;

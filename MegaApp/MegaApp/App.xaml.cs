@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -49,6 +51,7 @@ namespace MegaApp
             InitializeApplication();
 
             this.Suspending += OnSuspending;
+            this.UnhandledException += OnUnhandledException;
         }
 
         /// <summary>
@@ -107,7 +110,10 @@ namespace MegaApp
                 {
                     validUri = eventArgs.Uri.IsWellFormedOriginalString();
                     if (validUri)
-                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.AbsoluteUri);
+                    {
+                        // Use OriginalString to keep uppercase and lowercase letters
+                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+                    }
                 }
                 catch (UriFormatException ex)
                 {
@@ -197,6 +203,52 @@ namespace MegaApp
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// Variable which indicates if the app is being forcing to crash
+        /// after manage an unhnadled exception
+        /// </summary>
+        private bool isAborting;
+
+        /// <summary>
+        /// Invoked when occurs an unhandled exception.
+        /// </summary>
+        /// <param name="sender">The source of the unhandled exception.</param>
+        /// <param name="e">Details about the unhandled exception.</param>
+        private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            // An unhandled exception has occurred. Break into the debugger
+            if (Debugger.IsAttached)
+                Debugger.Break();
+
+            if (isAborting) return;
+
+            e.Handled = true;
+
+            string message = string.Format("{0}{1}{1}{2}", ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph1"),
+                    Environment.NewLine, ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph2"));
+
+            var result = await DialogService.ShowOkCancelAsync(
+                ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
+                ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
+
+            if (result)
+                await DebugService.ComposeErrorReportEmailAsync(e.Exception);
+
+            // Reenabling auto crash
+            ForceAppCrash(e.Exception);
+        }
+
+        /// <summary>
+        /// Force the app crash after manage an unhandled exception 
+        /// to register the crash into the automatic exception tracker.
+        /// </summary>
+        /// <param name="unhandledEx">Unhandled exception</param>
+        private void ForceAppCrash(Exception unhandledEx)
+        {
+            isAborting = true;
+            ExceptionDispatchInfo.Capture(unhandledEx).Throw();
         }
 
         #region Application initialization

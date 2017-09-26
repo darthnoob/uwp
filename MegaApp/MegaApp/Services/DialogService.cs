@@ -10,6 +10,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.ViewModels;
 using MegaApp.Views;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.Services
 {
@@ -19,13 +20,17 @@ namespace MegaApp.Services
     internal static class DialogService
     {
         /// <summary>
-        /// Show an Alert Dialog that can be dismissed by the "OK" button.
+        /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
         /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
-        public static async Task ShowAlertAsync(string title, string content)
+        /// <param name="message">Content message of the dialog</param>
+        /// <param name="button">Label of the dialog button</param>
+        public static async Task ShowAlertAsync(string title, string message, string button = null)
         {
-            var dialog = new MessageDialog(content, title);
+            if (button == null)
+                button = ResourceService.UiResources.GetString("UI_Ok");
+
+            var dialog = new AlertDialog(title, message, button);
             await dialog.ShowAsync();
         }
 
@@ -34,16 +39,30 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="title">Title of the dialog</param>
         /// <param name="content">Content message of the dialog</param>
+        /// <param name="okButton">Label for the "OK" button</param>
+        /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string content)
+        public static async Task<bool> ShowOkCancelAsync(string title, string content,
+            string okButton = null, string cancelButton = null)
         {
-            var dialog = new MessageDialog(content, title);
-            dialog.Commands.Add(new UICommand() { Id = true, Label = ResourceService.UiResources.GetString("UI_Ok") });
-            dialog.Commands.Add(new UICommand() { Id = false, Label = ResourceService.UiResources.GetString("UI_Cancel") });
-            dialog.CancelCommandIndex = 1;
-            dialog.DefaultCommandIndex = 1;
+            if (okButton == null)
+                okButton = ResourceService.UiResources.GetString("UI_Ok");
+            if (cancelButton == null)
+                cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
+
+            var dialog = new OkCancelDialog(title, content, okButton, cancelButton);
             var result = await dialog.ShowAsync();
-            return (bool) result.Id;
+
+            switch(result)
+            {
+                case ContentDialogResult.Primary:
+                    return true;
+
+                case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
+                default:
+                    return false;
+            }
         }
 
         public static async void ShowOverquotaAlert()
@@ -70,6 +89,51 @@ namespace MegaApp.Services
             await ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+        }
+
+        /// <summary>
+        /// Shows an alert dialog to inform that the DEBUG mode is enabled.
+        /// <para>Also asks if the user wants to disable it.</para>
+        /// </summary>
+        public static async void ShowDebugModeAlert()
+        {
+            var result = await new OkCancelDialog(
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
+                ResourceService.UiResources.GetString("UI_Yes"),
+                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+
+            if(result == ContentDialogResult.Primary)
+                DebugService.DebugSettings.DisableDebugMode();
+
+            DebugService.DebugSettings.ShowDebugAlert = false;
+        }
+
+        /// <summary>
+        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// </summary>
+        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+
+        /// <summary>
+        /// Show a dialog indicating that is waiting for an email confirmation
+        /// </summary>
+        /// <param name="email">Email for which is waiting confirmation</param>
+        public static async void ShowAwaitEmailConfirmationDialog(string email)
+        {
+            if (awaitEmailConfirmationDialog == null)
+                awaitEmailConfirmationDialog = new AwaitEmailConfirmationDialog(email);
+            else
+                awaitEmailConfirmationDialog.ViewModel.Email = email;
+
+            await awaitEmailConfirmationDialog.ShowAsync();
+        }
+
+        /// <summary>
+        /// Close the await email confirmation dialog if exists
+        /// </summary>
+        public static void CloseAwaitEmailConfirmationDialog()
+        {
+            awaitEmailConfirmationDialog?.Hide();
         }
 
         /// <summary>
@@ -129,11 +193,10 @@ namespace MegaApp.Services
             var result = await dialog.ShowAsync();
             switch (result)
             {
-                case ContentDialogResult.None:
-                    return null;
                 case ContentDialogResult.Primary:
                     return input.Text;
                 case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();

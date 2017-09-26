@@ -124,6 +124,8 @@
     <Compile Include="Classes\NodeTemplateSelector.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
+    <Compile Include="Converters\ContainerTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseContainerTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
@@ -133,12 +135,33 @@
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="Enums\ConfirmChangeEmailResult.cs" />
+    <Compile Include="Enums\QueryChangeEmailLinkResult.cs" />
+    <Compile Include="MegaApi\ConfirmChangeEmailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\QueryChangeEmailLinkRequestListenerAsync.cs" />
+    <Compile Include="Services\DebugService.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="ViewModels\DebugSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
+    <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\OkCancelDialogViewModel.cs" />
+    <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
+      <DependentUpon>AlertDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AwaitEmailConfirmationDialog.xaml.cs">
+      <DependentUpon>AwaitEmailConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ChangeEmailDialog.xaml.cs">
+      <DependentUpon>ChangeEmailDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\ChangePasswordDialog.xaml.cs">
       <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
+    <Compile Include="Enums\ChangeEmailResult.cs" />
     <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
@@ -171,6 +194,7 @@
     <Compile Include="Interfaces\ISetting.cs" />
     <Compile Include="MegaApi\BaseRequestListenerAsync.cs" />
     <Compile Include="MegaApi\BaseRequestListener.cs" />
+    <Compile Include="MegaApi\ChangeEmailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ChangePasswordRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
@@ -211,6 +235,9 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\UserControlEx.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
+    <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
+      <DependentUpon>OkCancelDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
     </Compile>
@@ -316,6 +343,9 @@
     <Compile Include="Views\PreviewImagePage.xaml.cs">
       <DependentUpon>PreviewImagePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmChangeEmailPage.xaml.cs">
+      <DependentUpon>ConfirmChangeEmailPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -342,6 +372,18 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Dialogs\AlertDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AwaitEmailConfirmationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ChangeEmailDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\ChangePasswordDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -355,6 +397,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\OkCancelDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>
@@ -406,6 +452,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PreviewImagePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmChangeEmailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
