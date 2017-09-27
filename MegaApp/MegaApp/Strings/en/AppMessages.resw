@@ -879,4 +879,50 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <value>Incorrect account. Please login into the right account and try again.</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
+  <data name="AM_DisableDebugMode_Message" xml:space="preserve">
+    <value>The log ({0}) will be deleted.</value>
+    <comment>Alert message shown when the DEBUG mode is disabled.
+Preserve the ({0}) code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_DisableDebugMode_Title" xml:space="preserve">
+    <value>Disable DEBUG mode</value>
+    <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
+  </data>
+  <data name="AM_EnableDebugMode_Message" xml:space="preserve">
+    <value>A log will be created ({0}).</value>
+    <comment>Alert message shown when the DEBUG mode is enabled.
+Preserve the ({0}) code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_EnableDebugMode_Title" xml:space="preserve">
+    <value>Enable DEBUG mode</value>
+    <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SaveLogFile" xml:space="preserve">
+    <value>Do you want to save the log file in an external location to use it later?</value>
+    <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
+  </data>
+  <data name="AM_SaveLogFile_Title" xml:space="preserve">
+    <value>Save the log file</value>
+    <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
+    <value>Debug mode is enabled. Do you want to disable it?</value>
+    <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable. This alert is to try to avoid that the user forget disable the DEBUG mode and the log file size grows a lot in the offline section.</comment>
+  </data>
+  <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
+    <value>Debug mode</value>
+    <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
+    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
+  </data>
+  <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
+    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
+  </data>
+  <data name="AM_ApplicationError_Title" xml:space="preserve">
+    <value>Application Error</value>
+    <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
+  </data>
 </root>

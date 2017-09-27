@@ -146,15 +146,15 @@
     <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
-    <value>windowsphone@mega.nz</value>
-    <comment>Windows Phone Team email for contact and/or support - (NO-TRANSLATION).</comment>
+    <value>uwp.alpha@mega.nz</value>
+    <comment>UWP Team email for contact and/or support - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DownloadsDirectory" xml:space="preserve">
     <value>downloads\</value>
     <comment>Path of the 'downloads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_LogFileName" xml:space="preserve">
-    <value>MEGA_WP.log</value>
+    <value>MEGA_UWP.log</value>
     <comment>Name of the log file created in DEBUG mode - (NO-TRANSLATION)</comment>
   </data>
   <data name="AR_MegaSdkUrl" xml:space="preserve">
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/a978a58c61b9de43448f99981cc26e9a96f9759e</value>
+    <value>https://github.com/meganz/sdk/tree/7b0d3587849d0d69786df8005f26a0cbd32fdd12</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>a978a58</value>
+    <value>7b0d358</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
@@ -248,5 +248,9 @@
   <data name="AR_FortumoUrl" xml:space="preserve">
     <value>http://fortumo.com/mobile_payments/f250460ec5d97fd27e361afaa366db0f?cuid=</value>
     <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_OfflineDirectory" xml:space="preserve">
+    <value>offline\</value>
+    <comment>Path of the 'offline' folder of the application - (NO-TRANSLATION).</comment>
   </data>
 </root>

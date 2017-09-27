@@ -39,16 +39,30 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="title">Title of the dialog</param>
         /// <param name="content">Content message of the dialog</param>
+        /// <param name="okButton">Label for the "OK" button</param>
+        /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string content)
+        public static async Task<bool> ShowOkCancelAsync(string title, string content,
+            string okButton = null, string cancelButton = null)
         {
-            var dialog = new MessageDialog(content, title);
-            dialog.Commands.Add(new UICommand() { Id = true, Label = ResourceService.UiResources.GetString("UI_Ok") });
-            dialog.Commands.Add(new UICommand() { Id = false, Label = ResourceService.UiResources.GetString("UI_Cancel") });
-            dialog.CancelCommandIndex = 1;
-            dialog.DefaultCommandIndex = 1;
+            if (okButton == null)
+                okButton = ResourceService.UiResources.GetString("UI_Ok");
+            if (cancelButton == null)
+                cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
+
+            var dialog = new OkCancelDialog(title, content, okButton, cancelButton);
             var result = await dialog.ShowAsync();
-            return (bool) result.Id;
+
+            switch(result)
+            {
+                case ContentDialogResult.Primary:
+                    return true;
+
+                case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
+                default:
+                    return false;
+            }
         }
 
         public static async void ShowOverquotaAlert()
@@ -75,6 +89,24 @@ namespace MegaApp.Services
             await ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
                 ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+        }
+
+        /// <summary>
+        /// Shows an alert dialog to inform that the DEBUG mode is enabled.
+        /// <para>Also asks if the user wants to disable it.</para>
+        /// </summary>
+        public static async void ShowDebugModeAlert()
+        {
+            var result = await new OkCancelDialog(
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
+                ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
+                ResourceService.UiResources.GetString("UI_Yes"),
+                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+
+            if(result == ContentDialogResult.Primary)
+                DebugService.DebugSettings.DisableDebugMode();
+
+            DebugService.DebugSettings.ShowDebugAlert = false;
         }
 
         /// <summary>
@@ -161,11 +193,10 @@ namespace MegaApp.Services
             var result = await dialog.ShowAsync();
             switch (result)
             {
-                case ContentDialogResult.None:
-                    return null;
                 case ContentDialogResult.Primary:
                     return input.Text;
                 case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();

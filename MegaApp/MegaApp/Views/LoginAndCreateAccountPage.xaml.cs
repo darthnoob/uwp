@@ -71,6 +71,9 @@ namespace MegaApp.Views
 
                 isAlertAlreadyDisplayed = false;
             }
+
+            if (DebugService.DebugSettings.IsDebugMode && DebugService.DebugSettings.ShowDebugAlert)
+                DialogService.ShowDebugModeAlert();
         }
 
         private void OnAcceptClick(object sender, RoutedEventArgs e)
@@ -105,6 +108,11 @@ namespace MegaApp.Views
 
             // On enter in password box. Start the login process
             this.ViewModel?.LoginViewModel?.Login();
+        }
+
+        private void OnMegaHeaderLogoTapped(object sender, TappedRoutedEventArgs e)
+        {
+            DebugService.ChangeStatusAction();
         }
     }
 }

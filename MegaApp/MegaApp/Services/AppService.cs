@@ -123,6 +123,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Get the app name
+        /// </summary>
+        /// <returns>App name</returns>
+        public static string GetAppName()
+        {
+            return ResourceService.AppResources.GetString("AR_ApplicationTitle");
+        }
+
+        /// <summary>
         /// Get the app version number
         /// </summary>
         /// <returns>App version number</returns>
@@ -219,6 +228,9 @@ namespace MegaApp.Services
 
                 string uploadDir = GetUploadDirectoryPath();
                 if (!Directory.Exists(uploadDir)) Directory.CreateDirectory(uploadDir);
+
+                string offlineDir = GetOfflineDirectoryPath();
+                if (!Directory.Exists(offlineDir)) Directory.CreateDirectory(offlineDir);
             }
             catch (IOException) { }
         }
@@ -250,6 +262,26 @@ namespace MegaApp.Services
         {
             return Path.Combine(ApplicationData.Current.LocalFolder.Path,
                 ResourceService.AppResources.GetString("AR_DownloadsDirectory"));
+        }
+
+        /// <summary>
+        /// Get the path of the offline folder
+        /// </summary>
+        /// <returns>The folder path</returns>
+        public static string GetOfflineDirectoryPath()
+        {
+            return Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_OfflineDirectory"));
+        }
+
+        /// <summary>
+        /// Gets the log file path created in DEBUG mode.
+        /// </summary>
+        /// <returns>Log file path.</returns>
+        public static string GetFileLogPath()
+        {
+            return Path.Combine(GetOfflineDirectoryPath(),
+                ResourceService.AppResources.GetString("AR_LogFileName"));
         }
 
         /// <summary>
