@@ -30,6 +30,9 @@ namespace BackgroundTaskService
                 var fetched = await FetchNodesAsync();
                 if (fetched)
                 {
+                    // Enable the transfers resumption for the Camera Uploads service
+                    SdkService.MegaSdk.enableTransferResumption();
+
                     var megaGlobalListener = new MegaGlobalListener();
                     SdkService.MegaSdk.addGlobalListener(megaGlobalListener);
                     await megaGlobalListener.ExecuteAsync(() => SdkService.MegaSdk.enableTransferResumption());
