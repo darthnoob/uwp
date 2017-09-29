@@ -4,6 +4,7 @@ using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
@@ -60,7 +61,7 @@ namespace MegaApp.ViewModels.MyAccount
         private async void ChangeEmail()
         {
             var changeEmailDialog = new ChangeEmailDialog();
-            await changeEmailDialog.ShowAsync();
+            await changeEmailDialog.ShowAsyncQueue();
 
             if(changeEmailDialog.DialogResult)
             {
@@ -95,7 +96,7 @@ namespace MegaApp.ViewModels.MyAccount
         private async void ChangePassword()
         {
             var changePasswordDialog = new ChangePasswordDialog();
-            await changePasswordDialog.ShowAsync();
+            await changePasswordDialog.ShowAsyncQueue();
         }
 
         #endregion

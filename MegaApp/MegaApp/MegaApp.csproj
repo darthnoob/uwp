@@ -137,6 +137,7 @@
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\ConfirmChangeEmailResult.cs" />
     <Compile Include="Enums\QueryChangeEmailLinkResult.cs" />
+    <Compile Include="Extensions\DialogExtensions.cs" />
     <Compile Include="MegaApi\ConfirmChangeEmailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\QueryChangeEmailLinkRequestListenerAsync.cs" />
     <Compile Include="Services\DebugService.cs" />

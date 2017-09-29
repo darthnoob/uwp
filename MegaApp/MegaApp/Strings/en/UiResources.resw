@@ -934,4 +934,8 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Please enter your password to verify your email address</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
+  <data name="UI_Wait" xml:space="preserve">
+    <value>Wait</value>
+    <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
