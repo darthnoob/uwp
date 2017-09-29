@@ -85,20 +85,8 @@ namespace MegaApp.Services
 
         public static async void ShowTransferOverquotaWarning()
         {
-            var result = await ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"),
-                ResourceService.UiResources.GetString("UI_Upgrade"),
-                ResourceService.UiResources.GetString("UI_Wait"));
-
-            if (result)
-            {
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
-                });
-            }
+            var dialog = new TransferOverquotaWarningDialog();
+            await dialog.ShowAsyncQueue();
         }
 
         /// <summary>

@@ -82,12 +82,7 @@ namespace MegaApp.Services
                 AccountDetails.TransferQuota = accountDetails.getTransferMax();
                 AccountDetails.UsedTransferQuota = accountDetails.getTransferOwnUsed();
 
-                AccountDetails.TransferOverquotaDelay = SdkService.MegaSdk.getBandwidthOverquotaDelay();
-                AccountDetails.IsInTransferOverquota = AccountDetails.TransferOverquotaDelay != 0;
-                if (AccountDetails.IsInTransferOverquota)
-                    AccountDetails.TimerTransferOverquota?.Start();
-                else
-                    AccountDetails.TimerTransferOverquota?.Stop();
+                GetTransferOverquotaDetails();
 
                 AccountDetails.PaymentMethod = accountDetails.getSubscriptionMethod();
             });
@@ -107,6 +102,22 @@ namespace MegaApp.Services
             {
                 GetNonSubscriptionDetails(accountDetails);
             }
+        }
+
+        /// <summary>
+        /// Gets the specific details related to a transfer overquota
+        /// </summary>
+        public static void GetTransferOverquotaDetails()
+        {
+            UiService.OnUiThread(() =>
+            {
+                AccountDetails.TransferOverquotaDelay = SdkService.MegaSdk.getBandwidthOverquotaDelay();
+                AccountDetails.IsInTransferOverquota = AccountDetails.TransferOverquotaDelay != 0;
+                if (AccountDetails.IsInTransferOverquota)
+                    AccountDetails.TimerTransferOverquota?.Start();
+                else
+                    AccountDetails.TimerTransferOverquota?.Stop();
+            });
         }
 
         /// <summary>
