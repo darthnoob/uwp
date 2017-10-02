@@ -357,11 +357,14 @@ namespace MegaApp.Services
                         product.ProductColor = (Color)Application.Current.Resources["MegaProLiteAccountColor"];
                         product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypeProLitePathData");
 
-                        // If Centili payment method is active, and product is LITE monthly include it into the product
-                        product.IsCentiliPaymentMethodAvailable = UpgradeAccount.IsCentiliPaymentMethodAvailable && product.Months == 1;
-
-                        // If Fortumo payment method is active, and product is LITE monthly include it into the product
-                        product.IsFortumoPaymentMethodAvailable = UpgradeAccount.IsFortumoPaymentMethodAvailable && product.Months == 1;
+                        // If product is is LITE monthly, store the price and currency for upgrade notifications purposes 
+                        // and include Centili and Fortumo payments methods if available
+                        if (product.Months == 1)
+                        {
+                            product.IsCentiliPaymentMethodAvailable = UpgradeAccount.IsCentiliPaymentMethodAvailable;
+                            product.IsFortumoPaymentMethodAvailable = UpgradeAccount.IsFortumoPaymentMethodAvailable;
+                            UpgradeAccount.LiteMonthlyPriceAndCurrency = product.PriceAndCurrency;
+                        }
                         break;
 
                     case MAccountType.ACCOUNT_TYPE_PROI:
@@ -412,6 +415,33 @@ namespace MegaApp.Services
                     await UiService.OnUiThreadAsync(() => UpgradeAccount.Plans.Add(plan));
                 }
             }
+        }
+
+        public static async Task<string> GetLitePriceAndCurrency()
+        {
+            var pricingRequestListener = new GetPricingRequestListenerAsync();
+            var pricingDetails = await pricingRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getPricing(pricingRequestListener));
+
+            if (pricingDetails == null) return null;
+
+            int numberOfProducts = pricingDetails.getNumProducts();
+
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                var accountType = (MAccountType)Enum.Parse(typeof(MAccountType),
+                    pricingDetails.getProLevel(i).ToString());
+
+                if ((accountType == MAccountType.ACCOUNT_TYPE_LITE) && (pricingDetails.getMonths(i) == 1))
+                {
+                    var price = (double)pricingDetails.getAmount(i) / 100;
+                    var currency = GetCurrencySymbol(pricingDetails.getCurrency(i));
+
+                    UpgradeAccount.LiteMonthlyPriceAndCurrency = string.Format("{0:N} {1}", price, currency);
+                }
+            }
+
+            return UpgradeAccount.LiteMonthlyPriceAndCurrency;
         }
 
         /// <summary>
