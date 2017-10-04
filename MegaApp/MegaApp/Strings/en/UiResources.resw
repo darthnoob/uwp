@@ -1089,6 +1089,11 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
+  <data name="UI_NumberOfContacts" xml:space="preserve">
+    <value>{0} Contacts</value>
+    <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
+Keep the {0} code because is for include the number of contacts in runtime.</comment>
+  </data>
   <data name="UI_OutgoingShares" xml:space="preserve">
     <value>Outgoing shares</value>
     <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>

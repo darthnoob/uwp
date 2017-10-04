@@ -1,6 +1,7 @@
 ﻿using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -29,9 +30,24 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public new void Update(bool externalUpdate = false)
+        public async new void Update(bool externalUpdate = false)
         {
             base.Update(externalUpdate);
+
+            var owner = SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode);
+            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getUserAttribute(owner, (int)MUserAttrType.USER_ATTR_FIRSTNAME,
+                contactAttributeRequestListener));
+            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getUserAttribute(owner, (int)MUserAttrType.USER_ATTR_LASTNAME,
+                contactAttributeRequestListener));
+
+            OnUiThread(() =>
+            {
+                this.Owner = (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ?
+                    owner.getEmail() : string.Format("{0} {1}", firstName, lastName);
+            });
         }
 
         private void Download()

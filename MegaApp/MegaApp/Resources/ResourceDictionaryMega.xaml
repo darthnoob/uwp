@@ -1195,12 +1195,7 @@
                             Text="{Binding DownloadText}" />
                         <MenuFlyoutItem
                             Command="{Binding RenameCommand}"
-                            Text="{Binding RenameText}"
-                            Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                        <MenuFlyoutItem
-                            Command="{Binding LeaveSharedCommand}"
-                            Foreground="{StaticResource MegaRedColorBrush}"
-                            Text="{Binding LeaveSharedText}" />
+                            Text="{Binding RenameText}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>

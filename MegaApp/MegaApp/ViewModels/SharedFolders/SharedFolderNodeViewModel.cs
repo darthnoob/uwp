@@ -1,6 +1,5 @@
 ﻿using mega;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.SharedFolders
@@ -15,27 +14,11 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Methods
 
-        public async void Update(bool externalUpdate = false)
+        public void Update(bool externalUpdate = false)
         {
             base.Update(this.OriginalMNode, externalUpdate);
 
             OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode));
-
-            var owner = SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode);
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode),
-                (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
-            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode),
-                (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
-
-            OnUiThread(() =>
-            {
-                this.Owner = (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ?
-                    SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode).getEmail() :
-                    string.Format("{0} {1}", firstName, lastName);
-            });
         }
 
         #endregion

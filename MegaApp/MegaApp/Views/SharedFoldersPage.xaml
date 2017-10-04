@@ -9,6 +9,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:MegaApp.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:WindowsStateTriggers"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:views="using:MegaApp.Views"
     xmlns:viewModels="using:MegaApp.ViewModels"
@@ -33,49 +34,132 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid x:Name="TopRowGrid" Grid.Row="0">
+            <Grid 
+                x:Name="TopRowGrid" 
+                DataContext="{Binding ActiveView}"
+                Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
+                
+                <TextBlock
+                    Grid.Row="0" Grid.Column="0"
+                    Margin="24,14,0,0"
+                    FontSize="12"
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Text="{Binding SharedFoldersText, Mode=OneTime}" />                
+                
                 <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
                 <Grid
                     x:Name="TopCommandBar"
-                    Grid.Row="0"
-                    Grid.Column="0">
+                    Grid.Row="0" Grid.Column="1">
+                    
+                    <!--  INCOMING SHARES TOP COMMAND BAR (ONLY DESKTOP)  -->
                     <CommandBar
-                        DataContext="{Binding ActiveView}"
-                        Grid.Row="0"
-                        Grid.Column="1"
+                        Grid.Row="0" Grid.Column="1"
                         Background="Transparent"
-                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
-                        <AppBarSeparator 
-                            x:Name="PermanentTopCommandBarSeparator"
-                            Margin="-12,0"
-                            VerticalAlignment="Center"/>
+                        Visibility="{Binding ContainerType, ConverterParameter=InShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
                         <AppBarButton
-                            x:Name="BtnSort"
-                            Click="OnSortClick"
-                            Label="{Binding SortByText, Mode=OneTime}"
+                            Command="{Binding DownloadCommand}"
+                            Label="{Binding DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding SortByText, Mode=OneTime}">
+                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding SortByPathData, Mode=OneTime}" />
+                                    Data="{Binding DownloadPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <CommandBar.Content>
-                            <TextBlock
-                                Margin="24,14,0,0"
-                                FontSize="12"
-                                Foreground="{StaticResource MegaRedColorBrush}"
-                                Text="{Binding SharedFoldersText, Mode=OneTime}" />
-                        </CommandBar.Content>
+                        <AppBarButton
+                            Command="{Binding LeaveSharedCommand}"
+                            Label="{Binding LeaveSharedText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding LeaveSharedText, Mode=OneTime}"
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding LeaveSharedPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding CancelText, Mode=OneTime}"                        
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+
+                    <!--  OUTGOING SHARES TOP COMMAND BAR (ONLY DESKTOP)  -->
+                    <CommandBar
+                        Grid.Row="0" Grid.Column="1"
+                        Background="Transparent"
+                        Visibility="{Binding ContainerType, ConverterParameter=OutShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
+                        <AppBarButton
+                            Command="{Binding DownloadCommand}"
+                            Label="{Binding DownloadText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding DownloadPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            Label="{Binding CancelText, Mode=OneTime}"                        
+                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}"
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
+                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
                     </CommandBar>
                 </Grid>
+
+                <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+                <CommandBar
+                    Grid.Row="0" Grid.Column="2"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Background="Transparent"
+                    IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                    <AppBarSeparator 
+                        x:Name="PermanentTopCommandBarSeparator"
+                        Margin="-12,0"
+                        VerticalAlignment="Center"/>
+                    <AppBarButton
+                        x:Name="BtnSort"
+                        Click="OnSortClick"
+                        Label="{Binding SortByText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding SortByText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding SortByPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
             </Grid>
 
             <Grid Grid.Row="1" Margin="12,0">
@@ -103,7 +187,7 @@
                                         Margin="-12,0,0,0"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
                                         DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                        IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                         ItemTemplate="{StaticResource MegaIncomingSharedItemListViewDesktop}"
                                         ItemsSource="{Binding ItemCollection.Items}"
@@ -113,7 +197,7 @@
                                             <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:EventTriggerBehavior.Actions>
-                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                    <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                                 </core:EventTriggerBehavior.Actions>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
@@ -143,7 +227,7 @@
                                         Margin="-12,0,0,0"
                                         Background="{StaticResource MegaAppBackgroundBrush}"
                                         DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
+                                        IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                         ItemTemplate="{StaticResource MegaOutgoingSharedItemListViewDesktop}"
                                         ItemsSource="{Binding ItemCollection.Items}"
@@ -152,7 +236,7 @@
                                             <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                             <core:EventTriggerBehavior EventName="SelectionChanged">
                                                 <core:EventTriggerBehavior.Actions>
-                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                                                    <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
                                                 </core:EventTriggerBehavior.Actions>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
@@ -165,5 +249,36 @@
                 </Pivot>
             </Grid>
         </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListViewIncomingShares.SelectionMode" Value="Extended" />
+                        <Setter Target="ListViewOutgoingShares.SelectionMode" Value="Extended" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <!--<Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />-->
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListViewIncomingShares.SelectionMode" Value="Single" />
+                        <Setter Target="ListViewOutgoingShares.SelectionMode" Value="Single" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <!--<Setter Target="BottomCommandBar.Visibility" Value="Visible" />-->
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </SplitView>
 </views:BaseSharedFoldersPage>

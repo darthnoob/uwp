@@ -163,19 +163,19 @@ namespace MegaApp.ViewModels
         /// </summary>
         public string NumberOfSharedItemsText => string.Format("{0} {1}", this.NumberOfSharedItems,
             this.NumberOfSharedItems == 1 ? ResourceService.UiResources.GetString("UI_SharedFolder").ToLower() :
-            ResourceService.UiResources.GetString("UI_SharedFolders").ToLower());        
+            ResourceService.UiResources.GetString("UI_SharedFolders").ToLower());
 
         #endregion
 
         #region UiResources
 
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
 
-        private string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
         #endregion

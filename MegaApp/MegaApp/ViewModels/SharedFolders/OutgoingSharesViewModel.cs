@@ -175,6 +175,8 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
+        public ContainerType ContainerType => ContainerType.OutShares;
+
         #endregion
 
         #region EmptyStates

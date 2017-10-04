@@ -18,17 +18,34 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public new void Update(bool externalUpdate = false)
+        public async new void Update(bool externalUpdate = false)
         {
             base.Update(externalUpdate);
 
             var outShares = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
             var outSharesSize = outShares.size();
-            OnUiThread(() =>
+            if (outSharesSize == 1)
             {
-                this.ContactsText = outSharesSize == 1 ? outShares.get(0).getUser() : 
-                    string.Format("{0} Contacts", outSharesSize);
-            });
+                var contact = SdkService.MegaSdk.getContact(outShares.get(0).getUser());
+                var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+                var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                    SdkService.MegaSdk.getUserAttribute(contact, (int)MUserAttrType.USER_ATTR_FIRSTNAME,
+                    contactAttributeRequestListener));
+                var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                    SdkService.MegaSdk.getUserAttribute(contact, (int)MUserAttrType.USER_ATTR_LASTNAME,
+                    contactAttributeRequestListener));
+
+                OnUiThread(() =>
+                {
+                    this.ContactsText = (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ?
+                        contact.getEmail() : string.Format("{0} {1}", firstName, lastName);
+                });
+            }
+            else
+            {
+                OnUiThread(() => this.ContactsText = string.Format(
+                    ResourceService.UiResources.GetString("UI_NumberOfContacts"), outSharesSize));
+            }
         }
 
         #endregion
