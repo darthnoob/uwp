@@ -117,7 +117,7 @@ namespace MegaApp.UserControls
             var sortButton = sender as Button;
             if (sortButton == null) return;
 
-            MenuFlyout menuFlyout = DialogService.CreateContactSharedItemsSortMenu(Contact.SharedItems);
+            MenuFlyout menuFlyout = DialogService.CreateIncomingSharedItemsSortMenu(Contact.SharedItems, true);
 
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout.ShowAt(sortButton);
@@ -125,7 +125,7 @@ namespace MegaApp.UserControls
 
         private void OnSharedItemTapped(object sender, TappedRoutedEventArgs e)
         {
-            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
             if (itemTapped == null) return;
 
             this.Contact.SharedItems.ItemCollection.FocusedItem = itemTapped;
@@ -135,7 +135,7 @@ namespace MegaApp.UserControls
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
-            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
             if (itemTapped == null) return;
 
             this.Contact.SharedItems.ItemCollection.FocusedItem = itemTapped;

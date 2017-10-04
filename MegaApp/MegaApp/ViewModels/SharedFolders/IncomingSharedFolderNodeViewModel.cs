@@ -2,13 +2,14 @@
 using mega;
 using MegaApp.Classes;
 using MegaApp.Services;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
-    public class IncomingSharedFolderNodeViewModel : FolderNodeViewModel
+    public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel
     {
         public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
-            : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
+            : base(megaNode)
         {
             this.Parent = parent;
 
@@ -28,10 +29,9 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public void Update(bool externalUpdate = false)
+        public new void Update(bool externalUpdate = false)
         {
-            this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode);
-            base.Update(this.OriginalMNode, externalUpdate);
+            base.Update(externalUpdate);
         }
 
         private void Download()
@@ -76,59 +76,7 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Properties
-
-        private MShareType _accessLevel;
-        public MShareType AccessLevel
-        {
-            get { return _accessLevel; }
-            set
-            {
-                SetField(ref _accessLevel, value);
-                OnPropertyChanged(nameof(this.AccessLevelText),
-                    nameof(this.AccessLevelPathData));
-            }
-        }
-
-        public string AccessLevelText
-        {
-            get
-            {
-                switch(this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadOnly");
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadAndWrite");
-                    case MShareType.ACCESS_FULL:
-                        return ResourceService.UiResources.GetString("UI_PermissionFullAccess");
-                    case MShareType.ACCESS_UNKNOWN:
-                    case MShareType.ACCESS_OWNER:
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
-        public string AccessLevelPathData
-        {
-            get
-            {
-                switch (this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadOnlyPathData");
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadAndWritePathData");
-                    case MShareType.ACCESS_FULL:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsFullAccessPathData");
-                    case MShareType.ACCESS_UNKNOWN:
-                    case MShareType.ACCESS_OWNER:
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        #region Properties        
 
         private SharedFoldersListViewModel _parent;
         public new SharedFoldersListViewModel Parent

@@ -31,6 +31,8 @@ namespace MegaApp.ViewModels
             this.SelectAllCommand = new RelayCommand<bool>(SelectAll);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
 
+            this.InvertOrderCommand = new RelayCommand(InvertOrder);
+
             this.EnableCollectionChangedDetection();            
         }
 
@@ -101,6 +103,19 @@ namespace MegaApp.ViewModels
             this.AllSelected?.Invoke(this, value);
         }
 
+        /// <summary>
+        /// Event triggered when user invert the order of items
+        /// </summary>
+        public event EventHandler OrderInverted;
+
+        /// <summary>
+        /// Event invocator method called when user invert the order of items
+        /// </summary>
+        protected virtual void OnOrderInverted()
+        {
+            this.OrderInverted?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Commands
@@ -108,6 +123,7 @@ namespace MegaApp.ViewModels
         public ICommand MultiSelectCommand { get; }
         public ICommand SelectAllCommand { get; }
         public ICommand SelectionChangedCommand { get; }
+        public ICommand InvertOrderCommand { get; }
 
         #endregion
 
@@ -159,6 +175,23 @@ namespace MegaApp.ViewModels
                 nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
 
             this.OnSelectedItemsCollectionChanged();
+        }
+
+        private void InvertOrder()
+        {
+            switch (this.CurrentOrderDirection)
+            {
+                case SortOrderDirection.ORDER_ASCENDING:
+                    this.CurrentOrderDirection = SortOrderDirection.ORDER_DESCENDING;
+                    break;
+                case SortOrderDirection.ORDER_DESCENDING:
+                    this.CurrentOrderDirection = SortOrderDirection.ORDER_ASCENDING;
+                    break;
+                default:
+                    return;
+            }
+
+            OnOrderInverted();
         }
 
         /// <summary>
@@ -249,6 +282,20 @@ namespace MegaApp.ViewModels
                 }
             }
         }
+
+        private SortOrderDirection _currentOrderDirection;
+        public SortOrderDirection CurrentOrderDirection
+        {
+            get { return _currentOrderDirection; }
+            set
+            {
+                SetField(ref _currentOrderDirection, value);
+                OnPropertyChanged(nameof(this.IsCurrentOrderAscending));
+            }
+        }
+
+        public bool IsCurrentOrderAscending =>
+            (this.CurrentOrderDirection == SortOrderDirection.ORDER_ASCENDING) ? true : false;
 
         public bool HasItems => this.Items?.Count > 0;
 

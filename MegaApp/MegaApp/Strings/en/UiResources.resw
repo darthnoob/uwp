@@ -1069,4 +1069,44 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Leave</value>
     <comment>Label for any 'Leave' button, link, text, title, etc. for leave a shared item - (String as short as possible).</comment>
   </data>
+  <data name="UI_ListSortedByAccessLevel" xml:space="preserve">
+    <value>Access ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+    <value>Access ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwner" xml:space="preserve">
+    <value>Owner ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by owner and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwnerMultiSelect2" xml:space="preserve">
+    <value>Owner ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_OutgoingShares" xml:space="preserve">
+    <value>Outgoing shares</value>
+    <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionAccessLevel" xml:space="preserve">
+    <value>Access</value>
+    <comment>Label for the menu option to sort a list of items by access level - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLastModified" xml:space="preserve">
+    <value>Last modified</value>
+    <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionName" xml:space="preserve">
+    <value>Name</value>
+    <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionOwner" xml:space="preserve">
+    <value>Owner</value>
+    <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
+  </data>
 </root>

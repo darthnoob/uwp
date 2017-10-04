@@ -77,6 +77,14 @@ namespace MegaApp.ViewModels
 
                 new MenuItemViewModel()
                 {
+                    Label = SharedFoldersText,
+                    ToolTip = SharedFoldersText,
+                    Icon = GetIconFromXamlPath(MenuSharedPathData),
+                    TargetViewModel = typeof(SharedFoldersViewModel)
+                },
+
+                new MenuItemViewModel()
+                {
                     Label = ContactsText,
                     ToolTip = ContactsText,
                     Icon = GetIconFromXamlPath(MenuContactsPathData),
@@ -153,6 +161,7 @@ namespace MegaApp.ViewModels
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
+        private static string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         private static string TransferManagerText => ResourceService.UiResources.GetString("UI_TransferManager");
 
         #endregion

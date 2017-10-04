@@ -1,14 +1,15 @@
 ﻿using mega;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.Contacts
 {
-    public class ContactSharedItemsViewModel : SharedFoldersListViewModel
+    public class ContactSharedItemsViewModel : IncomingSharesViewModel
     {
         public ContactSharedItemsViewModel(MUser contact)
         {
             this.Contact = contact;
 
-            this.GetIncomingSharedItems();
+            this.Initialize(this.Contact);
         }
 
         #region Methods

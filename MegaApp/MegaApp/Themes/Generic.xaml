@@ -912,6 +912,7 @@
                                                 VerticalAlignment="Center">
                                                 <Rectangle
                                                     x:Name="PART_AvatarRectangle"
+                                                    Height="96" Width="96"
                                                     Stroke="{ThemeResource MegaAppForegroundBrush}"
                                                     AutomationProperties.AccessibilityView="Raw"
                                                     Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
@@ -922,6 +923,7 @@
                                                 <TextBlock
                                                     x:Name="PART_AvatarLetter"
                                                     Text="{Binding AvatarLetter, Mode=OneWay}"
+                                                    FontSize="28"
                                                     Foreground="White"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
@@ -1013,7 +1015,7 @@
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                             ItemsSource="{Binding ItemCollection.Items}"
-                                            ItemTemplate="{StaticResource MegaSharedItemListViewDesktop}">
+                                            ItemTemplate="{StaticResource MegaContactIncomingSharedItemListViewDesktop}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                                 <core:EventTriggerBehavior EventName="SelectionChanged">

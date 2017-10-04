@@ -185,4 +185,20 @@
     <value>You can add and manage your contacts on this panel.</value>
     <comment>Sub header text for the empty state of the contacts list.</comment>
   </data>
+  <data name="ES_IncomingSharesHeader" xml:space="preserve">
+    <value>No incoming shares</value>
+    <comment>Header text for the empty state of the incoming shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_IncomingSharesSubHeader" xml:space="preserve">
+    <value>Manage your incoming shares on this panel.</value>
+    <comment>Sub header text for the empty state of the incoming shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OutgoingSharesHeader" xml:space="preserve">
+    <value>No outgoing shares</value>
+    <comment>Header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
+    <value>Manage your outgoing shares on this panel.</value>
+    <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
 </root>

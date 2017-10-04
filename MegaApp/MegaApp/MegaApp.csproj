@@ -116,8 +116,10 @@
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
@@ -166,8 +168,12 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
+    <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\OutgoingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\OutgoingSharesViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
@@ -264,7 +270,7 @@
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
     <Compile Include="Views\Dialogs\OkCancelAndWarningDialog.xaml.cs">
       <DependentUpon>OkCancelAndWarningDialog.xaml</DependentUpon>
-    </Compile>      
+    </Compile>
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
     </Compile>
@@ -366,6 +372,9 @@
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SharedFoldersPage.xaml.cs">
+      <DependentUpon>SharedFoldersPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
@@ -486,6 +495,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SharedFoldersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
