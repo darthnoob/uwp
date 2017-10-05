@@ -135,28 +135,11 @@ namespace MegaApp.Views
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
+            var listView = this.GetSelectedListView();
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-            {
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                    this.ListViewContacts.SelectionMode = ListViewSelectionMode.Extended;
-
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                    this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
-
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                    this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Extended;
-            }
+                listView.SelectionMode = ListViewSelectionMode.Extended;
             else
-            {
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                    this.ListViewContacts.SelectionMode = ListViewSelectionMode.Single;
-
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                    this.ListViewIncomingContactRequests.SelectionMode = ListViewSelectionMode.Single;
-
-                if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                    this.ListViewOutgoingContactRequests.SelectionMode = ListViewSelectionMode.Single;
-            }
+                listView.SelectionMode = ListViewSelectionMode.Single;
         }
 
         /// <summary>
@@ -164,14 +147,8 @@ namespace MegaApp.Views
         /// </summary>
         private void EnableViewsBehaviors()
         {
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                Interaction.GetBehaviors(this.ListViewContacts).Attach(this.ListViewContacts);
-
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                Interaction.GetBehaviors(this.ListViewIncomingContactRequests).Attach(this.ListViewIncomingContactRequests);
-
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                Interaction.GetBehaviors(this.ListViewOutgoingContactRequests).Attach(this.ListViewOutgoingContactRequests);
+            var listView = this.GetSelectedListView();
+            Interaction.GetBehaviors(listView).Attach(listView);
         }
 
         /// <summary>
@@ -179,14 +156,8 @@ namespace MegaApp.Views
         /// </summary>
         private void DisableViewsBehaviors()
         {
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
-                Interaction.GetBehaviors(this.ListViewContacts).Detach();
-
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.IncomingPivot))
-                Interaction.GetBehaviors(this.ListViewIncomingContactRequests).Detach();
-
-            if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
-                Interaction.GetBehaviors(this.ListViewOutgoingContactRequests).Detach();
+            var listView = this.GetSelectedListView();
+            Interaction.GetBehaviors(listView).Detach();
         }
 
         private void OnAllSelected(object sender, bool value)

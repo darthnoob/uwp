@@ -16,13 +16,13 @@ namespace MegaApp.ViewModels
             this.ItemCollection = new CollectionViewModel<IMegaSharedFolderNode>();
             
             this.DownloadCommand = new RelayCommand(Download);
-            this.LeaveSharedCommand = new RelayCommand(LeaveShared);
+            this.LeaveShareCommand = new RelayCommand(LeaveShare);
         }
 
         #region Commands
 
         public ICommand DownloadCommand { get; }
-        public ICommand LeaveSharedCommand { get; }
+        public ICommand LeaveShareCommand { get; }
 
         #endregion
 
@@ -74,7 +74,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private async void LeaveShared()
+        private async void LeaveShare()
         {
             if (!this.ItemCollection.HasSelectedItems) return;
 
@@ -161,9 +161,9 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Number of folders shared with or by the contact as a formatted text string
         /// </summary>
-        public string NumberOfSharedItemsText => string.Format("{0} {1}", this.NumberOfSharedItems,
-            this.NumberOfSharedItems == 1 ? ResourceService.UiResources.GetString("UI_SharedFolder").ToLower() :
-            ResourceService.UiResources.GetString("UI_SharedFolders").ToLower());
+        public string NumberOfSharedItemsText => this.NumberOfSharedItems == 1 ? 
+            ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
+            string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
 
         #endregion
 
@@ -171,7 +171,7 @@ namespace MegaApp.ViewModels
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
-        public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
+        public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
@@ -183,7 +183,7 @@ namespace MegaApp.ViewModels
         #region VisualResources
 
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
-        public string LeaveSharedPathData => ResourceService.VisualResources.GetString("VR_LeaveSharedPathData");
+        public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
 

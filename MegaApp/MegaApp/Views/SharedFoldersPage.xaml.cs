@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Input;
 using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
@@ -143,7 +144,10 @@ namespace MegaApp.Views
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
+            IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
+            if (itemTapped == null) return;
 
+            this.ViewModel.ActiveView.ItemCollection.FocusedItem = itemTapped;
         }
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -153,7 +157,17 @@ namespace MegaApp.Views
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
+            IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
+            if (itemTapped == null) return;
+
+            this.ViewModel.ActiveView.ItemCollection.FocusedItem = itemTapped;
+
+            if (!this.ViewModel.ActiveView.ItemCollection.IsMultiSelectActive)
+                ((ListViewBase)sender).SelectedItems?.Clear();
+
+            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
         }
     }
 }

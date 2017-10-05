@@ -1004,9 +1004,9 @@
                             Text="{Binding RenameText}"
                             Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
-                            Command="{Binding LeaveSharedCommand}"
+                            Command="{Binding LeaveShareCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
-                            Text="{Binding LeaveSharedText}" />
+                            Text="{Binding LeaveShareText}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -1101,9 +1101,9 @@
                             Text="{Binding RenameText}"
                             Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
-                            Command="{Binding LeaveSharedCommand}"
+                            Command="{Binding LeaveShareCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
-                            Text="{Binding LeaveSharedText}" />
+                            Text="{Binding LeaveShareText}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -1182,6 +1182,85 @@
                 Text="{Binding AccessLevelText}"
                 TextWrapping="NoWrap"
                 Opacity="0.9" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaIncomingSharedItemListViewMobile">
+        <Grid Margin="0,6,0,7">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding DownloadCommand}"
+                            Text="{Binding DownloadText}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RenameCommand}"
+                            Text="{Binding RenameText}"
+                            Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
+                            Command="{Binding LeaveShareCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding LeaveShareText}" />
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Path
+                Grid.Column="0"
+                Width="36" Height="36"
+                Margin="0,0,10,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding DefaultImagePathData}"
+                Stretch="Uniform">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="{Binding Name}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+                <TextBlock
+                    Grid.Row="1"
+                    FontSize="13"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Text="{Binding Owner}"
+                    TextWrapping="NoWrap"
+                    Opacity="0.5"/>
+            </Grid>
+            <Path
+                Grid.Column="2"
+                Width="12" Height="12"
+                Margin="12,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding AccessLevelPathData}"
+                Stretch="Uniform"
+                Opacity="0.9" >
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
         </Grid>
     </DataTemplate>
 

@@ -1057,9 +1057,9 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Read only</value>
     <comment>Label for the 'Read only' permission for shared items.</comment>
   </data>
-  <data name="UI_LeaveShared" xml:space="preserve">
-    <value>Leave shared</value>
-    <comment>Label for any 'Leave shared' button, link, text, title, etc. - (String as short as possible).</comment>
+  <data name="UI_LeaveShare" xml:space="preserve">
+    <value>Leave share</value>
+    <comment>Label for any 'Leave share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IgnoreContact" xml:space="preserve">
     <value>Ignore contact</value>
@@ -1093,6 +1093,16 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>{0} Contacts</value>
     <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
 Keep the {0} code because is for include the number of contacts in runtime.</comment>
+  </data>
+  <data name="UI_NumberSharedFolders" xml:space="preserve">
+    <value>{0} Shared folders</value>
+    <comment>Label to indicate that there are multiple shared folders - (String as short as possible).
+Keep the {0} code because is for include the number of shared folders in runtime.</comment>
+  </data>
+  <data name="UI_OneSharedFolder" xml:space="preserve">
+    <value>1 Shared folder</value>
+    <comment>Label to indicate that there is only 1 shared folder - (String as short as possible).
+</comment>
   </data>
   <data name="UI_OutgoingShares" xml:space="preserve">
     <value>Outgoing shares</value>

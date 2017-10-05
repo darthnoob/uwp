@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels
             this.Parent = parent;
 
             this.DownloadCommand = new RelayCommand(Download);
-            this.LeaveSharedCommand = new RelayCommand(LeaveShared);
+            this.LeaveShareCommand = new RelayCommand(LeaveShare);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update();            
@@ -24,7 +24,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public new ICommand DownloadCommand { get; }
-        public ICommand LeaveSharedCommand { get; }
+        public ICommand LeaveShareCommand { get; }
 
         #endregion
 
@@ -62,12 +62,12 @@ namespace MegaApp.ViewModels
             this.Download(TransferService.MegaTransfers);
         }
 
-        private async void LeaveShared()
+        private async void LeaveShare()
         {
             if (this.Parent.ItemCollection.IsMultiSelectActive)
             {
-                if (this.Parent.LeaveSharedCommand.CanExecute(null))
-                    this.Parent.LeaveSharedCommand.Execute(null);
+                if (this.Parent.LeaveShareCommand.CanExecute(null))
+                    this.Parent.LeaveShareCommand.Execute(null);
                 return;
             }
 
@@ -107,7 +107,7 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string LeaveSharedText => ResourceService.UiResources.GetString("UI_LeaveShared");
+        public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
 
         #endregion
     }

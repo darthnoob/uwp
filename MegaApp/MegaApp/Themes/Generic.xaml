@@ -837,16 +837,16 @@
                                         </AppBarButton.Icon>
                                     </AppBarButton>
                                     <AppBarButton
-                                        Command="{Binding LeaveSharedCommand}"
-                                        Label="{Binding LeaveSharedText, Mode=OneTime}"
+                                        Command="{Binding LeaveShareCommand}"
+                                        Label="{Binding LeaveShareText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding LeaveSharedText, Mode=OneTime}"
+                                        ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
                                         Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <AppBarButton.Icon>
                                             <PathIcon
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Data="{Binding LeaveSharedPathData, Mode=OneTime}" />
+                                                Data="{Binding LeaveSharePathData, Mode=OneTime}" />
                                         </AppBarButton.Icon>
                                     </AppBarButton>
                                     <AppBarButton
