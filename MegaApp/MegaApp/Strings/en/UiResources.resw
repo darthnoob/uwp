@@ -1124,4 +1124,8 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Owner</value>
     <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
   </data>
+  <data name="UI_RemoveSharedAccess" xml:space="preserve">
+    <value>Remove shared access</value>
+    <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

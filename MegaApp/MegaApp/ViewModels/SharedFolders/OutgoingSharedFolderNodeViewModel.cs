@@ -1,4 +1,6 @@
-﻿using mega;
+﻿using System.Windows.Input;
+using mega;
+using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
@@ -8,13 +10,19 @@ namespace MegaApp.ViewModels
     public class OutgoingSharedFolderNodeViewModel : SharedFolderNodeViewModel
     {
         public OutgoingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
-            : base(megaNode)
+            : base(megaNode, parent)
         {
-            this.Parent = parent;
+            this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
             this.Update();
         }
+
+        #region Commands
+
+        public ICommand RemoveSharedAccessCommand { get; }
+
+        #endregion
 
         #region Methods
 
@@ -48,6 +56,34 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private async void RemoveSharedAccess()
+        {
+            if (this.Parent.ItemCollection.IsMultiSelectActive)
+            {
+                if (this.Parent.RemoveSharedAccessCommand.CanExecute(null))
+                    this.Parent.RemoveSharedAccessCommand.Execute(null);
+                return;
+            }
+
+            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
+                string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
+                ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
+                this.RemoveText, this.CancelText);
+
+            if (!dialogResult) return;
+
+            if(! await this.RemoveSharedAccessAsync())
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), this.Name));
+                });
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -59,12 +95,11 @@ namespace MegaApp.ViewModels
             set { SetField(ref _contactsText, value); }
         }
 
-        private SharedFoldersListViewModel _parent;
-        public new SharedFoldersListViewModel Parent
-        {
-            get { return _parent; }
-            set { SetField(ref _parent, value); }
-        }
+        #endregion
+
+        #region UiResources
+
+        public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
 
         #endregion
     }

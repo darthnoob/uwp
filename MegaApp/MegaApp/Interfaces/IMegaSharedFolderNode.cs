@@ -1,4 +1,5 @@
-﻿using mega;
+﻿using System.Threading.Tasks;
+using mega;
 
 namespace MegaApp.Interfaces
 {
@@ -7,6 +8,18 @@ namespace MegaApp.Interfaces
     /// </summary>
     public interface IMegaSharedFolderNode : IMegaNode
     {
+        #region Methods
+
+        /// <summary>
+        /// Stop sharing a folder in MEGA
+        /// </summary>
+        /// <returns>Result of the action</returns>
+        Task<bool> RemoveSharedAccessAsync();
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Owner of the incoming shared node
         /// </summary>
@@ -16,5 +29,7 @@ namespace MegaApp.Interfaces
         /// Acces level to the incoming shared node
         /// </summary>
         MShareType AccessLevel { get; set; }
+
+        #endregion
     }
 }

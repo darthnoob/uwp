@@ -10,11 +10,8 @@ namespace MegaApp.ViewModels
     public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel
     {
         public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
-            : base(megaNode)
+            : base(megaNode, parent)
         {
-            this.Parent = parent;
-
-            this.DownloadCommand = new RelayCommand(Download);
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
@@ -23,7 +20,6 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public new ICommand DownloadCommand { get; }
         public ICommand LeaveShareCommand { get; }
 
         #endregion
@@ -48,19 +44,7 @@ namespace MegaApp.ViewModels
                 this.Owner = (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ?
                     owner.getEmail() : string.Format("{0} {1}", firstName, lastName);
             });
-        }
-
-        private void Download()
-        {
-            if (this.Parent.ItemCollection.IsMultiSelectActive)
-            {
-                if (this.Parent.DownloadCommand.CanExecute(null))
-                    this.Parent.DownloadCommand.Execute(null);
-                return;
-            }
-
-            this.Download(TransferService.MegaTransfers);
-        }
+        }        
 
         private async void LeaveShare()
         {
@@ -92,14 +76,7 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Properties        
-
-        private SharedFoldersListViewModel _parent;
-        public new SharedFoldersListViewModel Parent
-        {
-            get { return _parent; }
-            set { SetField(ref _parent, value); }
-        }
+        #region Properties
 
         public bool AllowRename => (this.AccessLevel == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
 

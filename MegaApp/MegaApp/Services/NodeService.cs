@@ -7,6 +7,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
@@ -64,7 +65,7 @@ namespace MegaApp.Services
             return null;
         }
 
-        public static NodeViewModel CreateNewSharedFolder(MegaSDK megaSdk, AppInformation appInformation, 
+        public static SharedFolderNodeViewModel CreateNewSharedFolder(MegaSDK megaSdk, AppInformation appInformation, 
             MNode megaNode, SharedFoldersListViewModel parent)
         {
             if (megaNode == null) return null;

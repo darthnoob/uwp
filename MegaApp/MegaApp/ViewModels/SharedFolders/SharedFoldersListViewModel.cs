@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -17,12 +19,14 @@ namespace MegaApp.ViewModels
             
             this.DownloadCommand = new RelayCommand(Download);
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
+            this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
         }
 
         #region Commands
 
         public ICommand DownloadCommand { get; }
         public ICommand LeaveShareCommand { get; }
+        public ICommand RemoveSharedAccessCommand { get; }
 
         #endregion
 
@@ -46,6 +50,54 @@ namespace MegaApp.ViewModels
             }
             this.LoadingCancelTokenSource = new CancellationTokenSource();
             this.LoadingCancelToken = LoadingCancelTokenSource.Token;
+        }
+
+        public void OnSharedFolderAdded(object sender, MNode megaNode)
+        {
+            if (megaNode == null) return;
+
+            var node = this.ItemCollection.Items.FirstOrDefault(
+                n => n.Base64Handle.Equals(megaNode.getBase64Handle()));
+
+            // If exists update it
+            if (node != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try { node.Update(megaNode, true); }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+            }
+            else
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try
+                    {
+                        this.ItemCollection.Items.Add(NodeService.CreateNewSharedFolder(
+                            this.MegaSdk, App.AppInformation, megaNode, this));
+                    }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+            }
+        }
+
+        public void OnSharedFolderRemoved(object sender, MNode megaNode)
+        {
+            if (megaNode == null) return;
+
+            var node = this.ItemCollection.Items.FirstOrDefault(
+                n => n.Base64Handle.Equals(megaNode.getBase64Handle()));
+
+            // If node is found in current view, process the remove action
+            if (node != null)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    try { this.ItemCollection.Items.Remove(node); }
+                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                });
+            }
         }
 
         private async void Download()
@@ -136,6 +188,68 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private async void RemoveSharedAccess()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+
+            if (this.ItemCollection.OnlyOneSelectedItem)
+            {
+                var node = this.ItemCollection.SelectedItems.First();
+
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), node.Name),
+                    ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
+                    this.RemoveText, this.CancelText);
+
+                if (!dialogResult) return;
+
+                if (!await node.RemoveSharedAccessAsync())
+                {
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), node.Name));
+                    });
+                }
+            }
+            else
+            {
+                var count = this.ItemCollection.SelectedItems.Count;
+
+                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                    ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFolders_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersQuestion"), count),
+                    ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersWarning"),
+                    this.RemoveText, this.CancelText);
+
+                if (!dialogResult) return;
+
+                // Use a temp variable to avoid InvalidOperationException
+                RemoveAccessMultipleSharedFolders(this.ItemCollection.SelectedItems.ToList());
+            }
+        }
+
+        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaSharedFolderNode> sharedFolders)
+        {
+            if (sharedFolders?.Count < 1) return;
+
+            bool result = true;
+            foreach (var node in sharedFolders)
+                result = result & (await node.RemoveSharedAccessAsync());
+
+            if (!result)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFolders_Title"),
+                        ResourceService.AppMessages.GetString("AM_RemoveAccessSharedMultipleSharedFailed"));
+                });
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -173,6 +287,8 @@ namespace MegaApp.ViewModels
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
 

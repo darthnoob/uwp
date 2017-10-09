@@ -120,6 +120,19 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            Command="{Binding RemoveSharedAccessCommand}"
+                            Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             Label="{Binding MultiSelectText, Mode=OneTime}"                        
                             ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
@@ -230,6 +243,7 @@
                                         ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                                         ItemTemplate="{StaticResource MegaOutgoingSharedItemListViewDesktop}"
                                         ItemsSource="{Binding ItemCollection.Items}"
+                                        RightTapped="OnRightItemTapped"
                                         Tapped="OnItemTapped">
                                         <interactivity:Interaction.Behaviors>
                                             <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
@@ -239,7 +253,7 @@
                                                 </core:EventTriggerBehavior.Actions>
                                             </core:EventTriggerBehavior>
                                         </interactivity:Interaction.Behaviors>
-                                    </ListView>                                    
+                                    </ListView>
                                 </Grid>
                             </Grid>
                             <ContentControl Template="{StaticResource EmptyStateTemplate}" />
@@ -313,6 +327,19 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{Binding DownloadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding RemoveSharedAccessCommand}"
+                        Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding LeaveSharePathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton

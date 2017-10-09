@@ -1,16 +1,30 @@
-﻿using mega;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using mega;
+using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.MegaApi;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
     public class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
     {
-        public SharedFolderNodeViewModel(MNode megaNode)
+        public SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
         {
+            this.Parent = parent;
+
+            this.DownloadCommand = new RelayCommand(Download);
+
             this.Update();
         }
+
+        #region Commands
+
+        public new ICommand DownloadCommand { get; }
+
+        #endregion
 
         #region Methods
 
@@ -21,9 +35,46 @@ namespace MegaApp.ViewModels.SharedFolders
             OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode));
         }
 
+        private void Download()
+        {
+            if (this.Parent.ItemCollection.IsMultiSelectActive)
+            {
+                if (this.Parent.DownloadCommand.CanExecute(null))
+                    this.Parent.DownloadCommand.Execute(null);
+                return;
+            }
+
+            this.Download(TransferService.MegaTransfers);
+        }
+
+        public async Task<bool> RemoveSharedAccessAsync()
+        {
+            var removeSharedAccess = new ShareRequestListenerAsync();
+            var outShares = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
+            var outSharesSize = outShares.size();
+            bool result = true;
+            for (int i = 0; i < outSharesSize; i++)
+            {
+                result = result & await removeSharedAccess.ExecuteAsync(() =>
+                {
+                    this.MegaSdk.shareByEmail(this.OriginalMNode, outShares.get(i).getUser(),
+                        (int)MShareType.ACCESS_UNKNOWN, removeSharedAccess);
+                });
+            }
+
+            return result;
+        }
+
         #endregion
 
         #region Properties
+
+        private SharedFoldersListViewModel _parent;
+        protected new SharedFoldersListViewModel Parent
+        {
+            get { return _parent; }
+            set { SetField(ref _parent, value); }
+        }
 
         private string _owner;
         /// <summary>

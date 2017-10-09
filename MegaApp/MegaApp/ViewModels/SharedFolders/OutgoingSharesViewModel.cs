@@ -21,7 +21,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
             if (App.GlobalListener == null) return;
-            App.GlobalListener.SharedItemUpdated += this.OnSharedItemsUpdated;
+            App.GlobalListener.OutSharedFolderAdded += this.OnSharedFolderAdded;
+            App.GlobalListener.OutSharedFolderRemoved += this.OnSharedFolderRemoved;
         }
 
         public void Deinitialize()
@@ -32,7 +33,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.OrderInverted -= (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
             if (App.GlobalListener == null) return;
-            App.GlobalListener.SharedItemUpdated -= this.OnSharedItemsUpdated;
+            App.GlobalListener.OutSharedFolderAdded -= this.OnSharedFolderAdded;
+            App.GlobalListener.OutSharedFolderRemoved -= this.OnSharedFolderRemoved;
         }
 
         protected async void GetOutgoingSharedItems()
@@ -109,7 +111,8 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             OnUiThread(() =>
             {
-                OnPropertyChanged(nameof(this.NumberOfSharedItems),
+                OnPropertyChanged(nameof(this.ItemCollection.Items),
+                    nameof(this.NumberOfSharedItems),
                     nameof(this.NumberOfSharedItemsText),
                     nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
@@ -123,12 +126,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
             });
-        }
-
-        private void OnSharedItemsUpdated(object sender, MNode node)
-        {
-            this.GetOutgoingSharedItems();
-        }
+        }        
 
         #region Properties
 

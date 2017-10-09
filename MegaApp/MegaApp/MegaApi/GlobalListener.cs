@@ -13,7 +13,10 @@ namespace MegaApp.MegaApi
         public event EventHandler<MNode> NodeAdded;
         public event EventHandler<MNode> NodeRemoved;
 
-        public event EventHandler<MNode> SharedItemUpdated;
+        public event EventHandler<MNode> InSharedFolderAdded;
+        public event EventHandler<MNode> InSharedFolderRemoved;
+        public event EventHandler<MNode> OutSharedFolderAdded;
+        public event EventHandler<MNode> OutSharedFolderRemoved;
 
         public event EventHandler<MUser> ContactUpdated;
         public event EventHandler IncomingContactRequestUpdated;
@@ -38,18 +41,33 @@ namespace MegaApp.MegaApi
                     MNode megaNode = nodes.get(i);
                     if (megaNode == null) return;
 
-                    if (megaNode.isShared())
-                        OnSharedItemUpdated(megaNode);
-
-                    if (megaNode.isRemoved())
+                    // Incoming shared folder
+                    if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_INSHARE))
                     {
-                        // REMOVED Scenario
-                        OnNodeRemoved(megaNode);
+                        if (megaNode.isShared()) // ADDED / UPDATE scenarions
+                            OnInSharedFolderAdded(megaNode);
+                        else // REMOVED Scenario
+                            OnInSharedFolderRemoved(megaNode);
+                    }
+                    // Outgoing shared folder
+                    else if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
+                    {
+                        if (megaNode.isShared()) // ADDED / UPDATE scenarions
+                            OnOutSharedFolderAdded(megaNode);
+                        else // REMOVED Scenario
+                            OnOutSharedFolderRemoved(megaNode);
                     }
                     else
                     {
-                        // ADDED / UPDATE scenarions
-                        OnNodeAdded(megaNode);
+                        if (megaNode.isRemoved()) // REMOVED Scenario
+                        {
+                            OnNodeRemoved(megaNode);
+                            OnInSharedFolderRemoved(megaNode);
+                        }
+                        else // ADDED / UPDATE scenarions
+                        {
+                            OnNodeAdded(megaNode);
+                        }
                     }
                 }                
             }
@@ -153,34 +171,17 @@ namespace MegaApp.MegaApi
 
         #endregion
 
-        protected virtual void OnNodeAdded(MNode e)
-        {
-            NodeAdded?.Invoke(this, e);
-        }
+        protected virtual void OnNodeAdded(MNode e) => NodeAdded?.Invoke(this, e);
+        protected virtual void OnNodeRemoved(MNode e) => NodeRemoved?.Invoke(this, e);
 
-        protected virtual void OnNodeRemoved(MNode e)
-        {
-            NodeRemoved?.Invoke(this, e);
-        }
+        protected virtual void OnInSharedFolderAdded(MNode e) => InSharedFolderAdded?.Invoke(this, e);
+        protected virtual void OnInSharedFolderRemoved(MNode e) => InSharedFolderRemoved?.Invoke(this, e);
+        protected virtual void OnOutSharedFolderAdded(MNode e) => OutSharedFolderAdded?.Invoke(this, e);
+        protected virtual void OnOutSharedFolderRemoved(MNode e) => OutSharedFolderRemoved?.Invoke(this, e);
 
-        protected virtual void OnSharedItemUpdated(MNode e)
-        {
-            SharedItemUpdated?.Invoke(this, e);
-        }
+        protected virtual void OnContactUpdated(MUser e) => ContactUpdated?.Invoke(this, e);
 
-        protected virtual void OnContactUpdated(MUser e)
-        {
-            ContactUpdated?.Invoke(this, e);
-        }
-
-        protected virtual void OnIncomingContactRequestUpdated()
-        {
-            IncomingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected virtual void OnOutgoingContactRequestUpdated()
-        {
-            OutgoingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
-        }
+        protected virtual void OnIncomingContactRequestUpdated() => IncomingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
+        protected virtual void OnOutgoingContactRequestUpdated() => OutgoingContactRequestUpdated?.Invoke(this, EventArgs.Empty);
     }
 }

@@ -80,14 +80,12 @@ namespace MegaApp.ViewModels.Contacts
 
             if (App.GlobalListener == null) return;
             globalListener.ContactUpdated += this.OnContactUpdated;
-            globalListener.SharedItemUpdated += this.OnSharedItemsUpdated;
         }
 
         public void Deinitialize(GlobalListener globalListener)
         {
             if (globalListener == null) return;
             globalListener.ContactUpdated -= this.OnContactUpdated;
-            globalListener.SharedItemUpdated -= this.OnSharedItemsUpdated;
         }
 
         private void AddContact()
@@ -316,12 +314,6 @@ namespace MegaApp.ViewModels.Contacts
                 this.GetContactAvatarColor(megaContact);
                 this.GetContactAvatar(megaContact);
             }
-        }
-
-        private void OnSharedItemsUpdated(object sender, MNode node)
-        {
-            foreach (var item in this.ItemCollection.Items)
-                item?.SharedItems?.GetIncomingSharedItems();
         }
 
         public void SortBy(MSortOrderType sortOption)

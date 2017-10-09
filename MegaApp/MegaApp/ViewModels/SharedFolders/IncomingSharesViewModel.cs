@@ -23,7 +23,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
             if (App.GlobalListener == null) return;
-            App.GlobalListener.SharedItemUpdated += this.OnSharedItemsUpdated;
+            App.GlobalListener.InSharedFolderAdded += this.OnSharedFolderAdded;
+            App.GlobalListener.InSharedFolderRemoved += this.OnSharedFolderRemoved;
         }
 
         public void Deinitialize()
@@ -34,7 +35,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.OrderInverted -= (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
             if (App.GlobalListener == null) return;
-            App.GlobalListener.SharedItemUpdated -= this.OnSharedItemsUpdated;
+            App.GlobalListener.InSharedFolderAdded -= this.OnSharedFolderAdded;
+            App.GlobalListener.InSharedFolderRemoved -= this.OnSharedFolderRemoved;
         }
 
         protected async void GetIncomingSharedItems(MUser contact = null)
@@ -131,7 +133,8 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             OnUiThread(() =>
             {
-                OnPropertyChanged(nameof(this.NumberOfSharedItems),
+                OnPropertyChanged(nameof(this.ItemCollection.Items),
+                    nameof(this.NumberOfSharedItems),
                     nameof(this.NumberOfSharedItemsText),
                     nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));

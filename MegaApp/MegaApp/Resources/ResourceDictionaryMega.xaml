@@ -1275,6 +1275,10 @@
                         <MenuFlyoutItem
                             Command="{Binding RenameCommand}"
                             Text="{Binding RenameText}" />
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveSharedAccessCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveSharedAccessText}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
