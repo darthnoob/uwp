@@ -44,9 +44,9 @@ namespace MegaApp.Services
         /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            string acceptButton = null, string cancelButton = null)
+            string okButton = null, string cancelButton = null)
         {
-            return await ShowOkCancelAndWarningAsync(title, message, null, acceptButton, cancelButton);
+            return await ShowOkCancelAndWarningAsync(title, message, null, okButton, cancelButton);
         }
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace MegaApp.Services
         /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
         public static async Task<bool> ShowOkCancelAndWarningAsync(string title, string message, 
-            string warning, string acceptButton = null, string cancelButton = null)
+            string warning, string okButton = null, string cancelButton = null)
         {
-            if (acceptButton == null)
-                acceptButton = ResourceService.UiResources.GetString("UI_Ok");
+            if (okButton == null)
+                okButton = ResourceService.UiResources.GetString("UI_Ok");
             if (cancelButton == null)
                 cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
 
-            var dialog = new OkCancelAndWarningDialog(title, message, warning, acceptButton, cancelButton);
+            var dialog = new OkCancelAndWarningDialog(title, message, warning, okButton, cancelButton);
             await dialog.ShowAsync();
 
             return dialog.DialogResult;
@@ -200,11 +200,10 @@ namespace MegaApp.Services
             var result = await dialog.ShowAsync();
             switch (result)
             {
-                case ContentDialogResult.None:
-                    return null;
                 case ContentDialogResult.Primary:
                     return input.Text;
                 case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
                     return null;
                 default:
                     throw new ArgumentOutOfRangeException();

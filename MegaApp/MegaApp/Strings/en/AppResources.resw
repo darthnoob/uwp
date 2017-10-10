@@ -146,8 +146,8 @@
     <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
-    <value>windowsphone@mega.nz</value>
-    <comment>Windows Phone Team email for contact and/or support - (NO-TRANSLATION).</comment>
+    <value>uwp.alpha@mega.nz</value>
+    <comment>UWP Team email for contact and/or support - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DownloadsDirectory" xml:space="preserve">
     <value>downloads\</value>
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/6248db9aee68f3079147b15b3058f97bfc0f807b</value>
+    <value>https://github.com/meganz/sdk/tree/7b0d3587849d0d69786df8005f26a0cbd32fdd12</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>6248db9</value>
+    <value>7b0d358</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
