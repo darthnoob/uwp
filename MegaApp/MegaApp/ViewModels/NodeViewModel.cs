@@ -56,7 +56,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand CopyOrMoveCommand { get; }
-        public ICommand DownloadCommand { get; }
+        public virtual ICommand DownloadCommand { get; }
         public ICommand GetLinkCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -548,7 +548,7 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
-        public void Update(MNode megaNode, bool externalUpdate = false)
+        public virtual void Update(MNode megaNode, bool externalUpdate = false)
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();

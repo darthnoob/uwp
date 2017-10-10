@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
-            this.Update();            
+            this.Update(megaNode);            
         }
 
         #region Commands
@@ -26,9 +26,9 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async new void Update(bool externalUpdate = false)
+        public override async void Update(MNode megaNode, bool externalUpdate = false)
         {
-            base.Update(externalUpdate);
+            base.Update(megaNode, externalUpdate);
 
             var owner = SdkService.MegaSdk.getUserFromInShare(this.OriginalMNode);
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();

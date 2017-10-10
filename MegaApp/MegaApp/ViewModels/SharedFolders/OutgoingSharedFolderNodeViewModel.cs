@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
-            this.Update();
+            this.Update(megaNode);
         }
 
         #region Commands
@@ -26,11 +26,11 @@ namespace MegaApp.ViewModels
 
         #region Methods
 
-        public async new void Update(bool externalUpdate = false)
+        public override async void Update(MNode megaNode, bool externalUpdate = false)
         {
-            base.Update(externalUpdate);
+            base.Update(megaNode, externalUpdate);
 
-            var outShares = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
+            var outShares = SdkService.MegaSdk.getOutShares(megaNode);
             var outSharesSize = outShares.size();
             if (outSharesSize == 1)
             {

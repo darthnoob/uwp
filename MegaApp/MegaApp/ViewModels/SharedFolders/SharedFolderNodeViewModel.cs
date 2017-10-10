@@ -17,22 +17,22 @@ namespace MegaApp.ViewModels.SharedFolders
 
             this.DownloadCommand = new RelayCommand(Download);
 
-            this.Update();
+            this.Update(megaNode);
         }
 
         #region Commands
 
-        public new ICommand DownloadCommand { get; }
+        public override ICommand DownloadCommand { get; }
 
         #endregion
 
         #region Methods
 
-        public void Update(bool externalUpdate = false)
+        public override void Update(MNode megaNode, bool externalUpdate = false)
         {
-            base.Update(this.OriginalMNode, externalUpdate);
+            base.Update(megaNode, externalUpdate);
 
-            OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(this.OriginalMNode));
+            OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(megaNode));
         }
 
         private void Download()
@@ -44,7 +44,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 return;
             }
 
-            this.Download(TransferService.MegaTransfers);
+            base.Download(TransferService.MegaTransfers);
         }
 
         public async Task<bool> RemoveSharedAccessAsync()
