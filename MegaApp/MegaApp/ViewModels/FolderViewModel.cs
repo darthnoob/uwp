@@ -156,7 +156,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
                 else
@@ -164,7 +164,7 @@ namespace MegaApp.ViewModels
                     UiService.OnUiThread(() =>
                     {
                         try { nodeToUpdateInView.Update(mNode, true); }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                     isProcessed = true;
                 }
@@ -198,7 +198,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
                 // Insert the node at a specific position
@@ -218,7 +218,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
             }
@@ -233,7 +233,7 @@ namespace MegaApp.ViewModels
                         var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                         folderNode?.SetFolderInfo();
                     }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
             }
 
@@ -242,7 +242,7 @@ namespace MegaApp.ViewModels
             UiService.OnUiThread(() =>
             {
                 try { FolderService.UpdateFolders(this); }
-                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
             });
 
             this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
@@ -268,7 +268,7 @@ namespace MegaApp.ViewModels
                         ItemCollection.Items.Remove(nodeToRemoveFromView);
                         ((FolderNodeViewModel) FolderRootNode).SetFolderInfo();
                     }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
 
                 isProcessed = true;
@@ -296,7 +296,7 @@ namespace MegaApp.ViewModels
                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                             folderNode?.SetFolderInfo();
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
             }

@@ -11,7 +11,7 @@ namespace MegaApp.Interfaces
         #region Methods
 
         /// <summary>
-        /// Update core date associated with the SDK MNode object
+        /// Update core data associated with the SDK MNode object
         /// </summary>
         /// <param name="megaNode">Node to update</param>
         /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>

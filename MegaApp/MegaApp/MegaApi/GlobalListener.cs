@@ -29,12 +29,12 @@ namespace MegaApp.MegaApi
             // Exit methods when node list is incorrect
             if (nodes == null || nodes.size() < 1) return;
 
-            try
-            {
-                // Retrieve the listsize for performance reasons and store local
-                int listSize = nodes.size();
+            // Retrieve the listsize for performance reasons and store local
+            int listSize = nodes.size();
 
-                for (int i = 0; i < listSize; i++)
+            for (int i = 0; i < listSize; i++)
+            {
+                try
                 {
                     // Get the specific node that has an update. If null exit the method
                     // and process no notification
@@ -42,7 +42,7 @@ namespace MegaApp.MegaApi
                     if (megaNode == null) return;
 
                     // Incoming shared folder
-                    if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_INSHARE))
+                    if (megaNode.isFolder() && megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_INSHARE))
                     {
                         if (megaNode.isShared()) // ADDED / UPDATE scenarions
                             OnInSharedFolderAdded(megaNode);
@@ -50,7 +50,7 @@ namespace MegaApp.MegaApi
                             OnInSharedFolderRemoved(megaNode);
                     }
                     // Outgoing shared folder
-                    else if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
+                    else if (megaNode.isFolder() && megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
                     {
                         if (megaNode.isShared()) // ADDED / UPDATE scenarions
                             OnOutSharedFolderAdded(megaNode);
@@ -62,16 +62,20 @@ namespace MegaApp.MegaApi
                         if (megaNode.isRemoved()) // REMOVED Scenario
                         {
                             OnNodeRemoved(megaNode);
-                            OnInSharedFolderRemoved(megaNode);
+
+                            // TEMPORARY FIX for REMOVED INCOMING SHARED FOLDER scenario
+                            // SHOULD ENTER IN THE FIRST IF => REMOVE IT WHEN FIXED IN THE SDK
+                            if (megaNode.isFolder())
+                                OnInSharedFolderRemoved(megaNode);
                         }
                         else // ADDED / UPDATE scenarions
                         {
                             OnNodeAdded(megaNode);
                         }
                     }
-                }                
+                }
+                catch (Exception) { /* Dummy catch, suppress possible exception */ }
             }
-            catch (Exception) { /* Dummy catch, suppress possible exception */ }
         }
 
         public void onReloadNeeded(MegaSDK api)

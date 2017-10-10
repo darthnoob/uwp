@@ -150,11 +150,6 @@ namespace MegaApp.ViewModels.SharedFolders
             });
         }
 
-        private void OnSharedItemsUpdated(object sender, MNode node)
-        {
-            this.GetIncomingSharedItems();
-        }
-
         #endregion
 
         #region Properties

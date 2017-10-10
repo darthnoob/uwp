@@ -23,22 +23,22 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void GetIncomingSharedItems() => base.GetIncomingSharedItems(this.Contact);
+        public void GetIncomingSharedItems() => this.GetIncomingSharedItems(this.Contact);
 
-        public void OnInSharedFolderAdded(object sender, MNode megaNode)
+        private void OnInSharedFolderAdded(object sender, MNode megaNode)
         {
             var user = MegaSdk.getUserFromInShare(megaNode);
 
             if (user.getEmail().Equals(this.Contact.getEmail()))
-                base.OnSharedFolderAdded(sender, megaNode);
+                this.OnSharedFolderAdded(sender, megaNode);
         }
 
-        public void OnInSharedFolderRemoved(object sender, MNode megaNode)
+        private void OnInSharedFolderRemoved(object sender, MNode megaNode)
         {
             var user = MegaSdk.getUserFromInShare(megaNode);
 
             if (user.getEmail().Equals(this.Contact.getEmail()))
-                base.OnSharedFolderRemoved(sender, megaNode);
+                this.OnSharedFolderRemoved(sender, megaNode);
         }
 
         #endregion

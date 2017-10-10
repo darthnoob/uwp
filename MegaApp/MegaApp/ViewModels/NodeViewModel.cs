@@ -548,6 +548,11 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
+        /// <summary>
+        /// Update core data associated with the SDK MNode object
+        /// </summary>
+        /// <param name="megaNode">Node to update</param>
+        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
         public virtual void Update(MNode megaNode, bool externalUpdate = false)
         {
             this.OriginalMNode = megaNode;

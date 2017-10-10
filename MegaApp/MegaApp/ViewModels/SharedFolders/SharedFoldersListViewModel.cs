@@ -35,7 +35,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Cancel any running load process of contacts
         /// </summary>
-        public void CancelLoad()
+        protected void CancelLoad()
         {
             if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
                 LoadingCancelTokenSource.Cancel();
@@ -52,7 +52,7 @@ namespace MegaApp.ViewModels
             this.LoadingCancelToken = LoadingCancelTokenSource.Token;
         }
 
-        public void OnSharedFolderAdded(object sender, MNode megaNode)
+        protected void OnSharedFolderAdded(object sender, MNode megaNode)
         {
             if (megaNode == null) return;
 
@@ -65,7 +65,7 @@ namespace MegaApp.ViewModels
                 UiService.OnUiThread(() =>
                 {
                     try { node.Update(megaNode, true); }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
             }
             else
@@ -77,12 +77,12 @@ namespace MegaApp.ViewModels
                         this.ItemCollection.Items.Add(NodeService.CreateNewSharedFolder(
                             this.MegaSdk, App.AppInformation, megaNode, this));
                     }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
             }
         }
 
-        public void OnSharedFolderRemoved(object sender, MNode megaNode)
+        protected void OnSharedFolderRemoved(object sender, MNode megaNode)
         {
             if (megaNode == null) return;
 
@@ -95,7 +95,7 @@ namespace MegaApp.ViewModels
                 UiService.OnUiThread(() =>
                 {
                     try { this.ItemCollection.Items.Remove(node); }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
             }
         }
