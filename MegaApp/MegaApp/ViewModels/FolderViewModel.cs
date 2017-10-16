@@ -106,7 +106,7 @@ namespace MegaApp.ViewModels
         private void SelectionChanged()
         {
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.HasSelectedItems) ||
                     this.ItemCollection.MoreThanOneSelected;
             else
                 this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;

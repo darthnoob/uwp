@@ -828,7 +828,7 @@
                                         Label="{Binding DownloadText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <AppBarButton.Icon>
                                             <PathIcon
                                                 HorizontalAlignment="Center"
@@ -841,7 +841,7 @@
                                         Label="{Binding LeaveShareText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
-                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <AppBarButton.Icon>
                                             <PathIcon
                                                 HorizontalAlignment="Center"
@@ -865,7 +865,7 @@
                                     <AppBarSeparator 
                                         Margin="-12,-12,-12,0"
                                         VerticalAlignment="Center"
-                                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}"/>
                                 </CommandBar>
 
                                 <!--  PERMANENT SHARED ITEMS TOP COMMAND BAR (ALL DEVICES)  -->

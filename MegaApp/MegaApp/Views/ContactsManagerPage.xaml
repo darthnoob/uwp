@@ -87,7 +87,7 @@
                             ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
                             Command="{Binding RemoveContactCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -123,7 +123,7 @@
                             ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
                             Command="{Binding AcceptContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxHeight="14" MaxWidth="14">
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -137,7 +137,7 @@
                             ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                             Command="{Binding DeclineContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -186,7 +186,7 @@
                             ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
                             Command="{Binding RemindContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Viewbox MaxHeight="16" MaxWidth="16">
                                 <FontIcon Glyph="&#xE1F2;"/>
                             </Viewbox>
@@ -197,7 +197,7 @@
                             ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
                             Command="{Binding CancelContactRequestCommand}"
                             Click="OnButtonClick"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -414,7 +414,7 @@
                         Label="{Binding RemoveContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"                    
                         ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -467,7 +467,7 @@
                         Label="{Binding AcceptContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="14" MaxWidth="14">
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -481,7 +481,7 @@
                         Label="{Binding DenyContactText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -547,7 +547,7 @@
                         Label="{Binding RemindContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="12" MaxWidth="12">
                             <FontIcon Glyph="&#xE1F2;"/>
                         </Viewbox>
@@ -558,7 +558,7 @@
                         Label="{Binding CancelInviteText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"

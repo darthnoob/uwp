@@ -162,17 +162,17 @@ namespace MegaApp.ViewModels
         protected void SelectionChanged()
         {
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.OneOrMoreSelected) ||
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.HasSelectedItems) ||
                     this.MoreThanOneSelected;
             else
-                this.IsMultiSelectActive = this.IsMultiSelectActive && this.OneOrMoreSelected;
+                this.IsMultiSelectActive = this.IsMultiSelectActive && this.HasSelectedItems;
 
             if (this.HasSelectedItems)
                 this.FocusedItem = this.SelectedItems.Last();
 
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
-                nameof(this.OnlyOneSelectedItem), nameof(this.OneOrMoreSelected),
-                nameof(this.MoreThanOneSelected), nameof(this.HasAllItemsSelected));
+                nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
+                nameof(this.HasAllItemsSelected));
 
             this.OnSelectedItemsCollectionChanged();
         }
@@ -306,8 +306,6 @@ namespace MegaApp.ViewModels
         public bool HasSelectedItems => this.SelectedItems?.Count > 0;
 
         public bool OnlyOneSelectedItem => this.SelectedItems?.Count == 1;
-
-        public bool OneOrMoreSelected => this.SelectedItems?.Count >= 1;
 
         public bool MoreThanOneSelected => this.SelectedItems?.Count > 1;
 

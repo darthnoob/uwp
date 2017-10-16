@@ -322,7 +322,17 @@
                 Foreground="{StaticResource MegaRedColorBrush}"
                 Text="{Binding OrderTypeAndNumberOfItems, Mode=OneWay}"
                 Opacity="0.8"
-                VerticalAlignment="Center" />
+                VerticalAlignment="Center"
+                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+            <TextBlock
+                Grid.Column="1"
+                Margin="8,0,0,12"
+                FontSize="13"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
+                Opacity="0.8"
+                VerticalAlignment="Center"
+                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}"/>
         </Grid>
     </ControlTemplate>
     

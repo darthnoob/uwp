@@ -66,7 +66,7 @@
                             Label="{Binding DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -79,7 +79,7 @@
                             Label="{Binding LeaveShareText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -111,7 +111,7 @@
                             Label="{Binding DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -124,7 +124,7 @@
                             Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -277,7 +277,7 @@
                         Label="{Binding DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -290,7 +290,7 @@
                         Label="{Binding LeaveShareText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -321,7 +321,7 @@
                         Label="{Binding DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -334,7 +334,7 @@
                         Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.OneOrMoreSelected, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
