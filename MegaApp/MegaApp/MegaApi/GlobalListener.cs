@@ -42,36 +42,27 @@ namespace MegaApp.MegaApi
                     if (megaNode == null) return;
 
                     // Incoming shared folder
-                    if (megaNode.isFolder() && megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_INSHARE))
+                    if (megaNode.isInShare())
                     {
-                        if (megaNode.isShared()) // ADDED / UPDATE scenarions
-                            OnInSharedFolderAdded(megaNode);
-                        else // REMOVED Scenario
+                        if (megaNode.isRemoved()) // REMOVED Scenario
                             OnInSharedFolderRemoved(megaNode);
+                        else // ADDED / UPDATE scenarions
+                            OnInSharedFolderAdded(megaNode);
                     }
                     // Outgoing shared folder
-                    else if (megaNode.isFolder() && megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
+                    else if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
                     {
-                        if (megaNode.isShared()) // ADDED / UPDATE scenarions
+                        if (megaNode.isOutShare()) // ADDED / UPDATE scenarions
                             OnOutSharedFolderAdded(megaNode);
                         else // REMOVED Scenario
                             OnOutSharedFolderRemoved(megaNode);
                     }
-                    else
+                    else // Normal node
                     {
                         if (megaNode.isRemoved()) // REMOVED Scenario
-                        {
                             OnNodeRemoved(megaNode);
-
-                            // TEMPORARY FIX for REMOVED INCOMING SHARED FOLDER scenario
-                            // SHOULD ENTER IN THE FIRST IF => REMOVE IT WHEN FIXED IN THE SDK
-                            if (megaNode.isFolder())
-                                OnInSharedFolderRemoved(megaNode);
-                        }
                         else // ADDED / UPDATE scenarions
-                        {
                             OnNodeAdded(megaNode);
-                        }
                     }
                 }
                 catch (Exception) { /* Dummy catch, suppress possible exception */ }

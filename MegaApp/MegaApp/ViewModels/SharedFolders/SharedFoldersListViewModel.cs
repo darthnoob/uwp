@@ -62,23 +62,20 @@ namespace MegaApp.ViewModels
             // If exists update it
             if (node != null)
             {
-                UiService.OnUiThread(() =>
-                {
-                    try { node.Update(megaNode, true); }
-                    catch (Exception) { /* Dummy catch, supress possible exception */ }
-                });
+                try { OnUiThread(() => node.Update(megaNode, true)); }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
             }
             else
             {
-                UiService.OnUiThread(() =>
+                try
                 {
-                    try
+                    OnUiThread(() =>
                     {
                         this.ItemCollection.Items.Add(NodeService.CreateNewSharedFolder(
                             this.MegaSdk, App.AppInformation, megaNode, this));
-                    }
-                    catch (Exception) { /* Dummy catch, supress possible exception */ }
-                });
+                    });
+                }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
             }
         }
 
@@ -92,11 +89,8 @@ namespace MegaApp.ViewModels
             // If node is found in current view, process the remove action
             if (node != null)
             {
-                UiService.OnUiThread(() =>
-                {
-                    try { this.ItemCollection.Items.Remove(node); }
-                    catch (Exception) { /* Dummy catch, supress possible exception */ }
-                });
+                try { OnUiThread(() => this.ItemCollection.Items.Remove(node)); }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
             }
         }
 

@@ -245,11 +245,7 @@ namespace MegaApp.ViewModels
         public ObservableCollection<T> Items
         {
             get { return _items; }
-            set
-            {
-                SetField(ref _items, value);
-                this.OnItemsCollectionChanged();
-            }
+            set { SetField(ref _items, value); }
         }
 
         private ObservableCollection<T> _selectedItems;

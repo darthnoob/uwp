@@ -76,7 +76,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         // If node creation failed for some reason, continue with the rest and leave this one
                         if (node == null) continue;
 
-                        OnUiThread(() => this.ItemCollection.Items.Add((IMegaSharedFolderNode)node));
+                        OnUiThread(() => this.ItemCollection.Items.Add(node));
                     }
                 }
                 catch (OperationCanceledException)
@@ -92,6 +92,8 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public void SortBy(OutgoingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
         {
+            OnUiThread(() => this.ItemCollection.DisableCollectionChangedDetection());
+
             switch (sortOption)
             {
                 case OutgoingSharesSortOrderType.ORDER_NAME:
@@ -103,8 +105,10 @@ namespace MegaApp.ViewModels.SharedFolders
                     break;
 
                 default:
-                    return;
+                    break;
             }
+
+            OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
 
         private void OnItemCollectionChanged()

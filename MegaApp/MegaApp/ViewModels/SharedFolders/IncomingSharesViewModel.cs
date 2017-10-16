@@ -90,6 +90,8 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public void SortBy(IncomingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
         {
+            OnUiThread(() => this.ItemCollection.DisableCollectionChangedDetection());
+
             switch (sortOption)
             {
                 case IncomingSharesSortOrderType.ORDER_NAME:
@@ -125,8 +127,10 @@ namespace MegaApp.ViewModels.SharedFolders
                     break;
 
                 default:
-                    return;
+                    break;
             }
+
+            OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
 
         protected void OnItemCollectionChanged()
