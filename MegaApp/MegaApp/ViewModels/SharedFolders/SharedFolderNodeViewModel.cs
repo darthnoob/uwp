@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
@@ -16,6 +17,7 @@ namespace MegaApp.ViewModels.SharedFolders
             this.Parent = parent;
 
             this.DownloadCommand = new RelayCommand(Download);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
 
             this.Update(megaNode);
         }
@@ -23,10 +25,17 @@ namespace MegaApp.ViewModels.SharedFolders
         #region Commands
 
         public override ICommand DownloadCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
         #region Methods
+
+        private void ParentItemCollectionOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Parent.ItemCollection.OnlyOneSelectedItem))
+                OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
+        }
 
         /// <summary>
         /// Update core data associated with the SDK MNode object
@@ -50,6 +59,15 @@ namespace MegaApp.ViewModels.SharedFolders
             }
 
             base.Download(TransferService.MegaTransfers);
+        }
+
+        private void OpenInformationPanel()
+        {
+            if (this.Parent.ItemCollection.OnlyOneSelectedItem)
+            {
+                if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
+                    this.Parent.OpenInformationPanelCommand.Execute(null);
+            }
         }
 
         public async Task<bool> RemoveSharedAccessAsync()
@@ -78,7 +96,30 @@ namespace MegaApp.ViewModels.SharedFolders
         protected new SharedFoldersListViewModel Parent
         {
             get { return _parent; }
-            set { SetField(ref _parent, value); }
+            set
+            {
+                if (_parent?.ItemCollection != null)
+                    _parent.ItemCollection.PropertyChanged -= ParentItemCollectionOnPropertyChanged;
+
+                SetField(ref _parent, value);
+
+                if (_parent?.ItemCollection != null)
+                    _parent.ItemCollection.PropertyChanged += ParentItemCollectionOnPropertyChanged;
+            }
+        }
+
+        private string _contactsText;
+        public string ContactsText
+        {
+            get { return _contactsText; }
+            set { SetField(ref _contactsText, value); }
+        }
+
+        private string _folderLocation;
+        public string FolderLocation
+        {
+            get { return _folderLocation; }
+            set { SetField(ref _folderLocation, value); }
         }
 
         private string _owner;
@@ -112,16 +153,15 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 switch (this.AccessLevel)
                 {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadOnly");
                     case MShareType.ACCESS_READWRITE:
                         return ResourceService.UiResources.GetString("UI_PermissionReadAndWrite");
                     case MShareType.ACCESS_FULL:
-                        return ResourceService.UiResources.GetString("UI_PermissionFullAccess");
-                    case MShareType.ACCESS_UNKNOWN:
                     case MShareType.ACCESS_OWNER:
+                        return ResourceService.UiResources.GetString("UI_PermissionFullAccess");
+                    case MShareType.ACCESS_READ:                        
+                    case MShareType.ACCESS_UNKNOWN:                    
                     default:
-                        return string.Empty;
+                        return ResourceService.UiResources.GetString("UI_PermissionReadOnly");
                 }
             }
         }
@@ -132,20 +172,27 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 switch (this.AccessLevel)
                 {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadOnlyPathData");
                     case MShareType.ACCESS_READWRITE:
                         return ResourceService.VisualResources.GetString("VR_PermissionsReadAndWritePathData");
                     case MShareType.ACCESS_FULL:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsFullAccessPathData");
-                    case MShareType.ACCESS_UNKNOWN:
                     case MShareType.ACCESS_OWNER:
+                        return ResourceService.VisualResources.GetString("VR_PermissionsFullAccessPathData");
+                    case MShareType.ACCESS_READ:                        
+                    case MShareType.ACCESS_UNKNOWN:                    
                     default:
-                        return string.Empty;
+                        return ResourceService.VisualResources.GetString("VR_PermissionsReadOnlyPathData");
                 }
             }
         }
-        
+
+        public bool OnlyOneSelectedItem => this.Parent.ItemCollection.OnlyOneSelectedItem;
+
+        #region UiResources
+
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
+
+        #endregion
+
         #endregion
     }
 }

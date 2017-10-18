@@ -20,6 +20,9 @@ namespace MegaApp.ViewModels
             this.DownloadCommand = new RelayCommand(Download);
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
+
+            this.CloseInformationPanelCommand = new RelayCommand(CloseInformationPanel);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
         }
 
         #region Commands
@@ -27,6 +30,9 @@ namespace MegaApp.ViewModels
         public ICommand DownloadCommand { get; }
         public ICommand LeaveShareCommand { get; }
         public ICommand RemoveSharedAccessCommand { get; }
+
+        public ICommand CloseInformationPanelCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
@@ -244,6 +250,18 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void CloseInformationPanel()
+        {
+            this.ItemCollection.OnlyAllowSingleSelect();
+            this.IsPanelOpen = false;
+        }
+
+        private void OpenInformationPanel()
+        {
+            this.ItemCollection.OnlyAllowSingleSelect();
+            this.IsPanelOpen = true;
+        }
+
         #endregion
 
         #region Properties
@@ -273,18 +291,28 @@ namespace MegaApp.ViewModels
             ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
             string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
 
+        private bool _isPanelOpen;
+        public bool IsPanelOpen
+        {
+            get { return _isPanelOpen; }
+            set { SetField(ref _isPanelOpen, value); }
+        }
+
         #endregion
 
         #region UiResources
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+        
 
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
@@ -296,6 +324,7 @@ namespace MegaApp.ViewModels
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 
         #endregion
     }

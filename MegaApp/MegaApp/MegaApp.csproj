@@ -126,6 +126,9 @@
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
+    <Compile Include="UserControls\SharedFolderInformationPanel.xaml.cs">
+      <DependentUpon>SharedFolderInformationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
@@ -176,6 +179,7 @@
     <Compile Include="ViewModels\SharedFolders\OutgoingSharesViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -412,6 +416,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UserControls\SharedFolderInformationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ContactsManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

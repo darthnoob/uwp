@@ -20,6 +20,8 @@ namespace MegaApp.Views
 
     public sealed partial class SharedFoldersPage : BaseSharedFoldersPage
     {
+        private const double InformationPanelMinWidth = 432;
+
         public SharedFoldersPage()
         {
             this.InitializeComponent();
@@ -32,17 +34,22 @@ namespace MegaApp.Views
 
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected += OnAllSelected;
-
+            
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected += OnAllSelected;
+
+            this.SharedFolderInformationSplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsInformationViewOpenPropertyChanged);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected -= OnAllSelected;
 
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
@@ -51,6 +58,23 @@ namespace MegaApp.Views
 
             this.ViewModel.Deinitialize();
             base.OnNavigatedFrom(e);
+        }
+
+        private void IsInformationViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (this.SharedFolderInformationSplitView.IsPaneOpen)
+            {
+                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.SharedFolderInformationSplitView.ActualWidth < 600)
+                {
+                    this.SharedFolderInformationSplitView.OpenPaneLength = this.SharedFolderInformationSplitView.ActualWidth;
+                    AppService.SetAppViewBackButtonVisibility(true);
+                    return;
+                }
+
+                this.SharedFolderInformationSplitView.OpenPaneLength = InformationPanelMinWidth;
+            }
+
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
@@ -79,6 +103,34 @@ namespace MegaApp.Views
                 listView.SelectionMode = ListViewSelectionMode.Extended;
             else
                 listView.SelectionMode = ListViewSelectionMode.Single;
+        }
+
+        private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
+        {
+            // Needed to avoid extrange behaviors during the view update
+            DisableViewsBehaviors();
+
+            // First save the current selected item to restore it after enable/disable the single select mode
+            var selectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem;
+
+            var listView = this.GetSelectedListView();
+            if(isEnabled)
+            {
+                listView.SelectionMode = ListViewSelectionMode.Single;
+            }
+            else
+            {
+                if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                    listView.SelectionMode = ListViewSelectionMode.Extended;
+                else
+                    listView.SelectionMode = ListViewSelectionMode.Single;
+            }
+
+            // Restore the selected item
+            listView.SelectedItem = selectedItem;
+
+            // Restore the view behaviors again
+            EnableViewsBehaviors();
         }
 
         /// <summary>
@@ -168,6 +220,16 @@ namespace MegaApp.Views
                 ((ListViewBase)sender).SelectedItems?.Clear();
 
             ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+        }
+
+        private void OnOpenInformationPanel(object sender, EventArgs e)
+        {
+            this.SharedFolderInformationSplitView.IsPaneOpen = true;
+        }
+
+        private void OnCloseInformationPanel(object sender, EventArgs e)
+        {
+            this.SharedFolderInformationSplitView.IsPaneOpen = false;
         }
     }
 }

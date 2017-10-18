@@ -1128,4 +1128,44 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Remove shared access</value>
     <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_ClosePanel" xml:space="preserve">
+    <value>Close panel</value>
+    <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Information" xml:space="preserve">
+    <value>Information</value>
+    <comment>Label for any 'Information' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Contents" xml:space="preserve">
+    <value>Contents</value>
+    <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Created" xml:space="preserve">
+    <value>Created</value>
+    <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FolderLocation" xml:space="preserve">
+    <value>Folder location</value>
+    <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FolderModified" xml:space="preserve">
+    <value>Folder modified</value>
+    <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Owner" xml:space="preserve">
+    <value>Owner</value>
+    <comment>Label for any 'Owner' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Permissions" xml:space="preserve">
+    <value>Permissions</value>
+    <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedOn" xml:space="preserve">
+    <value>Shared on</value>
+    <comment>Label for any 'Shared on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedTo" xml:space="preserve">
+    <value>Shared to</value>
+    <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

@@ -35,6 +35,8 @@ namespace MegaApp.ViewModels
         {
             base.Update(megaNode, externalUpdate);
 
+            this.FolderLocation = SdkService.MegaSdk.getNodePath(megaNode);
+
             var outShares = SdkService.MegaSdk.getOutShares(megaNode);
             var outSharesSize = outShares.size();
             if (outSharesSize == 1)
@@ -87,17 +89,6 @@ namespace MegaApp.ViewModels
                         string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), this.Name));
                 });
             }
-        }
-
-        #endregion
-
-        #region Properties
-
-        private string _contactsText;
-        public string ContactsText
-        {
-            get { return _contactsText; }
-            set { SetField(ref _contactsText, value); }
         }
 
         #endregion

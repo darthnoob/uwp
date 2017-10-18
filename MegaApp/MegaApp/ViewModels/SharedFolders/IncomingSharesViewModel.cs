@@ -25,7 +25,7 @@ namespace MegaApp.ViewModels.SharedFolders
             if (App.GlobalListener == null) return;
             App.GlobalListener.InSharedFolderAdded += this.OnSharedFolderAdded;
             App.GlobalListener.InSharedFolderRemoved += this.OnSharedFolderRemoved;
-        }
+        }        
 
         public void Deinitialize()
         {
@@ -156,7 +156,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #endregion
 
-        #region Properties
+        #region Properties        
 
         public string OrderTypeAndNumberOfItems
         {
