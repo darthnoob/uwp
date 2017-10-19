@@ -140,7 +140,7 @@
                                 VerticalAlignment="Center" />
                         </Grid>
                         
-                        <RelativePanel Grid.Row="2" Margin="24,12">
+                        <RelativePanel Grid.Row="1" Margin="24,12">
                             <TextBlock
                                 x:Name="SizeLabelText"
                                 Opacity="0.4"
@@ -152,15 +152,15 @@
                                 Text="{x:Bind ViewModel.ContentsLabelText, Mode=OneTime}" />
                             <TextBlock x:Name="ContentsText" Text="{x:Bind ViewModel.SharedFolder.Information, Mode=OneWay}" />
                             <TextBlock
-                                x:Name="CreatedLabelText"
+                                x:Name="DateCreatedLabelText"
                                 Opacity="0.4"
-                                Text="{x:Bind ViewModel.CreatedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="CreationDate" Text="{x:Bind ViewModel.SharedFolder.CreationTime, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.DateCreatedLabelText, Mode=OneWay}" />
+                            <TextBlock x:Name="DateCreated" Text="{x:Bind ViewModel.SharedFolder.CreationTime, Mode=OneWay}" />
                             <TextBlock
-                                x:Name="ModifiedLabelText"
+                                x:Name="DateModifiedLabelText"
                                 Opacity="0.4"
-                                Text="{x:Bind ViewModel.ModifiedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="ModificationDate" Text="{x:Bind ViewModel.SharedFolder.ModificationTime, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.DateModifiedLabelText, Mode=OneWay}" />
+                            <TextBlock x:Name="DateModified" Text="{x:Bind ViewModel.SharedFolder.ModificationTime, Mode=OneWay}" />
 
                             <TextBlock
                                 x:Name="SharedToLabelText"
@@ -230,67 +230,98 @@
                     <Grid Margin="0,0,0,48">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <StackPanel
+
+                        <Grid
                             Grid.Row="0"
-                            Margin="24,20,24,0"
-                            Orientation="Vertical">
+                            Margin="24,32,24,44"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Path
+                                Grid.Column="0"
+                                Height="60" Width="60"
+                                Data="{x:Bind ViewModel.SharedFolder.DefaultImagePathData, Mode=OneWay}"
+                                Stretch="Uniform"
+                                Visibility="{x:Bind ViewModel.SharedFolder.PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                                <Path.Fill>
+                                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                                </Path.Fill>
+                            </Path>
                             <TextBlock
-                                FontSize="24"
-                                FontWeight="SemiLight"
-                                Text="{Binding Name, Mode=OneWay}"
+                                Grid.Column="1"
+                                Margin="16,0,0,0"
+                                FontSize="18"
+                                Text="{x:Bind ViewModel.SharedFolder.Name, Mode=OneWay}"
                                 TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap" />
-                            <TextBlock
-                                Margin="0,18,0,0"
-                                FontSize="16"
-                                Opacity="0.4"
-                                Text="{Binding EnableLinkText, Mode=OneTime}" />
-                            <ToggleSwitch
-                                x:Name="PART_EnableLinkSwitch"
-                                Margin="0,12,0,0"
-                                IsOn="{Binding IsExported, Mode=TwoWay}" />
-                        </StackPanel>
+                                TextWrapping="WrapWholeWords"
+                                VerticalAlignment="Center" />
+                        </Grid>
+
                         <StackPanel
                             Grid.Row="1"
                             Margin="24,12,24,0"
+                            Orientation="Vertical">
+                            <TextBlock
+                                FontSize="16"
+                                Opacity="0.4"
+                                Text="{x:Bind ViewModel.EnableLinkText, Mode=OneTime}" />
+                            <ToggleSwitch
+                                x:Name="EnableLinkSwitch"
+                                Margin="0,12,0,0"
+                                IsOn="{x:Bind ViewModel.SharedFolder.IsExported, Mode=TwoWay}"
+                                Toggled="OnEnableLinkSwitchToggled"/>
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="24,12,24,0"
                             Orientation="Vertical"
-                            Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding SharedFolder.IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                             <RadioButton
-                                x:Name="PART_LinkWithoutKeyRadioButton"
-                                VerticalAlignment="Center"
-                                Content="{Binding LinkWithoutKeyLabelText, Mode=OneTime}" />
+                                x:Name="LinkWithoutKeyRadioButton"
+                                Command="{x:Bind ViewModel.LinkWithoutKeyCommand}"
+                                Content="{x:Bind ViewModel.LinkWithoutKeyLabelText, Mode=OneTime}"
+                                VerticalAlignment="Center"/>
                             <RadioButton
-                                x:Name="PART_DecryptionKeyRadioButton"
-                                VerticalAlignment="Center"
-                                Content="{Binding DecryptionKeyLabelText, Mode=OneTime}" />
+                                x:Name="DecryptionKeyRadioButton"
+                                Command="{x:Bind ViewModel.DecryptionKeyCommand}"
+                                Content="{x:Bind ViewModel.DecryptionKeyLabelText, Mode=OneTime}"
+                                VerticalAlignment="Center"/>
                             <RadioButton
-                                x:Name="PART_LinkWithKeyRadioButton"
-                                VerticalAlignment="Center"
-                                Content="{Binding LinkWithKeyLabelText, Mode=OneTime}"
-                                IsChecked="True" />
+                                x:Name="LinkWithKeyRadioButton"
+                                Command="{x:Bind ViewModel.LinkWithKeyCommand}"
+                                Content="{x:Bind ViewModel.LinkWithKeyLabelText, Mode=OneTime}"
+                                IsChecked="True"
+                                VerticalAlignment="Center"/>
                             <TextBlock
                                 Margin="0,20,0,0"
                                 FontSize="16"
                                 Opacity="0.4"
-                                Text="{Binding SetLinkExpirationDateText, Mode=OneTime}" />
+                                Text="{x:Bind ViewModel.SetLinkExpirationDateText, Mode=OneTime}" />
                             <StackPanel Margin="0,18" Orientation="Horizontal">
                                 <ToggleSwitch
-                                    x:Name="PART_EnableLinkExpirationDateSwitch"
-                                    IsEnabled="{Binding AccountDetails.IsProAccount}"
-                                    IsOn="{Binding LinkWithExpirationTime}" />
+                                    x:Name="EnableLinkExpirationDateSwitch"
+                                    IsEnabled="{x:Bind ViewModel.AccountDetails.IsProAccount}"
+                                    IsOn="{Binding IsLinkWithExpirationTime, Mode=OneWay}"
+                                    Toggled="OnSetExpirationDateSwitchToggled"/>
                                 <CalendarDatePicker
-                                    x:Name="PART_ExpirationDateCalendarDatePicker"
+                                    x:Name="ExpirationDateCalendarDatePicker"
+                                    DateChanged="OnExpirationDateCalendarDataPickerDateChanged"
                                     DateFormat="{}{day.integer(2)}‎/‎{month.integer(2)}‎/‎{year.full}"
-                                    IsEnabled="False" />
+                                    IsEnabled="False"
+                                    Opened="OnExpirationDateCalendarDataPickerOpened"/>
                             </StackPanel>
                         </StackPanel>
                         <Grid
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Margin="24,20,24,0"
-                            Visibility="{Binding ExportLink, Converter={StaticResource StringVisibilityConverter}}">
+                            Visibility="{Binding SharedFolder.ExportLink, Converter={StaticResource StringVisibilityConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -310,27 +341,33 @@
                                     <SolidColorBrush Opacity="0.4" Color="{ThemeResource MegaAppForeground}" />
                                 </Border.BorderBrush>
                                 <StackPanel Margin="12">
-                                    <TextBlock x:Name="PART_ExportLinkBorderTitle" Foreground="{ThemeResource MegaRedColorBrush}" />
-                                    <TextBlock Text="{Binding ExportLink, Mode=OneWay}" TextWrapping="Wrap" />
+                                    <TextBlock 
+                                        Foreground="{ThemeResource MegaRedColorBrush}" 
+                                        Text="{x:Bind ViewModel.ExportLinkBorderTitle, Mode=OneWay}" />
+                                    <TextBlock 
+                                        Text="{x:Bind ViewModel.SharedFolder.ExportLink, Mode=OneWay}" 
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
                             <Button
-                                x:Name="PART_CopyLinkButton"
+                                x:Name="CopyLinkButton"
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Margin="0,0,6,0"
+                                Command="{x:Bind ViewModel.CopyLinkCommand}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center">
-                                <TextBlock Text="{Binding CopyText, Mode=OneTime}" />
+                                <TextBlock Text="{x:Bind ViewModel.CopyText, Mode=OneTime}" />
                             </Button>
                             <Button
-                                x:Name="PART_ShareLinkButton"
+                                x:Name="ShareLinkButton"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Margin="6,0,0,0"
+                                Command="{x:Bind ViewModel.ShareLinkCommand}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Center">
-                                <TextBlock Text="{Binding ShareText, Mode=OneTime}" />
+                                <TextBlock Text="{x:Bind ViewModel.ShareText, Mode=OneTime}" />
                             </Button>
                         </Grid>
                     </Grid>
@@ -445,24 +482,24 @@
                     <VisualState.Setters>
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="ContentsLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
-                        <Setter Target="CreatedLabelText.(RelativePanel.Below)" Value="ContentsLabelText" />
-                        <Setter Target="ModifiedLabelText.(RelativePanel.Below)" Value="CreatedLabelText" />
-                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="ModifiedLabelText" />
+                        <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.Below)" Value="DateCreatedLabelText" />
+                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="SharedToLabelText" />
-                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="ModifiedLabelText" />
+                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="SizeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="ContentsText.(RelativePanel.Below)" Value="SizeText" />
                         <Setter Target="ContentsText.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="CreationDate.(RelativePanel.Below)" Value="ContentsText" />
-                        <Setter Target="CreationDate.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="ModificationDate.(RelativePanel.Below)" Value="CreationDate" />
-                        <Setter Target="ModificationDate.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Contacts.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="DateCreated.(RelativePanel.Below)" Value="ContentsText" />
+                        <Setter Target="DateCreated.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="DateModified.(RelativePanel.Below)" Value="DateCreated" />
+                        <Setter Target="DateModified.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="Contacts.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="Contacts.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="Owner" />
                         <Setter Target="FolderLocation.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Owner.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="Owner.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="Owner.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="Owner" />
                         <Setter Target="Permissions.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -478,21 +515,21 @@
                         <Setter Target="ContentsLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsText.(RelativePanel.Below)" Value="ContentsLabelText" />
                         <Setter Target="ContentsText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="CreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
-                        <Setter Target="CreatedLabelText.Margin" Value="0,36,0,0" />
-                        <Setter Target="CreationDate.(RelativePanel.Below)" Value="CreatedLabelText" />
-                        <Setter Target="ModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="CreatedLabelText" />
-                        <Setter Target="ModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="ModificationDate.(RelativePanel.Below)" Value="ModifiedLabelText" />
-                        <Setter Target="ModificationDate.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
+                        <Setter Target="DateCreatedLabelText.Margin" Value="0,36,0,0" />
+                        <Setter Target="DateCreated.(RelativePanel.Below)" Value="DateCreatedLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="DateCreatedLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.Below)" Value="DateModifiedLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="SharedToLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Contacts.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignBottomWith)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="FolderLocationLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
@@ -510,21 +547,21 @@
                         <Setter Target="ContentsLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsText.(RelativePanel.Below)" Value="ContentsLabelText" />
                         <Setter Target="ContentsText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="CreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
-                        <Setter Target="CreatedLabelText.Margin" Value="0,36,0,0" />
-                        <Setter Target="CreationDate.(RelativePanel.Below)" Value="CreatedLabelText" />
-                        <Setter Target="ModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="CreatedLabelText" />
-                        <Setter Target="ModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="ModificationDate.(RelativePanel.Below)" Value="ModifiedLabelText" />
-                        <Setter Target="ModificationDate.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
+                        <Setter Target="DateCreatedLabelText.Margin" Value="0,36,0,0" />
+                        <Setter Target="DateCreated.(RelativePanel.Below)" Value="DateCreatedLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="DateCreatedLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.Below)" Value="DateModifiedLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="SharedToLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Contacts.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignBottomWith)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="FolderLocationLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
-                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="ModificationDate" />
+                        <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />

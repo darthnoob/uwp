@@ -1035,13 +1035,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Last modified (descending)</value>
     <comment>Label for the menu option to sort the nodes in descending order by modification date (from older to newer) - (String as short as possible).</comment>
   </data>
-  <data name="UI_ListSortedByLastModification" xml:space="preserve">
-    <value>Last modified ({0})</value>
+  <data name="UI_ListSortedByModificationDate" xml:space="preserve">
+    <value>Date Modified ({0})</value>
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByLastModificationMultiSelect" xml:space="preserve">
-    <value>Last modified ({0} of {1})</value>
+  <data name="UI_ListSortedByModificationDateMultiSelect" xml:space="preserve">
+    <value>Date Modified ({0} of {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1112,8 +1112,8 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Access</value>
     <comment>Label for the menu option to sort a list of items by access level - (String as short as possible).</comment>
   </data>
-  <data name="UI_SortOptionLastModified" xml:space="preserve">
-    <value>Last modified</value>
+  <data name="UI_SortOptionDateModified" xml:space="preserve">
+    <value>Date Modified</value>
     <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionName" xml:space="preserve">
@@ -1144,6 +1144,10 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Created</value>
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_DateModified" xml:space="preserve">
+    <value>Date modified</value>
+    <comment>Label for any 'Date modified' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_FolderLocation" xml:space="preserve">
     <value>Folder location</value>
     <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -1167,5 +1171,9 @@ Keep the {0} code because is for include the number of shared folders in runtime
   <data name="UI_SharedTo" xml:space="preserve">
     <value>Shared to</value>
     <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DateCreated" xml:space="preserve">
+    <value>Date created</value>
+    <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

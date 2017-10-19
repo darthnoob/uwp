@@ -122,6 +122,7 @@
                         <!--  OUTGOING SHARES TOP COMMAND BAR (ONLY DESKTOP)  -->
                         <CommandBar 
                             Background="Transparent"
+                            extensions:CommandBarExtensions.HideMoreButton="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}"
                             Visibility="{Binding ContainerType, ConverterParameter=OutShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
                             <AppBarButton
                                 Command="{Binding DownloadCommand}"

@@ -587,7 +587,7 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionLastModified"),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionDateModified"),
                 Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, IncomingSharesSortOrderType.ORDER_MODIFICATION),
                 Command = new RelayCommand(() =>
                 {

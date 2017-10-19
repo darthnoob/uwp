@@ -168,7 +168,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByLastModification"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDate"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevel"),
@@ -192,7 +192,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByLastModificationMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDateMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevelMultiSelect"),
