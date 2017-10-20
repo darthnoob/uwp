@@ -77,6 +77,23 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
+        public override bool CanGoBack
+        {
+            get
+            {
+                if (this.ViewModel?.ActiveView != null && this.ViewModel.ActiveView.IsPanelOpen)
+                    return true;
+
+                return base.CanGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (this.ViewModel?.ActiveView != null && this.ViewModel.ActiveView.IsPanelOpen)
+                this.ViewModel.ActiveView.IsPanelOpen = false;
+        }
+
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
             // Needed to avoid extrange behaviors during the view update
