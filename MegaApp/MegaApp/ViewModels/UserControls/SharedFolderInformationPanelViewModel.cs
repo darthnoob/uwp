@@ -103,6 +103,9 @@ namespace MegaApp.ViewModels.UserControls
         #region UiResources
 
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
+        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
+        public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
 
         // Details pivot
         public string ContentsLabelText => ResourceService.UiResources.GetString("UI_Contents");
@@ -134,6 +137,13 @@ namespace MegaApp.ViewModels.UserControls
             ResourceService.UiResources.GetString("UI_SetExpirationDate"),
             ResourceService.UiResources.GetString("UI_ProOnly"));
 
+        #endregion
+
+        #region VisualResources
+
+        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
+        
         #endregion
     }
 }

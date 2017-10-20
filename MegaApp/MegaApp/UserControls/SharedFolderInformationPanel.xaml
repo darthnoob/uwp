@@ -12,9 +12,42 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance userControlsViewModels:SharedFolderInformationPanelViewModel}">
 
+    <UserControl.Resources>
+        <DataTemplate x:Name="SharedFolderInformationPanelHeader">
+            <Grid
+                Grid.Row="0"
+                Margin="24,32,24,44"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Path
+                    Grid.Column="0"
+                    Height="60" Width="60"
+                    Data="{Binding DefaultImagePathData, Mode=OneWay}"
+                    Stretch="Uniform"
+                    Visibility="{Binding PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    FontSize="18"
+                    Text="{Binding Name, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="WrapWholeWords"
+                    VerticalAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    
     <Grid DataContext="{x:Bind ViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -33,68 +66,51 @@
                 Foreground="{StaticResource MegaRedColorBrush}"
                 Text="{x:Bind ViewModel.InformationText, Mode=OneTime}" />
 
-            <!--<CommandBar
-            x:Name="TopCommandBar"
-            Grid.Column="1"
-            extensions:CommandBarExtensions.HideMoreButton="True"
-            Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton
-                Command="{Binding PreviewCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding PreviewText}"
-                Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
-                <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Command="{Binding DownloadCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding DownloadText}">
-                <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding DownloadPathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Command="{Binding CopyOrMoveCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding CopyOrMoveText}">
-                <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding CopyOrMovePathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Command="{Binding RenameCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding RenameText}">
-                <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding RenamePathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton
-                Command="{Binding RemoveCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding RemoveText}">
-                <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-        </CommandBar>-->
+            <CommandBar
+                x:Name="TopCommandBar"
+                Grid.Column="1"
+                Background="Transparent"
+                extensions:CommandBarExtensions.HideMoreButton="True"
+                Style="{StaticResource MegaCommandBarStyle}">
+                <AppBarButton
+                    Command="{Binding SharedFolder.DownloadCommand}"
+                    Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.LeaveShareCommand}"
+                    Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
+                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.RemoveSharedAccessCommand}"
+                    Label="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
+                    Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon 
+                            Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
         </Grid>
 
         <Pivot
@@ -109,37 +125,10 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-
-                        <Grid
+                        <ContentControl
                             Grid.Row="0"
-                            Margin="24,32,24,44"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Path
-                                Grid.Column="0"
-                                Height="60" Width="60"
-                                Data="{x:Bind ViewModel.SharedFolder.DefaultImagePathData, Mode=OneWay}"
-                                Stretch="Uniform"
-                                Visibility="{x:Bind ViewModel.SharedFolder.PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
-                                <Path.Fill>
-                                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                                </Path.Fill>
-                            </Path>
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="16,0,0,0"
-                                FontSize="18"
-                                Text="{x:Bind ViewModel.SharedFolder.Name, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="WrapWholeWords"
-                                VerticalAlignment="Center" />
-                        </Grid>
-                        
+                            DataContext="{Binding SharedFolder}"
+                            ContentTemplate="{StaticResource SharedFolderInformationPanelHeader}"/>
                         <RelativePanel Grid.Row="1" Margin="24,12">
                             <TextBlock
                                 x:Name="SizeLabelText"
@@ -234,36 +223,10 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-
-                        <Grid
+                        <ContentControl
                             Grid.Row="0"
-                            Margin="24,32,24,44"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Path
-                                Grid.Column="0"
-                                Height="60" Width="60"
-                                Data="{x:Bind ViewModel.SharedFolder.DefaultImagePathData, Mode=OneWay}"
-                                Stretch="Uniform"
-                                Visibility="{x:Bind ViewModel.SharedFolder.PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
-                                <Path.Fill>
-                                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                                </Path.Fill>
-                            </Path>
-                            <TextBlock
-                                Grid.Column="1"
-                                Margin="16,0,0,0"
-                                FontSize="18"
-                                Text="{x:Bind ViewModel.SharedFolder.Name, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="WrapWholeWords"
-                                VerticalAlignment="Center" />
-                        </Grid>
-
+                            DataContext="{Binding SharedFolder}"
+                            ContentTemplate="{StaticResource SharedFolderInformationPanelHeader}"/>
                         <StackPanel
                             Grid.Row="1"
                             Margin="24,12,24,0"
@@ -375,77 +338,49 @@
             </PivotItem>
         </Pivot>
 
-        <!--<CommandBar
+        <CommandBar
             x:Name="BottomCommandBar"
             Grid.Row="2"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
-                Command="{Binding PreviewCommand}"
-                Label="{Binding PreviewText}"
+                Command="{Binding SharedFolder.DownloadCommand}"
+                Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding PreviewText}"
-                Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
                 <AppBarButton.Icon>
                     <PathIcon 
-                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
+                        Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
-                Command="{Binding DownloadCommand}"
-                Label="{Binding DownloadText}"
+                Command="{Binding SharedFolder.LeaveShareCommand}"
+                Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding DownloadText}">
+                ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
+                Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
                 <AppBarButton.Icon>
                     <PathIcon 
-                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                        Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
-                Command="{Binding RemoveCommand}"
-                Label="{Binding RemoveText}"
+                Command="{Binding SharedFolder.RemoveSharedAccessCommand}"
+                Label="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                ToolTipService.ToolTip="{Binding RemoveText}">
+                ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
+                Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton.Icon>
                     <PathIcon 
-                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                        Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <CommandBar.SecondaryCommands>
-                <AppBarButton
-                    Command="{Binding CopyOrMoveCommand}"
-                    Label="{Binding CopyOrMoveText}"
-                    ToolTipService.ToolTip="{Binding CopyOrMoveText}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{Binding CopyOrMovePathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding RenameCommand}"
-                    Label="{Binding RenameText}"
-                    ToolTipService.ToolTip="{Binding RenameText}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{Binding RenamePathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding Parent.CloseNodeDetailsCommand}"
-                    Icon="Cancel"
-                    Label="{Binding CancelText}"
-                    ToolTipService.ToolTip="{Binding CancelText}" />
-            </CommandBar.SecondaryCommands>
-        </CommandBar>-->
+        </CommandBar>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Desktop">
@@ -453,11 +388,10 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}" />
                         <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
                         <Setter Target="PivotControl.Margin" Value="12,0" />
-                        <!--<Setter Target="TopCommandBar.Visibility" Value="Visible" />
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />-->
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -465,12 +399,11 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Height" Value="Auto" />
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="PivotControl.Margin" Value="0,0" />
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                        <!--<Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
-                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />-->
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

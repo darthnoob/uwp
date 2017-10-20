@@ -111,9 +111,9 @@
                                     Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <AppBarButton.Icon>
                                         <PathIcon
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                             </CommandBar.SecondaryCommands>
