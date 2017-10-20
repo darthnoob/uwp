@@ -163,8 +163,9 @@
         <Grid>
             <TextBlock
                 FontFamily="Segoe UI"
-                FontSize="24"
+                FontSize="20"
                 FontWeight="Normal"
+                LineHeight="27"
                 Text="{Binding}" />
         </Grid>
     </DataTemplate>
