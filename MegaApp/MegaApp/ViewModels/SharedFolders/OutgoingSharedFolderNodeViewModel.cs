@@ -20,7 +20,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand RemoveSharedAccessCommand { get; }
+        public override ICommand RemoveSharedAccessCommand { get; }
 
         #endregion
 

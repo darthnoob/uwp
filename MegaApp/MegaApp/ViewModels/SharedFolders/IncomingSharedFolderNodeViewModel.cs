@@ -20,7 +20,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand LeaveShareCommand { get; }
+        public override ICommand LeaveShareCommand { get; }
 
         #endregion
 

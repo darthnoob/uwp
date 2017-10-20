@@ -29,6 +29,13 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #endregion
 
+        #region Virtual Commands
+
+        public virtual ICommand LeaveShareCommand { get; }
+        public virtual ICommand RemoveSharedAccessCommand { get; }
+
+        #endregion
+
         #region Methods
 
         private void ParentItemCollectionOnPropertyChanged(object sender, PropertyChangedEventArgs e)
