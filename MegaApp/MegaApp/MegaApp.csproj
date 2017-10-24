@@ -125,6 +125,7 @@
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\TransferQueue.cs" />
     <Compile Include="Converters\ContainerTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\InputStateToColorConverter.cs" />
     <Compile Include="Converters\InverseContainerTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
@@ -135,19 +136,45 @@
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
     <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="Enums\ConfirmAccountResult.cs" />
     <Compile Include="Enums\ConfirmChangeEmailResult.cs" />
+    <Compile Include="Enums\InputState.cs" />
     <Compile Include="Enums\QueryChangeEmailLinkResult.cs" />
+    <Compile Include="Enums\SignUpLinkType.cs" />
+    <Compile Include="Enums\RecoverLinkType.cs" />
+    <Compile Include="Extensions\IsVisibleAnimation.cs" />
+    <Compile Include="MegaApi\ConfirmAccountRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ConfirmResetPasswordRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmChangeEmailRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\QuerySignUpLinkRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\QueryPasswordLinkRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ResetPasswordRequestListener.cs" />
     <Compile Include="MegaApi\QueryChangeEmailLinkRequestListenerAsync.cs" />
     <Compile Include="Services\DebugService.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="UserControls\SimplePage.cs" />
+    <Compile Include="ViewModels\CreateAccount\ConfirmEmailViewModel.cs" />
     <Compile Include="ViewModels\DebugSettingsViewModel.cs" />
+    <Compile Include="UserControls\PasswordStrengthIndicator.cs" />
+    <Compile Include="UserControls\ActivityIndicator.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelDialogViewModel.cs" />
+    <Compile Include="ViewModels\Login\ConfirmParkAccountViewModel.cs" />
+    <Compile Include="ViewModels\Login\ConfirmRecoveryViewModel.cs" />
+    <Compile Include="ViewModels\Login\RecoverViewModel.cs" />
+    <Compile Include="ViewModels\Login\RecoveryViewModel.cs" />
+    <Compile Include="ViewModels\Login\ParkAccountViewModel.cs" />
+    <Compile Include="ViewModels\Login\ForgotPasswordViewModel.cs" />
+    <Compile Include="Views\CreateAccount\ConfirmEmailPage.xaml.cs">
+      <DependentUpon>ConfirmEmailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateAccount\ConfirmAccountPage.xaml.cs">
+      <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\AlertDialog.xaml.cs">
       <DependentUpon>AlertDialog.xaml</DependentUpon>
     </Compile>
@@ -197,11 +224,9 @@
     <Compile Include="MegaApi\ChangeEmailRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ChangePasswordRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CleanRubbishBinRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\ConfirmAccountRequestListener.cs" />
     <Compile Include="MegaApi\CopyNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\SubmitPurchaseReceiptRequestListenerAsync.cs" />
     <Compile Include="MegaApi\CreateAccountRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\CreateAccountRequestListener.cs" />
     <Compile Include="MegaApi\DisableExportRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ExportNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\FastLoginRequestListenerAsync.cs" />
@@ -237,6 +262,24 @@
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\ConfirmParkAccountPage.xaml.cs">
+      <DependentUpon>ConfirmParkAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\ConfirmRecoveryPage.xaml.cs">
+      <DependentUpon>ConfirmRecoveryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\RecoverPage.xaml.cs">
+      <DependentUpon>RecoverPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\RecoveryPage.xaml.cs">
+      <DependentUpon>RecoveryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\ParkAccountPage.xaml.cs">
+      <DependentUpon>ParkAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
+      <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
@@ -295,14 +338,14 @@
     <Compile Include="ViewModels\BaseUiViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CloudDriveViewModel.cs" />
-    <Compile Include="ViewModels\ConfirmAccountViewModel.cs" />
-    <Compile Include="ViewModels\CreateAccountViewModel.cs" />
+    <Compile Include="ViewModels\CreateAccount\ConfirmAccountViewModel.cs" />
+    <Compile Include="ViewModels\CreateAccount\CreateAccountViewModel.cs" />
     <Compile Include="ViewModels\FileNodeViewModel.cs" />
     <Compile Include="ViewModels\FolderNodeViewModel.cs" />
     <Compile Include="ViewModels\FolderViewModel.cs" />
     <Compile Include="ViewModels\ImageNodeViewModel.cs" />
     <Compile Include="ViewModels\LoginAndCreateAccountViewModel.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingSectionViewModel.cs" />
     <Compile Include="ViewModels\PreviewImageViewModel.cs" />
@@ -314,9 +357,6 @@
     <Compile Include="ViewModels\UserDataViewModel.cs" />
     <Compile Include="Views\CloudDrivePage.xaml.cs">
       <DependentUpon>CloudDrivePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConfirmAccountPage.xaml.cs">
-      <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginAndCreateAccountPage.xaml.cs">
       <DependentUpon>LoginAndCreateAccountPage.xaml</DependentUpon>
@@ -372,6 +412,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\CreateAccount\ConfirmEmailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CreateAccount\ConfirmAccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\AlertDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -402,6 +450,30 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Login\ConfirmParkAccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login\ConfirmRecoveryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login\RecoverPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login\RecoveryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login\ParkAccountPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Login\ForgotPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -419,10 +491,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CloudDrivePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConfirmAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

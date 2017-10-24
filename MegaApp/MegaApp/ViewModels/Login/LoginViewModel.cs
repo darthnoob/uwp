@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using ForgotPasswordPage = MegaApp.Views.Login.ForgotPasswordPage;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.Login
 {
     public class LoginViewModel : BaseSdkViewModel
     {
         public LoginViewModel()
         {
             this.ControlState = true;
+            this.LoginCommand = new RelayCommand(Login);
+            this.ForgotMyPasswordCommand = new RelayCommand(ForgotMyPassword);
         }
 
         #region Methods
@@ -33,7 +37,10 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void Login()
         {
-            if (!CheckInputParametersAsync()) return;
+            SetWarning(false, string.Empty);
+            SetInputState();
+
+            if (!CheckInputParameters()) return;
 
             var login = new LoginRequestListenerAsync();
             login.ServerBusy += OnServerBusy;
@@ -42,6 +49,7 @@ namespace MegaApp.ViewModels
             try
             {
                 this.ControlState = false;
+                this.LoginButtonState = false;
                 this.IsBusy = true;
 
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
@@ -54,7 +62,7 @@ namespace MegaApp.ViewModels
                 // Do nothing, app is already logging out
                 return;
             }
-           
+
             // Set default error content
             var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
             switch (result)
@@ -67,7 +75,7 @@ namespace MegaApp.ViewModels
 
                     // Fetch nodes from MEGA
                     if (!await this.FetchNodes()) return;
-                    
+
                     // Navigate to the main page to load the main application for the user
                     NavigateService.Instance.Navigate(typeof(MainPage), true,
                         NavigationObject.Create(this.GetType(), NavigationActionType.Login));
@@ -95,35 +103,69 @@ namespace MegaApp.ViewModels
             }
 
             this.ControlState = true;
+            this.LoginButtonState = true;
             this.IsBusy = false;
-
+           
             // Show error message
-            OnUiThread(async () => await DialogService.ShowAlertAsync(this.LoginText, errorContent));
+            SetWarning(true, errorContent);
+            SetInputState(InputState.Warning, InputState.Warning);
         }
 
-        private bool CheckInputParametersAsync()
+        private void ForgotMyPassword()
+        {
+            NavigateService.Instance.Navigate(typeof(ForgotPasswordPage), true);
+        }
+
+        private void SetWarning(bool isVisible, string warningText)
+        {
+            if (isVisible)
+            {
+                // First text and then display
+                this.WarningText = warningText;
+                this.IsWarningVisible = true;
+            }
+            else
+            {
+                // First remove and than clean text
+                this.IsWarningVisible = false;
+                this.WarningText = warningText;
+            }
+        }
+
+        private void SetInputState(
+            InputState email = InputState.Normal, 
+            InputState password = InputState.Normal)
+        {
+            OnUiThread(() =>
+            {
+                this.EmailInputState = email;
+                this.PasswordInputState = password;
+            });
+        }
+
+        private void SetState()
+        {
+            var enabled = !string.IsNullOrEmpty(this.Email) &&
+                          !string.IsNullOrWhiteSpace(this.Email) &&
+                          !string.IsNullOrEmpty(this.Password);
+
+            OnUiThread(() => this.LoginButtonState = enabled);
+        }
+
+        private bool CheckInputParameters()
         {
             if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
             {
-                OnUiThread(async () =>
-                {
-                    await DialogService.ShowAlertAsync(this.LoginText,
-                        ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
-                });
-                return false;
-            }
-            
-            if(!ValidationService.IsValidEmail(this.Email))
-            {
-                OnUiThread(async () =>
-                {
-                    await DialogService.ShowAlertAsync(this.LoginText,
-                        ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat"));
-                });
+                SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+                SetInputState(InputState.Warning, InputState.Warning);
                 return false;
             }
 
-            return true;
+            if (ValidationService.IsValidEmail(this.Email)) return true;
+
+            SetWarning(true, ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat"));
+            SetInputState(InputState.Warning);
+            return false;
         }
 
         /// <summary>
@@ -206,27 +248,90 @@ namespace MegaApp.ViewModels
                 return false;
             }
         }
-        
-        #endregion
-        
-        #region Properties
 
-        public string Email { get; set; }
-        public string Password { get; set; }
+        #endregion
+
+        #region Commands
+
+        public ICommand LoginCommand { get; }
+        public ICommand ForgotMyPasswordCommand { get; }
+
+        #endregion
+
+        #region Properties
+       
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                SetField(ref _email, value);
+                SetState();
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                SetField(ref _password, value);
+                SetState();
+            }
+        }
+       
         public string SessionKey { get; set; }
+
+        private bool _isWarningVisible;
+        public bool IsWarningVisible
+        {
+            get { return _isWarningVisible; }
+            set { SetField(ref _isWarningVisible, value); }
+        }
+
+        private bool _loginButtonState;
+        public bool LoginButtonState
+        {
+            get { return _loginButtonState; }
+            set { SetField(ref _loginButtonState, value); }
+        }
+
+        private string _warningText;
+        public string WarningText
+        {
+            get { return _warningText; }
+            set { SetField(ref _warningText, value); }
+        }
+
+        private InputState _emailInputState;
+        public InputState EmailInputState
+        {
+            get { return _emailInputState; }
+            set { SetField(ref _emailInputState, value); }
+        }
+
+        private InputState _passwordInputState;
+        public InputState PasswordInputState
+        {
+            get { return _passwordInputState; }
+            set { SetField(ref _passwordInputState, value); }
+        }
 
         #endregion
 
         #region UiResources
 
         public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
-        public string LoginText => ResourceService.UiResources.GetString("UI_Login");
+        public string LoginText => ResourceService.UiResources.GetString("UI_LoginWithSpace");
         public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
+        public string ForgotMyPasswordText => ResourceService.UiResources.GetString("UI_ForgotMyPassword");
 
         #endregion
 
         #region ProgressMessages
-       
+
         private string _progressHeaderText;
         public string ProgressHeaderText
         {
@@ -243,4 +348,5 @@ namespace MegaApp.ViewModels
 
         #endregion
     }
+
 }

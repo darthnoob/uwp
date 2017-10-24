@@ -1,0 +1,237 @@
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+
+namespace MegaApp.UserControls
+{
+    public class ActivityIndicator : ContentControl
+    {
+        /// <summary>
+        /// Gets or sets the header text.
+        /// </summary>
+        /// <value>The header text</value>
+        public string HeaderText
+        {
+            get { return (string)GetValue(HeaderTextProperty); }
+            set { SetValue(HeaderTextProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="HeaderText" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderTextProperty =
+            DependencyProperty.Register(
+                nameof(HeaderText), 
+                typeof(string), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the sub header text.
+        /// </summary>
+        /// <value>The sub header text</value>
+        public string SubHeaderText
+        {
+            get { return (string)GetValue(SubHeaderTextProperty); }
+            set { SetValue(SubHeaderTextProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="SubHeaderText" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SubHeaderTextProperty =
+            DependencyProperty.Register(
+                nameof(SubHeaderText),
+                typeof(string), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the header font size.
+        /// </summary>
+        /// <value>The header text font size</value>
+        public double HeaderFontSize
+        {
+            get { return (double)GetValue(HeaderFontSizeProperty); }
+            set { SetValue(HeaderFontSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="HeaderFontSize" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderFontSizeProperty =
+            DependencyProperty.Register(
+                nameof(HeaderFontSize),
+                typeof(double), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(24));
+
+        /// <summary>
+        /// Gets or sets the sub header font size.
+        /// </summary>
+        /// <value>The sub header text font size</value>
+        public double SubHeaderFontSize
+        {
+            get { return (double)GetValue(SubHeaderFontSizeProperty); }
+            set { SetValue(SubHeaderFontSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="SubHeaderFontSize" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SubHeaderFontSizeProperty =
+            DependencyProperty.Register(
+                nameof(SubHeaderFontSize),
+                typeof(double), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(16));
+
+        /// <summary>
+        /// Gets or sets the header foreground color.
+        /// </summary>
+        /// <value>The icon to show as home button</value>
+        public Brush HeaderForeground
+        {
+            get { return (Brush)GetValue(HeaderForegroundProperty); }
+            set { SetValue(HeaderForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="HeaderForeground" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HeaderForegroundProperty =
+            DependencyProperty.Register(
+                nameof(HeaderForeground),
+                typeof(Brush), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the sub header foreground color.
+        /// </summary>
+        /// <value>The icon to show as home button</value>
+        public Brush SubHeaderForeground
+        {
+            get { return (Brush)GetValue(SubHeaderForegroundProperty); }
+            set { SetValue(SubHeaderForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="SubHeaderForeground" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SubHeaderForegroundProperty =
+            DependencyProperty.Register(
+                nameof(SubHeaderForeground),
+                typeof(Brush), 
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the sub header foreground color.
+        /// </summary>
+        /// <value>The icon to show as home button</value>
+        public Thickness SubHeaderMargin
+        {
+            get { return (Thickness)GetValue(SubHeaderMarginProperty); }
+            set { SetValue(SubHeaderMarginProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="SubHeaderMargin" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty SubHeaderMarginProperty =
+            DependencyProperty.Register(
+                nameof(SubHeaderMargin),
+                typeof(Thickness),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the size of the progress ring.
+        /// </summary>
+        /// <value>The icon to show as home button</value>
+        public double ProgressSize
+        {
+            get { return (double)GetValue(ProgressSizeProperty); }
+            set { SetValue(ProgressSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressSize" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressSizeProperty =
+            DependencyProperty.Register(
+                nameof(ProgressSize),
+                typeof(double),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(48));
+
+        /// <summary>
+        /// Gets or sets the size of the progress ring.
+        /// </summary>
+        /// <value>The icon to show as home button</value>
+        public bool IsVisible
+        {
+            get { return (bool)GetValue(IsVisibleProperty); }
+            set { SetValue(IsVisibleProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="IsVisible" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty IsVisibleProperty =
+            DependencyProperty.Register(
+                nameof(IsVisible),
+                typeof(bool),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(false, IsVisibleChangedCallback));
+
+        private static void IsVisibleChangedCallback(DependencyObject d, 
+            DependencyPropertyChangedEventArgs dpc)
+        {
+            var control = d as ActivityIndicator;
+            if (control == null) return;
+            if (dpc.NewValue != null)
+            {
+                control.OnIsVisibleChanged((bool)dpc.NewValue);
+            }
+        }
+
+        private ProgressRing _progress;
+
+        public ActivityIndicator()
+        {
+            this.DefaultStyleKey = typeof(ActivityIndicator);
+            this.Opacity = 0.0;
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            _progress = (ProgressRing) this.GetTemplateChild("PART_Progress");
+            OnIsVisibleChanged(this.IsVisible);
+        }
+
+        protected async void OnIsVisibleChanged(bool isVisible)
+        {
+            if (_progress != null) _progress.IsActive = isVisible;
+
+            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                this.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+                return;
+            }
+
+            if (isVisible)
+            {
+                this.Visibility = Visibility.Visible;
+                this.Fade(1.0f, 250.0).Start();
+                return;
+            }
+            await this.Fade(0.0f, 250.0).StartAsync();
+            this.Visibility = Visibility.Collapsed;
+        }
+    }
+}

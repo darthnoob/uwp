@@ -122,8 +122,8 @@
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
-    <value>I agree with the</value>
-    <comment>Text placed just before a link labeled 'Term of Service' into the 'create account' page.</comment>
+    <value>I agree with the terms of services.</value>
+    <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
     <value>Camera uploads</value>
@@ -150,7 +150,7 @@
     <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
-    <value>Confirm your password</value>
+    <value>Confirm password</value>
     <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmYourAccount" xml:space="preserve">
@@ -178,7 +178,7 @@
     <comment>Label for any 'Downloads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
-    <value>Enter your email</value>
+    <value>Email</value>
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
@@ -255,7 +255,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'On' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PasswordWatermark" xml:space="preserve">
-    <value>Enter your password</value>
+    <value>Password</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_Refresh" xml:space="preserve">
@@ -287,7 +287,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>Terms of service</value>
+    <value>View Terms of service here.</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -933,5 +933,99 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
   <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
     <value>Please enter your password to verify your email address</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
+  </data>
+  <data name="UI_LoginWithSpace" xml:space="preserve">
+    <value>Log in</value>
+    <comment>Label for any 'Log in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPassword" xml:space="preserve">
+    <value>Forgot my password</value>
+    <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ContactSupport" xml:space="preserve">
+    <value>Contact support</value>
+    <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription" xml:space="preserve">
+    <value>If you have a backup of your Recovery key, you can reset your password by selecting YES. No data will be lost.
+
+You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. 
+
+If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password.</comment>
+  </data>
+  <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
+    <value>Do you have a copy of your Recovery key?</value>
+    <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyDescription" xml:space="preserve">
+    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same e-mail address. 
+
+In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key.</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
+    <value>I don’t have my Recovery key</value>
+    <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ParkAccount" xml:space="preserve">
+    <value>Park account</value>
+    <comment>Label for any 'Park account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryDescription" xml:space="preserve">
+    <value>Please enter your e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.</value>
+    <comment>Text displayed in the 'Recovery' section when the user does have a recovery key.</comment>
+  </data>
+  <data name="UI_RecoveryKeyHeader" xml:space="preserve">
+    <value>I have my Recovery key</value>
+    <comment>Label for any 'I have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Send" xml:space="preserve">
+    <value>Send</value>
+    <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoverDescription" xml:space="preserve">
+    <value>Please provide your previously exported Recovery Key. You can still export it from any MEGA session that you may have open in another browser or on another computer.</value>
+    <comment>Text displayed in recover section on password reset</comment>
+  </data>
+  <data name="UI_RecoverHeader" xml:space="preserve">
+    <value>Password reset</value>
+    <comment>Header of the text displayed to reset password on recovery. - String as short as possible).</comment>
+  </data>
+  <data name="UI_UploadKey" xml:space="preserve">
+    <value>Upload key</value>
+    <comment>Label for any 'Upload key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Verify" xml:space="preserve">
+    <value>Verify</value>
+    <comment>Label for any 'Verify' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ValidatePassword" xml:space="preserve">
+    <value>Validate password</value>
+    <comment>Label for any 'Validate password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ValidatePasswordDescription" xml:space="preserve">
+    <value>You have successfully regained access to your account. Please choose a new password below:</value>
+    <comment>Text displayed to validate password on account recovery.</comment>
+  </data>
+  <data name="UI_ValidatePasswordHeader" xml:space="preserve">
+    <value>Great!</value>
+    <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
+  </data>
+  <data name="UI_ParkAccountDescription" xml:space="preserve">
+    <value>This is the last step to park your account, please enter your new password. Your data will be retained for at least 60 days. In case that you recall your parked account’s password, please contact support@mega.nz.</value>
+    <comment>Text displayed to validate password on parking account.</comment>
+  </data>
+  <data name="UI_ConfirmEmailDescription" xml:space="preserve">
+    <value>Please check your email and follow the link to confirm your account.</value>
+    <comment>Text displayed when user can resend his email address on create account.</comment>
+  </data>
+  <data name="UI_ConfirmEmailInfo" xml:space="preserve">
+    <value>If you have misspelled your email address, correct it and click ‘resend’.</value>
+    <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
+  </data>
+  <data name="UI_Resend" xml:space="preserve">
+    <value>Resend</value>
+    <comment>Label for any 'Resend' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

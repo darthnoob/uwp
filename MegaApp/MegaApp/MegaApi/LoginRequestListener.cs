@@ -5,7 +5,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
-using MegaApp.ViewModels;
+using MegaApp.ViewModels.Login;
 using MegaApp.Views;
 
 namespace MegaApp.MegaApi

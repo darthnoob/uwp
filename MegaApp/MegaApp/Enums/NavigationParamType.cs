@@ -3,5 +3,9 @@
     public enum NavigationParamType
     {
         Data,
+        Email,
+        Password,
+        FirstName,
+        LastName
     }
 }

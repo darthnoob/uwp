@@ -1,0 +1,151 @@
+﻿<account:BaseConfirmAccountPage
+    x:Class="MegaApp.Views.CreateAccount.ConfirmAccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:account="using:MegaApp.Views.CreateAccount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:MegaApp.UserControls"
+    xmlns:viewModels="using:MegaApp.ViewModels.CreateAccount"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
+    d:DataContext="{d:DesignInstance viewModels:ConfirmAccountViewModel}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ContentPresenter
+            x:Name="LogoPresenter"
+            Grid.Row="0"
+            Margin="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Style="{StaticResource MegaPageHeaderLogoStyle}" />
+
+        <ScrollViewer
+            x:Name="MainScrollViewer"
+            Grid.Row="1"
+            Margin="72,0,0,0"
+            VerticalScrollBarVisibility="Auto"
+            Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <StackPanel
+                x:Name="ConfirmAccountStackPanel"
+                Width="380"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaPageHeaderFontStyle}"
+                    Text="{Binding ConfirmAccountHeaderText}" />
+
+                <TextBlock
+                    Margin="0,24,0,20"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaBodyFontStyle}"
+                    Text="{Binding ConfirmAccountDescriptionText}" />
+
+                <TextBox
+                    Height="{StaticResource InputHeight}"
+                    Margin="{StaticResource StackedInputMargin}"
+                    InputScope="EmailNameOrAddress"
+                    IsEnabled="{Binding ControlState}"
+                    IsReadOnly="True"
+                    PlaceholderText="{Binding EmailWatermarkText, Mode=OneTime}"
+                    Style="{StaticResource MegaTextBoxStyle}"
+                    Text="{Binding Email, Mode=TwoWay}"
+                    TextWrapping="NoWrap" />
+
+                <PasswordBox
+                    Height="{StaticResource InputHeight}"
+                    Margin="{StaticResource StackedInputMargin}"
+                    BorderBrush="{Binding PasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
+                    IsEnabled="{Binding ControlState}"
+                    KeyDown="OnKeyDown"
+                    Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    PasswordRevealMode="Peek"
+                    PlaceholderText="{Binding PasswordWatermarkText, Mode=OneTime}"
+                    Style="{StaticResource MegaPasswordBoxStyle}"
+                    TabIndex="0" />
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    Visibility="{Binding IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox
+                        MaxWidth="16"
+                        MaxHeight="16"
+                        Margin="8,4,12,0"
+                        VerticalAlignment="Top">
+                        <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                    </Viewbox>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{Binding WarningText}" />
+                </StackPanel>
+
+                <Button
+                    Width="{StaticResource DefaultButtonWidth}"
+                    Margin="0,26,0,0"
+                    Command="{Binding ConfirmAccountCommand, Mode=OneTime}"
+                    Content="{Binding ConfirmAccountText, Mode=OneTime}"
+                    IsEnabled="{Binding ConfirmAccountButtonState}" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <userControls:ActivityIndicator
+            x:Name="ActivityIndicator"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="72,0,0,0"
+            VerticalAlignment="Center"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HeaderFontSize="28"
+            HeaderText="{Binding ProgressHeaderText}"
+            IsVisible="{Binding IsBusy}"
+            ProgressSize="24"
+            SubHeaderFontSize="14"
+            SubHeaderMargin="0, 24, 0 , 0"
+            SubHeaderText="{Binding ProgressSubHeaderText}">
+            <userControls:ActivityIndicator.SubHeaderForeground>
+                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.SubHeaderForeground>
+        </userControls:ActivityIndicator>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="72,0,0,0" />
+                        <Setter Target="ConfirmAccountStackPanel.Width" Value="380" />
+                        <Setter Target="ConfirmAccountStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="ConfirmAccountStackPanel.VerticalAlignment" Value="Center" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginMobile}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="20,0" />
+                        <Setter Target="ConfirmAccountStackPanel.Width" Value="NaN" />
+                        <Setter Target="ConfirmAccountStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="ConfirmAccountStackPanel.VerticalAlignment" Value="Stretch" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+</account:BaseConfirmAccountPage>
