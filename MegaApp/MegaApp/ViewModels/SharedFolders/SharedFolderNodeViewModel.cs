@@ -4,12 +4,13 @@ using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
-using MegaApp.Services;
 using MegaApp.MegaApi;
+using MegaApp.Services;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
-    public class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
+    public abstract class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
     {
         public SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
@@ -42,18 +43,6 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             if (e.PropertyName == nameof(this.Parent.ItemCollection.OnlyOneSelectedItem))
                 OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
-        }
-
-        /// <summary>
-        /// Update core data associated with the SDK MNode object
-        /// </summary>
-        /// <param name="megaNode">Node to update</param>
-        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
-        public override void Update(MNode megaNode, bool externalUpdate = false)
-        {
-            base.Update(megaNode, externalUpdate);
-
-            OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(megaNode));
         }
 
         private void Download()
@@ -115,90 +104,39 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private string _contactsText;
-        public string ContactsText
-        {
-            get { return _contactsText; }
-            set { SetField(ref _contactsText, value); }
-        }
-
-        private string _folderLocation;
-        public string FolderLocation
-        {
-            get { return _folderLocation; }
-            set { SetField(ref _folderLocation, value); }
-        }
-
-        private string _owner;
-        /// <summary>
-        /// Acces level to the incoming shared node
-        /// </summary>
-        public string Owner
-        {
-            get { return _owner; }
-            set { SetField(ref _owner, value); }
-        }
-
-        private MShareType _accessLevel;
-        /// <summary>
-        /// Acces level to the incoming shared node
-        /// </summary>
-        public MShareType AccessLevel
-        {
-            get { return _accessLevel; }
-            set
-            {
-                SetField(ref _accessLevel, value);
-                OnPropertyChanged(nameof(this.AccessLevelText),
-                    nameof(this.AccessLevelPathData));
-            }
-        }
-
-        public string AccessLevelText
-        {
-            get
-            {
-                switch (this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadAndWrite");
-                    case MShareType.ACCESS_FULL:
-                    case MShareType.ACCESS_OWNER:
-                        return ResourceService.UiResources.GetString("UI_PermissionFullAccess");
-                    case MShareType.ACCESS_READ:                        
-                    case MShareType.ACCESS_UNKNOWN:                    
-                    default:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadOnly");
-                }
-            }
-        }
-
-        public string AccessLevelPathData
-        {
-            get
-            {
-                switch (this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadAndWritePathData");
-                    case MShareType.ACCESS_FULL:
-                    case MShareType.ACCESS_OWNER:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsFullAccessPathData");
-                    case MShareType.ACCESS_READ:                        
-                    case MShareType.ACCESS_UNKNOWN:                    
-                    default:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadOnlyPathData");
-                }
-            }
-        }
-
         public bool OnlyOneSelectedItem => this.Parent.ItemCollection.OnlyOneSelectedItem;
+
+        #endregion
+
+        #region Virtual Properties
+
+        /// <summary>
+        /// Owner of the shared folder
+        /// </summary>
+        public virtual string Owner { get; set; }
+
+        /// <summary>
+        /// Access level to the shared folder
+        /// </summary>
+        public virtual SharedFolderAccessLevelViewModel AccessLevel { get; set; }
+
+        /// <summary>
+        /// Folder location of the shared folder
+        /// </summary>
+        public virtual string FolderLocation { get; set; }
+
+        /// <summary>
+        /// List of contacts with the folder is shared
+        /// </summary>
+        public virtual ContactsListViewModel ContactsList { get; set; }
+
+        public virtual string ContactsText { get; set; }
+
+        #endregion
 
         #region UiResources
 
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
-
-        #endregion
 
         #endregion
     }

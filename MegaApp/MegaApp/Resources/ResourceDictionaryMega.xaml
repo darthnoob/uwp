@@ -1081,7 +1081,7 @@
                 Margin="46,0,18,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1093,7 +1093,7 @@
                 FontSize="14"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Text="{Binding AccessLevelText}"
+                Text="{Binding AccessLevel.AccessLevelText}"
                 TextWrapping="NoWrap"
                 Opacity="0.9" />
         </Grid>
@@ -1182,7 +1182,7 @@
                 Margin="46,0,18,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1194,7 +1194,7 @@
                 FontSize="14"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Text="{Binding AccessLevelText}"
+                Text="{Binding AccessLevel.AccessLevelText}"
                 TextWrapping="NoWrap"
                 Opacity="0.9" />
         </Grid>
@@ -1273,7 +1273,7 @@
                 Margin="12,0,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1798,6 +1798,82 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OutgoingSharedFolderContactItem">
+        <Grid Margin="0,6">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <Image 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Width="36" Height="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill" 
+                Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelWidth="36"
+                        DecodePixelType="Logical"
+                        UriSource="{Binding AvatarUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="14"
+                Text="{Binding FullName}"
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Email}"
+                VerticalAlignment="Center"/>
+            <Path
+                Grid.Row="0" Grid.Column="2"
+                Grid.RowSpan="2"
+                Width="12" Height="12"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
+                Stretch="Uniform"
+                Opacity="0.9">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
         </Grid>
     </DataTemplate>
 

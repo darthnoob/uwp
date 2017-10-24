@@ -1,21 +1,27 @@
 ﻿using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
-    public class OutgoingSharedFolderNodeViewModel : SharedFolderNodeViewModel
+    public class OutgoingSharedFolderNodeViewModel : SharedFolderNodeViewModel, IMegaOutgoingSharedFolderNode
     {
         public OutgoingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(megaNode, parent)
         {
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
+            this.ContactsList = new ContactsListViewModel();
+
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
             this.Update(megaNode);
+
+            this.GetContactsList();
         }
 
         #region Commands
@@ -63,6 +69,29 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private async void GetContactsList()
+        {
+            await OnUiThreadAsync(() => this.ContactsList.ItemCollection.Clear());
+
+            var contactsList = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
+            var contactsListSize = contactsList.size();
+
+            for (int i = 0; i < contactsListSize; i++)
+            {
+                // To avoid null values
+                if (contactsList.get(i) == null) continue;
+
+                var megaContact = new ContactOutgoingSharedFolderViewModel(contactsList.get(i), this.ContactsList);
+
+                OnUiThread(() => this.ContactsList.ItemCollection.Items.Add(megaContact));
+
+                megaContact.GetContactFirstname();
+                megaContact.GetContactLastname();
+                megaContact.GetContactAvatarColor();
+                megaContact.GetContactAvatar();
+            }
+        }
+
         private async void RemoveSharedAccess()
         {
             if (this.Parent.ItemCollection.IsMultiSelectActive)
@@ -88,7 +117,41 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                         string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), this.Name));
                 });
+                return;
             }
+
+            this.Parent.IsPanelOpen = false;
+        }
+
+        #endregion
+
+        #region Properties
+
+        private string _folderLocation;
+        /// <summary>
+        /// Folder location of the shared folder
+        /// </summary>
+        public override string FolderLocation
+        {
+            get { return _folderLocation; }
+            set { SetField(ref _folderLocation, value); }
+        }
+
+        private ContactsListViewModel _contactsList;
+        /// <summary>
+        /// List of contacts with the folder is shared
+        /// </summary>
+        public override ContactsListViewModel ContactsList
+        {
+            get { return _contactsList; }
+            set { SetField(ref _contactsList, value); }
+        }
+
+        private string _contactsText;
+        public override string ContactsText
+        {
+            get { return _contactsText; }
+            set { SetField(ref _contactsText, value); }
         }
 
         #endregion

@@ -5,7 +5,7 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class SharedFolderInformationPanelViewModel :  BaseViewModel
+    public class SharedFolderInformationPanelViewModel : BaseViewModel
     {
         public SharedFolderInformationPanelViewModel()
         {
@@ -64,6 +64,17 @@ namespace MegaApp.ViewModels.UserControls
             ShareService.ShareLink(this.SharedFolder.ExportLink);
         }
 
+        public void EnableSharedFolder(bool isOn)
+        {
+            if (!isOn)
+            {
+                if (this.SharedFolder?.RemoveSharedAccessCommand?.CanExecute(null) == true)
+                    this.SharedFolder.RemoveSharedAccessCommand.Execute(null);
+            }
+
+            OnPropertyChanged(nameof(this.IsOutShare));
+        }
+
         #endregion
 
         #region Properties
@@ -77,6 +88,7 @@ namespace MegaApp.ViewModels.UserControls
                 SetField(ref _sharedFolder, value);
 
                 OnPropertyChanged(nameof(this.IsInShare),
+                    nameof(this.IsOutShare),
                     nameof(this.DateCreatedLabelText));
 
                 this.GetLinkWithKey();
@@ -85,6 +97,9 @@ namespace MegaApp.ViewModels.UserControls
 
         public bool IsInShare => (this.SharedFolder?.OriginalMNode != null) ?
             this.SharedFolder.OriginalMNode.isInShare() : false;
+
+        public bool IsOutShare => (this.SharedFolder?.OriginalMNode != null) ?
+            this.SharedFolder.OriginalMNode.isOutShare() : false;
 
         private string _exportLinkBorderTitle;
         public string ExportLinkBorderTitle
@@ -102,6 +117,7 @@ namespace MegaApp.ViewModels.UserControls
 
         #region UiResources
 
+        // Common
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
@@ -137,13 +153,21 @@ namespace MegaApp.ViewModels.UserControls
             ResourceService.UiResources.GetString("UI_SetExpirationDate"),
             ResourceService.UiResources.GetString("UI_ProOnly"));
 
+        // Share pivot
+        public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
+        public string EnableSharedFolderText => ResourceService.UiResources.GetString("UI_EnableSharedFolder");
+        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string SharedToText => ResourceService.UiResources.GetString("UI_SharedTo");
+
         #endregion
 
         #region VisualResources
 
+        public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
-        
+        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+
         #endregion
     }
 }

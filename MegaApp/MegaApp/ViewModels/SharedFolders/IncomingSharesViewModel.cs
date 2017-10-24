@@ -114,7 +114,8 @@ namespace MegaApp.ViewModels.SharedFolders
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ?
-                            this.ItemCollection.Items.OrderBy(item => item.AccessLevel) : this.ItemCollection.Items.OrderByDescending(item => item.AccessLevel));
+                            this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType) : 
+                            this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType));
                     });
                     break;
 
@@ -122,7 +123,8 @@ namespace MegaApp.ViewModels.SharedFolders
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ?
-                            this.ItemCollection.Items.OrderBy(item => item.Owner) : this.ItemCollection.Items.OrderByDescending(item => item.Owner));
+                            this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).Owner) : 
+                            this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).Owner));
                     });
                     break;
 

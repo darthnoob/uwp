@@ -118,7 +118,10 @@
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
+    <Compile Include="Interfaces\IMegaContactOutgoingSharedFolder.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
+    <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
@@ -175,8 +178,10 @@
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\OutgoingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\OutgoingSharesViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\SharedFolderAccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />

@@ -212,7 +212,10 @@ namespace MegaApp.ViewModels
         /// </summary>
         protected void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
 
-        public void OnlyAllowSingleSelect() => 
+        /// <summary>
+        /// Sets if only allow single select or not.
+        /// </summary>
+        protected void OnlyAllowSingleSelect() => 
             this.IsOnlyAllowSingleSelectActive = !this.IsOnlyAllowSingleSelectActive;
 
         #endregion
@@ -292,7 +295,9 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    this.ClearSelection();
+                    if(this.MoreThanOneSelected)
+                        this.ClearSelection();
+
                     OnPropertyChanged(nameof(this.IsMultiSelectActive));
                     this.OnMultiSelectDisabled();
                 }

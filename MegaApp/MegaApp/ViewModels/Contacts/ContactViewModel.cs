@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
@@ -24,7 +25,7 @@ namespace MegaApp.ViewModels.Contacts
             this.Timestamp = contact.getTimestamp();
             this.Visibility = contact.getVisibility();
             this.AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
-            this.SharedItems = new ContactSharedItemsViewModel(this.MegaUser);
+            this.SharedItems = new ContactSharedItemsViewModel(contact);
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
             this.ViewProfileCommand = new RelayCommand(ViewProfile);
@@ -38,6 +39,66 @@ namespace MegaApp.ViewModels.Contacts
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Gets the contact first name attribute
+        /// </summary>
+        public async void GetContactFirstname()
+        {
+            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
+                (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
+            UiService.OnUiThread(() => this.FirstName = firstName);
+        }
+
+        /// <summary>
+        /// Gets the contact last name attribute
+        /// </summary>
+        public async void GetContactLastname()
+        {
+            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
+                (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
+            UiService.OnUiThread(() => this.LastName = lastName);
+        }
+
+        /// <summary>
+        /// Gets the contact avatar color
+        /// </summary>
+        public void GetContactAvatarColor()
+        {
+            var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(this.MegaUser));
+            UiService.OnUiThread(() => this.AvatarColor = avatarColor);
+        }
+
+        /// <summary>
+        /// Gets the contact avatar
+        /// </summary>
+        public async void GetContactAvatar()
+        {
+            var contactAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
+            var contactAvatarResult = await contactAvatarRequestListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.getUserAvatar(this.MegaUser, this.AvatarPath, contactAvatarRequestListener));
+
+            if (contactAvatarResult)
+            {
+                UiService.OnUiThread(() =>
+                {
+                    var img = new BitmapImage()
+                    {
+                        CreateOptions = BitmapCreateOptions.IgnoreImageCache,
+                        UriSource = new Uri(this.AvatarPath)
+                    };
+                    this.AvatarUri = img.UriSource;
+                });
+            }
+            else
+            {
+                UiService.OnUiThread(() => this.AvatarUri = null);
+            }
+        }
 
         /// <summary>
         /// View the profile of the contact
@@ -109,7 +170,7 @@ namespace MegaApp.ViewModels.Contacts
             }
 
             return result;
-        }        
+        }
 
         #endregion
 

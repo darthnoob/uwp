@@ -55,11 +55,15 @@ namespace MegaApp.UserControls
             if (this.ViewModel.IsInShare)
             {
                 this.PivotControl.Items.Remove(this.LinkPivot);
+                this.PivotControl.Items.Remove(this.SharePivot);
+                this.PivotControl.SelectedItem = this.DetailsPivot;
                 return;
             }
 
             if (!this.PivotControl.Items.Contains(this.LinkPivot))
                 this.PivotControl.Items.Add(this.LinkPivot);
+            if (!this.PivotControl.Items.Contains(this.SharePivot))
+                this.PivotControl.Items.Add(this.SharePivot);
         }
 
         private void OnEnableLinkSwitchToggled(object sender, RoutedEventArgs e)
@@ -102,6 +106,33 @@ namespace MegaApp.UserControls
                 !this.SharedFolder.LinkExpirationDate.Value.ToUniversalTime().Equals(this.ExpirationDateCalendarDatePicker.Date.Value.ToUniversalTime()))
             {
                 this.SharedFolder.SetLinkExpirationTime(this.ExpirationDateCalendarDatePicker.Date.Value.ToUniversalTime().ToUnixTimeSeconds());
+            }
+        }
+
+        private void OnEnableSharedFolderSwitchToggled(object sender, RoutedEventArgs e)
+        {
+            var toggle = sender as ToggleSwitch;
+            if (toggle != null)
+                this.ViewModel.EnableSharedFolder(toggle.IsOn);
+        }
+
+        private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.PivotControl.SelectedItem.Equals(this.SharePivot))
+            {
+                this.MainTopCommandBar.Visibility = Visibility.Collapsed;
+                this.MainBottomCommandBar.Visibility = Visibility.Collapsed;
+
+                this.SharePivotTopCommandBar.Visibility = Visibility.Visible;
+                this.SharePivotBottomCommandBar.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.MainTopCommandBar.Visibility = Visibility.Visible;
+                this.MainBottomCommandBar.Visibility = Visibility.Visible;
+
+                this.SharePivotTopCommandBar.Visibility = Visibility.Collapsed;
+                this.SharePivotBottomCommandBar.Visibility = Visibility.Collapsed;
             }
         }
     }

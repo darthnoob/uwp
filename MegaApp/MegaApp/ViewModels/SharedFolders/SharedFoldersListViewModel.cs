@@ -194,7 +194,7 @@ namespace MegaApp.ViewModels
 
             if (this.ItemCollection.OnlyOneSelectedItem)
             {
-                var node = this.ItemCollection.SelectedItems.First();
+                var node = this.ItemCollection.SelectedItems.First() as IMegaOutgoingSharedFolderNode;
 
                 var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
@@ -237,7 +237,7 @@ namespace MegaApp.ViewModels
 
             bool result = true;
             foreach (var node in sharedFolders)
-                result = result & (await node.RemoveSharedAccessAsync());
+                result = result & (await (node as IMegaOutgoingSharedFolderNode).RemoveSharedAccessAsync());
 
             if (!result)
             {
@@ -250,17 +250,9 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void CloseInformationPanel()
-        {
-            this.ItemCollection.OnlyAllowSingleSelect();
-            this.IsPanelOpen = false;
-        }
+        private void OpenInformationPanel() => this.IsPanelOpen = true;
 
-        private void OpenInformationPanel()
-        {
-            this.ItemCollection.OnlyAllowSingleSelect();
-            this.IsPanelOpen = true;
-        }
+        private void CloseInformationPanel() => this.IsPanelOpen = false;        
 
         #endregion
 
@@ -295,7 +287,20 @@ namespace MegaApp.ViewModels
         public bool IsPanelOpen
         {
             get { return _isPanelOpen; }
-            set { SetField(ref _isPanelOpen, value); }
+            set
+            {
+                SetField(ref _isPanelOpen, value);
+
+                if (this.IsPanelOpen)
+                {
+                    this.ItemCollection.IsMultiSelectActive = false;
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
+                }
+                else
+                {
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
+                }
+            }
         }
 
         #endregion

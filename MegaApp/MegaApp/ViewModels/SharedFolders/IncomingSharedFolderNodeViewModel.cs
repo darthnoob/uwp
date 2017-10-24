@@ -1,19 +1,21 @@
 ﻿using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
-    public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel
+    public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel, IMegaIncomingSharedFolderNode
     {
         public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(megaNode, parent)
         {
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
 
+            this.AccessLevel = new SharedFolderAccessLevelViewModel();
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update(megaNode);            
         }
@@ -35,6 +37,9 @@ namespace MegaApp.ViewModels
         {
             base.Update(megaNode, externalUpdate);
 
+            if (this.AccessLevel != null)
+                OnUiThread(() => this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode));
+
             var owner = SdkService.MegaSdk.getUserFromInShare(megaNode);
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
@@ -51,7 +56,7 @@ namespace MegaApp.ViewModels
             });
         }        
 
-        private async void LeaveShare()
+        public async void LeaveShare()
         {
             if (this.Parent.ItemCollection.IsMultiSelectActive)
             {
@@ -83,7 +88,27 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public bool AllowRename => (this.AccessLevel == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
+        private string _owner;
+        /// <summary>
+        /// Owner of the incoming shared folder
+        /// </summary>
+        public override string Owner
+        {
+            get { return _owner; }
+            set { SetField(ref _owner, value); }
+        }
+
+        private SharedFolderAccessLevelViewModel _accessLevel;
+        /// <summary>
+        /// Access level to the incoming shared folder
+        /// </summary>
+        public override SharedFolderAccessLevelViewModel AccessLevel
+        {
+            get { return _accessLevel; }
+            set { SetField(ref _accessLevel, value); }
+        }
+
+        public bool AllowRename => (this.AccessLevel.AccessType == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
 
         #endregion
 

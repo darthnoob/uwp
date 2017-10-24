@@ -1176,4 +1176,8 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Date created</value>
     <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_EnableSharedFolder" xml:space="preserve">
+    <value>Enable shared folder</value>
+    <comment>Label for any 'Enable shared folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
