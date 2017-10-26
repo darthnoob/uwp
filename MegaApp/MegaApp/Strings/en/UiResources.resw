@@ -1028,4 +1028,8 @@ In the event that you recall your parked account's password, please contact supp
     <value>Resend</value>
     <comment>Label for any 'Resend' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Wait" xml:space="preserve">
+    <value>Wait</value>
+    <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
