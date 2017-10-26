@@ -142,6 +142,7 @@
     <Compile Include="Enums\QueryChangeEmailLinkResult.cs" />
     <Compile Include="Enums\SignUpLinkType.cs" />
     <Compile Include="Enums\RecoverLinkType.cs" />
+    <Compile Include="Extensions\DialogExtensions.cs" />
     <Compile Include="Extensions\IsVisibleAnimation.cs" />
     <Compile Include="MegaApi\ConfirmAccountRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ConfirmResetPasswordRequestListenerAsync.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\TransferOverquotaWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Login\ConfirmParkAccountViewModel.cs" />
     <Compile Include="ViewModels\Login\ConfirmRecoveryViewModel.cs" />
     <Compile Include="ViewModels\Login\RecoverViewModel.cs" />
@@ -262,6 +264,9 @@
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
+      <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\ConfirmParkAccountPage.xaml.cs">
       <DependentUpon>ConfirmParkAccountPage.xaml</DependentUpon>
@@ -449,6 +454,10 @@
     <Page Include="Views\Dialogs\OkCancelDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Login\ConfirmParkAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>
