@@ -50,8 +50,9 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api);
+                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
@@ -142,8 +143,9 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api);
+                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
@@ -160,17 +162,21 @@ namespace MegaApp.MegaApi
         /// It does the needed actions to process this kind of error.
         /// </summary>
         /// <param name="api">MegaApi object that started the transfer</param>
-        private void ProcessOverquotaError(MegaSDK api)
+        /// <param name="e">Error information</param>
+        private void ProcessOverquotaError(MegaSDK api, MError e)
         {
             UiService.OnUiThread(DialogService.ShowOverquotaAlert);
 
             // Stop all upload transfers
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                string.Format("Storage quota exceeded ({0}) - Canceling uploads", e.getErrorCode().ToString()));
             api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
 
             // Disable the "Camera Uploads" service if is enabled
             if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
+                    string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
                 TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
             }
         }

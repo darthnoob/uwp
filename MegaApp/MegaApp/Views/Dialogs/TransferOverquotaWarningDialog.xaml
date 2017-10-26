@@ -1,0 +1,81 @@
+﻿<dialogViews:BaseTransferOverquotaWarningDialog
+    x:Class="MegaApp.Views.Dialogs.TransferOverquotaWarningDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.UpgradeText, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.WaitText, Mode=OneTime}"
+    PrimaryButtonCommand="{x:Bind ViewModel.UpgradeButtonCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.WaitButtonCommand}">
+    <dialogViews:BaseTransferOverquotaWarningDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"/>
+    </dialogViews:BaseTransferOverquotaWarningDialog.Title>
+
+    <Grid Margin="24, 0, 0, 24">
+        <StackPanel>
+            <TextBlock 
+                x:Name="MessageText"
+                Margin="0,16,0,0"
+                Opacity="0.8"
+                Style="{StaticResource MegaDialogContentFontStyle}"
+                Text="{x:Bind ViewModel.MessageText, Mode=OneWay}"
+                TextWrapping="WrapWholeWords"/>
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,2,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
+                    <PathIcon Data="{x:Bind ViewModel.ProLitePathData, Mode=OneTime}">
+                        <PathIcon.Foreground>
+                            <SolidColorBrush Color="{ThemeResource MegaProLiteAccountColor}"/>
+                        </PathIcon.Foreground>
+                    </PathIcon>
+                </Viewbox>
+                <TextBlock 
+                    x:Name="UpgradeMessageText"
+                    Grid.Column="1"
+                    Opacity="0.8"
+                    Style="{StaticResource MegaDialogContentFontStyle}"
+                    Text="{x:Bind ViewModel.UpgradeMessageText, Mode=OneWay}"
+                    TextWrapping="WrapWholeWords"/>
+            </Grid>
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
+                    <SymbolIcon Symbol="Clock" />
+                </Viewbox>
+                <TextBlock 
+                    x:Name="WaitMessageText"
+                    Grid.Column="1"
+                    Opacity="0.8"
+                    Style="{StaticResource MegaDialogContentFontStyle}"
+                    Text="{x:Bind ViewModel.WaitMessageText, Mode=OneWay}"
+                    TextWrapping="WrapWholeWords"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseTransferOverquotaWarningDialog>

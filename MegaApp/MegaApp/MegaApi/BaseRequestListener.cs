@@ -31,92 +31,82 @@ namespace MegaApp.MegaApi
 
         public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-            //    ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]);
-            //    ProgressService.SetProgressIndicator(false);
-            //});
-
-            if (e.getErrorCode() == MErrorType.API_OK)
+            switch(e.getErrorCode())
             {
-                if (ShowSuccesMessage)
-                {
-                    new CustomMessageDialog(
-                        SuccessMessageTitle,
-                        SuccessMessage,
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
-                }
+                case MErrorType.API_OK:
+                    if (ShowSuccesMessage)
+                    {
+                        new CustomMessageDialog(
+                            SuccessMessageTitle,
+                            SuccessMessage,
+                            App.AppInformation,
+                            MessageDialogButtons.Ok).ShowDialog();
+                    }
 
-                if (ActionOnSucces)
-                    OnSuccesAction(api, request);
+                    if (ActionOnSucces)
+                        OnSuccesAction(api, request);
 
-                if (NavigateOnSucces)
-                    UiService.OnUiThread(() => 
-                        NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
+                    if (NavigateOnSucces)
+                        UiService.OnUiThread(() => NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
+                    break;
+
+                case MErrorType.API_EBLOCKED: // If the account has been blocked
+                    api.logout(new LogOutRequestListener(false));
+
+                    UiService.OnUiThread(() =>
+                    {
+                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
+                    });
+                    break;
+
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
+                case MErrorType.API_EOVERQUOTA: //Storage overquota error
+                    UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+
+                    // Stop all upload transfers
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Storage quota exceeded ({0}) - Canceling uploads", e.getErrorCode().ToString()));
+                    api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+
+                    // Disable the "Camera Uploads" service if is enabled
+                    if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
+                        TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                    }
+                    break;
+
+                default:
+                    if (e.getErrorCode() != MErrorType.API_EINCOMPLETE)
+                    {
+                        if (ShowErrorMessage)
+                        {
+                            new CustomMessageDialog(
+                                ErrorMessageTitle,
+                                string.Format(ErrorMessage, e.getErrorString()),
+                                App.AppInformation,
+                                MessageDialogButtons.Ok).ShowDialog();
+                        }
+                    }
+                    break;
             }
-            else if (e.getErrorCode() == MErrorType.API_EBLOCKED) // If the account has been blocked
-            {
-                api.logout(new LogOutRequestListener(false));
-
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-                });
-            }
-            else if(e.getErrorCode() == MErrorType.API_EOVERQUOTA) //Storage overquota error
-            {
-                UiService.OnUiThread(DialogService.ShowOverquotaAlert);
-
-                // Stop all upload transfers
-                api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
-
-                // Disable the "Camera Uploads" service if is enabled
-                if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
-                    TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
-                }
-            }
-            else if (e.getErrorCode() != MErrorType.API_EINCOMPLETE)
-            {
-                if (ShowErrorMessage)
-                {
-                    new CustomMessageDialog(
-                        ErrorMessageTitle,
-                        string.Format(ErrorMessage, e.getErrorString()),
-                        App.AppInformation,
-                        MessageDialogButtons.Ok).ShowDialog();
-                }
-            }           
         }
 
         public virtual void onRequestStart(MegaSDK api, MRequest request)
         {
-            //if (!ShowProgressMessage) return;
-            //var autoReset = new AutoResetEvent(true);
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //{
-            //    ProgressService.SetProgressIndicator(true, ProgressMessage);
-            //    autoReset.Set();
-            //});
-            //autoReset.WaitOne();
+            // Not necessary
         }
 
         public virtual void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
-            //if(DebugService.DebugSettings.IsDebugMode || Debugger.IsAttached)
-            //{
-                //Deployment.Current.Dispatcher.BeginInvoke(() =>
-                //    ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["MegaRedColor"]));
-            //}
+            // Not necessary
         }
 
         public virtual void onRequestUpdate(MegaSDK api, MRequest request)
-        {            
-            //Deployment.Current.Dispatcher.BeginInvoke(() =>
-            //    ProgressService.ChangeProgressBarBackgroundColor((Color)Application.Current.Resources["PhoneChromeColor"]));
+        {
+            // Not necessary
         }
 
         #endregion

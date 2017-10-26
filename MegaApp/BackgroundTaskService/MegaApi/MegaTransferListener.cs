@@ -48,10 +48,11 @@ namespace BackgroundTaskService.MegaApi
             _timer?.Dispose();
 
             //Storage overquota error
-            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            if (e.getErrorCode() == MErrorType.API_EGOINGOVERQUOTA || e.getErrorCode() == MErrorType.API_EOVERQUOTA)
             {
                 //Stop the Camera Upload Service
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
+                    string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
                 OnStorageQuotaExceeded(EventArgs.Empty);
                 _tcs.TrySetResult(e.getErrorString());
                 return;

@@ -925,4 +925,14 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <value>Application Error</value>
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
+  <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
+    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
+Preserve the {0} code because is for include the price in runtime.</comment>
+  </data>
+  <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
+    <value>Wait {0} for your transfer quota to renew.</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
+Preserve the {0} code because is for include the time to wait in runtime.</comment>
+  </data>
 </root>
