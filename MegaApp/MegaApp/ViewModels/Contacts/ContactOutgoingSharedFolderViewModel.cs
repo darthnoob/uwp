@@ -1,5 +1,9 @@
-﻿using mega;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using mega;
+using MegaApp.Classes;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -12,27 +16,104 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         /// <param name="outShare">Folder outbound sharing with the contact</param>
         /// <param name="contactList">List that contains the contact</param>
-        public ContactOutgoingSharedFolderViewModel(MShare outShare, ContactsListViewModel contactList)
+        public ContactOutgoingSharedFolderViewModel(MShare outShare, ContactsListOutgoingSharedFolderViewModel contactList)
             : base(SdkService.MegaSdk.getContact(outShare.getUser()), contactList)
         {
+            this.outShare = outShare;
+
             this.AccessLevel = new SharedFolderAccessLevelViewModel();
-            this.Initialize(outShare);
+            this.GetAccesLevel(outShare);
+
+            this.ChangePermissionsCommand = new RelayCommand<MShareType>(ChangePermissions);
+            this.RemoveContactFromFolderCommand = new RelayCommand(RemoveContactFromFolder);
         }
+
+        #region Commands
+
+        public ICommand ChangePermissionsCommand { get; }
+        public ICommand RemoveContactFromFolderCommand { get; }
+
+        #endregion
 
         #region Methods
 
         /// <summary>
-        /// Initialize the view model of the
+        /// Get the contact access level to the outgoing shared folder
         /// </summary>
         /// <param name="outShare">Folder outbound sharing with the contact</param>
-        private void Initialize(MShare outShare)
+        public void GetAccesLevel(MShare outShare)
         {
             OnUiThread(() => this.AccessLevel.AccessType = (MShareType)outShare.getAccess());
         }
 
+        /// <summary>
+        /// Modify the contact permissions over an outgoing shared folder
+        /// </summary>
+        /// <param name="newAccessLevel">New access level</param>
+        private async void ChangePermissions(MShareType newAccessLevel)
+        {
+            var contactList = this.ContactList as ContactsListOutgoingSharedFolderViewModel;
+
+            if ((bool)contactList?.ItemCollection?.IsMultiSelectActive)
+            {
+                if (contactList.ChangePermissionsCommand.CanExecute(newAccessLevel))
+                    contactList.ChangePermissionsCommand.Execute(newAccessLevel);
+                return;
+            }
+
+            await this.ChangePermissionsAsync(newAccessLevel);
+        }
+
+        /// <summary>
+        /// Modify the contact permissions over an outgoing shared folder
+        /// </summary>
+        /// <param name="newAccessLevel">New access level</param>
+        /// <returns>Result of the action</returns>
+        public async Task<bool> ChangePermissionsAsync(MShareType newAccessLevel)
+        {
+            var changePermissions = new ShareRequestListenerAsync();
+            var result = await changePermissions.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.shareByEmail(
+                    SdkService.MegaSdk.getNodeByHandle(this.outShare.getNodeHandle()),
+                    this.Email, (int)newAccessLevel, changePermissions);
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Remove contact access from an outgoing shared folder
+        /// </summary>
+        private async void RemoveContactFromFolder()
+        {
+            var contactList = this.ContactList as ContactsListOutgoingSharedFolderViewModel;
+
+            if ((bool)contactList?.ItemCollection?.IsMultiSelectActive)
+            {
+                if (contactList.RemoveContactFromFolderCommand.CanExecute(null))
+                    contactList.RemoveContactFromFolderCommand.Execute(null);
+                return;
+            }
+
+            await RemoveContactFromFolderAsync();
+        }
+
+        /// <summary>
+        /// Remove contact access from an outgoing shared folder
+        /// </summary>
+        /// <returns>Result of the action</returns>
+        public async Task<bool> RemoveContactFromFolderAsync() =>
+            await this.ChangePermissionsAsync(MShareType.ACCESS_UNKNOWN);
+
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Folder outbound sharing with the contact
+        /// </summary>
+        private MShare outShare;
 
         private SharedFolderAccessLevelViewModel _accessLevel;
         /// <summary>
@@ -43,6 +124,15 @@ namespace MegaApp.ViewModels.Contacts
             get { return _accessLevel; }
             set { SetField(ref _accessLevel, value); }
         }
+
+        #endregion
+
+        #region UiResources
+
+        public string PermissionReadOnlyText => ResourceService.UiResources.GetString("UI_PermissionReadOnly");
+        public string PermissionReadAndWriteText => ResourceService.UiResources.GetString("UI_PermissionReadAndWrite");
+        public string PermissionFullAccessText => ResourceService.UiResources.GetString("UI_PermissionFullAccess");
+        public string RemoveFromFolderText => ResourceService.UiResources.GetString("UI_RemoveFromFolder");
 
         #endregion
     }

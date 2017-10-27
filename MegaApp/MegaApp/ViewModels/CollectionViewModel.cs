@@ -170,6 +170,10 @@ namespace MegaApp.ViewModels
         {
             if (this.SelectedItems == null || !this.SelectedItems.Any()) return;
             this.SelectedItems.Clear();
+
+            OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
+                nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
+                nameof(this.HasAllItemsSelected));
         }
 
         protected void SelectionChanged()

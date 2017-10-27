@@ -95,7 +95,16 @@ namespace MegaApp.ViewModels
             // If node is found in current view, process the remove action
             if (node != null)
             {
-                try { OnUiThread(() => this.ItemCollection.Items.Remove(node)); }
+                try
+                {
+                    OnUiThread(() =>
+                    {
+                        this.ItemCollection.Items.Remove(node);
+
+                        if (this.ItemCollection.FocusedItem.Equals(node))
+                            this.CloseInformationPanel();
+                    });
+                }
                 catch (Exception) { /* Dummy catch, supress possible exception */ }
             }
         }
@@ -328,6 +337,7 @@ namespace MegaApp.ViewModels
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
         public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 

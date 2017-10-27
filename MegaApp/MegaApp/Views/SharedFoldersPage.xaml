@@ -147,7 +147,7 @@
                                     <PathIcon
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                                        Data="{Binding RemoveSharedAccessPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -404,7 +404,7 @@
                             <PathIcon
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                                Data="{Binding RemoveSharedAccessPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton

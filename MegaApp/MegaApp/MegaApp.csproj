@@ -136,6 +136,7 @@
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactSharedItemsViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactsListOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />

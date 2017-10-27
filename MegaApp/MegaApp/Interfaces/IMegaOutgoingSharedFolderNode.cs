@@ -28,7 +28,7 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// List of contacts with the folder is shared
         /// </summary>
-        ContactsListViewModel ContactsList { get; set; }
+        ContactsListOutgoingSharedFolderViewModel ContactsList { get; set; }
 
         #endregion
     }

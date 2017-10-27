@@ -208,7 +208,7 @@ namespace MegaApp.ViewModels.Contacts
             this.LoadingCancelToken = LoadingCancelTokenSource.Token;
         }
 
-        private void OnContactUpdated(object sender, MUser user)
+        protected void OnContactUpdated(object sender, MUser user)
         {
             var existingContact = (ContactViewModel)this.ItemCollection.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));

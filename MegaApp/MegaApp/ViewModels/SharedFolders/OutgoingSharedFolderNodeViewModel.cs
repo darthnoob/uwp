@@ -16,7 +16,7 @@ namespace MegaApp.ViewModels
         {
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            this.ContactsList = new ContactsListViewModel();
+            this.ContactsList = new ContactsListOutgoingSharedFolderViewModel(megaNode);
 
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
             this.Update(megaNode);
@@ -137,14 +137,23 @@ namespace MegaApp.ViewModels
             set { SetField(ref _folderLocation, value); }
         }
 
-        private ContactsListViewModel _contactsList;
+        private ContactsListOutgoingSharedFolderViewModel _contactsList;
         /// <summary>
         /// List of contacts with the folder is shared
         /// </summary>
-        public override ContactsListViewModel ContactsList
+        public override ContactsListOutgoingSharedFolderViewModel ContactsList
         {
             get { return _contactsList; }
-            set { SetField(ref _contactsList, value); }
+            set
+            {
+                if (_contactsList != null)
+                    _contactsList.Deinitialize();
+
+                SetField(ref _contactsList, value);
+
+                if (_contactsList != null)
+                    _contactsList.Initialize();
+            }
         }
 
         private string _contactsText;

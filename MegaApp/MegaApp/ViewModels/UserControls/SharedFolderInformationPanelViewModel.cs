@@ -154,9 +154,10 @@ namespace MegaApp.ViewModels.UserControls
             ResourceService.UiResources.GetString("UI_ProOnly"));
 
         // Share pivot
-        public string AddContactText => ResourceService.UiResources.GetString("UI_AddContact");
+        public string AddContactToFolderText => ResourceService.UiResources.GetString("UI_AddContactToFolder");
         public string EnableSharedFolderText => ResourceService.UiResources.GetString("UI_EnableSharedFolder");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string RemoveFromFolderText => ResourceService.UiResources.GetString("UI_RemoveFromFolder");
         public string SharedToText => ResourceService.UiResources.GetString("UI_SharedTo");
 
         #endregion
@@ -167,6 +168,7 @@ namespace MegaApp.ViewModels.UserControls
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
 
         #endregion
     }

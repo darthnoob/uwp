@@ -1180,4 +1180,12 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>Enable shared folder</value>
     <comment>Label for any 'Enable shared folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_AddContactToFolder" xml:space="preserve">
+    <value>Add contact to folder</value>
+    <comment>Label for an 'Add contact to folder' button to add a contact to an outgoing shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromFolder" xml:space="preserve">
+    <value>Remove from folder</value>
+    <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
+  </data>
 </root>

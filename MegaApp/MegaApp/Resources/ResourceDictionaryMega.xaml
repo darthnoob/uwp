@@ -6,6 +6,7 @@
     xmlns:converters="using:MegaApp.Converters"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:mega="using:mega"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters">
@@ -1803,6 +1804,42 @@
 
     <DataTemplate x:Key="OutgoingSharedFolderContactItem">
         <Grid Margin="0,6">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionReadOnlyText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_READ</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionReadAndWriteText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_READWRITE</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionFullAccessText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_FULL</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactFromFolderCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveFromFolderText}"/>
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

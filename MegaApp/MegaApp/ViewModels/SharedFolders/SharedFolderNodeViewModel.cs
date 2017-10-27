@@ -128,7 +128,7 @@ namespace MegaApp.ViewModels.SharedFolders
         /// <summary>
         /// List of contacts with the folder is shared
         /// </summary>
-        public virtual ContactsListViewModel ContactsList { get; set; }
+        public virtual ContactsListOutgoingSharedFolderViewModel ContactsList { get; set; }
 
         public virtual string ContactsText { get; set; }
 
