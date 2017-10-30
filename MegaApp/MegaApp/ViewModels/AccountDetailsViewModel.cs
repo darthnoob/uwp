@@ -14,6 +14,8 @@ namespace MegaApp.ViewModels
         public EventHandler RubbishBinUsedSpaceChanged;
         public EventHandler IsInStorageOverquotaChanged;
 
+        public EventHandler TimerTransferOverquotaChanged;
+
         public DispatcherTimer TimerTransferOverquota;
 
         public AccountDetailsViewModel()
@@ -31,6 +33,7 @@ namespace MegaApp.ViewModels
         private void TimerTransferOverquotaOnTick(object sender, object o)
         {
             TransferOverquotaDelay--;
+            TimerTransferOverquotaChanged.Invoke(sender, EventArgs.Empty);
             if(TransferOverquotaDelay == 0)
             {
                 UiService.OnUiThread(() => TimerTransferOverquota?.Stop());

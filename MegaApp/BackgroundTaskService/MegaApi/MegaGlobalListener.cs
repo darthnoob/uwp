@@ -29,7 +29,7 @@ namespace BackgroundTaskService.MegaApi
             
             // If no pending transfers to resume start a new upload
             // Else it will start when finish the current transfer
-            if (api.getTransfers(MTransferType.TYPE_UPLOAD).size() == 0)
+            if (api.getTransferData().getNumDownloads() == 0)
             {
                 _tcs.TrySetResult(null);
             }

@@ -195,6 +195,9 @@ namespace MegaApp.ViewModels
                     return false;
                 }
 
+                // Enable the transfer resumption for the main MegaSDK instance
+                SdkService.MegaSdk.enableTransferResumption();
+
                 this.ControlState = true;
                 this.IsBusy = false;
 
