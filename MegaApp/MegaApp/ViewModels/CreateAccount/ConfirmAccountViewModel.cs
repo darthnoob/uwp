@@ -160,6 +160,9 @@ namespace MegaApp.ViewModels.CreateAccount
                     return false;
                 }
 
+                // Enable the transfer resumption for the main MegaSDK instance
+                SdkService.MegaSdk.enableTransferResumption();
+
                 this.ControlState = true;
                 this.ConfirmAccountButtonState = true;
                 this.IsBusy = false;
@@ -185,14 +188,14 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private bool CheckInputParameters()
         {
-            if (string.IsNullOrEmpty(this.Email))
+            if (string.IsNullOrWhiteSpace(this.Email))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 EmailInputState = InputState.Warning;
                 return false;
             }
 
-            if (string.IsNullOrEmpty(this.Password))
+            if (string.IsNullOrWhiteSpace(this.Password))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 PasswordInputState = InputState.Warning;
@@ -208,9 +211,7 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private void SetButtonState()
         {
-            this.ConfirmAccountButtonState = !string.IsNullOrEmpty(this.Password) &&
-                                             !string.IsNullOrWhiteSpace(this.Password) &&
-                                             !string.IsNullOrEmpty(this.Email) &&
+            this.ConfirmAccountButtonState = !string.IsNullOrWhiteSpace(this.Password) &&
                                              !string.IsNullOrWhiteSpace(this.Email);
         }
 

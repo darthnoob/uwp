@@ -122,7 +122,7 @@
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
-    <value>I agree with the terms of services.</value>
+    <value>I agree with the Terms of Service.</value>
     <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
@@ -287,7 +287,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View Terms of service here.</value>
+    <value>View Terms of Service here.</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -946,23 +946,17 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Contact support</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_ForgotMyPasswordDescription" xml:space="preserve">
-    <value>If you have a backup of your Recovery key, you can reset your password by selecting YES. No data will be lost.
-
-You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer. 
-
-If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.</value>
-    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password.</comment>
+  <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
+    <value>If you have a backup of your Recovery key, you can reset your password by selecting YES. No data will be lost.</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
   </data>
   <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
     <value>Do you have a copy of your Recovery key?</value>
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
-  <data name="UI_NoRecoveryKeyDescription" xml:space="preserve">
-    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same e-mail address. 
-
-In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
-    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key.</comment>
+  <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
+    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same e-mail address.</value>
+    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
     <value>I don’t have my Recovery key</value>
@@ -1031,5 +1025,17 @@ In the event that you recall your parked account's password, please contact supp
   <data name="UI_Wait" xml:space="preserve">
     <value>Wait</value>
     <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
+    <value>You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer.</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
+    <value>If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
+    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
 </root>

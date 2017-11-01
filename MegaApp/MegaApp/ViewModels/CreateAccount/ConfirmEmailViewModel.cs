@@ -70,7 +70,7 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private bool CheckInputParameters()
         {
-            if (string.IsNullOrEmpty(this.Email))
+            if (string.IsNullOrWhiteSpace(this.Email))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 EmailInputState = InputState.Warning;
@@ -117,8 +117,7 @@ namespace MegaApp.ViewModels.CreateAccount
             set
             {
                 SetField(ref _email, value);
-                this.ResendButtonState = !string.IsNullOrEmpty(_email) &&
-                                         !string.IsNullOrWhiteSpace(_email);
+                this.ResendButtonState = !string.IsNullOrWhiteSpace(_email);
             }
         }
 

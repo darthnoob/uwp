@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
 using MegaApp.MegaApi;
@@ -128,13 +127,5 @@ namespace MegaApp.Services
 
             return null;
         }
-
-        public static MPasswordStrength CalculatePasswordStrength(string value)
-        {
-            return (MPasswordStrength)Enum.ToObject(
-                typeof(MPasswordStrength),
-                MegaSdk.getPasswordStrength(value));
-        }
-
     }
 }

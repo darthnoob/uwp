@@ -92,19 +92,18 @@ namespace MegaApp.ViewModels.Login
 
         private bool CheckInputParameters()
         {
-            if (string.IsNullOrEmpty(this.Password))
+            if (string.IsNullOrWhiteSpace(this.Password))
             {
                 this.PasswordInputState = InputState.Warning;
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 return false;
             }
-            if (string.IsNullOrEmpty(this.ConfirmPassword))
-            {
-                this.ConfirmPasswordInputState = InputState.Warning;
-                SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
-                return false;
-            }
-            return true;
+
+            if (!string.IsNullOrWhiteSpace(this.ConfirmPassword)) return true;
+
+            this.ConfirmPasswordInputState = InputState.Warning;
+            SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+            return false;
         }
 
         private void SetWarning(bool isVisible, string warningText)
@@ -131,7 +130,7 @@ namespace MegaApp.ViewModels.Login
 
         private void CalculatePasswordStrength(string value)
         {
-            this.PasswordStrength = SdkService.CalculatePasswordStrength(value);
+            this.PasswordStrength = ValidationService.CalculatePasswordStrength(value);
         }
 
         private bool CheckPasswordStrenght()
@@ -141,10 +140,8 @@ namespace MegaApp.ViewModels.Login
 
         private void SetButtonState()
         {
-            this.StartNewAccountButtonState = !string.IsNullOrEmpty(this.Password) &&
-                                       !string.IsNullOrWhiteSpace(this.Password) &&
-                                       !string.IsNullOrEmpty(this.ConfirmPassword) &&
-                                       !string.IsNullOrWhiteSpace(this.ConfirmPassword);
+            this.StartNewAccountButtonState = !string.IsNullOrWhiteSpace(this.Password) &&
+                                              !string.IsNullOrWhiteSpace(this.ConfirmPassword);
         }
 
         #endregion
@@ -177,7 +174,6 @@ namespace MegaApp.ViewModels.Login
             {
                 SetField(ref _confirmPassword, value);
                 SetButtonState();
-
             }
         }
 

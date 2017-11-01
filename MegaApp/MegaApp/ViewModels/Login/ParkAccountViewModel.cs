@@ -50,7 +50,7 @@ namespace MegaApp.ViewModels.Login
 
         private bool CheckInputParameters()
         {
-            if (string.IsNullOrEmpty(this.Email))
+            if (string.IsNullOrWhiteSpace(this.Email))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 EmailInputState = InputState.Warning;
@@ -98,8 +98,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _email, value);
-                this.ParkButtonState = !string.IsNullOrEmpty(_email) &&
-                                       !string.IsNullOrWhiteSpace(_email);
+                this.ParkButtonState = !string.IsNullOrWhiteSpace(_email);
             }
         }
 
@@ -137,7 +136,13 @@ namespace MegaApp.ViewModels.Login
 
         public string ParkAccountText => ResourceService.UiResources.GetString("UI_ParkAccount");
         public string ParkAccountHeaderText => ResourceService.UiResources.GetString("UI_NoRecoveryKeyHeader");
-        public string ParkAccountDescriptionText => ResourceService.UiResources.GetString("UI_NoRecoveryKeyDescription");
+        public string ParkAccountDescriptionText => UiService.ConcatStringsToParagraph(
+            new[]
+            {
+                ResourceService.UiResources.GetString("UI_NoRecoveryKeyDescription_Part_1"),
+                ResourceService.UiResources.GetString("UI_NoRecoveryKeyDescription_Part_2")
+            });
+       
         public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
 
         #endregion

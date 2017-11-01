@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels.Login
 
         private async Task<bool> VerifyKey(string key)
         {
-            if (string.IsNullOrEmpty(key) || key.Length != 22)
+            if (string.IsNullOrWhiteSpace(key) || key.Length != 22)
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_InvalidKeyFile_Title"));
                 this.RecoveryKeyInputState = InputState.Warning;
@@ -84,14 +84,11 @@ namespace MegaApp.ViewModels.Login
 
         private bool CheckInputParametersAsync()
         {
-            if (string.IsNullOrEmpty(this.RecoveryKey))
-            {
-                SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
-                this.RecoveryKeyInputState = InputState.Warning;
-                return false;
-            }
+            if (!string.IsNullOrWhiteSpace(this.RecoveryKey)) return true;
 
-            return true;
+            SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+            this.RecoveryKeyInputState = InputState.Warning;
+            return false;
         }
 
         private void SetWarning(bool isVisible, string warningText)
@@ -132,8 +129,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _recoveryKey, value);
-                this.VerifyButtonState = !string.IsNullOrEmpty(_recoveryKey) &&
-                                       !string.IsNullOrWhiteSpace(_recoveryKey);
+                this.VerifyButtonState = !string.IsNullOrWhiteSpace(_recoveryKey);
             }
         }
 

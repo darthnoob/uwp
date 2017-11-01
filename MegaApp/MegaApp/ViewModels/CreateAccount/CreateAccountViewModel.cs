@@ -114,10 +114,10 @@ namespace MegaApp.ViewModels.CreateAccount
             if (string.IsNullOrWhiteSpace(this.LastName))
                 this.LastName = string.Empty;
 
-            if (string.IsNullOrEmpty(this.Email) || 
-                string.IsNullOrEmpty(this.Password) ||
-                string.IsNullOrEmpty(this.FirstName) ||
-                string.IsNullOrEmpty(this.ConfirmPassword))
+            if (string.IsNullOrWhiteSpace(this.Email) || 
+                string.IsNullOrWhiteSpace(this.Password) ||
+                string.IsNullOrWhiteSpace(this.FirstName) ||
+                string.IsNullOrWhiteSpace(this.ConfirmPassword))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 SetInputState(
@@ -147,7 +147,7 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private void CalculatePasswordStrength(string value)
         {
-            this.PasswordStrength = SdkService.CalculatePasswordStrength(value);
+            this.PasswordStrength = ValidationService.CalculatePasswordStrength(value);
         }
 
         private void SetInputState(
@@ -169,12 +169,10 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private void SetButtonState()
         {
-            var enabled = !string.IsNullOrEmpty(this.Email) &&
-                          !string.IsNullOrWhiteSpace(this.Email) &&
-                          !string.IsNullOrEmpty(this.FirstName) &&
+            var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
                           !string.IsNullOrWhiteSpace(this.FirstName) &&
-                          !string.IsNullOrEmpty(this.Password) &&
-                          !string.IsNullOrEmpty(this.ConfirmPassword) &&
+                          !string.IsNullOrWhiteSpace(this.Password) &&
+                          !string.IsNullOrWhiteSpace(this.ConfirmPassword) &&
                           this.TermOfService;
 
             OnUiThread(() => this.CreateAccountButtonState = enabled);
@@ -212,9 +210,7 @@ namespace MegaApp.ViewModels.CreateAccount
             get { return _isReadOnly; }
             set { SetField(ref _isReadOnly, value); }
         }
-
-        public string NewSignUpCode { get; set; }
-
+        
         private string _email;
         public string Email 
         {
@@ -235,7 +231,6 @@ namespace MegaApp.ViewModels.CreateAccount
                 if(SetField(ref _password, value))
                     CalculatePasswordStrength(value);
                 SetButtonState();
-
             }
         }
 
@@ -254,7 +249,6 @@ namespace MegaApp.ViewModels.CreateAccount
             {
                 SetField(ref _confirmPassword, value);
                 SetButtonState();
-
             }
         }
 

@@ -249,7 +249,6 @@
     <Compile Include="MegaApi\GlobalListener.cs" />
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
     <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
-    <Compile Include="MegaApi\LoginRequestListener.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />

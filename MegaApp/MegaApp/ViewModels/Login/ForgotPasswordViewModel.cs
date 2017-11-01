@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.Views.Login;
@@ -39,7 +40,14 @@ namespace MegaApp.ViewModels.Login
         public string RecoveryConfirmText => ResourceService.UiResources.GetString("UI_Yes");
         public string RecoveryDenyText => ResourceService.UiResources.GetString("UI_No");
         public string ForgotMyPasswordHeaderText => ResourceService.UiResources.GetString("UI_ForgotMyPassword");
-        public string ForgotMyPasswordDescriptionText => ResourceService.UiResources.GetString("UI_ForgotMyPasswordDescription");
+
+        public string ForgotMyPasswordDescriptionText => UiService.ConcatStringsToParagraph(
+            new[]
+            {
+                ResourceService.UiResources.GetString("UI_ForgotMyPasswordDescription_Part_1"),
+                ResourceService.UiResources.GetString("UI_ForgotMyPasswordDescription_Part_2"),
+                ResourceService.UiResources.GetString("UI_ForgotMyPasswordDescription_Part_3")
+            });
         public string RecoveryKeyQuestionText => ResourceService.UiResources.GetString("UI_RecoveryKeyQuestion");
 
         #endregion

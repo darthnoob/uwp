@@ -145,16 +145,15 @@ namespace MegaApp.ViewModels.Login
 
         private void SetState()
         {
-            var enabled = !string.IsNullOrEmpty(this.Email) &&
-                          !string.IsNullOrWhiteSpace(this.Email) &&
-                          !string.IsNullOrEmpty(this.Password);
+            var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
+                          !string.IsNullOrWhiteSpace(this.Password);
 
             OnUiThread(() => this.LoginButtonState = enabled);
         }
 
         private bool CheckInputParameters()
         {
-            if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
+            if (string.IsNullOrWhiteSpace(this.Email) || string.IsNullOrWhiteSpace(this.Password))
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 SetInputState(InputState.Warning, InputState.Warning);
@@ -284,8 +283,6 @@ namespace MegaApp.ViewModels.Login
                 SetState();
             }
         }
-       
-        public string SessionKey { get; set; }
 
         private bool _isWarningVisible;
         public bool IsWarningVisible
