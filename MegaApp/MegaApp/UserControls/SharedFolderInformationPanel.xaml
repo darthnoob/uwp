@@ -120,7 +120,7 @@
                     Background="Transparent"
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Style="{StaticResource MegaCommandBarStyle}">
-                    <!--<AppBarButton
+                    <AppBarButton
                         Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -131,7 +131,20 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
-                    </AppBarButton>-->
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
+                        Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.ShareIconPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.ContactsList.RemoveContactFromFolderCommand}"
                         Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
@@ -494,7 +507,7 @@
             <CommandBar
                 x:Name="SharePivotBottomCommandBar"
                 Style="{StaticResource MegaCommandBarStyle}">
-                <!--<AppBarButton
+                <AppBarButton
                     Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
                     Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
@@ -505,7 +518,20 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                     </AppBarButton.Icon>
-                </AppBarButton>-->
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
+                    Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.ShareIconPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.ContactsList.RemoveContactFromFolderCommand}"
                     Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"

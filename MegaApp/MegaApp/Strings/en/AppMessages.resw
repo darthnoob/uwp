@@ -1031,4 +1031,16 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <value>Application Error</value>
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
+  <data name="AM_ShareFolderFailed" xml:space="preserve">
+    <value>Failed to share the folder. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
+  </data>
+  <data name="AM_ShareFolderFailedOwnEmail" xml:space="preserve">
+    <value>You are trying to share the folder to yourself.</value>
+    <comment>Message of the dialog displayed when the process/request to share a folder failed because the user is trying to share the folder to his/her own e-mail.</comment>
+  </data>
+  <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
+    <value>Error sharing folder</value>
+    <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
+  </data>
 </root>

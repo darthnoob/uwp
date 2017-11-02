@@ -158,6 +158,7 @@ namespace MegaApp.ViewModels.UserControls
         public string EnableSharedFolderText => ResourceService.UiResources.GetString("UI_EnableSharedFolder");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string RemoveFromFolderText => ResourceService.UiResources.GetString("UI_RemoveFromFolder");
+        public string SetFolderPermissionText => ResourceService.UiResources.GetString("UI_SetFolderPermission");
         public string SharedToText => ResourceService.UiResources.GetString("UI_SharedTo");
 
         #endregion
@@ -169,6 +170,7 @@ namespace MegaApp.ViewModels.UserControls
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
+        public string ShareIconPathData => ResourceService.VisualResources.GetString("VR_ShareIconPathData");
 
         #endregion
     }

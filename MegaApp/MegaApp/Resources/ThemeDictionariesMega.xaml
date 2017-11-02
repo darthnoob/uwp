@@ -5,8 +5,10 @@
 
     <!--  COLORS  -->
     <Color x:Key="MegaRedColor">#EB4444</Color>
+    <Color x:Key="MegaRedDisabledColor">#7DEB4444</Color>
     <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}"/>
-    
+    <SolidColorBrush x:Key="MegaRedDisabledColorBrush" Color="{ThemeResource MegaRedDisabledColor}" />
+
     <Color x:Key="MegaFreeAccountColor">#00B294</Color>
     <Color x:Key="MegaProLiteAccountColor">#FFC159</Color>
     <Color x:Key="MegaProAccountColor">#EB4444</Color>
@@ -135,7 +137,7 @@
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource MegaRedDisabledColorBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
@@ -1079,7 +1081,13 @@
                                             MaxWidth="{ThemeResource ContentDialogButtonMaxWidth}"
                                             Height="{ThemeResource ContentDialogButtonHeight}"
                                             Grid.Column="1"
-                                            HorizontalAlignment="Right" />
+                                            HorizontalAlignment="Right">
+                                            <Border.Resources>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="#444444"/>
+                                                </Style>
+                                            </Border.Resources>
+                                        </Border>
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -1117,6 +1125,7 @@
             <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#222222"/>
             <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#191919"/>
             <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#666666"/>
+            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444"/>
         </ResourceDictionary>
 
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
@@ -1144,6 +1153,7 @@
             <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#E6E6E6"/>
             <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#FFFFFF"/>
             <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#DDDDDD"/>
+            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444"/>
         </ResourceDictionary>        
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

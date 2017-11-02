@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.Views.Dialogs;
+using MegaApp.MegaApi;
 
 namespace MegaApp.ViewModels.Contacts
 {
@@ -17,6 +21,7 @@ namespace MegaApp.ViewModels.Contacts
             this.AddContactToFolderCommand = new RelayCommand(AddContactToFolder);
             this.ChangePermissionsCommand = new RelayCommand<MShareType>(ChangePermissions);
             this.RemoveContactFromFolderCommand = new RelayCommand(RemoveContactFromFolder);
+            this.SetFolderPermissionCommand = new RelayCommand(SetFolderPermission);
         }
 
         #region Commands
@@ -24,6 +29,7 @@ namespace MegaApp.ViewModels.Contacts
         public ICommand AddContactToFolderCommand { get; }
         public ICommand ChangePermissionsCommand { get; }
         public ICommand RemoveContactFromFolderCommand { get; }
+        public ICommand SetFolderPermissionCommand { get; }
 
         #endregion
 
@@ -45,9 +51,30 @@ namespace MegaApp.ViewModels.Contacts
             App.GlobalListener.OutSharedFolderRemoved -= this.OnOutSharedFolderUpdated;
         }
 
-        private void AddContactToFolder()
+        private async void AddContactToFolder()
         {
+            var shareFolderToDialog = new ShareFolderToDialog(this.sharedFolder.getName());
+            var dialogResult = await shareFolderToDialog.ShowAsync();
 
+            if (dialogResult != ContentDialogResult.Primary) return;
+
+            var share = new ShareRequestListenerAsync();
+            var result = await share.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.shareByEmail(this.sharedFolder,
+                    shareFolderToDialog.ViewModel.ContactEmail,
+                    (int)shareFolderToDialog.ViewModel.AccessLevel, share);
+            });
+
+            if(!result)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_ShareFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_ShareFolderFailed"));
+                });
+            }
         }
 
         /// <summary>
@@ -158,6 +185,18 @@ namespace MegaApp.ViewModels.Contacts
                     }
                 }
             }
+        }
+
+        private async void SetFolderPermission()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+
+            var dialog = new SetSharedFolderPermissionDialog();
+            var dialogResult = await dialog.ShowAsync();
+
+            if (dialogResult != ContentDialogResult.Primary) return;
+
+            this.ChangePermissions(dialog.ViewModel.AccessLevel);
         }
 
         #endregion
