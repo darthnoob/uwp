@@ -48,6 +48,26 @@ namespace MegaApp.UserControls
                 new PropertyMetadata(null));
 
         /// <summary>
+        /// Gets or sets the progress text.
+        /// </summary>
+        /// <value>The progress text</value>
+        public string ProgressText
+        {
+            get { return (string)GetValue(ProgressTextProperty); }
+            set { SetValue(ProgressTextProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressText" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressTextProperty =
+            DependencyProperty.Register(
+                nameof(ProgressText),
+                typeof(string),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
         /// Gets or sets the header font size.
         /// </summary>
         /// <value>The header text font size</value>
@@ -88,9 +108,29 @@ namespace MegaApp.UserControls
                 new PropertyMetadata(16));
 
         /// <summary>
+        /// Gets or sets the progress text font size.
+        /// </summary>
+        /// <value>The progress text font size</value>
+        public double ProgressTextFontSize
+        {
+            get { return (double)GetValue(ProgressTextFontSizeProperty); }
+            set { SetValue(ProgressTextFontSizeProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressTextFontSize" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressTextFontSizeProperty =
+            DependencyProperty.Register(
+                nameof(ProgressTextFontSize),
+                typeof(double),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(16));
+
+        /// <summary>
         /// Gets or sets the header foreground color.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>the header color</value>
         public Brush HeaderForeground
         {
             get { return (Brush)GetValue(HeaderForegroundProperty); }
@@ -110,7 +150,7 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the sub header foreground color.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>the sub header color</value>
         public Brush SubHeaderForeground
         {
             get { return (Brush)GetValue(SubHeaderForegroundProperty); }
@@ -128,9 +168,29 @@ namespace MegaApp.UserControls
                 new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the sub header foreground color.
+        /// Gets or sets the progress text foreground color.
         /// </summary>
-        /// <value>The icon to show as home button</value>
+        /// <value>the progress text color</value>
+        public Brush ProgressTextForeground
+        {
+            get { return (Brush)GetValue(ProgressTextForegroundProperty); }
+            set { SetValue(ProgressTextForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressTextForeground" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressTextForegroundProperty =
+            DependencyProperty.Register(
+                nameof(ProgressTextForeground),
+                typeof(Brush),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the margin of the sub header.
+        /// </summary>
+        /// <value>Margin sub header</value>
         public Thickness SubHeaderMargin
         {
             get { return (Thickness)GetValue(SubHeaderMarginProperty); }
@@ -148,21 +208,61 @@ namespace MegaApp.UserControls
                 new PropertyMetadata(null));
 
         /// <summary>
-        /// Gets or sets the size of the progress ring.
+        /// Gets or sets the margin of the progress text.
         /// </summary>
-        /// <value>The icon to show as home button</value>
-        public double ProgressSize
+        /// <value>Margin progress text</value>
+        public Thickness ProgressTextMargin
         {
-            get { return (double)GetValue(ProgressSizeProperty); }
-            set { SetValue(ProgressSizeProperty, value); }
+            get { return (Thickness)GetValue(ProgressTextMarginProperty); }
+            set { SetValue(ProgressTextMarginProperty, value); }
         }
 
         /// <summary>
-        /// Identifier for the<see cref="ProgressSize" /> dependency property.
+        /// Identifier for the<see cref="ProgressTextMargin" /> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ProgressSizeProperty =
+        public static readonly DependencyProperty ProgressTextMarginProperty =
             DependencyProperty.Register(
-                nameof(ProgressSize),
+                nameof(ProgressTextMargin),
+                typeof(Thickness),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the size of the progress ring on desktop.
+        /// </summary>
+        /// <value>Size of progress</value>
+        public double ProgressSizeDesktop
+        {
+            get { return (double)GetValue(ProgressSizeDesktopProperty); }
+            set { SetValue(ProgressSizeDesktopProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressSizeDesktop" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressSizeDesktopProperty =
+            DependencyProperty.Register(
+                nameof(ProgressSizeDesktop),
+                typeof(double),
+                typeof(ActivityIndicator),
+                new PropertyMetadata(48));
+
+        /// <summary>
+        /// Gets or sets the size of the progress ring on mobile.
+        /// </summary>
+        /// <value>Size of progress</value>
+        public double ProgressSizeMobile
+        {
+            get { return (double)GetValue(ProgressSizeMobileProperty); }
+            set { SetValue(ProgressSizeMobileProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifier for the<see cref="ProgressSizeMobile" /> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ProgressSizeMobileProperty =
+            DependencyProperty.Register(
+                nameof(ProgressSizeMobile),
                 typeof(double),
                 typeof(ActivityIndicator),
                 new PropertyMetadata(48));

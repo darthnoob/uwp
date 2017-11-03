@@ -356,7 +356,7 @@ namespace MegaApp.ViewModels.CreateAccount
         #region ProgressMessages
 
         public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountHeader");
-        public string ProgressSubHeaderText => ResourceService.ProgressMessages.GetString("PM_CreateAccountSubHeader");
+        public string ProgressText => ResourceService.ProgressMessages.GetString("PM_CreateAccountSubHeader");
 
         #endregion
     }

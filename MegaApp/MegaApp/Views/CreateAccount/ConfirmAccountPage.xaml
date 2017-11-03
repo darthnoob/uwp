@@ -102,18 +102,21 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             Margin="72,0,0,0"
-            VerticalAlignment="Center"
+            HorizontalContentAlignment="Stretch"
             Foreground="{StaticResource MegaAppForegroundBrush}"
             HeaderFontSize="28"
             HeaderText="{Binding ProgressHeaderText}"
             IsVisible="{Binding IsBusy}"
-            ProgressSize="24"
+            ProgressText="{Binding ProgressText}"
+            ProgressTextFontSize="14"
             SubHeaderFontSize="14"
-            SubHeaderMargin="0, 24, 0 , 0"
             SubHeaderText="{Binding ProgressSubHeaderText}">
             <userControls:ActivityIndicator.SubHeaderForeground>
-                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+                <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
             </userControls:ActivityIndicator.SubHeaderForeground>
+            <userControls:ActivityIndicator.ProgressTextForeground>
+                <SolidColorBrush Opacity="0.5" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.ProgressTextForeground>
         </userControls:ActivityIndicator>
 
         <VisualStateManager.VisualStateGroups>
@@ -129,6 +132,7 @@
                         <Setter Target="ConfirmAccountStackPanel.Width" Value="380" />
                         <Setter Target="ConfirmAccountStackPanel.HorizontalAlignment" Value="Left" />
                         <Setter Target="ConfirmAccountStackPanel.VerticalAlignment" Value="Center" />
+                        <Setter Target="ActivityIndicator.Margin" Value="72,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -142,6 +146,7 @@
                         <Setter Target="ConfirmAccountStackPanel.Width" Value="NaN" />
                         <Setter Target="ConfirmAccountStackPanel.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="ConfirmAccountStackPanel.VerticalAlignment" Value="Stretch" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

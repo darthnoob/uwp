@@ -33,6 +33,7 @@ namespace MegaApp.ViewModels.CreateAccount
 
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_ConfirmAccountHeader");
             this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ConfirmAccountSubHeader");
+            this.ProgressText = ResourceService.ProgressMessages.GetString("PM_Patient");
 
             this.IsBusy = true;
             this.ControlState = false;
@@ -78,7 +79,8 @@ namespace MegaApp.ViewModels.CreateAccount
             login.ServerBusy += OnServerBusy;
 
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
-            this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+            this.ProgressSubHeaderText = null;
+            this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
             this.IsBusy = true;
             this.ControlState = false;
@@ -144,7 +146,7 @@ namespace MegaApp.ViewModels.CreateAccount
         {
             try
             {
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
                 var fetchNodes = new FetchNodesRequestListenerAsync();
                 fetchNodes.DecryptNodes += OnDecryptNodes;
@@ -178,12 +180,12 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
         private bool CheckInputParameters()
@@ -322,6 +324,13 @@ namespace MegaApp.ViewModels.CreateAccount
         {
             get { return _progressSubHeaderText; }
             set { SetField(ref _progressSubHeaderText, value); }
+        }
+
+        private string _progressText;
+        public string ProgressText
+        {
+            get { return _progressText; }
+            set { SetField(ref _progressText, value); }
         }
 
         #endregion

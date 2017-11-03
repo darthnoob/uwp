@@ -24,12 +24,12 @@ namespace MegaApp.ViewModels.Login
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels.Login
                 this.IsBusy = true;
 
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
             }
@@ -183,7 +183,7 @@ namespace MegaApp.ViewModels.Login
                 this.IsBusy = true;
 
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 fastLoginResult = await fastLogin.ExecuteAsync(() =>
                 {
@@ -220,7 +220,7 @@ namespace MegaApp.ViewModels.Login
         {
             try
             {
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
                 var fetchNodes = new FetchNodesRequestListenerAsync();
                 fetchNodes.DecryptNodes += OnDecryptNodes;
@@ -339,11 +339,11 @@ namespace MegaApp.ViewModels.Login
             set { SetField(ref _progressHeaderText, value); }
         }
 
-        private string _progressSubHeaderText;
-        public string ProgressSubHeaderText
+        private string _progressText;
+        public string ProgressText
         {
-            get { return _progressSubHeaderText; }
-            set { SetField(ref _progressSubHeaderText, value); }
+            get { return _progressText; }
+            set { SetField(ref _progressText, value); }
         }
 
         #endregion
