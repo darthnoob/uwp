@@ -35,11 +35,13 @@ namespace MegaApp.Views
 
             // Do not allow user to go back to any previous page
             NavigateService.CoreFrame.BackStack.Clear();
-            
+            AppService.SetAppViewBackButtonVisibility(false);
+
             // If exists a navigation object
             if (e?.Parameter != null)
             {
-                NavigationActionType navActionType = NavigateService.GetNavigationObject(e.Parameter).Action;
+                var navObj = NavigateService.GetNavigationObject(e.Parameter);
+                NavigationActionType navActionType = navObj.Action;
 
                 // Try to avoid display duplicate alerts
                 if (isAlertAlreadyDisplayed) return;
@@ -47,6 +49,10 @@ namespace MegaApp.Views
 
                 switch (navActionType)
                 {
+                    case NavigationActionType.Recovery:
+                        this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
+                        this.ViewModel.LoginViewModel.Password = navObj.Parameters[NavigationParamType.Password] as string;
+                        break;
                     case NavigationActionType.API_ESID:
                         // Show a message notifying the error
                         await DialogService.ShowAlertAsync(
@@ -74,19 +80,6 @@ namespace MegaApp.Views
 
             if (DebugService.DebugSettings.IsDebugMode && DebugService.DebugSettings.ShowDebugAlert)
                 DialogService.ShowDebugModeAlert();
-        }
-
-        private void OnAcceptClick(object sender, RoutedEventArgs e)
-        {
-            if (!NetworkService.IsNetworkAvailable(true)) return;
-
-            if (PivotLoginAndCreateAccount?.SelectedItem == PivotItemLogin)
-            {
-                this.ViewModel?.LoginViewModel?.Login();
-                return;
-            }
-            // Else it is always create account
-           this.ViewModel?.CreateAccountViewModel?.CreateAccount();
         }
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)

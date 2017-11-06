@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MegaApp.Enums;
 using MegaApp.Services;
+using MegaApp.ViewModels.Login;
 
 namespace MegaApp.ViewModels
 {

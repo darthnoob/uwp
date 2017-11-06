@@ -1,0 +1,152 @@
+﻿<login:BaseConfirmRecoveryPage
+    x:Class="MegaApp.Views.Login.ConfirmRecoveryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:login="using:MegaApp.Views.Login"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:userControls="using:MegaApp.UserControls"
+    xmlns:viewModels="using:MegaApp.ViewModels.Login"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
+    d:DataContext="{d:DesignInstance viewModels:ConfirmRecoveryViewModel}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ContentPresenter
+            x:Name="LogoPresenter"
+            Grid.Row="0"
+            Margin="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Style="{StaticResource MegaPageHeaderLogoStyle}" />
+
+        <ScrollViewer
+            x:Name="MainScrollViewer"
+            Grid.Row="1"
+            Margin="72,0,0,0"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel
+                x:Name="ConfirmRecoveryStackPanel"
+                Width="380"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaPageHeaderFontStyle}"
+                    Text="{Binding ValidatePasswordtHeaderText}" />
+
+                <TextBlock
+                    Margin="0,24,0,20"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaBodyFontStyle}"
+                    Text="{Binding ValidatePasswordDescriptionText}" />
+
+                <PasswordBox
+                    Height="{StaticResource InputHeight}"
+                    Margin="{StaticResource StackedInputMargin}"
+                    BorderBrush="{Binding PasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
+                    IsEnabled="{Binding ControlState}"
+                    Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    PasswordRevealMode="Peek"
+                    PlaceholderText="{Binding PasswordWatermarkText, Mode=OneTime}"
+                    Style="{StaticResource MegaPasswordBoxStyle}"
+                    TabIndex="1" />
+                <userControls:PasswordStrengthIndicator
+                    Height="4"
+                    Margin="0,0,0,8"
+                    IndicatorBackground="{StaticResource MegaTextBoxBackgroundBrush}"
+                    IndicatorForeground="{StaticResource MegaRedColorBrush}"
+                    Value="{Binding PasswordStrength}">
+                    <userControls:PasswordStrengthIndicator.IndicatorsOpacity>
+                        <x:Double>0.4</x:Double>
+                        <x:Double>0.6</x:Double>
+                        <x:Double>0.8</x:Double>
+                        <x:Double>1.0</x:Double>
+                    </userControls:PasswordStrengthIndicator.IndicatorsOpacity>
+                </userControls:PasswordStrengthIndicator>
+
+                <PasswordBox
+                    Height="{StaticResource InputHeight}"
+                    Margin="{StaticResource StackedInputMargin}"
+                    BorderBrush="{Binding ConfirmPasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
+                    IsEnabled="{Binding ControlState}"
+                    KeyDown="OnKeyDown"
+                    Password="{Binding ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    PasswordRevealMode="Peek"
+                    PlaceholderText="{Binding ConfirmPasswordWatermarkText, Mode=OneTime}"
+                    Style="{StaticResource MegaPasswordBoxStyle}"
+                    TabIndex="2" />
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    Visibility="{Binding IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox
+                        MaxWidth="16"
+                        MaxHeight="16"
+                        Margin="8,4,12,0"
+                        VerticalAlignment="Top">
+                        <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                    </Viewbox>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{Binding WarningText}" />
+                </StackPanel>
+
+                <Button
+                    Width="{StaticResource DefaultButtonWidth}"
+                    Margin="0,26,0,0"
+                    Command="{Binding ValidatePasswordCommand, Mode=OneTime}"
+                    Content="{Binding ValidatePasswordText, Mode=OneTime}"
+                    IsEnabled="{Binding ValidateButtonState}" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <ProgressRing
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Width="32"
+            Height="32"
+            IsActive="{Binding IsBusy}"
+            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="72,0,0,0" />
+                        <Setter Target="ConfirmRecoveryStackPanel.Width" Value="380" />
+                        <Setter Target="ConfirmRecoveryStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="ConfirmRecoveryStackPanel.VerticalAlignment" Value="Center" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginMobile}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="20,0" />
+                        <Setter Target="ConfirmRecoveryStackPanel.Width" Value="NaN" />
+                        <Setter Target="ConfirmRecoveryStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="ConfirmRecoveryStackPanel.VerticalAlignment" Value="Stretch" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+</login:BaseConfirmRecoveryPage>

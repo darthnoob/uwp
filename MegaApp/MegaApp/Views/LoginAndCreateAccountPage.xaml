@@ -3,10 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
     d:DataContext="{d:DesignInstance viewModels:LoginAndCreateAccountViewModel}"
     mc:Ignorable="d">
 
@@ -17,50 +19,85 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource MegaPageHeaderLogoRowHeight}" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <ContentPresenter
+            x:Name="LogoPresenter"
             Grid.Row="0"
-            Margin="{StaticResource MegaPageHeaderLogoMargin}"
+            Margin="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            ContentTemplate="{StaticResource MegaPageHeaderLogo}"
+            Style="{StaticResource MegaPageHeaderLogoStyle}"
             Tapped="OnMegaHeaderLogoTapped" />
 
         <Pivot
             x:Name="PivotLoginAndCreateAccount"
             Grid.Row="1"
-            Margin="8,6,8,0"
+            Margin="72,0,0,0"
+            VerticalAlignment="Center"
+            extensions:IsVisibleAnimation.IsVisible="{Binding ActiveViewModel.IsBusy, Converter={StaticResource InverseBoolConverter}}"
             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
             SelectionChanged="OnSelectionChanged">
-
             <PivotItem
                 x:Name="PivotItemLogin"
                 Margin="{StaticResource PivotItemMargin}"
                 Header="{Binding LoginViewModel.LoginText, Mode=OneTime}">
                 <ScrollViewer Margin="{StaticResource ScrollViewerMargin}" VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
+                    <StackPanel
+                        x:Name="LoginStackPanel"
+                        Width="380"
+                        Height="400"
+                        HorizontalAlignment="Left">
                         <TextBox
                             Height="{StaticResource InputHeight}"
                             Margin="{StaticResource StackedInputMargin}"
+                            BorderBrush="{Binding LoginViewModel.EmailInputState, Converter={StaticResource InputStateToColorConverter}}"
                             InputScope="EmailNameOrAddress"
                             IsEnabled="{Binding LoginViewModel.ControlState}"
                             PlaceholderText="{Binding LoginViewModel.EmailWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaTextBoxStyle}"
                             TabIndex="0"
-                            Text="{Binding LoginViewModel.Email, Mode=TwoWay}"
+                            Text="{Binding LoginViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="NoWrap" />
                         <PasswordBox
                             Height="{StaticResource InputHeight}"
+                            BorderBrush="{Binding LoginViewModel.PasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
                             IsEnabled="{Binding LoginViewModel.ControlState}"
                             KeyDown="OnPasswordKeyDown"
-                            Password="{Binding LoginViewModel.Password, Mode=TwoWay}"
+                            Password="{Binding LoginViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             PasswordRevealMode="Peek"
                             PlaceholderText="{Binding LoginViewModel.PasswordWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaPasswordBoxStyle}"
                             TabIndex="1" />
+                        <StackPanel
+                            Margin="0,20,0,0"
+                            Orientation="Horizontal"
+                            Visibility="{Binding LoginViewModel.IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Viewbox
+                                MaxWidth="16"
+                                MaxHeight="16"
+                                Margin="8,4,12,0"
+                                VerticalAlignment="Top">
+                                <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                            </Viewbox>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{Binding LoginViewModel.WarningText}" />
+                        </StackPanel>
+                        <Button
+                            Width="{StaticResource DefaultButtonWidth}"
+                            Margin="0,26,0,0"
+                            Command="{Binding LoginViewModel.LoginCommand, Mode=OneTime}"
+                            Content="{Binding LoginViewModel.LoginText, Mode=OneTime}"
+                            IsEnabled="{Binding LoginViewModel.LoginButtonState}" />
+                        <Button
+                            Width="{StaticResource DefaultButtonWidth}"
+                            Margin="0,160,0,20"
+                            Command="{Binding LoginViewModel.ForgotMyPasswordCommand, Mode=OneTime}"
+                            Content="{Binding LoginViewModel.ForgotMyPasswordText, Mode=OneTime}" />
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
@@ -70,16 +107,21 @@
                 Margin="{StaticResource PivotItemMargin}"
                 Header="{Binding CreateAccountViewModel.CreateAccountText, Mode=OneTime}">
                 <ScrollViewer Margin="{StaticResource ScrollViewerMargin}" VerticalScrollBarVisibility="Auto">
-                    <StackPanel>
+                    <StackPanel
+                        x:Name="CreateAccountStackPanel"
+                        Width="380"
+                        Height="400"
+                        HorizontalAlignment="Left">
                         <TextBox
                             Height="{StaticResource InputHeight}"
                             Margin="{StaticResource StackedInputMargin}"
+                            BorderBrush="{Binding CreateAccountViewModel.FirstNameInputState, Converter={StaticResource InputStateToColorConverter}}"
                             InputScope="EmailNameOrAddress"
                             IsEnabled="{Binding LoginViewModel.ControlState}"
                             PlaceholderText="{Binding CreateAccountViewModel.FirstNameWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaTextBoxStyle}"
                             TabIndex="0"
-                            Text="{Binding CreateAccountViewModel.FirstName, Mode=TwoWay}"
+                            Text="{Binding CreateAccountViewModel.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="NoWrap" />
                         <TextBox
                             Height="{StaticResource InputHeight}"
@@ -93,121 +135,161 @@
                         <TextBox
                             Height="{StaticResource InputHeight}"
                             Margin="{StaticResource StackedInputMargin}"
+                            BorderBrush="{Binding CreateAccountViewModel.EmailInputState, Converter={StaticResource InputStateToColorConverter}}"
                             InputScope="EmailNameOrAddress"
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}"
                             IsReadOnly="{Binding CreateAccountViewModel.IsReadOnly}"
                             PlaceholderText="{Binding CreateAccountViewModel.EmailWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaTextBoxStyle}"
                             TabIndex="2"
-                            Text="{Binding CreateAccountViewModel.Email, Mode=TwoWay}"
+                            Text="{Binding CreateAccountViewModel.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextWrapping="NoWrap" />
                         <PasswordBox
                             Height="{StaticResource InputHeight}"
                             Margin="{StaticResource StackedInputMargin}"
+                            BorderBrush="{Binding CreateAccountViewModel.PasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}"
-                            Password="{Binding CreateAccountViewModel.Password, Mode=TwoWay}"
+                            Password="{Binding CreateAccountViewModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             PasswordRevealMode="Peek"
                             PlaceholderText="{Binding CreateAccountViewModel.PasswordWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaPasswordBoxStyle}"
                             TabIndex="3" />
+                        <userControls:PasswordStrengthIndicator
+                            Height="4"
+                            Margin="0,0,0,8"
+                            IndicatorBackground="{StaticResource MegaTextBoxBackgroundBrush}"
+                            IndicatorForeground="{StaticResource MegaRedColorBrush}"
+                            Value="{Binding CreateAccountViewModel.PasswordStrength}">
+                            <userControls:PasswordStrengthIndicator.IndicatorsOpacity>
+                                <x:Double>0.4</x:Double>
+                                <x:Double>0.6</x:Double>
+                                <x:Double>0.8</x:Double>
+                                <x:Double>1.0</x:Double>
+                            </userControls:PasswordStrengthIndicator.IndicatorsOpacity>
+                        </userControls:PasswordStrengthIndicator>
+
                         <PasswordBox
                             Height="{StaticResource InputHeight}"
                             Margin="{StaticResource StackedInputMargin}"
+                            BorderBrush="{Binding CreateAccountViewModel.ConfirmPasswordInputState, Converter={StaticResource InputStateToColorConverter}}"
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}"
-                            Password="{Binding CreateAccountViewModel.ConfirmPassword, Mode=TwoWay}"
+                            Password="{Binding CreateAccountViewModel.ConfirmPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             PasswordRevealMode="Peek"
                             PlaceholderText="{Binding CreateAccountViewModel.ConfirmPasswordWatermarkText, Mode=OneTime}"
                             Style="{StaticResource MegaPasswordBoxStyle}"
                             TabIndex="4" />
                         <CheckBox
                             Height="{StaticResource InputHeight}"
-                            IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay}"
+                            BorderBrush="{Binding CreateAccountViewModel.TermsOfServiceInputState, Converter={StaticResource InputStateToColorConverter}}"
+                            IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}"
                             Style="{StaticResource MegaCheckBoxStyle}"
                             TabIndex="5">
                             <CheckBox.Content>
                                 <RichTextBlock
+                                    Height="40"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
+                                    VerticalAlignment="Top"
                                     TextWrapping="Wrap">
                                     <Paragraph FontSize="14">
                                         <Run Text="{Binding CreateAccountViewModel.AgreeCreateAccountText, Mode=OneTime}" />
+                                        <LineBreak />
                                         <Hyperlink NavigateUri="{Binding CreateAccountViewModel.TermsOfServiceUri, Mode=OneTime}">
-                                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding CreateAccountViewModel.TermsOfServiceText, Converter={StaticResource TextToLowerCaseConverter}, Mode=OneTime}" />
+                                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding CreateAccountViewModel.TermsOfServiceText, Mode=OneTime}" />
                                         </Hyperlink>
                                     </Paragraph>
                                 </RichTextBlock>
                             </CheckBox.Content>
                         </CheckBox>
+                        <StackPanel
+                            Margin="0,20,0,0"
+                            Orientation="Horizontal"
+                            Visibility="{Binding CreateAccountViewModel.IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Viewbox
+                                MaxWidth="16"
+                                MaxHeight="16"
+                                Margin="8,4,12,0"
+                                VerticalAlignment="Top">
+                                <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                            </Viewbox>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Text="{Binding CreateAccountViewModel.WarningText}" />
+                        </StackPanel>
+                        <Button
+                            Width="{StaticResource DefaultButtonWidth}"
+                            Margin="0,24,0,0"
+                            Command="{Binding CreateAccountViewModel.CreateAccountCommand, Mode=OneTime}"
+                            Content="{Binding CreateAccountViewModel.CreateAccountText, Mode=OneTime}"
+                            IsEnabled="{Binding CreateAccountViewModel.CreateAccountButtonState}" />
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
         </Pivot>
 
-
-        <userControls:ProgressPanel
-            x:Name="ProgressPanelControl"
-            Grid.Row="1"
-            Background="{StaticResource MegaAppBackgroundBrush}"
+        <userControls:ActivityIndicator
+            x:Name="ActivityIndicator"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Margin="72,0,0,0"
+            HorizontalContentAlignment="Stretch"
             Foreground="{StaticResource MegaAppForegroundBrush}"
-            HeaderText="{Binding Path=ActiveViewModel.ProgressHeaderText}"
+            HeaderFontSize="28"
+            HeaderText="{Binding ActiveViewModel.ProgressHeaderText}"
             IsVisible="{Binding ActiveViewModel.IsBusy}"
-            SubHeaderMargin="0, 14, 0 , 0"
-            SubHeaderText="{Binding Path=ActiveViewModel.ProgressSubHeaderText}">
-            <userControls:ProgressPanel.SubHeaderForeground>
-                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
-            </userControls:ProgressPanel.SubHeaderForeground>
-        </userControls:ProgressPanel>
+            ProgressText="{Binding ActiveViewModel.ProgressText}"
+            ProgressTextFontSize="14"
+            SubHeaderFontSize="14"
+            SubHeaderText="{Binding ActiveViewModel.ProgressSubHeaderText}">
+            <userControls:ActivityIndicator.SubHeaderForeground>
+                <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.SubHeaderForeground>
+            <userControls:ActivityIndicator.ProgressTextForeground>
+                <SolidColorBrush Opacity="0.5" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.ProgressTextForeground>
+        </userControls:ActivityIndicator>
+
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup>
-                <VisualState x:Name="Small">
+                <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProgressPanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Below" />
-                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Top" />
-                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="24" />
-                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="16" />
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}" />
+                        <Setter Target="PivotLoginAndCreateAccount.VerticalAlignment" Value="Center" />
+                        <Setter Target="PivotLoginAndCreateAccount.Margin" Value="72,0,0,0" />
+                        <Setter Target="LoginStackPanel.Width" Value="380" />
+                        <Setter Target="LoginStackPanel.Height" Value="400" />
+                        <Setter Target="LoginStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="ActivityIndicator.Margin" Value="72,0,0,0" />
+                        <Setter Target="CreateAccountStackPanel.Width" Value="380" />
+                        <Setter Target="CreateAccountStackPanel.Height" Value="400" />
+                        <Setter Target="CreateAccountStackPanel.HorizontalAlignment" Value="Left" />
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="Wide">
+                <VisualState x:Name="Mobile">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProgressPanelControl.Padding" Value="178, 18, 0, 16" />
-                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Right" />
-                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Center" />
-                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="44" />
-                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="18" />
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginMobile}" />
+                        <Setter Target="PivotLoginAndCreateAccount.VerticalAlignment" Value="Stretch" />
+                        <Setter Target="PivotLoginAndCreateAccount.Margin" Value="20,0" />
+                        <Setter Target="LoginStackPanel.Width" Value="NaN" />
+                        <Setter Target="LoginStackPanel.Height" Value="NaN" />
+                        <Setter Target="LoginStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
+                        <Setter Target="CreateAccountStackPanel.Width" Value="NaN" />
+                        <Setter Target="CreateAccountStackPanel.Height" Value="NaN" />
+                        <Setter Target="CreateAccountStackPanel.HorizontalAlignment" Value="Stretch" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
 
-    <Page.BottomAppBar>
-        <CommandBar Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton
-                Click="OnAcceptClick"
-                IsEnabled="{Binding ActiveViewModel.ControlState}"
-                Label="{Binding ConfirmText, Mode=OneTime}"
-                ToolTipService.ToolTip="{Binding ConfirmText, Mode=OneTime}">
-                <Viewbox MaxWidth="14" MaxHeight="14">
-                    <SymbolIcon Symbol="Accept"/>
-                </Viewbox>
-            </AppBarButton>
-        </CommandBar>
-    </Page.BottomAppBar>
 </views:BaseLoginAndCreateAccountPage>
-
-
-
-
-
-
-

@@ -253,4 +253,8 @@
     <value>offline\</value>
     <comment>Path of the 'offline' folder of the application - (NO-TRANSLATION).</comment>
   </data>
+  <data name="AR_SupportEmailAddress" xml:space="preserve">
+    <value>support@mega.nz</value>
+    <comment>Email for contact and/or support - (NO-TRANSLATION).</comment>
+  </data>
 </root>

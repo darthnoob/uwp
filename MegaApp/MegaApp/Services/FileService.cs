@@ -267,6 +267,46 @@ namespace MegaApp.Services
             }
         }
 
+        /// <summary>
+        /// Select single file using the system file picker
+        /// </summary>
+        /// <returns>The selected file</returns>
+        public static async Task<StorageFile> SelectSingleFile(IEnumerable<string> fileTypeFilter = null)
+        {
+            try
+            {
+                var fileOpenPicker = new FileOpenPicker
+                {
+                    ViewMode = PickerViewMode.List,
+                    SuggestedStartLocation = PickerLocationId.ComputerFolder
+                };
+                if (fileTypeFilter == null)
+                {
+                    fileOpenPicker.FileTypeFilter.Add("*");
+                }
+                else
+                {
+                    foreach (var filter in fileTypeFilter)
+                    {
+                        fileOpenPicker.FileTypeFilter.Add(filter);
+                    }
+                }
+
+                return await fileOpenPicker.PickSingleFileAsync();
+            }
+            catch (Exception e)
+            {
+                UiService.OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_SelectFileFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_SelectFileFailed"), e.Message));
+                });
+
+                return null;
+            }
+        }
+
         public static async Task<StorageFile> SaveFile(KeyValuePair<string, IList<string>> fileTypes)
         {
             try
