@@ -235,10 +235,10 @@
                                 ToolTipService.ToolTip="{Binding PreviewText}"
                                 Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding PreviewImagePathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -246,10 +246,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding DownloadText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -257,10 +257,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding CopyOrMoveText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -268,10 +268,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RenameText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding RenamePathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding RenamePathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -279,10 +279,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RemoveText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <CommandBar.Content>
@@ -292,10 +292,10 @@
                                     Style="{StaticResource MegaAppBarButtonStyle}"
                                     ToolTipService.ToolTip="{Binding CloseText}">
                                     <AppBarButton.Icon>
-                                        <PathIcon 
-                                            Data="{Binding ClosePanelPathData, Mode=OneTime}"
+                                        <PathIcon
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"/>
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ClosePanelPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                             </CommandBar.Content>
@@ -526,10 +526,10 @@
                                 ToolTipService.ToolTip="{Binding PreviewText}"
                                 Visibility="{Binding IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding PreviewImagePathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding PreviewImagePathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -538,10 +538,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding DownloadText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -550,10 +550,10 @@
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RemoveText}">
                                 <AppBarButton.Icon>
-                                    <PathIcon 
-                                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                                    <PathIcon
                                         HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"/>
+                                        VerticalAlignment="Center"
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <CommandBar.SecondaryCommands>
@@ -562,10 +562,10 @@
                                     Label="{Binding CopyOrMoveText}"
                                     ToolTipService.ToolTip="{Binding CopyOrMoveText}">
                                     <AppBarButton.Icon>
-                                        <PathIcon 
-                                            Data="{Binding CopyOrMovePathData, Mode=OneTime}"
+                                        <PathIcon
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"/>
+                                            VerticalAlignment="Center"
+                                            Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
@@ -573,10 +573,10 @@
                                     Label="{Binding RenameText}"
                                     ToolTipService.ToolTip="{Binding RenameText}">
                                     <AppBarButton.Icon>
-                                        <PathIcon 
-                                            Data="{Binding RenamePathData, Mode=OneTime}"
+                                        <PathIcon
                                             HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"/>
+                                            VerticalAlignment="Center"
+                                            Data="{Binding RenamePathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
@@ -696,4 +696,147 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="userControls:ActivityIndicator">
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+        <Setter Property="HeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
+        <Setter Property="SubHeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
+        <Setter Property="SubHeaderMargin" Value="0, 24, 0, 0" />
+        <Setter Property="ProgressTextMargin" Value="0, 56, 0, 0" />
+        <Setter Property="ProgressSizeDesktop" Value="24" />
+        <Setter Property="ProgressSizeMobile" Value="96" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="userControls:ActivityIndicator">
+                    <Grid
+                        x:Name="MainGrid"
+                        Padding="{TemplateBinding Padding}"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalAlignment="Stretch"
+                        Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            x:Name="PART_HeaderText"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalAlignment="Left"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding HeaderFontSize}"
+                            Foreground="{TemplateBinding HeaderForeground}"
+                            Text="{TemplateBinding HeaderText}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            x:Name="PART_SubHeaderText"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="{TemplateBinding SubHeaderMargin}"
+                            HorizontalAlignment="Left"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding SubHeaderForeground}"
+                            Text="{TemplateBinding SubHeaderText}"
+                            TextWrapping="Wrap"
+                            Visibility="{Binding SubHeaderText, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                        <TextBlock
+                            x:Name="PART_ProgressText"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding ProgressTextMargin}"
+                            Padding="12,0"
+                            VerticalAlignment="Center"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding ProgressTextFontSize}"
+                            Foreground="{TemplateBinding ProgressTextForeground}"
+                            Text="{TemplateBinding ProgressText}"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap" />
+                        <ProgressRing
+                            x:Name="PART_Progress"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Width="{TemplateBinding ProgressSizeDesktop}"
+                            Height="{TemplateBinding ProgressSizeDesktop}"
+                            Margin="{TemplateBinding ProgressTextMargin}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource MegaRedColorBrush}" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Desktop">
+                                    <VisualState.StateTriggers>
+                                        <triggers:CompositeStateTrigger Operator="Or">
+                                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                                            <triggers:OrientationStateTrigger Orientation="Landscape" />
+                                        </triggers:CompositeStateTrigger>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="MainGrid.VerticalAlignment" Value="Center" />
+                                        <Setter Target="PART_HeaderText.(Grid.Row)" Value="0" />
+                                        <Setter Target="PART_HeaderText.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_HeaderText.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_ProgressText.(Grid.Row)" Value="2" />
+                                        <Setter Target="PART_ProgressText.(Grid.Column)" Value="1" />
+                                        <Setter Target="PART_ProgressText.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_ProgressText.TextAlignment" Value="Left" />
+                                        <Setter Target="PART_Progress.(Grid.Row)" Value="2" />
+                                        <Setter Target="PART_Progress.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_Progress.(Grid.ColumnSpan)" Value="1" />
+                                        <Setter Target="PART_Progress.Height" Value="{Binding ProgressSizeDesktop, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <Setter Target="PART_Progress.Width" Value="{Binding ProgressSizeDesktop, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+
+                                <VisualState x:Name="Mobile">
+                                    <VisualState.StateTriggers>
+                                        <triggers:CompositeStateTrigger Operator="And">
+                                            <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                                            <triggers:OrientationStateTrigger Orientation="Portrait" />
+                                        </triggers:CompositeStateTrigger>
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="MainGrid.VerticalAlignment" Value="Top" />
+                                        <Setter Target="PART_HeaderText.(Grid.Row)" Value="0" />
+                                        <Setter Target="PART_HeaderText.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_HeaderText.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.Row)" Value="1" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_SubHeaderText.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_ProgressText.(Grid.Row)" Value="3" />
+                                        <Setter Target="PART_ProgressText.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_ProgressText.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_ProgressText.TextAlignment" Value="Center" />
+                                        <Setter Target="PART_Progress.(Grid.Row)" Value="2" />
+                                        <Setter Target="PART_Progress.(Grid.Column)" Value="0" />
+                                        <Setter Target="PART_Progress.(Grid.ColumnSpan)" Value="2" />
+                                        <Setter Target="PART_Progress.Height" Value="{Binding ProgressSizeMobile, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <Setter Target="PART_Progress.Width" Value="{Binding ProgressSizeMobile, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
+

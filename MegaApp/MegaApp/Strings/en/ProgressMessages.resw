@@ -121,16 +121,12 @@
     <value>Clearing the rubbish bin...</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
-  <data name="PM_ConfirmAccount" xml:space="preserve">
-    <value>Confirming account...</value>
-    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
-  </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
     <value>Creating account...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <value>Please wait while we send you a confirmation sign-up link.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -188,5 +184,17 @@
   <data name="PM_LoadingPreview" xml:space="preserve">
     <value>Loading preview...</value>
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConfirmAccountHeader" xml:space="preserve">
+    <value>Creating your account</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
+    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Patient" xml:space="preserve">
+    <value>Please be patient</value>
+    <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
 </root>

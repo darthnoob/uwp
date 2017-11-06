@@ -146,8 +146,7 @@ namespace MegaApp
                 Window.Current.Activate();
 
                 // Check session and special navigation
-                if (await AppService.CheckActiveAndOnlineSession())
-                    await AppService.CheckSpecialNavigation();
+                await AppService.CheckActiveAndOnlineSession();
 
                 // Validate product subscription license on background thread
                 Task.Run(() => LicenseService.ValidateLicensesAsync());

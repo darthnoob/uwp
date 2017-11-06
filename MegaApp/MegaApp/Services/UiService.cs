@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
@@ -172,6 +173,26 @@ namespace MegaApp.Services
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting color from hexadecimal string.", e);
                 return Colors.Transparent;
             }
+        }
+
+        /// <summary>
+        /// Con-cat multiple strings to one paragraph block separated by newlines
+        /// </summary>
+        /// <param name="sentences">Strings to con-cat</param>
+        /// <returns>Paragraph containing input strings separated by two newlines</returns>
+        public static string ConcatStringsToParagraph(string[] sentences)
+        {
+            if (sentences == null || !sentences.Any()) return null;
+
+            var result = string.Empty;
+            var length = sentences.Length - 1;
+            for (var i = 0; i <= length; i++)
+            {
+                result += sentences[i];
+                if(i == length) continue;
+                result += Environment.NewLine + Environment.NewLine;
+            }
+            return result;
         }
     }
 }

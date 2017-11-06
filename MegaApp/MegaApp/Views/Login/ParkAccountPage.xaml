@@ -1,0 +1,127 @@
+﻿<login:BaseParkAccountPage
+    x:Class="MegaApp.Views.Login.ParkAccountPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:login="using:MegaApp.Views.Login"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="using:MegaApp.ViewModels.Login"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
+    d:DataContext="{d:DesignInstance viewModels:ParkAccountViewModel}"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ContentPresenter
+            x:Name="LogoPresenter"
+            Grid.Row="0"
+            Margin="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Style="{StaticResource MegaPageHeaderLogoStyle}" />
+
+        <ScrollViewer
+            x:Name="MainScrollViewer"
+            Grid.Row="1"
+            Margin="72,0,0,0"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel
+                x:Name="ParkStackPanel"
+                Width="380"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaPageHeaderFontStyle}"
+                    Text="{Binding ParkAccountHeaderText}" />
+
+                <TextBlock
+                    Margin="0,24,0,20"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource MegaBodyFontStyle}"
+                    Text="{Binding ParkAccountDescriptionText}" />
+
+                <TextBox
+                    Height="{StaticResource InputHeight}"
+                    BorderBrush="{Binding EmailInputState, Converter={StaticResource InputStateToColorConverter}}"
+                    InputScope="EmailNameOrAddress"
+                    IsEnabled="{Binding ControlState}"
+                    KeyDown="OnKeyDown"
+                    PlaceholderText="{Binding EmailWatermarkText, Mode=OneTime}"
+                    Style="{StaticResource MegaTextBoxStyle}"
+                    TabIndex="0"
+                    Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="NoWrap" />
+
+                <StackPanel
+                    Margin="0,20,0,0"
+                    Orientation="Horizontal"
+                    Visibility="{Binding IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox
+                        MaxWidth="16"
+                        MaxHeight="16"
+                        Margin="8,4,12,0"
+                        VerticalAlignment="Top">
+                        <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                    </Viewbox>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{Binding WarningText}" />
+                </StackPanel>
+
+                <Button
+                    Width="{StaticResource DefaultButtonWidth}"
+                    Margin="0,26,0,0"
+                    Command="{Binding ParkAccountCommand, Mode=OneTime}"
+                    Content="{Binding ParkAccountText, Mode=OneTime}"
+                    IsEnabled="{Binding ParkButtonState}" />
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <ProgressRing
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Width="32"
+            Height="32"
+            IsActive="{Binding IsBusy}"
+            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+        <VisualStateManager.VisualStateGroups>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="72,0,0,0" />
+                        <Setter Target="ParkStackPanel.Width" Value="380" />
+                        <Setter Target="ParkStackPanel.HorizontalAlignment" Value="Left" />
+                        <Setter Target="ParkStackPanel.VerticalAlignment" Value="Center" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginMobile}" />
+                        <Setter Target="MainScrollViewer.Margin" Value="20,0" />
+                        <Setter Target="ParkStackPanel.Width" Value="NaN" />
+                        <Setter Target="ParkStackPanel.HorizontalAlignment" Value="Stretch" />
+                        <Setter Target="ParkStackPanel.VerticalAlignment" Value="Stretch" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+</login:BaseParkAccountPage>
