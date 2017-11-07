@@ -239,9 +239,7 @@
             HeaderText="{Binding ActiveViewModel.ProgressHeaderText}"
             IsVisible="{Binding ActiveViewModel.IsBusy}"
             ProgressText="{Binding ActiveViewModel.ProgressText}"
-            ProgressTextFontSize="14"
-            SubHeaderFontSize="14"
-            SubHeaderText="{Binding ActiveViewModel.ProgressSubHeaderText}">
+            ProgressTextFontSize="14">
             <userControls:ActivityIndicator.SubHeaderForeground>
                 <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
             </userControls:ActivityIndicator.SubHeaderForeground>
