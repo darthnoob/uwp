@@ -29,7 +29,7 @@ namespace MegaApp.Services
         public static async Task<bool> CheckActiveAndOnlineSession(bool byMainPage = false)
         {
 
-            var hasActiveAndOnlineSession = Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) &&
+            var hasActiveAndOnlineSession = Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) ||
                                             SettingsService.HasValidSession();
 
             if (byMainPage)
