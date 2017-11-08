@@ -18,7 +18,7 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
-            this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
+            this.ItemCollection.OrderInverted += OnOrderInverted;
 
             if (App.GlobalListener == null) return;
             App.GlobalListener.OutSharedFolderAdded += this.OnSharedFolderAdded;
@@ -30,7 +30,7 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ItemCollection.ItemCollectionChanged -= OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
-            this.ItemCollection.OrderInverted -= (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
+            this.ItemCollection.OrderInverted -= OnOrderInverted;
 
             if (App.GlobalListener == null) return;
             App.GlobalListener.OutSharedFolderAdded -= this.OnSharedFolderAdded;
@@ -127,7 +127,10 @@ namespace MegaApp.ViewModels.SharedFolders
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
             });
-        }        
+        }
+
+        private void OnOrderInverted(object sender, EventArgs args) =>
+            SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
         #region Properties
 

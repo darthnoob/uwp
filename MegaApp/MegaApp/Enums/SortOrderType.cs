@@ -8,7 +8,24 @@
         ORDER_ASCENDING     = 0,
         ORDER_DESCENDING    = 1
     }
-    
+
+    /// <summary>
+    /// Contacts short options
+    /// </summary>
+    public enum ContactsSortOrderType
+    {
+        ORDER_NAME  = 0,
+        ORDER_EMAIL = 1
+    }
+
+    /// <summary>
+    /// Contact requests short options
+    /// </summary>
+    public enum ContactRerquestsSortOrderType
+    {
+        ORDER_NAME = 0
+    }
+
     /// <summary>
     /// Incoming shares short options
     /// </summary>

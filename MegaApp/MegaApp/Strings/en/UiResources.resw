@@ -1232,4 +1232,18 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
+  <data name="UI_ListSortedByEmail" xml:space="preserve">
+    <value>Email ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by email and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
+    <value>Email ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionEmail" xml:space="preserve">
+    <value>Email</value>
+    <comment>Label for the menu option to sort a list of items by email - (String as short as possible).</comment>
+  </data>
 </root>

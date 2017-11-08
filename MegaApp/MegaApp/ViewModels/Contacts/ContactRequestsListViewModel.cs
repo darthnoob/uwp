@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -28,9 +27,8 @@ namespace MegaApp.ViewModels.Contacts
             this.CancelContactRequestCommand = new RelayCommand(CancelContactRequest);
             this.DeclineContactRequestCommand = new RelayCommand(DeclineContactRequest);
             this.RemindContactRequestCommand = new RelayCommand(RemindContactRequest);
-            this.InvertOrderCommand = new RelayCommand(InvertOrder);
 
-            this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
+            this.CurrentOrder = ContactRerquestsSortOrderType.ORDER_NAME;
         }
 
         #region Methods
@@ -38,6 +36,8 @@ namespace MegaApp.ViewModels.Contacts
         public void Initialize(GlobalListener globalListener)
         {
             this.GetMegaContactRequests();
+
+            this.ItemCollection.OrderInverted += OnOrderInverted;
 
             if (globalListener == null) return;
             if (_isOutgoing)
@@ -48,6 +48,8 @@ namespace MegaApp.ViewModels.Contacts
 
         public void Deinitialize(GlobalListener globalListener)
         {
+            this.ItemCollection.OrderInverted -= OnOrderInverted;
+
             if (globalListener == null) return;
             if (_isOutgoing)
                 globalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
@@ -80,7 +82,7 @@ namespace MegaApp.ViewModels.Contacts
                 await OnUiThreadAsync(() => this.ItemCollection.Items.Add(contactRequest));
             }
 
-            this.SortBy(this.CurrentOrder);
+            this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
         }
 
         private void AddContact()
@@ -143,55 +145,84 @@ namespace MegaApp.ViewModels.Contacts
                 contactRequest.CancelContactRequest();
         }
 
-        public void SortBy(MSortOrderType sortOption)
+        public void SortBy(ContactRerquestsSortOrderType sortOption, SortOrderDirection sortDirection)
         {
+            OnUiThread(() => this.ItemCollection.DisableCollectionChangedDetection());
+
             switch (sortOption)
             {
-                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                case ContactRerquestsSortOrderType.ORDER_NAME:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.ItemCollection.Items.OrderBy(item => this._isOutgoing ?
-                            item.TargetEmail : item.SourceEmail));
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(this.ItemCollection.IsCurrentOrderAscending ?
+                            this.ItemCollection.Items.OrderBy(item => this._isOutgoing ? item.TargetEmail : item.SourceEmail) :
+                            this.ItemCollection.Items.OrderByDescending(item => this._isOutgoing ? item.TargetEmail : item.SourceEmail));
                     });
                     break;
-
-                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                    OnUiThread(() =>
-                    {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.ItemCollection.Items.OrderByDescending(item => this._isOutgoing ?
-                            item.TargetEmail : item.SourceEmail));
-                    });
-                    break;
-
-                default:
-                    return;
-            }
-        }
-
-        private void InvertOrder()
-        {
-            switch (this.CurrentOrder)
-            {
-                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
-                    break;
-                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                    this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
-                    break;
-                default:
-                    return;
             }
 
-            this.SortBy(this.CurrentOrder);
+            OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
+
+        private void OnItemCollectionChanged(object sender, EventArgs args) =>
+            OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems), nameof(this.OrderTypeAndNumberOfSelectedItems));
+
+        private void OnSelectedItemsCollectionChanged(object sender, EventArgs args) =>
+            OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
+
+        private void OnOrderInverted(object sender, EventArgs args) =>
+            this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
         #endregion
 
         #region Properties
 
         private bool _isOutgoing { get; set; }
+
+        public string OrderTypeAndNumberOfItems
+        {
+            get
+            {
+                switch (this.CurrentOrder)
+                {
+                    case ContactRerquestsSortOrderType.ORDER_NAME:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
+                            this.ItemCollection.Items.Count);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        public string OrderTypeAndNumberOfSelectedItems
+        {
+            get
+            {
+                switch (this.CurrentOrder)
+                {
+                    case ContactRerquestsSortOrderType.ORDER_NAME:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        private ContactRerquestsSortOrderType _currentOrder;
+        public ContactRerquestsSortOrderType CurrentOrder
+        {
+            get { return _currentOrder; }
+            set
+            {
+                SetField(ref _currentOrder, value);
+
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
+                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+            }
+        }
 
         #endregion
     }

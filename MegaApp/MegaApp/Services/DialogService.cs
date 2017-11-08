@@ -487,6 +487,14 @@ namespace MegaApp.Services
                 (MSortOrderType)currentSortOrder == (MSortOrderType)sortOrderToCheck)
                 return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
 
+            if (currentSortOrder is ContactsSortOrderType && sortOrderToCheck is ContactsSortOrderType &&
+                (ContactsSortOrderType)currentSortOrder == (ContactsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is ContactRerquestsSortOrderType && sortOrderToCheck is ContactRerquestsSortOrderType &&
+                (ContactRerquestsSortOrderType)currentSortOrder == (ContactRerquestsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
             if (currentSortOrder is IncomingSharesSortOrderType && sortOrderToCheck is IncomingSharesSortOrderType &&
                 (IncomingSharesSortOrderType)currentSortOrder == (IncomingSharesSortOrderType)sortOrderToCheck)
                 return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
@@ -508,23 +516,23 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_NAME),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
-                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_NAME;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionEmail"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_EMAIL),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
-                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_EMAIL;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });
 
@@ -541,23 +549,12 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, ContactRerquestsSortOrderType.ORDER_NAME),
                 Command = new RelayCommand(() =>
                 {
-                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
-                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
-                })
-            });
-
-            menuFlyout.Items.Add(new MenuFlyoutItem()
-            {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
-                Command = new RelayCommand(() =>
-                {
-                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
-                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    contactRequests.CurrentOrder = ContactRerquestsSortOrderType.ORDER_NAME;
+                    contactRequests.SortBy(contactRequests.CurrentOrder, contactRequests.ItemCollection.CurrentOrderDirection);
                 })
             });
 
