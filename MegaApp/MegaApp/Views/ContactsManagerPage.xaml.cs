@@ -203,15 +203,14 @@ namespace MegaApp.Views
             IMegaContact itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContact;
             if (itemTapped == null) return;
 
-            if (this.ViewModel.ActiveView is ContactsListViewModel)
-            {
-                this.ViewModel.MegaContacts.ItemCollection.FocusedItem = itemTapped;
+            if (!(this.ViewModel.ActiveView is ContactsListViewModel)) return;
 
-                if (!this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
-                    ((ListView)sender).SelectedItems?.Clear();
+            this.ViewModel.MegaContacts.ItemCollection.FocusedItem = itemTapped;
 
-                ((ListView)sender).SelectedItems?.Add(itemTapped);
-            }
+            if (!this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
+                ((ListView)sender).SelectedItems?.Clear();
+
+            ((ListView)sender).SelectedItems?.Add(itemTapped);
         }
 
         private void OnContactRequestTapped(object sender, TappedRoutedEventArgs e)
@@ -219,11 +218,10 @@ namespace MegaApp.Views
             IMegaContactRequest itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContactRequest;
             if (itemTapped == null) return;
 
-            if (this.ViewModel.ActiveView is ContactRequestsListViewModel)
-            {
-                var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
-                activeView.ItemCollection.FocusedItem = itemTapped;
-            }
+            if (!(this.ViewModel.ActiveView is ContactRequestsListViewModel)) return;
+
+            var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
+            activeView.ItemCollection.FocusedItem = itemTapped;
         }
 
         private void OnContactRequestRightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -233,16 +231,15 @@ namespace MegaApp.Views
             IMegaContactRequest itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContactRequest;
             if (itemTapped == null) return;
 
-            if (this.ViewModel.ActiveView is ContactRequestsListViewModel)
-            {
-                var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
-                activeView.ItemCollection.FocusedItem = itemTapped;
+            if (!(this.ViewModel.ActiveView is ContactRequestsListViewModel)) return;
 
-                if (!activeView.ItemCollection.IsMultiSelectActive)
-                    ((ListViewBase)sender).SelectedItems?.Clear();
+            var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
+            activeView.ItemCollection.FocusedItem = itemTapped;
 
-                ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
-            }
+            if (!activeView.ItemCollection.IsMultiSelectActive)
+                ((ListViewBase)sender).SelectedItems?.Clear();
+
+            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
         }
 
         private ListView GetSelectedListView()
@@ -281,8 +278,9 @@ namespace MegaApp.Views
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
                 menuFlyout = DialogService.CreateContactRequestsSortMenu(this.ViewModel.OutgoingContactRequests);
 
+            if (menuFlyout == null) return;
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
-            menuFlyout?.ShowAt(sortButton);
+            menuFlyout.ShowAt(sortButton);
         }
 
         private void OnOpenContactProfile(object sender, EventArgs e)

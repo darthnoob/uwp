@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
@@ -30,17 +29,6 @@ namespace MegaApp.ViewModels.Contacts
 
             this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
-
-        #region Commands
-
-        public override ICommand AddContactCommand { get; }
-        public override ICommand RemoveContactCommand { get; }
-        public override ICommand OpenContactProfileCommand { get; }
-        public override ICommand CloseContactProfileCommand { get; }
-
-        public override ICommand InvertOrderCommand { get; }
-
-        #endregion
 
         #region Events
 
@@ -124,9 +112,12 @@ namespace MegaApp.ViewModels.Contacts
             if (contacts?.Count < 1) return;
 
             bool result = true;
-            foreach (var contact in contacts)
+            if (contacts != null)
             {
-                result = result & (await contact.RemoveContactAsync(true));
+                foreach (var contact in contacts)
+                {
+                    result = result & await contact.RemoveContactAsync(true);
+                }
             }
 
             if (!result)
@@ -166,17 +157,16 @@ namespace MegaApp.ViewModels.Contacts
                         // To avoid null values
                         if (contactsList.get(i) == null) continue;
 
-                        if ((contactsList.get(i).getVisibility() == MUserVisibility.VISIBILITY_VISIBLE))
-                        {
-                            var megaContact = new ContactViewModel(contactsList.get(i), this);
+                        if (contactsList.get(i).getVisibility() != MUserVisibility.VISIBILITY_VISIBLE) continue;
 
-                            OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
+                        var megaContact = new ContactViewModel(contactsList.get(i), this);
 
-                            this.GetContactFirstname(megaContact);
-                            this.GetContactLastname(megaContact);
-                            this.GetContactAvatarColor(megaContact);
-                            this.GetContactAvatar(megaContact);
-                        }
+                        OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
+
+                        this.GetContactFirstname(megaContact);
+                        this.GetContactLastname(megaContact);
+                        this.GetContactAvatarColor(megaContact);
+                        this.GetContactAvatar(megaContact);
                     }
                 }
                 catch (OperationCanceledException)

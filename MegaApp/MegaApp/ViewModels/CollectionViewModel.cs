@@ -295,7 +295,7 @@ namespace MegaApp.ViewModels
         }
 
         public bool IsCurrentOrderAscending =>
-            (this.CurrentOrderDirection == SortOrderDirection.ORDER_ASCENDING) ? true : false;
+            this.CurrentOrderDirection == SortOrderDirection.ORDER_ASCENDING;
 
         public bool HasItems => this.Items?.Count > 0;
 

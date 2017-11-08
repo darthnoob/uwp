@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
@@ -19,12 +18,6 @@ namespace MegaApp.ViewModels.SharedFolders
 
             this.Update(megaNode);
         }
-
-        #region Commands
-
-        public override ICommand DownloadCommand { get; }
-
-        #endregion
 
         #region Methods
 

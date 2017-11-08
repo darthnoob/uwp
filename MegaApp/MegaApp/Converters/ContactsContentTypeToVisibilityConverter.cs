@@ -26,9 +26,9 @@ namespace MegaApp.Converters
                 return Visibility.Collapsed;
 
             // Convert "parameter" string to a ContactsViewState
-            var paramConvert = (ContactsContentType)Enum.Parse(typeof(ContactsContentType), parameter as string);
+            var paramConvert = (ContactsContentType)Enum.Parse(typeof(ContactsContentType), (string)parameter);
 
-            return ((ContactsContentType)value == paramConvert) ? Visibility.Visible : Visibility.Collapsed;
+            return (ContactsContentType)value == paramConvert ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

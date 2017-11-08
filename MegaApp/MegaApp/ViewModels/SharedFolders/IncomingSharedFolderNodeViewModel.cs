@@ -3,9 +3,8 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.SharedFolders;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel
     {
@@ -46,7 +45,7 @@ namespace MegaApp.ViewModels
 
             OnUiThread(() =>
             {
-                this.Owner = (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName)) ?
+                this.Owner = string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ?
                     owner.getEmail() : string.Format("{0} {1}", firstName, lastName);
             });
         }        

@@ -11,7 +11,7 @@ namespace MegaApp.ViewModels.Contacts
     {
         public ContactsBaseViewModel(bool? isOutgoing = null)
         {
-            this.isOutgoing = isOutgoing;
+            this._isOutgoing = isOutgoing;
         }
 
         #region Events
@@ -33,19 +33,19 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Commands
         
-        public virtual ICommand AddContactCommand { get; }
-        public virtual ICommand RemoveContactCommand { get; }
+        public ICommand AddContactCommand { get; set; }
+        public ICommand RemoveContactCommand { get; set; }
 
-        public virtual ICommand AcceptContactRequestCommand { get; }
-        public virtual ICommand IgnoreContactRequestCommand { get; }
-        public virtual ICommand CancelContactRequestCommand { get; }
-        public virtual ICommand DeclineContactRequestCommand { get; }
-        public virtual ICommand RemindContactRequestCommand { get; }
+        public ICommand AcceptContactRequestCommand { get; set; }
+        public ICommand IgnoreContactRequestCommand { get; set; }
+        public ICommand CancelContactRequestCommand { get; set; }
+        public ICommand DeclineContactRequestCommand { get; set; }
+        public ICommand RemindContactRequestCommand { get; set; }
 
-        public virtual ICommand OpenContactProfileCommand { get; }
-        public virtual ICommand CloseContactProfileCommand { get; }
+        public ICommand OpenContactProfileCommand { get; set; }
+        public ICommand CloseContactProfileCommand { get; set; }
 
-        public virtual ICommand InvertOrderCommand { get; }
+        public ICommand InvertOrderCommand { get; set; }
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Properties
 
-        private bool? isOutgoing { get; set; }
+        private bool? _isOutgoing { get; set; }
 
         private CollectionViewModel<T> _itemCollection;
         public CollectionViewModel<T> ItemCollection

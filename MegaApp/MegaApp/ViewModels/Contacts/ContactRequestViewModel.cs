@@ -54,7 +54,8 @@ namespace MegaApp.ViewModels
 
         private void AcceptContact()
         {
-            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            var collectionViewModel = this.ContactRequestsList?.ItemCollection;
+            if (collectionViewModel != null && collectionViewModel.IsMultiSelectActive)
             {
                 if (this.ContactRequestsList.AcceptContactRequestCommand.CanExecute(null))
                     this.ContactRequestsList.AcceptContactRequestCommand.Execute(null);
@@ -77,7 +78,8 @@ namespace MegaApp.ViewModels
 
         private void IgnoreContact()
         {
-            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            var collectionViewModel = this.ContactRequestsList?.ItemCollection;
+            if (collectionViewModel != null && collectionViewModel.IsMultiSelectActive)
             {
                 if (this.ContactRequestsList.IgnoreContactRequestCommand.CanExecute(null))
                     this.ContactRequestsList.IgnoreContactRequestCommand.Execute(null);
@@ -100,7 +102,8 @@ namespace MegaApp.ViewModels
 
         private void DeclineContact()
         {
-            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            var collectionViewModel = this.ContactRequestsList?.ItemCollection;
+            if (collectionViewModel != null && collectionViewModel.IsMultiSelectActive)
             {
                 if (this.ContactRequestsList.DeclineContactRequestCommand.CanExecute(null))
                     this.ContactRequestsList.DeclineContactRequestCommand.Execute(null);
@@ -123,7 +126,8 @@ namespace MegaApp.ViewModels
 
         private void RemindContact()
         {
-            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            var collectionViewModel = this.ContactRequestsList?.ItemCollection;
+            if (collectionViewModel != null && collectionViewModel.IsMultiSelectActive)
             {
                 if (this.ContactRequestsList.RemindContactRequestCommand.CanExecute(null))
                     this.ContactRequestsList.RemindContactRequestCommand.Execute(null);
@@ -146,7 +150,8 @@ namespace MegaApp.ViewModels
 
         private void CancelContact()
         {
-            if ((bool)this.ContactRequestsList?.ItemCollection?.IsMultiSelectActive)
+            var collectionViewModel = this.ContactRequestsList?.ItemCollection;
+            if (collectionViewModel != null && collectionViewModel.IsMultiSelectActive)
             {
                 if (this.ContactRequestsList.CancelContactRequestCommand.CanExecute(null))
                     this.ContactRequestsList.CancelContactRequestCommand.Execute(null);

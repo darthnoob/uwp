@@ -1,7 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -19,8 +18,8 @@ namespace MegaApp.ViewModels.Contacts
         /// <param name="isOutgoing">Indicate the contact request list is for outgoing requests or not</param>
         public ContactRequestsListViewModel(bool isOutgoing) : base(isOutgoing)
         {
-            this.isOutgoing = isOutgoing;
-            this.ContentType = this.isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
+            this._isOutgoing = isOutgoing;
+            this.ContentType = this._isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
             this.ItemCollection = new CollectionViewModel<IMegaContactRequest>();
 
             this.AddContactCommand = new RelayCommand(AddContact);
@@ -34,20 +33,6 @@ namespace MegaApp.ViewModels.Contacts
             this.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
 
-        #region Commands
-
-        public override ICommand AddContactCommand { get; }
-        
-        public override ICommand AcceptContactRequestCommand { get; }
-        public override ICommand IgnoreContactRequestCommand { get; }
-        public override ICommand CancelContactRequestCommand { get; }
-        public override ICommand DeclineContactRequestCommand { get; }
-        public override ICommand RemindContactRequestCommand { get; }
-
-        public override ICommand InvertOrderCommand { get; }
-
-        #endregion
-
         #region Methods
 
         public void Initialize(GlobalListener globalListener)
@@ -55,29 +40,23 @@ namespace MegaApp.ViewModels.Contacts
             this.GetMegaContactRequests();
 
             if (globalListener == null) return;
-            if (isOutgoing)
-                globalListener.OutgoingContactRequestUpdated += (sender, args) => this.GetMegaContactRequests();
+            if (_isOutgoing)
+                globalListener.OutgoingContactRequestUpdated += OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated += (sender, args) => this.GetMegaContactRequests();
+                globalListener.IncomingContactRequestUpdated += OnIncomingContactRequestUpdated;
         }
 
         public void Deinitialize(GlobalListener globalListener)
         {
             if (globalListener == null) return;
-            if (isOutgoing)
-                globalListener.OutgoingContactRequestUpdated -= (sender, args) => this.GetMegaContactRequests();
+            if (_isOutgoing)
+                globalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated -= (sender, args) => this.GetMegaContactRequests();
+                globalListener.IncomingContactRequestUpdated -= OnIncomingContactRequestUpdated;
         }
 
-        private void ListOnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.ItemCollection.Items))
-            {
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
-            }
-        }
+        private void OnIncomingContactRequestUpdated(object sender, EventArgs args) => this.GetMegaContactRequests();
+        private void OnOutgoingContactRequestUpdated(object sender, EventArgs args) => this.GetMegaContactRequests();
 
         public async void GetMegaContactRequests()
         {
@@ -86,7 +65,7 @@ namespace MegaApp.ViewModels.Contacts
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
 
-            var contactRequestsList = isOutgoing ?
+            var contactRequestsList = _isOutgoing ?
                 SdkService.MegaSdk.getOutgoingContactRequests() : 
                 SdkService.MegaSdk.getIncomingContactRequests();
 
@@ -172,7 +151,7 @@ namespace MegaApp.ViewModels.Contacts
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.ItemCollection.Items.OrderBy(item => this.isOutgoing ?
+                            this.ItemCollection.Items.OrderBy(item => this._isOutgoing ?
                             item.TargetEmail : item.SourceEmail));
                     });
                     break;
@@ -181,7 +160,7 @@ namespace MegaApp.ViewModels.Contacts
                     OnUiThread(() =>
                     {
                         this.ItemCollection.Items = new ObservableCollection<IMegaContactRequest>(
-                            this.ItemCollection.Items.OrderByDescending(item => this.isOutgoing ?
+                            this.ItemCollection.Items.OrderByDescending(item => this._isOutgoing ?
                             item.TargetEmail : item.SourceEmail));
                     });
                     break;
@@ -212,7 +191,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Properties
 
-        private bool isOutgoing { get; set; }
+        private bool _isOutgoing { get; set; }
 
         #endregion
     }

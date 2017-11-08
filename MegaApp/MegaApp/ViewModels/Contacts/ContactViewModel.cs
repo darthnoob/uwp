@@ -44,12 +44,10 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public void ViewProfile()
         {
-            if ((bool)!this.ContactList?.ItemCollection?.IsMultiSelectActive)
-            {
-                if (this.ContactList.OpenContactProfileCommand.CanExecute(null))
-                    this.ContactList.OpenContactProfileCommand.Execute(null);
-                return;
-            }
+            var contactListItemCollection = this.ContactList?.ItemCollection;
+            if (contactListItemCollection == null || contactListItemCollection.IsMultiSelectActive) return;
+            if (this.ContactList.OpenContactProfileCommand.CanExecute(null))
+                this.ContactList.OpenContactProfileCommand.Execute(null);
         }
 
         /// <summary>
@@ -62,7 +60,8 @@ namespace MegaApp.ViewModels.Contacts
 
         private async void RemoveContact()
         {
-            if ((bool)this.ContactList?.ItemCollection?.IsMultiSelectActive)
+            var contactListItemCollection = this.ContactList?.ItemCollection;
+            if (contactListItemCollection != null && contactListItemCollection.IsMultiSelectActive)
             {
                 if (this.ContactList.RemoveContactCommand.CanExecute(null))
                     this.ContactList.RemoveContactCommand.Execute(null);
@@ -97,18 +96,18 @@ namespace MegaApp.ViewModels.Contacts
             var removeContact = new RemoveContactRequestListenerAsync();
             var result = await removeContact.ExecuteAsync(() =>
                 SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
-            if (!result)
+
+            if (result) return true;
+
+            LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                string.Format("Error removing the contact {0}", this.Email));
+            if (!isMultiSelect)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
-                    string.Format("Error removing the contact {0}", this.Email));
-                if(!isMultiSelect)
-                {
-                    await DialogService.ShowAlertAsync(this.RemoveContactText,
-                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactFailed"), this.Email));
-                }
+                await DialogService.ShowAlertAsync(this.RemoveContactText,
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactFailed"), this.Email));
             }
 
-            return result;
+            return false;
         }        
 
         #endregion

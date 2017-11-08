@@ -3,9 +3,8 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.SharedFolders;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.SharedFolders
 {
     public class OutgoingSharedFolderNodeViewModel : SharedFolderNodeViewModel
     {

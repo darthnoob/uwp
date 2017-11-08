@@ -15,8 +15,8 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             this.GetOutgoingSharedItems();
 
-            this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
-            this.ItemCollection.SelectedItemsCollectionChanged += (sender, args) => OnSelectedItemsCollectionChanged();
+            this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
@@ -27,8 +27,8 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public void Deinitialize()
         {
-            this.ItemCollection.ItemCollectionChanged -= (sender, args) => OnItemCollectionChanged();
-            this.ItemCollection.SelectedItemsCollectionChanged -= (sender, args) => OnSelectedItemsCollectionChanged();
+            this.ItemCollection.ItemCollectionChanged -= OnItemCollectionChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted -= (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
@@ -87,7 +87,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
 
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
-            OnItemCollectionChanged();
+            OnItemCollectionChanged(this, EventArgs.Empty);
         }
 
         public void SortBy(OutgoingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
@@ -103,15 +103,12 @@ namespace MegaApp.ViewModels.SharedFolders
                             this.ItemCollection.Items.OrderBy(item => item.Name) : this.ItemCollection.Items.OrderByDescending(item => item.Name));
                     });
                     break;
-
-                default:
-                    break;
             }
 
             OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
 
-        private void OnItemCollectionChanged()
+        private void OnItemCollectionChanged(object sender, EventArgs args)
         {
             OnUiThread(() =>
             {
@@ -123,7 +120,7 @@ namespace MegaApp.ViewModels.SharedFolders
             });
         }
 
-        private void OnSelectedItemsCollectionChanged()
+        private void OnSelectedItemsCollectionChanged(object sender, EventArgs args)
         {
             OnUiThread(() =>
             {
