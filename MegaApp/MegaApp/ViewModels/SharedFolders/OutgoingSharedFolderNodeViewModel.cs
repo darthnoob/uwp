@@ -5,9 +5,8 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
-using MegaApp.ViewModels.SharedFolders;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.SharedFolders
 {
     public class OutgoingSharedFolderNodeViewModel : SharedFolderNodeViewModel, IMegaOutgoingSharedFolderNode
     {

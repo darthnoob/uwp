@@ -50,8 +50,9 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api);
+                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
@@ -142,8 +143,9 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api);
+                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
@@ -160,17 +162,21 @@ namespace MegaApp.MegaApi
         /// It does the needed actions to process this kind of error.
         /// </summary>
         /// <param name="api">MegaApi object that started the transfer</param>
-        private void ProcessOverquotaError(MegaSDK api)
+        /// <param name="e">Error information</param>
+        private void ProcessOverquotaError(MegaSDK api, MError e)
         {
             UiService.OnUiThread(DialogService.ShowOverquotaAlert);
 
             // Stop all upload transfers
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                string.Format("Storage quota exceeded ({0}) - Canceling uploads", e.getErrorCode().ToString()));
             api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
 
             // Disable the "Camera Uploads" service if is enabled
             if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Storage quota exceeded (API_EOVERQUOTA) - Disabling CAMERA UPLOADS service");
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
+                    string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
                 TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
             }
         }
@@ -270,12 +276,17 @@ namespace MegaApp.MegaApi
             var megaTransfer = TransferService.SearchTransfer(TransferService.MegaTransfers.SelectAll(), transfer);
             if (megaTransfer == null) return;
 
+            var isBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
+            var transferState = api.areTransfersPaused((int)transfer.getType()) ? MTransferState.STATE_QUEUED : transfer.getState();
+            var transferPriority = transfer.getPriority();
+
             UiService.OnUiThread(() =>
             {
-                megaTransfer.Transfer = transfer;
-                megaTransfer.IsBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
-                megaTransfer.TransferState = api.areTransfersPaused((int)transfer.getType()) ? MTransferState.STATE_QUEUED : transfer.getState();
-                megaTransfer.TransferPriority = transfer.getPriority();
+                // Only update the values if they have changed to improve the UI performance
+                if (megaTransfer.Transfer != transfer) megaTransfer.Transfer = transfer;
+                if (megaTransfer.IsBusy != isBusy) megaTransfer.IsBusy = isBusy;
+                if (megaTransfer.TransferState != transferState) megaTransfer.TransferState = transferState;
+                if (megaTransfer.TransferPriority != transferPriority) megaTransfer.TransferPriority = transferPriority;
             });
         }
 
@@ -288,16 +299,25 @@ namespace MegaApp.MegaApi
             var megaTransfer = TransferService.SearchTransfer(TransferService.MegaTransfers.SelectAll(), transfer);
             if (megaTransfer == null) return;
 
+            var isBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
+            var transferState = api.areTransfersPaused((int)transfer.getType()) ? MTransferState.STATE_QUEUED : transfer.getState();
+            var totalBytes = transfer.getTotalBytes();
+            var transferedBytes = transfer.getTransferredBytes();
+            var transferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
+            var transferMeanSpeed = transfer.getMeanSpeed();
+            var transferPriority = transfer.getPriority();
+
             UiService.OnUiThread(() =>
             {
-                megaTransfer.Transfer = transfer;
-                megaTransfer.IsBusy = api.areTransfersPaused((int)transfer.getType()) ? false : true;
-                megaTransfer.TransferState = api.areTransfersPaused((int)transfer.getType()) ? MTransferState.STATE_QUEUED : transfer.getState();
-                megaTransfer.TotalBytes = transfer.getTotalBytes();
-                megaTransfer.TransferedBytes = transfer.getTransferredBytes();
-                megaTransfer.TransferSpeed = transfer.getSpeed().ToStringAndSuffixPerSecond();
-                megaTransfer.TransferMeanSpeed = transfer.getMeanSpeed();
-                megaTransfer.TransferPriority = transfer.getPriority();
+                // Only update the values if they have changed to improve the UI performance
+                if (megaTransfer.Transfer != transfer) megaTransfer.Transfer = transfer;
+                if (megaTransfer.IsBusy != isBusy) megaTransfer.IsBusy = isBusy;
+                if (megaTransfer.TransferState != transferState) megaTransfer.TransferState = transferState;
+                if (megaTransfer.TotalBytes != totalBytes) megaTransfer.TotalBytes = totalBytes;
+                if (megaTransfer.TransferedBytes != transferedBytes) megaTransfer.TransferedBytes = transferedBytes;
+                if (megaTransfer.TransferSpeed != transferSpeed) megaTransfer.TransferSpeed = transferSpeed;
+                if (megaTransfer.TransferMeanSpeed != transferMeanSpeed) megaTransfer.TransferMeanSpeed = transferMeanSpeed;
+                if (megaTransfer.TransferPriority != transferPriority) megaTransfer.TransferPriority = transferPriority;
             });
         }
 

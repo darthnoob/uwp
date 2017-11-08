@@ -9,7 +9,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.SharedFolders
 {
     public class SharedFoldersListViewModel : BaseSdkViewModel
     {
@@ -92,21 +92,20 @@ namespace MegaApp.ViewModels
             var node = this.ItemCollection.Items.FirstOrDefault(
                 n => n.Base64Handle.Equals(megaNode.getBase64Handle()));
 
-            // If node is found in current view, process the remove action
-            if (node != null)
-            {
-                try
-                {
-                    OnUiThread(() =>
-                    {
-                        this.ItemCollection.Items.Remove(node);
+            // If node isn't found in current view, don't process the remove action
+            if (node == null) return;
 
-                        if (this.ItemCollection.FocusedItem.Equals(node))
-                            this.CloseInformationPanel();
-                    });
-                }
-                catch (Exception) { /* Dummy catch, supress possible exception */ }
+            try
+            {
+                OnUiThread(() =>
+                {
+                    this.ItemCollection.Items.Remove(node);
+
+                    if (this.ItemCollection.FocusedItem.Equals(node))
+                        this.CloseInformationPanel();
+                });
             }
+            catch (Exception) { /* Dummy catch, supress possible exception */ }
         }
 
         private async void Download()
@@ -125,11 +124,14 @@ namespace MegaApp.ViewModels
             {
                 if (await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
                 {
-                    foreach (var node in nodes)
+                    if (nodes != null)
                     {
-                        node.Transfer.ExternalDownloadPath = downloadFolder.Path;
-                        TransferService.MegaTransfers.Add(node.Transfer);
-                        node.Transfer.StartTransfer();
+                        foreach (var node in nodes)
+                        {
+                            node.Transfer.ExternalDownloadPath = downloadFolder.Path;
+                            TransferService.MegaTransfers.Add(node.Transfer);
+                            node.Transfer.StartTransfer();
+                        }
                     }
                 }
             }
@@ -183,8 +185,11 @@ namespace MegaApp.ViewModels
             if (sharedFolders?.Count < 1) return;
 
             bool result = true;
-            foreach (var node in sharedFolders)
-                result = result & (await node.RemoveAsync(true));
+            if (sharedFolders != null)
+            {
+                foreach (var node in sharedFolders)
+                    result = result & await node.RemoveAsync(true);
+            }
 
             if (!result)
             {
@@ -245,8 +250,11 @@ namespace MegaApp.ViewModels
             if (sharedFolders?.Count < 1) return;
 
             bool result = true;
-            foreach (var node in sharedFolders)
-                result = result & (await (node as IMegaOutgoingSharedFolderNode).RemoveSharedAccessAsync());
+            if (sharedFolders != null)
+            {
+                foreach (var node in sharedFolders)
+                    result = result & await (node as IMegaOutgoingSharedFolderNode).RemoveSharedAccessAsync();
+            }
 
             if (!result)
             {

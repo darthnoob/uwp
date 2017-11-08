@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Windows.Input;
-using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 
@@ -11,7 +9,7 @@ namespace MegaApp.ViewModels.Contacts
     {
         public ContactsBaseViewModel(bool? isOutgoing = null)
         {
-            this.isOutgoing = isOutgoing;
+            this._isOutgoing = isOutgoing;
         }
 
         #region Events
@@ -33,58 +31,29 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Commands
         
-        public virtual ICommand AddContactCommand { get; }
-        public virtual ICommand RemoveContactCommand { get; }
+        public ICommand AddContactCommand { get; set; }
+        public ICommand RemoveContactCommand { get; set; }
 
-        public virtual ICommand AcceptContactRequestCommand { get; }
-        public virtual ICommand IgnoreContactRequestCommand { get; }
-        public virtual ICommand CancelContactRequestCommand { get; }
-        public virtual ICommand DeclineContactRequestCommand { get; }
-        public virtual ICommand RemindContactRequestCommand { get; }
+        public ICommand AcceptContactRequestCommand { get; set; }
+        public ICommand IgnoreContactRequestCommand { get; set; }
+        public ICommand CancelContactRequestCommand { get; set; }
+        public ICommand DeclineContactRequestCommand { get; set; }
+        public ICommand RemindContactRequestCommand { get; set; }
 
-        public virtual ICommand OpenContactProfileCommand { get; }
-        public virtual ICommand CloseContactProfileCommand { get; }
-
-        public virtual ICommand InvertOrderCommand { get; }
-
-        #endregion
-
-        #region Methods
-
-        private void ListOnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(this.ItemCollection.Items))
-            {
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
-            }
-
-            if (e.PropertyName == nameof(this.ItemCollection.SelectedItems))
-            {
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
-            }
-        }
+        public ICommand OpenContactProfileCommand { get; set; }
+        public ICommand CloseContactProfileCommand { get; set; }
 
         #endregion
 
         #region Properties
 
-        private bool? isOutgoing { get; set; }
+        private bool? _isOutgoing { get; set; }
 
         private CollectionViewModel<T> _itemCollection;
         public CollectionViewModel<T> ItemCollection
         {
             get { return _itemCollection; }
-            set
-            {
-                if (_itemCollection != null)
-                    _itemCollection.PropertyChanged -= ListOnPropertyChanged;
-
-                SetField(ref _itemCollection, value);
-
-                if (_itemCollection != null)
-                    _itemCollection.PropertyChanged += ListOnPropertyChanged;
-            }
+            set { SetField(ref _itemCollection, value); }
         }
 
         private ContactsContentType _contentType;
@@ -92,70 +61,6 @@ namespace MegaApp.ViewModels.Contacts
         {
             get { return _contentType; }
             set { SetField(ref _contentType, value); }
-        }
-
-        public string OrderTypeAndNumberOfItems
-        {
-            get
-            {
-                switch(this.CurrentOrder)
-                {
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
-                            this.ItemCollection.Items.Count);
-
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
-        public string OrderTypeAndNumberOfSelectedItems
-        {
-            get
-            {
-                switch (this.CurrentOrder)
-                {
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
-                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
-
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
-        private MSortOrderType _currentOrder;
-        public MSortOrderType CurrentOrder
-        {
-            get { return _currentOrder; }
-            set
-            {
-                SetField(ref _currentOrder, value);
-
-                OnPropertyChanged(nameof(this.IsCurrentOrderAscending));
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems));
-                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
-            }
-        }
-
-        public bool IsCurrentOrderAscending
-        {
-            get
-            {
-                switch(this.CurrentOrder)
-                {
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    default:
-                        return true;
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return false;
-                }
-            }
         }
 
         #endregion

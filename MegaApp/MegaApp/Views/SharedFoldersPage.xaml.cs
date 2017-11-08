@@ -226,6 +226,7 @@ namespace MegaApp.Views
             if (this.SharedFoldersPivot.SelectedItem.Equals(this.OutgoingSharesPivot))
                 menuFlyout = DialogService.CreateOutgoingSharedItemsSortMenu(this.ViewModel.OutgoingShares);
 
+            if (menuFlyout == null) return;
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout.ShowAt(sortButton);
         }

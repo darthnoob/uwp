@@ -17,10 +17,10 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             this.GetIncomingSharedItems(contact);
 
-            this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
-            this.ItemCollection.SelectedItemsCollectionChanged += (sender, args) => OnSelectedItemsCollectionChanged();
+            this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
-            this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
+            this.ItemCollection.OrderInverted += OnOrderInverted;
 
             if (App.GlobalListener == null) return;
             App.GlobalListener.InSharedFolderAdded += this.OnSharedFolderAdded;
@@ -29,10 +29,10 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public void Deinitialize()
         {
-            this.ItemCollection.ItemCollectionChanged -= (sender, args) => OnItemCollectionChanged();
-            this.ItemCollection.SelectedItemsCollectionChanged -= (sender, args) => OnSelectedItemsCollectionChanged();
+            this.ItemCollection.ItemCollectionChanged -= OnItemCollectionChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
-            this.ItemCollection.OrderInverted -= (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
+            this.ItemCollection.OrderInverted -= OnOrderInverted;
 
             if (App.GlobalListener == null) return;
             App.GlobalListener.InSharedFolderAdded -= this.OnSharedFolderAdded;
@@ -85,7 +85,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
 
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
-            OnItemCollectionChanged();
+            OnItemCollectionChanged(this, EventArgs.Empty);
         }
 
         public void SortBy(IncomingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
@@ -127,15 +127,12 @@ namespace MegaApp.ViewModels.SharedFolders
                             this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).Owner));
                     });
                     break;
-
-                default:
-                    break;
             }
 
             OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
 
-        protected void OnItemCollectionChanged()
+        protected void OnItemCollectionChanged(object sender, EventArgs args)
         {
             OnUiThread(() =>
             {
@@ -147,7 +144,7 @@ namespace MegaApp.ViewModels.SharedFolders
             });
         }
 
-        protected void OnSelectedItemsCollectionChanged()
+        protected void OnSelectedItemsCollectionChanged(object sender, EventArgs args)
         {
             OnUiThread(() =>
             {
@@ -155,6 +152,9 @@ namespace MegaApp.ViewModels.SharedFolders
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
             });
         }
+
+        private void OnOrderInverted(object sender, EventArgs args) =>
+            SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
         #endregion
 

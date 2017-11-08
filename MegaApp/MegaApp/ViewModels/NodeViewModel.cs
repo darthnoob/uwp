@@ -14,6 +14,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
@@ -56,7 +57,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand CopyOrMoveCommand { get; }
-        public virtual ICommand DownloadCommand { get; }
+        public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }

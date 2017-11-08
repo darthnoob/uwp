@@ -522,7 +522,7 @@
                                                     <core:EventTriggerBehavior EventName="SelectionChanged">
                                                         <core:EventTriggerBehavior.Actions>
                                                             <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                                        </core:EventTriggerBehavior.Actions>                                                        
+                                                        </core:EventTriggerBehavior.Actions>
                                                     </core:EventTriggerBehavior>
                                                 </interactivity:Interaction.Behaviors>
                                                 <GridView.GroupStyle>

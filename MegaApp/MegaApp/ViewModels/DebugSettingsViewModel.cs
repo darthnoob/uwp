@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Controls;
 using mega;
+using MegaApp.Extensions;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
 
@@ -81,7 +82,7 @@ namespace MegaApp.ViewModels
                 var result = await new OkCancelDialog(ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
                     ResourceService.AppMessages.GetString("AM_SaveLogFile"),
                     ResourceService.UiResources.GetString("UI_Yes"),
-                    ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+                    ResourceService.UiResources.GetString("UI_No")).ShowAsyncQueue();
 
                 if (result == ContentDialogResult.Primary)
                 {
@@ -126,7 +127,7 @@ namespace MegaApp.ViewModels
 
                 OnUiThread(async () =>
                 {
-                    var result = await new OkCancelDialog(title, message).ShowAsync();
+                    var result = await new OkCancelDialog(title, message).ShowAsyncQueue();
                     if(result == ContentDialogResult.Primary)
                     {
                         if (value)

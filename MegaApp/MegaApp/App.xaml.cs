@@ -146,8 +146,7 @@ namespace MegaApp
                 Window.Current.Activate();
 
                 // Check session and special navigation
-                if (await AppService.CheckActiveAndOnlineSession())
-                    await AppService.CheckSpecialNavigation();
+                await AppService.CheckActiveAndOnlineSession();
 
                 // Validate product subscription license on background thread
                 Task.Run(() => LicenseService.ValidateLicensesAsync());
@@ -218,26 +217,35 @@ namespace MegaApp
         /// <param name="e">Details about the unhandled exception.</param>
         private async void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // An unhandled exception has occurred. Break into the debugger
-            if (Debugger.IsAttached)
-                Debugger.Break();
+            try
+            {
+                // An unhandled exception has occurred. Break into the debugger
+                if (Debugger.IsAttached)
+                    Debugger.Break();
 
-            if (isAborting) return;
+                if (isAborting) return;
 
-            e.Handled = true;
+                e.Handled = true;
 
-            string message = string.Format("{0}{1}{1}{2}", ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph1"),
-                    Environment.NewLine, ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph2"));
+                string message = string.Format("{0}{1}{1}{2}", ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph1"),
+                        Environment.NewLine, ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph2"));
 
-            var result = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
+                var result = await DialogService.ShowOkCancelAsync(
+                    ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
+                    ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
 
-            if (result)
-                await DebugService.ComposeErrorReportEmailAsync(e.Exception);
-
-            // Reenabling auto crash
-            ForceAppCrash(e.Exception);
+                if (result)
+                    await DebugService.ComposeErrorReportEmailAsync(e.Exception);
+            }
+            catch (Exception exception)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error managing an unhandled exception.", exception);
+            }
+            finally
+            {
+                // Reenabling auto crash
+                ForceAppCrash(e.Exception);
+            }
         }
 
         /// <summary>
@@ -247,8 +255,15 @@ namespace MegaApp
         /// <param name="unhandledEx">Unhandled exception</param>
         private void ForceAppCrash(Exception unhandledEx)
         {
-            isAborting = true;
-            ExceptionDispatchInfo.Capture(unhandledEx).Throw();
+            try
+            {
+                isAborting = true;
+                ExceptionDispatchInfo.Capture(unhandledEx).Throw();
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error forcing app crash after manage an unhandled exception.", e);
+            }
         }
 
         #region Application initialization

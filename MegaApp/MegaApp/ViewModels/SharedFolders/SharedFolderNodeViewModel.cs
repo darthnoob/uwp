@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
@@ -25,7 +25,6 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Commands
 
-        public override ICommand DownloadCommand { get; }
         public ICommand OpenInformationPanelCommand { get; }
 
         #endregion

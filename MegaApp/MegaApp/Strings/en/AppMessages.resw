@@ -436,9 +436,8 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
-    <value>Failed to confirm account. Please try again. [{0}]</value>
-    <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.
-Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
+    <value>Failed to confirm account. Please try again.</value>
+    <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.</comment>
   </data>
   <data name="AM_ConfirmAccountSucces" xml:space="preserve">
     <value>Your account has been created, confirmed and activated. You will be logged in automatically.</value>
@@ -1042,5 +1041,103 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
   <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
     <value>Error sharing folder</value>
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
+  </data>
+  <data name="AM_InvalidKeyFile" xml:space="preserve">
+    <value>The file you selected is too large/small. Please make sure you select the file containing your 22-character Recovery Key.</value>
+    <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
+  </data>
+  <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
+    <value>Invalid key file</value>
+    <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
+  </data>
+  <data name="AM_CheckEmail" xml:space="preserve">
+    <value>If you can’t access your email account, you will need to contact support@mega.nz.</value>
+    <comment>Message of the dialog displayed when a recovery link has been send.</comment>
+  </data>
+  <data name="AM_CheckEmail_Title" xml:space="preserve">
+    <value>Please check your email</value>
+    <comment>Title of the dialog displayed when a recovery link has been send.</comment>
+  </data>
+  <data name="AM_InvalidEmail" xml:space="preserve">
+    <value>Please check the email address and try again.</value>
+    <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
+  </data>
+  <data name="AM_InvalidEmail_Title" xml:space="preserve">
+    <value>Invalid email address</value>
+    <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
+  </data>
+  <data name="AM_PasswordResetFailed" xml:space="preserve">
+    <value>Your password has not been reset. Please try again or contact support.</value>
+    <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
+    <value>Error password reset</value>
+    <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordResetSuccess" xml:space="preserve">
+    <value>Your password has been reset successfully. Please log into your account now.</value>
+    <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
+  </data>
+  <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
+    <value>Successful password reset</value>
+    <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RecoveryLinkExpired" xml:space="preserve">
+    <value>This recovery link has expired, please try again.</value>
+    <comment>Message of the dialog displayed when the recovery is expired.</comment>
+  </data>
+  <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
+    <value>Recovery link expired</value>
+    <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
+  </data>
+  <data name="AM_InvalidRecoveryLink" xml:space="preserve">
+    <value>Invalid link, please try again.</value>
+    <comment>Message of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
+  </data>
+  <data name="AM_InvalidRecoveryLink_Title" xml:space="preserve">
+    <value>Invalid recovery link</value>
+    <comment>Title of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
+  </data>
+  <data name="AM_AccountParked" xml:space="preserve">
+    <value>Your old account has been parked successfully. You can now log into your new account.</value>
+    <comment>Message of the dialog displayed when the user has succesful parked account.</comment>
+  </data>
+  <data name="AM_AccountParked_Title" xml:space="preserve">
+    <value>Account parked</value>
+    <comment>Title of the dialog displayed when the user has succesful parked account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_AlreadyConfirmedAccount_Title" xml:space="preserve">
+    <value>Account already confirmed</value>
+    <comment>Title of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
+  </data>
+  <data name="AM_InvalidSignUpLink" xml:space="preserve">
+    <value>Invalid link, please try again.</value>
+    <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
+  </data>
+  <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
+    <value>Invalid sign-up link</value>
+    <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
+  </data>
+  <data name="AM_SignUpLinkExpired" xml:space="preserve">
+    <value>This sign-up link has expired, please try again.</value>
+    <comment>Message of the dialog displayed when the sign-up is expired.</comment>
+  </data>
+  <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
+    <value>Sign-up link expired</value>
+    <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
+  </data>
+  <data name="AM_VeryWeakPassword" xml:space="preserve">
+    <value>Please strengthen your password.</value>
+    <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
+  </data>
+  <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
+    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
+Preserve the {0} code because is for include the price in runtime.</comment>
+  </data>
+  <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
+    <value>Wait {0} for your transfer quota to renew.</value>
+    <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
+Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
 </root>

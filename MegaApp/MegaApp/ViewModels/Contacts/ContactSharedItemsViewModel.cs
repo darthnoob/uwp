@@ -11,8 +11,8 @@ namespace MegaApp.ViewModels.Contacts
 
             this.GetIncomingSharedItems();
 
-            this.ItemCollection.ItemCollectionChanged += (sender, args) => OnItemCollectionChanged();
-            this.ItemCollection.SelectedItemsCollectionChanged += (sender, args) => OnSelectedItemsCollectionChanged();
+            this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted += (sender, args) => SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 

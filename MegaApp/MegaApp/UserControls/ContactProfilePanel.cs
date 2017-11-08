@@ -50,7 +50,6 @@ namespace MegaApp.UserControls
         private Button _removeContact;
         private ListView _sharedItems;
         private Pivot _pivotControl;
-        private PivotItem _contactProfilePivot;
         private PivotItem _sharedItemsPivot;
         private Grid _sharedItemsTopCommandBarArea;
 
@@ -69,7 +68,6 @@ namespace MegaApp.UserControls
             this._removeContact = (Button)this.GetTemplateChild("PART_RemoveContactButton");
             this._sharedItems = (ListView)this.GetTemplateChild("PART_ListViewSharedItems");
             this._pivotControl = (Pivot)this.GetTemplateChild("PART_PivotControl");
-            this._contactProfilePivot = (PivotItem)this.GetTemplateChild("PART_ContactProfilePivot");
             this._sharedItemsPivot = (PivotItem)this.GetTemplateChild("PART_SharedItemsPivot");
             this._sharedItemsTopCommandBarArea = (Grid)this.GetTemplateChild("PART_SharedItemsTopCommandBarArea");
 
@@ -158,45 +156,42 @@ namespace MegaApp.UserControls
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
-            {
-                // Disable the view behaviors to avoid extrange behaviors during the view update
-                Interaction.GetBehaviors(this._sharedItems).Detach();
-                
-                // First save the current selection to restore after enable the multi select
-                var selection = this.Contact.SharedItems.ItemCollection.SelectedItems.ToList();
+            if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
 
-                this._sharedItems.SelectionMode = ListViewSelectionMode.Multiple;
+            // Disable the view behaviors to avoid extrange behaviors during the view update
+            Interaction.GetBehaviors(this._sharedItems).Detach();
 
-                // Update the selection
-                foreach (var item in selection)
-                    this._sharedItems.SelectedItems.Add(item);
+            // First save the current selection to restore after enable the multi select
+            var selection = this.Contact.SharedItems.ItemCollection.SelectedItems.ToList();
 
-                // Restore the view behaviors again
-                Interaction.GetBehaviors(this._sharedItems).Attach(this._sharedItems);
-            }
+            this._sharedItems.SelectionMode = ListViewSelectionMode.Multiple;
+
+            // Update the selection
+            foreach (var item in selection)
+                this._sharedItems.SelectedItems.Add(item);
+
+            // Restore the view behaviors again
+            Interaction.GetBehaviors(this._sharedItems).Attach(this._sharedItems);
         }
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
-            {
-                if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                    this._sharedItems.SelectionMode = ListViewSelectionMode.Extended;
-                else
-                    this._sharedItems.SelectionMode = ListViewSelectionMode.None;
-            }
+            if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
+
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                this._sharedItems.SelectionMode = ListViewSelectionMode.Extended;
+            else
+                this._sharedItems.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void OnAllSelected(object sender, bool value)
         {
-            if ((bool)this._pivotControl?.SelectedItem?.Equals(this._sharedItemsPivot))
-            {
-                if (value)
-                    this._sharedItems?.SelectAll();
-                else
-                    this._sharedItems?.SelectedItems.Clear();
-            }
+            if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
+
+            if (value)
+                this._sharedItems?.SelectAll();
+            else
+                this._sharedItems?.SelectedItems.Clear();
         }
     }
 }

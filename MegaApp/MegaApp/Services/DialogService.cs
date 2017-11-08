@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Extensions;
 using MegaApp.ViewModels;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
@@ -32,7 +33,7 @@ namespace MegaApp.Services
                 button = ResourceService.UiResources.GetString("UI_Ok");
 
             var dialog = new AlertDialog(title, message, button);
-            await dialog.ShowAsync();
+            await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
@@ -74,28 +75,26 @@ namespace MegaApp.Services
 
         public static async void ShowOverquotaAlert()
         {
-            var customMessageDialog = new CustomMessageDialog(
+            var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                App.AppInformation, MessageDialogButtons.YesNo);
+                ResourceService.UiResources.GetString("UI_Yes"),
+                ResourceService.UiResources.GetString("UI_No"));
 
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            if(result)
             {
                 UiService.OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
                         NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
                 });
-            };
-
-            await customMessageDialog.ShowDialogAsync();
+            }
         }
 
         public static async void ShowTransferOverquotaWarning()
         {
-            await ShowAlertAsync(
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+            var dialog = new TransferOverquotaWarningDialog();
+            await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
@@ -104,13 +103,13 @@ namespace MegaApp.Services
         /// </summary>
         public static async void ShowDebugModeAlert()
         {
-            var result = await new OkCancelDialog(
+            var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
                 ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+                ResourceService.UiResources.GetString("UI_No"));
 
-            if(result == ContentDialogResult.Primary)
+            if (result)
                 DebugService.DebugSettings.DisableDebugMode();
 
             DebugService.DebugSettings.ShowDebugAlert = false;
@@ -132,7 +131,7 @@ namespace MegaApp.Services
             else
                 awaitEmailConfirmationDialog.ViewModel.Email = email;
 
-            await awaitEmailConfirmationDialog.ShowAsync();
+            await awaitEmailConfirmationDialog.ShowAsyncQueue();
         }
 
         /// <summary>
@@ -197,7 +196,7 @@ namespace MegaApp.Services
             stackPanel.Children.Add(messageText);
             stackPanel.Children.Add(input);
             dialog.Content = stackPanel;
-            var result = await dialog.ShowAsync();
+            var result = await dialog.ShowAsyncQueue();
             switch (result)
             {
                 case ContentDialogResult.Primary:
@@ -325,7 +324,7 @@ namespace MegaApp.Services
             stackPanel.Children.Add(messageText);
             dialog.Content = stackPanel;
 
-            var result = await dialog.ShowAsync();
+            var result = await dialog.ShowAsyncQueue();
             switch (result)
             {
                 case ContentDialogResult.None:
@@ -488,6 +487,14 @@ namespace MegaApp.Services
                 (MSortOrderType)currentSortOrder == (MSortOrderType)sortOrderToCheck)
                 return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
 
+            if (currentSortOrder is ContactsSortOrderType && sortOrderToCheck is ContactsSortOrderType &&
+                (ContactsSortOrderType)currentSortOrder == (ContactsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is ContactRerquestsSortOrderType && sortOrderToCheck is ContactRerquestsSortOrderType &&
+                (ContactRerquestsSortOrderType)currentSortOrder == (ContactRerquestsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
             if (currentSortOrder is IncomingSharesSortOrderType && sortOrderToCheck is IncomingSharesSortOrderType &&
                 (IncomingSharesSortOrderType)currentSortOrder == (IncomingSharesSortOrderType)sortOrderToCheck)
                 return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
@@ -509,23 +516,23 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_NAME),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
-                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_NAME;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionEmail"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_EMAIL),
                 Command = new RelayCommand(() =>
                 {
-                    contacts.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
-                    contacts.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_EMAIL;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });
 
@@ -542,23 +549,12 @@ namespace MegaApp.Services
 
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, ContactRerquestsSortOrderType.ORDER_NAME),
                 Command = new RelayCommand(() =>
                 {
-                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_ASC;
-                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_ASC);
-                })
-            });
-
-            menuFlyout.Items.Add(new MenuFlyoutItem()
-            {
-                Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
-                Command = new RelayCommand(() =>
-                {
-                    contactRequests.CurrentOrder = MSortOrderType.ORDER_ALPHABETICAL_DESC;
-                    contactRequests.SortBy(MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    contactRequests.CurrentOrder = ContactRerquestsSortOrderType.ORDER_NAME;
+                    contactRequests.SortBy(contactRequests.CurrentOrder, contactRequests.ItemCollection.CurrentOrderDirection);
                 })
             });
 

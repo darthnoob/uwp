@@ -1,31 +1,35 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using ForgotPasswordPage = MegaApp.Views.Login.ForgotPasswordPage;
 
-namespace MegaApp.ViewModels
+namespace MegaApp.ViewModels.Login
 {
     public class LoginViewModel : BaseSdkViewModel
     {
         public LoginViewModel()
         {
             this.ControlState = true;
+            this.LoginCommand = new RelayCommand(Login);
+            this.ForgotMyPasswordCommand = new RelayCommand(ForgotMyPassword);
         }
 
         #region Methods
 
         private void OnDecryptNodes(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
         private void OnServerBusy(object sender, EventArgs e)
         {
-            OnUiThread(() => this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
 
         /// <summary>
@@ -33,7 +37,10 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void Login()
         {
-            if (!CheckInputParametersAsync()) return;
+            SetWarning(false, string.Empty);
+            SetInputState();
+
+            if (!CheckInputParameters()) return;
 
             var login = new LoginRequestListenerAsync();
             login.ServerBusy += OnServerBusy;
@@ -42,10 +49,11 @@ namespace MegaApp.ViewModels
             try
             {
                 this.ControlState = false;
+                this.LoginButtonState = false;
                 this.IsBusy = true;
 
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
             }
@@ -54,7 +62,7 @@ namespace MegaApp.ViewModels
                 // Do nothing, app is already logging out
                 return;
             }
-           
+
             // Set default error content
             var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
             switch (result)
@@ -67,7 +75,7 @@ namespace MegaApp.ViewModels
 
                     // Fetch nodes from MEGA
                     if (!await this.FetchNodes()) return;
-                    
+
                     // Navigate to the main page to load the main application for the user
                     NavigateService.Instance.Navigate(typeof(MainPage), true,
                         NavigationObject.Create(this.GetType(), NavigationActionType.Login));
@@ -95,35 +103,68 @@ namespace MegaApp.ViewModels
             }
 
             this.ControlState = true;
+            this.LoginButtonState = true;
             this.IsBusy = false;
-
+           
             // Show error message
-            OnUiThread(async () => await DialogService.ShowAlertAsync(this.LoginText, errorContent));
+            SetWarning(true, errorContent);
+            SetInputState(InputState.Warning, InputState.Warning);
         }
 
-        private bool CheckInputParametersAsync()
+        private void ForgotMyPassword()
         {
-            if (string.IsNullOrEmpty(this.Email) || string.IsNullOrEmpty(this.Password))
+            NavigateService.Instance.Navigate(typeof(ForgotPasswordPage), true);
+        }
+
+        private void SetWarning(bool isVisible, string warningText)
+        {
+            if (isVisible)
             {
-                OnUiThread(async () =>
-                {
-                    await DialogService.ShowAlertAsync(this.LoginText,
-                        ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
-                });
-                return false;
+                // First text and then display
+                this.WarningText = warningText;
+                this.IsWarningVisible = true;
             }
-            
-            if(!ValidationService.IsValidEmail(this.Email))
+            else
             {
-                OnUiThread(async () =>
-                {
-                    await DialogService.ShowAlertAsync(this.LoginText,
-                        ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat"));
-                });
+                // First remove and than clean text
+                this.IsWarningVisible = false;
+                this.WarningText = warningText;
+            }
+        }
+
+        private void SetInputState(
+            InputState email = InputState.Normal, 
+            InputState password = InputState.Normal)
+        {
+            OnUiThread(() =>
+            {
+                this.EmailInputState = email;
+                this.PasswordInputState = password;
+            });
+        }
+
+        private void SetState()
+        {
+            var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
+                          !string.IsNullOrWhiteSpace(this.Password);
+
+            OnUiThread(() => this.LoginButtonState = enabled);
+        }
+
+        private bool CheckInputParameters()
+        {
+            if (string.IsNullOrWhiteSpace(this.Email) || string.IsNullOrWhiteSpace(this.Password))
+            {
+                SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
+                SetInputState(InputState.Warning, InputState.Warning);
                 return false;
             }
 
-            return true;
+            if (ValidationService.IsValidEmail(this.Email)) return true;
+
+            SetWarning(true, ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat"));
+            SetInputState(InputState.Warning);
+            return false;
         }
 
         /// <summary>
@@ -142,7 +183,7 @@ namespace MegaApp.ViewModels
                 this.IsBusy = true;
 
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 fastLoginResult = await fastLogin.ExecuteAsync(() =>
                 {
@@ -179,7 +220,7 @@ namespace MegaApp.ViewModels
         {
             try
             {
-                this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
                 var fetchNodes = new FetchNodesRequestListenerAsync();
                 fetchNodes.DecryptNodes += OnDecryptNodes;
@@ -195,6 +236,9 @@ namespace MegaApp.ViewModels
                     return false;
                 }
 
+                // Enable the transfer resumption for the main MegaSDK instance
+                SdkService.MegaSdk.enableTransferResumption();
+
                 this.ControlState = true;
                 this.IsBusy = false;
 
@@ -206,27 +250,88 @@ namespace MegaApp.ViewModels
                 return false;
             }
         }
-        
-        #endregion
-        
-        #region Properties
 
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string SessionKey { get; set; }
+        #endregion
+
+        #region Commands
+
+        public ICommand LoginCommand { get; }
+        public ICommand ForgotMyPasswordCommand { get; }
+
+        #endregion
+
+        #region Properties
+       
+        private string _email;
+        public string Email
+        {
+            get { return _email; }
+            set
+            {
+                SetField(ref _email, value);
+                SetState();
+            }
+        }
+
+        private string _password;
+        public string Password
+        {
+            get { return _password; }
+            set
+            {
+                SetField(ref _password, value);
+                SetState();
+            }
+        }
+
+        private bool _isWarningVisible;
+        public bool IsWarningVisible
+        {
+            get { return _isWarningVisible; }
+            set { SetField(ref _isWarningVisible, value); }
+        }
+
+        private bool _loginButtonState;
+        public bool LoginButtonState
+        {
+            get { return _loginButtonState; }
+            set { SetField(ref _loginButtonState, value); }
+        }
+
+        private string _warningText;
+        public string WarningText
+        {
+            get { return _warningText; }
+            set { SetField(ref _warningText, value); }
+        }
+
+        private InputState _emailInputState;
+        public InputState EmailInputState
+        {
+            get { return _emailInputState; }
+            set { SetField(ref _emailInputState, value); }
+        }
+
+        private InputState _passwordInputState;
+        public InputState PasswordInputState
+        {
+            get { return _passwordInputState; }
+            set { SetField(ref _passwordInputState, value); }
+        }
 
         #endregion
 
         #region UiResources
 
         public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
-        public string LoginText => ResourceService.UiResources.GetString("UI_Login");
+        public string LoginText => ResourceService.UiResources.GetString("UI_LoginWithSpace");
         public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
+        public string ForgotMyPasswordText => ResourceService.UiResources.GetString("UI_ForgotMyPassword");
 
         #endregion
 
         #region ProgressMessages
-       
+
         private string _progressHeaderText;
         public string ProgressHeaderText
         {
@@ -234,13 +339,21 @@ namespace MegaApp.ViewModels
             set { SetField(ref _progressHeaderText, value); }
         }
 
-        private string _progressSubHeaderText;
-        public string ProgressSubHeaderText
+        // TODO -> Remove when remove the ProgressPanel control
+        public string ProgressSubHeaderText => this.ProgressText;
+
+        private string _progressText;
+        public string ProgressText
         {
-            get { return _progressSubHeaderText; }
-            set { SetField(ref _progressSubHeaderText, value); }
+            get { return _progressText; }
+            set
+            {
+                SetField(ref _progressText, value);
+                OnPropertyChanged(nameof(this.ProgressSubHeaderText));
+            }
         }
 
         #endregion
     }
+
 }
