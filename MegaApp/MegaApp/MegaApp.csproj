@@ -97,7 +97,9 @@
     <None Include="project.json" />
     <PRIResource Include="Strings\en\EmptyStates.resw" />
     <PRIResource Include="Strings\en\VisualResources.resw" />
-    <PRIResource Include="Strings\en\UiResources.resw" />
+    <PRIResource Include="Strings\en\UiResources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <PRIResource Include="Strings\en\SettingsResources.resw" />
     <PRIResource Include="Strings\en\ProgressMessages.resw" />
     <PRIResource Include="Strings\en\AppResources.resw" />
@@ -113,6 +115,25 @@
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
+    <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
+    <Compile Include="Enums\ContactsContentType.cs" />
+    <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\SortOrderType.cs" />
+    <Compile Include="Interfaces\IMegaContact.cs" />
+    <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
+    <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
+    <Compile Include="UserControls\ButtonPanel.cs" />
+    <Compile Include="UserControls\ContactProfilePanel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactSharedItemsViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Classes\LinkInformation.cs" />
@@ -153,6 +174,8 @@
     <Compile Include="MegaApi\QueryChangeEmailLinkRequestListenerAsync.cs" />
     <Compile Include="Services\DebugService.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
+    <Compile Include="ViewModels\ContactsManagerViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AddContactDialogViewModel.cs" />
     <Compile Include="UserControls\SimplePage.cs" />
     <Compile Include="ViewModels\CreateAccount\ConfirmEmailViewModel.cs" />
     <Compile Include="ViewModels\DebugSettingsViewModel.cs" />
@@ -163,6 +186,20 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
+    <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\OutgoingSharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\OutgoingSharesViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
+    <Compile Include="Views\ContactsManagerPage.xaml.cs">
+      <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AddContactDialog.xaml.cs">
+      <DependentUpon>AddContactDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Dialogs\OkCancelDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\TransferOverquotaWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Login\ConfirmParkAccountViewModel.cs" />
@@ -191,7 +228,6 @@
     </Compile>
     <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ChangeEmailResult.cs" />
-    <Compile Include="Enums\ContactsDisplayMode.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />
@@ -261,6 +297,9 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\UserControlEx.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
+    <Compile Include="Views\Dialogs\OkCancelAndWarningDialog.xaml.cs">
+      <DependentUpon>OkCancelAndWarningDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
     </Compile>
@@ -310,7 +349,7 @@
     <Compile Include="ViewModels\MyAccount\StorageAndTransferViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\UpgradeViewModel.cs" />
     <Compile Include="ViewModels\UpgradeAccountViewModel.cs" />
-    <Compile Include="ViewModels\NodeCollectionViewModel.cs" />
+    <Compile Include="ViewModels\CollectionViewModel.cs" />
     <Compile Include="ViewModels\Settings\AcknowledgementsSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SdkVersionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\AppVersionSettingViewModel.cs" />
@@ -381,6 +420,9 @@
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SharedFoldersPage.xaml.cs">
+      <DependentUpon>SharedFoldersPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TransferManagerPage.xaml.cs">
       <DependentUpon>TransferManagerPage.xaml</DependentUpon>
     </Compile>
@@ -416,6 +458,14 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ContactsManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\AddContactDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CreateAccount\ConfirmEmailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -449,6 +499,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\OkCancelAndWarningDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\OkCancelDialog.xaml">
       <SubType>Designer</SubType>
@@ -520,6 +574,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SharedFoldersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

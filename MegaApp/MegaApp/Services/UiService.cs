@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
 using mega;
 using MegaApp.Enums;
 
@@ -16,7 +14,7 @@ namespace MegaApp.Services
 {
     static class UiService
     {
-        private static Dictionary<string, int> _folderSorting;
+        private static Dictionary<string, MSortOrderType> _folderSorting;
         private static Dictionary<string, int> _folderViewMode;
 
         /// <summary>
@@ -25,19 +23,19 @@ namespace MegaApp.Services
         /// <param name="folderBase64Handle">Folder base 64 handle.</param>
         /// <param name="folderName">Folder name.</param>
         /// <returns>Sort order. Possible values: <see cref="MSortOrderType"/></returns>
-        public static int GetSortOrder(string folderBase64Handle, string folderName)
+        public static MSortOrderType GetSortOrder(string folderBase64Handle, string folderName)
         {
             if (string.IsNullOrWhiteSpace(folderBase64Handle) || string.IsNullOrWhiteSpace(folderName))
                 return (int)MSortOrderType.ORDER_NONE;
 
             if (_folderSorting == null)
-                _folderSorting = new Dictionary<string, int>();
+                _folderSorting = new Dictionary<string, MSortOrderType>();
 
             if (_folderSorting.ContainsKey(folderBase64Handle))
                 return _folderSorting[folderBase64Handle];
 
-            return folderName.Equals("Camera Uploads") ? (int)MSortOrderType.ORDER_MODIFICATION_DESC :
-                (int)MSortOrderType.ORDER_DEFAULT_ASC;
+            return folderName.Equals("Camera Uploads") ? MSortOrderType.ORDER_MODIFICATION_DESC :
+                MSortOrderType.ORDER_DEFAULT_ASC;
         }
 
         /// <summary>
@@ -45,12 +43,12 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="folderBase64Handle">Folder base 64 handle.</param>
         /// <param name="sortOrder">Sort order. Possible values: <see cref="MSortOrderType"/></param>
-        public static void SetSortOrder(string folderBase64Handle, int sortOrder)
+        public static void SetSortOrder(string folderBase64Handle, MSortOrderType sortOrder)
         {
             if (string.IsNullOrWhiteSpace(folderBase64Handle)) return;
 
             if (_folderSorting == null)
-                _folderSorting = new Dictionary<string, int>();
+                _folderSorting = new Dictionary<string, MSortOrderType>();
 
             if (_folderSorting.ContainsKey(folderBase64Handle))
                 _folderSorting[folderBase64Handle] = sortOrder;

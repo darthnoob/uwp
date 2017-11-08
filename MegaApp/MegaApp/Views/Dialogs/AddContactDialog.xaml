@@ -1,0 +1,56 @@
+﻿<dialogViews:BaseAddContactDialog
+    x:Class="MegaApp.Views.Dialogs.AddContactDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    d:DataContext="{d:DesignInstance dialogViewModels:ChangePasswordDialogViewModel}"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.AddText, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
+    PrimaryButtonCommand="{x:Bind ViewModel.AddButtonCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CancelButtonCommand}"
+    Opened="OnOpened"
+    Closing="OnClosing"
+    Closed="OnClosed">
+    <dialogViews:BaseAddContactDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
+    </dialogViews:BaseAddContactDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <StackPanel>
+            <TextBox
+                x:Name="ContactEmailTextBox"
+                Margin="0,16,0,8"
+                FontSize="14"
+                InputScope="EmailNameOrAddress"
+                PlaceholderText="{x:Bind ViewModel.EmailText, Mode=OneTime}"
+                Text="{x:Bind ViewModel.ContactEmail, Mode=TwoWay}"
+                TextChanged="OnContactEmailChanged"
+                TextWrapping="NoWrap"
+                Style="{StaticResource MegaTextBoxStyle}"/>
+            <TextBox
+                x:Name="EmailContentTextBox"
+                FontSize="14"
+                MinHeight="60"
+                Text="{x:Bind ViewModel.EmailContent, Mode=TwoWay}"
+                TextWrapping="Wrap"
+                Style="{StaticResource MegaTextBoxStyle}"/>
+            <TextBlock 
+                x:Name="ErrorMessage"
+                Margin="0,4,0,0"
+                Style="{StaticResource MegaDialogErrorFontStyle}"
+                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseAddContactDialog>

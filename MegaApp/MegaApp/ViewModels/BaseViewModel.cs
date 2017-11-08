@@ -49,6 +49,12 @@ namespace MegaApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+        protected void OnPropertyChanged(params string[] propertyNames)
+        {
+            foreach (string name in propertyNames)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value)) return false;

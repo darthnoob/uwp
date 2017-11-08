@@ -7,6 +7,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
@@ -38,21 +39,48 @@ namespace MegaApp.Services
                 {
                     case MNodeType.TYPE_UNKNOWN:
                         break;
-                    case MNodeType.TYPE_FILE:
-                        {
-                            if (megaNode.hasThumbnail() || megaNode.hasPreview() || ImageService.IsImage(megaNode.getName()))
-                                return new ImageNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
 
-                            return new FileNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
-                        }
-                    case MNodeType.TYPE_FOLDER:
+                    case MNodeType.TYPE_FILE:
+                        if (megaNode.hasThumbnail() || megaNode.hasPreview() || ImageService.IsImage(megaNode.getName()))
+                            return new ImageNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
+                        return new FileNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
                     case MNodeType.TYPE_ROOT:
                     case MNodeType.TYPE_RUBBISH:
-                        {
-                            return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
-                        }
+                        return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
+                    case MNodeType.TYPE_FOLDER:
+                        return new FolderNodeViewModel(megaSdk, appInformation, megaNode, folder, parentCollection, childCollection);
+
                     case MNodeType.TYPE_INCOMING:
                         break;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return null;
+        }
+
+        public static SharedFolderNodeViewModel CreateNewSharedFolder(MegaSDK megaSdk, AppInformation appInformation, 
+            MNode megaNode, SharedFoldersListViewModel parent)
+        {
+            if (megaNode == null) return null;
+
+            try
+            {
+                if (megaNode.getType() == MNodeType.TYPE_FOLDER)
+                {
+                    if (megaSdk.isShared(megaNode))
+                    {
+                        if (megaSdk.isInShare(megaNode))
+                            return new IncomingSharedFolderNodeViewModel(megaNode, parent);
+                        if (megaSdk.isOutShare(megaNode))
+                            return new OutgoingSharedFolderNodeViewModel(megaNode, parent);
+                    }
                 }
             }
             catch (Exception)
@@ -91,7 +119,7 @@ namespace MegaApp.Services
 
         public static MNodeList GetChildren(MegaSDK megaSdk, IMegaNode rootNode)
         {
-            return megaSdk.getChildren(rootNode.OriginalMNode, UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name));
+            return megaSdk.getChildren(rootNode.OriginalMNode, (int)UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name));
         }
 
         public static MNode FindCameraUploadNode(MegaSDK megaSdk, MNode rootNode)

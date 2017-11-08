@@ -51,7 +51,7 @@ namespace MegaApp.ViewModels
             this.IsBusy = false;
             this.BusyText = null;
             this.BreadCrumb = new BreadCrumbViewModel();
-            this.ItemCollection = new NodeCollectionViewModel();           
+            this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
 
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
@@ -106,7 +106,7 @@ namespace MegaApp.ViewModels
         private void SelectionChanged()
         {
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.OneOrMoreSelected) ||
+                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.HasSelectedItems) ||
                     this.ItemCollection.MoreThanOneSelected;
             else
                 this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;
@@ -156,7 +156,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
                 else
@@ -164,7 +164,7 @@ namespace MegaApp.ViewModels
                     UiService.OnUiThread(() =>
                     {
                         try { nodeToUpdateInView.Update(mNode, true); }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                     isProcessed = true;
                 }
@@ -183,7 +183,7 @@ namespace MegaApp.ViewModels
                 // Retrieve the index from the SDK
                 // Substract -1 to get a valid list index
                 var insertIndex = this.MegaSdk.getIndex(mNode,
-                    UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
+                    (int)UiService.GetSortOrder(parentNode.getBase64Handle(), parentNode.getName())) - 1;
 
                 // If the insert position is higher than the ChilNodes size insert in the last position
                 if (insertIndex >= ItemCollection.Items.Count)
@@ -198,7 +198,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
                 // Insert the node at a specific position
@@ -218,7 +218,7 @@ namespace MegaApp.ViewModels
                             ((FolderNodeViewModel)FolderRootNode).SetFolderInfo();
                             FolderService.UpdateFolders(this);
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
             }
@@ -233,7 +233,7 @@ namespace MegaApp.ViewModels
                         var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                         folderNode?.SetFolderInfo();
                     }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
             }
 
@@ -242,7 +242,7 @@ namespace MegaApp.ViewModels
             UiService.OnUiThread(() =>
             {
                 try { FolderService.UpdateFolders(this); }
-                catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
             });
 
             this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
@@ -268,7 +268,7 @@ namespace MegaApp.ViewModels
                         ItemCollection.Items.Remove(nodeToRemoveFromView);
                         ((FolderNodeViewModel) FolderRootNode).SetFolderInfo();
                     }
-                    catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                    catch (Exception) { /* Dummy catch, supress possible exception */ }
                 });
 
                 isProcessed = true;
@@ -296,7 +296,7 @@ namespace MegaApp.ViewModels
                             var folderNode = nodeToUpdateInView as FolderNodeViewModel;
                             folderNode?.SetFolderInfo();
                         }
-                        catch (Exception) { /* Dummy catch, surpress possible exception */ }
+                        catch (Exception) { /* Dummy catch, supress possible exception */ }
                     });
                 }
             }
@@ -328,8 +328,8 @@ namespace MegaApp.ViewModels
 
         #region Public Methods
 
-        public void SelectAll() => this.ItemCollection.SelectAll();
-        public void DeselectAll() => this.ItemCollection.ClearSelection();
+        public void SelectAll() => this.ItemCollection.SelectAll(true);
+        public void DeselectAll() => this.ItemCollection.SelectAll(false);
         public void ClearChildNodes() => this.ItemCollection.Clear();
 
         /// <summary>
@@ -1201,7 +1201,7 @@ namespace MegaApp.ViewModels
 
         public BreadCrumbViewModel BreadCrumb { get; }
 
-        public NodeCollectionViewModel ItemCollection { get; }
+        public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
         public bool HasBreadCrumbPath => this.BreadCrumb?.Items?.Count > 0;
 

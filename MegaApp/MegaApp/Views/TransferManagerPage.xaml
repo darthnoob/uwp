@@ -154,7 +154,7 @@
                     <Grid>
                         <ListView
                             x:Name="DownloadsListView" 
-                            ItemsSource="{Binding Items}"
+                            ItemsSource="{Binding ItemCollection.Items}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
                         <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                     </Grid>
@@ -165,7 +165,7 @@
                     <Grid>
                         <ListView
                             x:Name="UploadsListView" 
-                            ItemsSource="{Binding Items}"
+                            ItemsSource="{Binding ItemCollection.Items}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
                         <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                     </Grid>
@@ -176,7 +176,7 @@
                     <Grid>
                         <ListView
                             x:Name="CompletedListView" 
-                            ItemsSource="{Binding Items}"
+                            ItemsSource="{Binding ItemCollection.Items}"
                             ItemContainerStyle="{ThemeResource StretchedListviewItemStyle}"/>
                         <ContentControl Template="{StaticResource EmptyStateTemplate}"/>
                     </Grid>

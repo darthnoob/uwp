@@ -934,6 +934,200 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <value>Please enter your password to verify your email address</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
+  <data name="UI_Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContact" xml:space="preserve">
+    <value>Add contact</value>
+    <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Contacts" xml:space="preserve">
+    <value>Contacts</value>
+    <comment>Label for any 'Contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Incoming" xml:space="preserve">
+    <value>Incoming</value>
+    <comment>Label for any 'Incoming' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Outgoing" xml:space="preserve">
+    <value>Outgoing</value>
+    <comment>Label for any 'Outgoing' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContactEmailDefaultText" xml:space="preserve">
+    <value>Hello, join me on MEGA and get access to encrypted storage and communication. Get 50 GB free!</value>
+    <comment>Default text to attach in the email to invite a contact.</comment>
+  </data>
+  <data name="UI_Email" xml:space="preserve">
+    <value>Email</value>
+    <comment>Label for any 'Email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AcceptContact" xml:space="preserve">
+    <value>Accept contact</value>
+    <comment>Label for any 'Accept contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DenyContact" xml:space="preserve">
+    <value>Deny contact</value>
+    <comment>Label for any 'Deny contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemindContact" xml:space="preserve">
+    <value>Remind contact</value>
+    <comment>Label for any 'Remind contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveContact" xml:space="preserve">
+    <value>Remove contact</value>
+    <comment>Label for any 'Remove contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelInvite" xml:space="preserve">
+    <value>Cancel invite</value>
+    <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveMultipleContacts" xml:space="preserve">
+    <value>Remove contacts</value>
+    <comment>Label for any 'Remove contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedFolder" xml:space="preserve">
+    <value>Shared folder</value>
+    <comment>Label for any 'Shared folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_SharedFolders" xml:space="preserve">
+    <value>Shared folders</value>
+    <comment>Label for any 'Shared folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_ListSortedByName" xml:space="preserve">
+    <value>Name ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by name and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByNameMultiSelect" xml:space="preserve">
+    <value>Name ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by name and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewProfile" xml:space="preserve">
+    <value>View profile</value>
+    <comment>Label for any 'View profile' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedItems" xml:space="preserve">
+    <value>Shared items</value>
+    <comment>Label for any 'Shared items' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Details" xml:space="preserve">
+    <value>Details</value>
+    <comment>Label for any 'Details' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Link" xml:space="preserve">
+    <value>Link</value>
+    <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLastModifiedAscending" xml:space="preserve">
+    <value>Last modified (ascending)</value>
+    <comment>Label for the menu option to sort the nodes in ascending order by modification date (from newer to older) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLastModifiedDescending" xml:space="preserve">
+    <value>Last modified (descending)</value>
+    <comment>Label for the menu option to sort the nodes in descending order by modification date (from older to newer) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByLastModification" xml:space="preserve">
+    <value>Last modified ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByLastModificationMultiSelect" xml:space="preserve">
+    <value>Last modified ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by modification date and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_PermissionFullAccess" xml:space="preserve">
+    <value>Full access</value>
+    <comment>Label for the 'Full access' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadAndWrite" xml:space="preserve">
+    <value>Read &amp; write</value>
+    <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadOnly" xml:space="preserve">
+    <value>Read only</value>
+    <comment>Label for the 'Read only' permission for shared items.</comment>
+  </data>
+  <data name="UI_LeaveShare" xml:space="preserve">
+    <value>Leave share</value>
+    <comment>Label for any 'Leave share' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_IgnoreContact" xml:space="preserve">
+    <value>Ignore contact</value>
+    <comment>Label for any 'Ignore contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Leave" xml:space="preserve">
+    <value>Leave</value>
+    <comment>Label for any 'Leave' button, link, text, title, etc. for leave a shared item - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByAccessLevel" xml:space="preserve">
+    <value>Access ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+    <value>Access ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwner" xml:space="preserve">
+    <value>Owner ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by owner and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwnerMultiSelect2" xml:space="preserve">
+    <value>Owner ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_NumberOfContacts" xml:space="preserve">
+    <value>{0} Contacts</value>
+    <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
+Keep the {0} code because is for include the number of contacts in runtime.</comment>
+  </data>
+  <data name="UI_NumberSharedFolders" xml:space="preserve">
+    <value>{0} Shared folders</value>
+    <comment>Label to indicate that there are multiple shared folders - (String as short as possible).
+Keep the {0} code because is for include the number of shared folders in runtime.</comment>
+  </data>
+  <data name="UI_OneSharedFolder" xml:space="preserve">
+    <value>1 Shared folder</value>
+    <comment>Label to indicate that there is only 1 shared folder - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_OutgoingShares" xml:space="preserve">
+    <value>Outgoing shares</value>
+    <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionAccessLevel" xml:space="preserve">
+    <value>Access</value>
+    <comment>Label for the menu option to sort a list of items by access level - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLastModified" xml:space="preserve">
+    <value>Last modified</value>
+    <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionName" xml:space="preserve">
+    <value>Name</value>
+    <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionOwner" xml:space="preserve">
+    <value>Owner</value>
+    <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveSharedAccess" xml:space="preserve">
+    <value>Remove shared access</value>
+    <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_LoginWithSpace" xml:space="preserve">
     <value>Log in</value>
     <comment>Label for any 'Log in' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -1037,5 +1231,19 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
     <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
+  </data>
+  <data name="UI_ListSortedByEmail" xml:space="preserve">
+    <value>Email ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by email and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
+    <value>Email ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionEmail" xml:space="preserve">
+    <value>Email</value>
+    <comment>Label for the menu option to sort a list of items by email - (String as short as possible).</comment>
   </data>
 </root>

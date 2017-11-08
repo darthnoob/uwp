@@ -14,6 +14,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
@@ -56,7 +57,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand CopyOrMoveCommand { get; }
-        public ICommand DownloadCommand { get; }
+        public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
@@ -376,10 +377,10 @@ namespace MegaApp.ViewModels
 
             if (this.OriginalMNode == null) return false;
 
-            if (!isMultiSelect)
+            if (!isMultiSelect && !(this is IncomingSharedFolderNodeViewModel))
             {
                 string title, message;
-                switch (this.Parent.Type)
+                switch (this.Parent?.Type)
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
@@ -402,27 +403,36 @@ namespace MegaApp.ViewModels
             }
 
             bool result;
-            switch (this.Parent.Type)
+            if(this is IncomingSharedFolderNodeViewModel)
             {
-                case ContainerType.CloudDrive:
-                case ContainerType.CameraUploads:
-                    var moveNode = new MoveNodeRequestListenerAsync();
-                    result = await moveNode.ExecuteAsync(() =>
-                        this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
-                    break;
-
-                case ContainerType.RubbishBin:
-                    var removeNode = new RemoveNodeRequestListenerAsync();
-                    result = await removeNode.ExecuteAsync(() =>
-                        this.MegaSdk.remove(this.OriginalMNode, removeNode));
-                    break;
-
-                default:
-                    return false;
+                var leaveShare = new RemoveNodeRequestListenerAsync();
+                result = await leaveShare.ExecuteAsync(() =>
+                    this.MegaSdk.remove(this.OriginalMNode, leaveShare));
             }
+            else
+            {
+                switch (this.Parent?.Type)
+                {
+                    case ContainerType.CloudDrive:
+                    case ContainerType.CameraUploads:
+                        var moveNode = new MoveNodeRequestListenerAsync();
+                        result = await moveNode.ExecuteAsync(() =>
+                            this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
+                        break;
 
-            if (result)
-                this.Parent.CloseNodeDetails();
+                    case ContainerType.RubbishBin:
+                        var removeNode = new RemoveNodeRequestListenerAsync();
+                        result = await removeNode.ExecuteAsync(() =>
+                            this.MegaSdk.remove(this.OriginalMNode, removeNode));
+                        break;
+
+                    default:
+                        return false;
+                }
+
+                if (result)
+                    this.Parent.CloseNodeDetails();
+            }
 
             return result;
         }
@@ -539,7 +549,12 @@ namespace MegaApp.ViewModels
             this.Transfer.StartTransfer();
         }
 
-        public void Update(MNode megaNode, bool externalUpdate = false)
+        /// <summary>
+        /// Update core data associated with the SDK MNode object
+        /// </summary>
+        /// <param name="megaNode">Node to update</param>
+        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
+        public virtual void Update(MNode megaNode, bool externalUpdate = false)
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
@@ -749,6 +764,7 @@ namespace MegaApp.ViewModels
 
         public string AddedLabelText => ResourceService.UiResources.GetString("UI_Added");
         public string AudioLabelText => ResourceService.UiResources.GetString("UI_Audio");
+        public string DetailsText => ResourceService.UiResources.GetString("UI_Details");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
@@ -762,6 +778,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
@@ -782,7 +799,6 @@ namespace MegaApp.ViewModels
 
         #region VisualResources
 
-        public string ClosePanelPathData => ResourceService.VisualResources.GetString("VR_ClosePanelPathData");
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");

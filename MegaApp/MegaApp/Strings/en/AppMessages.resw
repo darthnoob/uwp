@@ -878,6 +878,77 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <value>Incorrect account. Please login into the right account and try again.</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
+  <data name="AM_ContactAlreadyExists" xml:space="preserve">
+    <value>You already have a contact with that email address</value>
+    <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
+  </data>
+  <data name="AM_InviteContactFailed" xml:space="preserve">
+    <value>The contact invitation could not be sent. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
+  </data>
+  <data name="AM_InviteContactSuccessfully" xml:space="preserve">
+    <value>User {0} has been invited and will appear on your contact list once they have accepted the invitation.</value>
+    <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
+Preserve the [{0}] code because is for include the contact email in runtime.</comment>
+  </data>
+  <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
+    <value>You are trying to add your own email as a contact.</value>
+    <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
+  </data>
+  <data name="AM_RemoveContactFailed" xml:space="preserve">
+    <value>Failed to remove the contact {0}. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
+Keep the {0} code because is for include the contact email or name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveContactQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} from your contact-list?</value>
+    <comment>Question of the dialog displayed when the user is trying to remove one contact.
+Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveContactWarning" xml:space="preserve">
+    <value>Access to any folders shared with you by selected contacts will be lost.</value>
+    <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
+  </data>
+  <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} users from your contact-list?</value>
+    <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
+Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
+  </data>
+  <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
+    <value>Failed removing contacts. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
+  </data>
+  <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
+    <value>Are you sure you want to leave {0} shared folders?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
+Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
+  </data>
+  <data name="AM_LeaveMultipleSharedFolders_Title" xml:space="preserve">
+    <value>Leave shared folders</value>
+    <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
+    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
+    <value>Are you sure you want to leave “{0}”?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolderWarning" xml:space="preserve">
+    <value>Access to shared folder content will be lost.</value>
+    <comment>Warning message of the dialog displayed when the user is trying to leave one or multiple shared folders.</comment>
+  </data>
+  <data name="AM_LeaveSharedFolder_Title" xml:space="preserve">
+    <value>Leave shared folder</value>
+    <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
+    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
+  </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
     <value>The log ({0}) will be deleted.</value>
     <comment>Alert message shown when the DEBUG mode is disabled.
@@ -911,6 +982,41 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
   <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
     <value>Debug mode</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove access to {0} shared folders?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to multiple shared folders.
+Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
+  </data>
+  <data name="AM_RemoveAccessMultipleSharedFoldersWarning" xml:space="preserve">
+    <value>Contacts will no longer be able to access these folders.</value>
+    <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
+  </data>
+  <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
+    <value>Remove shared folders access</value>
+    <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
+    <value>Failed to remove acces to the shared folder "{0}". Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove access to “{0}”?</value>
+    <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
+Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
+  </data>
+  <data name="AM_RemoveAccessSharedFolderWarning" xml:space="preserve">
+    <value>Contacts will no longer be able to access this folder.</value>
+    <comment>Warning message of the dialog displayed when the user is trying to leave one shared folder.</comment>
+  </data>
+  <data name="AM_RemoveAccessSharedFolder_Title" xml:space="preserve">
+    <value>Remove shared folder access</value>
+    <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
+    <value>Failed to remove access to multiple shared folders. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
     <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
