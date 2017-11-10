@@ -198,10 +198,10 @@ namespace MegaApp.ViewModels.SharedFolders
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevelMultiSelect"),
-                            this.ItemCollection.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_OWNER:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByOwnerMultiSelect"),
-                            this.ItemCollection.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     default:
                         return string.Empty;
                 }

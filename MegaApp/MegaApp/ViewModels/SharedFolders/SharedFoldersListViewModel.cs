@@ -21,7 +21,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            this.CloseInformationPanelCommand = new RelayCommand(CloseInformationPanel);
+            this.ClosePanelCommand = new RelayCommand(ClosePanels);
+            this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
         }
 
@@ -31,7 +32,8 @@ namespace MegaApp.ViewModels.SharedFolders
         public ICommand LeaveShareCommand { get; }
         public ICommand RemoveSharedAccessCommand { get; }
 
-        public ICommand CloseInformationPanelCommand { get; }
+        public ICommand ClosePanelCommand { get; }
+        public ICommand OpenContentPanelCommand { get; }
         public ICommand OpenInformationPanelCommand { get; }
 
         #endregion
@@ -102,7 +104,7 @@ namespace MegaApp.ViewModels.SharedFolders
                     this.ItemCollection.Items.Remove(node);
 
                     if (this.ItemCollection.FocusedItem.Equals(node))
-                        this.CloseInformationPanel();
+                        this.ClosePanels();
                 });
             }
             catch (Exception) { /* Dummy catch, supress possible exception */ }
@@ -267,9 +269,23 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private void OpenInformationPanel() => this.IsPanelOpen = true;
+        private void OpenContentPanel()
+        {
+            this.IsContentPanelOpen = true;
+            this.IsInformationPanelOpen = false;
+        }
 
-        private void CloseInformationPanel() => this.IsPanelOpen = false;        
+        private void OpenInformationPanel()
+        {
+            this.IsContentPanelOpen = false;
+            this.IsInformationPanelOpen = true;
+        }
+
+        public void ClosePanels()
+        {
+            this.IsContentPanelOpen = false;
+            this.IsInformationPanelOpen = false;
+        }
 
         #endregion
 
@@ -300,15 +316,39 @@ namespace MegaApp.ViewModels.SharedFolders
             ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
             string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
 
-        private bool _isPanelOpen;
-        public bool IsPanelOpen
+        public bool IsPanelOpen => this.IsContentPanelOpen || this.IsInformationPanelOpen;
+
+        private bool _isContentPanelOpen;
+        public bool IsContentPanelOpen
         {
-            get { return _isPanelOpen; }
+            get { return _isContentPanelOpen; }
             set
             {
-                SetField(ref _isPanelOpen, value);
+                SetField(ref _isContentPanelOpen, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
 
-                if (this.IsPanelOpen)
+                if (this._isContentPanelOpen)
+                {
+                    this.ItemCollection.IsMultiSelectActive = false;
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
+                }
+                else
+                {
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
+                }
+            }
+        }
+
+        private bool _isInformationPanelOpen;
+        public bool IsInformationPanelOpen
+        {
+            get { return _isInformationPanelOpen; }
+            set
+            {
+                SetField(ref _isInformationPanelOpen, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
+
+                if (this._isInformationPanelOpen)
                 {
                     this.ItemCollection.IsMultiSelectActive = false;
                     this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
@@ -330,6 +370,7 @@ namespace MegaApp.ViewModels.SharedFolders
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string OpenText => ResourceService.UiResources.GetString("UI_Open");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");

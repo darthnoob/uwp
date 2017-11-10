@@ -360,6 +360,8 @@ namespace MegaApp.ViewModels
             // Process is started so we can set the empty content template to loading already
             SetEmptyContent(true);
 
+            GetCurrentOrderDirection();
+
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = GetChildren();
 
@@ -833,6 +835,8 @@ namespace MegaApp.ViewModels
                         OnUiThread(() =>
                         {
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
+                            this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_FolderHeader");
+                            this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderSubHeader");
                         });
                         break;
 
@@ -1164,6 +1168,33 @@ namespace MegaApp.ViewModels
         protected virtual MNodeList GetChildren()
         {
             return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+        }
+
+        private void GetCurrentOrderDirection()
+        {
+            if (this.FolderRootNode == null) return;
+
+            var currentOrder = UiService.GetSortOrder(
+                this.FolderRootNode.Base64Handle, this.FolderRootNode.Name);
+
+            switch (currentOrder)
+            {
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                case MSortOrderType.ORDER_CREATION_ASC:
+                case MSortOrderType.ORDER_DEFAULT_ASC:
+                case MSortOrderType.ORDER_MODIFICATION_ASC:
+                case MSortOrderType.ORDER_SIZE_ASC:
+                    this.ItemCollection.CurrentOrderDirection = SortOrderDirection.ORDER_ASCENDING;
+                    break;
+
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                case MSortOrderType.ORDER_CREATION_DESC:
+                case MSortOrderType.ORDER_DEFAULT_DESC:
+                case MSortOrderType.ORDER_MODIFICATION_DESC:
+                case MSortOrderType.ORDER_SIZE_DESC:
+                    this.ItemCollection.CurrentOrderDirection = SortOrderDirection.ORDER_DESCENDING;
+                    break;
+            }
         }
 
         #endregion

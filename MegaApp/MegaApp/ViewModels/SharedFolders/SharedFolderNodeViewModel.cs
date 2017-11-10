@@ -18,6 +18,7 @@ namespace MegaApp.ViewModels.SharedFolders
             this.Parent = parent;
 
             this.DownloadCommand = new RelayCommand(Download);
+            this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
 
             this.Update(megaNode);
@@ -25,14 +26,11 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Commands
 
+        public ICommand LeaveShareCommand { get; set; }
+        public ICommand RemoveSharedAccessCommand { get; set; }
+
+        public ICommand OpenContentPanelCommand { get; }
         public ICommand OpenInformationPanelCommand { get; }
-
-        #endregion
-
-        #region Virtual Commands
-
-        public virtual ICommand LeaveShareCommand { get; }
-        public virtual ICommand RemoveSharedAccessCommand { get; }
 
         #endregion
 
@@ -62,6 +60,15 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
                     this.Parent.OpenInformationPanelCommand.Execute(null);
+            }
+        }
+
+        private void OpenContentPanel()
+        {
+            if (this.Parent.ItemCollection.OnlyOneSelectedItem)
+            {
+                if (this.Parent.OpenContentPanelCommand.CanExecute(null))
+                    this.Parent.OpenContentPanelCommand.Execute(null);
             }
         }
 
@@ -136,6 +143,7 @@ namespace MegaApp.ViewModels.SharedFolders
         #region UiResources
 
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
+        public string OpenText => ResourceService.UiResources.GetString("UI_Open");
 
         #endregion
     }

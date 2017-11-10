@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using mega;
+﻿using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -18,12 +17,6 @@ namespace MegaApp.ViewModels.SharedFolders
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update(megaNode);            
         }
-
-        #region Commands
-
-        public override ICommand LeaveShareCommand { get; }
-
-        #endregion
 
         #region Methods
 

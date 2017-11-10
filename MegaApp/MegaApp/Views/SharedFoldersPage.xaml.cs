@@ -21,6 +21,7 @@ namespace MegaApp.Views
     public sealed partial class SharedFoldersPage : BaseSharedFoldersPage
     {
         private const double InformationPanelMinWidth = 432;
+        private const double ContentPanelMinWidth = 888;
 
         public SharedFoldersPage()
         {
@@ -42,8 +43,8 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected += OnAllSelected;
 
-            this.SharedFolderInformationSplitView.RegisterPropertyChangedCallback(
-                SplitView.IsPaneOpenProperty, IsInformationViewOpenPropertyChanged);
+            this.SharedFolderSplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -62,18 +63,21 @@ namespace MegaApp.Views
             base.OnNavigatedFrom(e);
         }
 
-        private void IsInformationViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if (this.SharedFolderInformationSplitView.IsPaneOpen)
+            if (this.ViewModel.ActiveView.IsPanelOpen)
             {
-                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.SharedFolderInformationSplitView.ActualWidth < 600)
+                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.SharedFolderSplitView.ActualWidth < 600)
                 {
-                    this.SharedFolderInformationSplitView.OpenPaneLength = this.SharedFolderInformationSplitView.ActualWidth;
+                    this.SharedFolderSplitView.OpenPaneLength = this.SharedFolderSplitView.ActualWidth;
                     AppService.SetAppViewBackButtonVisibility(true);
                     return;
                 }
 
-                this.SharedFolderInformationSplitView.OpenPaneLength = InformationPanelMinWidth;
+                if (this.ViewModel.ActiveView.IsContentPanelOpen)
+                    this.SharedFolderSplitView.OpenPaneLength = ContentPanelMinWidth;
+                else if (this.ViewModel.ActiveView.IsInformationPanelOpen)
+                    this.SharedFolderSplitView.OpenPaneLength = InformationPanelMinWidth;
             }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
@@ -92,8 +96,8 @@ namespace MegaApp.Views
 
         public override void GoBack()
         {
-            if (this.ViewModel?.ActiveView != null && this.ViewModel.ActiveView.IsPanelOpen)
-                this.ViewModel.ActiveView.IsPanelOpen = false;
+            if (this.ViewModel?.ActiveView != null)
+                this.ViewModel.ActiveView.ClosePanels();
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)

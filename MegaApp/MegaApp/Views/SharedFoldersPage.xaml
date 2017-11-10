@@ -17,16 +17,26 @@
     d:DataContext="{d:DesignInstance viewModels:SharedFoldersViewModel}">
 
     <SplitView
-        x:Name="SharedFolderInformationSplitView"
+        x:Name="SharedFolderSplitView"
         DisplayMode="Inline"
         IsPaneOpen="{Binding ActiveView.IsPanelOpen}"
         PanePlacement="Right">
         <SplitView.Pane>
-            <userControls:SharedFolderInformationPanel
-                DataContext="{Binding ActiveView}"
-                Background="{StaticResource MegaAppBackgroundBrush}"
-                Foreground="{StaticResource MegaAppForegroundBrush}"
-                SharedFolder="{Binding ItemCollection.FocusedItem}"/>
+            <Grid>
+                <userControls:SharedFolderContentPanel
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    SharedFolderNode="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding IsContentPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                
+                <userControls:SharedFolderInformationPanel
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    SharedFolder="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding IsInformationPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </Grid>
         </SplitView.Pane>
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -105,6 +115,18 @@
                             </AppBarButton>
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
+                                    Label="{Binding OpenText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                                    Command="{Binding OpenContentPanelCommand}"
+                                    Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <!--<AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>-->
+                                </AppBarButton>
+                                <AppBarButton
                                     Label="{Binding InformationText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"
                                     Command="{Binding OpenInformationPanelCommand}"
@@ -165,6 +187,18 @@
                             </AppBarButton>
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
+                                    Label="{Binding OpenText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                                    Command="{Binding OpenContentPanelCommand}"
+                                    Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <!--<AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>-->
+                                </AppBarButton>
+                                <AppBarButton
                                     Label="{Binding InformationText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"
                                     Command="{Binding OpenInformationPanelCommand}"
@@ -188,7 +222,7 @@
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Visibility="{Binding IsPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}">
                     <AppBarButton
-                        Command="{Binding CloseInformationPanelCommand}"
+                        Command="{Binding ClosePanelCommand}"
                         Label="{Binding ClosePanelText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding ClosePanelText, Mode=OneTime}">
@@ -363,6 +397,18 @@
                     </AppBarButton>
                     <CommandBar.SecondaryCommands>
                         <AppBarButton
+                            Label="{Binding OpenText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                            Command="{Binding OpenContentPanelCommand}"
+                            Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <!--<AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>-->
+                        </AppBarButton>
+                        <AppBarButton
                             Label="{Binding InformationText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"
                             Command="{Binding OpenInformationPanelCommand}"
@@ -420,6 +466,18 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Label="{Binding OpenText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                            Command="{Binding OpenContentPanelCommand}"
+                            Visibility="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <!--<AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>-->
+                        </AppBarButton>
                         <AppBarButton
                             Label="{Binding InformationText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"

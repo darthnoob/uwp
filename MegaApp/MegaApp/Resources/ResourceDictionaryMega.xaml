@@ -80,8 +80,8 @@
         <userControls:EmptyState
             x:Name="EmptyState"
             VerticalContentAlignment="Center"
-            Background="{StaticResource MegaAppBackgroundBrush}"
-            Foreground="{StaticResource MegaAppForegroundBrush}"
+            Background="{TemplateBinding Background}"
+            Foreground="{TemplateBinding Foreground}"
             HeaderText="{Binding EmptyStateHeaderText}"
             IsVisible="{Binding ItemCollection.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
             SubHeaderMargin="0,14,0,0"
@@ -1113,6 +1113,10 @@
                 <MenuFlyout>
                     <MenuFlyout.Items>
                         <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
                             Command="{Binding OpenInformationPanelCommand}"
                             Text="{Binding InformationText}"
                             Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -1214,6 +1218,10 @@
                 <MenuFlyout>
                     <MenuFlyout.Items>
                         <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
                             Command="{Binding OpenInformationPanelCommand}"
                             Text="{Binding InformationText}"
                             Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -1296,6 +1304,10 @@
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
                             Command="{Binding OpenInformationPanelCommand}"
                             Text="{Binding InformationText}"

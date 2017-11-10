@@ -23,12 +23,6 @@ namespace MegaApp.ViewModels.SharedFolders
             this.GetContactsList();
         }
 
-        #region Commands
-
-        public override ICommand RemoveSharedAccessCommand { get; }
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -119,7 +113,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 return;
             }
 
-            this.Parent.IsPanelOpen = false;
+            this.Parent.ClosePanels();
         }
 
         #endregion
