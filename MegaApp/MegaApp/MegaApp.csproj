@@ -131,8 +131,8 @@
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
-    <Compile Include="UserControls\FolderViewer.xaml.cs">
-      <DependentUpon>FolderViewer.xaml</DependentUpon>
+    <Compile Include="UserControls\FolderExplorer.xaml.cs">
+      <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
@@ -211,7 +211,7 @@
     <Compile Include="ViewModels\SharedFolders\SharedFolderAccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\FolderViewerViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
@@ -484,7 +484,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UserControls\FolderViewer.xaml">
+    <Page Include="UserControls\FolderExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

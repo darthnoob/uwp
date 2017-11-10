@@ -13,11 +13,11 @@ namespace MegaApp.UserControls
 {
     // Helper class to define the viewmodel of this view
     // XAML cannot use generics in it's declaration.
-    public class BaseFolderViewer : UserControlEx<FolderViewerViewModel> { }
+    public class BaseFolderExplorer : UserControlEx<FolderExplorerViewModel> { }
 
-    public sealed partial class FolderViewer : BaseFolderViewer
+    public sealed partial class FolderExplorer : BaseFolderExplorer
     {
-        public FolderViewer()
+        public FolderExplorer()
         {
             this.InitializeComponent();
         }
@@ -38,13 +38,13 @@ namespace MegaApp.UserControls
             DependencyProperty.Register(
                 nameof(Folder),
                 typeof(FolderViewModel),
-                typeof(FolderViewer),
+                typeof(FolderExplorer),
                 new PropertyMetadata(null, FolderChangedCallback));
 
         private static void FolderChangedCallback(DependencyObject d,
             DependencyPropertyChangedEventArgs dpc)
         {
-            var control = d as FolderViewer;
+            var control = d as FolderExplorer;
             if (control == null) return;
             if (dpc.NewValue != null)
             {

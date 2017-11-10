@@ -5,7 +5,7 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class FolderViewerViewModel : BaseUiViewModel
+    public class FolderExplorerViewModel : BaseUiViewModel
     {
         #region Methods
 

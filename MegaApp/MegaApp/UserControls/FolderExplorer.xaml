@@ -1,5 +1,5 @@
-﻿<userControls:BaseFolderViewer
-    x:Class="MegaApp.UserControls.FolderViewer"
+﻿<userControls:BaseFolderExplorer
+    x:Class="MegaApp.UserControls.FolderExplorer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:MegaApp.Behaviors"
@@ -12,7 +12,7 @@
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance userControlsViewModels:FolderViewerViewModel}">
+    d:DataContext="{d:DesignInstance userControlsViewModels:FolderExplorerViewModel}">
 
     <Grid>
         <Grid Visibility="{Binding Folder.ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
@@ -88,4 +88,4 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-</userControls:BaseFolderViewer>
+</userControls:BaseFolderExplorer>
