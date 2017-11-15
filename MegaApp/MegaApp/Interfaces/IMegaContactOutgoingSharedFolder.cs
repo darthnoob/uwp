@@ -1,4 +1,4 @@
-﻿using MegaApp.ViewModels.SharedFolders;
+﻿using MegaApp.ViewModels;
 
 namespace MegaApp.Interfaces
 {
@@ -12,7 +12,7 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Access level of the contact to the outgoing shared folder
         /// </summary>
-        SharedFolderAccessLevelViewModel AccessLevel { get; set; }
+        AccessLevelViewModel AccessLevel { get; set; }
 
         #endregion
     }

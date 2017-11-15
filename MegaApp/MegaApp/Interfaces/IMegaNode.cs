@@ -110,6 +110,11 @@ namespace MegaApp.Interfaces
         /// </summary>
         MNode OriginalMNode { get; }
 
+        /// <summary>
+        /// Access level to the node
+        /// </summary>
+        AccessLevelViewModel AccessLevel { get; set; }
+
         #endregion
     }
 }

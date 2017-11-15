@@ -23,11 +23,6 @@ namespace MegaApp.Interfaces
         /// </summary>
         string Owner { get; set; }
 
-        /// <summary>
-        /// Access level to the incoming shared folder
-        /// </summary>
-        SharedFolderAccessLevelViewModel AccessLevel { get; set; }
-
         #endregion
     }
 }

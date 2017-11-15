@@ -5,7 +5,6 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.Contacts
 {
@@ -21,7 +20,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             this.outShare = outShare;
 
-            this.AccessLevel = new SharedFolderAccessLevelViewModel();
+            this.AccessLevel = new AccessLevelViewModel();
             this.GetAccesLevel(outShare);
 
             this.ChangePermissionsCommand = new RelayCommand<MShareType>(ChangePermissions);
@@ -115,11 +114,11 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         private MShare outShare;
 
-        private SharedFolderAccessLevelViewModel _accessLevel;
+        private AccessLevelViewModel _accessLevel;
         /// <summary>
         /// Access level of the contact to the outgoing shared folder
         /// </summary>
-        public SharedFolderAccessLevelViewModel AccessLevel
+        public AccessLevelViewModel AccessLevel
         {
             get { return _accessLevel; }
             set { SetField(ref _accessLevel, value); }

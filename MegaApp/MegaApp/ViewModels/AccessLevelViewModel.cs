@@ -1,15 +1,15 @@
 ﻿using mega;
 using MegaApp.Services;
 
-namespace MegaApp.ViewModels.SharedFolders
+namespace MegaApp.ViewModels
 {
-    public class SharedFolderAccessLevelViewModel : BaseViewModel
+    public class AccessLevelViewModel : BaseViewModel
     {
         #region Properties
 
         private MShareType _accessType;
         /// <summary>
-        /// Acces level to the incoming shared node
+        /// Access level to the node
         /// </summary>
         public MShareType AccessType
         {

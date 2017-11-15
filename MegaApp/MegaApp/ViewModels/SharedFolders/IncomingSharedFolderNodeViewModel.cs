@@ -13,7 +13,6 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
 
-            this.AccessLevel = new SharedFolderAccessLevelViewModel();
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update(megaNode);            
         }
@@ -28,9 +27,6 @@ namespace MegaApp.ViewModels.SharedFolders
         public override async void Update(MNode megaNode, bool externalUpdate = false)
         {
             base.Update(megaNode, externalUpdate);
-
-            if (this.AccessLevel != null)
-                OnUiThread(() => this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode));
 
             var owner = SdkService.MegaSdk.getUserFromInShare(megaNode);
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
@@ -88,17 +84,7 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             get { return _owner; }
             set { SetField(ref _owner, value); }
-        }
-
-        private SharedFolderAccessLevelViewModel _accessLevel;
-        /// <summary>
-        /// Access level to the incoming shared folder
-        /// </summary>
-        public override SharedFolderAccessLevelViewModel AccessLevel
-        {
-            get { return _accessLevel; }
-            set { SetField(ref _accessLevel, value); }
-        }
+        }        
 
         public bool AllowRename => (this.AccessLevel.AccessType == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
 

@@ -6,9 +6,9 @@ using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views.Dialogs;
-using MegaApp.MegaApi;
 
 namespace MegaApp.ViewModels.Contacts
 {

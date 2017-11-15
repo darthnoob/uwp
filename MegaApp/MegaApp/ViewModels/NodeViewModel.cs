@@ -29,6 +29,8 @@ namespace MegaApp.ViewModels
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
         {
+            this.AccessLevel = new AccessLevelViewModel();
+
             Update(megaNode);
             SetDefaultValues();
 
@@ -566,6 +568,7 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
+            this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
@@ -713,6 +716,16 @@ namespace MegaApp.ViewModels
         public TransferObjectModel Transfer { get; set; }
 
         public MNode OriginalMNode { get; private set; }
+
+        private AccessLevelViewModel _accessLevel;
+        /// <summary>
+        /// Access level to the node
+        /// </summary>
+        public AccessLevelViewModel AccessLevel
+        {
+            get { return _accessLevel; }
+            set { SetField(ref _accessLevel, value); }
+        }
 
         #endregion
 

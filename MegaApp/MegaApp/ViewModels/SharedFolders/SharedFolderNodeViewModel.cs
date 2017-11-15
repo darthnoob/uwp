@@ -122,11 +122,6 @@ namespace MegaApp.ViewModels.SharedFolders
         public virtual string Owner { get; set; }
 
         /// <summary>
-        /// Access level to the shared folder
-        /// </summary>
-        public virtual SharedFolderAccessLevelViewModel AccessLevel { get; set; }
-
-        /// <summary>
         /// Folder location of the shared folder
         /// </summary>
         public virtual string FolderLocation { get; set; }
