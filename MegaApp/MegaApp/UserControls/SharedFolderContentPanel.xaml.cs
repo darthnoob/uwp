@@ -1,9 +1,9 @@
 ﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 using MegaApp.ViewModels.UserControls;
-using Windows.UI.Xaml.Controls;
-using MegaApp.Services;
-using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MegaApp.UserControls
 {

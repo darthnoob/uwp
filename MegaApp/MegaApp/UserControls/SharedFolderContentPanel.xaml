@@ -38,7 +38,65 @@
                 Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
 
             <Grid x:Name="TopCommandBar" Grid.Column="1" Background="Transparent">
-                <CommandBar extensions:CommandBarExtensions.HideMoreButton="{x:Bind ViewModel.SharedFolder.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}">
+                <CommandBar
+                    DataContext="{x:Bind ViewModel}"
+                    Background="Transparent"
+                    extensions:CommandBarExtensions.HideMoreButton="{x:Bind ViewModel.SharedFolder.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}">
+                    <AppBarButton
+                        Command="{Binding SharedFolder.AddFolderCommand}"
+                        Label="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.HasReadWritePermissions, Mode=OneWay}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.AddFolderPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding SharedFolder.UploadCommand}"
+                        Label="{x:Bind ViewModel.UploadText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.HasReadWritePermissions, Mode=OneWay}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.UploadText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.UploadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding SharedFolder.DownloadCommand}"
+                        Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding SharedFolder.RenameCommand}"
+                        Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.HasFullAccessPermissions, Mode=OneWay}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <AppBarButton
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
@@ -118,6 +176,59 @@
 
         <Grid x:Name="BottomCommandBar" Grid.Row="2">
             <CommandBar Style="{StaticResource MegaCommandBarStyle}">
+                <AppBarButton
+                    Command="{Binding SharedFolder.AddFolderCommand}"
+                    Label="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
+                    IsEnabled="{x:Bind ViewModel.HasReadWritePermissions, Mode=OneWay}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.AddFolderText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.AddFolderPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.UploadCommand}"
+                    Label="{x:Bind ViewModel.UploadText, Mode=OneTime}"
+                    IsEnabled="{x:Bind ViewModel.HasReadWritePermissions, Mode=OneWay}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.UploadText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.UploadPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.DownloadCommand}"
+                    Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                    Visibility="{Binding SharedFolder.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolder.RenameCommand}"
+                    Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                    IsEnabled="{x:Bind ViewModel.HasFullAccessPermissions, Mode=OneWay}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                    Visibility="{Binding SharedFolder.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
                 <AppBarButton
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"

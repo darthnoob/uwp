@@ -1,13 +1,17 @@
 ﻿using System;
-using Windows.UI.Xaml;
-using MegaApp.ViewModels;
-using MegaApp.ViewModels.UserControls;
-using Microsoft.Xaml.Interactivity;
 using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Microsoft.Xaml.Interactivity;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
-using MegaApp.Enums;
+using MegaApp.ViewModels;
+using MegaApp.ViewModels.SharedFolders;
+using MegaApp.ViewModels.UserControls;
 
 namespace MegaApp.UserControls
 {
@@ -152,6 +156,111 @@ namespace MegaApp.UserControls
                 this.ListView?.SelectedItems.Clear();
                 this.GridView?.SelectedItems.Clear();
             }
+        }
+
+        private void OnItemTapped(object sender, TappedRoutedEventArgs e)
+        {
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            {
+                this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
+                return;
+            }
+
+            if ((itemTapped is ImageNodeViewModel) && (itemTapped as ImageNodeViewModel != null))
+                (itemTapped as ImageNodeViewModel).InViewingRange = true;
+
+            this.ViewModel.Folder.FocusedNode = itemTapped;
+        }
+
+        private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            if (((ListViewBase)sender)?.SelectedItems?.Contains(itemTapped) == true)
+                ((ListViewBase)sender).SelectedItems.Remove(itemTapped);
+
+            this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
+        }
+
+        private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+
+            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (itemTapped == null) return;
+
+            this.ViewModel.Folder.FocusedNode = itemTapped;
+
+            if (!this.ViewModel.Folder.IsMultiSelectActive &&
+                this.ViewModel.Folder.CurrentViewState != FolderContentViewState.CopyOrMove)
+            {
+                ((ListViewBase)sender).SelectedItems.Clear();
+                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            }
+        }
+
+        private void OnFolderOptionsButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var flyoutButton = sender as Button;
+            if (flyoutButton == null) return;
+
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            //menuFlyout.Items.Add(new MenuFlyoutItem()
+            //{
+            //    Text = ResourceService.UiResources.GetString("UI_Information"),
+            //    Command = this.ViewModel.InformationCommand
+            //});
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_Download"),
+                Command = this.ViewModel.DownloadFolderCommand
+            });
+
+            //menuFlyout.Items.Add(new MenuFlyoutItem()
+            //{
+            //    Text = ResourceService.UiResources.GetString("UI_Copy"),
+            //    Command = this.ViewModel.CopyFolderCommand
+            //});
+
+            if (this.ViewModel?.IsRenameFolderOptionAvailable == true)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_Rename"),
+                    Command = this.ViewModel.RenameFolderCommand
+                });
+            }
+
+            if (this.ViewModel?.Folder?.FolderRootNode is IncomingSharedFolderNodeViewModel)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_LeaveShare"),
+                    Foreground = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"],
+                    Command = (this.ViewModel.Folder.FolderRootNode as IncomingSharedFolderNodeViewModel)?.LeaveShareCommand
+                });
+            }
+
+            if (this.ViewModel?.Folder?.FolderRootNode is OutgoingSharedFolderNodeViewModel)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_RemoveSharedAccess"),
+                    Foreground = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"],
+                    Command = (this.ViewModel.Folder.FolderRootNode as OutgoingSharedFolderNodeViewModel)?.RemoveSharedAccessCommand
+                });
+            }
+
+            menuFlyout.Placement = FlyoutPlacementMode.Bottom;
+            menuFlyout.ShowAt(flyoutButton);
         }
     }
 }

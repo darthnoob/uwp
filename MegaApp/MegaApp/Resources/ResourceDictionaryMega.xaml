@@ -175,6 +175,21 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="BreadcrumbHomeTemplate">
+        <Grid>
+            <Viewbox MaxWidth="14" MaxHeight="14">
+                <Path
+                    x:Name="BreadcrumbHomeIcon"
+                    Data="{Binding BreadcrumbHomeIcon}"
+                    Stretch="UniformToFill">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+            </Viewbox>
+        </Grid>
+    </DataTemplate>
+    
     <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
         <Grid>
             <Path

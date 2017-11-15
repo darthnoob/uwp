@@ -1377,4 +1377,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
+  <data name="UI_FolderOptions" xml:space="preserve">
+    <value>Folder options</value>
+    <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

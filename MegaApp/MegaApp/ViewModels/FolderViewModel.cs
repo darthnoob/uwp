@@ -66,6 +66,7 @@ namespace MegaApp.ViewModels
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveCommand = new RelayCommand(Remove);
+            this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
             this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
             this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
@@ -319,6 +320,7 @@ namespace MegaApp.ViewModels
         public ICommand MultiSelectCommand { get; set; }
         public ICommand RefreshCommand { get; }
         public ICommand RemoveCommand { get; }
+        public ICommand RenameCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand SelectionChangedCommand { get; }
         public ICommand OpenNodeDetailsCommand { get; private set; }
@@ -606,7 +608,16 @@ namespace MegaApp.ViewModels
                 OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
             }            
         }
-        
+
+        private async void Rename()
+        {
+            if (!this.ItemCollection.HasSelectedItems || this.ItemCollection.MoreThanOneSelected) return;
+
+            var selectedNode = this.ItemCollection.SelectedItems.First();
+            if (selectedNode == null) return;
+            await selectedNode.RenameAsync();
+        }
+
         /// <summary>
         /// Select files for upload to cloud
         /// </summary>

@@ -1,5 +1,4 @@
-﻿using System.Windows.Input;
-using mega;
+﻿using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;

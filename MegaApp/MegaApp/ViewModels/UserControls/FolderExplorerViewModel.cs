@@ -1,12 +1,32 @@
 ﻿using System;
+using System.Windows.Input;
 using mega;
+using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
     public class FolderExplorerViewModel : BaseUiViewModel
     {
+        public FolderExplorerViewModel()
+        {
+            this.CopyFolderCommand = new RelayCommand(CopyFolder);
+            this.DownloadFolderCommand = new RelayCommand(DownloadFolder);
+            this.InformationCommand = new RelayCommand(ShowFolderInformation);
+            this.RenameFolderCommand = new RelayCommand(RenameFolder);
+        }
+
+        #region Commands
+
+        public ICommand CopyFolderCommand { get; }
+        public ICommand DownloadFolderCommand { get; }
+        public ICommand InformationCommand { get; }
+        public ICommand RenameFolderCommand { get; }
+
+        #endregion
+
         #region Methods
 
         private void Initialize()
@@ -23,6 +43,30 @@ namespace MegaApp.ViewModels.UserControls
             this.Folder.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
             this.Folder.ItemCollection.OrderInverted -= OnOrderInverted;
+        }
+
+        private void CopyFolder()
+        {
+
+        }
+
+        private void DownloadFolder()
+        {
+            var folder = this.Folder.FolderRootNode as NodeViewModel;
+            if (folder == null) return;
+            folder.Download(TransferService.MegaTransfers);
+        }
+
+        private void ShowFolderInformation()
+        {
+
+        }
+
+        private async void RenameFolder()
+        {
+            var folder = this.Folder.FolderRootNode as NodeViewModel;
+            if (folder == null) return;
+            await folder.RenameAsync();
         }
 
         private void OnItemCollectionChanged(object sender, EventArgs args)
@@ -108,6 +152,8 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Properties
 
+        public IMegaNode FolderRootNode;
+
         private FolderViewModel _folder;
         public FolderViewModel Folder
         {
@@ -118,6 +164,7 @@ namespace MegaApp.ViewModels.UserControls
                     this.Deinitialize();
 
                 SetField(ref _folder, value);
+                this.FolderRootNode = this._folder.FolderRootNode;
                 OnPropertyChanged(nameof(this.ItemCollection));
 
                 if (_folder != null)
@@ -207,6 +254,33 @@ namespace MegaApp.ViewModels.UserControls
                 }
             }
         }
+
+        public bool IsRenameFolderOptionAvailable
+        {
+            get
+            {
+                if (this.FolderRootNode is IncomingSharedFolderNodeViewModel)
+                {
+                    var folderRootNode = this.FolderRootNode as IncomingSharedFolderNodeViewModel;
+                    if ((int)folderRootNode?.AccessLevel?.AccessType < (int)MShareType.ACCESS_FULL)
+                        return false;
+                }
+
+                return true;
+            }
+        }
+
+        #endregion
+
+        #region UiResources
+
+        public string FolderOptionsText => ResourceService.UiResources.GetString("UI_FolderOptions");
+
+        #endregion
+
+        #region VisualResources
+
+        public string BreadcrumbHomeIcon => ResourceService.VisualResources.GetString("VR_FolderTypePath_default");
 
         #endregion
     }
