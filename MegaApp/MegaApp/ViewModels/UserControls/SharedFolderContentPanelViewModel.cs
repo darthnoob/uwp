@@ -1,12 +1,21 @@
-﻿using mega;
+﻿using System;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class SharedFolderContentPanelViewModel : BaseViewModel
+    public class SharedFolderContentPanelViewModel : BaseUiViewModel
     {
+        #region Methods
+
+        private void OnFolderViewStateChanged(object sender, EventArgs args)
+        {
+            OnUiThread(() => OnPropertyChanged(nameof(this.SharedFolder)));
+        }
+
+        #endregion
+
         #region Properties
 
         private SharedFolderNodeViewModel _sharedFolderNode;
@@ -19,9 +28,7 @@ namespace MegaApp.ViewModels.UserControls
 
                 if(_sharedFolderNode?.OriginalMNode != null)
                 {
-                    OnPropertyChanged(nameof(this.SectionNameText),
-                        nameof(this.HasReadWritePermissions),
-                        nameof(this.HasFullAccessPermissions));
+                    OnPropertyChanged(nameof(this.SectionNameText));
 
                     var sharedFolder = (this._sharedFolderNode?.OriginalMNode?.isInShare() == true) ?
                         new FolderViewModel(ContainerType.InShares) : new FolderViewModel(ContainerType.OutShares);
@@ -37,15 +44,23 @@ namespace MegaApp.ViewModels.UserControls
         public FolderViewModel SharedFolder
         {
             get { return _sharedFolder; }
-            set { SetField(ref _sharedFolder, value); }
-        }
+            set
+            {
+                if (_sharedFolder != null)
+                {
+                    _sharedFolder.ItemCollection.ItemCollectionChanged -= OnFolderViewStateChanged;
+                    _sharedFolder.ItemCollection.SelectedItemsCollectionChanged -= OnFolderViewStateChanged;
+                }
+                    
+                SetField(ref _sharedFolder, value);
 
-        public bool HasReadWritePermissions => this.SharedFolderNode?.AccessLevel == null ? false :
-            (int)this.SharedFolderNode?.AccessLevel?.AccessType >= (int)MShareType.ACCESS_READWRITE;
-            
-
-        public bool HasFullAccessPermissions => this.SharedFolderNode?.AccessLevel == null ? false :
-            (int)this.SharedFolderNode?.AccessLevel?.AccessType >= (int)MShareType.ACCESS_FULL;
+                if (_sharedFolder != null)
+                {
+                    _sharedFolder.ItemCollection.ItemCollectionChanged += OnFolderViewStateChanged;
+                    _sharedFolder.ItemCollection.SelectedItemsCollectionChanged += OnFolderViewStateChanged;
+                }
+            }
+        }        
 
         #endregion
 
@@ -59,6 +74,7 @@ namespace MegaApp.ViewModels.UserControls
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
         public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
@@ -71,6 +87,7 @@ namespace MegaApp.ViewModels.UserControls
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
         public string UploadPathData => ResourceService.VisualResources.GetString("VR_UploadPathData");
 

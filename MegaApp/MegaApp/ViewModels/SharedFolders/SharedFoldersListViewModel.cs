@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
-    public class SharedFoldersListViewModel : BaseSdkViewModel
+    public class SharedFoldersListViewModel : FolderViewModel
     {
-        public SharedFoldersListViewModel()
+        public SharedFoldersListViewModel(ContainerType containerType) : base(containerType)
         {
-            this.ItemCollection = new CollectionViewModel<IMegaSharedFolderNode>();
-            
-            this.DownloadCommand = new RelayCommand(Download);
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
@@ -28,7 +24,6 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Commands
 
-        public ICommand DownloadCommand { get; }
         public ICommand LeaveShareCommand { get; }
         public ICommand RemoveSharedAccessCommand { get; }
 
@@ -39,26 +34,6 @@ namespace MegaApp.ViewModels.SharedFolders
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Cancel any running load process of contacts
-        /// </summary>
-        protected void CancelLoad()
-        {
-            if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
-                LoadingCancelTokenSource.Cancel();
-        }
-
-        protected void CreateLoadCancelOption()
-        {
-            if (this.LoadingCancelTokenSource != null)
-            {
-                this.LoadingCancelTokenSource.Dispose();
-                this.LoadingCancelTokenSource = null;
-            }
-            this.LoadingCancelTokenSource = new CancellationTokenSource();
-            this.LoadingCancelToken = LoadingCancelTokenSource.Token;
-        }
 
         protected void OnSharedFolderAdded(object sender, MNode megaNode)
         {
@@ -110,35 +85,6 @@ namespace MegaApp.ViewModels.SharedFolders
             catch (Exception) { /* Dummy catch, supress possible exception */ }
         }
 
-        private async void Download()
-        {
-            if (!this.ItemCollection.HasSelectedItems) return;
-            await MultipleDownloadAsync(this.ItemCollection.SelectedItems);
-            this.ItemCollection.IsMultiSelectActive = false;
-        }
-
-        private async Task MultipleDownloadAsync(ICollection<IMegaSharedFolderNode> nodes)
-        {
-            if (nodes?.Count < 1) return;
-
-            var downloadFolder = await FolderService.SelectFolder();
-            if (downloadFolder != null)
-            {
-                if (await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
-                {
-                    if (nodes != null)
-                    {
-                        foreach (var node in nodes)
-                        {
-                            node.Transfer.ExternalDownloadPath = downloadFolder.Path;
-                            TransferService.MegaTransfers.Add(node.Transfer);
-                            node.Transfer.StartTransfer();
-                        }
-                    }
-                }
-            }
-        }
-
         private async void LeaveShare()
         {
             if (!this.ItemCollection.HasSelectedItems) return;
@@ -182,7 +128,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void LeaveMultipleSharedFolders(ICollection<IMegaSharedFolderNode> sharedFolders)
+        private async void LeaveMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 
@@ -247,7 +193,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaSharedFolderNode> sharedFolders)
+        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 
@@ -290,19 +236,6 @@ namespace MegaApp.ViewModels.SharedFolders
         #endregion
 
         #region Properties
-
-        private CancellationTokenSource LoadingCancelTokenSource { get; set; }
-        protected CancellationToken LoadingCancelToken { get; set; }
-
-        private CollectionViewModel<IMegaSharedFolderNode> _itemCollection;
-        /// <summary>
-        /// Folders shared with or by the contact
-        /// </summary>
-        public CollectionViewModel<IMegaSharedFolderNode> ItemCollection
-        {
-            get { return _itemCollection; }
-            set { SetField(ref _itemCollection, value); }
-        }
 
         /// <summary>
         /// Number of folders shared with or by the contact
@@ -364,30 +297,21 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region UiResources
 
-        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
-        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
-        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string OpenText => ResourceService.UiResources.GetString("UI_Open");
-        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
-        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
         
-
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
         #endregion
 
         #region VisualResources
 
-        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
-        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
-        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
         public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 
         #endregion

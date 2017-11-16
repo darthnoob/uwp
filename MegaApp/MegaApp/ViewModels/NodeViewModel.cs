@@ -363,7 +363,7 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.Parent != null && this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && this.Parent.ItemCollection.MoreThanOneSelected)
             {
                 if (this.Parent.RemoveCommand.CanExecute(null))
                     this.Parent.RemoveCommand.Execute(null);
@@ -386,6 +386,9 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
+                    case ContainerType.ContactInShares:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
                         message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name);
                         break;
@@ -417,6 +420,9 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
+                    case ContainerType.ContactInShares:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
                         var moveNode = new MoveNodeRequestListenerAsync();
                         result = await moveNode.ExecuteAsync(() =>
                             this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
@@ -724,8 +730,32 @@ namespace MegaApp.ViewModels
         public AccessLevelViewModel AccessLevel
         {
             get { return _accessLevel; }
-            set { SetField(ref _accessLevel, value); }
+            set
+            {
+                SetField(ref _accessLevel, value);
+                OnPropertyChanged(nameof(this.HasReadPermissions), 
+                    nameof(this.HasReadWritePermissions),
+                    nameof(this.HasFullAccessPermissions));
+            }
         }
+
+        /// <summary>
+        /// Specifies if the node has read permissions
+        /// </summary>
+        public bool HasReadPermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_READ;
+
+        /// <summary>
+        /// Specifies if the node has read & write permissions
+        /// </summary>
+        public bool HasReadWritePermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_READWRITE;
+
+        /// <summary>
+        /// Specifies if the node has full access permissions
+        /// </summary>
+        public bool HasFullAccessPermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_FULL;
 
         #endregion
 

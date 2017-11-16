@@ -17,6 +17,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
 {
@@ -53,6 +54,9 @@ namespace MegaApp.ViewModels
             this.BreadCrumb = new BreadCrumbViewModel();
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
+
+            this.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
 
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
             this.AcceptMoveCommand = new RelayCommand(AcceptMove);
@@ -101,6 +105,23 @@ namespace MegaApp.ViewModels
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(containerType));
+            }
+        }
+
+        private void OnMultiSelectEnabled(object sender, EventArgs e)
+        {
+            if (this.CurrentViewState != FolderContentViewState.MultiSelect)
+                this.PreviousViewState = this.CurrentViewState;
+
+            this.CurrentViewState = FolderContentViewState.MultiSelect;
+        }
+
+        private void OnMultiSelectDisabled(object sender, EventArgs e)
+        {
+            if (this.PreviousViewState != FolderContentViewState.MultiSelect)
+            {
+                this.CurrentViewState = this.PreviousViewState;
+                this.PreviousViewState = FolderContentViewState.MultiSelect;
             }
         }
 
@@ -414,7 +435,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Cancel any running load process of this folder
         /// </summary>
-        public void CancelLoad()
+        protected void CancelLoad()
         {
             if (this.LoadingCancelTokenSource != null && this.LoadingCancelToken.CanBeCanceled)
                 this.LoadingCancelTokenSource.Cancel();
@@ -501,7 +522,6 @@ namespace MegaApp.ViewModels
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
-
                 });
             }
         }
@@ -552,13 +572,21 @@ namespace MegaApp.ViewModels
             {
                 case ContainerType.CloudDrive:
                 case ContainerType.CameraUploads:
+                case ContainerType.ContactInShares:
+                case ContainerType.InShares:
+                case ContainerType.OutShares:
                     title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
-                    message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), count);
+                    message = this.ItemCollection.OnlyOneSelectedItem ?
+                        string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.ItemCollection.SelectedItems.First().Name) :
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiMoveToRubbishBinQuestion"), count);
                     break;
 
                 case ContainerType.RubbishBin:
                     title = ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title");
                     message = string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
+                    message = this.ItemCollection.OnlyOneSelectedItem ?
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.ItemCollection.SelectedItems.First().Name) :
+                        string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
                     break;
 
                 default:
@@ -592,6 +620,9 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
+                    case ContainerType.ContactInShares:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinFailed_Title");
                         message = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinMultipleNodesFailed");
                         break;
@@ -727,7 +758,8 @@ namespace MegaApp.ViewModels
         {
             // Needed to avoid process the node when the user is in MultiSelect mode and also after the
             // node is the last removed from selection and MultiSelect mode will be automatically disabled.
-            if (this.CurrentViewState == FolderContentViewState.MultiSelect) return;
+            if (this.CurrentViewState == FolderContentViewState.MultiSelect || this.ItemCollection.IsMultiSelectActive) return;
+            
             if (this.PreviousViewState == FolderContentViewState.MultiSelect)
             {
                 this.PreviousViewState = this.CurrentViewState;
@@ -786,7 +818,7 @@ namespace MegaApp.ViewModels
             return false;
         }
 
-        public void SetEmptyContent(bool isLoading)
+        protected void SetEmptyContent(bool isLoading)
         {
             if (isLoading)
             {
@@ -841,17 +873,37 @@ namespace MegaApp.ViewModels
                     case ContainerType.CameraUploads:
                         break;
 
+                    case ContainerType.ContactInShares:
                     case ContainerType.InShares:
                     case ContainerType.OutShares:
+                        if (this is IncomingSharesViewModel)
+                        {
+                            OnUiThread(() =>
+                            {
+                                this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_IncomingSharesHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_IncomingSharesSubHeader");
+                            });
+                            break;
+                        }
+
+                        if (this is OutgoingSharesViewModel)
+                        {
+                            OnUiThread(() =>
+                            {
+                                this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
+                                this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_OutgoingSharesHeader");
+                                this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_OutgoingSharesSubHeader");
+                            });
+                            break;
+                        }
+
                         OnUiThread(() =>
                         {
                             this.EmptyInformationText = ResourceService.UiResources.GetString("UI_EmptySharedFolders").ToLower();
                             this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_FolderHeader");
                             this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_FolderSubHeader");
                         });
-                        break;
-
-                    case ContainerType.ContactInShares:
                         break;
 
                     case ContainerType.Offline:
@@ -1085,7 +1137,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void CreateLoadCancelOption()
+        protected void CreateLoadCancelOption()
         {
             if (this.LoadingCancelTokenSource != null)
             {
@@ -1111,11 +1163,14 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void SetViewDefaults()
         {
-            this.NodeTemplateSelector = new NodeTemplateSelector()
+            OnUiThread(() =>
             {
-                FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
-                FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
-            };
+                this.NodeTemplateSelector = new NodeTemplateSelector()
+                {
+                    FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                    FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
+                };
+            });
 
             this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
@@ -1304,7 +1359,7 @@ namespace MegaApp.ViewModels
         }
 
         private CancellationTokenSource LoadingCancelTokenSource { get; set; }
-        private CancellationToken LoadingCancelToken { get; set; }
+        protected CancellationToken LoadingCancelToken { get; set; }
 
         private string _nextViewButtonPathData;
         public string NextViewButtonPathData

@@ -125,7 +125,7 @@ namespace MegaApp.Views
             DisableViewsBehaviors();
 
             // If there is only one selected item save it to restore it after disable the multi select mode
-            IMegaSharedFolderNode selectedItem = null;
+            IMegaNode selectedItem = null;
             if (this.ViewModel.ActiveView.ItemCollection.OnlyOneSelectedItem)
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
@@ -149,7 +149,7 @@ namespace MegaApp.Views
             DisableViewsBehaviors();
 
             // First save the current selected item to restore it after enable/disable the single select mode
-            IMegaSharedFolderNode selectedItem = null;
+            IMegaNode selectedItem = null;
             if (this.ViewModel.ActiveView.ItemCollection.OnlyOneSelectedItem)
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
