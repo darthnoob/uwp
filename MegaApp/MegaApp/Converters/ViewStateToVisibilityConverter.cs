@@ -71,7 +71,6 @@ namespace MegaApp.Converters
                             return Visibility.Collapsed;
                     }; 
                 case FolderContentViewState.InShares:
-                case FolderContentViewState.OutShares:
                 case FolderContentViewState.ContactInShares:
                     switch (command)
                     {
@@ -83,6 +82,19 @@ namespace MegaApp.Converters
                         case "rename":
                             return parentFolder.ItemCollection.MoreThanOneSelected || !parentFolder.FolderRootNode.HasFullAccessPermissions ?
                                 Visibility.Collapsed: Visibility.Visible;
+                        default:
+                            return Visibility.Collapsed;
+                    }
+                case FolderContentViewState.OutShares:
+                    switch (command)
+                    {
+                        case "download":
+                        case "remove":
+                            return Visibility.Visible;
+                        case "getlink":
+                        case "rename":
+                            return parentFolder.ItemCollection.MoreThanOneSelected ?
+                                Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
                     }

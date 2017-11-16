@@ -20,12 +20,11 @@ namespace MegaApp.Converters
             if (string.IsNullOrWhiteSpace(paramString))
                 return Visibility.Collapsed;
 
-            var viewState = folder.CurrentViewState;
-            switch (viewState)
+            var containerType = folder.Type;
+            switch (containerType)
             {
-                case FolderContentViewState.InShares:
-                case FolderContentViewState.OutShares:
-                case FolderContentViewState.ContactInShares:
+                case ContainerType.InShares:
+                case ContainerType.ContactInShares:
                     switch (paramString)
                     {
                         case "newfolder":
@@ -40,6 +39,25 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
                         case "rename":
                             return folder.ItemCollection.OnlyOneSelectedItem && folder.FolderRootNode.HasFullAccessPermissions ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.OutShares:
+                    switch (paramString)
+                    {
+                        case "newfolder":
+                        case "upload":
+                            return !folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        case "download":
+                        case "remove":
+                            return folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        case "getlink":
+                        case "rename":
+                            return folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
                         default:
                             return Visibility.Collapsed;
