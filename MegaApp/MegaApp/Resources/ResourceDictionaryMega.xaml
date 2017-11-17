@@ -1340,7 +1340,8 @@
                         </MenuFlyoutItem>
                         <MenuFlyoutItem
                             Command="{Binding RenameCommand}"
-                            Text="{Binding RenameText}" />
+                            Text="{Binding RenameText}"
+                            Visibility="{Binding Parent.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
                             Command="{Binding RemoveSharedAccessCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
