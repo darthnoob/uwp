@@ -121,7 +121,8 @@
                         Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
+                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="16" MaxWidth="16">
                             <FontIcon Glyph="&#xE8FA;" />
                         </Viewbox>
@@ -499,7 +500,8 @@
                     Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
                     Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}">
+                    ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
+                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="16" MaxWidth="16">
                         <FontIcon Glyph="&#xE8FA;" />
                     </Viewbox>
@@ -531,8 +533,7 @@
                     Command="{Binding SharedFolder.ContactsList.ItemCollection.MultiSelectCommand}"
                     Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
                     Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
-                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                    ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}">
                     <AppBarButton.Icon>
                         <PathIcon
                             HorizontalAlignment="Center"
