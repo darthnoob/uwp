@@ -1332,6 +1332,13 @@
                             Command="{Binding DownloadCommand}"
                             Text="{Binding DownloadText}" />
                         <MenuFlyoutItem
+                            Command="{Binding GetLinkCommand}"
+                            Text="{Binding GetLinkText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <x:Boolean>True</x:Boolean>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
                             Command="{Binding RenameCommand}"
                             Text="{Binding RenameText}" />
                         <MenuFlyoutItem

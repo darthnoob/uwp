@@ -20,6 +20,9 @@ namespace MegaApp.ViewModels.SharedFolders
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
             this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+
+            this.ItemCollection.ItemCollectionChanged += OnFolderListViewStateChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnFolderListViewStateChanged;
         }
 
         #region Commands
@@ -34,6 +37,11 @@ namespace MegaApp.ViewModels.SharedFolders
         #endregion
 
         #region Methods
+
+        private void OnFolderListViewStateChanged(object sender, EventArgs args)
+        {
+            OnUiThread(() => OnPropertyChanged(nameof(this.SharedFolders)));
+        }
 
         protected void OnSharedFolderAdded(object sender, MNode megaNode)
         {
@@ -237,6 +245,8 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Properties
 
+        public FolderViewModel SharedFolders => this;
+
         /// <summary>
         /// Number of folders shared with or by the contact
         /// </summary>
@@ -298,6 +308,7 @@ namespace MegaApp.ViewModels.SharedFolders
         #region UiResources
 
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
+        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string OpenText => ResourceService.UiResources.GetString("UI_Open");
@@ -311,6 +322,7 @@ namespace MegaApp.ViewModels.SharedFolders
         #region VisualResources
 
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
         public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
         public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 

@@ -65,6 +65,7 @@ namespace MegaApp.ViewModels
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
+            this.GetLinkCommand = new RelayCommand(GetLink);
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
@@ -336,6 +337,7 @@ namespace MegaApp.ViewModels
         public ICommand ChangeViewCommand { get; }
         public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
+        public ICommand GetLinkCommand { get; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
         public ICommand MultiSelectCommand { get; set; }
@@ -554,6 +556,12 @@ namespace MegaApp.ViewModels
                     }
                 }
             }
+        }
+
+        private void GetLink()
+        {
+            if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return;
+            this.ItemCollection.FocusedItem?.GetLinkAsync();
         }
 
         /// <summary>
