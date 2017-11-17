@@ -106,12 +106,9 @@
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
                         Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon 
-                                Data="{x:Bind ViewModel.RemoveSharedAccessPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xE8F8;" />
+                        </Viewbox>
                     </AppBarButton>
                 </CommandBar>
 
@@ -125,12 +122,9 @@
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}">
-                        <AppBarButton.Icon>
-                            <PathIcon 
-                                Data="{x:Bind ViewModel.AddContactPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xE8FA;" />
+                        </Viewbox>
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
@@ -151,12 +145,9 @@
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                         Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{x:Bind ViewModel.RemoveSharedAccessPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xE8F8;" />
+                        </Viewbox>
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.ContactsList.ItemCollection.MultiSelectCommand}"
@@ -495,12 +486,9 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
                     Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{x:Bind ViewModel.RemoveSharedAccessPathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Glyph="&#xE8F8;" />
+                    </Viewbox>
                 </AppBarButton>
             </CommandBar>
 
@@ -512,12 +500,9 @@
                     Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{x:Bind ViewModel.AddContactPathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Glyph="&#xE8FA;" />
+                    </Viewbox>
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
@@ -538,12 +523,9 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                     Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.RemoveSharedAccessPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Glyph="&#xE8F8;" />
+                    </Viewbox>
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.ContactsList.ItemCollection.MultiSelectCommand}"

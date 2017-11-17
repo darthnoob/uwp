@@ -165,11 +165,9 @@ namespace MegaApp.ViewModels.UserControls
 
         #region VisualResources
 
-        public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
-        public string RemoveSharedAccessPathData => ResourceService.VisualResources.GetString("VR_RemoveSharedAccessPathData");
         public string ShareIconPathData => ResourceService.VisualResources.GetString("VR_ShareIconPathData");
 
         #endregion

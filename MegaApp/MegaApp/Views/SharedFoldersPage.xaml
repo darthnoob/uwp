@@ -166,12 +166,9 @@
                                     Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
                                     Visibility="{Binding SharedFolders, ConverterParameter='removeshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                                    <AppBarButton.Icon>
-                                        <PathIcon
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Data="{Binding RemoveSharedAccessPathData, Mode=OneTime}" />
-                                    </AppBarButton.Icon>
+                                    <Viewbox MaxHeight="16" MaxWidth="16">
+                                        <FontIcon Glyph="&#xE8F8;" />
+                                    </Viewbox>
                                 </AppBarButton>
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
@@ -410,12 +407,9 @@
                             Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
                             Visibility="{Binding SharedFolders, ConverterParameter='removeshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding RemoveSharedAccessPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8F8;" />
+                            </Viewbox>
                         </AppBarButton>
                     </CommandBar.SecondaryCommands>
                 </CommandBar>
