@@ -1152,7 +1152,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
@@ -1257,7 +1257,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
@@ -1350,7 +1350,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>

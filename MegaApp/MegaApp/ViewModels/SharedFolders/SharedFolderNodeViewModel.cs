@@ -36,10 +36,13 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Methods
 
-        private void ParentItemCollectionOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnParentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(this.Parent.ItemCollection.OnlyOneSelectedItem))
                 OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
+
+            if (e.PropertyName == nameof(this.Parent.IsPanelOpen))
+                OnPropertyChanged(nameof(this.IsPanelOpen));
         }
 
         private void Download()
@@ -100,17 +103,26 @@ namespace MegaApp.ViewModels.SharedFolders
             get { return _parent; }
             set
             {
-                if (_parent?.ItemCollection != null)
-                    _parent.ItemCollection.PropertyChanged -= ParentItemCollectionOnPropertyChanged;
+                if(_parent != null)
+                {
+                    _parent.PropertyChanged -= OnParentPropertyChanged;
+                    if (_parent.ItemCollection != null)
+                        _parent.ItemCollection.PropertyChanged -= OnParentPropertyChanged;
+                }
 
                 SetField(ref _parent, value);
 
-                if (_parent?.ItemCollection != null)
-                    _parent.ItemCollection.PropertyChanged += ParentItemCollectionOnPropertyChanged;
+                if (_parent != null)
+                {
+                    _parent.PropertyChanged += OnParentPropertyChanged;
+                    if (_parent.ItemCollection != null)
+                        _parent.ItemCollection.PropertyChanged += OnParentPropertyChanged;
+                }
             }
         }
 
         public bool OnlyOneSelectedItem => this.Parent.ItemCollection.OnlyOneSelectedItem;
+        public bool IsPanelOpen => this.Parent.IsPanelOpen;
 
         #endregion
 
