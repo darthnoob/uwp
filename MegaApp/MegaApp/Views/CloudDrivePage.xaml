@@ -350,11 +350,12 @@
                                 </userControls:TogglePanel>
 
                                 <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                    <userControls:FolderExplorer
-                                        Background="{StaticResource MegaAppBackgroundBrush}"
-                                        Foreground="{StaticResource MegaAppForegroundBrush}"
-                                        Folder="{x:Bind ViewModel.CameraUploads, Mode=OneWay}"
-                                        Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                    <Grid Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <userControls:FolderExplorer
+                                            Background="{StaticResource MegaAppBackgroundBrush}"
+                                            Foreground="{StaticResource MegaAppForegroundBrush}"
+                                            Folder="{x:Bind ViewModel.CameraUploads, Mode=OneWay}" />
+                                    </Grid>
                                     <SemanticZoom 
                                         Margin="0,0,-12,0"
                                         ScrollViewer.ZoomMode="Enabled"
