@@ -41,7 +41,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
-            <Grid Grid.Row="0" Margin="0,0,24,0">
+            <Grid Grid.Row="0" Margin="0,0,12,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -57,12 +57,13 @@
                     Content="{Binding FolderOptionsText, Mode=OneTime}" 
                     FontSize="14"
                     MinWidth="136"
-                    Click="OnFolderOptionsButtonClicked"/>
+                    Click="OnFolderOptionsButtonClicked"
+                    Visibility="{Binding FolderOptionsButtonVisibility}"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ListView
                     x:Name="ListView"
-                    Margin="-12,-8,12,0"
+                    Margin="-12,-8,0,0"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"

@@ -567,7 +567,13 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Sets if multiselect is active or not.
         /// </summary>
-        private void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
+        private void MultiSelect()
+        {
+            this.IsMultiSelectActive = !this.IsMultiSelectActive;
+
+            if (this.ItemCollection.MultiSelectCommand.CanExecute(null))
+                this.ItemCollection.MultiSelectCommand.Execute(null);
+        }
 
         private async void Remove()
         {
@@ -1175,7 +1181,9 @@ namespace MegaApp.ViewModels
             {
                 this.NodeTemplateSelector = new NodeTemplateSelector()
                 {
-                    FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                    FileItemTemplate = this.Type == ContainerType.CameraUploads ?
+                        (DataTemplate)Application.Current.Resources["CameraUploadsListViewFileItemContent"] :
+                        (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
                     FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
                 };
             });
@@ -1218,7 +1226,9 @@ namespace MegaApp.ViewModels
                 case FolderContentViewMode.GridView:
                     this.NodeTemplateSelector = new NodeTemplateSelector()
                     {
-                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
+                        FileItemTemplate = this.Type == ContainerType.CameraUploads ?
+                            (DataTemplate)Application.Current.Resources["CameraUploadsGridViewFileItemContent"] :
+                            (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
                         FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
                     };
 

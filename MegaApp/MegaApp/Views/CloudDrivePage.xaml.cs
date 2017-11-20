@@ -208,18 +208,6 @@ namespace MegaApp.Views
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
 
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectAll();
-                GridViewCloudDrive.SelectAll();
-            }
-
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectAll();
-                GridViewRubbishBin.SelectAll();
-            }
-
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
             {
                 ListViewCameraUploads.SelectAll();
@@ -232,23 +220,10 @@ namespace MegaApp.Views
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
 
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectedItems.Clear();
-                GridViewCloudDrive.SelectedItems.Clear();
-            }
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectedItems.Clear();
-                GridViewRubbishBin.SelectedItems.Clear();
-            }
-
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                ListViewCameraUploads.SelectedItems.Clear();
-                GridViewCameraUploads.SelectedItems.Clear();
-            }
+            ListViewCameraUploads.SelectedItems.Clear();
+            GridViewCameraUploads.SelectedItems.Clear();
         }
 
         private void OnEnableMultiSelect(object sender, EventArgs e)
@@ -260,18 +235,6 @@ namespace MegaApp.Views
 
             // Needed to avoid extrange behaviors during the view update
             DisableViewsBehaviors();
-
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectionMode = ListViewSelectionMode.Multiple;
-                GridViewCloudDrive.SelectionMode = ListViewSelectionMode.Multiple;
-            }
-
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
-                GridViewRubbishBin.SelectionMode = ListViewSelectionMode.Multiple;
-            }
 
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
             {
@@ -291,94 +254,37 @@ namespace MegaApp.Views
 
         private void OnDisableSelection(object sender, EventArgs e)
         {
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                ListViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
-                GridViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
-            }
+            this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                ListViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
-                GridViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
-            }
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
-                GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
-            }
+            ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+            GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void OnEnableSelection(object sender, EventArgs e)
         {
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
             {
-                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                {
-                    ListViewCloudDrive.SelectionMode = ListViewSelectionMode.Extended;
-                    GridViewCloudDrive.SelectionMode = ListViewSelectionMode.Extended;
-                }
-
-                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                {
-                    ListViewRubbishBin.SelectionMode = ListViewSelectionMode.Extended;
-                    GridViewRubbishBin.SelectionMode = ListViewSelectionMode.Extended;
-                }
-
-                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-                {
-                    ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
-                    GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
-                }
+                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
+                GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
+                return;
             }
-            else
-            {
-                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-                {
-                    ListViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
-                    GridViewCloudDrive.SelectionMode = ListViewSelectionMode.None;
-                }
 
-                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                {
-                    ListViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
-                    GridViewRubbishBin.SelectionMode = ListViewSelectionMode.None;
-                }
-
-                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                {
-                    ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
-                    GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
-                }
-            }
+            ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+            GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void OnClearSelectedItems(object sender, EventArgs e)
         {
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                if (ListViewCloudDrive?.SelectedItems?.Count > 0)
-                    ListViewCloudDrive.SelectedItems.Clear();
-                if (GridViewCloudDrive?.SelectedItems?.Count > 0)
-                    GridViewCloudDrive.SelectedItems.Clear();
-            }
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                if (ListViewRubbishBin?.SelectedItems?.Count > 0)
-                    ListViewRubbishBin.SelectedItems.Clear();
-                if (GridViewRubbishBin?.SelectedItems?.Count > 0)
-                    GridViewRubbishBin.SelectedItems.Clear();
-            }
-
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                if (ListViewCameraUploads?.SelectedItems?.Count > 0)
-                    ListViewCameraUploads.SelectedItems.Clear();
-                if (GridViewCameraUploads?.SelectedItems?.Count > 0)
-                    GridViewCameraUploads.SelectedItems.Clear();
-            }
+            if (ListViewCameraUploads?.SelectedItems?.Count > 0)
+                ListViewCameraUploads.SelectedItems.Clear();
+            if (GridViewCameraUploads?.SelectedItems?.Count > 0)
+                GridViewCameraUploads.SelectedItems.Clear();
         }
 
         private void OnChangeView(object sender, EventArgs e)
@@ -412,23 +318,10 @@ namespace MegaApp.Views
         /// </summary>
         private void EnableViewsBehaviors()
         {
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                Interaction.GetBehaviors(ListViewCloudDrive).Attach(ListViewCloudDrive);
-                Interaction.GetBehaviors(GridViewCloudDrive).Attach(GridViewCloudDrive);
-            }
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                Interaction.GetBehaviors(ListViewRubbishBin).Attach(ListViewRubbishBin);
-                Interaction.GetBehaviors(GridViewRubbishBin).Attach(GridViewRubbishBin);
-            }
-
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                Interaction.GetBehaviors(ListViewCameraUploads).Attach(ListViewCameraUploads);
-                Interaction.GetBehaviors(GridViewCameraUploads).Attach(GridViewCameraUploads);
-            }
+            Interaction.GetBehaviors(ListViewCameraUploads).Attach(ListViewCameraUploads);
+            Interaction.GetBehaviors(GridViewCameraUploads).Attach(GridViewCameraUploads);
         }
 
         /// <summary>
@@ -436,23 +329,10 @@ namespace MegaApp.Views
         /// </summary>
         private void DisableViewsBehaviors()
         {
-            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
-            {
-                Interaction.GetBehaviors(ListViewCloudDrive).Detach();
-                Interaction.GetBehaviors(GridViewCloudDrive).Detach();
-            }
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-            {
-                Interaction.GetBehaviors(ListViewRubbishBin).Detach();
-                Interaction.GetBehaviors(GridViewRubbishBin).Detach();
-            }
-
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                Interaction.GetBehaviors(ListViewCameraUploads).Detach();
-                Interaction.GetBehaviors(GridViewCameraUploads).Detach();
-            }
+            Interaction.GetBehaviors(ListViewCameraUploads).Detach();
+            Interaction.GetBehaviors(GridViewCameraUploads).Detach();
         }
 
         /// <summary>
@@ -461,51 +341,20 @@ namespace MegaApp.Views
         /// <param name="selectedNodes">Listo of selected nodes</param>
         private void UpdateSelectedItems(List<IMegaNode> selectedNodes)
         {
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+
             foreach (var node in selectedNodes)
             {
-                if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                switch (this.ViewModel.CameraUploads.ViewMode)
                 {
-                    switch (this.ViewModel.CloudDrive.ViewMode)
-                    {
-                        case FolderContentViewMode.ListView:
-                            ListViewCloudDrive.SelectedItems.Add(node);
-                            break;
-                        case FolderContentViewMode.GridView:
-                            GridViewCloudDrive.SelectedItems.Add(node);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-
-                if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
-                {
-                    switch (this.ViewModel.RubbishBin.ViewMode)
-                    {
-                        case FolderContentViewMode.ListView:
-                            ListViewRubbishBin.SelectedItems.Add(node);
-                            break;
-                        case FolderContentViewMode.GridView:
-                            GridViewRubbishBin.SelectedItems.Add(node);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-
-                if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-                {
-                    switch (this.ViewModel.CameraUploads.ViewMode)
-                    {
-                        case FolderContentViewMode.ListView:
-                            ListViewCameraUploads.SelectedItems.Add(node);
-                            break;
-                        case FolderContentViewMode.GridView:
-                            GridViewCameraUploads.SelectedItems.Add(node);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    case FolderContentViewMode.ListView:
+                        ListViewCameraUploads.SelectedItems.Add(node);
+                        break;
+                    case FolderContentViewMode.GridView:
+                        GridViewCameraUploads.SelectedItems.Add(node);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

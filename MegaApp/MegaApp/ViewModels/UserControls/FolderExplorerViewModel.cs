@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
@@ -165,7 +166,8 @@ namespace MegaApp.ViewModels.UserControls
 
                 SetField(ref _folder, value);
                 this.FolderRootNode = this._folder.FolderRootNode;
-                OnPropertyChanged(nameof(this.ItemCollection));
+                OnPropertyChanged(nameof(this.ItemCollection),
+                    nameof(this.FolderOptionsButtonVisibility));
 
                 if (_folder != null)
                     this.Initialize();
@@ -269,6 +271,13 @@ namespace MegaApp.ViewModels.UserControls
                 return true;
             }
         }
+
+        /// <summary>
+        /// Gets the "Folder options" button visibility
+        /// </summary>
+        public Visibility FolderOptionsButtonVisibility => 
+            (this.Folder?.FolderRootNode is SharedFolderNodeViewModel) ? 
+            Visibility.Visible : Visibility.Collapsed;
 
         #endregion
 
