@@ -246,7 +246,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
-    <value>Could not load files and folders from MEGA. Please try again or click on refresh.</value>
+    <value>Could not load files and folders from MEGA. Please try again.</value>
     <comment>Message of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service.</comment>
   </data>
   <data name="AM_LoadNodesFailed_Title" xml:space="preserve">

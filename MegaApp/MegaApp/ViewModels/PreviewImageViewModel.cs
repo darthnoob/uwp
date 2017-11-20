@@ -196,7 +196,6 @@ namespace MegaApp.ViewModels
         public string PreviousText => ResourceService.UiResources.GetString("UI_Previous");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
-        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
 
         #endregion
 

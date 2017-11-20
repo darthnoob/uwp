@@ -97,16 +97,6 @@
                                     Data="{Binding AddFolderPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding RefreshCommand}"
-                            Label="{Binding RefreshText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="Refresh" />
-                            </Viewbox>
-                        </AppBarButton>
                     </CommandBar>
 
                     <!--  RUBBISH BIN TOP COMMAND BAR (DESKTOP ONLY)  -->
@@ -128,17 +118,6 @@
                                     Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding RefreshCommand}"
-                            DataContext="{Binding ActiveFolderView}"
-                            Label="{Binding RefreshText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="Refresh" />
-                            </Viewbox>
-                        </AppBarButton>
                     </CommandBar>
 
                     <!--  CAMERA UPLOADS TOP COMMAND BAR (DESKTOP ONLY)  -->
@@ -147,16 +126,7 @@
                         Background="Transparent"
                         DataContext="{Binding ActiveFolderView}"
                         Visibility="{Binding CurrentViewState, ConverterParameter=CameraUploads, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding RefreshCommand}"
-                            Label="{Binding RefreshText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="Refresh" />
-                            </Viewbox>
-                        </AppBarButton>
+                        
                     </CommandBar>
 
                     <!--  COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY)  -->
@@ -307,6 +277,10 @@
                     Background="Transparent"
                     DataContext="{Binding ActiveFolderView}"
                     IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+                    <AppBarSeparator 
+                        x:Name="PermanentTopCommandBarSeparator"
+                        Margin="-12,0"
+                        VerticalAlignment="Center"/>
                     <AppBarButton
                         x:Name="BtnSort"
                         Click="OnSortClick"
@@ -509,16 +483,6 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton
-                        Click="OnButtonClick"
-                        Command="{Binding RefreshCommand}"
-                        Label="{Binding RefreshText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                        <Viewbox MaxWidth="14" MaxHeight="14">
-                            <SymbolIcon Symbol="Refresh" />
-                        </Viewbox>
-                    </AppBarButton>
                 </CommandBar>
 
                 <!--  RUBBISH BIN BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
@@ -552,17 +516,6 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton
-                        Click="OnButtonClick"
-                        Command="{Binding RefreshCommand}"
-                        DataContext="{Binding ActiveFolderView}"
-                        Label="{Binding RefreshText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                        <Viewbox MaxWidth="14" MaxHeight="14">
-                            <SymbolIcon Symbol="Refresh" />
-                        </Viewbox>
-                    </AppBarButton>
                 </CommandBar>
 
                 <!--  CAMRE UPLOADS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
@@ -583,16 +536,6 @@
                                 VerticalAlignment="Center"
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Click="OnButtonClick"
-                        Command="{Binding RefreshCommand}"
-                        Label="{Binding RefreshText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding RefreshText, Mode=OneTime}">
-                        <Viewbox MaxWidth="14" MaxHeight="14">
-                            <SymbolIcon Symbol="Refresh" />
-                        </Viewbox>
                     </AppBarButton>
                 </CommandBar>
 
@@ -743,7 +686,7 @@
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
-                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -755,7 +698,7 @@
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
-                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

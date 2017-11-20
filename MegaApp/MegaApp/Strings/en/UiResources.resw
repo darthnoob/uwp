@@ -258,10 +258,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Password</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
-  <data name="UI_Refresh" xml:space="preserve">
-    <value>Refresh</value>
-    <comment>Label for any 'Refresh' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_Remove" xml:space="preserve">
     <value>Remove</value>
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>

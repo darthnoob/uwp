@@ -69,7 +69,6 @@ namespace MegaApp.ViewModels
             this.MultiSelectCommand = new RelayCommand(MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
-            this.RefreshCommand = new RelayCommand(Refresh);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
@@ -341,7 +340,6 @@ namespace MegaApp.ViewModels
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
         public ICommand MultiSelectCommand { get; set; }
-        public ICommand RefreshCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand UploadCommand { get; }
@@ -441,46 +439,6 @@ namespace MegaApp.ViewModels
         {
             if (this.LoadingCancelTokenSource != null && this.LoadingCancelToken.CanBeCanceled)
                 this.LoadingCancelTokenSource.Cancel();
-        }
-
-        /// <summary>
-        /// Refresh the current folder. Delete cached thumbnails and reload the nodes
-        /// </summary>
-        private async void Refresh()
-        {
-            if (!NetworkService.IsNetworkAvailable(true)) return;
-
-            CloseNodeDetails();
-
-            FileService.ClearFiles(
-                NodeService.GetFiles(this.ItemCollection.Items,
-                Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"))));
-
-            if (this.FolderRootNode == null)
-            {
-                switch (this.Type)
-                {
-                    case ContainerType.RubbishBin:
-                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
-                            App.AppInformation, this.MegaSdk.getRubbishNode(), this);
-                        break;
-
-                    case ContainerType.CloudDrive:
-                    case ContainerType.FolderLink:
-                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, 
-                            App.AppInformation, this.MegaSdk.getRootNode(), this);
-                        break;
-                    case ContainerType.CameraUploads:
-                        var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
-                        this.FolderRootNode = NodeService.CreateNew(this.MegaSdk,
-                            App.AppInformation, cameraUploadsNode, this);
-                        
-                        break;
-                }
-            }
-
-            LoadChildNodes();
         }
 
         private void AcceptCopy() => AcceptCopyEvent?.Invoke(this, EventArgs.Empty);
@@ -1477,7 +1435,6 @@ namespace MegaApp.ViewModels
         public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
-        public string RefreshText => ResourceService.UiResources.GetString("UI_Refresh");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
