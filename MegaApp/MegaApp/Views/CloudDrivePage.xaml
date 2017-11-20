@@ -333,20 +333,7 @@
                             Margin="{StaticResource RootGridMargin}"
                             Background="Transparent"
                             DataContext="{Binding CameraUploads}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <ProgressBar
-                                Grid.Row="0"
-                                Height="8"
-                                VerticalAlignment="Center"
-                                Foreground="{StaticResource MegaRedColorBrush}"
-                                IsIndeterminate="True"
-                                Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
-
-                            <Grid Grid.Row="1" Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <Grid>
                                 <userControls:TogglePanel
                                     x:Name="CameraUploadsTogglePanelControl"
                                     VerticalAlignment="Center"
@@ -363,28 +350,11 @@
                                 </userControls:TogglePanel>
 
                                 <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                    <ListView
-                                        x:Name="ListViewCameraUploads"
-                                        Margin="-12,0"
+                                    <userControls:FolderExplorer
                                         Background="{StaticResource MegaAppBackgroundBrush}"
-                                        DoubleTapped="OnItemDoubleTapped"
-                                        IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                        ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                        ItemTemplate="{StaticResource CameraUploadsListViewFileItemContent}"
-                                        ItemsSource="{Binding ItemCollection.Items}"
-                                        RightTapped="OnRightItemTapped"
-                                        Tapped="OnItemTapped"
-                                        Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <interactivity:Interaction.Behaviors>
-                                            <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                            <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                <core:EventTriggerBehavior.Actions>
-                                                    <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                                </core:EventTriggerBehavior.Actions>
-                                            </core:EventTriggerBehavior>
-                                        </interactivity:Interaction.Behaviors>
-                                    </ListView>
-
+                                        Foreground="{StaticResource MegaAppForegroundBrush}"
+                                        Folder="{x:Bind ViewModel.CameraUploads, Mode=OneWay}"
+                                        Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                                     <SemanticZoom 
                                         Margin="0,0,-12,0"
                                         ScrollViewer.ZoomMode="Enabled"
@@ -682,7 +652,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListViewCameraUploads.SelectionMode" Value="Extended" />
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
@@ -694,7 +663,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListViewCameraUploads.SelectionMode" Value="None" />
                         <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />

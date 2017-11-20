@@ -209,10 +209,7 @@ namespace MegaApp.Views
             SdkService.MegaSdk.retryPendingConnections();
 
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                ListViewCameraUploads.SelectAll();
                 GridViewCameraUploads.SelectAll();
-            }
         }
 
         private void OnDeselectAllClick(object sender, RoutedEventArgs e)
@@ -222,7 +219,6 @@ namespace MegaApp.Views
 
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            ListViewCameraUploads.SelectedItems.Clear();
             GridViewCameraUploads.SelectedItems.Clear();
         }
 
@@ -237,10 +233,7 @@ namespace MegaApp.Views
             DisableViewsBehaviors();
 
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-            {
-                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Multiple;
                 GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Multiple;
-            }
 
             // Restore the selected items and enable the view behaviors again
             UpdateSelectedItems(tempSelectedNodes);
@@ -258,7 +251,6 @@ namespace MegaApp.Views
 
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
             GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
@@ -268,12 +260,10 @@ namespace MegaApp.Views
 
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
             {
-                ListViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
                 GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
                 return;
             }
 
-            ListViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
             GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
@@ -281,8 +271,6 @@ namespace MegaApp.Views
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (ListViewCameraUploads?.SelectedItems?.Count > 0)
-                ListViewCameraUploads.SelectedItems.Clear();
             if (GridViewCameraUploads?.SelectedItems?.Count > 0)
                 GridViewCameraUploads.SelectedItems.Clear();
         }
@@ -320,7 +308,6 @@ namespace MegaApp.Views
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            Interaction.GetBehaviors(ListViewCameraUploads).Attach(ListViewCameraUploads);
             Interaction.GetBehaviors(GridViewCameraUploads).Attach(GridViewCameraUploads);
         }
 
@@ -331,7 +318,6 @@ namespace MegaApp.Views
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            Interaction.GetBehaviors(ListViewCameraUploads).Detach();
             Interaction.GetBehaviors(GridViewCameraUploads).Detach();
         }
 
@@ -348,7 +334,6 @@ namespace MegaApp.Views
                 switch (this.ViewModel.CameraUploads.ViewMode)
                 {
                     case FolderContentViewMode.ListView:
-                        ListViewCameraUploads.SelectedItems.Add(node);
                         break;
                     case FolderContentViewMode.GridView:
                         GridViewCameraUploads.SelectedItems.Add(node);

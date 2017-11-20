@@ -10,7 +10,19 @@
     }
 
     /// <summary>
-    /// Contacts short options
+    /// Nodes sort options
+    /// </summary>
+    public enum NodesSortOrderType
+    {
+        ORDER_NAME          = 0,
+        ORDER_SIZE          = 1,
+        ORDER_CREATION      = 2,
+        ORDER_MODIFICATION  = 3,
+        ORDER_FILES         = 4,
+    }
+
+    /// <summary>
+    /// Contacts sort options
     /// </summary>
     public enum ContactsSortOrderType
     {
@@ -19,7 +31,7 @@
     }
 
     /// <summary>
-    /// Contact requests short options
+    /// Contact requests sort options
     /// </summary>
     public enum ContactRerquestsSortOrderType
     {
@@ -27,7 +39,7 @@
     }
 
     /// <summary>
-    /// Incoming shares short options
+    /// Incoming shares sort options
     /// </summary>
     public enum IncomingSharesSortOrderType
     {
@@ -38,7 +50,7 @@
     }
 
     /// <summary>
-    /// Outgoing shares short options
+    /// Outgoing shares sort options
     /// </summary>
     public enum OutgoingSharesSortOrderType
     {

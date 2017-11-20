@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
@@ -189,26 +190,36 @@ namespace MegaApp.ViewModels.UserControls
                 {
                     case MSortOrderType.ORDER_DEFAULT_ASC:
                     case MSortOrderType.ORDER_DEFAULT_DESC:
+                        if(this.Folder.Type == ContainerType.CameraUploads)
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByFiles"), numChildFiles);
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByFiles"),
                             numChildFolders, numChildFiles);
 
                     case MSortOrderType.ORDER_ALPHABETICAL_ASC:
                     case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                        if (this.Folder.Type == ContainerType.CameraUploads)
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), numChildFiles);
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
                             numChildFolders, numChildFiles);
 
                     case MSortOrderType.ORDER_CREATION_ASC:
                     case MSortOrderType.ORDER_CREATION_DESC:
+                        if (this.Folder.Type == ContainerType.CameraUploads)
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), numChildFiles);
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
                             numChildFolders, numChildFiles);
 
                     case MSortOrderType.ORDER_MODIFICATION_ASC:
                     case MSortOrderType.ORDER_MODIFICATION_DESC:
+                        if (this.Folder.Type == ContainerType.CameraUploads)
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), numChildFiles);
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
                             numChildFolders, numChildFiles);
 
                     case MSortOrderType.ORDER_SIZE_ASC:
                     case MSortOrderType.ORDER_SIZE_DESC:
+                        if (this.Folder.Type == ContainerType.CameraUploads)
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), numChildFiles);
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
                             numChildFolders, numChildFiles);
 
@@ -228,27 +239,27 @@ namespace MegaApp.ViewModels.UserControls
                 {
                     case MSortOrderType.ORDER_DEFAULT_ASC:
                     case MSortOrderType.ORDER_DEFAULT_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByFilesMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByFilesMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     case MSortOrderType.ORDER_ALPHABETICAL_ASC:
                     case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByNameMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     case MSortOrderType.ORDER_CREATION_ASC:
                     case MSortOrderType.ORDER_CREATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreatedMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreatedMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     case MSortOrderType.ORDER_MODIFICATION_ASC:
                     case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModifiedMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     case MSortOrderType.ORDER_SIZE_ASC:
                     case MSortOrderType.ORDER_SIZE_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySizeMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySizeMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     default:

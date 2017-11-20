@@ -20,19 +20,22 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <breadcrumb:BreadcrumbControl
-            x:Name="BreadCrumb"
+
+        <Grid 
             Grid.Row="0"
-            DisplayMemberPath="Name"
-            HomeCommand="{Binding Folder.HomeSelectedCommand}"
-            HomeTemplate="{StaticResource BreadcrumbHomeTemplate}"
-            ItemCommand="{Binding Folder.ItemSelectedCommand}"
-            ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-            ItemsSource="{Binding Folder.BreadCrumb.Items}"
-            OverFlow="..."
-            Seperator="&gt;"
-            Visibility="{Binding Folder.HasBreadCrumbPath, Converter={StaticResource BoolToVisibilityConverter}}" />
+            Visibility="{Binding Folder.Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
+            <breadcrumb:BreadcrumbControl
+                x:Name="BreadCrumb"
+                DisplayMemberPath="Name"
+                HomeCommand="{Binding Folder.HomeSelectedCommand}"
+                HomeTemplate="{StaticResource BreadcrumbHomeTemplate}"
+                ItemCommand="{Binding Folder.ItemSelectedCommand}"
+                ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
+                ItemsSource="{Binding Folder.BreadCrumb.Items}"
+                OverFlow="..."
+                Seperator="&gt;"
+                Visibility="{Binding Folder.HasBreadCrumbPath, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
         <Grid 
             Grid.Row="1"
             Visibility="{Binding Folder.ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
