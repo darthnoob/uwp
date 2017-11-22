@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         /// <param name="outShare">Folder outbound sharing with the contact</param>
         /// <param name="contactList">List that contains the contact</param>
-        public ContactOutgoingSharedFolderViewModel(MShare outShare, ContactsListOutgoingSharedFolderViewModel contactList)
+        public ContactOutgoingSharedFolderViewModel(MShare outShare, ContactsListViewModel contactList)
             : base(SdkService.MegaSdk.getContact(outShare.getUser()), contactList)
         {
             this._outShare = outShare;
