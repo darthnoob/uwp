@@ -112,10 +112,10 @@ namespace MegaApp.ViewModels
                 return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
 
             var sortOrder = UiService.GetSortOrder(FolderRootNode.Base64Handle, FolderRootNode.Name);
-            if (sortOrder != (int) MSortOrderType.ORDER_MODIFICATION_DESC &&
-                sortOrder != (int) MSortOrderType.ORDER_MODIFICATION_ASC)
+            if (sortOrder != MSortOrderType.ORDER_MODIFICATION_DESC &&
+                sortOrder != MSortOrderType.ORDER_MODIFICATION_ASC)
             {
-                UiService.SetSortOrder(FolderRootNode.Base64Handle, (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                UiService.SetSortOrder(FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
             }
             return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
         }
@@ -126,8 +126,8 @@ namespace MegaApp.ViewModels
             if (viewMode != FolderContentViewMode.GridView) return;
 
             var sortOrder = UiService.GetSortOrder(FolderRootNode.Base64Handle, FolderRootNode.Name);
-            if (sortOrder != (int)MSortOrderType.ORDER_MODIFICATION_DESC &&
-                sortOrder != (int)MSortOrderType.ORDER_MODIFICATION_ASC)
+            if (sortOrder != MSortOrderType.ORDER_MODIFICATION_DESC &&
+                sortOrder != MSortOrderType.ORDER_MODIFICATION_ASC)
             {
                 LoadChildNodes();
             }

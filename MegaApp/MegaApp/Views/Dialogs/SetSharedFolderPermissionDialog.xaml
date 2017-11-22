@@ -1,0 +1,59 @@
+﻿<dialogViews:BaseSetSharedFolderPermissionDialog
+    x:Class="MegaApp.Views.Dialogs.SetSharedFolderPermissionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mega="using:mega"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    d:DataContext="{d:DesignInstance dialogViewModels:SetSharedFolderPermissionDialogViewModel}"
+    mc:Ignorable="d"
+    DataContext="{x:Bind ViewModel}"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.ShareText, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}">
+    <dialogViews:BaseSetSharedFolderPermissionDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            FontSize="18"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
+    </dialogViews:BaseSetSharedFolderPermissionDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <StackPanel>
+            <TextBlock
+                Margin="0,24,0,12"
+                Text="{x:Bind ViewModel.FolderPermissionText, Mode=OneTime}"
+                Opacity="0.4"/>
+            <RadioButton IsChecked="True" Command="{x:Bind ViewModel.SetFolderPermissionCommand}">
+                <RadioButton.CommandParameter>
+                    <mega:MShareType>ACCESS_READ</mega:MShareType>
+                </RadioButton.CommandParameter>
+                <RadioButton.Content>
+                    <TextBlock Text="{x:Bind ViewModel.PermissionReadOnlyText, Mode=OneTime}" Opacity="0.9"/>
+                </RadioButton.Content>
+            </RadioButton>
+            <RadioButton Command="{x:Bind ViewModel.SetFolderPermissionCommand}">
+                <RadioButton.CommandParameter>
+                    <mega:MShareType>ACCESS_READWRITE</mega:MShareType>
+                </RadioButton.CommandParameter>
+                <RadioButton.Content>
+                    <TextBlock Text="{x:Bind ViewModel.PermissionReadAndWriteText, Mode=OneTime}" Opacity="0.9"/>
+                </RadioButton.Content>
+            </RadioButton>
+            <RadioButton Command="{x:Bind ViewModel.SetFolderPermissionCommand}">
+                <RadioButton.CommandParameter>
+                    <mega:MShareType>ACCESS_FULL</mega:MShareType>
+                </RadioButton.CommandParameter>
+                <RadioButton.Content>
+                    <TextBlock Text="{x:Bind ViewModel.PermissionFullAccessText, Mode=OneTime}" Opacity="0.9"/>
+                </RadioButton.Content>
+            </RadioButton>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseSetSharedFolderPermissionDialog>

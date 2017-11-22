@@ -1,4 +1,5 @@
 ﻿using System;
+using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
 {
@@ -6,14 +7,14 @@ namespace MegaApp.ViewModels
     {
         public GroupedByDateItemViewModel()
         {
-            ItemCollection = new NodeCollectionViewModel();
+            ItemCollection = new CollectionViewModel<IMegaNode>();
         }
 
         #region Properties
 
         public DateTime Date { get; set; }
 
-        public NodeCollectionViewModel ItemCollection { get; }
+        public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
         public string DateAsString => Date.Date == DateTime.Today ? "Today" : Date.ToString("dd MMM yyyy");
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Windows.Networking.Connectivity;
 using MegaApp.Classes;
-using MegaApp.Enums;
 
 namespace MegaApp.Services
 {
@@ -25,6 +24,7 @@ namespace MegaApp.Services
 
             if (showMessageDialog)
             {
+                // TODO change to dialog service
                 new CustomMessageDialog(
                     ResourceService.UiResources.GetString("UI_NoInternetConnection"),
                     ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),

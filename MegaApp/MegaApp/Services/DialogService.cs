@@ -1,16 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Extensions;
 using MegaApp.ViewModels;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
@@ -31,64 +33,68 @@ namespace MegaApp.Services
                 button = ResourceService.UiResources.GetString("UI_Ok");
 
             var dialog = new AlertDialog(title, message, button);
-            await dialog.ShowAsync();
+            await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
-        /// Show a dialog that has an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and an "OK" and a "Cancel" button option
         /// </summary>
         /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
-        /// <param name="okButton">Label for the "OK" button</param>
+        /// <param name="message">Message of the dialog</param>
+        /// <param name="okButton">Label for the "Ok" button</param>
         /// <param name="cancelButton">Label for the "Cancel" button</param>
         /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string content,
+        public static async Task<bool> ShowOkCancelAsync(string title, string message,
             string okButton = null, string cancelButton = null)
+        {
+            return await ShowOkCancelAndWarningAsync(title, message, null, okButton, cancelButton);
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and an "OK" and a "Cancel" button option
+        /// </summary>
+        /// <param name="title">Title of the dialog</param>
+        /// <param name="message">Message of the dialog</param>
+        /// <param name="warning">Warning of the dialog</param>
+        /// <param name="okButton">Label for the "Ok" button</param>
+        /// <param name="cancelButton">Label for the "Cancel" button</param>
+        /// <returns>True if the "OK" button is pressed, else False</returns>
+        public static async Task<bool> ShowOkCancelAndWarningAsync(string title, string message, 
+            string warning, string okButton = null, string cancelButton = null)
         {
             if (okButton == null)
                 okButton = ResourceService.UiResources.GetString("UI_Ok");
             if (cancelButton == null)
                 cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
 
-            var dialog = new OkCancelDialog(title, content, okButton, cancelButton);
-            var result = await dialog.ShowAsync();
+            var dialog = new OkCancelAndWarningDialog(title, message, warning, okButton, cancelButton);
+            await dialog.ShowAsync();
 
-            switch(result)
-            {
-                case ContentDialogResult.Primary:
-                    return true;
-
-                case ContentDialogResult.Secondary:
-                case ContentDialogResult.None:
-                default:
-                    return false;
-            }
+            return dialog.DialogResult;
         }
 
         public static async void ShowOverquotaAlert()
         {
-            var customMessageDialog = new CustomMessageDialog(
+            var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                App.AppInformation, MessageDialogButtons.YesNo);
+                ResourceService.UiResources.GetString("UI_Yes"),
+                ResourceService.UiResources.GetString("UI_No"));
 
-            customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
+            if(result)
             {
                 UiService.OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
                         NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
                 });
-            };
-
-            await customMessageDialog.ShowDialogAsync();
+            }
         }
 
         public static async void ShowTransferOverquotaWarning()
         {
-            await ShowAlertAsync(
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title"),
-                ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning"));
+            var dialog = new TransferOverquotaWarningDialog();
+            await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
@@ -97,13 +103,13 @@ namespace MegaApp.Services
         /// </summary>
         public static async void ShowDebugModeAlert()
         {
-            var result = await new OkCancelDialog(
+            var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
                 ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No")).ShowAsync();
+                ResourceService.UiResources.GetString("UI_No"));
 
-            if(result == ContentDialogResult.Primary)
+            if (result)
                 DebugService.DebugSettings.DisableDebugMode();
 
             DebugService.DebugSettings.ShowDebugAlert = false;
@@ -125,7 +131,7 @@ namespace MegaApp.Services
             else
                 awaitEmailConfirmationDialog.ViewModel.Email = email;
 
-            await awaitEmailConfirmationDialog.ShowAsync();
+            await awaitEmailConfirmationDialog.ShowAsyncQueue();
         }
 
         /// <summary>
@@ -190,7 +196,7 @@ namespace MegaApp.Services
             stackPanel.Children.Add(messageText);
             stackPanel.Children.Add(input);
             dialog.Content = stackPanel;
-            var result = await dialog.ShowAsync();
+            var result = await dialog.ShowAsyncQueue();
             switch (result)
             {
                 case ContentDialogResult.Primary:
@@ -318,7 +324,7 @@ namespace MegaApp.Services
             stackPanel.Children.Add(messageText);
             dialog.Content = stackPanel;
 
-            var result = await dialog.ShowAsync();
+            var result = await dialog.ShowAsyncQueue();
             switch (result)
             {
                 case ContentDialogResult.None:
@@ -347,6 +353,8 @@ namespace MegaApp.Services
             var isCameraUploadsGrid = (folder is CameraUploadsViewModel) &&
                                       ((CameraUploadsViewModel) folder).IsGridViewMode;
 
+            var currentSortOrder = UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name);
+
             MenuFlyout menuFlyout = new MenuFlyout();
 
             if (isCameraUploadsGrid)
@@ -354,11 +362,10 @@ namespace MegaApp.Services
                 menuFlyout.Items.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
-                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                    Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_DESC),
                     Command = new RelayCommand(() =>
                     {
-                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                            (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
                         folder.LoadChildNodes();
                     })
                 });
@@ -366,11 +373,10 @@ namespace MegaApp.Services
                 menuFlyout.Items.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
-                    Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                    Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_ASC),
                     Command = new RelayCommand(() =>
                     {
-                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                            (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                        UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_ASC);
                         folder.LoadChildNodes();
                     })
                 });
@@ -381,11 +387,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameAscending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_ALPHABETICAL_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_ALPHABETICAL_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_ALPHABETICAL_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_ALPHABETICAL_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -393,11 +398,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNameDescending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_ALPHABETICAL_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_ALPHABETICAL_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_ALPHABETICAL_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_ALPHABETICAL_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -405,11 +409,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionLargest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_SIZE_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_SIZE_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_SIZE_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_SIZE_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -417,11 +420,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionSmallest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_SIZE_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_SIZE_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_SIZE_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_SIZE_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -429,11 +431,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionNewest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_MODIFICATION_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -441,11 +442,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionOldest"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_MODIFICATION_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_MODIFICATION_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_MODIFICATION_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -453,11 +453,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionFilesAscending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_DEFAULT_ASC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_DEFAULT_ASC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_DEFAULT_ASC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_DEFAULT_ASC);
                     folder.LoadChildNodes();
                 })
             });
@@ -465,11 +464,10 @@ namespace MegaApp.Services
             menuFlyout.Items.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_SortOptionFilesDescending"),
-                Foreground = GetSortMenuItemForeground(folder, (int)MSortOrderType.ORDER_DEFAULT_DESC),
+                Foreground = GetSortMenuItemForeground(currentSortOrder, MSortOrderType.ORDER_DEFAULT_DESC),
                 Command = new RelayCommand(() =>
                 {
-                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle,
-                        (int)MSortOrderType.ORDER_DEFAULT_DESC);
+                    UiService.SetSortOrder(folder.FolderRootNode.Base64Handle, MSortOrderType.ORDER_DEFAULT_DESC);
                     folder.LoadChildNodes();
                 })
             });
@@ -478,20 +476,171 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Gets the sort menu item foreground color depending on the current sort order of the folder.
+        /// Gets the sort menu item foreground color depending on the current sort order.
         /// </summary>
-        /// <param name="folder">Folder to check the current sort order.</param>
-        /// <param name="sortOrder">Sort order to check.</param>
+        /// <param name="currentSortOrder">Current sort order of the list/collection.</param>
+        /// <param name="sortOrderToCheck">Sort order to check.</param>
         /// <returns>The brush object with the color.</returns>
-        private static Brush GetSortMenuItemForeground(FolderViewModel folder, int sortOrder)
+        private static Brush GetSortMenuItemForeground(object currentSortOrder, object sortOrderToCheck)
         {
-            if(folder?.FolderRootNode != null)
-            {
-                if (UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name) == sortOrder)
-                    return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
-            }
+            if (currentSortOrder is MSortOrderType && sortOrderToCheck is MSortOrderType &&
+                (MSortOrderType)currentSortOrder == (MSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is ContactsSortOrderType && sortOrderToCheck is ContactsSortOrderType &&
+                (ContactsSortOrderType)currentSortOrder == (ContactsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is ContactRerquestsSortOrderType && sortOrderToCheck is ContactRerquestsSortOrderType &&
+                (ContactRerquestsSortOrderType)currentSortOrder == (ContactRerquestsSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is IncomingSharesSortOrderType && sortOrderToCheck is IncomingSharesSortOrderType &&
+                (IncomingSharesSortOrderType)currentSortOrder == (IncomingSharesSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+
+            if (currentSortOrder is OutgoingSharesSortOrderType && sortOrderToCheck is OutgoingSharesSortOrderType &&
+                (OutgoingSharesSortOrderType)currentSortOrder == (OutgoingSharesSortOrderType)sortOrderToCheck)
+                return (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
 
             return (SolidColorBrush)Application.Current.Resources["MegaAppForegroundBrush"];
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contacts.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_NAME;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionEmail"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_EMAIL),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_EMAIL;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contact requests.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateContactRequestsSortMenu(ContactRequestsListViewModel contactRequests)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contactRequests.CurrentOrder, ContactRerquestsSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    contactRequests.CurrentOrder = ContactRerquestsSortOrderType.ORDER_NAME;
+                    contactRequests.SortBy(contactRequests.CurrentOrder, contactRequests.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for incoming shared items.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateIncomingSharedItemsSortMenu(IncomingSharesViewModel sharedItems, 
+            bool areContactIncomingShares = false)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, IncomingSharesSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = IncomingSharesSortOrderType.ORDER_NAME;
+                    sharedItems.SortBy(sharedItems.CurrentOrder, sharedItems.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionDateModified"),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, IncomingSharesSortOrderType.ORDER_MODIFICATION),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = IncomingSharesSortOrderType.ORDER_MODIFICATION;
+                    sharedItems.SortBy(sharedItems.CurrentOrder, sharedItems.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionAccessLevel"),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, IncomingSharesSortOrderType.ORDER_ACCESS),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = IncomingSharesSortOrderType.ORDER_ACCESS;
+                    sharedItems.SortBy(sharedItems.CurrentOrder, sharedItems.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            if(!areContactIncomingShares)
+            {
+                menuFlyout.Items.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionOwner"),
+                    Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, IncomingSharesSortOrderType.ORDER_OWNER),
+                    Command = new RelayCommand(() =>
+                    {
+                        sharedItems.CurrentOrder = IncomingSharesSortOrderType.ORDER_OWNER;
+                        sharedItems.SortBy(sharedItems.CurrentOrder, sharedItems.ItemCollection.CurrentOrderDirection);
+                    })
+                });
+            }
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for outgoing shared items.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateOutgoingSharedItemsSortMenu(OutgoingSharesViewModel sharedItems,
+            bool areContactIncomingShares = false)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items.Add(new MenuFlyoutItem()
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(sharedItems.CurrentOrder, OutgoingSharesSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    sharedItems.CurrentOrder = OutgoingSharesSortOrderType.ORDER_NAME;
+                    sharedItems.SortBy(sharedItems.CurrentOrder, sharedItems.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            return menuFlyout;
         }
     }
 

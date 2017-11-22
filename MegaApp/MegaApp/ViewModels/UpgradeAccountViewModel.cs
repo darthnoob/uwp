@@ -14,6 +14,13 @@ namespace MegaApp.ViewModels
         public ObservableCollection<ProductBase> Plans { get; set; }
         public ObservableCollection<Product> Products { get; set; }
 
+        private string _liteMonthlyPriceAndCurrency;
+        public string LiteMonthlyPriceAndCurrency
+        {
+            get { return _liteMonthlyPriceAndCurrency; }
+            set { SetField(ref _liteMonthlyPriceAndCurrency, value); }
+        }
+
         private bool _isCentiliPaymentMethodAvailable;
         public bool IsCentiliPaymentMethodAvailable
         {

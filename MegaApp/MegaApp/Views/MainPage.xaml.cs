@@ -40,15 +40,13 @@ namespace MegaApp.Views
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
 
             // Check if the user has an active and online session, because this is the first page loaded
-            if (!await AppService.CheckActiveAndOnlineSession(e.NavigationMode)) return;
+            if (!await AppService.CheckActiveAndOnlineSession(true)) return;
 
             // If user has an active and online session but is not logged in, resume the session
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
             {
                 if (!await this.ViewModel.FastLogin()) return;
             }
-
-            await AppService.CheckSpecialNavigation();
 
             this.ViewModel.Initialize(navActionType);
 

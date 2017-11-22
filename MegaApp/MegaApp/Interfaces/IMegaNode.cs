@@ -59,7 +59,7 @@ namespace MegaApp.Interfaces
         void Download(TransferQueue transferQueue);
 
         /// <summary>
-        /// Update core date associated with the SDK MNode object
+        /// Update core data associated with the SDK MNode object
         /// </summary>
         /// <param name="megaNode">Node to update</param>
         /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
@@ -109,6 +109,26 @@ namespace MegaApp.Interfaces
         /// and used in as input/output in different SDK methods and functions
         /// </summary>
         MNode OriginalMNode { get; }
+
+        /// <summary>
+        /// Access level to the node
+        /// </summary>
+        AccessLevelViewModel AccessLevel { get; set; }
+
+        /// <summary>
+        /// Specifies if the node has read permissions
+        /// </summary>
+        bool HasReadPermissions { get; }
+
+        /// <summary>
+        /// Specifies if the node has read & write permissions
+        /// </summary>
+        bool HasReadWritePermissions { get; }
+
+        /// <summary>
+        /// Specifies if the node has full access permissions
+        /// </summary>
+        bool HasFullAccessPermissions { get; }
 
         #endregion
     }

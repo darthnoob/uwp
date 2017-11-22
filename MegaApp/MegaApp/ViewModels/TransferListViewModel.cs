@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +18,8 @@ namespace MegaApp.ViewModels
         public TransferListViewModel(MTransferType type)
         {
             this.Type = type;
+            this.ItemCollection = new CollectionViewModel<TransferObjectModel>();
+
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
@@ -27,7 +28,7 @@ namespace MegaApp.ViewModels
                     this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_DownloadsSubHeader");
                     this.CancelTransfersTitleText = ResourceService.UiResources.GetString("UI_CancelDownloads");
                     this.CancelTransfersDescriptionText = ResourceService.AppMessages.GetString("AM_CancelDownloadsQuestion");
-                    this.Items = TransferService.MegaTransfers.Downloads;
+                    this.ItemCollection.Items = TransferService.MegaTransfers.Downloads;
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
@@ -36,7 +37,7 @@ namespace MegaApp.ViewModels
                     this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_UploadsSubHeader");
                     this.CancelTransfersTitleText = ResourceService.UiResources.GetString("UI_CancelUploads");
                     this.CancelTransfersDescriptionText = ResourceService.AppMessages.GetString("AM_CancelUploadsQuestion");
-                    this.Items = TransferService.MegaTransfers.Uploads;
+                    this.ItemCollection.Items = TransferService.MegaTransfers.Uploads;
                     break;
 
                 default:
@@ -48,19 +49,21 @@ namespace MegaApp.ViewModels
             this.CancelCommand = new RelayCommand(CancelTransfers);
             this.CleanCommand = new RelayCommand<bool>(UpdateTransfers);
 
-            this.Items.CollectionChanged += ItemsOnCollectionChanged;
+            this.ItemCollection.Items.CollectionChanged += ItemsOnCollectionChanged;
         }
 
         public TransferListViewModel()
         {
+            this.ItemCollection = new CollectionViewModel<TransferObjectModel>();
+
             this.Description = ResourceService.UiResources.GetString("UI_Completed");
             this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersHeader"); ;
             this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersSubHeader");
             this.IsCompletedTransfersList = true;
-            this.Items = TransferService.MegaTransfers.Completed;
+            this.ItemCollection.Items = TransferService.MegaTransfers.Completed;
             this.CleanCommand = new RelayCommand(CleanCompletedTransfers);
 
-            this.Items.CollectionChanged += ItemsOnCollectionChanged;
+            this.ItemCollection.Items.CollectionChanged += ItemsOnCollectionChanged;
         }
 
         private void ItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -111,7 +114,7 @@ namespace MegaApp.ViewModels
             if (!result) return;
 
             // Use a temp list to avoid InvalidOperationException
-            var transfers = Items.ToList();
+            var transfers = ItemCollection.Items.ToList();
             foreach (var transfer in transfers)
             {
                 // If the transfer is an upload and is being prepared (copying file to the upload temporary folder)
@@ -148,9 +151,14 @@ namespace MegaApp.ViewModels
 
         public MTransferType Type { get; set; }
 
-        public ObservableCollection<TransferObjectModel> Items { get; }
+        private CollectionViewModel<TransferObjectModel> _itemCollection;
+        public CollectionViewModel<TransferObjectModel> ItemCollection
+        {
+            get { return _itemCollection; }
+            set { SetField(ref _itemCollection, value); }
+        }
 
-        public bool IsEmpty => (Items.Count == 0);
+        public bool IsEmpty => (ItemCollection.Items.Count == 0);
 
         private bool _isCompletedTransfersList;
         public bool IsCompletedTransfersList

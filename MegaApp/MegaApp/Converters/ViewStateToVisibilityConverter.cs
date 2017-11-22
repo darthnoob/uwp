@@ -71,11 +71,33 @@ namespace MegaApp.Converters
                             return Visibility.Collapsed;
                     }; 
                 case FolderContentViewState.InShares:
-                    break;
-                case FolderContentViewState.OutShares:
-                    break;
                 case FolderContentViewState.ContactInShares:
-                    break;
+                    switch (command)
+                    {
+                        case "download":
+                            return Visibility.Visible;
+                        case "remove":
+                            return parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        case "rename":
+                            return parentFolder.ItemCollection.MoreThanOneSelected || !parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                                Visibility.Collapsed: Visibility.Visible;
+                        default:
+                            return Visibility.Collapsed;
+                    }
+                case FolderContentViewState.OutShares:
+                    switch (command)
+                    {
+                        case "download":
+                        case "remove":
+                            return Visibility.Visible;
+                        case "getlink":
+                        case "rename":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        default:
+                            return Visibility.Collapsed;
+                    }
                 case FolderContentViewState.SavedForOffline:
                     break;
                 case FolderContentViewState.FolderLink:

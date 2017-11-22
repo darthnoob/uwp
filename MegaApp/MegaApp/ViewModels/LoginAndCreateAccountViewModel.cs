@@ -1,4 +1,6 @@
 ﻿using MegaApp.Services;
+using MegaApp.ViewModels.CreateAccount;
+using MegaApp.ViewModels.Login;
 
 namespace MegaApp.ViewModels
 {
@@ -21,10 +23,10 @@ namespace MegaApp.ViewModels
             get { return _activeViewModel; }
             set { SetField(ref _activeViewModel, value); }
         }
+        
+        #region Visual Resources
 
-        #region UiResources
-
-        public string ConfirmText => ResourceService.UiResources.GetString("UI_Confirm");
+        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }
