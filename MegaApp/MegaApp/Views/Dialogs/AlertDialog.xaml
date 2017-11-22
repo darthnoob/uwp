@@ -10,7 +10,7 @@
     d:DataContext="{d:DesignInstance dialogViewModels:AlertDialogViewModel}"
     mc:Ignorable="d"
     Margin="0, 0, 24, 24"
-    Style="{ThemeResource MegaContentDialogStyle}"
+    Style="{ThemeResource MegaAlertDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
     PrimaryButtonText="{x:Bind ViewModel.ButtonLabel, Mode=OneWay}"

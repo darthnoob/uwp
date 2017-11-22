@@ -7,7 +7,7 @@ using MegaApp.ViewModels.Contacts;
 namespace MegaApp.Interfaces
 {
     /// <summary>
-    /// Base signature for MegaContact models in the MegaApp
+    /// Base interface for contact models in the MegaApp
     /// </summary>
     public interface IMegaContact
     {

@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -172,10 +171,10 @@ namespace MegaApp.ViewModels.Contacts
 
                         OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
 
-                        this.GetContactFirstname(megaContact);
-                        this.GetContactLastname(megaContact);
-                        this.GetContactAvatarColor(megaContact);
-                        this.GetContactAvatar(megaContact);
+                        megaContact.GetContactFirstname();
+                        megaContact.GetContactLastname();
+                        megaContact.GetContactAvatarColor();
+                        megaContact.GetContactAvatar();
                     }
                 }
                 catch (OperationCanceledException)
@@ -208,69 +207,9 @@ namespace MegaApp.ViewModels.Contacts
             this.LoadingCancelToken = LoadingCancelTokenSource.Token;
         }
 
-        /// <summary>
-        /// Gets the contact first name attribute
-        /// </summary>
-        private async void GetContactFirstname(IMegaContact contact)
+        protected void OnContactUpdated(object sender, MUser user)
         {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(contact.MegaUser,
-                (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
-            UiService.OnUiThread(() => contact.FirstName = firstName);
-        }
-
-        /// <summary>
-        /// Gets the contact last name attribute
-        /// </summary>
-        private async void GetContactLastname(IMegaContact contact)
-        {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(contact.MegaUser,
-                (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
-            UiService.OnUiThread(() => contact.LastName = lastName);
-        }
-
-        /// <summary>
-        /// Gets the contact avatar color
-        /// </summary>
-        private void GetContactAvatarColor(IMegaContact contact)
-        {
-            var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact.MegaUser));
-            UiService.OnUiThread(() => contact.AvatarColor = avatarColor);
-        }
-
-        /// <summary>
-        /// Gets the contact avatar
-        /// </summary>
-        private async void GetContactAvatar(IMegaContact contact)
-        {
-            var contactAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
-            var contactAvatarResult = await contactAvatarRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAvatar(contact.MegaUser, contact.AvatarPath, contactAvatarRequestListener));
-
-            if (contactAvatarResult)
-            {
-                UiService.OnUiThread(() =>
-                {
-                    var img = new BitmapImage()
-                    {
-                        CreateOptions = BitmapCreateOptions.IgnoreImageCache,
-                        UriSource = new Uri(contact.AvatarPath)
-                    };
-                    contact.AvatarUri = img.UriSource;
-                });
-            }
-            else
-            {
-                UiService.OnUiThread(() => contact.AvatarUri = null);
-            }
-        }
-
-        private void OnContactUpdated(object sender, MUser user)
-        {
-            var existingContact = this.ItemCollection.Items.FirstOrDefault(
+            var existingContact = (ContactViewModel)this.ItemCollection.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));
 
             // If the contact exists in the contact list
@@ -288,17 +227,17 @@ namespace MegaApp.ViewModels.Contacts
                     if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_AVATAR) &&
                         !string.IsNullOrWhiteSpace(existingContact.AvatarPath))
                     {
-                        this.GetContactAvatar(existingContact);
+                        existingContact.GetContactAvatar();
                     }
 
                     if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_EMAIL))
                         OnUiThread(() => existingContact.Email = user.getEmail());
 
                     if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_FIRSTNAME))
-                        this.GetContactFirstname(existingContact);
+                        existingContact.GetContactFirstname();
 
                     if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_LASTNAME))
-                        this.GetContactLastname(existingContact);
+                        existingContact.GetContactLastname();
                 }
             }
             // If is a new contact (ADD CONTACT SCENARIO - REQUEST ACCEPTED)
@@ -308,10 +247,10 @@ namespace MegaApp.ViewModels.Contacts
 
                 OnUiThread(() => this.ItemCollection.Items.Add(megaContact));
 
-                this.GetContactFirstname(megaContact);
-                this.GetContactLastname(megaContact);
-                this.GetContactAvatarColor(megaContact);
-                this.GetContactAvatar(megaContact);
+                megaContact.GetContactFirstname();
+                megaContact.GetContactLastname();
+                megaContact.GetContactAvatarColor();
+                megaContact.GetContactAvatar();
             }
         }
 

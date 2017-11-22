@@ -29,6 +29,8 @@ namespace MegaApp.ViewModels
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
         {
+            this.AccessLevel = new AccessLevelViewModel();
+
             Update(megaNode);
             SetDefaultValues();
 
@@ -361,7 +363,7 @@ namespace MegaApp.ViewModels
 
         private async void Remove()
         {
-            if (this.Parent != null && this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && this.Parent.ItemCollection.MoreThanOneSelected)
             {
                 if (this.Parent.RemoveCommand.CanExecute(null))
                     this.Parent.RemoveCommand.Execute(null);
@@ -384,6 +386,9 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
+                    case ContainerType.ContactInShares:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
                         title = ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion_Title");
                         message = string.Format(ResourceService.AppMessages.GetString("AM_MoveToRubbishBinQuestion"), this.Name);
                         break;
@@ -415,6 +420,9 @@ namespace MegaApp.ViewModels
                 {
                     case ContainerType.CloudDrive:
                     case ContainerType.CameraUploads:
+                    case ContainerType.ContactInShares:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
                         var moveNode = new MoveNodeRequestListenerAsync();
                         result = await moveNode.ExecuteAsync(() =>
                             this.MegaSdk.moveNode(this.OriginalMNode, this.MegaSdk.getRubbishNode(), moveNode));
@@ -566,6 +574,7 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
+            this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
@@ -713,6 +722,40 @@ namespace MegaApp.ViewModels
         public TransferObjectModel Transfer { get; set; }
 
         public MNode OriginalMNode { get; private set; }
+
+        private AccessLevelViewModel _accessLevel;
+        /// <summary>
+        /// Access level to the node
+        /// </summary>
+        public AccessLevelViewModel AccessLevel
+        {
+            get { return _accessLevel; }
+            set
+            {
+                SetField(ref _accessLevel, value);
+                OnPropertyChanged(nameof(this.HasReadPermissions), 
+                    nameof(this.HasReadWritePermissions),
+                    nameof(this.HasFullAccessPermissions));
+            }
+        }
+
+        /// <summary>
+        /// Specifies if the node has read permissions
+        /// </summary>
+        public bool HasReadPermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_READ;
+
+        /// <summary>
+        /// Specifies if the node has read & write permissions
+        /// </summary>
+        public bool HasReadWritePermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_READWRITE;
+
+        /// <summary>
+        /// Specifies if the node has full access permissions
+        /// </summary>
+        public bool HasFullAccessPermissions => this.AccessLevel == null ? false :
+            (int)this.AccessLevel?.AccessType >= (int)MShareType.ACCESS_FULL;
 
         #endregion
 

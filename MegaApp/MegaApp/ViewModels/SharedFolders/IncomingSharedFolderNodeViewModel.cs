@@ -1,12 +1,12 @@
-﻿using System.Windows.Input;
-using mega;
+﻿using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
-    public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel
+    public class IncomingSharedFolderNodeViewModel : SharedFolderNodeViewModel, IMegaIncomingSharedFolderNode
     {
         public IncomingSharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(megaNode, parent)
@@ -16,12 +16,6 @@ namespace MegaApp.ViewModels.SharedFolders
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_IncomingSharedFolderPathData");
             this.Update(megaNode);            
         }
-
-        #region Commands
-
-        public ICommand LeaveShareCommand { get; }
-
-        #endregion
 
         #region Methods
 
@@ -45,12 +39,12 @@ namespace MegaApp.ViewModels.SharedFolders
 
             OnUiThread(() =>
             {
-                this.Owner = string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ?
+                this.Owner = string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) ?
                     owner.getEmail() : string.Format("{0} {1}", firstName, lastName);
             });
         }        
 
-        private async void LeaveShare()
+        public async void LeaveShare()
         {
             if (this.Parent.ItemCollection.IsMultiSelectActive)
             {
@@ -82,7 +76,17 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Properties
 
-        public bool AllowRename => (this.AccessLevel == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
+        private string _owner;
+        /// <summary>
+        /// Owner of the incoming shared folder
+        /// </summary>
+        public override string Owner
+        {
+            get { return _owner; }
+            set { SetField(ref _owner, value); }
+        }        
+
+        public bool AllowRename => (this.AccessLevel.AccessType == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
 
         #endregion
 

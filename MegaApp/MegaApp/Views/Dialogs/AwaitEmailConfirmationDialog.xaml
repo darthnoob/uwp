@@ -10,7 +10,7 @@
     d:DataContext="{d:DesignInstance dialogViewModels:AwaitEmailConfirmationDialogViewModel}"
     mc:Ignorable="d"
     Margin="0, 0, 24, 8"
-    Style="{ThemeResource MegaContentDialogStyle}"
+    Style="{ThemeResource MegaAlertDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}">
     <dialogViews:BaseAwaitEmailConfirmationDialog.Title>

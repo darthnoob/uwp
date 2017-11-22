@@ -1,55 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
-    public class SharedFoldersListViewModel : BaseSdkViewModel
+    public class SharedFoldersListViewModel : FolderViewModel
     {
-        public SharedFoldersListViewModel()
+        public SharedFoldersListViewModel(ContainerType containerType) : base(containerType)
         {
-            this.ItemCollection = new CollectionViewModel<IMegaSharedFolderNode>();
-            
-            this.DownloadCommand = new RelayCommand(Download);
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
+
+            this.ClosePanelCommand = new RelayCommand(ClosePanels);
+            this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+
+            this.ItemCollection.ItemCollectionChanged += OnFolderListViewStateChanged;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnFolderListViewStateChanged;
         }
 
         #region Commands
 
-        public ICommand DownloadCommand { get; }
         public ICommand LeaveShareCommand { get; }
         public ICommand RemoveSharedAccessCommand { get; }
+
+        public ICommand ClosePanelCommand { get; }
+        public ICommand OpenContentPanelCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Cancel any running load process of contacts
-        /// </summary>
-        protected void CancelLoad()
+        private void OnFolderListViewStateChanged(object sender, EventArgs args)
         {
-            if (this.LoadingCancelTokenSource != null && LoadingCancelToken.CanBeCanceled)
-                LoadingCancelTokenSource.Cancel();
-        }
-
-        protected void CreateLoadCancelOption()
-        {
-            if (this.LoadingCancelTokenSource != null)
-            {
-                this.LoadingCancelTokenSource.Dispose();
-                this.LoadingCancelTokenSource = null;
-            }
-            this.LoadingCancelTokenSource = new CancellationTokenSource();
-            this.LoadingCancelToken = LoadingCancelTokenSource.Token;
+            OnUiThread(() => OnPropertyChanged(nameof(this.SharedFolders)));
         }
 
         protected void OnSharedFolderAdded(object sender, MNode megaNode)
@@ -86,40 +77,20 @@ namespace MegaApp.ViewModels.SharedFolders
             var node = this.ItemCollection.Items.FirstOrDefault(
                 n => n.Base64Handle.Equals(megaNode.getBase64Handle()));
 
-            // If node is found in current view, process the remove action
+            // If node isn't found in current view, don't process the remove action
             if (node == null) return;
 
-            try { OnUiThread(() => this.ItemCollection.Items.Remove(node)); }
-            catch (Exception) { /* Dummy catch, supress possible exception */ }
-        }
-
-        private async void Download()
-        {
-            if (!this.ItemCollection.HasSelectedItems) return;
-            await MultipleDownloadAsync(this.ItemCollection.SelectedItems);
-            this.ItemCollection.IsMultiSelectActive = false;
-        }
-
-        private async Task MultipleDownloadAsync(ICollection<IMegaSharedFolderNode> nodes)
-        {
-            if (nodes?.Count < 1) return;
-
-            var downloadFolder = await FolderService.SelectFolder();
-            if (downloadFolder != null)
+            try
             {
-                if (await TransferService.CheckExternalDownloadPathAsync(downloadFolder.Path))
+                OnUiThread(() =>
                 {
-                    if (nodes != null)
-                    {
-                        foreach (var node in nodes)
-                        {
-                            node.Transfer.ExternalDownloadPath = downloadFolder.Path;
-                            TransferService.MegaTransfers.Add(node.Transfer);
-                            node.Transfer.StartTransfer();
-                        }
-                    }
-                }
+                    this.ItemCollection.Items.Remove(node);
+
+                    if (this.ItemCollection.FocusedItem.Equals(node))
+                        this.ClosePanels();
+                });
             }
+            catch (Exception) { /* Dummy catch, supress possible exception */ }
         }
 
         private async void LeaveShare()
@@ -165,7 +136,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void LeaveMultipleSharedFolders(ICollection<IMegaSharedFolderNode> sharedFolders)
+        private async void LeaveMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 
@@ -193,7 +164,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
             if (this.ItemCollection.OnlyOneSelectedItem)
             {
-                var node = this.ItemCollection.SelectedItems.First();
+                var node = this.ItemCollection.SelectedItems.First() as IMegaOutgoingSharedFolderNode;
 
                 var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
@@ -230,7 +201,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaSharedFolderNode> sharedFolders)
+        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 
@@ -238,7 +209,7 @@ namespace MegaApp.ViewModels.SharedFolders
             if (sharedFolders != null)
             {
                 foreach (var node in sharedFolders)
-                    result = result & await node.RemoveSharedAccessAsync();
+                    result = result & await (node as IMegaOutgoingSharedFolderNode).RemoveSharedAccessAsync();
             }
 
             if (!result)
@@ -252,22 +223,29 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
+        private void OpenContentPanel()
+        {
+            this.IsContentPanelOpen = true;
+            this.IsInformationPanelOpen = false;
+        }
+
+        private void OpenInformationPanel()
+        {
+            this.IsContentPanelOpen = false;
+            this.IsInformationPanelOpen = true;
+        }
+
+        public void ClosePanels()
+        {
+            this.IsContentPanelOpen = false;
+            this.IsInformationPanelOpen = false;
+        }
+
         #endregion
 
         #region Properties
 
-        private CancellationTokenSource LoadingCancelTokenSource { get; set; }
-        protected CancellationToken LoadingCancelToken { get; set; }
-
-        private CollectionViewModel<IMegaSharedFolderNode> _itemCollection;
-        /// <summary>
-        /// Folders shared with or by the contact
-        /// </summary>
-        public CollectionViewModel<IMegaSharedFolderNode> ItemCollection
-        {
-            get { return _itemCollection; }
-            set { SetField(ref _itemCollection, value); }
-        }
+        public FolderViewModel SharedFolders => this;
 
         /// <summary>
         /// Number of folders shared with or by the contact
@@ -281,29 +259,71 @@ namespace MegaApp.ViewModels.SharedFolders
             ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
             string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
 
+        public bool IsPanelOpen => this.IsContentPanelOpen || this.IsInformationPanelOpen;
+
+        private bool _isContentPanelOpen;
+        public bool IsContentPanelOpen
+        {
+            get { return _isContentPanelOpen; }
+            set
+            {
+                SetField(ref _isContentPanelOpen, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
+
+                if (this._isContentPanelOpen)
+                {
+                    this.ItemCollection.IsMultiSelectActive = false;
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
+                }
+                else
+                {
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
+                }
+            }
+        }
+
+        private bool _isInformationPanelOpen;
+        public bool IsInformationPanelOpen
+        {
+            get { return _isInformationPanelOpen; }
+            set
+            {
+                SetField(ref _isInformationPanelOpen, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
+
+                if (this._isInformationPanelOpen)
+                {
+                    this.ItemCollection.IsMultiSelectActive = false;
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
+                }
+                else
+                {
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
+                }
+            }
+        }
+
         #endregion
 
         #region UiResources
 
-        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
+        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
-        public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
-        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string OpenText => ResourceService.UiResources.GetString("UI_Open");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
-        public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
-
+        
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
         #endregion
 
         #region VisualResources
 
-        public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
-        public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
-        public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
 
         #endregion
     }

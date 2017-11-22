@@ -110,6 +110,26 @@ namespace MegaApp.Interfaces
         /// </summary>
         MNode OriginalMNode { get; }
 
+        /// <summary>
+        /// Access level to the node
+        /// </summary>
+        AccessLevelViewModel AccessLevel { get; set; }
+
+        /// <summary>
+        /// Specifies if the node has read permissions
+        /// </summary>
+        bool HasReadPermissions { get; }
+
+        /// <summary>
+        /// Specifies if the node has read & write permissions
+        /// </summary>
+        bool HasReadWritePermissions { get; }
+
+        /// <summary>
+        /// Specifies if the node has full access permissions
+        /// </summary>
+        bool HasFullAccessPermissions { get; }
+
         #endregion
     }
 }

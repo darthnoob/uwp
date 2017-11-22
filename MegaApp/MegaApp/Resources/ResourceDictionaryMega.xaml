@@ -7,6 +7,7 @@
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:extensions="using:MegaApp.Extensions"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:mega="using:mega"
     xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:userControls="using:MegaApp.UserControls">
 
@@ -37,6 +38,7 @@
     <converters:IntValueToVisibilityConverter x:Key="IntValueToVisibilityConverter" />
     <converters:InverseContainerTypeToVisibilityConverter x:Key="InverseContainerTypeToVisibilityConverter" />
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
+    <converters:FolderViewStateToVisibilityConverter x:Key="FolderViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter" />
     <converters:TransferStateToReadableTextConverter x:Key="TransferStateToReadableTextConverter" />
@@ -79,8 +81,8 @@
         <userControls:EmptyState
             x:Name="EmptyState"
             VerticalContentAlignment="Center"
-            Background="{StaticResource MegaAppBackgroundBrush}"
-            Foreground="{StaticResource MegaAppForegroundBrush}"
+            Background="{TemplateBinding Background}"
+            Foreground="{TemplateBinding Foreground}"
             HeaderText="{Binding EmptyStateHeaderText}"
             IsVisible="{Binding ItemCollection.Items, Converter={StaticResource InverseCollectionToBoolConverter}}"
             SubHeaderMargin="0,14,0,0"
@@ -167,12 +169,28 @@
         <Grid>
             <TextBlock
                 FontFamily="Segoe UI"
-                FontSize="24"
+                FontSize="20"
                 FontWeight="Normal"
+                LineHeight="27"
                 Text="{Binding}" />
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="BreadcrumbHomeTemplate">
+        <Grid>
+            <Viewbox MaxWidth="14" MaxHeight="14">
+                <Path
+                    x:Name="BreadcrumbHomeIcon"
+                    Data="{Binding BreadcrumbHomeIcon}"
+                    Stretch="UniformToFill">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+            </Viewbox>
+        </Grid>
+    </DataTemplate>
+    
     <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
         <Grid>
             <Path
@@ -1009,7 +1027,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactIncomingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1087,7 +1105,7 @@
                 Margin="46,0,18,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1099,17 +1117,25 @@
                 FontSize="14"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Text="{Binding AccessLevelText}"
+                Text="{Binding AccessLevel.AccessLevelText}"
                 TextWrapping="NoWrap"
                 Opacity="0.9" />
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaIncomingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenInformationPanelCommand}"
+                            Text="{Binding InformationText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
                             Command="{Binding DownloadCommand}"
                             Text="{Binding DownloadText}" />
@@ -1126,7 +1152,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
@@ -1184,7 +1210,7 @@
                 Margin="46,0,18,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1196,17 +1222,25 @@
                 FontSize="14"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Text="{Binding AccessLevelText}"
+                Text="{Binding AccessLevel.AccessLevelText}"
                 TextWrapping="NoWrap"
                 Opacity="0.9" />
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="MegaIncomingSharedItemListViewMobile">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenInformationPanelCommand}"
+                            Text="{Binding InformationText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
                             Command="{Binding DownloadCommand}"
                             Text="{Binding DownloadText}" />
@@ -1223,7 +1257,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
@@ -1271,7 +1305,7 @@
                 Margin="12,0,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Data="{Binding AccessLevelPathData}"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
                 Stretch="Uniform"
                 Opacity="0.9" >
                 <Path.Fill>
@@ -1282,16 +1316,32 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaOutgoingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
                         <MenuFlyoutItem
+                            Command="{Binding OpenContentPanelCommand}"
+                            Text="{Binding OpenText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
+                            Command="{Binding OpenInformationPanelCommand}"
+                            Text="{Binding InformationText}"
+                            Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <MenuFlyoutItem
                             Command="{Binding DownloadCommand}"
                             Text="{Binding DownloadText}" />
                         <MenuFlyoutItem
+                            Command="{Binding GetLinkCommand}"
+                            Text="{Binding GetLinkText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <x:Boolean>True</x:Boolean>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
                             Command="{Binding RenameCommand}"
-                            Text="{Binding RenameText}" />
+                            Text="{Binding RenameText}"
+                            Visibility="{Binding Parent.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                         <MenuFlyoutItem
                             Command="{Binding RemoveSharedAccessCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
@@ -1301,7 +1351,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.ColumnDefinitions>
@@ -1795,8 +1845,120 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="OutgoingSharedFolderContactItem">
+        <Grid Margin="0,6" Background="Transparent">
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyout.Items>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionReadOnlyText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_READ</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionReadAndWriteText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_READWRITE</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding ChangePermissionsCommand}"
+                            Text="{Binding PermissionFullAccessText}">
+                            <MenuFlyoutItem.CommandParameter>
+                                <mega:MShareType>ACCESS_FULL</mega:MShareType>
+                            </MenuFlyoutItem.CommandParameter>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem
+                            Command="{Binding RemoveContactFromFolderCommand}"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            Text="{Binding RemoveFromFolderText}"/>
+                    </MenuFlyout.Items>
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+            <interactivity:Interaction.Behaviors>
+                <core:EventTriggerBehavior EventName="RightTapped">
+                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                </core:EventTriggerBehavior>
+            </interactivity:Interaction.Behaviors>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Height="36" Width="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Text="{Binding AvatarLetter}" />
+            <Image 
+                Grid.Row="0" Grid.Column="0" 
+                Grid.RowSpan="2" 
+                Width="36" Height="36" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center" 
+                Stretch="UniformToFill" 
+                Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelWidth="36"
+                        DecodePixelType="Logical"
+                        UriSource="{Binding AvatarUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock 
+                Grid.Row="0" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="14"
+                Text="{Binding FullName}"
+                Opacity="0.9"
+                VerticalAlignment="Center"/>
+            <TextBlock 
+                Grid.Row="1" Grid.Column="1" 
+                Margin="8,0,0,0" 
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding Email}"
+                VerticalAlignment="Center"/>
+            <Path
+                Grid.Row="0" Grid.Column="2"
+                Grid.RowSpan="2"
+                Width="12" Height="12"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Data="{Binding AccessLevel.AccessLevelPathData}"
+                Stretch="Uniform"
+                Opacity="0.9">
+                <Path.Fill>
+                    <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                </Path.Fill>
+            </Path>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="MegaContactItemContentMobile">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1907,7 +2069,7 @@
     </DataTemplate>
     
     <DataTemplate x:Key="MegaContactItemContentDesktop">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -2018,7 +2180,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactRequestItemContentMobile">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -2134,7 +2296,7 @@
     </DataTemplate>
     
     <DataTemplate x:Key="MegaContactRequestItemContentDesktop">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>

@@ -11,6 +11,11 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharesViewModel : SharedFoldersListViewModel
     {
+        public IncomingSharesViewModel() : base(ContainerType.InShares)
+        {
+
+        }
+
         #region Methods
 
         public void Initialize(MUser contact = null)
@@ -25,7 +30,7 @@ namespace MegaApp.ViewModels.SharedFolders
             if (App.GlobalListener == null) return;
             App.GlobalListener.InSharedFolderAdded += this.OnSharedFolderAdded;
             App.GlobalListener.InSharedFolderRemoved += this.OnSharedFolderRemoved;
-        }
+        }        
 
         public void Deinitialize()
         {
@@ -49,6 +54,9 @@ namespace MegaApp.ViewModels.SharedFolders
 
             // Create the option to cancel
             CreateLoadCancelOption();
+
+            // Process is started so we can set the empty content template to loading already
+            SetEmptyContent(true);
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
             MNodeList inSharedItems = (contact != null) ?
@@ -86,6 +94,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
             OnItemCollectionChanged(this, EventArgs.Empty);
+            SetEmptyContent(false);
         }
 
         public void SortBy(IncomingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
@@ -97,7 +106,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_NAME:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.Name) : this.ItemCollection.Items.OrderByDescending(item => item.Name));
                     });
                     break;
@@ -105,7 +114,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_MODIFICATION:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.ModificationTime) : this.ItemCollection.Items.OrderByDescending(item => item.ModificationTime));
                     });
                     break;
@@ -113,16 +122,18 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_ACCESS:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ?
-                            this.ItemCollection.Items.OrderBy(item => item.AccessLevel) : this.ItemCollection.Items.OrderByDescending(item => item.AccessLevel));
+                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ?
+                            this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType) : 
+                            this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType));
                     });
                     break;
 
                 case IncomingSharesSortOrderType.ORDER_OWNER:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ?
-                            this.ItemCollection.Items.OrderBy(item => item.Owner) : this.ItemCollection.Items.OrderByDescending(item => item.Owner));
+                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ?
+                            this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).Owner) : 
+                            this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).Owner));
                     });
                     break;
             }
@@ -156,7 +167,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #endregion
 
-        #region Properties
+        #region Properties        
 
         public string OrderTypeAndNumberOfItems
         {
@@ -168,7 +179,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByLastModification"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDate"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevel"),
@@ -192,14 +203,14 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByLastModificationMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDateMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevelMultiSelect"),
-                            this.ItemCollection.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_OWNER:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByOwnerMultiSelect"),
-                            this.ItemCollection.Items.Count);
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     default:
                         return string.Empty;
                 }
@@ -220,13 +231,6 @@ namespace MegaApp.ViewModels.SharedFolders
         }
 
         public ContainerType ContainerType => ContainerType.InShares;
-
-        #endregion
-
-        #region EmptyStates
-
-        public string EmptyStateHeaderText => ResourceService.EmptyStates.GetString("ES_IncomingSharesHeader");
-        public string EmptyStateSubHeaderText => ResourceService.EmptyStates.GetString("ES_IncomingSharesSubHeader");
 
         #endregion
     }

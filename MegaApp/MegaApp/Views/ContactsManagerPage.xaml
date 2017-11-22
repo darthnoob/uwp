@@ -60,12 +60,9 @@
                             ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
                             Command="{Binding AddContactCommand}"
                             Click="OnButtonClick">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding AddContactPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8FA;" />
+                            </Viewbox>
                         </AppBarButton>
                         <AppBarButton
                             Style="{StaticResource MegaAppBarButtonStyle}"
@@ -173,12 +170,9 @@
                             ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
                             Command="{Binding AddContactCommand}"
                             Click="OnButtonClick">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding AddContactPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8FA;" />
+                            </Viewbox>
                         </AppBarButton>
                         <AppBarButton
                             Style="{StaticResource MegaAppBarButtonStyle}"
@@ -401,12 +395,9 @@
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding AddContactPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xE8FA;" />
+                        </Viewbox>
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
@@ -534,12 +525,9 @@
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding AddContactPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xE8FA;" />
+                        </Viewbox>
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"

@@ -17,16 +17,27 @@
     d:DataContext="{d:DesignInstance viewModels:SharedFoldersViewModel}">
 
     <SplitView
-        x:Name="SharedFolderDetailsSplitView"
+        x:Name="SharedFolderSplitView"
         DisplayMode="Inline"
-        IsPaneOpen="False"
+        IsPaneOpen="{Binding ActiveView.IsPanelOpen}"
         PanePlacement="Right">
-        <!--<SplitView.Pane>
-            <userControls:NodeDetailsPanel
-                x:Name="SharedFolderDetailsPanelControl"
-                Background="{StaticResource MegaAppBackgroundBrush}"
-                Foreground="{StaticResource MegaAppForegroundBrush}" />
-        </SplitView.Pane>-->
+        <SplitView.Pane>
+            <Grid>
+                <userControls:SharedFolderContentPanel
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    SharedFolderNode="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding IsContentPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                
+                <userControls:SharedFolderInformationPanel
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    SharedFolder="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding IsInformationPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </Grid>
+        </SplitView.Pane>
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
@@ -35,7 +46,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid 
-                x:Name="TopRowGrid" 
+                x:Name="TopRowGrid"
                 DataContext="{Binding ActiveView}"
                 Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -50,110 +61,144 @@
                     Margin="24,14,0,0"
                     FontSize="12"
                     Foreground="{StaticResource MegaRedColorBrush}"
-                    Text="{Binding SharedFoldersText, Mode=OneTime}" />                
-                
-                <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
-                <Grid
-                    x:Name="TopCommandBar"
-                    Grid.Row="0" Grid.Column="1">
-                    
-                    <!--  INCOMING SHARES TOP COMMAND BAR (ONLY DESKTOP)  -->
-                    <CommandBar 
-                        Background="Transparent"
-                        Visibility="{Binding ContainerType, ConverterParameter=InShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                        <AppBarButton
-                            Command="{Binding DownloadCommand}"
-                            Label="{Binding DownloadText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding DownloadPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Command="{Binding LeaveShareCommand}"
-                            Label="{Binding LeaveShareText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding LeaveSharePathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            Label="{Binding MultiSelectText, Mode=OneTime}"                        
-                            ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
-                            Command="{Binding ItemCollection.MultiSelectCommand}"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar>
+                    Text="{Binding SharedFoldersText, Mode=OneTime}" />
 
-                    <!--  OUTGOING SHARES TOP COMMAND BAR (ONLY DESKTOP)  -->
-                    <CommandBar 
-                        Background="Transparent"
-                        Visibility="{Binding ContainerType, ConverterParameter=OutShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                        <AppBarButton
-                            Command="{Binding DownloadCommand}"
-                            Label="{Binding DownloadText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding DownloadPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Command="{Binding RemoveSharedAccessCommand}"
-                            Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding LeaveSharePathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            Label="{Binding MultiSelectText, Mode=OneTime}"                        
-                            ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
-                            Command="{Binding ItemCollection.MultiSelectCommand}"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar>
+                <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
+                <Grid 
+                    Grid.Row="0" Grid.Column="1"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Grid x:Name="TopCommandBar">
+                        
+                        <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+                        <CommandBar 
+                            Background="Transparent"
+                            extensions:CommandBarExtensions.HideMoreButton="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}">
+                            <AppBarButton
+                                Command="{Binding DownloadCommand}"
+                                Label="{Binding DownloadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                Visibility="{Binding SharedFolders, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{Binding LeaveShareCommand}"
+                                Label="{Binding LeaveShareText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
+                                Visibility="{Binding SharedFolders, ConverterParameter='leaveshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                Label="{Binding MultiSelectText, Mode=OneTime}"                        
+                                ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
+                                Command="{Binding ItemCollection.MultiSelectCommand}"
+                                Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton
+                                    Label="{Binding OpenText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                                    Command="{Binding OpenContentPanelCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='open', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <!--<AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>-->
+                                </AppBarButton>
+                                <AppBarButton
+                                    Label="{Binding InformationText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"
+                                    Command="{Binding OpenInformationPanelCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='information', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                                <AppBarButton
+                                    Label="{Binding GetLinkText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding GetLinkText, Mode=OneTime}"
+                                    Command="{Binding GetLinkCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='getlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding LinkPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                                <AppBarButton
+                                    Label="{Binding RenameText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding RenameText, Mode=OneTime}"
+                                    Command="{Binding RenameCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding RenamePathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                                <AppBarButton
+                                    Command="{Binding RemoveSharedAccessCommand}"
+                                    Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='removeshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <Viewbox MaxHeight="16" MaxWidth="16">
+                                        <FontIcon Glyph="&#xE8F8;" />
+                                    </Viewbox>
+                                </AppBarButton>
+                            </CommandBar.SecondaryCommands>
+                        </CommandBar>
+                    </Grid>
                 </Grid>
+
+                <!--  CLOSE PANEL TOP COMMAND BAR (ONLY DESKTOP)  -->
+                <CommandBar 
+                    Grid.Row="0" Grid.Column="2"
+                    Background="Transparent"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton
+                        Command="{Binding ClosePanelCommand}"
+                        Label="{Binding ClosePanelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding ClosePanelText, Mode=OneTime}">
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xEA5B;"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
 
                 <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
                 <CommandBar
                     Grid.Row="0" Grid.Column="2"
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Background="Transparent"
-                    IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                    IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <AppBarSeparator 
                         x:Name="PermanentTopCommandBarSeparator"
                         Margin="-12,0"
@@ -268,16 +313,14 @@
                 DataContext="{Binding ActiveView}"
                 Grid.Row="2">
 
-                <!--  INCOMING SHARES BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
-                <CommandBar
-                    Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding ContainerType, ConverterParameter=InShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
+                <!--  BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+                <CommandBar Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{Binding DownloadCommand}"
                         Label="{Binding DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding SharedFolders, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -290,7 +333,7 @@
                         Label="{Binding LeaveShareText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding SharedFolders, ConverterParameter='leaveshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -310,50 +353,65 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                </CommandBar>
-                
-                <!--  OUTGOING SHARES BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
-                <CommandBar 
-                    Style="{StaticResource MegaCommandBarStyle}"
-                    Visibility="{Binding ContainerType, ConverterParameter=OutShares, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                    <AppBarButton
-                        Command="{Binding DownloadCommand}"
-                        Label="{Binding DownloadText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding DownloadPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Command="{Binding RemoveSharedAccessCommand}"
-                        Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding LeaveSharePathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        Label="{Binding MultiSelectText, Mode=OneTime}"                        
-                        ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
-                        Command="{Binding ItemCollection.MultiSelectCommand}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Label="{Binding OpenText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding OpenText, Mode=OneTime}"
+                            Command="{Binding OpenContentPanelCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='open', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <!--<AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>-->
+                        </AppBarButton>
+                        <AppBarButton
+                            Label="{Binding InformationText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding InformationText, Mode=OneTime}"
+                            Command="{Binding OpenInformationPanelCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='information', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Label="{Binding GetLinkText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding GetLinkText, Mode=OneTime}"
+                            Command="{Binding GetLinkCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='getlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding LinkPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Label="{Binding RenameText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding RenameText, Mode=OneTime}"
+                            Command="{Binding RenameCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding RenamePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding RemoveSharedAccessCommand}"
+                            Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='removeshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8F8;" />
+                            </Viewbox>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
         </Grid>
@@ -369,7 +427,6 @@
                         <Setter Target="ListViewOutgoingShares.SelectionMode" Value="Extended" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
-                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
@@ -382,7 +439,6 @@
                         <Setter Target="ListViewOutgoingShares.SelectionMode" Value="Single" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
-                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>

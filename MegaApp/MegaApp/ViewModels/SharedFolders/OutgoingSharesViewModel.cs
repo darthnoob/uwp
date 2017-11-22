@@ -11,6 +11,11 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class OutgoingSharesViewModel : SharedFoldersListViewModel
     {
+        public OutgoingSharesViewModel() : base(ContainerType.OutShares)
+        {
+
+        }
+
         public void Initialize()
         {
             this.GetOutgoingSharedItems();
@@ -47,6 +52,9 @@ namespace MegaApp.ViewModels.SharedFolders
 
             // Create the option to cancel
             CreateLoadCancelOption();
+
+            // Process is started so we can set the empty content template to loading already
+            SetEmptyContent(true);
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
             MShareList outSharedItems = SdkService.MegaSdk.getOutShares();
@@ -88,6 +96,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
             OnItemCollectionChanged(this, EventArgs.Empty);
+            SetEmptyContent(false);
         }
 
         public void SortBy(OutgoingSharesSortOrderType sortOption, SortOrderDirection sortDirection)
@@ -99,7 +108,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case OutgoingSharesSortOrderType.ORDER_NAME:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaSharedFolderNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.Name) : this.ItemCollection.Items.OrderByDescending(item => item.Name));
                     });
                     break;
@@ -178,13 +187,6 @@ namespace MegaApp.ViewModels.SharedFolders
         }
 
         public ContainerType ContainerType => ContainerType.OutShares;
-
-        #endregion
-
-        #region EmptyStates
-
-        public string EmptyStateHeaderText => ResourceService.EmptyStates.GetString("ES_OutgoingSharesHeader");
-        public string EmptyStateSubHeaderText => ResourceService.EmptyStates.GetString("ES_OutgoingSharesSubHeader");
 
         #endregion
     }

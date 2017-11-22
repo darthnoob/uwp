@@ -86,7 +86,6 @@ namespace MegaApp.ViewModels.Contacts
 
         #region VisualResources
 
-        public string AddContactPathData => ResourceService.VisualResources.GetString("VR_AddContactPathData");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string RemovePathData => ResourceService.VisualResources.GetString("VR_RemovePathData");

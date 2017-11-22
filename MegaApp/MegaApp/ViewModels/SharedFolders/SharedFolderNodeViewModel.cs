@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
-using MegaApp.Services;
 using MegaApp.MegaApi;
+using MegaApp.Services;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
-    public class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
+    public abstract class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
     {
         public SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
@@ -15,22 +18,36 @@ namespace MegaApp.ViewModels.SharedFolders
             this.Parent = parent;
 
             this.DownloadCommand = new RelayCommand(Download);
+            this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
 
             this.Update(megaNode);
         }
 
+        #region Commands
+
+        public ICommand LeaveShareCommand { get; set; }
+        public ICommand RemoveSharedAccessCommand { get; set; }
+
+        public ICommand OpenContentPanelCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; }
+
+        #endregion
+
         #region Methods
 
-        /// <summary>
-        /// Update core data associated with the SDK MNode object
-        /// </summary>
-        /// <param name="megaNode">Node to update</param>
-        /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
-        public override void Update(MNode megaNode, bool externalUpdate = false)
+        private void OnParentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            base.Update(megaNode, externalUpdate);
+            switch (e.PropertyName)
+            {
+                case nameof(this.Parent.ItemCollection.OnlyOneSelectedItem):
+                    OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
+                    break;
 
-            OnUiThread(() => this.AccessLevel = (MShareType)SdkService.MegaSdk.getAccess(megaNode));
+                case nameof(this.Parent.IsPanelOpen):
+                    OnPropertyChanged(nameof(this.IsPanelOpen));
+                    break;
+            }
         }
 
         private void Download()
@@ -43,6 +60,20 @@ namespace MegaApp.ViewModels.SharedFolders
             }
 
             base.Download(TransferService.MegaTransfers);
+        }
+
+        private void OpenInformationPanel()
+        {
+            if (!this.Parent.ItemCollection.OnlyOneSelectedItem) return;
+            if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
+                this.Parent.OpenInformationPanelCommand.Execute(null);
+        }
+
+        private void OpenContentPanel()
+        {
+            if (!this.Parent.ItemCollection.OnlyOneSelectedItem) return;
+            if (this.Parent.OpenContentPanelCommand.CanExecute(null))
+                this.Parent.OpenContentPanelCommand.Execute(null);
         }
 
         public async Task<bool> RemoveSharedAccessAsync()
@@ -71,74 +102,55 @@ namespace MegaApp.ViewModels.SharedFolders
         protected new SharedFoldersListViewModel Parent
         {
             get { return _parent; }
-            set { SetField(ref _parent, value); }
-        }
-
-        private string _owner;
-        /// <summary>
-        /// Acces level to the incoming shared node
-        /// </summary>
-        public string Owner
-        {
-            get { return _owner; }
-            set { SetField(ref _owner, value); }
-        }
-
-        private MShareType _accessLevel;
-        /// <summary>
-        /// Acces level to the incoming shared node
-        /// </summary>
-        public MShareType AccessLevel
-        {
-            get { return _accessLevel; }
             set
             {
-                SetField(ref _accessLevel, value);
-                OnPropertyChanged(nameof(this.AccessLevelText),
-                    nameof(this.AccessLevelPathData));
+                if(_parent != null)
+                {
+                    _parent.PropertyChanged -= OnParentPropertyChanged;
+                    if (_parent.ItemCollection != null)
+                        _parent.ItemCollection.PropertyChanged -= OnParentPropertyChanged;
+                }
+
+                SetField(ref _parent, value);
+
+                if (_parent == null) return;
+                _parent.PropertyChanged += OnParentPropertyChanged;
+                if (_parent.ItemCollection != null)
+                    _parent.ItemCollection.PropertyChanged += OnParentPropertyChanged;
             }
         }
 
-        public string AccessLevelText
-        {
-            get
-            {
-                switch (this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadOnly");
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.UiResources.GetString("UI_PermissionReadAndWrite");
-                    case MShareType.ACCESS_FULL:
-                        return ResourceService.UiResources.GetString("UI_PermissionFullAccess");
-                    case MShareType.ACCESS_UNKNOWN:
-                    case MShareType.ACCESS_OWNER:
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public bool OnlyOneSelectedItem => this.Parent.ItemCollection.OnlyOneSelectedItem;
+        public bool IsPanelOpen => this.Parent.IsPanelOpen;
 
-        public string AccessLevelPathData
-        {
-            get
-            {
-                switch (this.AccessLevel)
-                {
-                    case MShareType.ACCESS_READ:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadOnlyPathData");
-                    case MShareType.ACCESS_READWRITE:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsReadAndWritePathData");
-                    case MShareType.ACCESS_FULL:
-                        return ResourceService.VisualResources.GetString("VR_PermissionsFullAccessPathData");
-                    case MShareType.ACCESS_UNKNOWN:
-                    case MShareType.ACCESS_OWNER:
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-        
+        #endregion
+
+        #region Virtual Properties
+
+        /// <summary>
+        /// Owner of the shared folder
+        /// </summary>
+        public virtual string Owner { get; set; }
+
+        /// <summary>
+        /// Folder location of the shared folder
+        /// </summary>
+        public virtual string FolderLocation { get; set; }
+
+        /// <summary>
+        /// List of contacts with the folder is shared
+        /// </summary>
+        public virtual ContactsListOutgoingSharedFolderViewModel ContactsList { get; set; }
+
+        public virtual string ContactsText { get; set; }
+
+        #endregion
+
+        #region UiResources
+
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
+        public string OpenText => ResourceService.UiResources.GetString("UI_Open");
+
         #endregion
     }
 }

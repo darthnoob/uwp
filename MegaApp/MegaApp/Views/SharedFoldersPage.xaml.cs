@@ -20,6 +20,9 @@ namespace MegaApp.Views
 
     public sealed partial class SharedFoldersPage : BaseSharedFoldersPage
     {
+        private const double InformationPanelMinWidth = 432;
+        private const double ContentPanelMinWidth = 888;
+
         public SharedFoldersPage()
         {
             this.InitializeComponent();
@@ -32,25 +35,68 @@ namespace MegaApp.Views
 
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected += OnAllSelected;
-
+            
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.OutgoingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected += OnAllSelected;
+
+            this.SharedFolderSplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected -= OnAllSelected;
 
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+            this.ViewModel.OutgoingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected -= OnAllSelected;
 
             this.ViewModel.Deinitialize();
             base.OnNavigatedFrom(e);
+        }
+
+        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (this.ViewModel.ActiveView.IsPanelOpen)
+            {
+                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.SharedFolderSplitView.ActualWidth < 600)
+                {
+                    this.SharedFolderSplitView.OpenPaneLength = this.SharedFolderSplitView.ActualWidth;
+                    AppService.SetAppViewBackButtonVisibility(true);
+                    return;
+                }
+
+                if (this.ViewModel.ActiveView.IsContentPanelOpen)
+                    this.SharedFolderSplitView.OpenPaneLength = ContentPanelMinWidth;
+                else if (this.ViewModel.ActiveView.IsInformationPanelOpen)
+                    this.SharedFolderSplitView.OpenPaneLength = InformationPanelMinWidth;
+            }
+
+            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
+        }
+
+        public override bool CanGoBack
+        {
+            get
+            {
+                if (this.ViewModel?.ActiveView != null && this.ViewModel.ActiveView.IsPanelOpen)
+                    return true;
+
+                return base.CanGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            this.ViewModel?.ActiveView?.ClosePanels();
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
@@ -74,11 +120,56 @@ namespace MegaApp.Views
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
+            // Needed to avoid extrange behaviors during the view update
+            DisableViewsBehaviors();
+
+            // If there is only one selected item save it to restore it after disable the multi select mode
+            IMegaNode selectedItem = null;
+            if (this.ViewModel.ActiveView.ItemCollection.OnlyOneSelectedItem)
+                selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
+
             var listView = this.GetSelectedListView();
+
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
                 listView.SelectionMode = ListViewSelectionMode.Extended;
             else
                 listView.SelectionMode = ListViewSelectionMode.Single;
+
+            // Restore the selected item
+            listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
+
+            // Restore the view behaviors again
+            EnableViewsBehaviors();
+        }
+
+        private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
+        {
+            // Needed to avoid extrange behaviors during the view update
+            DisableViewsBehaviors();
+
+            // First save the current selected item to restore it after enable/disable the single select mode
+            IMegaNode selectedItem = null;
+            if (this.ViewModel.ActiveView.ItemCollection.OnlyOneSelectedItem)
+                selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
+
+            var listView = this.GetSelectedListView();
+            if(isEnabled)
+            {
+                listView.SelectionMode = ListViewSelectionMode.Single;
+            }
+            else
+            {
+                if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                    listView.SelectionMode = ListViewSelectionMode.Extended;
+                else
+                    listView.SelectionMode = ListViewSelectionMode.Single;
+            }
+
+            // Restore the selected item
+            listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
+
+            // Restore the view behaviors again
+            EnableViewsBehaviors();
         }
 
         /// <summary>

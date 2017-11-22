@@ -116,11 +116,15 @@
     <Compile Include="Classes\BadSessionIdException.cs" />
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
+    <Compile Include="Interfaces\IMegaContactOutgoingSharedFolder.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
+    <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
@@ -128,10 +132,20 @@
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
+    <Compile Include="UserControls\FolderExplorer.xaml.cs">
+      <DependentUpon>FolderExplorer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
+      <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SharedFolderInformationPanel.xaml.cs">
+      <DependentUpon>SharedFolderInformationPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactSharedItemsViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactsListOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
@@ -187,13 +201,20 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
+    <Compile Include="ViewModels\Contacts\ContactOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\OutgoingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\OutgoingSharesViewModel.cs" />
+    <Compile Include="ViewModels\AccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -302,6 +323,12 @@
     </Compile>
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\SetSharedFolderPermissionDialog.xaml.cs">
+      <DependentUpon>SetSharedFolderPermissionDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ShareFolderToDialog.xaml.cs">
+      <DependentUpon>ShareFolderToDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
@@ -458,6 +485,18 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UserControls\FolderExplorer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SharedFolderContentPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\SharedFolderInformationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ContactsManagerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -505,6 +544,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\OkCancelDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\SetSharedFolderPermissionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ShareFolderToDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

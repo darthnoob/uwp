@@ -91,6 +91,19 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
+        /// Event triggered when the only allow single select mode status is changed
+        /// </summary>
+        public event EventHandler<bool> OnlyAllowSingleSelectStatusChanged;
+
+        /// <summary>
+        /// Event invocator method called when the only allow single select mode status is changed
+        /// </summary>
+        protected virtual void OnOnlyAllowSingleSelect(bool value)
+        {
+            this.OnlyAllowSingleSelectStatusChanged?.Invoke(this, value);
+        }
+
+        /// <summary>
         /// Event triggered when user choose to select/deselect all the items
         /// </summary>
         public event EventHandler<bool> AllSelected;
@@ -157,6 +170,10 @@ namespace MegaApp.ViewModels
         {
             if (this.SelectedItems == null || !this.SelectedItems.Any()) return;
             this.SelectedItems.Clear();
+
+            OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
+                nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
+                nameof(this.HasAllItemsSelected));
         }
 
         protected void SelectionChanged()
@@ -198,6 +215,12 @@ namespace MegaApp.ViewModels
         /// Sets if multiselect is active or not.
         /// </summary>
         protected void MultiSelect() => this.IsMultiSelectActive = !this.IsMultiSelectActive;
+
+        /// <summary>
+        /// Sets if only allow single select or not.
+        /// </summary>
+        protected void OnlyAllowSingleSelect() => 
+            this.IsOnlyAllowSingleSelectActive = !this.IsOnlyAllowSingleSelectActive;
 
         #endregion
 
@@ -276,10 +299,23 @@ namespace MegaApp.ViewModels
                 }
                 else
                 {
-                    this.ClearSelection();
+                    if(this.MoreThanOneSelected)
+                        this.ClearSelection();
+
                     OnPropertyChanged(nameof(this.IsMultiSelectActive));
                     this.OnMultiSelectDisabled();
                 }
+            }
+        }
+
+        private bool _isOnlyAllowSingleSelectActive;
+        public bool IsOnlyAllowSingleSelectActive
+        {
+            get { return _isOnlyAllowSingleSelectActive; }
+            set
+            {
+                if (!SetField(ref _isOnlyAllowSingleSelectActive, value)) return;
+                OnOnlyAllowSingleSelect(_isOnlyAllowSingleSelectActive);
             }
         }
 
