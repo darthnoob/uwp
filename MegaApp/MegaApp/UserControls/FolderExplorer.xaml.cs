@@ -116,8 +116,8 @@ namespace MegaApp.UserControls
             }
             else
             {
-                this.ListView.SelectionMode = ListViewSelectionMode.Single;
-                this.GridView.SelectionMode = ListViewSelectionMode.Single;
+                this.ListView.SelectionMode = ListViewSelectionMode.None;
+                this.GridView.SelectionMode = ListViewSelectionMode.None;
             }
 
             // Restore the selected item
