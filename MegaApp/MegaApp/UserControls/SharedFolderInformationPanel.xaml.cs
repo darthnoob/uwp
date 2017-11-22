@@ -67,41 +67,44 @@ namespace MegaApp.UserControls
                 sharedFolder.ContactsList.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             }
 
-            this.ViewModel.SharedFolder = sharedFolder;
+            if (this.ViewModel != null)
+                this.ViewModel.SharedFolder = sharedFolder;
+
             this.LinkWithKeyRadioButton.IsChecked = true;
 
-            if (this.ViewModel.IsInShare)
+            if (this.ViewModel?.IsInShare == true)
             {
-                this.PivotControl.Items.Remove(this.LinkPivot);
-                this.PivotControl.Items.Remove(this.SharePivot);
+                this.PivotControl.Items?.Remove(this.LinkPivot);
+                this.PivotControl.Items?.Remove(this.SharePivot);
                 this.PivotControl.SelectedItem = this.DetailsPivot;
                 return;
             }
 
-            if (!this.PivotControl.Items.Contains(this.LinkPivot))
-                this.PivotControl.Items.Add(this.LinkPivot);
-            if (!this.PivotControl.Items.Contains(this.SharePivot))
-                this.PivotControl.Items.Add(this.SharePivot);
+            if (this.PivotControl.Items != null)
+            {
+                if (!this.PivotControl.Items.Contains(this.LinkPivot))
+                    this.PivotControl.Items.Add(this.LinkPivot);
+                if (!this.PivotControl.Items.Contains(this.SharePivot))
+                    this.PivotControl.Items.Add(this.SharePivot);
+            }
         }
 
         private void OnEnableLinkSwitchToggled(object sender, RoutedEventArgs e)
         {
             var toggle = sender as ToggleSwitch;
-            if (toggle != null)
-                this.ViewModel.EnableLink(toggle.IsOn);
+            if (toggle == null) return;
+
+            this.ViewModel.EnableLink(toggle.IsOn);
         }
 
         private void OnSetExpirationDateSwitchToggled(object sender, RoutedEventArgs e)
         {
             var toggle = sender as ToggleSwitch;
-            if (toggle != null)
-            {
-                this.ExpirationDateCalendarDatePicker.IsEnabled = toggle.IsOn;
-                if (toggle.IsOn)
-                    this.ExpirationDateCalendarDatePicker.Date = this.SharedFolder.LinkExpirationDate;
-                else
-                    this.ExpirationDateCalendarDatePicker.Date = null;
-            }
+            if (toggle == null) return;
+
+            this.ExpirationDateCalendarDatePicker.IsEnabled = toggle.IsOn;
+            this.ExpirationDateCalendarDatePicker.Date = toggle.IsOn ?
+                this.SharedFolder.LinkExpirationDate : null;
         }
 
         private void OnExpirationDateCalendarDataPickerOpened(object sender, object e)

@@ -18,7 +18,7 @@ namespace MegaApp.ViewModels.Contacts
         public ContactOutgoingSharedFolderViewModel(MShare outShare, ContactsListOutgoingSharedFolderViewModel contactList)
             : base(SdkService.MegaSdk.getContact(outShare.getUser()), contactList)
         {
-            this.outShare = outShare;
+            this._outShare = outShare;
 
             this.AccessLevel = new AccessLevelViewModel();
             this.GetAccesLevel(outShare);
@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactList = this.ContactList as ContactsListOutgoingSharedFolderViewModel;
 
-            if ((bool)contactList?.ItemCollection?.IsMultiSelectActive)
+            if (contactList?.ItemCollection != null && contactList.ItemCollection.IsMultiSelectActive)
             {
                 if (contactList.ChangePermissionsCommand.CanExecute(newAccessLevel))
                     contactList.ChangePermissionsCommand.Execute(newAccessLevel);
@@ -74,7 +74,7 @@ namespace MegaApp.ViewModels.Contacts
             var result = await changePermissions.ExecuteAsync(() =>
             {
                 SdkService.MegaSdk.shareByEmail(
-                    SdkService.MegaSdk.getNodeByHandle(this.outShare.getNodeHandle()),
+                    SdkService.MegaSdk.getNodeByHandle(this._outShare.getNodeHandle()),
                     this.Email, (int)newAccessLevel, changePermissions);
             });
 
@@ -88,7 +88,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactList = this.ContactList as ContactsListOutgoingSharedFolderViewModel;
 
-            if ((bool)contactList?.ItemCollection?.IsMultiSelectActive)
+            if (contactList?.ItemCollection != null && contactList.ItemCollection.IsMultiSelectActive)
             {
                 if (contactList.RemoveContactFromFolderCommand.CanExecute(null))
                     contactList.RemoveContactFromFolderCommand.Execute(null);
@@ -112,7 +112,7 @@ namespace MegaApp.ViewModels.Contacts
         /// <summary>
         /// Folder outbound sharing with the contact
         /// </summary>
-        private MShare outShare;
+        private readonly MShare _outShare;
 
         private AccessLevelViewModel _accessLevel;
         /// <summary>

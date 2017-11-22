@@ -26,17 +26,16 @@ namespace MegaApp.ViewModels.UserControls
             {
                 if (!SetField(ref _sharedFolderNode, value)) return;
 
-                if(_sharedFolderNode?.OriginalMNode != null)
-                {
-                    OnPropertyChanged(nameof(this.SectionNameText));
+                if (_sharedFolderNode?.OriginalMNode == null) return;
 
-                    var sharedFolder = (this._sharedFolderNode?.OriginalMNode?.isInShare() == true) ?
-                        new FolderViewModel(ContainerType.InShares) : new FolderViewModel(ContainerType.OutShares);
-                    sharedFolder.FolderRootNode = this.SharedFolderNode;
+                OnPropertyChanged(nameof(this.SectionNameText));
 
-                    this.SharedFolder = sharedFolder;
-                    this.SharedFolder.LoadChildNodes();
-                }
+                var sharedFolder = (this._sharedFolderNode?.OriginalMNode?.isInShare() == true) ?
+                    new FolderViewModel(ContainerType.InShares) : new FolderViewModel(ContainerType.OutShares);
+                sharedFolder.FolderRootNode = this.SharedFolderNode;
+
+                this.SharedFolder = sharedFolder;
+                this.SharedFolder.LoadChildNodes();
             }
         }
 
@@ -54,11 +53,10 @@ namespace MegaApp.ViewModels.UserControls
                     
                 SetField(ref _sharedFolder, value);
 
-                if (_sharedFolder != null)
-                {
-                    _sharedFolder.ItemCollection.ItemCollectionChanged += OnFolderViewStateChanged;
-                    _sharedFolder.ItemCollection.SelectedItemsCollectionChanged += OnFolderViewStateChanged;
-                }
+                if (_sharedFolder == null) return;
+
+                _sharedFolder.ItemCollection.ItemCollectionChanged += OnFolderViewStateChanged;
+                _sharedFolder.ItemCollection.SelectedItemsCollectionChanged += OnFolderViewStateChanged;
             }
         }        
 

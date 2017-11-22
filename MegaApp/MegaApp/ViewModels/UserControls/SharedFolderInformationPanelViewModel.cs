@@ -95,11 +95,9 @@ namespace MegaApp.ViewModels.UserControls
             }
         }
 
-        public bool IsInShare => (this.SharedFolder?.OriginalMNode != null) ?
-            this.SharedFolder.OriginalMNode.isInShare() : false;
+        public bool IsInShare => this.SharedFolder?.OriginalMNode?.isInShare() ?? false;
 
-        public bool IsOutShare => (this.SharedFolder?.OriginalMNode != null) ?
-            this.SharedFolder.OriginalMNode.isOutShare() : false;
+        public bool IsOutShare => this.SharedFolder?.OriginalMNode?.isOutShare() ?? false;
 
         private string _exportLinkBorderTitle;
         public string ExportLinkBorderTitle
@@ -108,8 +106,7 @@ namespace MegaApp.ViewModels.UserControls
             set { SetField(ref _exportLinkBorderTitle, value); }
         }
 
-        public bool IsLinkWithExpirationTime => 
-            (this.SharedFolder?.LinkExpirationTime > 0) ? true : false;
+        public bool IsLinkWithExpirationTime => this.SharedFolder?.LinkExpirationTime > 0;
 
         public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
 

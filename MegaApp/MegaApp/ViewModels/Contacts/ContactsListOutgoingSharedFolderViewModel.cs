@@ -16,7 +16,7 @@ namespace MegaApp.ViewModels.Contacts
     {
         public ContactsListOutgoingSharedFolderViewModel(MNode sharedFolder)
         {
-            this.sharedFolder = sharedFolder;
+            this._sharedFolder = sharedFolder;
 
             this.AddContactToFolderCommand = new RelayCommand(AddContactToFolder);
             this.ChangePermissionsCommand = new RelayCommand<MShareType>(ChangePermissions);
@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels.Contacts
 
         private async void AddContactToFolder()
         {
-            var shareFolderToDialog = new ShareFolderToDialog(this.sharedFolder.getName());
+            var shareFolderToDialog = new ShareFolderToDialog(this._sharedFolder.getName());
             var dialogResult = await shareFolderToDialog.ShowAsync();
 
             if (dialogResult != ContentDialogResult.Primary) return;
@@ -61,7 +61,7 @@ namespace MegaApp.ViewModels.Contacts
             var share = new ShareRequestListenerAsync();
             var result = await share.ExecuteAsync(() =>
             {
-                SdkService.MegaSdk.shareByEmail(this.sharedFolder,
+                SdkService.MegaSdk.shareByEmail(this._sharedFolder,
                     shareFolderToDialog.ViewModel.ContactEmail,
                     (int)shareFolderToDialog.ViewModel.AccessLevel, share);
             });
@@ -118,12 +118,12 @@ namespace MegaApp.ViewModels.Contacts
         private async void RemoveMultipleContactsFromFolder(ICollection<IMegaContact> contacts)
         {
             foreach (var contact in contacts)
-                await (contact as ContactOutgoingSharedFolderViewModel).RemoveContactFromFolderAsync();
+                await ((ContactOutgoingSharedFolderViewModel)contact).RemoveContactFromFolderAsync();
         }
 
         private void OnOutSharedFolderUpdated(object sender, MNode node)
         {
-            if (node.getHandle() != this.sharedFolder.getHandle()) return;
+            if (node.getHandle() != this._sharedFolder.getHandle()) return;
 
             var outSharesList = SdkService.MegaSdk.getOutShares(node);
             var outSharesListSize = outSharesList.size();
@@ -138,11 +138,9 @@ namespace MegaApp.ViewModels.Contacts
                     for (int i = 0; i < outSharesListSize; i++)
                     {
                         var contact = SdkService.MegaSdk.getContact(outSharesList.get(i).getUser());
-                        if (item.Handle == contact.getHandle())
-                        {
-                            foundItem = true;
-                            break;
-                        }
+                        if (item.Handle != contact.getHandle()) continue;
+                        foundItem = true;
+                        break;
                     }
 
                     if (!foundItem)
@@ -203,7 +201,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Properties
 
-        private MNode sharedFolder;
+        private readonly MNode _sharedFolder;
 
         #endregion
     }
