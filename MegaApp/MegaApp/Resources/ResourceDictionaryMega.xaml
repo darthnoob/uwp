@@ -1027,7 +1027,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactIncomingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1124,7 +1124,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaIncomingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1229,7 +1229,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaIncomingSharedItemListViewMobile">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1316,7 +1316,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaOutgoingSharedItemListViewDesktop">
-        <Grid Margin="0,6,0,7">
+        <Grid Margin="0,6,0,7" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1846,7 +1846,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="OutgoingSharedFolderContactItem">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -1958,7 +1958,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactItemContentMobile">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -2069,7 +2069,7 @@
     </DataTemplate>
     
     <DataTemplate x:Key="MegaContactItemContentDesktop">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -2180,7 +2180,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MegaContactRequestItemContentMobile">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
@@ -2296,7 +2296,7 @@
     </DataTemplate>
     
     <DataTemplate x:Key="MegaContactRequestItemContentDesktop">
-        <Grid Margin="0,6">
+        <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
