@@ -39,7 +39,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
             OnUiThread(() =>
             {
-                this.Owner = string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName) ?
+                this.Owner = string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) ?
                     owner.getEmail() : string.Format("{0} {1}", firstName, lastName);
             });
         }        

@@ -118,11 +118,9 @@ namespace MegaApp.ViewModels
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            if (this.PreviousViewState != FolderContentViewState.MultiSelect)
-            {
-                this.CurrentViewState = this.PreviousViewState;
-                this.PreviousViewState = FolderContentViewState.MultiSelect;
-            }
+            if (this.PreviousViewState == FolderContentViewState.MultiSelect) return;
+            this.CurrentViewState = this.PreviousViewState;
+            this.PreviousViewState = FolderContentViewState.MultiSelect;
         }
 
         private void SelectionChanged()
@@ -133,14 +131,13 @@ namespace MegaApp.ViewModels
             else
                 this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;
 
-            if(this.ItemCollection.HasSelectedItems)
-            {
-                var focusedNode = (NodeViewModel)this.ItemCollection.SelectedItems.Last();
-                if(focusedNode is ImageNodeViewModel)
-                    (focusedNode as ImageNodeViewModel).InViewingRange = true;
+            if (!this.ItemCollection.HasSelectedItems) return;
 
-                this.FocusedNode = focusedNode;
-            }
+            var focusedNode = (NodeViewModel)this.ItemCollection.SelectedItems.Last();
+            if (focusedNode is ImageNodeViewModel)
+                (focusedNode as ImageNodeViewModel).InViewingRange = true;
+
+            this.FocusedNode = focusedNode;
         }
 
         public void OpenNodeDetails()

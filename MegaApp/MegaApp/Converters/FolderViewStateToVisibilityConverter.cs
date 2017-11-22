@@ -30,50 +30,52 @@ namespace MegaApp.Converters
                     {
                         case "newfolder":
                         case "upload":
-                            return !(bool)folder.ItemCollection?.HasSelectedItems && (bool)folder.FolderRootNode?.HasReadWritePermissions ?
+                            return folder.ItemCollection != null && folder.FolderRootNode != null && 
+                                !folder.ItemCollection.HasSelectedItems && folder.FolderRootNode.HasReadWritePermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "download":
-                            return (bool)folder.ItemCollection?.HasSelectedItems ?
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "open":
                         case "information":
-                            return (bool)folder.ItemCollection?.OnlyOneSelectedItem ?
+                            return folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "remove":
-                            if ((bool)folder.ItemCollection?.HasSelectedItems)
+                            if (folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems)
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return (bool)folder.ItemCollection?.FocusedItem?.HasFullAccessPermissions ?
+                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 
-                                return (bool)folder.FolderRootNode?.HasFullAccessPermissions ?
+                                return folder.FolderRootNode != null && folder.FolderRootNode.HasFullAccessPermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
                             }
 
                             return Visibility.Collapsed;
 
                         case "rename":
-                            if ((bool)folder.ItemCollection?.OnlyOneSelectedItem)
+                            if (folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem)
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return (bool)folder.ItemCollection?.FocusedItem?.HasFullAccessPermissions ?
+                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 
-                                return (bool)folder.FolderRootNode?.HasFullAccessPermissions ?
+                                return folder.FolderRootNode != null && folder.FolderRootNode.HasFullAccessPermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
                             }
 
                             return Visibility.Collapsed;
 
                         case "leaveshare":
-                            return folder is SharedFoldersListViewModel && (bool)folder.ItemCollection?.HasSelectedItems ?
+                            return folder is SharedFoldersListViewModel && 
+                                folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                                 default:
@@ -85,23 +87,24 @@ namespace MegaApp.Converters
                     {
                         case "newfolder":
                         case "upload":
-                            return !(bool)folder.ItemCollection?.HasSelectedItems ?
-                                Visibility.Visible : Visibility.Collapsed;
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Collapsed : Visibility.Visible;
 
                         case "download":
                         case "remove":
-                            return (bool)folder.ItemCollection?.HasSelectedItems ?
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "open":
                         case "information":
                         case "getlink":
                         case "rename":
-                            return (bool)folder.ItemCollection?.OnlyOneSelectedItem ?
+                            return folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "removeshare":
-                            return folder is SharedFoldersListViewModel && (bool)folder.ItemCollection?.HasSelectedItems ?
+                            return folder is SharedFoldersListViewModel &&
+                                folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:

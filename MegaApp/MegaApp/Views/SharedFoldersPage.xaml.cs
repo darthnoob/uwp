@@ -96,8 +96,7 @@ namespace MegaApp.Views
 
         public override void GoBack()
         {
-            if (this.ViewModel?.ActiveView != null)
-                this.ViewModel.ActiveView.ClosePanels();
+            this.ViewModel?.ActiveView?.ClosePanels();
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)

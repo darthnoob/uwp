@@ -234,6 +234,8 @@
                             <TextBlock
                                 x:Name="Owner"
                                 Text="{x:Bind ViewModel.SharedFolder.Owner, Mode=OneWay}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
                                 Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="PermissionsLabelText"
@@ -629,6 +631,8 @@
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
+                        <Setter Target="Owner.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="Owner.(RelativePanel.LeftOf)" Value="Permissions" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="PermissionsLabelText" />
@@ -661,6 +665,8 @@
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
+                        <Setter Target="Owner.(RelativePanel.AlignLeftWithPanel)" Value="True" />
+                        <Setter Target="Owner.(RelativePanel.LeftOf)" Value="Permissions" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="PermissionsLabelText" />

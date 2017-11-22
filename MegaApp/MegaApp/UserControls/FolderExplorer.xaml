@@ -127,8 +127,8 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListView.SelectionMode" Value="Single" />
-                        <Setter Target="GridView.SelectionMode" Value="Single" />
+                        <Setter Target="ListView.SelectionMode" Value="None" />
+                        <Setter Target="GridView.SelectionMode" Value="None" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

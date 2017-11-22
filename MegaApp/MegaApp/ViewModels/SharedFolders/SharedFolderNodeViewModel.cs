@@ -38,11 +38,16 @@ namespace MegaApp.ViewModels.SharedFolders
 
         private void OnParentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Parent.ItemCollection.OnlyOneSelectedItem))
-                OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
+            switch (e.PropertyName)
+            {
+                case nameof(this.Parent.ItemCollection.OnlyOneSelectedItem):
+                    OnPropertyChanged(nameof(this.OnlyOneSelectedItem));
+                    break;
 
-            if (e.PropertyName == nameof(this.Parent.IsPanelOpen))
-                OnPropertyChanged(nameof(this.IsPanelOpen));
+                case nameof(this.Parent.IsPanelOpen):
+                    OnPropertyChanged(nameof(this.IsPanelOpen));
+                    break;
+            }
         }
 
         private void Download()
@@ -59,20 +64,16 @@ namespace MegaApp.ViewModels.SharedFolders
 
         private void OpenInformationPanel()
         {
-            if (this.Parent.ItemCollection.OnlyOneSelectedItem)
-            {
-                if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
-                    this.Parent.OpenInformationPanelCommand.Execute(null);
-            }
+            if (!this.Parent.ItemCollection.OnlyOneSelectedItem) return;
+            if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
+                this.Parent.OpenInformationPanelCommand.Execute(null);
         }
 
         private void OpenContentPanel()
         {
-            if (this.Parent.ItemCollection.OnlyOneSelectedItem)
-            {
-                if (this.Parent.OpenContentPanelCommand.CanExecute(null))
-                    this.Parent.OpenContentPanelCommand.Execute(null);
-            }
+            if (!this.Parent.ItemCollection.OnlyOneSelectedItem) return;
+            if (this.Parent.OpenContentPanelCommand.CanExecute(null))
+                this.Parent.OpenContentPanelCommand.Execute(null);
         }
 
         public async Task<bool> RemoveSharedAccessAsync()
@@ -112,12 +113,10 @@ namespace MegaApp.ViewModels.SharedFolders
 
                 SetField(ref _parent, value);
 
-                if (_parent != null)
-                {
-                    _parent.PropertyChanged += OnParentPropertyChanged;
-                    if (_parent.ItemCollection != null)
-                        _parent.ItemCollection.PropertyChanged += OnParentPropertyChanged;
-                }
+                if (_parent == null) return;
+                _parent.PropertyChanged += OnParentPropertyChanged;
+                if (_parent.ItemCollection != null)
+                    _parent.ItemCollection.PropertyChanged += OnParentPropertyChanged;
             }
         }
 

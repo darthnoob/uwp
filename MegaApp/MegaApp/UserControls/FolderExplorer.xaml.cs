@@ -58,7 +58,9 @@ namespace MegaApp.UserControls
 
         private void OnFolderChanged(FolderViewModel folder)
         {
-            if(this.ViewModel?.Folder != null)
+            if (this.ViewModel == null) return;
+
+            if (this.ViewModel.Folder != null)
             {
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
@@ -67,7 +69,7 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder = folder;
 
-            if (this.ViewModel?.Folder != null)
+            if (this.ViewModel.Folder != null)
             {
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
@@ -114,8 +116,8 @@ namespace MegaApp.UserControls
             }
             else
             {
-                this.ListView.SelectionMode = ListViewSelectionMode.Single;
-                this.GridView.SelectionMode = ListViewSelectionMode.Single;
+                this.ListView.SelectionMode = ListViewSelectionMode.None;
+                this.GridView.SelectionMode = ListViewSelectionMode.None;
             }
 
             // Restore the selected item
@@ -169,7 +171,7 @@ namespace MegaApp.UserControls
                 return;
             }
 
-            if ((itemTapped is ImageNodeViewModel) && (itemTapped as ImageNodeViewModel != null))
+            if (itemTapped is ImageNodeViewModel)
                 (itemTapped as ImageNodeViewModel).InViewingRange = true;
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
@@ -212,19 +214,19 @@ namespace MegaApp.UserControls
 
             MenuFlyout menuFlyout = new MenuFlyout();
 
-            //menuFlyout.Items.Add(new MenuFlyoutItem()
+            //menuFlyout.Items?.Add(new MenuFlyoutItem()
             //{
             //    Text = ResourceService.UiResources.GetString("UI_Information"),
             //    Command = this.ViewModel.InformationCommand
             //});
 
-            menuFlyout.Items.Add(new MenuFlyoutItem()
+            menuFlyout.Items?.Add(new MenuFlyoutItem()
             {
                 Text = ResourceService.UiResources.GetString("UI_Download"),
                 Command = this.ViewModel.DownloadFolderCommand
             });
 
-            //menuFlyout.Items.Add(new MenuFlyoutItem()
+            //menuFlyout.Items?.Add(new MenuFlyoutItem()
             //{
             //    Text = ResourceService.UiResources.GetString("UI_Copy"),
             //    Command = this.ViewModel.CopyFolderCommand
@@ -232,7 +234,7 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel?.IsRenameFolderOptionAvailable == true)
             {
-                menuFlyout.Items.Add(new MenuFlyoutItem()
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_Rename"),
                     Command = this.ViewModel.RenameFolderCommand
@@ -241,7 +243,7 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel?.Folder?.FolderRootNode is IncomingSharedFolderNodeViewModel)
             {
-                menuFlyout.Items.Add(new MenuFlyoutItem()
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_LeaveShare"),
                     Foreground = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"],
@@ -251,7 +253,7 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel?.Folder?.FolderRootNode is OutgoingSharedFolderNodeViewModel)
             {
-                menuFlyout.Items.Add(new MenuFlyoutItem()
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
                 {
                     Text = ResourceService.UiResources.GetString("UI_RemoveSharedAccess"),
                     Foreground = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"],

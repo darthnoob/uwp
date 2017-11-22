@@ -55,8 +55,7 @@ namespace MegaApp.ViewModels.UserControls
         private void DownloadFolder()
         {
             var folder = this.Folder.FolderRootNode as NodeViewModel;
-            if (folder == null) return;
-            folder.Download(TransferService.MegaTransfers);
+            folder?.Download(TransferService.MegaTransfers);
         }
 
         private void ShowFolderInformation()
@@ -275,7 +274,7 @@ namespace MegaApp.ViewModels.UserControls
                 if (this.FolderRootNode is IncomingSharedFolderNodeViewModel)
                 {
                     var folderRootNode = this.FolderRootNode as IncomingSharedFolderNodeViewModel;
-                    if ((int)folderRootNode?.AccessLevel?.AccessType < (int)MShareType.ACCESS_FULL)
+                    if (folderRootNode?.AccessLevel != null && (int)folderRootNode.AccessLevel.AccessType < (int)MShareType.ACCESS_FULL)
                         return false;
                 }
 
