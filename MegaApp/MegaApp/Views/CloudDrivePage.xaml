@@ -235,27 +235,7 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
-                            Click="OnSelectAllClick"
-                            Label="{Binding SelectAllText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding SelectAllText, Mode=OneTime}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="SelectAll" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton
-                            Click="OnDeselectAllClick"
-                            Label="{Binding DeselectAllText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding DeselectAllText, Mode=OneTime}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="ClearSelection" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton
-                            Command="{Binding MultiSelectCommand}"
+                            Command="{Binding ItemCollection.MultiSelectCommand}"
                             Label="{Binding CancelText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
@@ -276,7 +256,8 @@
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Background="Transparent"
                     DataContext="{Binding ActiveFolderView}"
-                    IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}">
+                    IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                    Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                     <AppBarSeparator 
                         x:Name="PermanentTopCommandBarSeparator"
                         Margin="-12,0"
@@ -320,6 +301,7 @@
                         CacheMode="{x:Null}"
                         Header="{Binding CloudDriveNameText}">
                         <userControls:FolderExplorer
+                            x:Name="CloudDriveExplorer"
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             Foreground="{StaticResource MegaAppForegroundBrush}"
                             Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
@@ -333,65 +315,67 @@
                             Margin="{StaticResource RootGridMargin}"
                             Background="Transparent"
                             DataContext="{Binding CameraUploads}">
-                            <Grid>
-                                <userControls:TogglePanel
-                                    x:Name="CameraUploadsTogglePanelControl"
-                                    VerticalAlignment="Center"
-                                    Background="{StaticResource MegaAppBackgroundBrush}"
-                                    Foreground="{StaticResource MegaAppForegroundBrush}"
-                                    HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
-                                    IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
-                                    IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
-                                    SubHeaderMargin="0,14,0,28"
-                                    SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
-                                    <userControls:TogglePanel.SubHeaderForeground>
-                                        <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
-                                    </userControls:TogglePanel.SubHeaderForeground>
-                                </userControls:TogglePanel>
-
-                                <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                    <Grid Visibility="{Binding IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <userControls:FolderExplorer
-                                            Background="{StaticResource MegaAppBackgroundBrush}"
-                                            Foreground="{StaticResource MegaAppForegroundBrush}"
-                                            Folder="{x:Bind ViewModel.CameraUploads, Mode=OneWay}" />
-                                    </Grid>
-                                    <SemanticZoom 
-                                        Margin="0,0,-12,0"
-                                        ScrollViewer.ZoomMode="Enabled"
-                                        Visibility="{Binding IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                        <SemanticZoom.ZoomedOutView>
-                                            <ListView ItemTemplate="{StaticResource CameraUploadsGroupItem}" ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
-                                        </SemanticZoom.ZoomedOutView>
-                                        <SemanticZoom.ZoomedInView>
-                                            <GridView
-                                                x:Name="GridViewCameraUploads"
-                                                Padding="2,4"
-                                                Background="{StaticResource MegaAppBackgroundBrush}"
-                                                DoubleTapped="OnItemDoubleTapped"
-                                                IsMultiSelectCheckBoxEnabled="{Binding IsMultiSelectActive}"
-                                                ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
-                                                ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
-                                                Tapped="OnItemTapped">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                        <core:EventTriggerBehavior.Actions>
-                                                            <core:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                                                        </core:EventTriggerBehavior.Actions>
-                                                    </core:EventTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                                <GridView.GroupStyle>
-                                                    <GroupStyle
-                                                        HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
-                                                        HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
-                                                        HidesIfEmpty="True" />
-                                                </GridView.GroupStyle>
-                                            </GridView>
-                                        </SemanticZoom.ZoomedInView>
-                                    </SemanticZoom>
+                            <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
+                                    <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
                                 </Grid>
+                                <SemanticZoom
+                                    Grid.Row="1"
+                                    Margin="-12,-12,-12,0"
+                                    ScrollViewer.ZoomMode="Enabled">
+                                    <SemanticZoom.ZoomedOutView>
+                                        <ListView
+                                            ItemTemplate="{StaticResource CameraUploadsGroupItem}" 
+                                            ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
+                                    </SemanticZoom.ZoomedOutView>
+                                    <SemanticZoom.ZoomedInView>
+                                        <GridView
+                                            x:Name="GridViewCameraUploads"
+                                            Margin="12,0,0,0"
+                                            Padding="2,4"
+                                            Background="{StaticResource MegaAppBackgroundBrush}"
+                                            DoubleTapped="OnItemDoubleTapped"
+                                            IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
+                                            ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
+                                            ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                            Tapped="OnItemTapped">
+                                            <interactivity:Interaction.Behaviors>
+                                                <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:EventTriggerBehavior.Actions>
+                                                        <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
+                                                    </core:EventTriggerBehavior.Actions>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <GridView.GroupStyle>
+                                                <GroupStyle
+                                                    HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
+                                                    HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
+                                                    HidesIfEmpty="True" />
+                                            </GridView.GroupStyle>
+                                        </GridView>
+                                    </SemanticZoom.ZoomedInView>
+                                </SemanticZoom>
                             </Grid>
+                            <userControls:TogglePanel
+                                x:Name="CameraUploadsTogglePanelControl"
+                                VerticalAlignment="Center"
+                                Background="{StaticResource MegaAppBackgroundBrush}"
+                                Foreground="{StaticResource MegaAppForegroundBrush}"
+                                HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
+                                IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
+                                IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
+                                SubHeaderMargin="0,14,0,28"
+                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
+                                <userControls:TogglePanel.SubHeaderForeground>
+                                    <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+                                </userControls:TogglePanel.SubHeaderForeground>
+                            </userControls:TogglePanel>
                         </Grid>
                     </PivotItem>
                     <PivotItem
@@ -399,6 +383,7 @@
                         CacheMode="{x:Null}"
                         Header="{Binding RubbishBinNameText}">
                         <userControls:FolderExplorer
+                            x:Name="RubbishBinExplorer"
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             Foreground="{StaticResource MegaAppForegroundBrush}"
                             Folder="{x:Bind ViewModel.RubbishBin, Mode=OneWay}"/>
@@ -442,7 +427,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -474,7 +459,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         DataContext="{Binding ActiveFolderView}"
                         IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
@@ -496,7 +481,7 @@
                     Visibility="{Binding CurrentViewState, ConverterParameter=CameraUploads, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -614,7 +599,7 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding MultiSelectCommand}"
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
                         Label="{Binding CancelText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
@@ -625,24 +610,6 @@
                                 Data="{Binding CancelPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton 
-                            Click="OnSelectAllClick" 
-                            Label="{Binding SelectAllText}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="SelectAll" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton 
-                            Click="OnDeselectAllClick" 
-                            Label="{Binding DeselectAllText}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource ContainerTypeToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="ClearSelection" />
-                            </Viewbox>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
         </Grid>

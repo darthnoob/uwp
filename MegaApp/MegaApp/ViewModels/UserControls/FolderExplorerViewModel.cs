@@ -190,8 +190,8 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_DEFAULT_ASC:
                     case MSortOrderType.ORDER_DEFAULT_DESC:
                         if(this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByFiles"), numChildFiles);
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByFiles"),
+                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), numChildFiles);
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
                             numChildFolders, numChildFiles);
 
                     case MSortOrderType.ORDER_ALPHABETICAL_ASC:
@@ -238,7 +238,7 @@ namespace MegaApp.ViewModels.UserControls
                 {
                     case MSortOrderType.ORDER_DEFAULT_ASC:
                     case MSortOrderType.ORDER_DEFAULT_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByFilesMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByTypeMultiSelect"),
                             this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
 
                     case MSortOrderType.ORDER_ALPHABETICAL_ASC:
@@ -294,6 +294,7 @@ namespace MegaApp.ViewModels.UserControls
         #region UiResources
 
         public string FolderOptionsText => ResourceService.UiResources.GetString("UI_FolderOptions");
+        public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
 
         #endregion
 

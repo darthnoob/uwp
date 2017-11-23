@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -62,6 +63,7 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel.Folder != null)
             {
+                this.ViewModel.Folder.ChangeViewEvent -= OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
                 this.ViewModel.Folder.ItemCollection.AllSelected -= OnAllSelected;
@@ -71,10 +73,49 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel.Folder != null)
             {
+                this.ViewModel.Folder.ChangeViewEvent += OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
                 this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
             }
+        }
+
+        private void OnViewChanged(object sender, EventArgs e)
+        {
+            // First save the current selected nodes to restore them after change the view
+            var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
+
+            // Needed to avoid extrange behaviors during the view update
+            DisableViewsBehaviors();
+
+            // Clear the selected items and restore in the new view
+            ClearSelectedItems();
+            UpdateSelectedItems(selectedNodes);
+
+            // Enable the view behaviors again
+            EnableViewsBehaviors();
+        }
+
+        public void EnableSelection()
+        {
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+            this.ListView.SelectionMode = ListViewSelectionMode.Extended;
+            this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+        }
+
+        public void DisableSelection()
+        {
+            this.ListView.SelectionMode = ListViewSelectionMode.None;
+            this.GridView.SelectionMode = ListViewSelectionMode.None;
+        }
+
+        public void ClearSelectedItems()
+        {
+            if (this.ListView?.SelectedItems?.Count > 0)
+                this.ListView.SelectedItems.Clear();
+
+            if (this.GridView?.SelectedItems?.Count > 0)
+                this.GridView.SelectedItems.Clear();
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
@@ -88,12 +129,8 @@ namespace MegaApp.UserControls
             this.ListView.SelectionMode = ListViewSelectionMode.Multiple;
             this.GridView.SelectionMode = ListViewSelectionMode.Multiple;
 
-            // Update the selected items
-            foreach (var item in selectedItems)
-            {
-                this.ListView.SelectedItems.Add(item);
-                this.GridView.SelectedItems.Add(item);
-            }
+            // Restore the selected items
+            UpdateSelectedItems(selectedItems);
 
             // Restore the view behaviors again
             EnableViewsBehaviors();
@@ -144,6 +181,32 @@ namespace MegaApp.UserControls
         {
             Interaction.GetBehaviors(this.ListView).Detach();
             Interaction.GetBehaviors(this.GridView).Detach();
+        }
+
+        /// <summary>
+        /// Update the selected nodes of the active view
+        /// </summary>
+        /// <param name="selectedNodes">Listo of selected nodes</param>
+        private void UpdateSelectedItems(List<IMegaNode> selectedNodes)
+        {
+            ListViewBase list = null;
+            switch (this.Folder.ViewMode)
+            {
+                case FolderContentViewMode.ListView:
+                    list = this.ListView;
+                    break;
+                case FolderContentViewMode.GridView:
+                    list = this.GridView;
+                    break;
+                default:
+                    return;
+            }
+
+            foreach (var node in selectedNodes)
+            {
+                if (list.SelectedItems.Contains(node)) continue;
+                list.SelectedItems.Add(node);
+            }
         }
 
         private void OnAllSelected(object sender, bool value)
@@ -199,7 +262,7 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.Folder.IsMultiSelectActive &&
+            if (!this.ViewModel.Folder.ItemCollection.IsMultiSelectActive &&
                 this.ViewModel.Folder.CurrentViewState != FolderContentViewState.CopyOrMove)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();

@@ -35,9 +35,6 @@ namespace MegaApp.ViewModels
         public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
-        public event EventHandler EnableMultiSelect;
-        public event EventHandler DisableMultiSelect;
-
         public event EventHandler OpenNodeDetailsEvent;
         public event EventHandler CloseNodeDetailsEvent;
 
@@ -66,13 +63,11 @@ namespace MegaApp.ViewModels
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand(GetLink);
-            this.MultiSelectCommand = new RelayCommand(MultiSelect);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
-            this.SelectionChangedCommand = new RelayCommand(SelectionChanged);
             this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
             this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
 
@@ -118,26 +113,13 @@ namespace MegaApp.ViewModels
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            if (this.PreviousViewState == FolderContentViewState.MultiSelect) return;
-            this.CurrentViewState = this.PreviousViewState;
-            this.PreviousViewState = FolderContentViewState.MultiSelect;
-        }
+            if (this.PreviousViewState != FolderContentViewState.MultiSelect)
+            {
+                this.CurrentViewState = this.PreviousViewState;
+                this.PreviousViewState = FolderContentViewState.MultiSelect;
+            }
 
-        private void SelectionChanged()
-        {
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.IsMultiSelectActive = (this.IsMultiSelectActive && this.ItemCollection.HasSelectedItems) ||
-                    this.ItemCollection.MoreThanOneSelected;
-            else
-                this.IsMultiSelectActive = this.ItemCollection.HasSelectedItems;
-
-            if (!this.ItemCollection.HasSelectedItems) return;
-
-            var focusedNode = (NodeViewModel)this.ItemCollection.SelectedItems.Last();
-            if (focusedNode is ImageNodeViewModel)
-                (focusedNode as ImageNodeViewModel).InViewingRange = true;
-
-            this.FocusedNode = focusedNode;
+            this.ItemCollection.ClearSelection();
         }
 
         public void OpenNodeDetails()
@@ -336,11 +318,9 @@ namespace MegaApp.ViewModels
         public ICommand GetLinkCommand { get; }
         public ICommand HomeSelectedCommand { get; }
         public ICommand ItemSelectedCommand { get; }
-        public ICommand MultiSelectCommand { get; set; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand UploadCommand { get; }
-        public ICommand SelectionChangedCommand { get; }
         public ICommand OpenNodeDetailsCommand { get; private set; }
         public ICommand CloseNodeDetailsCommand { get; }
 
@@ -383,7 +363,7 @@ namespace MegaApp.ViewModels
             GetCurrentOrderDirection();
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
-            MNodeList childList = GetChildren();
+            MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
 
             if (childList == null)
             {
@@ -491,7 +471,7 @@ namespace MegaApp.ViewModels
         {
             if (!this.ItemCollection.HasSelectedItems) return;
             await MultipleDownloadAsync(this.ItemCollection.SelectedItems);
-            this.IsMultiSelectActive = false;
+            this.ItemCollection.IsMultiSelectActive = false;
         }
 
         private async Task MultipleDownloadAsync(ICollection<IMegaNode> nodes)
@@ -517,17 +497,6 @@ namespace MegaApp.ViewModels
         {
             if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return;
             this.ItemCollection.FocusedItem?.GetLinkAsync();
-        }
-
-        /// <summary>
-        /// Sets if multiselect is active or not.
-        /// </summary>
-        private void MultiSelect()
-        {
-            this.IsMultiSelectActive = !this.IsMultiSelectActive;
-
-            if (this.ItemCollection.MultiSelectCommand.CanExecute(null))
-                this.ItemCollection.MultiSelectCommand.Execute(null);
         }
 
         private async void Remove()
@@ -569,7 +538,7 @@ namespace MegaApp.ViewModels
             // Use a temp variable to avoid InvalidOperationException
             MultipleRemoveAsync(this.ItemCollection.SelectedItems.ToList());
 
-            this.IsMultiSelectActive = false;
+            this.ItemCollection.IsMultiSelectActive = false;
         }
 
         private async void MultipleRemoveAsync(ICollection<IMegaNode> nodes)
@@ -1136,9 +1105,7 @@ namespace MegaApp.ViewModels
             {
                 this.NodeTemplateSelector = new NodeTemplateSelector()
                 {
-                    FileItemTemplate = this.Type == ContainerType.CameraUploads ?
-                        (DataTemplate)Application.Current.Resources["CameraUploadsListViewFileItemContent"] :
-                        (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                    FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
                     FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
                 };
             });
@@ -1181,9 +1148,7 @@ namespace MegaApp.ViewModels
                 case FolderContentViewMode.GridView:
                     this.NodeTemplateSelector = new NodeTemplateSelector()
                     {
-                        FileItemTemplate = this.Type == ContainerType.CameraUploads ?
-                            (DataTemplate)Application.Current.Resources["CameraUploadsGridViewFileItemContent"] :
-                            (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
+                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
                         FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
                     };
 
@@ -1202,11 +1167,6 @@ namespace MegaApp.ViewModels
         protected virtual void OnFolderNavigatedTo()
         {
             FolderNavigatedTo?.Invoke(this, EventArgs.Empty);
-        }
-
-        protected virtual MNodeList GetChildren()
-        {
-            return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
         }
 
         private void GetCurrentOrderDirection()
@@ -1360,36 +1320,6 @@ namespace MegaApp.ViewModels
         {
             get { return _isNodeDetailsViewVisible; }
             set { SetField(ref _isNodeDetailsViewVisible, value); }
-        }
-
-        private bool _isMultiSelectActive;
-        public bool IsMultiSelectActive
-        {
-            get { return _isMultiSelectActive || this.ItemCollection.MoreThanOneSelected; }
-            set
-            {
-                if (!SetField(ref _isMultiSelectActive, value)) return;
-
-                if (_isMultiSelectActive)
-                {
-                    if (this.CurrentViewState != FolderContentViewState.MultiSelect)
-                        this.PreviousViewState = this.CurrentViewState;
-
-                    this.CurrentViewState = FolderContentViewState.MultiSelect;
-                    EnableMultiSelect?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    if (this.PreviousViewState != FolderContentViewState.MultiSelect)
-                    {
-                        this.CurrentViewState = this.PreviousViewState;
-                        this.PreviousViewState = FolderContentViewState.MultiSelect;
-                    }
-                        
-                    this.ItemCollection.ClearSelection();
-                    DisableMultiSelect?.Invoke(this, EventArgs.Empty);                    
-                }
-            }
         }
 
         private string _emptyInformationText;

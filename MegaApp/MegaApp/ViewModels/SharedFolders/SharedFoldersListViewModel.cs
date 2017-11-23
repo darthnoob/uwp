@@ -314,7 +314,8 @@ namespace MegaApp.ViewModels.SharedFolders
         public string OpenText => ResourceService.UiResources.GetString("UI_Open");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
-        
+        public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
+
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
         #endregion

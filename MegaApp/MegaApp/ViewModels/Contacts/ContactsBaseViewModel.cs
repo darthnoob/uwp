@@ -79,8 +79,7 @@ namespace MegaApp.ViewModels.Contacts
         public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
         public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
 
-        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
-        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
 
         #endregion
 

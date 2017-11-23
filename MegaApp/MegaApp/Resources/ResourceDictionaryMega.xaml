@@ -290,6 +290,7 @@
             IsChecked="{Binding ItemCollection.HasAllItemsSelected}"
             Command="{Binding ItemCollection.SelectAllCommand}"
             CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+            ToolTipService.ToolTip="{Binding SelectOrDeselectAllText, Mode=OneTime}"
             Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
             <Grid 
                 Margin="4,-8,0,0"

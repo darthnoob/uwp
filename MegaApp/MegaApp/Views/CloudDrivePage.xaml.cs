@@ -30,19 +30,11 @@ namespace MegaApp.Views
 
             this.ViewModel.ClearSelectedItems += OnClearSelectedItems;
             this.ViewModel.DisableSelection += OnDisableSelection;
-            this.ViewModel.EnableSelection += OnEnableSelection;            
+            this.ViewModel.EnableSelection += OnEnableSelection;
 
-            this.ViewModel.CloudDrive.ChangeViewEvent += OnChangeView;
-            this.ViewModel.RubbishBin.ChangeViewEvent += OnChangeView;
-            this.ViewModel.CameraUploads.ChangeViewEvent += OnChangeView;
-
-            this.ViewModel.CloudDrive.EnableMultiSelect += OnEnableMultiSelect;
-            this.ViewModel.RubbishBin.EnableMultiSelect += OnEnableMultiSelect;
-            this.ViewModel.CameraUploads.EnableMultiSelect += OnEnableMultiSelect;
-
-            this.ViewModel.CloudDrive.DisableMultiSelect += OnDisableMultiSelect;
-            this.ViewModel.RubbishBin.DisableMultiSelect += OnDisableMultiSelect;
-            this.ViewModel.CameraUploads.DisableMultiSelect += OnDisableMultiSelect;
+            this.ViewModel.CameraUploads.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ViewModel.CameraUploads.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.CameraUploads.ItemCollection.AllSelected += OnAllSelected;
 
             this.ViewModel.CloudDrive.OpenNodeDetailsEvent += OnOpenNodeDetails;
             this.ViewModel.RubbishBin.OpenNodeDetailsEvent += OnOpenNodeDetails;
@@ -54,7 +46,6 @@ namespace MegaApp.Views
 
             this.NodeDetailsSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
-            
         }
 
         private void IsDetailsViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
@@ -189,7 +180,7 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.IsMultiSelectActive &&
+            if (!this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive &&
                 this.ViewModel.ActiveFolderView.CurrentViewState != FolderContentViewState.CopyOrMove)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
@@ -222,7 +213,7 @@ namespace MegaApp.Views
             GridViewCameraUploads.SelectedItems.Clear();
         }
 
-        private void OnEnableMultiSelect(object sender, EventArgs e)
+        private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
             this.NodeDetailsSplitView.IsPaneOpen = false;
 
@@ -240,55 +231,52 @@ namespace MegaApp.Views
             EnableViewsBehaviors();
         }
 
-        private void OnDisableMultiSelect(object sender, EventArgs e)
+        private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
             OnEnableSelection(sender, e);
         }
 
         private void OnDisableSelection(object sender, EventArgs e)
         {
-            this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                this.CloudDriveExplorer.DisableSelection();
 
-            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                this.RubbishBinExplorer.DisableSelection();
 
-            GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+                this.GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void OnEnableSelection(object sender, EventArgs e)
         {
-            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                this.CloudDriveExplorer.EnableSelection();
 
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                this.RubbishBinExplorer.EnableSelection();
+
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
             {
-                GridViewCameraUploads.SelectionMode = ListViewSelectionMode.Extended;
-                return;
+                this.GridViewCameraUploads.SelectionMode = 
+                    DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                    ListViewSelectionMode.Extended : ListViewSelectionMode.None;
             }
-
-            GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
         private void OnClearSelectedItems(object sender, EventArgs e)
         {
-            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+            if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
+                this.CloudDriveExplorer.ClearSelectedItems();
 
-            if (GridViewCameraUploads?.SelectedItems?.Count > 0)
-                GridViewCameraUploads.SelectedItems.Clear();
-        }
+            if (MainPivot.SelectedItem.Equals(RubbishBinPivot))
+                this.RubbishBinExplorer.ClearSelectedItems();
 
-        private void OnChangeView(object sender, EventArgs e)
-        {
-            // First save the current selected nodes to restore them after change the view
-            var tempSelectedNodes = this.ViewModel.ActiveFolderView.ItemCollection.SelectedItems.ToList();
-
-            // Needed to avoid extrange behaviors during the view update
-            DisableViewsBehaviors();
-
-            // Clean the selected items and restore in the new view
-            OnClearSelectedItems(sender, e);
-            UpdateSelectedItems(tempSelectedNodes);
-
-            // Enable the view behaviors again
-            EnableViewsBehaviors();
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
+            {
+                if (this.GridViewCameraUploads?.SelectedItems?.Count > 0)
+                    this.GridViewCameraUploads.SelectedItems.Clear();
+            }
         }
 
         private void OnOpenNodeDetails(object sender, EventArgs e)
@@ -307,7 +295,6 @@ namespace MegaApp.Views
         private void EnableViewsBehaviors()
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
-
             Interaction.GetBehaviors(GridViewCameraUploads).Attach(GridViewCameraUploads);
         }
 
@@ -317,7 +304,6 @@ namespace MegaApp.Views
         private void DisableViewsBehaviors()
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
-
             Interaction.GetBehaviors(GridViewCameraUploads).Detach();
         }
 
@@ -330,22 +316,24 @@ namespace MegaApp.Views
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
             foreach (var node in selectedNodes)
-            {
-                switch (this.ViewModel.CameraUploads.ViewMode)
-                {
-                    case FolderContentViewMode.ListView:
-                        break;
-                    case FolderContentViewMode.GridView:
-                        GridViewCameraUploads.SelectedItems.Add(node);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
+                GridViewCameraUploads.SelectedItems.Add(node);
+        }
+
+        private void OnAllSelected(object sender, bool value)
+        {
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+
+            if (value)
+                this.GridViewCameraUploads?.SelectAll();
+            else
+                this.GridViewCameraUploads?.SelectedItems.Clear();
         }
 
         private void OnSortClick(object sender, RoutedEventArgs e)
         {
+            // Camera uploads view does not allow change the sort type
+            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+
             var sortButton = sender as Button;
             if (sortButton == null) return;
 

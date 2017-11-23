@@ -168,15 +168,15 @@ namespace MegaApp.ViewModels
 
         private void ResetViewStates()
         {
-            CloudDrive.IsMultiSelectActive = false;
+            CloudDrive.ItemCollection.IsMultiSelectActive = false;
             CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
             CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
 
-            RubbishBin.IsMultiSelectActive = false;
+            RubbishBin.ItemCollection.IsMultiSelectActive = false;
             RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
             RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
 
-            CameraUploads.IsMultiSelectActive = false;
+            CameraUploads.ItemCollection.IsMultiSelectActive = false;
             CameraUploads.CurrentViewState = FolderContentViewState.CameraUploads;
             CameraUploads.PreviousViewState = FolderContentViewState.CameraUploads;
         }
@@ -192,7 +192,7 @@ namespace MegaApp.ViewModels
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
             this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
-            this.ActiveFolderView.IsMultiSelectActive = false;
+            this.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
 
             ResetViewStates();
 

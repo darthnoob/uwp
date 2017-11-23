@@ -275,7 +275,7 @@ namespace MegaApp.ViewModels
         {
             // In case that copy or move a single node using the flyout menu and the selected 
             // nodes list is empty, we need add the current node to the selected nodes
-            if (this.Parent != null && !this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && !this.Parent.ItemCollection.IsMultiSelectActive)
             {
                 if (!this.Parent.ItemCollection.HasSelectedItems)
                     this.Parent.ItemCollection.SelectedItems.Add(this);
@@ -533,7 +533,7 @@ namespace MegaApp.ViewModels
 
         private void Download()
         {
-            if (this.Parent != null && this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && this.Parent.ItemCollection.IsMultiSelectActive)
             {
                 if(this.Parent.DownloadCommand.CanExecute(null))
                     this.Parent.DownloadCommand.Execute(null);

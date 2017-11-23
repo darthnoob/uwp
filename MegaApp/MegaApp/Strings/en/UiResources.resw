@@ -1299,8 +1299,8 @@ Keep the {0} and {1} codes because are for include the total number of folders a
     <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByFiles" xml:space="preserve">
-    <value>Files ({0} folders, {1} files)</value>
+  <data name="UI_NodeListSortedByType" xml:space="preserve">
+    <value>Type ({0} folders, {1} files)</value>
     <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
@@ -1324,8 +1324,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByFilesMultiSelect" xml:space="preserve">
-    <value>Files ({0} of {1})</value>
+  <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
+    <value>Type ({0} of {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1348,8 +1348,8 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByFiles" xml:space="preserve">
-    <value>Files ({0})</value>
+  <data name="UI_ListSortedByType" xml:space="preserve">
+    <value>Type ({0})</value>
     <comment>Label to indicate that a list of items is sorted by type and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
@@ -1358,8 +1358,12 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate that a list of items is sorted by size and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_SortOptionFiles" xml:space="preserve">
-    <value>Files</value>
+  <data name="UI_SelectOrDeselectAll" xml:space="preserve">
+    <value>Select/deselect all</value>
+    <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionType" xml:space="preserve">
+    <value>Type</value>
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">

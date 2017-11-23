@@ -18,7 +18,7 @@
         ORDER_SIZE          = 1,
         ORDER_CREATION      = 2,
         ORDER_MODIFICATION  = 3,
-        ORDER_FILES         = 4,
+        ORDER_TYPE          = 4,
     }
 
     /// <summary>
