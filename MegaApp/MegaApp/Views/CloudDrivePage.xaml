@@ -26,7 +26,7 @@
     </Page.Resources>
 
     <SplitView
-        x:Name="NodeDetailsSplitView"
+        x:Name="CloudDriveSplitView"
         DisplayMode="Inline"
         IsPaneOpen="False"
         PanePlacement="Right">
@@ -60,222 +60,249 @@
                     Text="{Binding CloudDriveNameText, Mode=OneTime}" />
 
                 <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
-                <Grid
-                    x:Name="TopCommandBar"
-                    Grid.Row="0"
-                    Grid.Column="1">
-                    <CommandBar
-                        Background="Transparent"
-                        extensions:CommandBarExtensions.HideMoreButton="True"
-                        Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource InverseFolderContentViewStateToVisibilityConverter}}">
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Click="OnButtonClick"
-                            Command="{Binding AddFolderCommand}"
-                            Label="{Binding AddFolderText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding AddFolderPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Click="OnButtonClick"
-                            Command="{Binding UploadCommand}"
-                            Label="{Binding UploadText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='upload', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding UploadPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Click="OnButtonClick"
-                            Command="{Binding DownloadCommand}"
-                            Label="{Binding DownloadText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding DownloadPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Click="OnButtonClick"
-                            Command="{Binding CopyOrMoveCommand}"
-                            Label="{Binding CopyOrMoveText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='copyormove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Click="OnButtonClick"
-                            Command="{Binding RemoveCommand}"
-                            Label="{Binding RemoveText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding RubbishBinPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding CleanRubbishBinCommand}"
-                            IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
-                            Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
-                            Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='clean', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            DataContext="{Binding ActiveFolderView}"
-                            Command="{Binding ItemCollection.MultiSelectCommand}"
-                            Label="{Binding MultiSelectText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding MultiSelectPathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                    </CommandBar>
+                <Grid 
+                    Grid.Row="0" Grid.Column="1"
+                    Visibility="{Binding ActiveFolderView.IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Grid
+                        x:Name="TopCommandBar"
+                        Grid.Row="0"
+                        Grid.Column="1">
 
-                    <!--  COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY)  -->
+                        <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+                        <CommandBar
+                            Background="Transparent"
+                            extensions:CommandBarExtensions.HideMoreButton="True"
+                            Visibility="{Binding ActiveFolderView.CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource InverseFolderContentViewStateToVisibilityConverter}}">
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
+                                Command="{Binding AddFolderCommand}"
+                                Label="{Binding AddFolderText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding AddFolderPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
+                                Command="{Binding UploadCommand}"
+                                Label="{Binding UploadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='upload', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding UploadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
+                                Command="{Binding DownloadCommand}"
+                                Label="{Binding DownloadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
+                                Command="{Binding CopyOrMoveCommand}"
+                                Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='copyormove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
+                                Command="{Binding RemoveCommand}"
+                                Label="{Binding RemoveText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding RubbishBinPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding CleanRubbishBinCommand}"
+                                IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                                Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                                Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='clean', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding EmptyRubbishBinPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Command="{Binding ItemCollection.MultiSelectCommand}"
+                                Label="{Binding MultiSelectText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
+
+                        <!--  COPY OR MOVE TOP COMMAND BAR (DESKTOP ONLY)  -->
+                        <CommandBar
+                            extensions:CommandBarExtensions.HideMoreButton="True"
+                            Background="Transparent"
+                            DataContext="{Binding ActiveFolderView}"
+                            Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding AddFolderCommand}"
+                                Label="{Binding AddFolderText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding AddFolderPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding AcceptCopyCommand}"
+                                Label="{Binding CopyText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                                Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding AcceptMoveCommand}"
+                                Label="{Binding MoveText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                                Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
+                                <Viewbox MaxWidth="14" MaxHeight="14">
+                                    <SymbolIcon Symbol="MoveToFolder" />
+                                </Viewbox>
+                            </AppBarButton>
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding CancelCopyOrMoveCommand}"
+                                Label="{Binding CancelText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CancelPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
+                    </Grid>
+                </Grid>
+
+                <!--  CLOSE PANEL TOP COMMAND BAR (ONLY DESKTOP)  -->
+                <CommandBar 
+                    DataContext="{Binding ActiveFolderView}"
+                    Grid.Row="0" Grid.Column="2"
+                    Background="Transparent"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton
+                        Command="{Binding ClosePanelCommand}"
+                        Label="{Binding ClosePanelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding ClosePanelText, Mode=OneTime}">
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xEA5B;"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+                <Grid 
+                    DataContext="{Binding ActiveFolderView}"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
                     <CommandBar
-                        extensions:CommandBarExtensions.HideMoreButton="True"
                         Background="Transparent"
-                        DataContext="{Binding ActiveFolderView}"
-                        Visibility="{Binding CurrentViewState, ConverterParameter=CopyOrMove, Converter={StaticResource FolderContentViewStateToVisibilityConverter}}">
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <AppBarSeparator 
+                            x:Name="PermanentTopCommandBarSeparator"
+                            Margin="-12,0"
+                            VerticalAlignment="Center"/>
                         <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding AddFolderCommand}"
-                            Label="{Binding AddFolderText, Mode=OneTime}"
+                            x:Name="BtnSort"
+                            Click="OnSortClick"
+                            Label="{Binding SortByText}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
-                            Visibility="{Binding Folder, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            ToolTipService.ToolTip="{Binding SortByText}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding AddFolderPathData, Mode=OneTime}" />
+                                    Data="{Binding SortByPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            x:Name="BtnChangeView"
                             Click="OnButtonClick"
-                            Command="{Binding AcceptCopyCommand}"
-                            Label="{Binding CopyText, Mode=OneTime}"
+                            Command="{Binding ChangeViewCommand}"
+                            Label="{Binding NextViewButtonLabelText}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
+                            ToolTipService.ToolTip="{Binding NextViewButtonLabelText}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding AcceptMoveCommand}"
-                            Label="{Binding MoveText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
-                            Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="MoveToFolder" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton
-                            Click="OnButtonClick"
-                            Command="{Binding CancelCopyOrMoveCommand}"
-                            Label="{Binding CancelText, Mode=OneTime}"
-                            Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{Binding CancelPathData, Mode=OneTime}" />
+                                    Data="{Binding NextViewButtonPathData, Mode=OneWay}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar>
                 </Grid>
-
-                <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
-                <CommandBar
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    extensions:CommandBarExtensions.HideMoreButton="True"
-                    Background="Transparent"
-                    DataContext="{Binding ActiveFolderView}"
-                    IsEnabled="{Binding IsEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
-                    Visibility="{Binding Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
-                    <AppBarSeparator 
-                        x:Name="PermanentTopCommandBarSeparator"
-                        Margin="-12,0"
-                        VerticalAlignment="Center"/>
-                    <AppBarButton
-                        x:Name="BtnSort"
-                        Click="OnSortClick"
-                        Label="{Binding SortByText}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding SortByText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding SortByPathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        x:Name="BtnChangeView"
-                        Click="OnButtonClick"
-                        Command="{Binding ChangeViewCommand}"
-                        Label="{Binding NextViewButtonLabelText}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding NextViewButtonLabelText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{Binding NextViewButtonPathData, Mode=OneWay}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar>
             </Grid>
             <Grid Grid.Row="1" Margin="12,0,0,0">
                 <Pivot

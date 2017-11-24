@@ -35,8 +35,8 @@ namespace MegaApp.ViewModels
         public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
-        public event EventHandler OpenNodeDetailsEvent;
-        public event EventHandler CloseNodeDetailsEvent;
+        public event EventHandler OpenPanelEvent;
+        public event EventHandler ClosePanelEvent;
 
         public event EventHandler ChildNodesCollectionChanged;
 
@@ -69,8 +69,8 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
-            this.OpenNodeDetailsCommand = new RelayCommand(OpenNodeDetails);
-            this.CloseNodeDetailsCommand = new RelayCommand(CloseNodeDetails);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+            this.ClosePanelCommand = new RelayCommand(ClosePanels);
 
             SetViewDefaults();
 
@@ -128,14 +128,16 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.Folder));
         }
 
-        public void OpenNodeDetails()
+        protected virtual void OpenInformationPanel()
         {
-            OpenNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+            this.IsInformationPanelOpen = true;
+            OpenPanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
-        public void CloseNodeDetails()
+        public virtual void ClosePanels()
         {
-            CloseNodeDetailsEvent?.Invoke(this, EventArgs.Empty);
+            this.IsInformationPanelOpen = false;
+            ClosePanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnNodeAdded(object sender, MNode mNode)
@@ -327,8 +329,8 @@ namespace MegaApp.ViewModels
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand UploadCommand { get; }
-        public ICommand OpenNodeDetailsCommand { get; private set; }
-        public ICommand CloseNodeDetailsCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; set; }
+        public ICommand ClosePanelCommand { get; set; }
 
         #endregion
 
@@ -902,7 +904,7 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
-            CloseNodeDetails();
+            ClosePanels();
 
             MNode homeNode = null;
             FolderViewModel homeFolder = null;
@@ -935,7 +937,7 @@ namespace MegaApp.ViewModels
         {
             if (node == null) return;
 
-            CloseNodeDetails();
+            ClosePanels();
 
             // Show the back button in desktop and tablet applications
             // Back button in mobile applications is automatic in the nav bar on screen
@@ -1323,13 +1325,6 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _nodeTemplateSelector, value); }
         }
 
-        private bool _isNodeDetailsViewVisible;
-        public bool IsNodeDetailsViewVisible
-        {
-            get { return _isNodeDetailsViewVisible; }
-            set { SetField(ref _isNodeDetailsViewVisible, value); }
-        }
-
         private string _emptyInformationText;
         public string EmptyInformationText
         {
@@ -1355,13 +1350,36 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _hasBusyText, value); }
         }
 
+        public virtual bool IsPanelOpen => this.IsInformationPanelOpen;
+
+        private bool _isInformationPanelOpen;
+        public bool IsInformationPanelOpen
+        {
+            get { return _isInformationPanelOpen; }
+            set
+            {
+                SetField(ref _isInformationPanelOpen, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
+
+                if (this._isInformationPanelOpen)
+                {
+                    this.ItemCollection.IsMultiSelectActive = false;
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
+                }
+                else
+                {
+                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
+                }
+            }
+        }
+
         #endregion
 
         #region UiResources
 
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");

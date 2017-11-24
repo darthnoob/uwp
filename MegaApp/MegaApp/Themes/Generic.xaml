@@ -362,9 +362,9 @@
                             <CommandBar.Content>
                                 <AppBarButton
                                     x:Name="CloseDetailsViewButton"
-                                    Command="{Binding Parent.CloseNodeDetailsCommand}"
+                                    Command="{Binding Parent.ClosePanelCommand}"
                                     Style="{StaticResource MegaAppBarButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding CloseText}">
+                                    ToolTipService.ToolTip="{Binding ClosePanelText}">
                                     <Viewbox MaxHeight="16" MaxWidth="16">
                                         <FontIcon Glyph="&#xEA5B;"/>
                                     </Viewbox>
@@ -651,7 +651,7 @@
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
-                                    Command="{Binding Parent.CloseNodeDetailsCommand}"
+                                    Command="{Binding Parent.ClosePanelCommand}"
                                     Icon="Cancel"
                                     Label="{Binding CancelText}"
                                     ToolTipService.ToolTip="{Binding CancelText}" />

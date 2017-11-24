@@ -186,7 +186,7 @@ namespace MegaApp.ViewModels
             if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
                 !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
 
-            this.ActiveFolderView.CloseNodeDetails();
+            this.ActiveFolderView.ClosePanels();
 
             foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;

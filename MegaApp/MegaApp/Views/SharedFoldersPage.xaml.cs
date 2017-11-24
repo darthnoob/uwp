@@ -153,17 +153,10 @@ namespace MegaApp.Views
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
             var listView = this.GetSelectedListView();
-            if(isEnabled)
-            {
-                listView.SelectionMode = ListViewSelectionMode.Single;
-            }
+            if (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+                listView.SelectionMode = ListViewSelectionMode.Extended;
             else
-            {
-                if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                    listView.SelectionMode = ListViewSelectionMode.Extended;
-                else
-                    listView.SelectionMode = ListViewSelectionMode.Single;
-            }
+                listView.SelectionMode = ListViewSelectionMode.Single;
 
             // Restore the selected item
             listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;

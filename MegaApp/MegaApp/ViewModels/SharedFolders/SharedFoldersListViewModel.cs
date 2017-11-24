@@ -30,9 +30,7 @@ namespace MegaApp.ViewModels.SharedFolders
         public ICommand LeaveShareCommand { get; }
         public ICommand RemoveSharedAccessCommand { get; }
 
-        public ICommand ClosePanelCommand { get; }
         public ICommand OpenContentPanelCommand { get; }
-        public ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
@@ -229,16 +227,16 @@ namespace MegaApp.ViewModels.SharedFolders
             this.IsInformationPanelOpen = false;
         }
 
-        private void OpenInformationPanel()
+        protected override void OpenInformationPanel()
         {
             this.IsContentPanelOpen = false;
-            this.IsInformationPanelOpen = true;
+            base.OpenInformationPanel();
         }
 
-        public void ClosePanels()
+        public override void ClosePanels()
         {
             this.IsContentPanelOpen = false;
-            this.IsInformationPanelOpen = false;
+            base.ClosePanels();
         }
 
         #endregion
@@ -259,7 +257,7 @@ namespace MegaApp.ViewModels.SharedFolders
             ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
             string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
 
-        public bool IsPanelOpen => this.IsContentPanelOpen || this.IsInformationPanelOpen;
+        public override bool IsPanelOpen => this.IsContentPanelOpen || this.IsInformationPanelOpen;
 
         private bool _isContentPanelOpen;
         public bool IsContentPanelOpen
@@ -282,32 +280,10 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private bool _isInformationPanelOpen;
-        public bool IsInformationPanelOpen
-        {
-            get { return _isInformationPanelOpen; }
-            set
-            {
-                SetField(ref _isInformationPanelOpen, value);
-                OnPropertyChanged(nameof(this.IsPanelOpen));
-
-                if (this._isInformationPanelOpen)
-                {
-                    this.ItemCollection.IsMultiSelectActive = false;
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
-                }
-                else
-                {
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
-                }
-            }
-        }
-
         #endregion
 
         #region UiResources
 
-        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");

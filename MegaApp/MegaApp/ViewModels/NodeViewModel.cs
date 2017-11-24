@@ -356,8 +356,8 @@ namespace MegaApp.ViewModels
 
                 this.Parent.FocusedNode = this;
 
-                if (this.Parent.OpenNodeDetailsCommand.CanExecute(null))
-                    this.Parent.OpenNodeDetailsCommand.Execute(null);
+                if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
+                    this.Parent.OpenInformationPanelCommand.Execute(null);
             }
         }
 
@@ -439,7 +439,7 @@ namespace MegaApp.ViewModels
                 }
 
                 if (result)
-                    this.Parent.CloseNodeDetails();
+                    this.Parent.ClosePanels();
             }
 
             return result;
@@ -812,7 +812,7 @@ namespace MegaApp.ViewModels
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
         public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string FileLabelText => ResourceService.UiResources.GetString("UI_File");

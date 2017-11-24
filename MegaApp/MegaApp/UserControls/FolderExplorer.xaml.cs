@@ -66,6 +66,7 @@ namespace MegaApp.UserControls
                 this.ViewModel.Folder.ChangeViewEvent -= OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+                this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
                 this.ViewModel.Folder.ItemCollection.AllSelected -= OnAllSelected;
             }
 
@@ -76,6 +77,7 @@ namespace MegaApp.UserControls
                 this.ViewModel.Folder.ChangeViewEvent += OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+                this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
                 this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
             }
         }
@@ -155,6 +157,35 @@ namespace MegaApp.UserControls
             {
                 this.ListView.SelectionMode = ListViewSelectionMode.None;
                 this.GridView.SelectionMode = ListViewSelectionMode.None;
+            }
+
+            // Restore the selected item
+            this.ListView.SelectedItem = this.GridView.SelectedItem = 
+                this.ViewModel.Folder.ItemCollection.FocusedItem = selectedItem;
+
+            // Restore the view behaviors again
+            EnableViewsBehaviors();
+        }
+
+        private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
+        {
+            // Needed to avoid extrange behaviors during the view update
+            DisableViewsBehaviors();
+
+            // First save the current selected item to restore it after enable/disable the single select mode
+            IMegaNode selectedItem = null;
+            if (this.ViewModel.Folder.ItemCollection.OnlyOneSelectedItem)
+                selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First();
+
+            if (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Extended;
+                this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+            }
+            else
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Single;
+                this.GridView.SelectionMode = ListViewSelectionMode.Single;
             }
 
             // Restore the selected item
@@ -246,9 +277,6 @@ namespace MegaApp.UserControls
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
-
-            if (((ListViewBase)sender)?.SelectedItems?.Contains(itemTapped) == true)
-                ((ListViewBase)sender).SelectedItems.Remove(itemTapped);
 
             this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
         }

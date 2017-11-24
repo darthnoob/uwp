@@ -36,30 +36,30 @@ namespace MegaApp.Views
             this.ViewModel.CameraUploads.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.CameraUploads.ItemCollection.AllSelected += OnAllSelected;
 
-            this.ViewModel.CloudDrive.OpenNodeDetailsEvent += OnOpenNodeDetails;
-            this.ViewModel.RubbishBin.OpenNodeDetailsEvent += OnOpenNodeDetails;
-            this.ViewModel.CameraUploads.OpenNodeDetailsEvent += OnOpenNodeDetails;
+            this.ViewModel.CloudDrive.OpenPanelEvent += OnOpenPanel;
+            this.ViewModel.RubbishBin.OpenPanelEvent += OnOpenPanel;
+            this.ViewModel.CameraUploads.OpenPanelEvent += OnOpenPanel;
 
-            this.ViewModel.CloudDrive.CloseNodeDetailsEvent += OnCloseNodeDetails;
-            this.ViewModel.RubbishBin.CloseNodeDetailsEvent += OnCloseNodeDetails;
-            this.ViewModel.CameraUploads.CloseNodeDetailsEvent += OnCloseNodeDetails;
+            this.ViewModel.CloudDrive.ClosePanelEvent += OnClosePanel;
+            this.ViewModel.RubbishBin.ClosePanelEvent += OnClosePanel;
+            this.ViewModel.CameraUploads.ClosePanelEvent += OnClosePanel;
 
-            this.NodeDetailsSplitView.RegisterPropertyChangedCallback(
+            this.CloudDriveSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
         }
 
         private void IsDetailsViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if (this.NodeDetailsSplitView.IsPaneOpen)
+            if (this.CloudDriveSplitView.IsPaneOpen)
             {
-                if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.NodeDetailsSplitView.ActualWidth < 600)
+                if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.CloudDriveSplitView.ActualWidth < 600)
                 {
-                    this.NodeDetailsSplitView.OpenPaneLength = this.NodeDetailsSplitView.ActualWidth;
+                    this.CloudDriveSplitView.OpenPaneLength = this.CloudDriveSplitView.ActualWidth;
                     AppService.SetAppViewBackButtonVisibility(true);
                     return;
                 }
 
-                this.NodeDetailsSplitView.OpenPaneLength = NodeDetailsMinWidth;
+                this.CloudDriveSplitView.OpenPaneLength = NodeDetailsMinWidth;
             }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
@@ -69,16 +69,24 @@ namespace MegaApp.Views
         {
             get
             {
-                bool canGoFolderUp = false;
+                bool canGoBack = false;
                 if (this.ViewModel?.ActiveFolderView != null)
-                    canGoFolderUp = this.ViewModel.ActiveFolderView.CanGoFolderUp();
-                return canGoFolderUp || MainPivot.SelectedIndex != 0;
+                {
+                    canGoBack = this.ViewModel.ActiveFolderView.IsPanelOpen ||
+                        this.ViewModel.ActiveFolderView.CanGoFolderUp();
+                }
+                                
+                return canGoBack || MainPivot.SelectedIndex != 0;
             }
         }
 
         public override void GoBack()
         {
-            if (this.ViewModel.ActiveFolderView.CanGoFolderUp())
+            if(CloudDriveSplitView.IsPaneOpen)
+            {
+                this.ViewModel.ActiveFolderView.ClosePanels();
+            }
+            else if (this.ViewModel.ActiveFolderView.CanGoFolderUp())
             {
                 this.ViewModel.ActiveFolderView.GoFolderUp();
             }
@@ -122,7 +130,7 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.NodeDetailsSplitView.IsPaneOpen = false;
+            this.CloudDriveSplitView.IsPaneOpen = false;
 
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
@@ -160,13 +168,10 @@ namespace MegaApp.Views
         {
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
 
-            this.NodeDetailsSplitView.IsPaneOpen = false;
+            this.CloudDriveSplitView.IsPaneOpen = false;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
-
-            if (((ListViewBase)sender)?.SelectedItems?.Contains(itemTapped) == true)
-                ((ListViewBase)sender).SelectedItems.Remove(itemTapped);
 
             this.ViewModel.ActiveFolderView.OnChildNodeTapped(itemTapped);
         }
@@ -215,7 +220,7 @@ namespace MegaApp.Views
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            this.NodeDetailsSplitView.IsPaneOpen = false;
+            this.CloudDriveSplitView.IsPaneOpen = false;
 
             // First save the current selected nodes to restore them after enable the multi select
             var tempSelectedNodes = this.ViewModel.ActiveFolderView.ItemCollection.SelectedItems.ToList();
@@ -279,14 +284,14 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnOpenNodeDetails(object sender, EventArgs e)
+        private void OnOpenPanel(object sender, EventArgs e)
         {
-            this.NodeDetailsSplitView.IsPaneOpen = true;
+            this.CloudDriveSplitView.IsPaneOpen = true;
         }
 
-        private void OnCloseNodeDetails(object sender, EventArgs e)
+        private void OnClosePanel(object sender, EventArgs e)
         {
-            this.NodeDetailsSplitView.IsPaneOpen = false;
+            this.CloudDriveSplitView.IsPaneOpen = false;
         }
 
         /// <summary>
