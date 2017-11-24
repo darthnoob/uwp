@@ -54,6 +54,7 @@ namespace MegaApp.ViewModels
 
             this.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
             this.AcceptMoveCommand = new RelayCommand(AcceptMove);
@@ -120,6 +121,11 @@ namespace MegaApp.ViewModels
             }
 
             this.ItemCollection.ClearSelection();
+        }
+
+        private void OnSelectedItemsCollectionChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(this.Folder));
         }
 
         public void OpenNodeDetails()
@@ -1200,6 +1206,8 @@ namespace MegaApp.ViewModels
 
 
         #region Properties
+
+        public FolderViewModel Folder => this;
 
         private bool _isLoaded;
         public bool IsLoaded

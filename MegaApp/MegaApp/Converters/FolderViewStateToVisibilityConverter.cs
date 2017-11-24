@@ -24,6 +24,54 @@ namespace MegaApp.Converters
             var containerType = folder.Type;
             switch (containerType)
             {
+                case ContainerType.CloudDrive:
+                    switch (paramString)
+                    {
+                        case "newfolder":
+                        case "upload":
+                            return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ? 
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.CameraUploads:
+                    switch (paramString)
+                    {
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.RubbishBin:
+                    switch (paramString)
+                    {
+                        case "clean":
+                            return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
                 case ContainerType.InShares:
                 case ContainerType.ContactInShares:
                     switch (paramString)
@@ -78,7 +126,7 @@ namespace MegaApp.Converters
                                 folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
-                                default:
+                        default:
                             return Visibility.Collapsed;
                     }
 

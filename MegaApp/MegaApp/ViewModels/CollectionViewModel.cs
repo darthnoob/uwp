@@ -174,6 +174,8 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
                 nameof(this.HasAllItemsSelected));
+
+            this.OnSelectedItemsCollectionChanged();
         }
 
         protected void SelectionChanged()

@@ -117,6 +117,7 @@
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
+    <Compile Include="Converters\InverseFolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\SortOrderType.cs" />

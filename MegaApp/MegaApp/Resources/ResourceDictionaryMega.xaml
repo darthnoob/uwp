@@ -37,6 +37,7 @@
     <converters:ContainerTypeToVisibilityConverter x:Key="ContainerTypeToVisibilityConverter" />
     <converters:IntValueToVisibilityConverter x:Key="IntValueToVisibilityConverter" />
     <converters:InverseContainerTypeToVisibilityConverter x:Key="InverseContainerTypeToVisibilityConverter" />
+    <converters:InverseFolderContentViewStateToVisibilityConverter x:Key="InverseFolderContentViewStateToVisibilityConverter" />
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:FolderViewStateToVisibilityConverter x:Key="FolderViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
