@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Microsoft.Toolkit.Uwp.UI.Animations;
@@ -45,7 +47,7 @@ namespace MegaApp.UserControls
                 nameof(SubHeaderText),
                 typeof(string), 
                 typeof(ActivityIndicator),
-                new PropertyMetadata(null));
+                new PropertyMetadata(null, SubHeaderChanged));
 
         /// <summary>
         /// Gets or sets the progress text.
@@ -298,7 +300,14 @@ namespace MegaApp.UserControls
             }
         }
 
+        private static void SubHeaderChanged(DependencyObject d, DependencyPropertyChangedEventArgs dpc)
+        {
+            var control = d as ActivityIndicator;
+            control?.SetSubHeaderVisibility();
+        }
+
         private ProgressRing _progress;
+        public TextBlock SubHeaderControl { get; private set; }
 
         public ActivityIndicator()
         {
@@ -311,7 +320,17 @@ namespace MegaApp.UserControls
         {
             base.OnApplyTemplate();
             _progress = (ProgressRing) this.GetTemplateChild("PART_Progress");
+            SubHeaderControl = (TextBlock) this.GetTemplateChild("PART_SubHeaderText");
+            SetSubHeaderVisibility();
             OnIsVisibleChanged(this.IsVisible);
+        }
+
+        private void SetSubHeaderVisibility()
+        {
+            if (SubHeaderControl == null) return;
+            SubHeaderControl.Visibility = string.IsNullOrWhiteSpace(SubHeaderText) 
+                ? Visibility.Collapsed 
+                : Visibility.Visible;
         }
 
         protected async void OnIsVisibleChanged(bool isVisible)
@@ -330,6 +349,7 @@ namespace MegaApp.UserControls
                 this.Fade(1.0f, 250.0).Start();
                 return;
             }
+
             await this.Fade(0.0f, 250.0).StartAsync();
             this.Visibility = Visibility.Collapsed;
         }

@@ -399,7 +399,6 @@
     <Compile Include="Services\UriService.cs" />
     <Compile Include="UserControls\FrameEx.cs" />
     <Compile Include="UserControls\HamburgerMenuEx.cs" />
-    <Compile Include="UserControls\ProgressPanel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="UserControls\PageEx.cs" />
     <Compile Include="ViewModels\BaseNavigableViewModel.cs" />

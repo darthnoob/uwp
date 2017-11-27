@@ -2,20 +2,18 @@
     x:Class="MegaApp.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:views="using:MegaApp.Views"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
-    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
-    mc:Ignorable="d"    
-    d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
+    xmlns:views="using:MegaApp.Views"
+    d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+    mc:Ignorable="d">
 
     <Page.Resources>
-        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter"/>
-        <DataTemplate 
-            x:Key="MenuItemTemplate" 
-            x:DataType="viewModels:MenuItemViewModel">
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+        <DataTemplate x:Key="MenuItemTemplate" x:DataType="viewModels:MenuItemViewModel">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="48" />
@@ -23,59 +21,59 @@
                 </Grid.ColumnDefinitions>
                 <ContentPresenter
                     Grid.Column="0"
-                    Content="{x:Bind Icon}"
-                    ToolTipService.ToolTip="{x:Bind ToolTip}"
                     HorizontalAlignment="Stretch"
-                    AutomationProperties.AccessibilityView="Raw"/>
-                <Grid 
-                    Grid.Column="0"
-                    Visibility="{x:Bind IsMyAccountMenuItem, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
+                    AutomationProperties.AccessibilityView="Raw"
+                    Content="{x:Bind Icon}"
+                    ToolTipService.ToolTip="{x:Bind ToolTip}" />
+                <Grid Grid.Column="0" Visibility="{x:Bind IsMyAccountMenuItem, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneTime}">
                     <Ellipse
-                        Width="33" Height="33"
-                        ToolTipService.ToolTip="{x:Bind ToolTip}"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Stretch"
-                        Stroke="{ThemeResource MegaAppForegroundBrush}"
                         AutomationProperties.AccessibilityView="Raw"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        ToolTipService.ToolTip="{x:Bind ToolTip}"
                         Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
                         <Ellipse.Fill>
-                            <SolidColorBrush Color="{x:Bind UserData.AvatarColor, Mode=OneWay}"/>
+                            <SolidColorBrush Color="{x:Bind UserData.AvatarColor, Mode=OneWay}" />
                         </Ellipse.Fill>
                     </Ellipse>
                     <TextBlock
-                        Text="{x:Bind UserData.AvatarLetter, Mode=OneWay}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontWeight="Bold"
                         Foreground="White"
-                        Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
+                        Text="{x:Bind UserData.AvatarLetter, Mode=OneWay}"
+                        Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}" />
                     <Ellipse
-                        Width="33" Height="33"
-                        ToolTipService.ToolTip="{x:Bind ToolTip}"
+                        Width="33"
+                        Height="33"
                         HorizontalAlignment="Stretch"
-                        Stroke="{ThemeResource MegaAppForegroundBrush}"
                         AutomationProperties.AccessibilityView="Raw"
+                        Stroke="{ThemeResource MegaAppForegroundBrush}"
+                        ToolTipService.ToolTip="{x:Bind ToolTip}"
                         Visibility="{x:Bind UserData.AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                         <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding UserData.AvatarUri, Mode=OneWay}"/>
+                            <ImageBrush ImageSource="{Binding UserData.AvatarUri, Mode=OneWay}" />
                         </Ellipse.Fill>
                     </Ellipse>
-                </Grid>                
-                <StackPanel 
-                    Orientation="Vertical"
-                    VerticalAlignment="Center"
+                </Grid>
+                <StackPanel
                     Grid.Column="1"
-                    Margin="10,5,10,6">
+                    Margin="10,5,10,6"
+                    VerticalAlignment="Center"
+                    Orientation="Vertical">
                     <TextBlock
-                        Text="{x:Bind Label, Mode=OneWay}" 
-                        FontSize="16" 
-                        VerticalAlignment="Center"/>
-                    <TextBlock
-                        Text="{x:Bind SubLabel, Mode=OneWay}" 
-                        FontSize="12" 
                         VerticalAlignment="Center"
-                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}"
-                        Opacity="0.6"/>
-                </StackPanel>                
+                        FontSize="16"
+                        Text="{x:Bind Label, Mode=OneWay}" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Opacity="0.6"
+                        Text="{x:Bind SubLabel, Mode=OneWay}"
+                        Visibility="{x:Bind SubLabel, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}" />
+                </StackPanel>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -83,35 +81,22 @@
     <Grid Background="{StaticResource MegaHamburgerMenuBackgroundBrush}">
         <userControls:HamburgerMenuEx
             x:Name="HamburgerMenuControl"
-            ItemsSource="{Binding MenuItems}"
-            SelectedMenuItem="{Binding SelectedItem, Mode=TwoWay}"
-            OptionsItemsSource="{Binding OptionItems}"
-            SelectedOptionItem="{Binding SelectedOptionItem, Mode=TwoWay}"
-            ItemTemplate="{StaticResource MenuItemTemplate}"
-            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
-            PaneBackground="{StaticResource MegaHamburgerMenuBackgroundBrush}"
             Foreground="{StaticResource MegaHamburgerMenuForegroundBrush}"
             ItemClick="OnHamburgerMenuControlItemClick"
+            ItemTemplate="{StaticResource MenuItemTemplate}"
+            ItemsSource="{Binding MenuItems}"
             OptionsItemClick="OnHamburgerMenuControlItemClick"
+            OptionsItemTemplate="{StaticResource MenuItemTemplate}"
+            OptionsItemsSource="{Binding OptionItems}"
+            PaneBackground="{StaticResource MegaHamburgerMenuBackgroundBrush}"
+            SelectedMenuItem="{Binding SelectedItem, Mode=TwoWay}"
+            SelectedOptionItem="{Binding SelectedOptionItem, Mode=TwoWay}"
             VisualStateNarrowMinWidth="0"
             VisualStateNormalMinWidth="600"
             VisualStateWideMinWidth="1200">
-            <userControls:FrameEx x:Name="ContentFrame"/>
+            <userControls:FrameEx x:Name="ContentFrame" />
         </userControls:HamburgerMenuEx>
 
-        <userControls:ProgressPanel
-            x:Name="ProgressPanelControl"
-            Grid.Row="1"
-            Background="{StaticResource MegaAppBackgroundBrush}"
-            Foreground="{StaticResource MegaAppForegroundBrush}"
-            HeaderText="{Binding Path=ProgressHeaderText}"
-            IsVisible="{Binding IsBusy}"
-            SubHeaderMargin="0, 14, 0 , 0"
-            SubHeaderText="{Binding Path=ProgressSubHeaderText}">
-            <userControls:ProgressPanel.SubHeaderForeground>
-                <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
-            </userControls:ProgressPanel.SubHeaderForeground>
-        </userControls:ProgressPanel>
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup>
@@ -143,5 +128,5 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-    
+
 </views:BaseMainPage>

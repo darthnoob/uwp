@@ -199,82 +199,11 @@
                             x:Name="PART_Button"
                             Grid.Row="2"
                             Grid.Column="1"
-                            Command="{TemplateBinding ButtonCommand}"
-                            Content="{TemplateBinding ButtonText}"
                             MinWidth="{TemplateBinding ButtonMinWidth}"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style TargetType="userControls:ProgressPanel">
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
-        <Setter Property="HeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
-        <Setter Property="SubHeaderForeground" Value="{ThemeResource ApplicationForegroundThemeBrush}" />
-        <Setter Property="SubHeaderMargin" Value="0, 8, 0, 0" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="userControls:ProgressPanel">
-                    <Grid
-                        x:Name="PART_RootGrid"
-                        Padding="{TemplateBinding Padding}"
-                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        Background="{TemplateBinding Background}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                x:Name="PART_HeaderText"
-                                Grid.Row="0"
-                                FontFamily="{TemplateBinding FontFamily}"
-                                FontSize="{TemplateBinding HeaderFontSize}"
-                                Foreground="{TemplateBinding HeaderForeground}"
-                                Text="{TemplateBinding HeaderText}"
-                                TextWrapping="Wrap" />
-                            <TextBlock
-                                x:Name="PART_SubHeaderText"
-                                Grid.Row="1"
-                                Margin="{TemplateBinding SubHeaderMargin}"
-                                FontFamily="{TemplateBinding FontFamily}"
-                                FontSize="{TemplateBinding SubHeaderFontSize}"
-                                Foreground="{TemplateBinding SubHeaderForeground}"
-                                Text="{TemplateBinding SubHeaderText}"
-                                TextWrapping="Wrap" />
-                        </Grid>
-                        <ProgressRing
-                            x:Name="PART_Progress"
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Width="{TemplateBinding ProgressSize}"
-                            Height="{TemplateBinding ProgressSize}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="{ThemeResource MegaRedColorBrush}" />
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Command="{TemplateBinding ButtonCommand}"
+                            Content="{TemplateBinding ButtonText}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -365,8 +294,8 @@
                                     Command="{Binding Parent.CloseNodeDetailsCommand}"
                                     Style="{StaticResource MegaAppBarButtonStyle}"
                                     ToolTipService.ToolTip="{Binding CloseText}">
-                                    <Viewbox MaxHeight="16" MaxWidth="16">
-                                        <FontIcon Glyph="&#xEA5B;"/>
+                                    <Viewbox MaxWidth="16" MaxHeight="16">
+                                        <FontIcon Glyph="&#xEA5B;" />
                                     </Viewbox>
                                 </AppBarButton>
                             </CommandBar.Content>
@@ -767,7 +696,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="userControls:ContactProfilePanel">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
@@ -792,7 +721,8 @@
 
                             <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
                             <CommandBar
-                                Grid.Row="0" Grid.Column="0"
+                                Grid.Row="0"
+                                Grid.Column="0"
                                 extensions:CommandBarExtensions.HideMoreButton="True"
                                 Style="{StaticResource MegaCommandBarStyle}">
                                 <CommandBar.Content>
@@ -801,7 +731,7 @@
                                         Command="{Binding ContactList.CloseContactProfileCommand}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding CloseText}">
-                                        <Viewbox MaxHeight="16" MaxWidth="16">
+                                        <Viewbox MaxWidth="16" MaxHeight="16">
                                             <FontIcon Glyph="&#xEA5B;" />
                                         </Viewbox>
                                     </AppBarButton>
@@ -809,9 +739,10 @@
                             </CommandBar>
 
                             <!--  SHARED ITEMS TOP COMMAND BAR AREA (DESKTOP ONLY)  -->
-                            <Grid 
+                            <Grid
                                 x:Name="PART_SharedItemsTopCommandBarArea"
-                                Grid.Row="0" Grid.Column="1"
+                                Grid.Row="0"
+                                Grid.Column="1"
                                 DataContext="{Binding SharedItems}">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -820,7 +751,8 @@
                                 <!--  SHARED ITEMS TOP COMMAND BAR (DESKTOP ONLY)  -->
                                 <CommandBar
                                     x:Name="TopCommandBar"
-                                    Grid.Row="0" Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
                                     extensions:CommandBarExtensions.HideMoreButton="True"
                                     Style="{StaticResource MegaCommandBarStyle}">
                                     <AppBarButton
@@ -851,7 +783,7 @@
                                     </AppBarButton>
                                     <AppBarButton
                                         Command="{Binding ItemCollection.MultiSelectCommand}"
-                                        Label="{Binding MultiSelectText, Mode=OneTime}"                        
+                                        Label="{Binding MultiSelectText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
                                         Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -862,23 +794,24 @@
                                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                                         </AppBarButton.Icon>
                                     </AppBarButton>
-                                    <AppBarSeparator 
+                                    <AppBarSeparator
                                         Margin="-12,-12,-12,0"
                                         VerticalAlignment="Center"
-                                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </CommandBar>
 
                                 <!--  PERMANENT SHARED ITEMS TOP COMMAND BAR (ALL DEVICES)  -->
                                 <CommandBar
-                                    Grid.Row="0" Grid.Column="1"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
                                     extensions:CommandBarExtensions.HideMoreButton="True"
                                     Style="{StaticResource MegaCommandBarStyle}">
                                     <AppBarButton
                                         x:Name="PART_BtnSortSharedItems"
+                                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                                         Label="{Binding SortByText}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding SortByText}"
-                                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                                        ToolTipService.ToolTip="{Binding SortByText}">
                                         <AppBarButton.Icon>
                                             <PathIcon
                                                 HorizontalAlignment="Center"
@@ -907,30 +840,33 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid
-                                                Grid.Column="0" Grid.Row="0"
+                                                Grid.Row="0"
+                                                Grid.Column="0"
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center">
                                                 <Rectangle
                                                     x:Name="PART_AvatarRectangle"
-                                                    Height="96" Width="96"
-                                                    Stroke="{ThemeResource MegaAppForegroundBrush}"
+                                                    Width="96"
+                                                    Height="96"
                                                     AutomationProperties.AccessibilityView="Raw"
+                                                    Stroke="{ThemeResource MegaAppForegroundBrush}"
                                                     Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}">
                                                     <Rectangle.Fill>
-                                                        <SolidColorBrush Color="{Binding AvatarColor, Mode=OneWay}"/>
+                                                        <SolidColorBrush Color="{Binding AvatarColor, Mode=OneWay}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                                 <TextBlock
                                                     x:Name="PART_AvatarLetter"
-                                                    Text="{Binding AvatarLetter, Mode=OneWay}"
-                                                    FontSize="28"
-                                                    Foreground="White"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}"/>
+                                                    FontSize="28"
+                                                    Foreground="White"
+                                                    Text="{Binding AvatarLetter, Mode=OneWay}"
+                                                    Visibility="{Binding AvatarUri, Converter={StaticResource InverseStringVisibilityConverter}, Mode=OneWay}" />
                                                 <Image
                                                     x:Name="PART_AvatarUri"
-                                                    Height="96" Width="96"
+                                                    Width="96"
+                                                    Height="96"
                                                     AutomationProperties.AccessibilityView="Raw"
                                                     Stretch="Uniform"
                                                     Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}}">
@@ -939,17 +875,18 @@
                                                     </Image.Source>
                                                 </Image>
                                             </Grid>
-                                            <StackPanel 
-                                                Grid.Column="1" Grid.Row="0"
+                                            <StackPanel
+                                                Grid.Row="0"
+                                                Grid.Column="1"
                                                 Margin="20,0,0,0"
                                                 VerticalAlignment="Top">
                                                 <TextBlock
                                                     x:Name="PART_NameText"
+                                                    Margin="0,0,0,8"
                                                     FontSize="28"
                                                     FontWeight="SemiLight"
-                                                    Margin="0,0,0,8"
                                                     Text="{Binding FullName, Mode=OneWay}"
-                                                    TextWrapping="WrapWholeWords"/>
+                                                    TextWrapping="WrapWholeWords" />
                                                 <TextBlock
                                                     x:Name="PART_EmailText"
                                                     FontSize="16"
@@ -964,32 +901,29 @@
                                                 FontSize="20"
                                                 FontWeight="SemiLight"
                                                 Text="{Binding RemoveContactText, Mode=OneWay}"
-                                                TextWrapping="WrapWholeWords"/>
+                                                TextWrapping="WrapWholeWords" />
                                             <Grid Margin="0,20,0,24">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
                                                 <Viewbox
                                                     Grid.Column="0"
+                                                    MaxWidth="16"
+                                                    MaxHeight="16"
                                                     Margin="0,4,12,0"
-                                                    MaxWidth="16" MaxHeight="16"
                                                     VerticalAlignment="Top">
-                                                    <PathIcon 
-                                                        Data="{Binding WarningIconPathData, Mode=OneTime}"
-                                                        Foreground="{StaticResource MegaRedColorBrush}" />
+                                                    <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
                                                 </Viewbox>
                                                 <TextBlock
                                                     x:Name="PART_RemoveContactWarningText"
                                                     Grid.Column="1"
                                                     FontSize="14"
+                                                    Opacity="0.4"
                                                     Text="{Binding RemoveContactWarningText, Mode=OneTime}"
-                                                    TextWrapping="WrapWholeWords"
-                                                    Opacity="0.4"/>
+                                                    TextWrapping="WrapWholeWords" />
                                             </Grid>
-                                            <Button
-                                                x:Name="PART_RemoveContactButton"
-                                                Width="136">
+                                            <Button x:Name="PART_RemoveContactButton" Width="136">
                                                 <TextBlock Text="{Binding RemoveText, Mode=OneTime}" />
                                             </Button>
                                         </StackPanel>
@@ -997,25 +931,25 @@
                                 </ScrollViewer>
                             </PivotItem>
                             <PivotItem x:Name="PART_SharedItemsPivot" Header="{Binding SharedItemsText}">
-                                <Grid 
-                                    DataContext="{Binding SharedItems}"
+                                <Grid
                                     Background="{ThemeResource MegaContactProfileBackgroundBrush}"
+                                    DataContext="{Binding SharedItems}"
                                     Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
                                     <Grid Grid.Row="0">
-                                        <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
-                                        <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                                        <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}" />
+                                        <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}" />
                                     </Grid>
                                     <Grid Grid.Row="1" Margin="-12,-8,0,0">
                                         <ListView
                                             x:Name="PART_ListViewSharedItems"
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                            ItemsSource="{Binding ItemCollection.Items}"
-                                            ItemTemplate="{StaticResource MegaContactIncomingSharedItemListViewDesktop}">
+                                            ItemTemplate="{StaticResource MegaContactIncomingSharedItemListViewDesktop}"
+                                            ItemsSource="{Binding ItemCollection.Items}">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
                                                 <core:EventTriggerBehavior EventName="SelectionChanged">
@@ -1116,7 +1050,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="userControls:ActivityIndicator">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
@@ -1171,7 +1105,7 @@
                             FontSize="{TemplateBinding SubHeaderForeground}"
                             Text="{TemplateBinding SubHeaderText}"
                             TextWrapping="Wrap"
-                            Visibility="{Binding SubHeaderText, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource StringVisibilityConverter}}" />
+                            Visibility="Collapsed" />
                         <TextBlock
                             x:Name="PART_ProgressText"
                             Grid.Row="2"
