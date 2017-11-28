@@ -273,7 +273,8 @@ namespace MegaApp.UserControls
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                return;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
@@ -283,7 +284,8 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
+            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                return;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;

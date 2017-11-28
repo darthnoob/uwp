@@ -44,6 +44,9 @@ namespace MegaApp.Views
             this.ViewModel.RubbishBin.ClosePanelEvent += OnClosePanel;
             this.ViewModel.CameraUploads.ClosePanelEvent += OnClosePanel;
 
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += this.ViewModel.OnCopyOrMoveFinished;
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += this.ViewModel.OnCopyOrMoveCanceled;
+
             this.CloudDriveSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
         }

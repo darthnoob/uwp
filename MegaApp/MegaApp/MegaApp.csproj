@@ -118,8 +118,10 @@
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseFolderContentViewStateToVisibilityConverter.cs" />
+    <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
     <Compile Include="Interfaces\IMegaContactOutgoingSharedFolder.cs" />
@@ -133,6 +135,9 @@
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
+    <Compile Include="UserControls\CopyOrMovePanel.xaml.cs">
+      <DependentUpon>CopyOrMovePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
@@ -213,6 +218,7 @@
     <Compile Include="ViewModels\AccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CopyOrMovePanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
@@ -486,6 +492,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UserControls\CopyOrMovePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\FolderExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

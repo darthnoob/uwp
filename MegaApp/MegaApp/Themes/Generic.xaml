@@ -359,17 +359,6 @@
                                         Data="{Binding RubbishBinPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
-                            <CommandBar.Content>
-                                <AppBarButton
-                                    x:Name="CloseDetailsViewButton"
-                                    Command="{Binding Parent.ClosePanelCommand}"
-                                    Style="{StaticResource MegaAppBarButtonStyle}"
-                                    ToolTipService.ToolTip="{Binding ClosePanelText}">
-                                    <Viewbox MaxHeight="16" MaxWidth="16">
-                                        <FontIcon Glyph="&#xEA5B;"/>
-                                    </Viewbox>
-                                </AppBarButton>
-                            </CommandBar.Content>
                         </CommandBar>
 
                         <Pivot
@@ -688,7 +677,6 @@
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
                                         <Setter Target="TypeLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
                                         <Setter Target="AddedLabelText.(RelativePanel.Below)" Value="TypeLabelText" />
                                         <Setter Target="ModifiedLabelText.(RelativePanel.Below)" Value="AddedLabelText" />
@@ -713,7 +701,6 @@
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
                                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Collapsed" />
                                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                                         <Setter Target="TypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                                         <Setter Target="TypeText.(RelativePanel.Below)" Value="TypeLabelText" />
@@ -739,7 +726,6 @@
                                         <AdaptiveTrigger MinWindowWidth="600" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="CloseDetailsViewButton.Visibility" Value="Visible" />
                                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                                         <Setter Target="TypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                                         <Setter Target="TypeText.(RelativePanel.Below)" Value="TypeLabelText" />

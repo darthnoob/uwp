@@ -31,11 +31,23 @@
         IsPaneOpen="False"
         PanePlacement="Right">
         <SplitView.Pane>
-            <userControls:NodeDetailsPanel
-                x:Name="NodeDetailsPanelControl"
-                Background="{StaticResource MegaAppBackgroundBrush}"
-                Foreground="{StaticResource MegaAppForegroundBrush}"
-                Node="{Binding ActiveFolderView.FocusedNode}" />
+            <Grid>
+                <userControls:NodeDetailsPanel
+                    x:Name="NodeDetailsPanelControl"
+                    DataContext="{Binding ActiveFolderView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Node="{Binding FocusedNode}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+                
+                <userControls:CopyOrMovePanel
+                    x:Name="CopyOrMovePanelControl"
+                    DataContext="{Binding ActiveFolderView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    SelectedNodes="{Binding CopyOrMoveSelectedNodes}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+            </Grid>
         </SplitView.Pane>
 
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

@@ -41,6 +41,7 @@
     <converters:FolderContentViewStateToVisibilityConverter x:Key="FolderContentViewStateToVisibilityConverter" />
     <converters:FolderViewStateToVisibilityConverter x:Key="FolderViewStateToVisibilityConverter" />
     <converters:NodeDisplayModeToColorBrushConverter x:Key="NodeDisplayModeToColorBrushConverter" />
+    <converters:PanelTypeToVisibilityConverter x:Key="PanelTypeToVisibilityConverter" />
     <converters:TextToLowerCaseConverter x:Key="TextToLowerCaseConverter" />
     <converters:TransferStateToReadableTextConverter x:Key="TransferStateToReadableTextConverter" />
     <converters:TransferStateToVisibilityConverter x:Key="TransferStateToVisibilityConverter" />

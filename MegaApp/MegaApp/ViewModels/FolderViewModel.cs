@@ -30,8 +30,6 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChangeViewEvent;
 
-        public event EventHandler AcceptCopyEvent;
-        public event EventHandler AcceptMoveEvent;
         public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
@@ -40,9 +38,11 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChildNodesCollectionChanged;
 
-        public FolderViewModel(ContainerType containerType)
+        public FolderViewModel(ContainerType containerType, bool onlyShowFolders = false)
         {
             this.Type = containerType;
+
+            this.OnlyShowFolders = onlyShowFolders;
 
             this.FolderRootNode = null;
             this.IsLoaded = false;
@@ -51,13 +51,12 @@ namespace MegaApp.ViewModels
             this.BreadCrumb = new BreadCrumbViewModel();
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
+            this.VisiblePanel = PanelType.None;
 
             this.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
-            this.AcceptCopyCommand = new RelayCommand(AcceptCopy);
-            this.AcceptMoveCommand = new RelayCommand(AcceptMove);
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
@@ -131,12 +130,17 @@ namespace MegaApp.ViewModels
         protected virtual void OpenInformationPanel()
         {
             this.IsInformationPanelOpen = true;
+            this.VisiblePanel = PanelType.Information;
             OpenPanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void ClosePanels()
         {
+            if (this.VisiblePanel == PanelType.CopyOrMove)
+                CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+
             this.IsInformationPanelOpen = false;
+            this.VisiblePanel = PanelType.None;
             ClosePanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
@@ -316,8 +320,6 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand AcceptCopyCommand { get; }
-        public ICommand AcceptMoveCommand { get; }
         public ICommand AddFolderCommand { get; private set; }
         public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand ChangeViewCommand { get; }
@@ -371,7 +373,11 @@ namespace MegaApp.ViewModels
             GetCurrentOrderDirection();
 
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
-            MNodeList childList = NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
+            MNodeList childList = this.Type == ContainerType.CameraUploads ?
+                NodeService.GetFileChildren(this.MegaSdk, this.FolderRootNode) : 
+                this.OnlyShowFolders ? 
+                NodeService.GetFolderChildren(this.MegaSdk, this.FolderRootNode) :
+                NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
 
             if (childList == null)
             {
@@ -426,10 +432,6 @@ namespace MegaApp.ViewModels
                 this.LoadingCancelTokenSource.Cancel();
         }
 
-        private void AcceptCopy() => AcceptCopyEvent?.Invoke(this, EventArgs.Empty);
-
-        private void AcceptMove() => AcceptMoveEvent?.Invoke(this, EventArgs.Empty);
-
         /// <summary>
         /// Add a new sub-folder to the current folder
         /// </summary>
@@ -471,9 +473,13 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void CancelCopyOrMove() => CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+        private void CancelCopyOrMove() => ClosePanels();
 
-        private void CopyOrMove() => CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+        private void CopyOrMove()
+        {
+            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+            OpenPanelEvent?.Invoke(this, EventArgs.Empty);
+        }
 
         private async void Download()
         {
@@ -1279,6 +1285,8 @@ namespace MegaApp.ViewModels
 
         public ContainerType Type { get; private set; }
 
+        public bool OnlyShowFolders { get; private set; }
+
         private FolderContentViewMode _viewMode;
         public FolderContentViewMode ViewMode
         {
@@ -1350,7 +1358,7 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _hasBusyText, value); }
         }
 
-        public virtual bool IsPanelOpen => this.IsInformationPanelOpen;
+        public virtual bool IsPanelOpen => this.IsInformationPanelOpen || this.VisiblePanel != PanelType.None;
 
         private bool _isInformationPanelOpen;
         public bool IsInformationPanelOpen
@@ -1370,6 +1378,17 @@ namespace MegaApp.ViewModels
                 {
                     this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
                 }
+            }
+        }
+
+        private PanelType _visiblePanel;
+        public PanelType VisiblePanel
+        {
+            get { return _visiblePanel; }
+            set
+            {
+                SetField(ref _visiblePanel, value);
+                OnPropertyChanged(nameof(this.IsPanelOpen));
             }
         }
 

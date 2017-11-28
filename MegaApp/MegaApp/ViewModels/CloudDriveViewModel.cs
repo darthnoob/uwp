@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -32,15 +30,9 @@ namespace MegaApp.ViewModels
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
             this.CameraUploads = new CameraUploadsViewModel();
 
-            this.CloudDrive.AcceptCopyEvent += OnAcceptCopy;
-            this.RubbishBin.AcceptCopyEvent += OnAcceptCopy;
-
-            this.CloudDrive.AcceptMoveEvent += OnAcceptMove;
-            this.RubbishBin.AcceptMoveEvent += OnAcceptMove;
-
-            this.CloudDrive.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.RubbishBin.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.CameraUploads.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
+            this.CloudDrive.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
+            this.RubbishBin.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
+            this.CameraUploads.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
 
             this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
             this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
@@ -186,7 +178,7 @@ namespace MegaApp.ViewModels
             if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
                 !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
 
-            this.ActiveFolderView.ClosePanels();
+            this.ActiveFolderView.VisiblePanel = PanelType.CopyOrMove;
 
             foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
@@ -203,8 +195,6 @@ namespace MegaApp.ViewModels
             this.CameraUploads.PreviousViewState = this.CameraUploads.CurrentViewState;
             this.CameraUploads.CurrentViewState = FolderContentViewState.CopyOrMove;
 
-            this.SourceFolderView = this.ActiveFolderView;
-
             this.DisableSelection?.Invoke(this, EventArgs.Empty);
         }
 
@@ -213,97 +203,28 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void ResetCopyOrMove()
         {
-            SourceFolderView.ItemCollection.SelectedItems.Clear();
-            SourceFolderView.CopyOrMoveSelectedNodes.Clear();
-            SourceFolderView = null;
+            ActiveFolderView.ItemCollection.ClearSelection();
+            ActiveFolderView.CopyOrMoveSelectedNodes.Clear();
+            this.ActiveFolderView.VisiblePanel = PanelType.None;
             ResetViewStates();
             ClearSelectedItems?.Invoke(this, EventArgs.Empty);
             EnableSelection?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnCancelCopyOrMove(object sender, EventArgs e)
+        public void OnCopyOrMoveFinished(object sender, EventArgs e)
         {
-            if (SourceFolderView?.CopyOrMoveSelectedNodes != null)
+            ResetCopyOrMove();
+        }
+
+        public void OnCopyOrMoveCanceled(object sender, EventArgs e)
+        {
+            if (ActiveFolderView?.CopyOrMoveSelectedNodes != null)
             {
-                foreach (var node in SourceFolderView.CopyOrMoveSelectedNodes)
+                foreach (var node in ActiveFolderView.CopyOrMoveSelectedNodes)
                     if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
             }
 
             ResetCopyOrMove();
-        }
-
-        private void OnAcceptCopy(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptCopyAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptCopyAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being copied
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
-                {
-                    if (node != null)
-                    {
-                        result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
-            }
-            catch (Exception) { result = false; }
-            finally
-            {
-                if (!result)
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_CopyFailed"));
-                }
-            }
-        }
-
-        private void OnAcceptMove(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptMoveAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptMoveAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being moved
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
-                {
-                    if (node != null)
-                    {
-                        result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
-            }
-            catch (Exception) { result = false; }
-            finally
-            {
-                if (!result)
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_MoveFailed"));
-                }
-            }
         }
 
         #endregion
@@ -338,16 +259,6 @@ namespace MegaApp.ViewModels
         {
             get { return _activeFolderView; }
             set { SetField(ref _activeFolderView, value); }
-        }
-
-        /// <summary>
-        /// Property needed to store the source folder in a move/copy action 
-        /// </summary>
-        private FolderViewModel _sourceFolderView;
-        public FolderViewModel SourceFolderView
-        {
-            get { return _sourceFolderView; }
-            set { SetField(ref _sourceFolderView, value); }
         }
 
         #endregion

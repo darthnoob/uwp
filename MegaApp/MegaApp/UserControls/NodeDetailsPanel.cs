@@ -74,30 +74,64 @@ namespace MegaApp.UserControls
             this._copyLink = (Button)this.GetTemplateChild("PART_CopyLinkButton");
             this._shareLink = (Button)this.GetTemplateChild("PART_ShareLinkButton");
             
-            this._previewImage.Tapped += (sender, args) => OnPreviewImageTapped();
-            //this._enableOfflineView.Toggled += (sender, args) => OnEnableOfflineViewSwitchToggled();
-            this._enableLink.Toggled += (sender, args) => OnEnableLinkSwitchToggled();
-            this._linkWithoutKey.Content = this.LinkWithoutKeyLabelText;
-            this._linkWithoutKey.Checked += (sender, args) => OnLinkWithoutKeyRadioButtonChecked();
-            this._decryptionKey.Content = this.DecryptionKeyLabelText;
-            this._decryptionKey.Checked += (sender, args) => OnDecryptionKeyRadioButtonChecked();
-            this._linkWithKey.Content = this.LinkWithKeyLabelText;
-            this._linkWithKey.Checked += (sender, args) => OnLinkWithKeyRadioButtonChecked();
-            this._setExpirationDate.Toggled += (sender, args) => OnSetExpirationDateSwitchToggled();
-            this._expirationDate.Opened += (sender, args) => OnExpirationDateCalendarDataPickerOpened();
-            this._expirationDate.DateChanged += (sender, args) => OnExpirationDateCalendarDataPickerDateChanged();
-            this._copyLink.Tapped += (sender, args) => OnCopyLinkButtonTapped();
-            this._shareLink.Tapped += (sender, args) => OnShareLinkButtonTapped();
+            if (this._previewImage != null)
+                this._previewImage.Tapped += (sender, args) => OnPreviewImageTapped();
+            
+            //if (this._enableOfflineView != null)
+            //    this._enableOfflineView.Toggled += (sender, args) => OnEnableOfflineViewSwitchToggled();
+
+            if (this._enableLink != null)
+                this._enableLink.Toggled += (sender, args) => OnEnableLinkSwitchToggled();
+
+            if (this._linkWithoutKey != null)
+            {
+                this._linkWithoutKey.Content = this.LinkWithoutKeyLabelText;
+                this._linkWithoutKey.Checked += (sender, args) => OnLinkWithoutKeyRadioButtonChecked();
+            }
+
+            if (this._decryptionKey != null)
+            {
+                this._decryptionKey.Content = this.DecryptionKeyLabelText;
+                this._decryptionKey.Checked += (sender, args) => OnDecryptionKeyRadioButtonChecked();
+            }
+
+            if (this._linkWithKey != null)
+            {
+                this._linkWithKey.Content = this.LinkWithKeyLabelText;
+                this._linkWithKey.Checked += (sender, args) => OnLinkWithKeyRadioButtonChecked();
+            }
+            
+            if (this._setExpirationDate != null)
+                this._setExpirationDate.Toggled += (sender, args) => OnSetExpirationDateSwitchToggled();
+
+            if (this._expirationDate != null)
+            {
+                this._expirationDate.Opened += (sender, args) => OnExpirationDateCalendarDataPickerOpened();
+                this._expirationDate.DateChanged += (sender, args) => OnExpirationDateCalendarDataPickerDateChanged();
+            }
+            
+            if (this._copyLink != null)
+                this._copyLink.Tapped += (sender, args) => OnCopyLinkButtonTapped();
+
+            if (this._shareLink != null)
+                this._shareLink.Tapped += (sender, args) => OnShareLinkButtonTapped();
         }
 
         protected void OnNodeChanged(NodeViewModel node)
         {
+            OnApplyTemplate();
+
             // Default value is laways link with key
-            this._linkWithKey.IsChecked = true;
+            if (this._linkWithKey != null)
+                this._linkWithKey.IsChecked = true;
+
             OnLinkWithKeyRadioButtonChecked();
 
-            this._setExpirationDate.IsOn = node.LinkWithExpirationTime;
-            this._expirationDate.Date = node.LinkExpirationDate;
+            if (this._setExpirationDate != null)
+            {
+                this._setExpirationDate.IsOn = node.LinkWithExpirationTime;
+                this._expirationDate.Date = node.LinkExpirationDate;
+            }
         }
 
         private void OnPreviewImageTapped()
@@ -139,7 +173,9 @@ namespace MegaApp.UserControls
 
         private void OnLinkWithKeyRadioButtonChecked()
         {
-            this._exportLinkBorderTitle.Text = this.ExportLinkText;
+            if (this._exportLinkBorderTitle != null)
+                this._exportLinkBorderTitle.Text = this.ExportLinkText;
+
             this.Node.ExportLink = this.Node.OriginalMNode.getPublicLink(true);
         }
 
