@@ -4,10 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
     mc:Ignorable="d">
 
@@ -97,36 +99,54 @@
             <userControls:FrameEx x:Name="ContentFrame" />
         </userControls:HamburgerMenuEx>
 
+        <Grid
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            extensions:IsVisibleAnimation.IsVisible="{Binding IsBusy}"
+            Background="{StaticResource MegaAppBackgroundBrush}">
+            <userControls:ActivityIndicator
+                x:Name="ActivityIndicator"
+                Margin="72,0,0,0"
+                HorizontalContentAlignment="Stretch"
+                Foreground="{StaticResource MegaAppForegroundBrush}"
+                HeaderFontSize="28"
+                HeaderText="{Binding ProgressHeaderText}"
+                IsVisible="{Binding IsBusy}"
+                ProgressText="{Binding ProgressSubHeaderText}"
+                ProgressTextFontSize="14">
+                <userControls:ActivityIndicator.SubHeaderForeground>
+                    <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
+                </userControls:ActivityIndicator.SubHeaderForeground>
+                <userControls:ActivityIndicator.ProgressTextForeground>
+                    <SolidColorBrush Opacity="0.5" Color="{ThemeResource MegaAppForeground}" />
+                </userControls:ActivityIndicator.ProgressTextForeground>
+            </userControls:ActivityIndicator>
+        </Grid>
+
         <VisualStateManager.VisualStateGroups>
 
             <VisualStateGroup>
-                <VisualState x:Name="Small">
+                <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0" />
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProgressPanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Below" />
-                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Top" />
-                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="24" />
-                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="16" />
+                        <Setter Target="ActivityIndicator.Margin" Value="72,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
 
-                <VisualState x:Name="Wide">
+                <VisualState x:Name="Mobile">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="600" />
+                        <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ProgressPanelControl.Padding" Value="178, 18, 0, 16" />
-                        <Setter Target="ProgressPanelControl.ProgressAlignment" Value="Right" />
-                        <Setter Target="ProgressPanelControl.VerticalContentAlignment" Value="Center" />
-                        <Setter Target="ProgressPanelControl.HeaderFontSize" Value="44" />
-                        <Setter Target="ProgressPanelControl.SubHeaderFontSize" Value="18" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
 
+
 </views:BaseMainPage>
+
