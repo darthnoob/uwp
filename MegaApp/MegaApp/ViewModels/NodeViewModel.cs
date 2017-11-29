@@ -49,7 +49,7 @@ namespace MegaApp.ViewModels
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Parent.CurrentViewState))
+            if (e.PropertyName == nameof(this.Parent.Folder))
             {
                 OnPropertyChanged(nameof(this.Parent));
                 OnPropertyChanged(nameof(this.NodeBinding));

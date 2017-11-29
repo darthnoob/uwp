@@ -44,8 +44,8 @@ namespace MegaApp.Views
             this.ViewModel.RubbishBin.ClosePanelEvent += OnClosePanel;
             this.ViewModel.CameraUploads.ClosePanelEvent += OnClosePanel;
 
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += this.ViewModel.OnCopyOrMoveFinished;
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += this.ViewModel.OnCopyOrMoveCanceled;
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += OnCopyOrMoveFinished;
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += OnCopyOrMoveCanceled;
 
             this.CloudDriveSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
@@ -188,8 +188,7 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive &&
-                this.ViewModel.ActiveFolderView.CurrentViewState != FolderContentViewState.CopyOrMove)
+            if (!this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
                 ((ListViewBase)sender).SelectedItems.Add(itemTapped);
@@ -295,6 +294,18 @@ namespace MegaApp.Views
         private void OnClosePanel(object sender, EventArgs e)
         {
             this.CloudDriveSplitView.IsPaneOpen = false;
+        }
+
+        private void OnCopyOrMoveFinished(object sender, EventArgs e)
+        {
+            this.ViewModel.OnCopyOrMoveFinished(sender, e);
+            this.OnClosePanel(sender, e);
+        }
+
+        private void OnCopyOrMoveCanceled(object sender, EventArgs e)
+        {
+            this.ViewModel.OnCopyOrMoveCanceled(sender, e);
+            this.OnClosePanel(sender, e);
         }
 
         /// <summary>

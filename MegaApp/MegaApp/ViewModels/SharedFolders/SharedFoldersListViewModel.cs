@@ -223,20 +223,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         private void OpenContentPanel()
         {
-            this.IsContentPanelOpen = true;
-            this.IsInformationPanelOpen = false;
-        }
-
-        protected override void OpenInformationPanel()
-        {
-            this.IsContentPanelOpen = false;
-            base.OpenInformationPanel();
-        }
-
-        public override void ClosePanels()
-        {
-            this.IsContentPanelOpen = false;
-            base.ClosePanels();
+            this.VisiblePanel = PanelType.Content;
         }
 
         #endregion
@@ -256,29 +243,6 @@ namespace MegaApp.ViewModels.SharedFolders
         public string NumberOfSharedItemsText => this.NumberOfSharedItems == 1 ? 
             ResourceService.UiResources.GetString("UI_OneSharedFolder").ToLower() :
             string.Format(ResourceService.UiResources.GetString("UI_NumberSharedFolders").ToLower(), this.NumberOfSharedItems);
-
-        public override bool IsPanelOpen => this.IsContentPanelOpen || this.IsInformationPanelOpen;
-
-        private bool _isContentPanelOpen;
-        public bool IsContentPanelOpen
-        {
-            get { return _isContentPanelOpen; }
-            set
-            {
-                SetField(ref _isContentPanelOpen, value);
-                OnPropertyChanged(nameof(this.IsPanelOpen));
-
-                if (this._isContentPanelOpen)
-                {
-                    this.ItemCollection.IsMultiSelectActive = false;
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
-                }
-                else
-                {
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
-                }
-            }
-        }
 
         #endregion
 

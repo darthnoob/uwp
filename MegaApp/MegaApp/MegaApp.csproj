@@ -117,7 +117,6 @@
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
-    <Compile Include="Converters\InverseFolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
@@ -171,12 +170,11 @@
     <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
-    <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
-    <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="Converters\NodeViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\ConfirmAccountResult.cs" />
     <Compile Include="Enums\ConfirmChangeEmailResult.cs" />
     <Compile Include="Enums\InputState.cs" />
@@ -260,7 +258,6 @@
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
-    <Compile Include="Enums\FolderContentViewState.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />

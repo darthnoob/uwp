@@ -108,12 +108,12 @@
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
             </PivotItem>
-            <PivotItem 
+            <!--<PivotItem 
                 x:Name="IncomingSharesPivot"
                 CacheMode="{x:Null}"
                 Header="{x:Bind ViewModel.IncomingSharesText}">
 
-            </PivotItem>
+            </PivotItem>-->
         </Pivot>
     </Grid>
 </userControls:BaseCopyOrMovePanel>

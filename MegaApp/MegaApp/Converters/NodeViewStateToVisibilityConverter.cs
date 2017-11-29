@@ -9,7 +9,7 @@ namespace MegaApp.Converters
     /// <summary>
     /// Class to convert from a viewstate value to a Visibility state (Visible/Collapsed)
     /// </summary>
-    public class ViewStateToVisibilityConverter: IValueConverter
+    public class NodeViewStateToVisibilityConverter: IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -17,91 +17,99 @@ namespace MegaApp.Converters
             var parentFolder = node?.Parent;
             if (parentFolder == null) return Visibility.Collapsed;
 
-            var viewState = parentFolder.CurrentViewState;
+            var containerType = parentFolder.Type;
             var command = parameter as string;
-            switch (viewState)
+            switch (containerType)
             {
-                case FolderContentViewState.CloudDrive:
-                case FolderContentViewState.CameraUploads:
+                case ContainerType.CloudDrive:
+                case ContainerType.CameraUploads:
                     switch (command)
                     {
                         case "preview":
-                            return node.IsImage ? Visibility.Visible : Visibility.Collapsed;
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsImage ? 
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "viewdetails":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "download":
                         case "copyormove":
                         case "remove":
-                            return Visibility.Visible;
+                            return parentFolder.ItemCollection != null && parentFolder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "getlink":
                         case "rename":
                             return parentFolder.ItemCollection.MoreThanOneSelected ? 
                                 Visibility.Collapsed : Visibility.Visible;
+
                         default:
                             return Visibility.Collapsed;
                     }
-                case FolderContentViewState.CopyOrMove:
-                    break;
-                case FolderContentViewState.Import:
-                    break;
-                case FolderContentViewState.MultiSelect:
-                    switch (command)
-                    {
-                        case "download":
-                        case "copyormove":
-                        case "remove":
-                            return Visibility.Visible;
-                        default:
-                            return Visibility.Collapsed;
 
-                    };
-                case FolderContentViewState.RubbishBin:
+                case ContainerType.RubbishBin:
                     switch (command)
                     {
                         case "preview":
-                            return node.IsImage ? Visibility.Visible : Visibility.Collapsed;
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsImage ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "viewdetails":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "download":
                         case "copyormove":
                         case "remove":
-                            return Visibility.Visible;
+                            return parentFolder.ItemCollection != null && parentFolder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+                        
                         case "rename":
                             return parentFolder.ItemCollection.MoreThanOneSelected ?
                                 Visibility.Collapsed : Visibility.Visible;
                         default:
                             return Visibility.Collapsed;
-                    }; 
-                case FolderContentViewState.InShares:
-                case FolderContentViewState.ContactInShares:
+                    };
+
+                case ContainerType.InShares:
+                case ContainerType.ContactInShares:
                     switch (command)
                     {
                         case "download":
                             return Visibility.Visible;
+
                         case "remove":
                             return parentFolder.FolderRootNode.HasFullAccessPermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
+
                         case "rename":
                             return parentFolder.ItemCollection.MoreThanOneSelected || !parentFolder.FolderRootNode.HasFullAccessPermissions ?
                                 Visibility.Collapsed: Visibility.Visible;
+
                         default:
                             return Visibility.Collapsed;
                     }
-                case FolderContentViewState.OutShares:
+
+                case ContainerType.OutShares:
                     switch (command)
                     {
                         case "download":
                         case "remove":
                             return Visibility.Visible;
+
                         case "getlink":
                         case "rename":
                             return parentFolder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
+
                         default:
                             return Visibility.Collapsed;
                     }
-                case FolderContentViewState.SavedForOffline:
+                
+                case ContainerType.FolderLink:
                     break;
-                case FolderContentViewState.FolderLink:
-                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

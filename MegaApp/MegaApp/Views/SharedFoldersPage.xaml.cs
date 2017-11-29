@@ -74,9 +74,9 @@ namespace MegaApp.Views
                     return;
                 }
 
-                if (this.ViewModel.ActiveView.IsContentPanelOpen)
+                if (this.ViewModel.ActiveView.VisiblePanel == PanelType.Content)
                     this.SharedFolderSplitView.OpenPaneLength = ContentPanelMinWidth;
-                else if (this.ViewModel.ActiveView.IsInformationPanelOpen)
+                else if (this.ViewModel.ActiveView.VisiblePanel == PanelType.Information)
                     this.SharedFolderSplitView.OpenPaneLength = InformationPanelMinWidth;
             }
 

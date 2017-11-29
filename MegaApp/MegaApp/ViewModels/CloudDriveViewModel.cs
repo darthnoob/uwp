@@ -158,21 +158,6 @@ namespace MegaApp.ViewModels
             OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
-        private void ResetViewStates()
-        {
-            CloudDrive.ItemCollection.IsMultiSelectActive = false;
-            CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
-            CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
-
-            RubbishBin.ItemCollection.IsMultiSelectActive = false;
-            RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
-            RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
-
-            CameraUploads.ItemCollection.IsMultiSelectActive = false;
-            CameraUploads.CurrentViewState = FolderContentViewState.CameraUploads;
-            CameraUploads.PreviousViewState = FolderContentViewState.CameraUploads;
-        }
-
         private void OnCopyOrMove(object sender, EventArgs e)
         {
             if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
@@ -186,15 +171,6 @@ namespace MegaApp.ViewModels
             this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
             this.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
 
-            ResetViewStates();
-
-            this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
-            this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
-            this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.CameraUploads.PreviousViewState = this.CameraUploads.CurrentViewState;
-            this.CameraUploads.CurrentViewState = FolderContentViewState.CopyOrMove;
-
             this.DisableSelection?.Invoke(this, EventArgs.Empty);
         }
 
@@ -206,7 +182,6 @@ namespace MegaApp.ViewModels
             ActiveFolderView.ItemCollection.ClearSelection();
             ActiveFolderView.CopyOrMoveSelectedNodes.Clear();
             this.ActiveFolderView.VisiblePanel = PanelType.None;
-            ResetViewStates();
             ClearSelectedItems?.Invoke(this, EventArgs.Empty);
             EnableSelection?.Invoke(this, EventArgs.Empty);
         }

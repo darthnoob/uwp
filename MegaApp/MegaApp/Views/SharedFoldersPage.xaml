@@ -24,18 +24,20 @@
         <SplitView.Pane>
             <Grid>
                 <userControls:SharedFolderContentPanel
+                    x:Name="ContentPanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     SharedFolderNode="{Binding ItemCollection.FocusedItem}"
-                    Visibility="{Binding IsContentPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Content', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
                 
                 <userControls:SharedFolderInformationPanel
+                    x:Name="InformationPanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     SharedFolder="{Binding ItemCollection.FocusedItem}"
-                    Visibility="{Binding IsInformationPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 

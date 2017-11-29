@@ -53,12 +53,9 @@ namespace MegaApp.ViewModels
             this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
             this.VisiblePanel = PanelType.None;
 
-            this.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
-            this.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
-            this.CancelCopyOrMoveCommand = new RelayCommand(CancelCopyOrMove);
             this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
@@ -74,52 +71,6 @@ namespace MegaApp.ViewModels
             SetViewDefaults();
 
             SetEmptyContent(true);
-
-            switch (containerType)
-            {
-                case ContainerType.CloudDrive:
-                    this.CurrentViewState = FolderContentViewState.CloudDrive;
-                    break;
-                case ContainerType.RubbishBin:
-                    this.CurrentViewState = FolderContentViewState.RubbishBin;
-                    break;
-                case ContainerType.InShares:
-                    this.CurrentViewState = FolderContentViewState.InShares;
-                    break;
-                case ContainerType.OutShares:
-                    this.CurrentViewState = FolderContentViewState.OutShares;
-                    break;
-                case ContainerType.ContactInShares:
-                    this.CurrentViewState = FolderContentViewState.ContactInShares;
-                    break;
-                case ContainerType.FolderLink:
-                    this.CurrentViewState = FolderContentViewState.FolderLink;
-                    break;
-                case ContainerType.CameraUploads:
-                    this.CurrentViewState = FolderContentViewState.CameraUploads;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(containerType));
-            }
-        }
-
-        private void OnMultiSelectEnabled(object sender, EventArgs e)
-        {
-            if (this.CurrentViewState != FolderContentViewState.MultiSelect)
-                this.PreviousViewState = this.CurrentViewState;
-
-            this.CurrentViewState = FolderContentViewState.MultiSelect;
-        }
-
-        private void OnMultiSelectDisabled(object sender, EventArgs e)
-        {
-            if (this.PreviousViewState != FolderContentViewState.MultiSelect)
-            {
-                this.CurrentViewState = this.PreviousViewState;
-                this.PreviousViewState = FolderContentViewState.MultiSelect;
-            }
-
-            this.ItemCollection.ClearSelection();
         }
 
         private void OnSelectedItemsCollectionChanged(object sender, EventArgs e)
@@ -127,19 +78,17 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.Folder));
         }
 
-        protected virtual void OpenInformationPanel()
+        protected void OpenInformationPanel()
         {
-            this.IsInformationPanelOpen = true;
             this.VisiblePanel = PanelType.Information;
             OpenPanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
-        public virtual void ClosePanels()
+        public void ClosePanels()
         {
             if (this.VisiblePanel == PanelType.CopyOrMove)
                 CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
-            this.IsInformationPanelOpen = false;
             this.VisiblePanel = PanelType.None;
             ClosePanelEvent?.Invoke(this, EventArgs.Empty);
         }
@@ -473,8 +422,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void CancelCopyOrMove() => ClosePanels();
-
         private void CopyOrMove()
         {
             CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
@@ -708,36 +655,25 @@ namespace MegaApp.ViewModels
 
         public void OnChildNodeTapped(IMegaNode node)
         {
-            // Needed to avoid process the node when the user is in MultiSelect mode and also after the
-            // node is the last removed from selection and MultiSelect mode will be automatically disabled.
-            if (this.CurrentViewState == FolderContentViewState.MultiSelect || this.ItemCollection.IsMultiSelectActive) return;
+            // Needed to avoid process the node when the user is in MultiSelect.
+            if (this.ItemCollection.IsMultiSelectActive) return;
             
-            if (this.PreviousViewState == FolderContentViewState.MultiSelect)
-            {
-                this.PreviousViewState = this.CurrentViewState;
-                return;
-            }
-
             switch (node.Type)
             {
-                case MNodeType.TYPE_UNKNOWN:
-                    break;
                 case MNodeType.TYPE_FILE:
-                    // If the user is moving nodes don't process the file node
-                    if (this.CurrentViewState != FolderContentViewState.CopyOrMove)
-                        ProcessFileNode(node);
+                    ProcessFileNode(node);
                     break;
+
                 case MNodeType.TYPE_FOLDER:
-                    // If the user is moving nodes and the folder is one of the selected nodes don't navigate to it
-                    if ((this.CurrentViewState == FolderContentViewState.CopyOrMove) && (IsCopyOrMoveSelectedNode(node))) return;
                     BrowseToFolder(node);
                     break;
+
+                case MNodeType.TYPE_UNKNOWN:
                 case MNodeType.TYPE_ROOT:
-                    break;
                 case MNodeType.TYPE_INCOMING:
-                    break;
                 case MNodeType.TYPE_RUBBISH:
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -1011,7 +947,7 @@ namespace MegaApp.ViewModels
 
                 // If the user is moving nodes, check if the node had been selected to move 
                 // and establish the corresponding display mode
-                if (this.CurrentViewState == FolderContentViewState.CopyOrMove)
+                if (this.VisiblePanel == PanelType.CopyOrMove)
                 {
                     // Check if it is one of the selected nodes
                     IsCopyOrMoveSelectedNode(node);
@@ -1261,25 +1197,7 @@ namespace MegaApp.ViewModels
             set { SetField(ref _copyOrMoveSelectedNodes, value); }
         }
 
-        private FolderContentViewState _currentViewState;
-        public FolderContentViewState CurrentViewState
-        {
-            get { return _currentViewState; }
-            set
-            {
-                SetField(ref _currentViewState, value);
-                OnPropertyChanged("IsFlyoutActionAvailable");
-            }
-        }
-
-        private FolderContentViewState _previousViewState;
-        public FolderContentViewState PreviousViewState
-        {
-            get { return _previousViewState; }
-            set { SetField(ref _previousViewState, value); }
-        }
-
-        public bool IsFlyoutActionAvailable => this.CurrentViewState != FolderContentViewState.CopyOrMove;        
+        public bool IsFlyoutActionAvailable => !this.IsPanelOpen;
 
         public bool IsEmpty => !this.ItemCollection.HasItems;
 
@@ -1294,8 +1212,8 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _viewMode, value);
-                OnPropertyChanged("IsListViewMode");
-                OnPropertyChanged("IsGridViewMode");
+                OnPropertyChanged(nameof(this.IsListViewMode),
+                    nameof(this.IsGridViewMode));
             }
         }
 
@@ -1358,28 +1276,7 @@ namespace MegaApp.ViewModels
             private set { SetField(ref _hasBusyText, value); }
         }
 
-        public virtual bool IsPanelOpen => this.IsInformationPanelOpen || this.VisiblePanel != PanelType.None;
-
-        private bool _isInformationPanelOpen;
-        public bool IsInformationPanelOpen
-        {
-            get { return _isInformationPanelOpen; }
-            set
-            {
-                SetField(ref _isInformationPanelOpen, value);
-                OnPropertyChanged(nameof(this.IsPanelOpen));
-
-                if (this._isInformationPanelOpen)
-                {
-                    this.ItemCollection.IsMultiSelectActive = false;
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = true;
-                }
-                else
-                {
-                    this.ItemCollection.IsOnlyAllowSingleSelectActive = false;
-                }
-            }
-        }
+        public bool IsPanelOpen => this.VisiblePanel != PanelType.None;
 
         private PanelType _visiblePanel;
         public PanelType VisiblePanel
@@ -1388,7 +1285,10 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _visiblePanel, value);
-                OnPropertyChanged(nameof(this.IsPanelOpen));
+                OnPropertyChanged(nameof(this.IsPanelOpen),
+                    nameof(this.IsFlyoutActionAvailable));
+
+                this.ItemCollection.IsOnlyAllowSingleSelectActive = (_visiblePanel != PanelType.None);
             }
         }
 

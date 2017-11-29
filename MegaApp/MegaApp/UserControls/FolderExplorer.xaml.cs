@@ -79,6 +79,8 @@ namespace MegaApp.UserControls
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
                 this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
                 this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
+
+                this.OnlyAllowSingleSelect(this.ViewModel.Folder.OnlyShowFolders);
             }
         }
 
@@ -166,6 +168,9 @@ namespace MegaApp.UserControls
             // Restore the view behaviors again
             EnableViewsBehaviors();
         }
+
+        public void OnlyAllowSingleSelect(bool isEnabled) =>
+            this.ViewModel.Folder.ItemCollection.IsOnlyAllowSingleSelectActive = isEnabled;
 
         private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
         {
@@ -292,8 +297,7 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.Folder.ItemCollection.IsMultiSelectActive &&
-                this.ViewModel.Folder.CurrentViewState != FolderContentViewState.CopyOrMove)
+            if (!this.ViewModel.Folder.ItemCollection.IsMultiSelectActive)
             {
                 ((ListViewBase)sender).SelectedItems.Clear();
                 ((ListViewBase)sender).SelectedItems.Add(itemTapped);
