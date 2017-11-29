@@ -148,11 +148,9 @@
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
             Foreground="{StaticResource MegaAppForegroundBrush}"
-            HeaderFontSize="28"
             HeaderText="{Binding ProgressHeaderText}"
             IsVisible="{Binding SelectedPreview.IsBusy}"
-            ProgressText="{Binding ProgressText}"
-            ProgressTextFontSize="14">
+            ProgressText="{Binding ProgressText}">
             <userControls:ActivityIndicator.SubHeaderForeground>
                 <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
             </userControls:ActivityIndicator.SubHeaderForeground>

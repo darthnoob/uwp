@@ -87,7 +87,7 @@ namespace MegaApp.UserControls
                 nameof(HeaderFontSize),
                 typeof(double), 
                 typeof(ActivityIndicator),
-                new PropertyMetadata(24));
+                new PropertyMetadata(20));
 
         /// <summary>
         /// Gets or sets the sub header font size.
@@ -107,7 +107,7 @@ namespace MegaApp.UserControls
                 nameof(SubHeaderFontSize),
                 typeof(double), 
                 typeof(ActivityIndicator),
-                new PropertyMetadata(16));
+                new PropertyMetadata(14));
 
         /// <summary>
         /// Gets or sets the progress text font size.
@@ -127,7 +127,7 @@ namespace MegaApp.UserControls
                 nameof(ProgressTextFontSize),
                 typeof(double),
                 typeof(ActivityIndicator),
-                new PropertyMetadata(16));
+                new PropertyMetadata(14));
 
         /// <summary>
         /// Gets or sets the header foreground color.

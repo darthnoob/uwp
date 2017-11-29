@@ -236,11 +236,9 @@
             Margin="72,0,0,0"
             HorizontalContentAlignment="Stretch"
             Foreground="{StaticResource MegaAppForegroundBrush}"
-            HeaderFontSize="28"
             HeaderText="{Binding ActiveViewModel.ProgressHeaderText}"
             IsVisible="{Binding ActiveViewModel.IsBusy}"
-            ProgressText="{Binding ActiveViewModel.ProgressText}"
-            ProgressTextFontSize="14">
+            ProgressText="{Binding ActiveViewModel.ProgressText}">
             <userControls:ActivityIndicator.SubHeaderForeground>
                 <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
             </userControls:ActivityIndicator.SubHeaderForeground>
@@ -281,7 +279,7 @@
                         <Setter Target="LoginStackPanel.Width" Value="NaN" />
                         <Setter Target="LoginStackPanel.Height" Value="NaN" />
                         <Setter Target="LoginStackPanel.HorizontalAlignment" Value="Stretch" />
-                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,60" />
                         <Setter Target="CreateAccountStackPanel.Width" Value="NaN" />
                         <Setter Target="CreateAccountStackPanel.Height" Value="NaN" />
                         <Setter Target="CreateAccountStackPanel.HorizontalAlignment" Value="Stretch" />

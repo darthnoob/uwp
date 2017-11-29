@@ -105,16 +105,28 @@
             extensions:IsVisibleAnimation.IsVisible="{Binding IsBusy}"
             Background="{StaticResource MegaAppBackgroundBrush}"
             Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ContentPresenter
+                x:Name="LogoPresenter"
+                Grid.Row="0"
+                Margin="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource MegaPageHeaderLogoStyle}" />
+
             <userControls:ActivityIndicator
                 x:Name="ActivityIndicator"
+                Grid.Row="1"
                 Margin="72,0,0,0"
                 HorizontalContentAlignment="Stretch"
                 Foreground="{StaticResource MegaAppForegroundBrush}"
-                HeaderFontSize="28"
                 HeaderText="{Binding ProgressHeaderText}"
                 IsVisible="{Binding IsBusy}"
-                ProgressText="{Binding ProgressSubHeaderText}"
-                ProgressTextFontSize="14">
+                ProgressText="{Binding ProgressSubHeaderText}">
                 <userControls:ActivityIndicator.SubHeaderForeground>
                     <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
                 </userControls:ActivityIndicator.SubHeaderForeground>
@@ -132,6 +144,7 @@
                         <windowsStateTriggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginDesktop}" />
                         <Setter Target="ActivityIndicator.Margin" Value="72,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
@@ -142,6 +155,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="ActivityIndicator.Margin" Value="20,0" />
+                        <Setter Target="LogoPresenter.Margin" Value="{StaticResource LoginMegaPageHeaderLogoMarginMobile}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

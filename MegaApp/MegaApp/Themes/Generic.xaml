@@ -1102,7 +1102,7 @@
                             Margin="{TemplateBinding SubHeaderMargin}"
                             HorizontalAlignment="Left"
                             FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding SubHeaderForeground}"
+                            FontSize="{TemplateBinding SubHeaderFontSize}"
                             Text="{TemplateBinding SubHeaderText}"
                             TextWrapping="Wrap"
                             Visibility="Collapsed" />
