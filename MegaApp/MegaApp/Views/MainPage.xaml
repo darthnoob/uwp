@@ -103,7 +103,8 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             extensions:IsVisibleAnimation.IsVisible="{Binding IsBusy}"
-            Background="{StaticResource MegaAppBackgroundBrush}">
+            Background="{StaticResource MegaAppBackgroundBrush}"
+            Visibility="Collapsed">
             <userControls:ActivityIndicator
                 x:Name="ActivityIndicator"
                 Margin="72,0,0,0"

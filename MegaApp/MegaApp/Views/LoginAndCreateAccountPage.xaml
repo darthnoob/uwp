@@ -39,7 +39,8 @@
             VerticalAlignment="Center"
             extensions:IsVisibleAnimation.IsVisible="{Binding ActiveViewModel.IsBusy, Converter={StaticResource InverseBoolConverter}}"
             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-            SelectionChanged="OnSelectionChanged">
+            SelectionChanged="OnSelectionChanged"
+            Visibility="Visible">
             <PivotItem
                 x:Name="PivotItemLogin"
                 Margin="{StaticResource PivotItemMargin}"
