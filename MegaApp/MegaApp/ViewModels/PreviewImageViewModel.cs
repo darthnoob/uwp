@@ -180,10 +180,11 @@ namespace MegaApp.ViewModels
         }
 
         #endregion
-
+       
         #region ProgressMessages
 
-        public string ProgressLoadingPreviewText => ResourceService.ProgressMessages.GetString("PM_LoadingPreview");
+        public string ProgressHeaderText => ResourceService.ProgressMessages.GetString("PM_LoadingPreview");
+        public string ProgressText => ResourceService.ProgressMessages.GetString("PM_Patient");
 
         #endregion
 

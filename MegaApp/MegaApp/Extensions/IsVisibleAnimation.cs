@@ -1,11 +1,12 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Microsoft.Toolkit.Uwp.UI.Animations;
 
 namespace MegaApp.Extensions
 {
     public class IsVisibleAnimation: DependencyObject
     {
+        // Attention! Set initial state if bound property does not change value
+
         public static readonly DependencyProperty IsVisibleProperty =
             DependencyProperty.RegisterAttached(
                 "IsVisible",
