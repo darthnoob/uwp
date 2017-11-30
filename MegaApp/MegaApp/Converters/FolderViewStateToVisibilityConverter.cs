@@ -38,6 +38,10 @@ namespace MegaApp.Converters
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
+                        case "copy":
+                        case "move":
+                            return folder.IsCopyOrMoveViewModel ? Visibility.Visible : Visibility.Collapsed;
+
                         default:
                             return Visibility.Collapsed;
                     }
@@ -125,6 +129,11 @@ namespace MegaApp.Converters
                             return folder is SharedFoldersListViewModel && 
                                 folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
+
+                        case "copy":
+                        case "move":
+                            return folder.IsCopyOrMoveViewModel && folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                    Visibility.Visible : Visibility.Collapsed;
 
                         default:
                             return Visibility.Collapsed;

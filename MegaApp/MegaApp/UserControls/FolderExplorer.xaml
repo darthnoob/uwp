@@ -34,7 +34,7 @@
                 ItemsSource="{Binding Folder.BreadCrumb.Items}"
                 OverFlow="..."
                 Seperator="&gt;"
-                Visibility="{Binding Folder.HasBreadCrumbPath, Converter={StaticResource BoolToVisibilityConverter}}" />
+                Visibility="{Binding Folder.BreadCrumb.HasPath, Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
         <Grid 
             Grid.Row="1"
@@ -67,6 +67,7 @@
                 <ListView
                     x:Name="ListView"
                     Margin="-12,-8,0,0"
+                    ContainerContentChanging="OnContainerContentChanging"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
@@ -87,6 +88,7 @@
                 <GridView
                     x:Name="GridView"
                     Padding="2,4"
+                    ContainerContentChanging="OnContainerContentChanging"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemTemplateSelector="{Binding Folder.NodeTemplateSelector}"

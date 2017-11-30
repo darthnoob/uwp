@@ -63,6 +63,7 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel.Folder != null)
             {
+                this.ViewModel.Folder.FolderNavigatedTo -= OnFolderNavigatedTo;
                 this.ViewModel.Folder.ChangeViewEvent -= OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
@@ -74,14 +75,20 @@ namespace MegaApp.UserControls
 
             if (this.ViewModel.Folder != null)
             {
+                this.ViewModel.Folder.FolderNavigatedTo += OnFolderNavigatedTo;
                 this.ViewModel.Folder.ChangeViewEvent += OnViewChanged;
                 this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
                 this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
                 this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
                 this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
 
-                this.OnlyAllowSingleSelect(this.ViewModel.Folder.OnlyShowFolders);
+                this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
             }
+        }
+
+        private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
+        {
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
         }
 
         private void OnViewChanged(object sender, EventArgs e)
@@ -360,6 +367,18 @@ namespace MegaApp.UserControls
 
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout.ShowAt(flyoutButton);
+        }
+
+        private void OnContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            var viewItem = args.ItemContainer;
+            if (viewItem == null) return;
+
+            if (args.Item is IncomingSharedFolderNodeViewModel)
+            {
+                var item = args.Item as IncomingSharedFolderNodeViewModel;
+                viewItem.IsEnabled = item.IsEnabledForCopyOrMove;
+            }
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
@@ -22,6 +24,9 @@ namespace MegaApp.ViewModels.UserControls
             this.CloudDrive.FolderRootNode =
                 NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
                 SdkService.MegaSdk.getRootNode(), this.CloudDrive);
+
+            this.IncomingShares = new IncomingSharesViewModel(true);
+            this.IncomingShares.Initialize();
 
             this.ActiveFolderView = this.CloudDrive;
         }
@@ -69,8 +74,8 @@ namespace MegaApp.ViewModels.UserControls
 
         private void AddFolder()
         {
-            if (this.CloudDrive.AddFolderCommand.CanExecute(null))
-                this.CloudDrive.AddFolderCommand.Execute(null);
+            if (this.ActiveFolderView.AddFolderCommand.CanExecute(null))
+                this.ActiveFolderView.AddFolderCommand.Execute(null);
         }
 
         private void CancelCopyOrMove()
@@ -111,6 +116,9 @@ namespace MegaApp.ViewModels.UserControls
             }
         }
 
+        private void OnActiveFolderPropertyChanged(object sender, PropertyChangedEventArgs e) => 
+            OnPropertyChanged(nameof(this.ActiveFolderView));
+
         #endregion
 
         #region Properties
@@ -133,11 +141,27 @@ namespace MegaApp.ViewModels.UserControls
             private set { SetField(ref _cloudDrive, value); }
         }
 
+        private IncomingSharesViewModel _incomingShares;
+        public IncomingSharesViewModel IncomingShares
+        {
+            get { return _incomingShares; }
+            private set { SetField(ref _incomingShares, value); }
+        }
+
         private FolderViewModel _activeFolderView;
         public FolderViewModel ActiveFolderView
         {
             get { return _activeFolderView; }
-            private set { SetField(ref _activeFolderView, value); }
+            set
+            {
+                if (_activeFolderView != null)
+                    _activeFolderView.PropertyChanged -= OnActiveFolderPropertyChanged;
+
+                SetField(ref _activeFolderView, value);
+
+                if (_activeFolderView != null)
+                    _activeFolderView.PropertyChanged += OnActiveFolderPropertyChanged;
+            }
         }
 
         #endregion

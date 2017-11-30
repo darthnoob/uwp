@@ -38,11 +38,11 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChildNodesCollectionChanged;
 
-        public FolderViewModel(ContainerType containerType, bool onlyShowFolders = false)
+        public FolderViewModel(ContainerType containerType, bool isCopyOrMoveViewModel = false)
         {
             this.Type = containerType;
 
-            this.OnlyShowFolders = onlyShowFolders;
+            this.IsCopyOrMoveViewModel = isCopyOrMoveViewModel;
 
             this.FolderRootNode = null;
             this.IsLoaded = false;
@@ -324,7 +324,7 @@ namespace MegaApp.ViewModels
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = this.Type == ContainerType.CameraUploads ?
                 NodeService.GetFileChildren(this.MegaSdk, this.FolderRootNode) : 
-                this.OnlyShowFolders ? 
+                this.IsCopyOrMoveViewModel ? 
                 NodeService.GetFolderChildren(this.MegaSdk, this.FolderRootNode) :
                 NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
 
@@ -348,11 +348,7 @@ namespace MegaApp.ViewModels
             SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            OnUiThread(() =>
-            {
-                this.BreadCrumb.Create(this);
-                OnPropertyChanged("HasBreadCrumbPath");
-            });
+            OnUiThread(() => this.BreadCrumb.Create(this));
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -1185,8 +1181,6 @@ namespace MegaApp.ViewModels
 
         public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
-        public bool HasBreadCrumbPath => this.BreadCrumb?.Items?.Count > 0;
-
         /// <summary>
         /// Property needed to store the selected nodes in a move/copy action 
         /// </summary>
@@ -1203,7 +1197,7 @@ namespace MegaApp.ViewModels
 
         public ContainerType Type { get; private set; }
 
-        public bool OnlyShowFolders { get; private set; }
+        public bool IsCopyOrMoveViewModel { get; private set; }
 
         private FolderContentViewMode _viewMode;
         public FolderContentViewMode ViewMode

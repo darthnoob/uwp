@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels.UserControls;
 
@@ -51,6 +52,15 @@ namespace MegaApp.UserControls
         private void OnSelectedNodesChanged(List<IMegaNode> selectedNodes)
         {
             this.ViewModel.SelectedNodes = selectedNodes;
+        }
+
+        private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PivotControl.SelectedItem.Equals(CloudDrivePivot))
+                this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
+
+            if (PivotControl.SelectedItem.Equals(IncomingSharesPivot))
+                this.ViewModel.ActiveFolderView = this.ViewModel.IncomingShares;
         }
     }
 }

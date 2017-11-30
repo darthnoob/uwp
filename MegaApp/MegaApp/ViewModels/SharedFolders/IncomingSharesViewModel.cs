@@ -11,7 +11,8 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharesViewModel : SharedFoldersListViewModel
     {
-        public IncomingSharesViewModel() : base(ContainerType.InShares)
+        public IncomingSharesViewModel(bool isCopyOrMoveViewModel = false) : 
+            base(ContainerType.InShares, isCopyOrMoveViewModel)
         {
 
         }
@@ -164,6 +165,12 @@ namespace MegaApp.ViewModels.SharedFolders
 
         private void OnOrderInverted(object sender, EventArgs args) =>
             SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
+
+        public override void BrowseToHome()
+        {
+            this.BreadCrumb.Items.Clear();
+            this.GetIncomingSharedItems();
+        }
 
         #endregion
 

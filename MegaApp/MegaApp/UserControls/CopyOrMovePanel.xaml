@@ -42,7 +42,8 @@
                         Command="{Binding AddFolderCommand}"
                         Label="{Binding AddFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                        Visibility="{Binding ActiveFolderView, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -54,7 +55,8 @@
                         Command="{Binding CopyCommand}"
                         Label="{Binding CopyText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                        Visibility="{Binding ActiveFolderView, ConverterParameter='copy', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.CommandParameter>
                             <x:Boolean>False</x:Boolean>
                         </AppBarButton.CommandParameter>
@@ -69,7 +71,8 @@
                         Command="{Binding MoveCommand}"
                         Label="{Binding MoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                        Visibility="{Binding ActiveFolderView, ConverterParameter='move', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.CommandParameter>
                             <x:Boolean>True</x:Boolean>
                         </AppBarButton.CommandParameter>
@@ -97,7 +100,8 @@
             x:Name="PivotControl"
             Grid.Row="1"
             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-            Margin="12,0">
+            Margin="12,0"
+            SelectionChanged="OnPivotSelectionChanged">
             <PivotItem
                 x:Name="CloudDrivePivot"
                 CacheMode="{x:Null}"
@@ -108,12 +112,16 @@
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
             </PivotItem>
-            <!--<PivotItem 
+            <PivotItem 
                 x:Name="IncomingSharesPivot"
                 CacheMode="{x:Null}"
                 Header="{x:Bind ViewModel.IncomingSharesText}">
-
-            </PivotItem>-->
+                <userControls:FolderExplorer
+                    x:Name="IncomingSharesExplorer"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Folder="{x:Bind ViewModel.IncomingShares, Mode=OneWay}"/>
+            </PivotItem>
         </Pivot>
     </Grid>
 </userControls:BaseCopyOrMovePanel>
