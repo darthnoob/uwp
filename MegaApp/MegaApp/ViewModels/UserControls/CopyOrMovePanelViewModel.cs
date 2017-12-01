@@ -15,18 +15,13 @@ namespace MegaApp.ViewModels.UserControls
     {
         public CopyOrMovePanelViewModel()
         {
+            CopyOrMoveService.SelectedNodesChanged += (sender, args) =>
+                OnPropertyChanged(nameof(this.CopyOrMoveItemsToText));
+
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCommand = new RelayCommand(CancelCopyOrMove);
             this.CopyCommand = new RelayCommand<bool>(CopyOrMove);
             this.MoveCommand = new RelayCommand<bool>(CopyOrMove);
-
-            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive, true);
-            this.CloudDrive.FolderRootNode =
-                NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
-                SdkService.MegaSdk.getRootNode(), this.CloudDrive);
-
-            this.IncomingShares = new IncomingSharesViewModel(true);
-            this.IncomingShares.Initialize();
 
             this.ActiveFolderView = this.CloudDrive;
         }
@@ -85,13 +80,19 @@ namespace MegaApp.ViewModels.UserControls
 
         private async void CopyOrMove(bool move)
         {
-            if (this.SelectedNodes == null || !this.SelectedNodes.Any()) return;
+            if (CopyOrMoveService.SelectedNodes == null || !CopyOrMoveService.SelectedNodes.Any()) return;
 
             bool finalResult = true;
             try
             {
+                // Use a temporal list of nodes to copy/move to allow close the panel and
+                // deselect the nodes in the main view meanwhile the nodes are copied/moved
+                var selectedNodes = CopyOrMoveService.SelectedNodes.ToList();
+
+                this.OnCopyOrMoveFinished();
+
                 var newParentNode = this.ActiveFolderView.FolderRootNode;
-                foreach (var node in this.SelectedNodes)
+                foreach (var node in selectedNodes)
                 {
                     if (node == null) continue;
                     node.DisplayMode = NodeDisplayMode.Normal;
@@ -123,30 +124,9 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Properties
 
-        private List<IMegaNode> _selectedNodes;
-        public List<IMegaNode> SelectedNodes
-        {
-            get { return _selectedNodes; }
-            set
-            {
-                SetField(ref _selectedNodes, value);
-                OnPropertyChanged(nameof(this.CopyOrMoveItemsToText));
-            }
-        }
+        public FolderViewModel CloudDrive => CopyOrMoveService.CloudDrive;
 
-        private FolderViewModel _cloudDrive;
-        public FolderViewModel CloudDrive
-        {
-            get { return _cloudDrive; }
-            private set { SetField(ref _cloudDrive, value); }
-        }
-
-        private IncomingSharesViewModel _incomingShares;
-        public IncomingSharesViewModel IncomingShares
-        {
-            get { return _incomingShares; }
-            private set { SetField(ref _incomingShares, value); }
-        }
+        public IncomingSharesViewModel IncomingShares => CopyOrMoveService.IncomingShares;
 
         private FolderViewModel _activeFolderView;
         public FolderViewModel ActiveFolderView
@@ -175,10 +155,11 @@ namespace MegaApp.ViewModels.UserControls
         {
             get
             {
-                if (SelectedNodes == null) return string.Empty;
-                return SelectedNodes.Count == 1 ?
+                if (CopyOrMoveService.SelectedNodes == null) return string.Empty;
+                return CopyOrMoveService.SelectedNodes.Count == 1 ?
                     ResourceService.UiResources.GetString("UI_CopyOrMoveItemTo") :
-                    string.Format(ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo"), SelectedNodes.Count);
+                    string.Format(ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo"),
+                    CopyOrMoveService.SelectedNodes.Count);
             }
         }
 

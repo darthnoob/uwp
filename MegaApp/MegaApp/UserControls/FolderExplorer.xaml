@@ -73,6 +73,7 @@
                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                     ItemTemplateSelector="{Binding Folder.NodeTemplateSelector}"
                     ItemsSource="{Binding Folder.ItemCollection.Items}"
+                    Loaded="OnListViewLoaded"
                     RightTapped="OnRightItemTapped"
                     Tapped="OnItemTapped"
                     Visibility="{Binding Folder.IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
@@ -93,6 +94,7 @@
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemTemplateSelector="{Binding Folder.NodeTemplateSelector}"
                     ItemsSource="{Binding Folder.ItemCollection.Items}"
+                    Loaded="OnListViewLoaded"
                     RightTapped="OnRightItemTapped"
                     Tapped="OnItemTapped"
                     Visibility="{Binding Folder.IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">

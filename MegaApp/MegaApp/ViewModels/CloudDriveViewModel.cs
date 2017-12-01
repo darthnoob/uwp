@@ -168,7 +168,7 @@ namespace MegaApp.ViewModels
             foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
-            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
+            CopyOrMoveService.SelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();
             this.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
 
             this.DisableSelection?.Invoke(this, EventArgs.Empty);
@@ -180,7 +180,7 @@ namespace MegaApp.ViewModels
         private void ResetCopyOrMove()
         {
             ActiveFolderView.ItemCollection.ClearSelection();
-            ActiveFolderView.CopyOrMoveSelectedNodes.Clear();
+            CopyOrMoveService.ClearSelectedNodes();
             this.ActiveFolderView.VisiblePanel = PanelType.None;
             ClearSelectedItems?.Invoke(this, EventArgs.Empty);
             EnableSelection?.Invoke(this, EventArgs.Empty);
@@ -193,12 +193,6 @@ namespace MegaApp.ViewModels
 
         public void OnCopyOrMoveCanceled(object sender, EventArgs e)
         {
-            if (ActiveFolderView?.CopyOrMoveSelectedNodes != null)
-            {
-                foreach (var node in ActiveFolderView.CopyOrMoveSelectedNodes)
-                    if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
-            }
-
             ResetCopyOrMove();
         }
 

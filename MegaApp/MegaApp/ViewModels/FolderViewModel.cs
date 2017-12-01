@@ -50,7 +50,6 @@ namespace MegaApp.ViewModels
             this.BusyText = null;
             this.BreadCrumb = new BreadCrumbViewModel();
             this.ItemCollection = new CollectionViewModel<IMegaNode>();
-            this.CopyOrMoveSelectedNodes = new List<IMegaNode>();
             this.VisiblePanel = PanelType.None;
 
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
@@ -675,33 +674,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        /// <summary>
-        /// Check if a node is in the selected nodes group for move, copy or any other action.
-        /// </summary>        
-        /// <param name="node">Node to check if is in the selected node list</param>        
-        /// <returns>True if is a selected node or false in other case</returns>
-        private bool IsCopyOrMoveSelectedNode(IMegaNode node)
-        {
-            if (CopyOrMoveSelectedNodes?.Count > 0)
-            {
-                var count = CopyOrMoveSelectedNodes.Count;
-                for (int index = 0; index < count; index++)
-                {
-                    var selectedNode = CopyOrMoveSelectedNodes[index];
-                    if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
-                    {
-                        //Update the selected nodes list values
-                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                        CopyOrMoveSelectedNodes[index] = node;
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
         protected void SetEmptyContent(bool isLoading)
         {
             if (isLoading)
@@ -946,7 +918,7 @@ namespace MegaApp.ViewModels
                 if (this.VisiblePanel == PanelType.CopyOrMove)
                 {
                     // Check if it is one of the selected nodes
-                    IsCopyOrMoveSelectedNode(node);
+                    CopyOrMoveService.IsCopyOrMoveSelectedNode(node, true);
                 }
 
                 helperList.Add(node);
@@ -1180,16 +1152,6 @@ namespace MegaApp.ViewModels
         public BreadCrumbViewModel BreadCrumb { get; }
 
         public CollectionViewModel<IMegaNode> ItemCollection { get; }
-
-        /// <summary>
-        /// Property needed to store the selected nodes in a move/copy action 
-        /// </summary>
-        private List<IMegaNode> _copyOrMoveSelectedNodes;
-        public List<IMegaNode> CopyOrMoveSelectedNodes
-        {
-            get { return _copyOrMoveSelectedNodes; }
-            set { SetField(ref _copyOrMoveSelectedNodes, value); }
-        }
 
         public bool IsFlyoutActionAvailable => !this.IsPanelOpen;
 

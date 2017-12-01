@@ -25,6 +25,8 @@ namespace MegaApp.UserControls
         public FolderExplorer()
         {
             this.InitializeComponent();
+
+            CopyOrMoveService.SelectedNodesChanged += this.OnSelectedNodesChanged;
         }
 
         /// <summary>
@@ -378,6 +380,45 @@ namespace MegaApp.UserControls
             {
                 var item = args.Item as IncomingSharedFolderNodeViewModel;
                 viewItem.IsEnabled = item.IsEnabledForCopyOrMove;
+                return;
+            }
+
+            if (args.Item is FolderNodeViewModel)
+            {
+                var item = args.Item as FolderNodeViewModel;
+                viewItem.IsEnabled = !(item.Parent.IsCopyOrMoveViewModel && CopyOrMoveService.IsCopyOrMoveSelectedNode(item));
+            }
+        }
+
+        private void OnSelectedNodesChanged(object sender, EventArgs e)
+        {
+            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+
+            this.OnListViewLoaded(sender, new RoutedEventArgs());
+            this.OnGridViewLoaded(sender, new RoutedEventArgs());
+        }
+
+        private void OnListViewLoaded(object sender, RoutedEventArgs e)
+        {
+            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+
+            foreach (var item in this.ListView.Items)
+            {
+                var listViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as ListViewItem);
+                if (listViewItem == null) continue;
+                listViewItem.IsEnabled = !CopyOrMoveService.IsCopyOrMoveSelectedNode(item as NodeViewModel);
+            }
+        }
+
+        private void OnGridViewLoaded(object sender, RoutedEventArgs e)
+        {
+            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+
+            foreach (var item in this.GridView.Items)
+            {
+                var gridViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as GridViewItem);
+                if (gridViewItem == null) continue;
+                gridViewItem.IsEnabled = !CopyOrMoveService.IsCopyOrMoveSelectedNode(item as NodeViewModel);
             }
         }
     }

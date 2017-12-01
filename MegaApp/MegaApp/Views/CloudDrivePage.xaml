@@ -45,7 +45,6 @@
                     DataContext="{Binding ActiveFolderView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    SelectedNodes="{Binding CopyOrMoveSelectedNodes}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
