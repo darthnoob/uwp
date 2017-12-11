@@ -376,17 +376,22 @@ namespace MegaApp.UserControls
             var viewItem = args.ItemContainer;
             if (viewItem == null) return;
 
-            if (args.Item is IncomingSharedFolderNodeViewModel)
+            this.CheckItemIsEnabled(viewItem, args.Item);
+        }
+
+        private void CheckItemIsEnabled(SelectorItem viewItem, object item)
+        {
+            if (item is IncomingSharedFolderNodeViewModel)
             {
-                var item = args.Item as IncomingSharedFolderNodeViewModel;
-                viewItem.IsEnabled = item.IsEnabledForCopyOrMove;
+                var folder = item as IncomingSharedFolderNodeViewModel;
+                viewItem.IsEnabled = folder.IsEnabledForCopyOrMove;
                 return;
             }
 
-            if (args.Item is FolderNodeViewModel)
+            if (item is FolderNodeViewModel)
             {
-                var item = args.Item as FolderNodeViewModel;
-                viewItem.IsEnabled = !(item.Parent.IsCopyOrMoveViewModel && CopyOrMoveService.IsCopyOrMoveSelectedNode(item));
+                var folder = item as FolderNodeViewModel;
+                viewItem.IsEnabled = !(folder.Parent.IsCopyOrMoveViewModel && CopyOrMoveService.IsCopyOrMoveSelectedNode(folder));
             }
         }
 
@@ -406,7 +411,8 @@ namespace MegaApp.UserControls
             {
                 var listViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as ListViewItem);
                 if (listViewItem == null) continue;
-                listViewItem.IsEnabled = !CopyOrMoveService.IsCopyOrMoveSelectedNode(item as NodeViewModel);
+
+                this.CheckItemIsEnabled(listViewItem, item);
             }
         }
 
@@ -418,7 +424,8 @@ namespace MegaApp.UserControls
             {
                 var gridViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as GridViewItem);
                 if (gridViewItem == null) continue;
-                gridViewItem.IsEnabled = !CopyOrMoveService.IsCopyOrMoveSelectedNode(item as NodeViewModel);
+
+                this.CheckItemIsEnabled(gridViewItem, item);
             }
         }
     }
