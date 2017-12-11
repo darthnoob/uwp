@@ -312,8 +312,7 @@ namespace MegaApp.ViewModels.UserControls
         /// Gets the "Folder options" button visibility
         /// </summary>
         public Visibility FolderOptionsButtonVisibility => 
-            (this.Folder?.FolderRootNode is SharedFolderNodeViewModel) ? 
-            Visibility.Visible : Visibility.Collapsed;
+            this.FolderRootNode is SharedFolderNodeViewModel ? Visibility.Visible : Visibility.Collapsed;
 
         #endregion
 
