@@ -86,7 +86,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 {
                     this.ItemCollection.Items.Remove(node);
 
-                    if (this.ItemCollection.FocusedItem.Equals(node))
+                    if (this.ItemCollection.FocusedItem?.Equals(node) == true)
                         this.ClosePanels();
                 });
             }

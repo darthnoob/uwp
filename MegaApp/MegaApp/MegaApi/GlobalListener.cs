@@ -46,22 +46,24 @@ namespace MegaApp.MegaApi
                     {
                         if (megaNode.isRemoved()) // REMOVED Scenario
                             OnInSharedFolderRemoved(megaNode);
-                        else // ADDED / UPDATE scenarions
+                        else // ADDED/UPDATED scenarios
                             OnInSharedFolderAdded(megaNode);
                     }
-                    // Outgoing shared folder
-                    else if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
+                    // Outgoing shared folder - ADDED/UPDATED scenarios
+                    else if (megaNode.isOutShare())
                     {
-                        if (megaNode.isOutShare()) // ADDED / UPDATE scenarions
-                            OnOutSharedFolderAdded(megaNode);
-                        else // REMOVED Scenario
-                            OnOutSharedFolderRemoved(megaNode);
+                        OnOutSharedFolderAdded(megaNode);
                     }
-                    else // Normal node
+                    else
                     {
+                        // Outgoing shared folder - REMOVED Scenario
+                        if (megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_OUTSHARE))
+                            OnOutSharedFolderRemoved(megaNode);
+
+                        // Normal node
                         if (megaNode.isRemoved()) // REMOVED Scenario
                             OnNodeRemoved(megaNode);
-                        else // ADDED / UPDATE scenarions
+                        else // ADDED/UPDATED scenarions
                             OnNodeAdded(megaNode);
                     }
                 }
