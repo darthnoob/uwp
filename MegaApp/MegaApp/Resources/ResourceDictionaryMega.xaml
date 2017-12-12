@@ -582,7 +582,7 @@
                             UriSource="{Binding ThumbnailImageUri}" />
                     </Image.Source>
                 </Image>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -598,7 +598,6 @@
                         TextWrapping="NoWrap" />
                     <StackPanel
                         Grid.Column="1"
-                        Margin="0,4,0,0"
                         Orientation="Horizontal"
                         Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
@@ -807,7 +806,7 @@
                         <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1" HorizontalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
@@ -823,7 +822,6 @@
                         TextWrapping="NoWrap" />
                     <StackPanel
                         Grid.Column="1"
-                        Margin="0,4,0,0"
                         Orientation="Horizontal"
                         Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
