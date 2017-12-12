@@ -1011,6 +1011,12 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
+            if (this.IsCopyOrMoveViewModel)
+            {
+                SetViewDefaults();
+                return;
+            }
+
             SetView(UiService.GetViewMode(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name));
         }
 
