@@ -844,6 +844,7 @@ namespace MegaApp.ViewModels
 
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
         public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");

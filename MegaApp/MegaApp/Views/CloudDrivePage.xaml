@@ -74,10 +74,7 @@
                 <Grid 
                     Grid.Row="0" Grid.Column="1"
                     Visibility="{Binding ActiveFolderView.IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Grid
-                        x:Name="TopCommandBar"
-                        Grid.Row="0"
-                        Grid.Column="1">
+                    <Grid x:Name="TopCommandBar">
 
                         <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
                         <CommandBar
@@ -499,7 +496,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
-                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Overlay" />
+                        <Setter Target="CloudDriveSplitView.DisplayMode" Value="Overlay" />
                         <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16, 18, 0, 16" />
                         <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
                         <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
@@ -512,8 +509,7 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
-                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
                         <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97, 0, 0, 16" />
                         <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
                         <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
@@ -526,7 +522,7 @@
                         <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="NodeDetailsSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
                         <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 0, 0, 16" />
                         <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
                         <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />

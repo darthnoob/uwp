@@ -409,20 +409,14 @@
                         <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
-                <Grid
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="0">
+                <Grid Grid.Column="0">
                     <Path
                         Width="36"
                         Height="36"
@@ -451,45 +445,54 @@
                                 UriSource="{Binding ThumbnailImageUri}" />
                         </Image.Source>
                     </Image>
-                    <Ellipse
-                        Width="12"
-                        Height="12"
-                        Margin="-3,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Canvas.ZIndex="1"
-                        Fill="{ThemeResource MegaRedColorBrush}"
-                        Stroke="{ThemeResource MegaAppForegroundBrush}"
-                        StrokeThickness="1"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
                 </Grid>
 
-                <TextBlock
-                    x:Name="txtFileName"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Left"
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="txtFileName"
+                        Grid.Row="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BaseTextBlockStyle}"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <TextBlock
+                        x:Name="txtSize"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Opacity="0.5"
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Text="{Binding Information}"
+                        TextWrapping="NoWrap" />
+                </Grid>
+
+                <Path
+                    Grid.Column="2"
+                    Height="6"
+                    Width="10"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Style="{ThemeResource BaseTextBlockStyle}"
-                    Text="{Binding Name}"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
-                <TextBlock
-                    x:Name="txtSize"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding Information}"
-                    TextWrapping="NoWrap" />
+                    Data="{Binding LinkPathData}"
+                    Stretch="Uniform"
+                    Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
+                    </Path.Fill>
+                </Path>
+
                 <TextBlock
                     x:Name="txtCreated"
-                    Grid.Row="1"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    Opacity="0.5"
                     Style="{ThemeResource CaptionTextBlockStyle}"
                     Text="{Binding ModificationTime}"
                     TextWrapping="NoWrap" />
@@ -593,15 +596,29 @@
                         TextAlignment="Center"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
-                    <Ellipse
+                    <StackPanel
                         Grid.Column="1"
-                        Width="8"
-                        Height="8"
-                        Margin="4,0,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Fill="{ThemeResource MegaRedColorBrush}"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Margin="0,4,0,0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Ellipse
+                            Margin="8,0"
+                            Fill="{ThemeResource MegaAppForegroundBrush}"
+                            Height="4" Width="4"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                        <Path
+                            Height="6"
+                            Width="10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Data="{Binding LinkPathData}"
+                            Stretch="Uniform">
+                            <Path.Fill>
+                                <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
+                            </Path.Fill>
+                        </Path>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>
@@ -653,71 +670,73 @@
                         <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
-                <Grid
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Grid.Column="0">
-                    <Path
-                        Width="36"
-                        Height="36"
-                        Margin="0,0,12,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Data="{Binding DefaultImagePathData}"
-                        Stretch="Uniform">
-                        <Path.Fill>
-                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                        </Path.Fill>
-                    </Path>
-                    <Ellipse
-                        Width="12"
-                        Height="12"
-                        Margin="-3,0,0,0"
+                <Path
+                    Grid.Column="0"
+                    Width="36"
+                    Height="36"
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding DefaultImagePathData}"
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="txtFolderName"
+                        Grid.Row="0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Bottom"
-                        Canvas.ZIndex="1"
-                        Fill="{ThemeResource MegaRedColorBrush}"
-                        Stroke="{ThemeResource MegaAppForegroundBrush}"
-                        StrokeThickness="1"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BaseTextBlockStyle}"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <TextBlock
+                        x:Name="txtCount"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Opacity="0.5"
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Text="{Binding Information}"
+                        TextWrapping="NoWrap" />
                 </Grid>
 
-                <TextBlock
-                    x:Name="txtFolderName"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Left"
+                <Path
+                    Grid.Column="2"
+                    Height="6"
+                    Width="10"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Style="{ThemeResource BaseTextBlockStyle}"
-                    Text="{Binding Name}"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
-                <TextBlock
-                    x:Name="txtCount"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding Information}"
-                    TextWrapping="NoWrap" />
+                    Data="{Binding LinkPathData}"
+                    Stretch="Uniform"
+                    Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
+                    </Path.Fill>
+                </Path>
+
                 <TextBlock
                     x:Name="txtCreated"
-                    Grid.Row="1"
-                    Grid.Column="2"
+                    Grid.Column="3"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    Opacity="0.5"
                     Style="{ThemeResource CaptionTextBlockStyle}"
                     Text="{Binding CreationTime}"
                     TextWrapping="NoWrap" />
@@ -802,15 +821,29 @@
                         TextAlignment="Center"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
-                    <Ellipse
+                    <StackPanel
                         Grid.Column="1"
-                        Width="8"
-                        Height="8"
-                        Margin="4,0,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Fill="{ThemeResource MegaRedColorBrush}"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Margin="0,4,0,0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Ellipse
+                            Margin="8,0"
+                            Fill="{ThemeResource MegaAppForegroundBrush}"
+                            Height="4" Width="4"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center" />
+                        <Path
+                            Height="6"
+                            Width="10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Data="{Binding LinkPathData}"
+                            Stretch="Uniform">
+                            <Path.Fill>
+                                <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
+                            </Path.Fill>
+                        </Path>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Border>

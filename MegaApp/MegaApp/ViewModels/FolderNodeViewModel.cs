@@ -28,13 +28,35 @@ namespace MegaApp.ViewModels
             this.ChildFolders = this.MegaSdk.getNumChildFolders(this.OriginalMNode);
             this.ChildFiles = this.MegaSdk.getNumChildFiles(this.OriginalMNode);
 
-            OnUiThread(() =>
+            string infoString = ResourceService.UiResources.GetString("UI_EmptyFolder");
+            if (this.ChildFolders > 0 && this.ChildFiles > 0)
             {
-                this.Information = string.Format("{0} {1} | {2} {3}",
-                    this.ChildFolders, this.ChildFolders == 1 ? ResourceService.UiResources.GetString("UI_SingleFolder").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower(),
-                    this.ChildFiles, this.ChildFiles == 1 ? ResourceService.UiResources.GetString("UI_SingleFile").ToLower() : ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower());
-            });
+                infoString = string.Format("{0} {1}, {2} {3}",
+                    this.ChildFolders, this.ChildFolders == 1 ? this.SingleForderString : this.MultipleFordersString,
+                    this.ChildFiles, this.ChildFiles == 1 ? this.SingleFileString : this.MultipleFilesString);
+            }
+            else if (this.ChildFolders > 0)
+            {
+                infoString = string.Format("{0} {1}", this.ChildFolders, 
+                    this.ChildFolders == 1 ? this.SingleForderString : this.MultipleFordersString);
+            }
+            else if (this.ChildFiles > 0)
+            {
+                infoString = string.Format("{0} {1}", this.ChildFiles,
+                    this.ChildFiles == 1 ? this.SingleFileString: this.MultipleFilesString);
+            }
+
+            OnUiThread(() => this.Information = infoString);
         }
+
+        #endregion
+
+        #region UiResources
+
+        private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
+        private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();
+        private string SingleFileString => ResourceService.UiResources.GetString("UI_SingleFile").ToLower();
+        private string MultipleFilesString => ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower();
 
         #endregion
     }
