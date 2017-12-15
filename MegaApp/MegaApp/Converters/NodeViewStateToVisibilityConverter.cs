@@ -29,7 +29,7 @@ namespace MegaApp.Converters
                             return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsImage ? 
                                 Visibility.Visible : Visibility.Collapsed;
 
-                        case "viewdetails":
+                        case "information":
                             return parentFolder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 
@@ -55,7 +55,7 @@ namespace MegaApp.Converters
                             return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsImage ?
                                 Visibility.Visible : Visibility.Collapsed;
 
-                        case "viewdetails":
+                        case "information":
                             return parentFolder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 

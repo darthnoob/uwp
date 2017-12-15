@@ -44,7 +44,7 @@ namespace MegaApp.ViewModels
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
-            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -64,7 +64,7 @@ namespace MegaApp.ViewModels
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
-        public ICommand ViewDetailsCommand { get; }
+        public virtual ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
@@ -340,7 +340,7 @@ namespace MegaApp.ViewModels
             });
         }
 
-        private void ViewDetails()
+        private void OpenInformationPanel()
         {
             if(Parent != null)
             {
@@ -814,6 +814,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
@@ -825,7 +826,6 @@ namespace MegaApp.ViewModels
         public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
         public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
         public string VideoLabelText => ResourceService.UiResources.GetString("UI_Video");
-        public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
 
         public string SetLinkExpirationDateText => string.Format("{0} {1}",
             ResourceService.UiResources.GetString("UI_SetExpirationDate"),
@@ -838,10 +838,10 @@ namespace MegaApp.ViewModels
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        public string InformationPathData => ResourceService.VisualResources.GetString("VR_InformationPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
-        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
-        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");        
 
         #endregion
     }

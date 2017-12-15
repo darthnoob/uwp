@@ -24,7 +24,7 @@ namespace MegaApp.ViewModels.SharedFolders
         public ICommand LeaveShareCommand { get; set; }
 
         public ICommand OpenContentPanelCommand { get; }
-        public ICommand OpenInformationPanelCommand { get; }
+        public override ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 
@@ -119,7 +119,6 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region UiResources
 
-        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string OpenText => ResourceService.UiResources.GetString("UI_Open");
 
         #endregion

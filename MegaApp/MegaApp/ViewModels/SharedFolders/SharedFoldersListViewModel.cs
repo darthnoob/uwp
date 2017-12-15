@@ -265,7 +265,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
-        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
+        public string InformationPathData => ResourceService.VisualResources.GetString("VR_InformationPathData");
 
         #endregion
     }

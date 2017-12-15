@@ -370,9 +370,9 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
@@ -513,11 +513,11 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding PreviewCommand}"
+                                Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
@@ -634,9 +634,9 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
@@ -756,9 +756,9 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
@@ -858,9 +858,9 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
@@ -990,9 +990,9 @@
                     <MenuFlyout>
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
-                                Command="{Binding ViewDetailsCommand}"
-                                Text="{Binding ViewDetailsText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='viewdetails', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"

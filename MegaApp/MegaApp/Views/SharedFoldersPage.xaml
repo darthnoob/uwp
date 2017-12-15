@@ -124,7 +124,7 @@
                                         <PathIcon
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                            Data="{Binding InformationPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>-->
                                 </AppBarButton>
                                 <AppBarButton
@@ -136,7 +136,7 @@
                                         <PathIcon
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                            Data="{Binding InformationPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
@@ -365,7 +365,7 @@
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    Data="{Binding InformationPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>-->
                         </AppBarButton>
                         <AppBarButton
@@ -377,7 +377,7 @@
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    Data="{Binding InformationPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
