@@ -31,12 +31,12 @@
                     SharedFolderNode="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Content', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
                 
-                <userControls:SharedFolderInformationPanel
+                <userControls:NodeInformationPanel
                     x:Name="InformationPanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    SharedFolder="{Binding ItemCollection.FocusedItem}"
+                    Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>

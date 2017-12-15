@@ -125,6 +125,7 @@
     <Compile Include="Interfaces\IMegaContact.cs" />
     <Compile Include="Interfaces\IMegaContactOutgoingSharedFolder.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaFolderNode.cs" />
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
@@ -144,8 +145,8 @@
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\SharedFolderInformationPanel.xaml.cs">
-      <DependentUpon>SharedFolderInformationPanel.xaml</DependentUpon>
+    <Compile Include="UserControls\NodeInformationPanel.xaml.cs">
+      <DependentUpon>NodeInformationPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
@@ -220,7 +221,7 @@
     <Compile Include="ViewModels\UserControls\CopyOrMovePanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\NodeInformationPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -368,7 +369,6 @@
     <Compile Include="Views\MyAccount\UpgradeView.xaml.cs">
       <DependentUpon>UpgradeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="UserControls\TogglePanel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
@@ -502,7 +502,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\SharedFolderInformationPanel.xaml">
+    <Page Include="UserControls\NodeInformationPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

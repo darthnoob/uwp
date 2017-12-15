@@ -3,7 +3,7 @@
     /// <summary>
     /// Base interface for shared folder node models in the MegaApp
     /// </summary>
-    public interface IMegaSharedFolderNode : IMegaNode
+    public interface IMegaSharedFolderNode : IMegaFolderNode
     {
 
     }

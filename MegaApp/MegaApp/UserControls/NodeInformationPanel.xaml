@@ -1,5 +1,5 @@
-﻿<userControls:BaseSharedFolderInformationPanel
-    x:Class="MegaApp.UserControls.SharedFolderInformationPanel"
+﻿<userControls:BaseNodeInformationPanel
+    x:Class="MegaApp.UserControls.NodeInformationPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:MegaApp.Behaviors"
@@ -13,12 +13,11 @@
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance userControlsViewModels:SharedFolderInformationPanelViewModel}">
+    d:DataContext="{d:DesignInstance userControlsViewModels:NodeInformationPanelViewModel}">
 
     <UserControl.Resources>
-        <DataTemplate x:Name="SharedFolderInformationPanelHeader">
+        <DataTemplate x:Name="NoPreviewHeader">
             <Grid
-                Grid.Row="0"
                 Margin="24,32,24,44"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center">
@@ -31,11 +30,23 @@
                     Height="60" Width="60"
                     Data="{Binding DefaultImagePathData, Mode=OneWay}"
                     Stretch="Uniform"
-                    Visibility="{Binding PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
+                <Image
+                    Grid.Column="0"
+                    Height="60" Width="60"
+                    Stretch="UniformToFill"
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
+                    <Image.Source>
+                        <BitmapImage
+                            DecodePixelHeight="60"
+                            DecodePixelType="Logical"
+                            UriSource="{Binding ThumbnailImageUri}" />
+                    </Image.Source>
+                </Image>
                 <TextBlock
                     Grid.Column="1"
                     Margin="16,0,0,0"
@@ -44,6 +55,47 @@
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="WrapWholeWords"
                     VerticalAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Name="PreviewHeader">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="192" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid 
+                    Grid.Row="0"
+                    Background="{ThemeResource MegaAppBackgroundBrush}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center">
+                    <Image                        
+                        HorizontalAlignment="Center"
+                        Stretch="Uniform">
+                        <Image.Source>
+                            <BitmapImage UriSource="{Binding PreviewImageUri}" />
+                        </Image.Source>
+                    </Image>
+                </Grid>
+                <TextBlock
+                    Grid.Row="1"
+                    Margin="24,20"
+                    FontSize="24"
+                    FontWeight="SemiLight"
+                    Text="{Binding Name, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Name="NodeInformationPanelHeader">
+            <Grid>
+                <ContentControl
+                    ContentTemplate="{StaticResource NoPreviewHeader}"
+                    Visibility="{Binding PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}"/>
+                <ContentControl
+                    ContentTemplate="{StaticResource PreviewHeader}"
+                    Visibility="{Binding PreviewImageUri, Converter={StaticResource StringVisibilityConverter}}"/>
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
@@ -76,7 +128,20 @@
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{Binding SharedFolder.DownloadCommand}"
+                        Command="{Binding Node.PreviewCommand}"
+                        Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                        Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding Node.DownloadCommand}"
                         Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -88,7 +153,44 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding SharedFolder.LeaveShareCommand}"
+                        Command="{Binding Node.CopyOrMoveCommand}"
+                        Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding Node.RenameCommand}"
+                        Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding Node.RemoveCommand}"
+                        Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
+                        Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.RubbishBinPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding SharedFolderNode.LeaveShareCommand}"
                         Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
@@ -100,16 +202,6 @@
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton
-                        Command="{Binding SharedFolder.RemoveSharedAccessCommand}"
-                        Label="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
-                        Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        <Viewbox MaxHeight="16" MaxWidth="16">
-                            <FontIcon Glyph="&#xE8F8;" />
-                        </Viewbox>
-                    </AppBarButton>
                 </CommandBar>
 
                 <CommandBar
@@ -118,21 +210,21 @@
                     extensions:CommandBarExtensions.HideMoreButton="True"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
+                        Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
-                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="16" MaxWidth="16">
                             <FontIcon Glyph="&#xE8FA;" />
                         </Viewbox>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
+                        Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
                         Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
-                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -141,21 +233,21 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding SharedFolder.ContactsList.RemoveContactFromFolderCommand}"
+                        Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
                         Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
-                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxHeight="16" MaxWidth="16">
                             <FontIcon Glyph="&#xE8F8;" />
                         </Viewbox>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding SharedFolder.ContactsList.ItemCollection.MultiSelectCommand}"
+                        Command="{Binding FolderNode.ContactsList.ItemCollection.MultiSelectCommand}"
                         Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
-                        Visibility="{Binding SharedFolder.ContactsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding FolderNode.ContactsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -181,51 +273,51 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <ContentControl
+                            x:Name="DetailsPivotHeader"
                             Grid.Row="0"
-                            DataContext="{Binding SharedFolder}"
-                            ContentTemplate="{StaticResource SharedFolderInformationPanelHeader}"/>
+                            DataContext="{Binding Node}"
+                            ContentTemplate="{StaticResource NodeInformationPanelHeader}"/>
                         <RelativePanel Grid.Row="1" Margin="24,0,24,12">
                             <TextBlock
                                 x:Name="SizeLabelText"
                                 Opacity="0.4"
                                 Text="{x:Bind ViewModel.SizeLabelText, Mode=OneTime}" />
-                            <TextBlock x:Name="SizeText" Text="{x:Bind ViewModel.SharedFolder.SizeText, Mode=OneWay}" />
+                            <TextBlock x:Name="SizeText" Text="{x:Bind ViewModel.Node.SizeText, Mode=OneWay}" />
                             <TextBlock
-                                x:Name="ContentsLabelText"
+                                x:Name="ContentsOrTypeLabelText"
                                 Opacity="0.4"
-                                Text="{x:Bind ViewModel.ContentsLabelText, Mode=OneTime}" />
-                            <TextBlock x:Name="ContentsText" Text="{x:Bind ViewModel.SharedFolder.Information, Mode=OneWay}" />
+                                Text="{x:Bind ViewModel.ContentsOrTypeLabelText, Mode=OneWay}" />
+                            <TextBlock x:Name="ContentsOrTypeText" Text="{x:Bind ViewModel.ContentsOrTypeText, Mode=OneWay}" />
                             <TextBlock
                                 x:Name="DateCreatedLabelText"
                                 Opacity="0.4"
                                 Text="{x:Bind ViewModel.DateCreatedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="DateCreated" Text="{x:Bind ViewModel.SharedFolder.CreationTime, Mode=OneWay}" />
+                            <TextBlock x:Name="DateCreated" Text="{x:Bind ViewModel.Node.CreationTime, Mode=OneWay}" />
                             <TextBlock
                                 x:Name="DateModifiedLabelText"
                                 Opacity="0.4"
                                 Text="{x:Bind ViewModel.DateModifiedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="DateModified" Text="{x:Bind ViewModel.SharedFolder.ModificationTime, Mode=OneWay}" />
-
+                            <TextBlock x:Name="DateModified" Text="{x:Bind ViewModel.Node.ModificationTime, Mode=OneWay}" />
                             <TextBlock
                                 x:Name="SharedToLabelText"
                                 Opacity="0.4"
                                 Text="{x:Bind ViewModel.SharedToLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="Contacts"
-                                Text="{x:Bind ViewModel.SharedFolder.ContactsText, Mode=OneWay}"
-                                Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                Text="{x:Bind ViewModel.SharedFolderNode.ContactsText, Mode=OneWay}"
+                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="FolderLocationLabelText"
                                 Opacity="0.4"
                                 Text="{x:Bind ViewModel.FolderLocationLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="FolderLocation"
-                                Text="{x:Bind ViewModel.SharedFolder.FolderLocation, Mode=OneWay}"
+                                Text="{x:Bind ViewModel.SharedFolderNode.FolderLocation, Mode=OneWay}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
-                                Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="OwnerLabelText"
                                 Opacity="0.4"
@@ -233,7 +325,7 @@
                                 Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <TextBlock
                                 x:Name="Owner"
-                                Text="{x:Bind ViewModel.SharedFolder.Owner, Mode=OneWay}"
+                                Text="{x:Bind ViewModel.SharedFolderNode.Owner, Mode=OneWay}"
                                 TextTrimming="CharacterEllipsis"
                                 TextWrapping="NoWrap"
                                 Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
@@ -253,7 +345,7 @@
                                     Grid.Column="0"
                                     Height="12" Width="12"
                                     Margin="4,0,12,0"
-                                    Data="{x:Bind ViewModel.SharedFolder.AccessLevel.AccessLevelPathData, Mode=OneWay}"
+                                    Data="{x:Bind ViewModel.Node.AccessLevel.AccessLevelPathData, Mode=OneWay}"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Stretch="Uniform" >
@@ -263,7 +355,7 @@
                                 </Path>
                                 <TextBlock 
                                     Grid.Column="1" 
-                                    Text="{x:Bind ViewModel.SharedFolder.AccessLevel.AccessLevelText, Mode=OneWay}" />
+                                    Text="{x:Bind ViewModel.Node.AccessLevel.AccessLevelText, Mode=OneWay}" />
                             </Grid>
                         </RelativePanel>
                     </Grid>
@@ -282,8 +374,8 @@
                         </Grid.RowDefinitions>
                         <ContentControl
                             Grid.Row="0"
-                            DataContext="{Binding SharedFolder}"
-                            ContentTemplate="{StaticResource SharedFolderInformationPanelHeader}"/>
+                            DataContext="{Binding Node}"
+                            ContentTemplate="{StaticResource NoPreviewHeader}"/>
                         <StackPanel
                             Grid.Row="1"
                             Margin="24,0"
@@ -295,14 +387,14 @@
                             <ToggleSwitch
                                 x:Name="EnableLinkSwitch"
                                 Margin="0,12,0,0"
-                                IsOn="{x:Bind ViewModel.SharedFolder.IsExported, Mode=TwoWay}"
+                                IsOn="{x:Bind ViewModel.Node.IsExported, Mode=TwoWay}"
                                 Toggled="OnEnableLinkSwitchToggled"/>
                         </StackPanel>
                         <StackPanel
                             Grid.Row="2"
                             Margin="24,12,24,0"
                             Orientation="Vertical"
-                            Visibility="{Binding SharedFolder.IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding Node.IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                             <RadioButton
                                 x:Name="LinkWithoutKeyRadioButton"
                                 Command="{x:Bind ViewModel.LinkWithoutKeyCommand}"
@@ -341,7 +433,7 @@
                         <Grid
                             Grid.Row="3"
                             Margin="24,20,24,0"
-                            Visibility="{Binding SharedFolder.ExportLink, Converter={StaticResource StringVisibilityConverter}}">
+                            Visibility="{Binding Node.ExportLink, Converter={StaticResource StringVisibilityConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -365,7 +457,7 @@
                                         Foreground="{ThemeResource MegaRedColorBrush}" 
                                         Text="{x:Bind ViewModel.ExportLinkBorderTitle, Mode=OneWay}" />
                                     <TextBlock 
-                                        Text="{x:Bind ViewModel.SharedFolder.ExportLink, Mode=OneWay}" 
+                                        Text="{x:Bind ViewModel.Node.ExportLink, Mode=OneWay}" 
                                         TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
@@ -405,8 +497,8 @@
                         </Grid.RowDefinitions>
                         <ContentControl
                             Grid.Row="0"
-                            DataContext="{Binding SharedFolder}"
-                            ContentTemplate="{StaticResource SharedFolderInformationPanelHeader}"/>
+                            DataContext="{Binding Node}"
+                            ContentTemplate="{StaticResource NoPreviewHeader}"/>
                         <StackPanel
                             Grid.Row="1"
                             Margin="24,0"
@@ -418,13 +510,14 @@
                             <ToggleSwitch
                                 x:Name="EnableSharedFolderSwitch"
                                 Margin="0,12,0,0"
-                                IsOn="{x:Bind ViewModel.IsOutShare, Mode=OneWay}"
+                                IsOn="{x:Bind ViewModel.FolderNode.IsOutShare, Mode=OneWay}"
                                 Toggled="OnEnableSharedFolderSwitchToggled"/>
                         </StackPanel>
                         <StackPanel
                             Grid.Row="2"
                             Margin="24,32,24,0"
-                            Orientation="Vertical">
+                            Orientation="Vertical"
+                            Visibility="{Binding FolderNode.IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock
                                 FontSize="16"
                                 Opacity="0.4"
@@ -432,7 +525,7 @@
                             <ListView
                                 x:Name="ListViewContacts"
                                 Margin="-12,20,-12,0"
-                                DataContext="{Binding SharedFolder.ContactsList}"
+                                DataContext="{Binding FolderNode.ContactsList}"
                                 Background="Transparent"
                                 IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                 ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
@@ -459,7 +552,7 @@
                 x:Name="MainBottomCommandBar"
                 Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton
-                    Command="{Binding SharedFolder.DownloadCommand}"
+                    Command="{Binding Node.DownloadCommand}"
                     Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -471,7 +564,46 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton
-                    Command="{Binding SharedFolder.LeaveShareCommand}"
+                    Command="{Binding Node.PreviewCommand}"
+                    Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                    Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding Node.CopyOrMoveCommand}"
+                    Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
+                    Visibility="{Binding Node.IsImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding Node.RemoveCommand}"
+                    Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
+                    Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.RubbishBinPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding SharedFolderNode.LeaveShareCommand}"
                     Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
@@ -483,37 +615,52 @@
                             VerticalAlignment="Center"/>
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton
-                    Command="{Binding SharedFolder.RemoveSharedAccessCommand}"
-                    Label="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.RemoveSharedAccessText, Mode=OneTime}"
-                    Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="16" MaxWidth="16">
-                        <FontIcon Glyph="&#xE8F8;" />
-                    </Viewbox>
-                </AppBarButton>
+                <CommandBar.SecondaryCommands>
+                    <AppBarButton
+                        Command="{Binding Node.RenameCommand}"
+                        Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding Node.CopyOrMoveCommand}"
+                        Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
+                        Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar.SecondaryCommands>
             </CommandBar>
 
             <CommandBar
                 x:Name="SharePivotBottomCommandBar"
                 Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton
-                    Command="{Binding SharedFolder.ContactsList.AddContactToFolderCommand}"
+                    Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
                     Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
-                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="16" MaxWidth="16">
                         <FontIcon Glyph="&#xE8FA;" />
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
-                    Command="{Binding SharedFolder.ContactsList.SetFolderPermissionCommand}"
+                    Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
                     Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
-                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                     <AppBarButton.Icon>
                         <PathIcon
                             HorizontalAlignment="Center"
@@ -522,17 +669,17 @@
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton
-                    Command="{Binding SharedFolder.ContactsList.RemoveContactFromFolderCommand}"
+                    Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
                     Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
-                    Visibility="{Binding SharedFolder.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="16" MaxWidth="16">
                         <FontIcon Glyph="&#xE8F8;" />
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
-                    Command="{Binding SharedFolder.ContactsList.ItemCollection.MultiSelectCommand}"
+                    Command="{Binding FolderNode.ContactsList.ItemCollection.MultiSelectCommand}"
                     Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}">
@@ -557,6 +704,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
+                        <Setter Target="DetailsPivotHeader.ContentTemplate" Value="{StaticResource NodeInformationPanelHeader}" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -570,6 +718,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Single" />
+                        <Setter Target="DetailsPivotHeader.ContentTemplate" Value="{StaticResource NoPreviewHeader}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -580,17 +729,17 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                        <Setter Target="ContentsLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
-                        <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsLabelText" />
+                        <Setter Target="ContentsOrTypeLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
+                        <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.Below)" Value="DateCreatedLabelText" />
                         <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="SizeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="ContentsText.(RelativePanel.Below)" Value="SizeText" />
-                        <Setter Target="ContentsText.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="DateCreated.(RelativePanel.Below)" Value="ContentsText" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="SizeText" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
+                        <Setter Target="DateCreated.(RelativePanel.Below)" Value="ContentsOrTypeText" />
                         <Setter Target="DateCreated.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="DateModified.(RelativePanel.Below)" Value="DateCreated" />
                         <Setter Target="DateModified.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -611,30 +760,30 @@
                     <VisualState.Setters>
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
-                        <Setter Target="ContentsLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
-                        <Setter Target="ContentsText.(RelativePanel.Below)" Value="ContentsLabelText" />
-                        <Setter Target="ContentsText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
                         <Setter Target="DateCreatedLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="DateCreated.(RelativePanel.Below)" Value="DateCreatedLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="DateCreatedLabelText" />
-                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModified.(RelativePanel.Below)" Value="DateModifiedLabelText" />
-                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="SharedToLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Contacts.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignBottomWith)" Value="SharedToLabelText" />
-                        <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="FolderLocationLabelText" />
-                        <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="Owner.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Owner.(RelativePanel.LeftOf)" Value="Permissions" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
-                        <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="PermissionsLabelText" />
                         <Setter Target="Permissions.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
                     </VisualState.Setters>
@@ -645,35 +794,35 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
-                        <Setter Target="ContentsLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
-                        <Setter Target="ContentsText.(RelativePanel.Below)" Value="ContentsLabelText" />
-                        <Setter Target="ContentsText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
+                        <Setter Target="ContentsOrTypeText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="SizeText" />
                         <Setter Target="DateCreatedLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="DateCreated.(RelativePanel.Below)" Value="DateCreatedLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.AlignBottomWith)" Value="DateCreatedLabelText" />
-                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModifiedLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModified.(RelativePanel.Below)" Value="DateModifiedLabelText" />
-                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="DateModified.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="SharedToLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Contacts.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="FolderLocationLabelText.(RelativePanel.AlignBottomWith)" Value="SharedToLabelText" />
-                        <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="FolderLocationLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="FolderLocation.(RelativePanel.Below)" Value="FolderLocationLabelText" />
-                        <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="FolderLocation.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="OwnerLabelText.Margin" Value="0,36,0,0" />
                         <Setter Target="Owner.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="Owner.(RelativePanel.AlignLeftWithPanel)" Value="True" />
                         <Setter Target="Owner.(RelativePanel.LeftOf)" Value="Permissions" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
-                        <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="PermissionsLabelText" />
-                        <Setter Target="Permissions.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="Permissions.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-</userControls:BaseSharedFolderInformationPanel>
+</userControls:BaseNodeInformationPanel>

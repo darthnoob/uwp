@@ -468,7 +468,7 @@
                         VerticalAlignment="Center"
                         Opacity="0.5"
                         Style="{ThemeResource CaptionTextBlockStyle}"
-                        Text="{Binding Information}"
+                        Text="{Binding SizeText}"
                         TextWrapping="NoWrap" />
                 </Grid>
 
@@ -711,7 +711,7 @@
                         VerticalAlignment="Center"
                         Opacity="0.5"
                         Style="{ThemeResource CaptionTextBlockStyle}"
-                        Text="{Binding Information}"
+                        Text="{Binding Contents}"
                         TextWrapping="NoWrap" />
                 </Grid>
 
@@ -953,7 +953,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Style="{ThemeResource CaptionTextBlockStyle}"
-                    Text="{Binding Information}"
+                    Text="{Binding SizeText}"
                     TextWrapping="NoWrap" />
                 <TextBlock
                     x:Name="txtType"
@@ -1119,7 +1119,7 @@
                     FontSize="13"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Text="{Binding Information}"
+                    Text="{Binding Contents}"
                     TextWrapping="NoWrap"
                     Opacity="0.5"/>
             </Grid>
@@ -1433,7 +1433,7 @@
                         FontSize="13"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Text="{Binding Information}"
+                        Text="{Binding Contents}"
                         TextWrapping="NoWrap"
                         Opacity="0.5"/>
                 </Grid>

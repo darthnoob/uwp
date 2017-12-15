@@ -5,9 +5,9 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class SharedFolderInformationPanelViewModel : BaseViewModel
+    public class NodeInformationPanelViewModel : BaseViewModel
     {
-        public SharedFolderInformationPanelViewModel()
+        public NodeInformationPanelViewModel()
         {
             this.CopyLinkCommand = new RelayCommand(CopyLink);
             this.DecryptionKeyCommand = new RelayCommand(GetDecryptiontKey);
@@ -30,74 +30,82 @@ namespace MegaApp.ViewModels.UserControls
 
         public void EnableLink(bool isOn)
         {
-            if (isOn && !this.SharedFolder.OriginalMNode.isExported())
-                this.SharedFolder.GetLinkAsync(false);
-            else if (!isOn && this.SharedFolder.OriginalMNode.isExported())
-                this.SharedFolder.RemoveLink();
+            if (isOn && !this.Node.OriginalMNode.isExported())
+                this.Node.GetLinkAsync(false);
+            else if (!isOn && this.Node.OriginalMNode.isExported())
+                this.Node.RemoveLink();
         }
 
         private void GetDecryptiontKey()
         {
             this.ExportLinkBorderTitle = this.DecryptionKeyLabelText;
-            this.SharedFolder.ExportLink = this.SharedFolder.OriginalMNode.getBase64Key();
+            this.Node.ExportLink = this.Node.OriginalMNode.getBase64Key();
         }
 
         private void GetLinkWithKey()
         {
             this.ExportLinkBorderTitle = this.ExportLinkText;
-            this.SharedFolder.ExportLink = this.SharedFolder.OriginalMNode.getPublicLink(true);
+            this.Node.ExportLink = this.Node.OriginalMNode.getPublicLink(true);
         }
 
         private void GetLinkWithoutKey()
         {
             this.ExportLinkBorderTitle = this.ExportLinkText;
-            this.SharedFolder.ExportLink = this.SharedFolder.OriginalMNode.getPublicLink(false);
+            this.Node.ExportLink = this.Node.OriginalMNode.getPublicLink(false);
         }
 
         private void CopyLink()
         {
-            ShareService.CopyLinkToClipboard(this.SharedFolder.ExportLink);
+            ShareService.CopyLinkToClipboard(this.Node.ExportLink);
         }
 
         private void ShareLink()
         {
-            ShareService.ShareLink(this.SharedFolder.ExportLink);
+            ShareService.ShareLink(this.Node.ExportLink);
         }
 
         public void EnableSharedFolder(bool isOn)
         {
-            if (!isOn)
-            {
-                if (this.SharedFolder?.RemoveSharedAccessCommand?.CanExecute(null) == true)
-                    this.SharedFolder.RemoveSharedAccessCommand.Execute(null);
-            }
+            if (this.Node is FolderNodeViewModel == false) return;
 
-            OnPropertyChanged(nameof(this.IsOutShare));
+            var folderNode = this.Node as FolderNodeViewModel;
+
+            if (!isOn && folderNode.IsOutShare)
+            {
+                if (folderNode?.RemoveSharedAccessCommand?.CanExecute(null) == true)
+                    folderNode.RemoveSharedAccessCommand.Execute(null);
+            }
         }
 
         #endregion
 
         #region Properties
 
-        private SharedFolderNodeViewModel _sharedFolder;
-        public SharedFolderNodeViewModel SharedFolder
+        private NodeViewModel _node;
+        public NodeViewModel Node
         {
-            get { return _sharedFolder; }
+            get { return _node; }
             set
             {
-                SetField(ref _sharedFolder, value);
+                SetField(ref _node, value);
+                if (_node == null) return;
 
-                OnPropertyChanged(nameof(this.IsInShare),
-                    nameof(this.IsOutShare),
+                OnPropertyChanged(nameof(this.IsFolder), 
+                    nameof(this.FolderNode), nameof(this.SharedFolderNode), 
+                    nameof(this.IsInShare), nameof(this.IsOutShare),
+                    nameof(this.ContentsOrTypeLabelText), nameof(this.ContentsOrTypeText),
                     nameof(this.DateCreatedLabelText));
 
                 this.GetLinkWithKey();
             }
         }
 
-        public bool IsInShare => this.SharedFolder?.OriginalMNode?.isInShare() ?? false;
+        public bool IsFolder => this.Node is FolderNodeViewModel;
+        public bool IsInShare => this.Node is IncomingSharedFolderNodeViewModel;
+        public bool IsOutShare => this.Node is OutgoingSharedFolderNodeViewModel;
 
-        public bool IsOutShare => this.SharedFolder?.OriginalMNode?.isOutShare() ?? false;
+        public FolderNodeViewModel FolderNode => this.Node as FolderNodeViewModel;
+        public SharedFolderNodeViewModel SharedFolderNode => this.Node as SharedFolderNodeViewModel;
 
         private string _exportLinkBorderTitle;
         public string ExportLinkBorderTitle
@@ -106,7 +114,7 @@ namespace MegaApp.ViewModels.UserControls
             set { SetField(ref _exportLinkBorderTitle, value); }
         }
 
-        public bool IsLinkWithExpirationTime => this.SharedFolder?.LinkExpirationTime > 0;
+        public bool IsLinkWithExpirationTime => this.Node?.LinkExpirationTime > 0;
 
         public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
 
@@ -116,8 +124,14 @@ namespace MegaApp.ViewModels.UserControls
 
         // Common
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
+        public string MoveText => ResourceService.UiResources.GetString("UI_Move");
+        public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
+        public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
 
         // Details pivot
@@ -130,9 +144,15 @@ namespace MegaApp.ViewModels.UserControls
         public string SharedOnLabelText => ResourceService.UiResources.GetString("UI_SharedOn");
         public string SharedToLabelText => ResourceService.UiResources.GetString("UI_SharedTo");
         public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");
+        public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
+
+        public string ContentsOrTypeLabelText => this.IsFolder ? this.ContentsLabelText : this.TypeLabelText;
+        public string ContentsOrTypeText => this.IsFolder ?
+            (this.FolderNode != null ? this.FolderNode.Contents : string.Empty) :
+            (this.Node != null ? this.Node.TypeText : string.Empty);
 
         public string DateCreatedLabelText => 
-            (this.SharedFolder?.OriginalMNode != null && this.SharedFolder.OriginalMNode.isInShare()) ?
+            (this.Node?.OriginalMNode != null && this.Node.OriginalMNode.isInShare()) ?
             ResourceService.UiResources.GetString("UI_SharedOn") :
             ResourceService.UiResources.GetString("UI_DateCreated");
 
@@ -162,9 +182,14 @@ namespace MegaApp.ViewModels.UserControls
 
         #region VisualResources
 
+        public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
+        public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string ShareIconPathData => ResourceService.VisualResources.GetString("VR_ShareIconPathData");
 
         #endregion

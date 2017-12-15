@@ -31,11 +31,6 @@ namespace MegaApp.Interfaces
         string ThumbnailPath { get; }
 
         /// <summary>
-        /// Get the readable information about a node
-        /// </summary>
-        string Information { get; }
-
-        /// <summary>
         /// Unique identifier of the node
         /// </summary>
         string Base64Handle { get; set; }

@@ -32,12 +32,12 @@
         PanePlacement="Right">
         <SplitView.Pane>
             <Grid>
-                <userControls:NodeDetailsPanel
-                    x:Name="NodeDetailsPanelControl"
+                <userControls:NodeInformationPanel
+                    x:Name="InformationPanelControl"
                     DataContext="{Binding ActiveFolderView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    Node="{Binding FocusedNode}"
+                    Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
                 
                 <userControls:CopyOrMovePanel

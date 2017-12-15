@@ -147,13 +147,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private string _information;
-        public string Information
-        {
-            get { return _information; }
-            set { SetField(ref _information, value); }
-        }
-
         private int _childFiles;
         public int ChildFiles
         {

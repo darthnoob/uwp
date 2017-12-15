@@ -1,12 +1,9 @@
 using System.ComponentModel;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -20,14 +17,11 @@ namespace MegaApp.ViewModels.SharedFolders
             this.DownloadCommand = new RelayCommand(Download);
             this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
-
-            this.Update(megaNode);
         }
 
         #region Commands
 
         public ICommand LeaveShareCommand { get; set; }
-        public ICommand RemoveSharedAccessCommand { get; set; }
 
         public ICommand OpenContentPanelCommand { get; }
         public ICommand OpenInformationPanelCommand { get; }
@@ -76,24 +70,6 @@ namespace MegaApp.ViewModels.SharedFolders
                 this.Parent.OpenContentPanelCommand.Execute(null);
         }
 
-        public async Task<bool> RemoveSharedAccessAsync()
-        {
-            var removeSharedAccess = new ShareRequestListenerAsync();
-            var outShares = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
-            var outSharesSize = outShares.size();
-            bool result = true;
-            for (int i = 0; i < outSharesSize; i++)
-            {
-                result = result & await removeSharedAccess.ExecuteAsync(() =>
-                {
-                    this.MegaSdk.shareByEmail(this.OriginalMNode, outShares.get(i).getUser(),
-                        (int)MShareType.ACCESS_UNKNOWN, removeSharedAccess);
-                });
-            }
-
-            return result;
-        }
-
         #endregion
 
         #region Properties
@@ -136,11 +112,6 @@ namespace MegaApp.ViewModels.SharedFolders
         /// Folder location of the shared folder
         /// </summary>
         public virtual string FolderLocation { get; set; }
-
-        /// <summary>
-        /// List of contacts with the folder is shared
-        /// </summary>
-        public virtual ContactsListOutgoingSharedFolderViewModel ContactsList { get; set; }
 
         public virtual string ContactsText { get; set; }
 
