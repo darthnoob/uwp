@@ -28,7 +28,7 @@
     <SplitView
         x:Name="CloudDriveSplitView"
         DisplayMode="Inline"
-        IsPaneOpen="False"
+        IsPaneOpen="{Binding ActiveFolderView.IsPanelOpen}"
         PanePlacement="Right">
         <SplitView.Pane>
             <Grid>
@@ -255,6 +255,7 @@
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
+                    IsLocked="{Binding ActiveFolderView.IsPanelOpen}"
                     SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem
                         x:Name="CloudDrivePivot"

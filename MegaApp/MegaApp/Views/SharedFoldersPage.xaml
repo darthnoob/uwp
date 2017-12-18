@@ -38,6 +38,13 @@
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+
+                <userControls:CopyOrMovePanel
+                    x:Name="CopyOrMovePanelControl"
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 
@@ -86,6 +93,19 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{Binding CopyOrMoveCommand}"
+                                Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Visibility="{Binding SharedFolders, ConverterParameter='copyormove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -225,6 +245,7 @@
                 <Pivot
                     x:Name="SharedFoldersPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
+                    IsLocked="{Binding ActiveView.IsPanelOpen}"
                     SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem
                         x:Name="IncomingSharesPivot"

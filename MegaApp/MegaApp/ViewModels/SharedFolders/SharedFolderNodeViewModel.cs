@@ -10,7 +10,7 @@ namespace MegaApp.ViewModels.SharedFolders
     public abstract class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
     {
         public SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
-            : base(SdkService.MegaSdk, App.AppInformation, megaNode, null)
+            : base(SdkService.MegaSdk, App.AppInformation, megaNode, parent)
         {
             this.Parent = parent;
 

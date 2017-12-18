@@ -33,9 +33,6 @@ namespace MegaApp.ViewModels
         public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
-        public event EventHandler OpenPanelEvent;
-        public event EventHandler ClosePanelEvent;
-
         public event EventHandler ChildNodesCollectionChanged;
 
         public FolderViewModel(ContainerType containerType, bool isCopyOrMoveViewModel = false)
@@ -77,11 +74,7 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.Folder));
         }
 
-        protected void OpenInformationPanel()
-        {
-            this.VisiblePanel = PanelType.Information;
-            OpenPanelEvent?.Invoke(this, EventArgs.Empty);
-        }
+        protected void OpenInformationPanel() => this.VisiblePanel = PanelType.Information;
 
         public void ClosePanels()
         {
@@ -89,7 +82,6 @@ namespace MegaApp.ViewModels
                 CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
             this.VisiblePanel = PanelType.None;
-            ClosePanelEvent?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnNodeAdded(object sender, MNode mNode)
@@ -419,8 +411,28 @@ namespace MegaApp.ViewModels
 
         private void CopyOrMove()
         {
+            if (this.ItemCollection.SelectedItems == null ||
+                !this.ItemCollection.HasSelectedItems) return;
+
+            this.VisiblePanel = PanelType.CopyOrMove;
+
+            foreach (var node in this.ItemCollection.SelectedItems)
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+
+            CopyOrMoveService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
+            this.ItemCollection.IsMultiSelectActive = false;
+
             CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
-            OpenPanelEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Reset the variables used in the copy or move actions
+        /// </summary>
+        public void ResetCopyOrMove()
+        {
+            this.ItemCollection.ClearSelection();
+            CopyOrMoveService.ClearSelectedNodes();
+            this.VisiblePanel = PanelType.None;
         }
 
         private async void Download()
@@ -1261,7 +1273,7 @@ namespace MegaApp.ViewModels
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
-        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyOrMoveText => CopyText + "/" + MoveText;
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");

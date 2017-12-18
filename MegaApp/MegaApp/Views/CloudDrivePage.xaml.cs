@@ -22,38 +22,35 @@ namespace MegaApp.Views
 
     public sealed partial class CloudDrivePage : BaseCloudDrivePage
     {
-        private const double NodeDetailsMinWidth = 435;
+        private const double InformationPanelMinWidth = 432;
+        private const double CopyOrMovePanelMinWidth = 432;
 
         public CloudDrivePage()
         {
             InitializeComponent();
 
-            this.ViewModel.ClearSelectedItems += OnClearSelectedItems;
-            this.ViewModel.DisableSelection += OnDisableSelection;
-            this.ViewModel.EnableSelection += OnEnableSelection;
-
             this.ViewModel.CameraUploads.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.CameraUploads.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.CameraUploads.ItemCollection.AllSelected += OnAllSelected;
 
-            this.ViewModel.CloudDrive.OpenPanelEvent += OnOpenPanel;
-            this.ViewModel.RubbishBin.OpenPanelEvent += OnOpenPanel;
-            this.ViewModel.CameraUploads.OpenPanelEvent += OnOpenPanel;
+            this.ViewModel.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
+            this.ViewModel.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
+            this.ViewModel.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
 
-            this.ViewModel.CloudDrive.ClosePanelEvent += OnClosePanel;
-            this.ViewModel.RubbishBin.ClosePanelEvent += OnClosePanel;
-            this.ViewModel.CameraUploads.ClosePanelEvent += OnClosePanel;
+            this.ViewModel.CloudDrive.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.CameraUploads.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.RubbishBin.CancelCopyOrMoveEvent += OnResetCopyOrMove;
 
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += OnCopyOrMoveFinished;
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += OnCopyOrMoveCanceled;
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
+            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
 
             this.CloudDriveSplitView.RegisterPropertyChangedCallback(
-                SplitView.IsPaneOpenProperty, IsDetailsViewOpenPropertyChanged);
+                SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
         }
 
-        private void IsDetailsViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
         {
-            if (this.CloudDriveSplitView.IsPaneOpen)
+            if (this.ViewModel.ActiveFolderView.IsPanelOpen)
             {
                 if(DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.CloudDriveSplitView.ActualWidth < 600)
                 {
@@ -62,7 +59,16 @@ namespace MegaApp.Views
                     return;
                 }
 
-                this.CloudDriveSplitView.OpenPaneLength = NodeDetailsMinWidth;
+                switch (this.ViewModel.ActiveFolderView.VisiblePanel)
+                {
+                    case PanelType.Information:
+                        this.CloudDriveSplitView.OpenPaneLength = InformationPanelMinWidth;
+                        break;
+                    
+                    case PanelType.CopyOrMove:
+                        this.CloudDriveSplitView.OpenPaneLength = CopyOrMovePanelMinWidth;
+                        break;
+                }
             }
 
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
@@ -133,7 +139,6 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.CloudDriveSplitView.IsPaneOpen = false;
 
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.ViewModel.ActiveFolderView = this.ViewModel.CloudDrive;
@@ -240,10 +245,10 @@ namespace MegaApp.Views
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            OnEnableSelection(sender, e);
+            EnableSelection();
         }
 
-        private void OnDisableSelection(object sender, EventArgs e)
+        private void DisableSelection()
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.CloudDriveExplorer.DisableSelection();
@@ -255,7 +260,7 @@ namespace MegaApp.Views
                 this.GridViewCameraUploads.SelectionMode = ListViewSelectionMode.None;
         }
 
-        private void OnEnableSelection(object sender, EventArgs e)
+        private void EnableSelection()
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.CloudDriveExplorer.EnableSelection();
@@ -271,7 +276,7 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnClearSelectedItems(object sender, EventArgs e)
+        private void ClearSelectedItems()
         {
             if (MainPivot.SelectedItem.Equals(CloudDrivePivot))
                 this.CloudDriveExplorer.ClearSelectedItems();
@@ -286,26 +291,16 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnOpenPanel(object sender, EventArgs e)
+        private void OnCopyOrMove(object sender, EventArgs e)
         {
-            this.CloudDriveSplitView.IsPaneOpen = true;
+            this.DisableSelection();
         }
 
-        private void OnClosePanel(object sender, EventArgs e)
+        private void OnResetCopyOrMove(object sender, EventArgs e)
         {
-            this.CloudDriveSplitView.IsPaneOpen = false;
-        }
-
-        private void OnCopyOrMoveFinished(object sender, EventArgs e)
-        {
-            this.ViewModel.OnCopyOrMoveFinished(sender, e);
-            this.OnClosePanel(sender, e);
-        }
-
-        private void OnCopyOrMoveCanceled(object sender, EventArgs e)
-        {
-            this.ViewModel.OnCopyOrMoveCanceled(sender, e);
-            this.OnClosePanel(sender, e);
+            this.ViewModel.ActiveFolderView.ResetCopyOrMove();
+            this.ClearSelectedItems();
+            this.EnableSelection();
         }
 
         /// <summary>

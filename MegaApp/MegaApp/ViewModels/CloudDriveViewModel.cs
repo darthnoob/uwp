@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -10,10 +9,6 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public event EventHandler ClearSelectedItems;
-        public event EventHandler DisableSelection;
-        public event EventHandler EnableSelection;
-
         public CloudDriveViewModel()
         {
             InitializeModel();
@@ -29,14 +24,6 @@ namespace MegaApp.ViewModels
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
             this.CameraUploads = new CameraUploadsViewModel();
-
-            this.CloudDrive.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
-            this.RubbishBin.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
-            this.CameraUploads.CancelCopyOrMoveEvent += OnCopyOrMoveCanceled;
-
-            this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
-            this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
-            this.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
 
             this.RubbishBin.ChildNodesCollectionChanged += OnRubbishBinChildNodesCollectionChanged;
 
@@ -164,44 +151,6 @@ namespace MegaApp.ViewModels
         private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e)
         {
             OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
-        }
-
-        private void OnCopyOrMove(object sender, EventArgs e)
-        {
-            if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
-                !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
-
-            this.ActiveFolderView.VisiblePanel = PanelType.CopyOrMove;
-
-            foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
-                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-
-            CopyOrMoveService.SelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();
-            this.ActiveFolderView.ItemCollection.IsMultiSelectActive = false;
-
-            this.DisableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Reset the variables used in the copy or move actions
-        /// </summary>
-        private void ResetCopyOrMove()
-        {
-            ActiveFolderView.ItemCollection.ClearSelection();
-            CopyOrMoveService.ClearSelectedNodes();
-            this.ActiveFolderView.VisiblePanel = PanelType.None;
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
-            EnableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnCopyOrMoveFinished(object sender, EventArgs e)
-        {
-            ResetCopyOrMove();
-        }
-
-        public void OnCopyOrMoveCanceled(object sender, EventArgs e)
-        {
-            ResetCopyOrMove();
         }
 
         #endregion

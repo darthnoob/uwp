@@ -806,7 +806,7 @@ namespace MegaApp.ViewModels
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
-        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyOrMoveText => CopyText + "/" + MoveText;
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string FileLabelText => ResourceService.UiResources.GetString("UI_File");
         public string FilesLabelText => ResourceService.UiResources.GetString("UI_Files");

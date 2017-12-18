@@ -125,7 +125,7 @@ namespace MegaApp.ViewModels.UserControls
         // Common
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string CopyOrMoveText => CopyText + "/" + MoveText;
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");

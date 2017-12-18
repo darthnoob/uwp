@@ -87,6 +87,7 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "download":
+                        case "copyormove":
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
@@ -148,6 +149,7 @@ namespace MegaApp.Converters
                                 Visibility.Collapsed : Visibility.Visible;
 
                         case "download":
+                        case "copyormove":
                         case "remove":
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;

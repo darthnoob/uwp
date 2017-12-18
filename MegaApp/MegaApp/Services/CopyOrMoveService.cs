@@ -66,7 +66,7 @@ namespace MegaApp.Services
             }
         }
 
-        static public void ClearSelectedNodes()
+        public static void ClearSelectedNodes()
         {
             foreach (var node in SelectedNodes)
                 if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
@@ -79,7 +79,7 @@ namespace MegaApp.Services
         /// </summary>        
         /// <param name="node">Node to check if is in the selected node list</param>        
         /// <returns>True if is a selected node or false in other case</returns>
-        static public bool IsCopyOrMoveSelectedNode(IMegaNode node, bool setDisplayMode = false)
+        public static bool IsCopyOrMoveSelectedNode(IMegaNode node, bool setDisplayMode = false)
         {
             if (SelectedNodes?.Count > 0)
             {
