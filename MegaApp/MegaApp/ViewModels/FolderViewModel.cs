@@ -1273,7 +1273,7 @@ namespace MegaApp.ViewModels
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
-        public string CopyOrMoveText => CopyText + "/" + MoveText;
+        public string CopyOrMoveText => this is IncomingSharesViewModel ? CopyText : CopyText + "/" + MoveText;
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");

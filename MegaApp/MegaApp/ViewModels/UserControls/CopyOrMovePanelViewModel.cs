@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -16,7 +14,10 @@ namespace MegaApp.ViewModels.UserControls
         public CopyOrMovePanelViewModel()
         {
             CopyOrMoveService.SelectedNodesChanged += (sender, args) =>
+            {
+                OnPropertyChanged(nameof(this.ActiveFolderView));
                 OnPropertyChanged(nameof(this.CopyOrMoveItemsToText));
+            };
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCommand = new RelayCommand(CancelCopyOrMove);

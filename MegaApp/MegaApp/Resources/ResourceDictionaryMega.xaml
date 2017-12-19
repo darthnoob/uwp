@@ -1077,7 +1077,7 @@
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}" />
+                                Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1191,7 +1191,7 @@
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}" />
+                                Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1305,7 +1305,7 @@
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}" />
+                                Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"

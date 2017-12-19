@@ -35,6 +35,9 @@ namespace MegaApp.Services
             }
         }
 
+        public static bool IsMoveAllowed => SelectedNodes.Count > 0 ?
+            SelectedNodes[0] is IncomingSharedFolderNodeViewModel : false;
+
         private static FolderViewModel _cloudDrive;
         public static FolderViewModel CloudDrive
         {

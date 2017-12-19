@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -39,8 +40,11 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                        case "move":
                             return folder.IsCopyOrMoveViewModel ? Visibility.Visible : Visibility.Collapsed;
+
+                        case "move":
+                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsMoveAllowed ? 
+                                Visibility.Visible : Visibility.Collapsed;
 
                         default:
                             return Visibility.Collapsed;
@@ -132,9 +136,13 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                        case "move":
                             return folder.IsCopyOrMoveViewModel && folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
+
+                        case "move":
+                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsMoveAllowed &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                Visibility.Visible : Visibility.Collapsed;
 
                         default:
                             return Visibility.Collapsed;
