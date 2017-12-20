@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -55,63 +56,80 @@ namespace MegaApp.UserControls
 
         private void OnNodeChanged(NodeViewModel node)
         {
-            if (this.ViewModel?.Node is FolderNodeViewModel)
+            if (this.ViewModel == null) return;
+
+            if (this.ViewModel.Node != null)
             {
-                var folderNode = this.ViewModel.Node as FolderNodeViewModel;
-                if (folderNode?.ContactsList?.ItemCollection != null)
+                this.ViewModel.Node.PropertyChanged -= OnNodePropertyChanged;
+
+                if (this.ViewModel.Node is FolderNodeViewModel)
                 {
-                    folderNode.ContactsList.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
-                    folderNode.ContactsList.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+                    var folderNode = this.ViewModel.Node as FolderNodeViewModel;
+                    if (folderNode?.ContactsList?.ItemCollection != null)
+                    {
+                        folderNode.ContactsList.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+                        folderNode.ContactsList.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+                    }
                 }
             }
 
-            if (node is FolderNodeViewModel)
+            if (node != null)
             {
-                var folderNode = node as FolderNodeViewModel;
-                if (folderNode?.ContactsList?.ItemCollection != null)
+                node.PropertyChanged += OnNodePropertyChanged;
+
+                if (node is FolderNodeViewModel)
                 {
-                    folderNode.ContactsList.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
-                    folderNode.ContactsList.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+                    var folderNode = node as FolderNodeViewModel;
+                    if (folderNode?.ContactsList?.ItemCollection != null)
+                    {
+                        folderNode.ContactsList.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+                        folderNode.ContactsList.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+                    }
                 }
             }
 
-            if (this.ViewModel != null)
-                this.ViewModel.Node = node;
+            this.ViewModel.Node = node;
 
             this.LinkWithKeyRadioButton.IsChecked = true;
 
-            if (this.ViewModel?.IsInShare == true)
-            {
-                this.PivotControl.Items.Remove(this.LinkPivot);
-                this.PivotControl.Items.Remove(this.SharePivot);
-                this.PivotControl.SelectedItem = this.DetailsPivot;
-                return;
-            }
-
-            if (this.ViewModel?.IsFolder == false)
-            {
-                var changeSelectedItem = this.PivotControl.SelectedItem != null ?
-                    this.PivotControl.SelectedItem.Equals(this.SharePivot) : true;
-
-                this.PivotControl.Items.Remove(this.SharePivot);
-
-                if (!this.PivotControl.Items.Contains(this.LinkPivot))
-                    this.PivotControl.Items.Add(this.LinkPivot);
-                
-                if (changeSelectedItem == true)
-                    this.PivotControl.SelectedItem = this.DetailsPivot;
-                return;
-            }
-
             if (this.PivotControl.Items != null)
             {
-                if (!this.PivotControl.Items.Contains(this.LinkPivot))
-                    this.PivotControl.Items.Add(this.LinkPivot);
-                if (!this.PivotControl.Items.Contains(this.SharePivot))
-                    this.PivotControl.Items.Add(this.SharePivot);
+                // Node is an InShare
+                if (this.ViewModel.IsInShare)
+                {
+                    this.PivotControl.Items.Remove(this.LinkPivot);
+                    this.PivotControl.Items.Remove(this.SharePivot);
+                    this.PivotControl.SelectedItem = this.DetailsPivot;
+                }
+                // Node is a Folder or OutShare
+                else if (this.ViewModel.IsFolder)
+                {
+                    if(!this.PivotControl.Items.Contains(this.LinkPivot))
+                        this.PivotControl.Items.Add(this.LinkPivot);
+                    if (!this.PivotControl.Items.Contains(this.SharePivot))
+                        this.PivotControl.Items.Add(this.SharePivot);
+                }
+                else // Node is a File
+                {
+                    var changeSelectedItem = this.PivotControl.SelectedItem != null ?
+                    this.PivotControl.SelectedItem.Equals(this.SharePivot) : true;
+
+                    this.PivotControl.Items.Remove(this.SharePivot);
+
+                    if (!this.PivotControl.Items.Contains(this.LinkPivot))
+                        this.PivotControl.Items.Add(this.LinkPivot);
+
+                    if (changeSelectedItem == true)
+                        this.PivotControl.SelectedItem = this.DetailsPivot;
+                }
             }
 
             ChangeCommandBar();
+        }
+
+        private void OnNodePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.ChangeCommandBar();
         }
 
         private void OnEnableLinkSwitchToggled(object sender, RoutedEventArgs e)
@@ -162,8 +180,7 @@ namespace MegaApp.UserControls
 
             this.ViewModel.EnableSharedFolder(toggle.IsOn);
 
-            if (!toggle.IsOn)
-                toggle.IsOn = this.ViewModel.FolderNode.IsOutShare;
+            toggle.IsOn = this.ViewModel.FolderNode.IsOutShare;
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCommandBar();

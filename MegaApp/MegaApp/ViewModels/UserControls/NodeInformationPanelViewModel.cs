@@ -75,6 +75,14 @@ namespace MegaApp.ViewModels.UserControls
                 if (folderNode?.RemoveSharedAccessCommand?.CanExecute(null) == true)
                     folderNode.RemoveSharedAccessCommand.Execute(null);
             }
+            else if (isOn && !folderNode.IsOutShare)
+            {
+                if (folderNode?.ContactsList == null)
+                    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
+
+                if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
+                    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
+            }
         }
 
         #endregion
