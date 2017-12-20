@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using mega;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -11,29 +12,44 @@ namespace MegaApp.ViewModels
     {
         public ContactsManagerViewModel()
         {
-            this.MegaContacts = new ContactsListViewModel();
-            this.MegaContacts.AddContactTapped += OnAddContactTapped;
-
-            this.IncomingContactRequests = new ContactRequestsListViewModel(false);
-
-            this.OutgoingContactRequests = new ContactRequestsListViewModel(true);
-            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
+            
         }
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public void Initialize()
         {
-            this.MegaContacts.Initialize(globalListener);
-            this.IncomingContactRequests.Initialize(globalListener);
-            this.OutgoingContactRequests.Initialize(globalListener);
+            this.MegaContacts.AddContactTapped += OnAddContactTapped;
+            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
+
+            this.MegaContacts.PropertyChanged += this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged += this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged += this.OnOutgoingContactRequestsPropertyChanged;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public void Deinitialize()
         {
-            this.MegaContacts.Deinitialize(globalListener);
-            this.IncomingContactRequests.Deinitialize(globalListener);
-            this.OutgoingContactRequests.Deinitialize(globalListener);
+            this.MegaContacts.AddContactTapped -= OnAddContactTapped;
+            this.OutgoingContactRequests.AddContactTapped -= OnAddContactTapped;
+
+            this.MegaContacts.PropertyChanged -= this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged -= this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged -= this.OnOutgoingContactRequestsPropertyChanged;
+        }
+
+        private void OnMegaContactsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.MegaContacts));
+        }
+
+        private void OnIncomingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.IncomingContactRequests));
+        }
+
+        private void OnOutgoingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.OutgoingContactRequests));
         }
 
         private async void OnAddContactTapped(object sender, EventArgs e)
@@ -79,26 +95,9 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeView, value); }
         }
 
-        private ContactsListViewModel _megaContacts;
-        public ContactsListViewModel MegaContacts
-        {
-            get { return _megaContacts; }
-            set { SetField(ref _megaContacts, value); }
-        }
-
-        private ContactRequestsListViewModel _incomingContactRequests;
-        public ContactRequestsListViewModel IncomingContactRequests
-        {
-            get { return _incomingContactRequests; }
-            set { SetField(ref _incomingContactRequests, value); }
-        }
-
-        private ContactRequestsListViewModel _outgoingContactRequest;
-        public ContactRequestsListViewModel OutgoingContactRequests
-        {
-            get { return _outgoingContactRequest; }
-            set { SetField(ref _outgoingContactRequest, value); }
-        }
+        public ContactsListViewModel MegaContacts => ContactsService.MegaContacts;
+        public ContactRequestsListViewModel IncomingContactRequests => ContactsService.IncomingContactRequests;
+        public ContactRequestsListViewModel OutgoingContactRequests => ContactsService.OutgoingContactRequests;
 
         #endregion
 

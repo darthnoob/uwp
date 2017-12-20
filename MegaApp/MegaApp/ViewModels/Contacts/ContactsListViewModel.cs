@@ -8,7 +8,6 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Contacts
@@ -60,28 +59,26 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public virtual void Initialize()
         {
             this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted += OnOrderInverted;
 
-            this.GetMegaContacts();
-
             if (App.GlobalListener == null) return;
-            globalListener.ContactUpdated += this.OnContactUpdated;
+            App.GlobalListener.ContactUpdated += this.OnContactUpdated;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public virtual void Deinitialize()
         {
             this.ItemCollection.ItemCollectionChanged -= OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted -= OnOrderInverted;
 
-            if (globalListener == null) return;
-            globalListener.ContactUpdated -= this.OnContactUpdated;
+            if (App.GlobalListener == null) return;
+            App.GlobalListener.ContactUpdated -= this.OnContactUpdated;
         }
 
         private void AddContact()

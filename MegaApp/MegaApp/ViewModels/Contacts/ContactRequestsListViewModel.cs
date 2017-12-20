@@ -4,7 +4,6 @@ using System.Linq;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Contacts
@@ -33,28 +32,26 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public void Initialize()
         {
-            this.GetMegaContactRequests();
-
             this.ItemCollection.OrderInverted += OnOrderInverted;
 
-            if (globalListener == null) return;
+            if (App.GlobalListener == null) return;
             if (_isOutgoing)
-                globalListener.OutgoingContactRequestUpdated += OnOutgoingContactRequestUpdated;
+                App.GlobalListener.OutgoingContactRequestUpdated += OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated += OnIncomingContactRequestUpdated;
+                App.GlobalListener.IncomingContactRequestUpdated += OnIncomingContactRequestUpdated;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public void Deinitialize()
         {
             this.ItemCollection.OrderInverted -= OnOrderInverted;
 
-            if (globalListener == null) return;
+            if (App.GlobalListener == null) return;
             if (_isOutgoing)
-                globalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
+                App.GlobalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated -= OnIncomingContactRequestUpdated;
+                App.GlobalListener.IncomingContactRequestUpdated -= OnIncomingContactRequestUpdated;
         }
 
         private void OnIncomingContactRequestUpdated(object sender, EventArgs args) => this.GetMegaContactRequests();
