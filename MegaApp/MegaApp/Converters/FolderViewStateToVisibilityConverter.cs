@@ -166,6 +166,7 @@ namespace MegaApp.Converters
                         case "information":
                         case "getlink":
                         case "rename":
+                        case "share":
                             return folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 

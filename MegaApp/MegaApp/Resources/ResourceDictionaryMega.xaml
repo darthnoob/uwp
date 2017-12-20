@@ -1405,15 +1405,20 @@
                                 Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
-                                Text="{Binding GetLinkText}">
+                                Text="{Binding GetLinkText}"
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
                                     <x:Boolean>True</x:Boolean>
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding ShareCommand}"
+                                Text="{Binding SharingText}"
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                            <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
-                                Visibility="{Binding Parent.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
                                 Text="{Binding CopyOrMoveText}" />

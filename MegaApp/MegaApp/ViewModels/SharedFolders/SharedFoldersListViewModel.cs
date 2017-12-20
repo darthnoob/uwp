@@ -256,6 +256,7 @@ namespace MegaApp.ViewModels.SharedFolders
         public string RemoveSharedAccessText => ResourceService.UiResources.GetString("UI_RemoveSharedAccess");
         public string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
+        public string ManageCollaboratorsText => ResourceService.UiResources.GetString("UI_ManageCollaborators");
 
         private string LeaveText => ResourceService.UiResources.GetString("UI_Leave");
 
@@ -266,6 +267,7 @@ namespace MegaApp.ViewModels.SharedFolders
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
         public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
         public string InformationPathData => ResourceService.VisualResources.GetString("VR_InformationPathData");
+        public string ManageSharePathData => ResourceService.VisualResources.GetString("VR_ManageSharePathData");
 
         #endregion
     }

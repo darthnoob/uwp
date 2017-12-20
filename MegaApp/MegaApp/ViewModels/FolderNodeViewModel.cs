@@ -212,9 +212,10 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string SharingText => this.IsOutShare ?
-            ResourceService.UiResources.GetString("UI_ManageCollaborators") :
+        public string SharingText => this.IsOutShare ? this.ManageCollaboratorsText :
             ResourceService.UiResources.GetString("UI_Sharing");
+
+        private string ManageCollaboratorsText => ResourceService.UiResources.GetString("UI_ManageCollaborators");
 
         private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
         private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();

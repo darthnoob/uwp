@@ -172,6 +172,18 @@
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
+                                    Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                                    Command="{Binding ShareCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='share', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ManageSharePathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                                <AppBarButton
                                     Label="{Binding RenameText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding RenameText, Mode=OneTime}"
                                     Command="{Binding RenameCommand}"
@@ -410,6 +422,18 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Data="{Binding LinkPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                            Command="{Binding ShareCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='share', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ManageSharePathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
