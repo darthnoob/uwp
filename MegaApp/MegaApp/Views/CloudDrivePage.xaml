@@ -255,7 +255,6 @@
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-                    IsLocked="{Binding ActiveFolderView.IsPanelOpen}"
                     SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem
                         x:Name="CloudDrivePivot"

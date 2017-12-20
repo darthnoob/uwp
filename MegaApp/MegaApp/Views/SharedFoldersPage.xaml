@@ -245,7 +245,6 @@
                 <Pivot
                     x:Name="SharedFoldersPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-                    IsLocked="{Binding ActiveView.IsPanelOpen}"
                     SelectionChanged="OnPivotSelectionChanged">
                     <PivotItem
                         x:Name="IncomingSharesPivot"

@@ -49,6 +49,15 @@ namespace MegaApp.Services
                 _cloudDrive.FolderRootNode =
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
                     SdkService.MegaSdk.getRootNode(), _cloudDrive);
+
+                if (App.GlobalListener != null)
+                {
+                    App.GlobalListener.NodeAdded += _cloudDrive.OnNodeAdded;
+                    App.GlobalListener.NodeRemoved += _cloudDrive.OnNodeRemoved;
+                    App.GlobalListener.OutSharedFolderAdded += _cloudDrive.OnNodeAdded;
+                    App.GlobalListener.OutSharedFolderRemoved += _cloudDrive.OnNodeAdded;
+                }
+
                 _cloudDrive.LoadChildNodes();
 
                 return _cloudDrive;
