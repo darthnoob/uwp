@@ -45,7 +45,7 @@ namespace MegaApp.ViewModels
 
             if (megaNode.isInShare()) return;
 
-            OnPropertyChanged(nameof(this.IsOutShare));
+            OnPropertyChanged(nameof(this.IsOutShare), nameof(this.SharingText));
 
             if (megaNode.isOutShare())
             {
@@ -212,7 +212,9 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
-        public string SharingText => ResourceService.UiResources.GetString("UI_Sharing");
+        public string SharingText => this.IsOutShare ?
+            ResourceService.UiResources.GetString("UI_ManageCollaborators") :
+            ResourceService.UiResources.GetString("UI_Sharing");
 
         private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
         private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();
