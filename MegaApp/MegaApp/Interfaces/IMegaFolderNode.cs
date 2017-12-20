@@ -11,6 +11,11 @@ namespace MegaApp.Interfaces
         #region Methods
 
         /// <summary>
+        /// Start and manage sharing of a folder in MEGA
+        /// </summary>
+        void Share();
+
+        /// <summary>
         /// Stop sharing a folder in MEGA
         /// </summary>
         /// <returns>Result of the action</returns>

@@ -16,6 +16,7 @@ namespace MegaApp.ViewModels
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
+            this.ShareCommand = new RelayCommand(Share);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
             Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
@@ -25,6 +26,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
+        public ICommand ShareCommand { get; set; }
         public ICommand RemoveSharedAccessCommand { get; set; }
 
         #endregion
@@ -116,6 +118,20 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Start and manage sharing of a folder in MEGA
+        /// </summary>
+        public void Share()
+        {
+            if (this.Parent == null || !this.Parent.ItemCollection.OnlyOneSelectedItem) return;
+
+            if (this.Parent.ShareCommand.CanExecute(null))
+                this.Parent.ShareCommand.Execute(null);
+        }
+
+        /// <summary>
+        /// Stop sharing a folder in MEGA
+        /// </summary>
         private async void RemoveSharedAccess()
         {
             var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
@@ -138,6 +154,10 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stop sharing a folder in MEGA
+        /// </summary>
+        /// <returns>Result of the action</returns>
         public async Task<bool> RemoveSharedAccessAsync()
         {
             var removeSharedAccess = new ShareRequestListenerAsync();
@@ -191,6 +211,8 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region UiResources
+
+        public string SharingText => ResourceService.UiResources.GetString("UI_Sharing");
 
         private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
         private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();

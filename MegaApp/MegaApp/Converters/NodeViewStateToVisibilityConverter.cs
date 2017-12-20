@@ -44,6 +44,10 @@ namespace MegaApp.Converters
                             return parentFolder.ItemCollection.MoreThanOneSelected ? 
                                 Visibility.Collapsed : Visibility.Visible;
 
+                        case "share":
+                            return parentFolder.ItemCollection.MoreThanOneSelected || !node.IsFolder ?
+                                Visibility.Collapsed : Visibility.Visible;
+
                         default:
                             return Visibility.Collapsed;
                     }

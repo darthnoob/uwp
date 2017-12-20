@@ -1400,4 +1400,8 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
+  <data name="UI_Sharing" xml:space="preserve">
+    <value>Sharing</value>
+    <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
+  </data>
 </root>

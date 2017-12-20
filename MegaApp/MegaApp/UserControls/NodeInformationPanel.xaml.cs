@@ -61,6 +61,7 @@ namespace MegaApp.UserControls
             if (this.ViewModel.Node != null)
             {
                 this.ViewModel.Node.PropertyChanged -= OnNodePropertyChanged;
+                this.ViewModel.Node.Parent.ShareEvent -= OnSharingEvent;
 
                 if (this.ViewModel.Node is FolderNodeViewModel)
                 {
@@ -76,6 +77,7 @@ namespace MegaApp.UserControls
             if (node != null)
             {
                 node.PropertyChanged += OnNodePropertyChanged;
+                node.Parent.ShareEvent += OnSharingEvent;
 
                 if (node is FolderNodeViewModel)
                 {
@@ -125,6 +127,11 @@ namespace MegaApp.UserControls
             }
 
             ChangeCommandBar();
+        }
+
+        private void OnSharingEvent(object sender, EventArgs e)
+        {
+            this.PivotControl.SelectedItem = this.SharePivot;
         }
 
         private void OnNodePropertyChanged(object sender, PropertyChangedEventArgs e)

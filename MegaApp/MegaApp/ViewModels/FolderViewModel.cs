@@ -33,6 +33,8 @@ namespace MegaApp.ViewModels
         public event EventHandler CancelCopyOrMoveEvent;
         public event EventHandler CopyOrMoveEvent;
 
+        public event EventHandler ShareEvent;
+
         public event EventHandler ChildNodesCollectionChanged;
 
         public FolderViewModel(ContainerType containerType, bool isCopyOrMoveViewModel = false)
@@ -63,6 +65,7 @@ namespace MegaApp.ViewModels
             this.UploadCommand = new RelayCommand(Upload);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
+            this.ShareCommand = new RelayCommand(Share);
 
             SetViewDefaults();
 
@@ -82,6 +85,15 @@ namespace MegaApp.ViewModels
                 CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
 
             this.VisiblePanel = PanelType.None;
+        }
+
+        /// <summary>
+        /// Start and manage sharing of a folder in MEGA
+        /// </summary>
+        private void Share()
+        {
+            ShareEvent?.Invoke(this, EventArgs.Empty);
+            this.VisiblePanel = PanelType.Information;
         }
 
         public void OnNodeAdded(object sender, MNode mNode)
@@ -273,6 +285,7 @@ namespace MegaApp.ViewModels
         public ICommand UploadCommand { get; }
         public ICommand OpenInformationPanelCommand { get; set; }
         public ICommand ClosePanelCommand { get; set; }
+        public ICommand ShareCommand { get; set; }
 
         #endregion
 

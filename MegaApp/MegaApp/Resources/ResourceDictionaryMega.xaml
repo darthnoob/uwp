@@ -650,6 +650,10 @@
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding ShareCommand}"
+                                Text="{Binding SharingText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='share', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
@@ -771,6 +775,10 @@
                                     <x:Boolean>True</x:Boolean>
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding ShareCommand}"
+                                Text="{Binding SharingText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='share', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
