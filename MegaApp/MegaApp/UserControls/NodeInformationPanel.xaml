@@ -733,7 +733,7 @@
                         <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.Below)" Value="DateCreatedLabelText" />
                         <Setter Target="SharedToLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
-                        <Setter Target="FolderLocation.(RelativePanel.Below)" Value="SharedToLabelText" />
+                        <Setter Target="FolderLocationLabelText.(RelativePanel.Below)" Value="SharedToLabelText" />
                         <Setter Target="OwnerLabelText.(RelativePanel.Below)" Value="DateModifiedLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.Below)" Value="OwnerLabelText" />
                         <Setter Target="SizeText.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -745,9 +745,9 @@
                         <Setter Target="DateModified.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Contacts.(RelativePanel.Below)" Value="DateModified" />
                         <Setter Target="Contacts.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="FolderLocation.(RelativePanel.Below)" Value="Owner" />
+                        <Setter Target="FolderLocation.(RelativePanel.Below)" Value="Contacts" />
                         <Setter Target="FolderLocation.(RelativePanel.AlignRightWithPanel)" Value="True" />
-                        <Setter Target="Owner.(RelativePanel.Below)" Value="DateModified" />
+                        <Setter Target="Owner.(RelativePanel.Below)" Value="FolderLocation" />
                         <Setter Target="Owner.(RelativePanel.AlignRightWithPanel)" Value="True" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="Owner" />
                         <Setter Target="Permissions.(RelativePanel.AlignRightWithPanel)" Value="True" />
@@ -758,7 +758,6 @@
                         <AdaptiveTrigger MinWindowWidth="360" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
@@ -785,7 +784,7 @@
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignBottomWith)" Value="OwnerLabelText" />
                         <Setter Target="PermissionsLabelText.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="Permissions.(RelativePanel.Below)" Value="PermissionsLabelText" />
-                        <Setter Target="Permissions.(RelativePanel.AlignLeftWith)" Value="ContentsLabelText" />
+                        <Setter Target="Permissions.(RelativePanel.AlignLeftWith)" Value="ContentsOrTypeLabelText" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Wide">
