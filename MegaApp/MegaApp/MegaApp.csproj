@@ -149,6 +149,9 @@
     <Compile Include="UserControls\NodeInformationPanel.xaml.cs">
       <DependentUpon>NodeInformationPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ShareToPanel.xaml.cs">
+      <DependentUpon>ShareToPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
@@ -223,6 +226,7 @@
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\NodeInformationPanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ShareToPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -504,6 +508,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\NodeInformationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShareToPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

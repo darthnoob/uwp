@@ -84,7 +84,8 @@ namespace MegaApp.ViewModels.Contacts
 
         private void AddContact()
         {
-            this.OnAddContactTapped();
+            if (ContactsService.MegaContacts.AddContactCommand.CanExecute(null))
+                ContactsService.MegaContacts.AddContactCommand.Execute(null);
         }
 
         private void AcceptContactRequest()

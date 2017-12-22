@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
@@ -23,6 +24,12 @@ namespace MegaApp.ViewModels.UserControls
         public ICommand LinkWithKeyCommand { get; }
         public ICommand LinkWithoutKeyCommand { get; }
         public ICommand ShareLinkCommand { get; }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler OpenShareToPanelEvent;
 
         #endregion
 
@@ -77,11 +84,13 @@ namespace MegaApp.ViewModels.UserControls
             }
             else if (isOn && !folderNode.IsOutShare)
             {
-                if (folderNode?.ContactsList == null)
-                    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
+                //if (folderNode?.ContactsList == null)
+                //    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
 
-                if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
-                    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
+                //if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
+                //    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
+
+                this.OpenShareToPanelEvent?.Invoke(this, EventArgs.Empty);
             }
         }
 

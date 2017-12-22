@@ -19,9 +19,6 @@ namespace MegaApp.ViewModels
 
         public void Initialize()
         {
-            this.MegaContacts.AddContactTapped += OnAddContactTapped;
-            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
-
             this.MegaContacts.PropertyChanged += this.OnMegaContactsPropertyChanged;
             this.IncomingContactRequests.PropertyChanged += this.OnIncomingContactRequestsPropertyChanged;
             this.OutgoingContactRequests.PropertyChanged += this.OnOutgoingContactRequestsPropertyChanged;
@@ -29,9 +26,6 @@ namespace MegaApp.ViewModels
 
         public void Deinitialize()
         {
-            this.MegaContacts.AddContactTapped -= OnAddContactTapped;
-            this.OutgoingContactRequests.AddContactTapped -= OnAddContactTapped;
-
             this.MegaContacts.PropertyChanged -= this.OnMegaContactsPropertyChanged;
             this.IncomingContactRequests.PropertyChanged -= this.OnIncomingContactRequestsPropertyChanged;
             this.OutgoingContactRequests.PropertyChanged -= this.OnOutgoingContactRequestsPropertyChanged;

@@ -8,7 +8,9 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
+using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
 {
@@ -81,9 +83,36 @@ namespace MegaApp.ViewModels.Contacts
             App.GlobalListener.ContactUpdated -= this.OnContactUpdated;
         }
 
-        private void AddContact()
+        private async void AddContact()
         {
-            this.OnAddContactTapped();
+            var addContactDialog = new AddContactDialog();
+            await addContactDialog.ShowAsync();
+
+            if (!addContactDialog.DialogResult) return;
+
+            var inviteContact = new InviteContactRequestListenerAsync();
+            var result = await inviteContact.ExecuteAsync(() =>
+                SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
+                    MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
+
+            switch (result)
+            {
+                case Enums.InviteContactResult.Success:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
+                        addContactDialog.ContactEmail));
+                    break;
+
+                case Enums.InviteContactResult.AlreadyExists:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
+                    break;
+
+                case Enums.InviteContactResult.Unknown:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
+                    break;
+            }
         }
 
         private async void RemoveContact()

@@ -1404,8 +1404,20 @@ Keep the {0} code because are for include the total number of folders in runtime
     <value>Sharing</value>
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_AllContacts" xml:space="preserve">
+    <value>All contacts</value>
+    <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmShare" xml:space="preserve">
+    <value>Confirm share</value>
+    <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
   <data name="UI_ManageCollaborators" xml:space="preserve">
     <value>Manage collaborators</value>
     <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ShareTo" xml:space="preserve">
+    <value>Share to</value>
+    <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

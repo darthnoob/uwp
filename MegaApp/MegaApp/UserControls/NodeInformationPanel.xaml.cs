@@ -19,9 +19,42 @@ namespace MegaApp.UserControls
 
     public sealed partial class NodeInformationPanel : BaseNodeInformationPanel
     {
+        private const double ShareToPanelMinWidth = 432;
+
         public NodeInformationPanel()
         {
             this.InitializeComponent();
+
+            this.ViewModel.OpenShareToPanelEvent += (sender, args) =>
+                this.SplitView.IsPaneOpen = true;
+
+            this.ShareToPanelControl.ViewModel.ClosePanelEvent += (sender, args) =>
+                this.SplitView.IsPaneOpen = false;
+
+            this.SplitView.PaneClosed += (sender, args) =>
+                this.ShareToPanelControl.ViewModel.MegaContacts.ItemCollection.ClearSelection();
+
+            this.SplitView.RegisterPropertyChangedCallback(
+                SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
+        }
+
+        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        {
+            if (this.SplitView.IsPaneOpen)
+            {
+                if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop || this.SplitView.ActualWidth < 600)
+                {
+                    this.SplitView.OpenPaneLength = this.SplitView.ActualWidth;
+                    AppService.SetAppViewBackButtonVisibility(true);
+                    return;
+                }
+
+                this.SplitView.OpenPaneLength = ShareToPanelMinWidth;
+                AppService.SetAppViewBackButtonVisibility(true);
+                return;
+            }
+
+            AppService.SetAppViewBackButtonVisibility(false);
         }
 
         /// <summary>

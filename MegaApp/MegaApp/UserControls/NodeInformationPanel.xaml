@@ -99,34 +99,486 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    
-    <Grid DataContext="{x:Bind ViewModel}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+    <SplitView
+        x:Name="SplitView"
+        DataContext="{x:Bind ViewModel}"
+        DisplayMode="Overlay"
+        IsPaneOpen="False"
+        PanePlacement="Right">
+        <SplitView.Pane>
+            <Grid>
+                <userControls:ShareToPanel
+                    x:Name="ShareToPanelControl"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Node="{x:Bind ViewModel.Node}"/>
+            </Grid>
+        </SplitView.Pane>
 
-            <TextBlock
-                x:Name="SectionNameText"
-                Grid.Column="0"
-                Margin="24,14,0,0"
-                FontSize="12"
-                Foreground="{StaticResource MegaRedColorBrush}"
-                Text="{x:Bind ViewModel.InformationText, Mode=OneTime}" />
+        <Grid DataContext="{x:Bind ViewModel}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-            <Grid x:Name="TopCommandBar" Grid.Column="1">
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    x:Name="SectionNameText"
+                    Grid.Column="0"
+                    Margin="24,14,0,0"
+                    FontSize="12"
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Text="{x:Bind ViewModel.InformationText, Mode=OneTime}" />
+
+                <Grid x:Name="TopCommandBar" Grid.Column="1">
+                    <CommandBar
+                        x:Name="MainTopCommandBar"
+                        Background="Transparent"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Style="{StaticResource MegaCommandBarStyle}">
+                        <AppBarButton
+                            Command="{Binding Node.PreviewCommand}"
+                            Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                            Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding Node.DownloadCommand}"
+                            Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding Node.CopyOrMoveCommand}"
+                            Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding Node.RenameCommand}"
+                            Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding Node.RemoveCommand}"
+                            Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
+                            Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.RubbishBinPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding SharedFolderNode.LeaveShareCommand}"
+                            Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
+                            Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+
+                    <CommandBar
+                        x:Name="SharePivotTopCommandBar"
+                        Background="Transparent"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Style="{StaticResource MegaCommandBarStyle}">
+                        <AppBarButton
+                            Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
+                            Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
+                            Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8FA;" />
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
+                            Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
+                            Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.ShareIconPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
+                            Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
+                            Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Viewbox MaxHeight="16" MaxWidth="16">
+                                <FontIcon Glyph="&#xE8F8;" />
+                            </Viewbox>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding FolderNode.ContactsList.ItemCollection.MultiSelectCommand}"
+                            Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
+                            Visibility="{Binding FolderNode.ContactsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.MultiSelectPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+            </Grid>
+
+            <Pivot
+                x:Name="PivotControl"
+                Grid.Row="1"
+                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
+                Margin="12,0"
+                SelectionChanged="OnPivotSelectionChanged">
+                <PivotItem x:Name="DetailsPivot" Header="{x:Bind ViewModel.DetailsText}">
+                    <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ContentControl
+                                x:Name="DetailsPivotHeader"
+                                Grid.Row="0"
+                                DataContext="{Binding Node}"
+                                ContentTemplate="{StaticResource NodeInformationPanelHeader}"/>
+                            <RelativePanel Grid.Row="1" Margin="24,0,24,12">
+                                <TextBlock
+                                    x:Name="SizeLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.SizeLabelText, Mode=OneTime}" />
+                                <TextBlock x:Name="SizeText" Text="{x:Bind ViewModel.Node.SizeText, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="ContentsOrTypeLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.ContentsOrTypeLabelText, Mode=OneWay}" />
+                                <TextBlock x:Name="ContentsOrTypeText" Text="{x:Bind ViewModel.ContentsOrTypeText, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="DateCreatedLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.DateCreatedLabelText, Mode=OneWay}" />
+                                <TextBlock x:Name="DateCreated" Text="{x:Bind ViewModel.Node.CreationTime, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="DateModifiedLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.DateModifiedLabelText, Mode=OneWay}" />
+                                <TextBlock x:Name="DateModified" Text="{x:Bind ViewModel.Node.ModificationTime, Mode=OneWay}" />
+                                <TextBlock
+                                    x:Name="SharedToLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.SharedToLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="Contacts"
+                                    Text="{x:Bind ViewModel.SharedFolderNode.ContactsText, Mode=OneWay}"
+                                    Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="FolderLocationLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.FolderLocationLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="FolderLocation"
+                                    Text="{x:Bind ViewModel.SharedFolderNode.FolderLocation, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
+                                    Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="OwnerLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.OwnerLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="Owner"
+                                    Text="{x:Bind ViewModel.SharedFolderNode.Owner, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
+                                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <TextBlock
+                                    x:Name="PermissionsLabelText"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.PermissionsLabelText, Mode=OneTime}"
+                                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                <Grid 
+                                    x:Name="Permissions"
+                                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Path
+                                        Grid.Column="0"
+                                        Height="12" Width="12"
+                                        Margin="4,0,12,0"
+                                        Data="{x:Bind ViewModel.Node.AccessLevel.AccessLevelPathData, Mode=OneWay}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Stretch="Uniform" >
+                                        <Path.Fill>
+                                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                                        </Path.Fill>
+                                    </Path>
+                                    <TextBlock 
+                                        Grid.Column="1" 
+                                        Text="{x:Bind ViewModel.Node.AccessLevel.AccessLevelText, Mode=OneWay}" />
+                                </Grid>
+                            </RelativePanel>
+                        </Grid>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem 
+                    x:Name="LinkPivot" 
+                    Header="{x:Bind ViewModel.LinkText}">
+                    <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
+                        <Grid Margin="0,0,0,48">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentControl
+                                Grid.Row="0"
+                                DataContext="{Binding Node}"
+                                ContentTemplate="{StaticResource NoPreviewHeader}"/>
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="24,0"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="16"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.EnableLinkText, Mode=OneTime}" />
+                                <ToggleSwitch
+                                    x:Name="EnableLinkSwitch"
+                                    Margin="0,12,0,0"
+                                    IsOn="{x:Bind ViewModel.Node.IsExported, Mode=TwoWay}"
+                                    Toggled="OnEnableLinkSwitchToggled"/>
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="2"
+                                Margin="24,12,24,0"
+                                Orientation="Vertical"
+                                Visibility="{Binding Node.IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <RadioButton
+                                    x:Name="LinkWithoutKeyRadioButton"
+                                    Command="{x:Bind ViewModel.LinkWithoutKeyCommand}"
+                                    Content="{x:Bind ViewModel.LinkWithoutKeyLabelText, Mode=OneTime}"
+                                    VerticalAlignment="Center"/>
+                                <RadioButton
+                                    x:Name="DecryptionKeyRadioButton"
+                                    Command="{x:Bind ViewModel.DecryptionKeyCommand}"
+                                    Content="{x:Bind ViewModel.DecryptionKeyLabelText, Mode=OneTime}"
+                                    VerticalAlignment="Center"/>
+                                <RadioButton
+                                    x:Name="LinkWithKeyRadioButton"
+                                    Command="{x:Bind ViewModel.LinkWithKeyCommand}"
+                                    Content="{x:Bind ViewModel.LinkWithKeyLabelText, Mode=OneTime}"
+                                    IsChecked="True"
+                                    VerticalAlignment="Center"/>
+                                <TextBlock
+                                    Margin="0,20,0,0"
+                                    FontSize="16"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.SetLinkExpirationDateText, Mode=OneTime}" />
+                                <StackPanel Margin="0,18" Orientation="Horizontal">
+                                    <ToggleSwitch
+                                        x:Name="EnableLinkExpirationDateSwitch"
+                                        IsEnabled="{x:Bind ViewModel.AccountDetails.IsProAccount}"
+                                        IsOn="{Binding IsLinkWithExpirationTime, Mode=OneWay}"
+                                        Toggled="OnSetExpirationDateSwitchToggled"/>
+                                    <CalendarDatePicker
+                                        x:Name="ExpirationDateCalendarDatePicker"
+                                        DateChanged="OnExpirationDateCalendarDataPickerDateChanged"
+                                        DateFormat="{}{day.integer(2)}‎/‎{month.integer(2)}‎/‎{year.full}"
+                                        IsEnabled="False"
+                                        Opened="OnExpirationDateCalendarDataPickerOpened"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <Grid
+                                Grid.Row="3"
+                                Margin="24,20,24,0"
+                                Visibility="{Binding Node.ExportLink, Converter={StaticResource StringVisibilityConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Margin="0,0,0,12"
+                                    Background="{ThemeResource MegaAppBackgroundBrush}"
+                                    BorderThickness="1">
+                                    <Border.BorderBrush>
+                                        <SolidColorBrush Opacity="0.4" Color="{ThemeResource MegaAppForeground}" />
+                                    </Border.BorderBrush>
+                                    <StackPanel Margin="12">
+                                        <TextBlock 
+                                            Foreground="{ThemeResource MegaRedColorBrush}" 
+                                            Text="{x:Bind ViewModel.ExportLinkBorderTitle, Mode=OneWay}" />
+                                        <TextBlock 
+                                            Text="{x:Bind ViewModel.Node.ExportLink, Mode=OneWay}" 
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Border>
+                                <Button
+                                    x:Name="CopyLinkButton"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="0,0,6,0"
+                                    Command="{x:Bind ViewModel.CopyLinkCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center">
+                                    <TextBlock Text="{x:Bind ViewModel.CopyText, Mode=OneTime}" />
+                                </Button>
+                                <Button
+                                    x:Name="ShareLinkButton"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="6,0,0,0"
+                                    Command="{x:Bind ViewModel.ShareLinkCommand}"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Center">
+                                    <TextBlock Text="{x:Bind ViewModel.ShareText, Mode=OneTime}" />
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </PivotItem>
+                <PivotItem
+                    x:Name="SharePivot" 
+                    Header="{x:Bind ViewModel.ShareText}">
+                    <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ContentControl
+                                Grid.Row="0"
+                                DataContext="{Binding Node}"
+                                ContentTemplate="{StaticResource NoPreviewHeader}"/>
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="24,0"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="16"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.EnableSharedFolderText, Mode=OneTime}" />
+                                <ToggleSwitch
+                                    x:Name="EnableSharedFolderSwitch"
+                                    Margin="0,12,0,0"
+                                    IsOn="{x:Bind ViewModel.FolderNode.IsOutShare, Mode=OneWay}"
+                                    Toggled="OnEnableSharedFolderSwitchToggled"/>
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="2"
+                                Margin="24,32,24,0"
+                                Orientation="Vertical"
+                                Visibility="{Binding FolderNode.IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <TextBlock
+                                    FontSize="16"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.SharedToText, Mode=OneTime}" />
+                                <ListView
+                                    x:Name="ListViewContacts"
+                                    Margin="-12,20,-12,0"
+                                    DataContext="{Binding FolderNode.ContactsList}"
+                                    Background="Transparent"
+                                    IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
+                                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                                    ItemTemplate="{StaticResource OutgoingSharedFolderContactItem}"
+                                    ItemsSource="{Binding ItemCollection.Items}"
+                                    RightTapped="OnRightItemTapped">
+                                    <interactivity:Interaction.Behaviors>
+                                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                                            <core:EventTriggerBehavior.Actions>
+                                                <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
+                                            </core:EventTriggerBehavior.Actions>
+                                        </core:EventTriggerBehavior>
+                                    </interactivity:Interaction.Behaviors>
+                                </ListView>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </PivotItem>
+            </Pivot>
+
+            <Grid x:Name="BottomCommandBar" Grid.Row="2">
                 <CommandBar
-                    x:Name="MainTopCommandBar"
-                    Background="Transparent"
-                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    x:Name="MainBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton
+                        Command="{Binding Node.DownloadCommand}"
+                        Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon 
+                                Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <AppBarButton
                         Command="{Binding Node.PreviewCommand}"
                         Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
@@ -141,39 +593,16 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding Node.DownloadCommand}"
-                        Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
-                        <AppBarButton.Icon>
-                            <PathIcon 
-                                Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
                         Command="{Binding Node.CopyOrMoveCommand}"
                         Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}">
+                        ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
+                        Visibility="{Binding Node.IsImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Command="{Binding Node.RenameCommand}"
-                        Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -202,12 +631,35 @@
                                 VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
+                    <CommandBar.SecondaryCommands>
+                        <AppBarButton
+                            Command="{Binding Node.RenameCommand}"
+                            Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Command="{Binding Node.CopyOrMoveCommand}"
+                            Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
+                            Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar.SecondaryCommands>
                 </CommandBar>
 
                 <CommandBar
-                    x:Name="SharePivotTopCommandBar"
-                    Background="Transparent"
-                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    x:Name="SharePivotBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
@@ -246,8 +698,7 @@
                         Command="{Binding FolderNode.ContactsList.ItemCollection.MultiSelectCommand}"
                         Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
-                        Visibility="{Binding FolderNode.ContactsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                        ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -257,440 +708,6 @@
                     </AppBarButton>
                 </CommandBar>
             </Grid>
-        </Grid>
-
-        <Pivot
-            x:Name="PivotControl"
-            Grid.Row="1"
-            HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
-            Margin="12,0"
-            SelectionChanged="OnPivotSelectionChanged">
-            <PivotItem x:Name="DetailsPivot" Header="{x:Bind ViewModel.DetailsText}">
-                <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <ContentControl
-                            x:Name="DetailsPivotHeader"
-                            Grid.Row="0"
-                            DataContext="{Binding Node}"
-                            ContentTemplate="{StaticResource NodeInformationPanelHeader}"/>
-                        <RelativePanel Grid.Row="1" Margin="24,0,24,12">
-                            <TextBlock
-                                x:Name="SizeLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.SizeLabelText, Mode=OneTime}" />
-                            <TextBlock x:Name="SizeText" Text="{x:Bind ViewModel.Node.SizeText, Mode=OneWay}" />
-                            <TextBlock
-                                x:Name="ContentsOrTypeLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.ContentsOrTypeLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="ContentsOrTypeText" Text="{x:Bind ViewModel.ContentsOrTypeText, Mode=OneWay}" />
-                            <TextBlock
-                                x:Name="DateCreatedLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.DateCreatedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="DateCreated" Text="{x:Bind ViewModel.Node.CreationTime, Mode=OneWay}" />
-                            <TextBlock
-                                x:Name="DateModifiedLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.DateModifiedLabelText, Mode=OneWay}" />
-                            <TextBlock x:Name="DateModified" Text="{x:Bind ViewModel.Node.ModificationTime, Mode=OneWay}" />
-                            <TextBlock
-                                x:Name="SharedToLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.SharedToLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="Contacts"
-                                Text="{x:Bind ViewModel.SharedFolderNode.ContactsText, Mode=OneWay}"
-                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="FolderLocationLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.FolderLocationLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="FolderLocation"
-                                Text="{x:Bind ViewModel.SharedFolderNode.FolderLocation, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                Visibility="{Binding IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="OwnerLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.OwnerLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="Owner"
-                                Text="{x:Bind ViewModel.SharedFolderNode.Owner, Mode=OneWay}"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <TextBlock
-                                x:Name="PermissionsLabelText"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.PermissionsLabelText, Mode=OneTime}"
-                                Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <Grid 
-                                x:Name="Permissions"
-                                Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Path
-                                    Grid.Column="0"
-                                    Height="12" Width="12"
-                                    Margin="4,0,12,0"
-                                    Data="{x:Bind ViewModel.Node.AccessLevel.AccessLevelPathData, Mode=OneWay}"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Stretch="Uniform" >
-                                    <Path.Fill>
-                                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                                    </Path.Fill>
-                                </Path>
-                                <TextBlock 
-                                    Grid.Column="1" 
-                                    Text="{x:Bind ViewModel.Node.AccessLevel.AccessLevelText, Mode=OneWay}" />
-                            </Grid>
-                        </RelativePanel>
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-            <PivotItem 
-                x:Name="LinkPivot" 
-                Header="{x:Bind ViewModel.LinkText}">
-                <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
-                    <Grid Margin="0,0,0,48">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ContentControl
-                            Grid.Row="0"
-                            DataContext="{Binding Node}"
-                            ContentTemplate="{StaticResource NoPreviewHeader}"/>
-                        <StackPanel
-                            Grid.Row="1"
-                            Margin="24,0"
-                            Orientation="Vertical">
-                            <TextBlock
-                                FontSize="16"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.EnableLinkText, Mode=OneTime}" />
-                            <ToggleSwitch
-                                x:Name="EnableLinkSwitch"
-                                Margin="0,12,0,0"
-                                IsOn="{x:Bind ViewModel.Node.IsExported, Mode=TwoWay}"
-                                Toggled="OnEnableLinkSwitchToggled"/>
-                        </StackPanel>
-                        <StackPanel
-                            Grid.Row="2"
-                            Margin="24,12,24,0"
-                            Orientation="Vertical"
-                            Visibility="{Binding Node.IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <RadioButton
-                                x:Name="LinkWithoutKeyRadioButton"
-                                Command="{x:Bind ViewModel.LinkWithoutKeyCommand}"
-                                Content="{x:Bind ViewModel.LinkWithoutKeyLabelText, Mode=OneTime}"
-                                VerticalAlignment="Center"/>
-                            <RadioButton
-                                x:Name="DecryptionKeyRadioButton"
-                                Command="{x:Bind ViewModel.DecryptionKeyCommand}"
-                                Content="{x:Bind ViewModel.DecryptionKeyLabelText, Mode=OneTime}"
-                                VerticalAlignment="Center"/>
-                            <RadioButton
-                                x:Name="LinkWithKeyRadioButton"
-                                Command="{x:Bind ViewModel.LinkWithKeyCommand}"
-                                Content="{x:Bind ViewModel.LinkWithKeyLabelText, Mode=OneTime}"
-                                IsChecked="True"
-                                VerticalAlignment="Center"/>
-                            <TextBlock
-                                Margin="0,20,0,0"
-                                FontSize="16"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.SetLinkExpirationDateText, Mode=OneTime}" />
-                            <StackPanel Margin="0,18" Orientation="Horizontal">
-                                <ToggleSwitch
-                                    x:Name="EnableLinkExpirationDateSwitch"
-                                    IsEnabled="{x:Bind ViewModel.AccountDetails.IsProAccount}"
-                                    IsOn="{Binding IsLinkWithExpirationTime, Mode=OneWay}"
-                                    Toggled="OnSetExpirationDateSwitchToggled"/>
-                                <CalendarDatePicker
-                                    x:Name="ExpirationDateCalendarDatePicker"
-                                    DateChanged="OnExpirationDateCalendarDataPickerDateChanged"
-                                    DateFormat="{}{day.integer(2)}‎/‎{month.integer(2)}‎/‎{year.full}"
-                                    IsEnabled="False"
-                                    Opened="OnExpirationDateCalendarDataPickerOpened"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Grid
-                            Grid.Row="3"
-                            Margin="24,20,24,0"
-                            Visibility="{Binding Node.ExportLink, Converter={StaticResource StringVisibilityConverter}}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Border
-                                Grid.Row="0"
-                                Grid.Column="0"
-                                Grid.ColumnSpan="2"
-                                Margin="0,0,0,12"
-                                Background="{ThemeResource MegaAppBackgroundBrush}"
-                                BorderThickness="1">
-                                <Border.BorderBrush>
-                                    <SolidColorBrush Opacity="0.4" Color="{ThemeResource MegaAppForeground}" />
-                                </Border.BorderBrush>
-                                <StackPanel Margin="12">
-                                    <TextBlock 
-                                        Foreground="{ThemeResource MegaRedColorBrush}" 
-                                        Text="{x:Bind ViewModel.ExportLinkBorderTitle, Mode=OneWay}" />
-                                    <TextBlock 
-                                        Text="{x:Bind ViewModel.Node.ExportLink, Mode=OneWay}" 
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
-                            </Border>
-                            <Button
-                                x:Name="CopyLinkButton"
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="0,0,6,0"
-                                Command="{x:Bind ViewModel.CopyLinkCommand}"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center">
-                                <TextBlock Text="{x:Bind ViewModel.CopyText, Mode=OneTime}" />
-                            </Button>
-                            <Button
-                                x:Name="ShareLinkButton"
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Margin="6,0,0,0"
-                                Command="{x:Bind ViewModel.ShareLinkCommand}"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center">
-                                <TextBlock Text="{x:Bind ViewModel.ShareText, Mode=OneTime}" />
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-            <PivotItem
-                x:Name="SharePivot" 
-                Header="{x:Bind ViewModel.ShareText}">
-                <ScrollViewer Margin="-24,0" VerticalScrollBarVisibility="Auto">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />                            
-                        </Grid.RowDefinitions>
-                        <ContentControl
-                            Grid.Row="0"
-                            DataContext="{Binding Node}"
-                            ContentTemplate="{StaticResource NoPreviewHeader}"/>
-                        <StackPanel
-                            Grid.Row="1"
-                            Margin="24,0"
-                            Orientation="Vertical">
-                            <TextBlock
-                                FontSize="16"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.EnableSharedFolderText, Mode=OneTime}" />
-                            <ToggleSwitch
-                                x:Name="EnableSharedFolderSwitch"
-                                Margin="0,12,0,0"
-                                IsOn="{x:Bind ViewModel.FolderNode.IsOutShare, Mode=OneWay}"
-                                Toggled="OnEnableSharedFolderSwitchToggled"/>
-                        </StackPanel>
-                        <StackPanel
-                            Grid.Row="2"
-                            Margin="24,32,24,0"
-                            Orientation="Vertical"
-                            Visibility="{Binding FolderNode.IsOutShare, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <TextBlock
-                                FontSize="16"
-                                Opacity="0.4"
-                                Text="{x:Bind ViewModel.SharedToText, Mode=OneTime}" />
-                            <ListView
-                                x:Name="ListViewContacts"
-                                Margin="-12,20,-12,0"
-                                DataContext="{Binding FolderNode.ContactsList}"
-                                Background="Transparent"
-                                IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
-                                ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
-                                ItemTemplate="{StaticResource OutgoingSharedFolderContactItem}"
-                                ItemsSource="{Binding ItemCollection.Items}"
-                                RightTapped="OnRightItemTapped">
-                                <interactivity:Interaction.Behaviors>
-                                    <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                        <core:EventTriggerBehavior.Actions>
-                                            <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
-                                        </core:EventTriggerBehavior.Actions>
-                                    </core:EventTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                            </ListView>
-                        </StackPanel>                        
-                    </Grid>
-                </ScrollViewer>
-            </PivotItem>
-        </Pivot>
-
-        <Grid x:Name="BottomCommandBar" Grid.Row="2">
-            <CommandBar
-                x:Name="MainBottomCommandBar"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton
-                    Command="{Binding Node.DownloadCommand}"
-                    Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding Node.PreviewCommand}"
-                    Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
-                    Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding Node.CopyOrMoveCommand}"
-                    Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
-                    Visibility="{Binding Node.IsImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding Node.RemoveCommand}"
-                    Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
-                    Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.RubbishBinPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding SharedFolderNode.LeaveShareCommand}"
-                    Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
-                    Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <CommandBar.SecondaryCommands>
-                    <AppBarButton
-                        Command="{Binding Node.RenameCommand}"
-                        Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
-                        Command="{Binding Node.CopyOrMoveCommand}"
-                        Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
-                        Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <AppBarButton.Icon>
-                            <PathIcon
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </CommandBar.SecondaryCommands>
-            </CommandBar>
-
-            <CommandBar
-                x:Name="SharePivotBottomCommandBar"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton
-                    Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
-                    Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
-                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="16" MaxWidth="16">
-                        <FontIcon Glyph="&#xE8FA;" />
-                    </Viewbox>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
-                    Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
-                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.ShareIconPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
-                    Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
-                    Visibility="{Binding FolderNode.ContactsList.ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="16" MaxWidth="16">
-                        <FontIcon Glyph="&#xE8F8;" />
-                    </Viewbox>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{Binding FolderNode.ContactsList.ItemCollection.MultiSelectCommand}"
-                    Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"                        
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.MultiSelectPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar>
         </Grid>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -823,5 +840,5 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-    </Grid>
+    </SplitView>
 </userControls:BaseNodeInformationPanel>

@@ -12,23 +12,6 @@ namespace MegaApp.ViewModels.Contacts
             this._isOutgoing = isOutgoing;
         }
 
-        #region Events
-
-        /// <summary>
-        /// Event triggered when the add contact menu option is tapped
-        /// </summary>
-        public event EventHandler AddContactTapped;
-
-        /// <summary>
-        /// Event invocator method called when the add contact menu option is tapped
-        /// </summary>
-        protected virtual void OnAddContactTapped()
-        {
-            this.AddContactTapped?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
         #region Commands
         
         public ICommand AddContactCommand { get; set; }
