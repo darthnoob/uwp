@@ -1,108 +1,81 @@
 ﻿<views:BasePreviewImagePage
     x:Class="MegaApp.Views.PreviewImagePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:WindowsStateTriggers"
-    xmlns:views="using:MegaApp.Views"
-    xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:userControls="using:MegaApp.UserControls"
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModels:PreviewImageViewModel}">
+    xmlns:viewModels="using:MegaApp.ViewModels"
+    xmlns:views="using:MegaApp.Views"
+    d:DataContext="{d:DesignInstance viewModels:PreviewImageViewModel}"
+    mc:Ignorable="d">
 
     <Page.TopAppBar>
         <CommandBar
             Name="TopCommandBar"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-            extensions:CommandBarExtensions.HideMoreButton="True">
+            extensions:CommandBarExtensions.HideMoreButton="True"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <CommandBar.Content>
-                <TextBlock 
-                    Margin="12"
-                    Text="{Binding SelectedPreview.Name}"/>
+                <TextBlock Margin="12" Text="{Binding SelectedPreview.Name}" />
             </CommandBar.Content>
 
             <AppBarButton
+                Command="{Binding DownloadCommand}"
+                Label="{Binding DownloadText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding DownloadText}" 
-                ToolTipService.ToolTip="{Binding DownloadText}"
-                Command="{Binding DownloadCommand}">
+                ToolTipService.ToolTip="{Binding DownloadText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding DownloadPathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
+                Command="{Binding GetLinkCommand}"
+                Label="{Binding GetLinkText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding GetLinkText}" 
-                ToolTipService.ToolTip="{Binding GetLinkText}"
-                Command="{Binding GetLinkCommand}">
+                ToolTipService.ToolTip="{Binding GetLinkText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding LinkPathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding LinkPathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
+                Command="{Binding RenameCommand}"
+                Label="{Binding RenameText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding RenameText}" 
-                ToolTipService.ToolTip="{Binding RenameText}"
-                Command="{Binding RenameCommand}">
+                ToolTipService.ToolTip="{Binding RenameText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding RenamePathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding RenamePathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
+                Command="{Binding RemoveCommand}"
+                Label="{Binding RemoveText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding RemoveText}" 
-                ToolTipService.ToolTip="{Binding RemoveText}"
-                Command="{Binding RemoveCommand}">
+                ToolTipService.ToolTip="{Binding RemoveText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding RubbishBinPathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
         </CommandBar>
     </Page.TopAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState x:Name="Desktop">
-                    <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ImageName.Visibility" Value="Collapsed"/>
-                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="Mobile">
-                    <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
-                    </VisualState.StateTriggers>
-                    <VisualState.Setters>
-                        <Setter Target="ImageName.Visibility" Value="Visible"/>
-                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
-        
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock
@@ -112,7 +85,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Text="{Binding SelectedPreview.Name}"
-            TextWrapping="Wrap"/>
+            TextWrapping="Wrap" />
 
         <FlipView
             x:Name="FlipView"
@@ -126,111 +99,140 @@
                 <DataTemplate>
                     <ScrollViewer
                         x:Name="ScrollViewer"
-                        MinZoomFactor="1"
-                        MaxZoomFactor="4"
-                        ZoomMode="Enabled"
                         HorizontalScrollBarVisibility="Hidden"
+                        ManipulationDelta="OnImageManipulationDelta"
+                        MaxZoomFactor="4"
+                        MinZoomFactor="1"
                         VerticalScrollBarVisibility="Hidden"
-                        ManipulationDelta="OnImageManipulationDelta">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup>
-                                <VisualState x:Name="Desktop">
-                                    <VisualState.StateTriggers>
-                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
-                                    </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="ScrollViewer.Margin" Value="36,0"/>
-                                        <Setter Target="ScrollViewer.ManipulationMode" Value="TranslateX, TranslateY"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                                <VisualState x:Name="Mobile">
-                                    <VisualState.StateTriggers>
-                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
-                                    </VisualState.StateTriggers>
-                                    <VisualState.Setters>
-                                        <Setter Target="ScrollViewer.Margin" Value="0,0"/>
-                                    </VisualState.Setters>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        
+                        ZoomMode="Enabled">
                         <Image
                             MaxWidth="{Binding Path=ViewportWidth, ElementName=ScrollViewer}"
                             MaxHeight="{Binding Path=ViewportHeight, ElementName=ScrollViewer}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Stretch="Uniform"
-                            DoubleTapped="OnImageDoubleTapped">
+                            DoubleTapped="OnImageDoubleTapped"
+                            Stretch="Uniform">
                             <Image.Source>
-                                <BitmapImage UriSource="{Binding PreviewImageUri}"/>
+                                <BitmapImage UriSource="{Binding PreviewImageUri}" />
                             </Image.Source>
                         </Image>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Desktop">
+                                    <VisualState.StateTriggers>
+                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="ScrollViewer.Margin" Value="36,0" />
+                                        <Setter Target="ScrollViewer.ManipulationMode" Value="TranslateX, TranslateY" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="Mobile">
+                                    <VisualState.StateTriggers>
+                                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                                    </VisualState.StateTriggers>
+                                    <VisualState.Setters>
+                                        <Setter Target="ScrollViewer.Margin" Value="0,0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </ScrollViewer>
                 </DataTemplate>
             </FlipView.ItemTemplate>
         </FlipView>
 
-        <userControls:ProgressPanel
+        <userControls:ActivityIndicator
+            x:Name="ActivityIndicator"
             Grid.Row="1"
-            x:Name="ProgressPanelControl"
-            Background="{StaticResource MegaAppBackgroundBrush}"
-            Foreground="{StaticResource MegaAppForegroundBrush}"
-            HorizontalAlignment="Center"
             VerticalAlignment="Center"
-            HeaderText="{Binding Path=ProgressLoadingPreviewText}"
-            IsVisible="{Binding IsBusy}"/>
+            HorizontalContentAlignment="Center"
+            Foreground="{StaticResource MegaAppForegroundBrush}"
+            HeaderText="{Binding ProgressHeaderText}"
+            IsVisible="{Binding SelectedPreview.IsBusy}"
+            ProgressText="{Binding ProgressText}">
+            <userControls:ActivityIndicator.SubHeaderForeground>
+                <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.SubHeaderForeground>
+            <userControls:ActivityIndicator.ProgressTextForeground>
+                <SolidColorBrush Opacity="0.5" Color="{ThemeResource MegaAppForeground}" />
+            </userControls:ActivityIndicator.ProgressTextForeground>
+        </userControls:ActivityIndicator>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ImageName.Visibility" Value="Collapsed" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ImageName.Visibility" Value="Visible" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
-    
+
     <Page.BottomAppBar>
-        <CommandBar
-            Name="BottomCommandBar"
-            Style="{StaticResource MegaCommandBarStyle}">
+        <CommandBar Name="BottomCommandBar" Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
+                Command="{Binding DownloadCommand}"
+                Label="{Binding DownloadText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding DownloadText}" 
-                ToolTipService.ToolTip="{Binding DownloadText}"
-                Command="{Binding DownloadCommand}">
+                ToolTipService.ToolTip="{Binding DownloadText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding DownloadPathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding DownloadPathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
+                Command="{Binding GetLinkCommand}"
+                Label="{Binding GetLinkText}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
-                Label="{Binding GetLinkText}" 
-                ToolTipService.ToolTip="{Binding GetLinkText}"
-                Command="{Binding GetLinkCommand}">
+                ToolTipService.ToolTip="{Binding GetLinkText}">
                 <AppBarButton.Icon>
-                    <PathIcon 
-                        Data="{Binding LinkPathData, Mode=OneTime}"
+                    <PathIcon
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+                        VerticalAlignment="Center"
+                        Data="{Binding LinkPathData, Mode=OneTime}" />
                 </AppBarButton.Icon>
             </AppBarButton>
 
             <CommandBar.SecondaryCommands>
                 <AppBarButton
-                    Label="{Binding RenameText}" 
-                    ToolTipService.ToolTip="{Binding RenameText}"
-                    Command="{Binding RenameCommand}">
+                    Command="{Binding RenameCommand}"
+                    Label="{Binding RenameText}"
+                    ToolTipService.ToolTip="{Binding RenameText}">
                     <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{Binding RenamePathData, Mode=OneTime}"
+                        <PathIcon
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding RenamePathData, Mode=OneTime}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton
-                    Label="{Binding RemoveText}" 
-                    ToolTipService.ToolTip="{Binding RemoveText}"
-                    Command="{Binding RemoveCommand}">
+                    Command="{Binding RemoveCommand}"
+                    Label="{Binding RemoveText}"
+                    ToolTipService.ToolTip="{Binding RemoveText}">
                     <AppBarButton.Icon>
-                        <PathIcon 
-                            Data="{Binding RubbishBinPathData, Mode=OneTime}"
+                        <PathIcon
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding RubbishBinPathData, Mode=OneTime}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.SecondaryCommands>

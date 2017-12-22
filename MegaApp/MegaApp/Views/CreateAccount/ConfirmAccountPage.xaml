@@ -104,12 +104,9 @@
             Margin="72,0,0,0"
             HorizontalContentAlignment="Stretch"
             Foreground="{StaticResource MegaAppForegroundBrush}"
-            HeaderFontSize="28"
             HeaderText="{Binding ProgressHeaderText}"
             IsVisible="{Binding IsBusy}"
             ProgressText="{Binding ProgressText}"
-            ProgressTextFontSize="14"
-            SubHeaderFontSize="14"
             SubHeaderText="{Binding ProgressSubHeaderText}">
             <userControls:ActivityIndicator.SubHeaderForeground>
                 <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
@@ -146,7 +143,7 @@
                         <Setter Target="ConfirmAccountStackPanel.Width" Value="NaN" />
                         <Setter Target="ConfirmAccountStackPanel.HorizontalAlignment" Value="Stretch" />
                         <Setter Target="ConfirmAccountStackPanel.VerticalAlignment" Value="Stretch" />
-                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,60" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
