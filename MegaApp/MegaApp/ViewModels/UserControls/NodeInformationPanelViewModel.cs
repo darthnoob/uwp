@@ -84,13 +84,17 @@ namespace MegaApp.ViewModels.UserControls
             }
             else if (isOn && !folderNode.IsOutShare)
             {
-                //if (folderNode?.ContactsList == null)
-                //    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
+                if (ContactsService.MegaContacts.ItemCollection.HasItems)
+                {
+                    this.OpenShareToPanelEvent?.Invoke(this, EventArgs.Empty);
+                    return;
+                }
 
-                //if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
-                //    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
+                if (folderNode?.ContactsList == null)
+                    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
 
-                this.OpenShareToPanelEvent?.Invoke(this, EventArgs.Empty);
+                if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
+                    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
             }
         }
 

@@ -45,5 +45,12 @@ namespace MegaApp.Services
                 return _outgoingContactRequest;
             }
         }
+
+        public static void Clear()
+        {
+            MegaContacts.ItemCollection.Clear();
+            IncomingContactRequests.ItemCollection.Clear();
+            OutgoingContactRequests.ItemCollection.Clear();
+        }
     }
 }
