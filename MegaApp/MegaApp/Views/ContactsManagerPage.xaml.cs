@@ -93,7 +93,7 @@ namespace MegaApp.Views
         {
             this.ContactProfileSplitView.IsPaneOpen = false;
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))

@@ -35,8 +35,8 @@ namespace MegaApp.Services
             }
         }
 
-        public static bool IsMoveAllowed => SelectedNodes.Count > 0 ?
-            SelectedNodes[0] is IncomingSharedFolderNodeViewModel : false;
+        public static bool IsMoveAllowed => SelectedNodes.Count > 0 && 
+            SelectedNodes[0] is IncomingSharedFolderNodeViewModel;
 
         private static FolderViewModel _cloudDrive;
         public static FolderViewModel CloudDrive
@@ -93,23 +93,22 @@ namespace MegaApp.Services
         /// <returns>True if is a selected node or false in other case</returns>
         public static bool IsCopyOrMoveSelectedNode(IMegaNode node, bool setDisplayMode = false)
         {
-            if (SelectedNodes?.Count > 0)
-            {
-                var count = SelectedNodes.Count;
-                for (int index = 0; index < count; index++)
-                {
-                    var selectedNode = SelectedNodes[index];
-                    if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
-                    {
-                        if(setDisplayMode)
-                        {
-                            //Update the selected nodes list values
-                            node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-                            SelectedNodes[index] = node;
-                        }
+            if (!(SelectedNodes?.Count > 0)) return false;
 
-                        return true;
+            var count = SelectedNodes.Count;
+            for (int index = 0; index < count; index++)
+            {
+                var selectedNode = SelectedNodes[index];
+                if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
+                {
+                    if (setDisplayMode)
+                    {
+                        //Update the selected nodes list values
+                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+                        SelectedNodes[index] = node;
                     }
+
+                    return true;
                 }
             }
 

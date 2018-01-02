@@ -29,10 +29,10 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Commands
 
-        public ICommand AddFolderCommand { get; private set; }
-        public ICommand CancelCommand { get; private set; }
-        public ICommand CopyCommand { get; private set; }
-        public ICommand MoveCommand { get; private set; }
+        public ICommand AddFolderCommand { get; }
+        public ICommand CancelCommand { get; }
+        public ICommand CopyCommand { get; }
+        public ICommand MoveCommand { get; }
 
         #endregion
 

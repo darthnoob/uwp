@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public abstract class SharedFolderNodeViewModel : FolderNodeViewModel, IMegaSharedFolderNode
     {
-        public SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
+        protected SharedFolderNodeViewModel(MNode megaNode, SharedFoldersListViewModel parent)
             : base(SdkService.MegaSdk, App.AppInformation, megaNode, parent)
         {
             this.Parent = parent;
@@ -24,7 +24,6 @@ namespace MegaApp.ViewModels.SharedFolders
         public ICommand LeaveShareCommand { get; set; }
 
         public ICommand OpenContentPanelCommand { get; }
-        public override ICommand OpenInformationPanelCommand { get; }
 
         #endregion
 

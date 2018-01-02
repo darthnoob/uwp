@@ -35,8 +35,8 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Commands
 
-        public ICommand CancelCommand { get; private set; }
-        public ICommand ConfirmShareCommand { get; private set; }
+        public ICommand CancelCommand { get; }
+        public ICommand ConfirmShareCommand { get; }
 
         #endregion
 

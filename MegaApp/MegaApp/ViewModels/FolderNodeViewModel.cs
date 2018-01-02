@@ -142,16 +142,14 @@ namespace MegaApp.ViewModels
 
             if (!dialogResult) return;
 
-            if (!await this.RemoveSharedAccessAsync())
+            if (await this.RemoveSharedAccessAsync()) return;
+
+            OnUiThread(async () =>
             {
-                OnUiThread(async () =>
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), this.Name));
-                });
-                return;
-            }
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderFailed"), this.Name));
+            });
         }
 
         /// <summary>
@@ -198,13 +196,11 @@ namespace MegaApp.ViewModels
             get { return _contactsList; }
             set
             {
-                if (_contactsList != null)
-                    _contactsList.Deinitialize();
+                _contactsList?.Deinitialize();
 
                 SetField(ref _contactsList, value);
 
-                if (_contactsList != null)
-                    _contactsList.Initialize();
+                _contactsList?.Initialize();
             }
         }
 

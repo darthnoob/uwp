@@ -126,7 +126,7 @@ namespace MegaApp.Views
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // First save the current selected items to restore them after enable the multi select
@@ -145,7 +145,7 @@ namespace MegaApp.Views
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // If there is only one selected item save it to restore it after disable the multi select mode
@@ -169,7 +169,7 @@ namespace MegaApp.Views
 
         private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // First save the current selected item to restore it after enable/disable the single select mode

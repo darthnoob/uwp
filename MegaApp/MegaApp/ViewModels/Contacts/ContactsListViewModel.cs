@@ -97,18 +97,18 @@ namespace MegaApp.ViewModels.Contacts
 
             switch (result)
             {
-                case Enums.InviteContactResult.Success:
+                case InviteContactResult.Success:
                     await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
                         string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
                         addContactDialog.ContactEmail));
                     break;
 
-                case Enums.InviteContactResult.AlreadyExists:
+                case InviteContactResult.AlreadyExists:
                     await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
                         ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
                     break;
 
-                case Enums.InviteContactResult.Unknown:
+                case InviteContactResult.Unknown:
                     await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
                         ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
                     break;

@@ -75,17 +75,16 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder = folder;
 
-            if (this.ViewModel.Folder != null)
-            {
-                this.ViewModel.Folder.FolderNavigatedTo += OnFolderNavigatedTo;
-                this.ViewModel.Folder.ChangeViewEvent += OnViewChanged;
-                this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
-                this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
-                this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
-                this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
+            if (this.ViewModel.Folder == null) return;
 
-                this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
-            }
+            this.ViewModel.Folder.FolderNavigatedTo += OnFolderNavigatedTo;
+            this.ViewModel.Folder.ChangeViewEvent += OnViewChanged;
+            this.ViewModel.Folder.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+            this.ViewModel.Folder.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
+            this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
+            this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
+
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
@@ -98,7 +97,7 @@ namespace MegaApp.UserControls
             // First save the current selected nodes to restore them after change the view
             var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // Clear the selected items and restore in the new view
@@ -133,7 +132,7 @@ namespace MegaApp.UserControls
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // First save the current selected items to restore them after enable the multi select
@@ -151,7 +150,7 @@ namespace MegaApp.UserControls
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // If there is only one selected item save it to restore it after disable the multi select mode
@@ -183,7 +182,7 @@ namespace MegaApp.UserControls
 
         private void OnOnlyAllowSingleSelectStatusChanged(object sender, bool isEnabled)
         {
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // First save the current selected item to restore it after enable/disable the single select mode
@@ -306,11 +305,10 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.Folder.ItemCollection.IsMultiSelectActive)
-            {
-                ((ListViewBase)sender).SelectedItems.Clear();
-                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
-            }
+            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive) return;
+
+            ((ListViewBase)sender).SelectedItems.Clear();
+            ((ListViewBase)sender).SelectedItems.Add(itemTapped);
         }
 
         private void OnFolderOptionsButtonClicked(object sender, RoutedEventArgs e)
@@ -381,17 +379,18 @@ namespace MegaApp.UserControls
 
         private void CheckItemIsEnabled(SelectorItem viewItem, object item)
         {
-            if (item is IncomingSharedFolderNodeViewModel)
+            var incomingSharedFolderNode = item as IncomingSharedFolderNodeViewModel;
+            if (incomingSharedFolderNode != null)
             {
-                var folder = item as IncomingSharedFolderNodeViewModel;
-                viewItem.IsEnabled = folder.IsEnabledForCopyOrMove;
+                viewItem.IsEnabled = incomingSharedFolderNode.IsEnabledForCopyOrMove;
                 return;
             }
 
-            if (item is FolderNodeViewModel)
+            var folderNode = item as FolderNodeViewModel;
+            if (folderNode != null)
             {
-                var folder = item as FolderNodeViewModel;
-                viewItem.IsEnabled = !(folder.Parent.IsCopyOrMoveViewModel && CopyOrMoveService.IsCopyOrMoveSelectedNode(folder));
+                viewItem.IsEnabled = !(folderNode.Parent.IsCopyOrMoveViewModel &&
+                    CopyOrMoveService.IsCopyOrMoveSelectedNode(folderNode));
             }
         }
 
@@ -407,7 +406,9 @@ namespace MegaApp.UserControls
         {
             if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
 
-            foreach (var item in this.ListView.Items)
+            var listViewItems = this.ListView.Items;
+            if (listViewItems == null) return;
+            foreach (var item in listViewItems)
             {
                 var listViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as ListViewItem);
                 if (listViewItem == null) continue;
@@ -420,7 +421,9 @@ namespace MegaApp.UserControls
         {
             if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
 
-            foreach (var item in this.GridView.Items)
+            var gridViewItems = this.GridView.Items;
+            if (gridViewItems == null) return;
+            foreach (var item in gridViewItems)
             {
                 var gridViewItem = ((FrameworkElement)this.ListView.ContainerFromItem(item) as GridViewItem);
                 if (gridViewItem == null) continue;

@@ -64,7 +64,7 @@ namespace MegaApp.ViewModels
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
-        public virtual ICommand OpenInformationPanelCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; set; }
 
         #endregion
 

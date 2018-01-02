@@ -232,7 +232,7 @@ namespace MegaApp.Views
             // First save the current selected nodes to restore them after enable the multi select
             var tempSelectedNodes = this.ViewModel.ActiveFolderView.ItemCollection.SelectedItems.ToList();
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))

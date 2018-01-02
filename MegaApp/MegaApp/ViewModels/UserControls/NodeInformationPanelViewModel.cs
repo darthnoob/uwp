@@ -75,7 +75,7 @@ namespace MegaApp.ViewModels.UserControls
         {
             if (this.Node is FolderNodeViewModel == false) return;
 
-            var folderNode = this.Node as FolderNodeViewModel;
+            var folderNode = (FolderNodeViewModel)this.Node;
 
             if (!isOn && folderNode.IsOutShare)
             {

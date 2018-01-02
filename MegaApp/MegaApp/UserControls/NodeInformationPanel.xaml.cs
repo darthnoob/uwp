@@ -96,14 +96,11 @@ namespace MegaApp.UserControls
                 this.ViewModel.Node.PropertyChanged -= OnNodePropertyChanged;
                 this.ViewModel.Node.Parent.ShareEvent -= OnSharingEvent;
 
-                if (this.ViewModel.Node is FolderNodeViewModel)
+                var folderNode = this.ViewModel.Node as FolderNodeViewModel;
+                if (folderNode?.ContactsList?.ItemCollection != null)
                 {
-                    var folderNode = this.ViewModel.Node as FolderNodeViewModel;
-                    if (folderNode?.ContactsList?.ItemCollection != null)
-                    {
-                        folderNode.ContactsList.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
-                        folderNode.ContactsList.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
-                    }
+                    folderNode.ContactsList.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+                    folderNode.ContactsList.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
                 }
             }
 
@@ -112,14 +109,11 @@ namespace MegaApp.UserControls
                 node.PropertyChanged += OnNodePropertyChanged;
                 node.Parent.ShareEvent += OnSharingEvent;
 
-                if (node is FolderNodeViewModel)
+                var folderNode = node as FolderNodeViewModel;
+                if (folderNode?.ContactsList?.ItemCollection != null)
                 {
-                    var folderNode = node as FolderNodeViewModel;
-                    if (folderNode?.ContactsList?.ItemCollection != null)
-                    {
-                        folderNode.ContactsList.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
-                        folderNode.ContactsList.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
-                    }
+                    folderNode.ContactsList.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
+                    folderNode.ContactsList.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
                 }
             }
 
@@ -146,15 +140,14 @@ namespace MegaApp.UserControls
                 }
                 else // Node is a File
                 {
-                    var changeSelectedItem = this.PivotControl.SelectedItem != null ?
-                    this.PivotControl.SelectedItem.Equals(this.SharePivot) : true;
+                    var changeSelectedItem = this.PivotControl.SelectedItem?.Equals(this.SharePivot) ?? true;
 
                     this.PivotControl.Items.Remove(this.SharePivot);
 
                     if (!this.PivotControl.Items.Contains(this.LinkPivot))
                         this.PivotControl.Items.Add(this.LinkPivot);
 
-                    if (changeSelectedItem == true)
+                    if (changeSelectedItem)
                         this.PivotControl.SelectedItem = this.DetailsPivot;
                 }
             }
@@ -253,7 +246,7 @@ namespace MegaApp.UserControls
 
             var folderNode = this.ViewModel.Node as FolderNodeViewModel;
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // First save the current selected items to restore them after enable the multi select
@@ -275,7 +268,7 @@ namespace MegaApp.UserControls
 
             var folderNode = this.ViewModel.Node as FolderNodeViewModel;
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             // If there is only one selected item save it to restore it after disable the multi select mode
@@ -283,10 +276,9 @@ namespace MegaApp.UserControls
             if (folderNode.ContactsList.ItemCollection.OnlyOneSelectedItem)
                 selectedItem = folderNode.ContactsList.ItemCollection.SelectedItems.First();
 
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this.ListViewContacts.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                this.ListViewContacts.SelectionMode = ListViewSelectionMode.Single;
+            this.ListViewContacts.SelectionMode = 
+                DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
 
             // Restore the selected item
             this.ListViewContacts.SelectedItem = folderNode.ContactsList.ItemCollection.FocusedItem = selectedItem;
@@ -316,7 +308,7 @@ namespace MegaApp.UserControls
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop ||
                 this.ViewModel.Node is FolderNodeViewModel == false) return;
 
-            var folderNode = this.ViewModel.Node as FolderNodeViewModel;
+            var folderNode = (FolderNodeViewModel)this.ViewModel.Node;
 
             IMegaContact itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContact;
             if (itemTapped == null) return;

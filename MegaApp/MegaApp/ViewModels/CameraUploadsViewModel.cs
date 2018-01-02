@@ -103,10 +103,10 @@ namespace MegaApp.ViewModels
 
         private void OnOrderInverted(object sender, EventArgs args)
         {
-            if (this.ItemCollection.IsCurrentOrderAscending)
-                UiService.SetSortOrder(this.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_ASC);
-            else
-                UiService.SetSortOrder(this.FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
+            UiService.SetSortOrder(this.FolderRootNode.Base64Handle, 
+                this.ItemCollection.IsCurrentOrderAscending ? 
+                    MSortOrderType.ORDER_MODIFICATION_ASC : 
+                    MSortOrderType.ORDER_MODIFICATION_DESC);
 
             this.LoadChildNodes();
         }
