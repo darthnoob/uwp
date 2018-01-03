@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using mega;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -11,61 +12,38 @@ namespace MegaApp.ViewModels
     {
         public ContactsManagerViewModel()
         {
-            this.MegaContacts = new ContactsListViewModel();
-            this.MegaContacts.AddContactTapped += OnAddContactTapped;
-
-            this.IncomingContactRequests = new ContactRequestsListViewModel(false);
-
-            this.OutgoingContactRequests = new ContactRequestsListViewModel(true);
-            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
+            
         }
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public void Initialize()
         {
-            this.MegaContacts.Initialize(globalListener);
-            this.IncomingContactRequests.Initialize(globalListener);
-            this.OutgoingContactRequests.Initialize(globalListener);
+            this.MegaContacts.PropertyChanged += this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged += this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged += this.OnOutgoingContactRequestsPropertyChanged;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public void Deinitialize()
         {
-            this.MegaContacts.Deinitialize(globalListener);
-            this.IncomingContactRequests.Deinitialize(globalListener);
-            this.OutgoingContactRequests.Deinitialize(globalListener);
+            this.MegaContacts.PropertyChanged -= this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged -= this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged -= this.OnOutgoingContactRequestsPropertyChanged;
         }
 
-        private async void OnAddContactTapped(object sender, EventArgs e)
+        private void OnMegaContactsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var addContactDialog = new AddContactDialog();
-            await addContactDialog.ShowAsync();
+            OnPropertyChanged(nameof(this.MegaContacts));
+        }
 
-            if (!addContactDialog.DialogResult) return;
+        private void OnIncomingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.IncomingContactRequests));
+        }
 
-            var inviteContact = new InviteContactRequestListenerAsync();
-            var result = await inviteContact.ExecuteAsync(() =>
-                SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
-                    MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
-
-            switch (result)
-            {
-                case Enums.InviteContactResult.Success:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
-                        addContactDialog.ContactEmail));
-                    break;
-
-                case Enums.InviteContactResult.AlreadyExists:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
-                    break;
-
-                case Enums.InviteContactResult.Unknown:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
-                    break;
-            }
+        private void OnOutgoingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.OutgoingContactRequests));
         }
 
         #endregion
@@ -79,26 +57,9 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeView, value); }
         }
 
-        private ContactsListViewModel _megaContacts;
-        public ContactsListViewModel MegaContacts
-        {
-            get { return _megaContacts; }
-            set { SetField(ref _megaContacts, value); }
-        }
-
-        private ContactRequestsListViewModel _incomingContactRequests;
-        public ContactRequestsListViewModel IncomingContactRequests
-        {
-            get { return _incomingContactRequests; }
-            set { SetField(ref _incomingContactRequests, value); }
-        }
-
-        private ContactRequestsListViewModel _outgoingContactRequest;
-        public ContactRequestsListViewModel OutgoingContactRequests
-        {
-            get { return _outgoingContactRequest; }
-            set { SetField(ref _outgoingContactRequest, value); }
-        }
+        public ContactsListViewModel MegaContacts => ContactsService.MegaContacts;
+        public ContactRequestsListViewModel IncomingContactRequests => ContactsService.IncomingContactRequests;
+        public ContactRequestsListViewModel OutgoingContactRequests => ContactsService.OutgoingContactRequests;
 
         #endregion
 

@@ -12,23 +12,6 @@ namespace MegaApp.ViewModels.Contacts
             this._isOutgoing = isOutgoing;
         }
 
-        #region Events
-
-        /// <summary>
-        /// Event triggered when the add contact menu option is tapped
-        /// </summary>
-        public event EventHandler AddContactTapped;
-
-        /// <summary>
-        /// Event invocator method called when the add contact menu option is tapped
-        /// </summary>
-        protected virtual void OnAddContactTapped()
-        {
-            this.AddContactTapped?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
         #region Commands
         
         public ICommand AddContactCommand { get; set; }
@@ -79,8 +62,7 @@ namespace MegaApp.ViewModels.Contacts
         public string DenyContactText => ResourceService.UiResources.GetString("UI_DenyContact");
         public string RemindContactText => ResourceService.UiResources.GetString("UI_RemindContact");
 
-        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
-        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
 
         #endregion
 

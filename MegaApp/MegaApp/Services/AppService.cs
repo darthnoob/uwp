@@ -493,6 +493,9 @@ namespace MegaApp.Services
             // Clear all the account and user data info
             AccountService.ClearAccountDetails();
             AccountService.ClearUserData();
+
+            // Clear all the contacts info
+            ContactsService.Clear();
         }
 
         /// <summary>

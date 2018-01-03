@@ -258,10 +258,6 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Password</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
-  <data name="UI_Refresh" xml:space="preserve">
-    <value>Refresh</value>
-    <comment>Label for any 'Refresh' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
   <data name="UI_Remove" xml:space="preserve">
     <value>Remove</value>
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
@@ -466,25 +462,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Move</value>
     <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_SortOptionFilesAscending" xml:space="preserve">
-    <value>Files (ascending)</value>
-    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by type - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionFilesDescending" xml:space="preserve">
-    <value>Files (descending)</value>
-    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by type - (String as short as possible).</comment>
-  </data>
   <data name="UI_SortOptionLargest" xml:space="preserve">
     <value>Largest</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionNameAscending" xml:space="preserve">
-    <value>Name (ascending)</value>
-    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by name - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionNameDescending" xml:space="preserve">
-    <value>Name (descending)</value>
-    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by name - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionNewest" xml:space="preserve">
     <value>Newest</value>
@@ -549,10 +529,6 @@ Preserve the {0} code because is for include the name of the destination folder 
   <data name="UI_Preview" xml:space="preserve">
     <value>Preview</value>
     <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_ViewDetails" xml:space="preserve">
-    <value>View details</value>
-    <comment>Label for any 'View details' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Close" xml:space="preserve">
     <value>Close</value>
@@ -1027,24 +1003,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Link</value>
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_SortOptionLastModifiedAscending" xml:space="preserve">
-    <value>Last modified (ascending)</value>
-    <comment>Label for the menu option to sort the nodes in ascending order by modification date (from newer to older) - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SortOptionLastModifiedDescending" xml:space="preserve">
-    <value>Last modified (descending)</value>
-    <comment>Label for the menu option to sort the nodes in descending order by modification date (from older to newer) - (String as short as possible).</comment>
-  </data>
-  <data name="UI_ListSortedByModificationDate" xml:space="preserve">
-    <value>Date Modified ({0})</value>
-    <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
-Keep the {0} code because is for include the total number of items in runtime.</comment>
-  </data>
-  <data name="UI_ListSortedByModificationDateMultiSelect" xml:space="preserve">
-    <value>Date Modified ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of items is sorted by modification date and the number of selected items over the total number of items.
-Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
-  </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
     <value>Full access</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
@@ -1337,8 +1295,8 @@ Keep the {0} and {1} codes because are for include the total number of folders a
     <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByFiles" xml:space="preserve">
-    <value>Files ({0} folders, {1} files)</value>
+  <data name="UI_NodeListSortedByType" xml:space="preserve">
+    <value>Type ({0} folders, {1} files)</value>
     <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
@@ -1352,33 +1310,114 @@ Keep the {0} and {1} codes because are for include the total number of folders a
     <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByDateCreatedMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
     <value>Date Created ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by creation date and the number of selected items over the total number of items.
+    <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByDateModifiedMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
     <value>Date Modified ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by modification date and the number of selected items over the total number of items.
+    <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByFilesMultiSelect" xml:space="preserve">
-    <value>Files ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by type and the number of selected items over the total number of items.
+  <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
+    <value>Type ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
-  <data name="UI_NodeListSortedByNameMultiSelect" xml:space="preserve">
-    <value>Name ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by name and the number of selected items over the total number of items.
-Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedBySizeMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
     <value>Size ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list of nodes is sorted by size and the number of selected items over the total number of items.
+    <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_FolderOptions" xml:space="preserve">
     <value>Folder options</value>
     <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByDateCreated" xml:space="preserve">
+    <value>Date Created ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by creation date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByDateModified" xml:space="preserve">
+    <value>Date Modified ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByType" xml:space="preserve">
+    <value>Type ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by type and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedBySize" xml:space="preserve">
+    <value>Size ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by size and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SelectOrDeselectAll" xml:space="preserve">
+    <value>Select/deselect all</value>
+    <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionType" xml:space="preserve">
+    <value>Type</value>
+    <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionSize" xml:space="preserve">
+    <value>Size</value>
+    <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
+    <value>Copy/Move 1 item to</value>
+    <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
+    <value>Copy/Move {0} items to</value>
+    <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
+Keep the {0} code because is for include the number of selected items in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
+    <value>Date Created ({0} folders)</value>
+    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
+    <value>Date Modified ({0} folders)</value>
+    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByName" xml:space="preserve">
+    <value>Name ({0} folders)</value>
+    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedBySize" xml:space="preserve">
+    <value>Size ({0} folders)</value>
+    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByType" xml:space="preserve">
+    <value>Type ({0} folders)</value>
+    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_Sharing" xml:space="preserve">
+    <value>Sharing</value>
+    <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AllContacts" xml:space="preserve">
+    <value>All contacts</value>
+    <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmShare" xml:space="preserve">
+    <value>Confirm share</value>
+    <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageCollaborators" xml:space="preserve">
+    <value>Manage collaborators</value>
+    <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ShareTo" xml:space="preserve">
+    <value>Share to</value>
+    <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

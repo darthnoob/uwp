@@ -117,12 +117,15 @@
     <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
+    <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
     <Compile Include="Interfaces\IMegaContactOutgoingSharedFolder.cs" />
     <Compile Include="Interfaces\IMegaContactRequest.cs" />
+    <Compile Include="Interfaces\IMegaFolderNode.cs" />
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
@@ -130,16 +133,24 @@
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
+    <Compile Include="Services\ContactsService.cs" />
+    <Compile Include="Services\CopyOrMoveService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
+    <Compile Include="UserControls\CopyOrMovePanel.xaml.cs">
+      <DependentUpon>CopyOrMovePanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\SharedFolderInformationPanel.xaml.cs">
-      <DependentUpon>SharedFolderInformationPanel.xaml</DependentUpon>
+    <Compile Include="UserControls\NodeInformationPanel.xaml.cs">
+      <DependentUpon>NodeInformationPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ShareToPanel.xaml.cs">
+      <DependentUpon>ShareToPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
@@ -165,12 +176,11 @@
     <Compile Include="Converters\IntValueToVisibilityConverter.cs" />
     <Compile Include="Converters\InverseBoolConverter.cs" />
     <Compile Include="Converters\TransferTypeToSymbolConverter.cs" />
-    <Compile Include="Converters\FolderContentViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\NodeDisplayModeToColorBrushConverter.cs" />
     <Compile Include="Converters\TextToLowerCaseConverter.cs" />
     <Compile Include="Converters\TransferStateToReadableTextConverter.cs" />
     <Compile Include="Converters\TransferStateToVisibilityConverter.cs" />
-    <Compile Include="Converters\ViewStateToVisibilityConverter.cs" />
+    <Compile Include="Converters\NodeViewStateToVisibilityConverter.cs" />
     <Compile Include="Enums\ConfirmAccountResult.cs" />
     <Compile Include="Enums\ConfirmChangeEmailResult.cs" />
     <Compile Include="Enums\InputState.cs" />
@@ -212,9 +222,11 @@
     <Compile Include="ViewModels\AccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CopyOrMovePanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\SharedFolderInformationPanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\NodeInformationPanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ShareToPanelViewModel.cs" />
     <Compile Include="Views\ContactsManagerPage.xaml.cs">
       <DependentUpon>ContactsManagerPage.xaml</DependentUpon>
     </Compile>
@@ -253,7 +265,6 @@
     <Compile Include="Enums\CountryCodes.cs" />
     <Compile Include="Enums\CreateAccountResult.cs" />
     <Compile Include="Enums\DeviceFormFactorType.cs" />
-    <Compile Include="Enums\FolderContentViewState.cs" />
     <Compile Include="Enums\GalleryDirection.cs" />
     <Compile Include="Enums\HamburgerMenuItemType.cs" />
     <Compile Include="Enums\LinkAction.cs" />
@@ -363,7 +374,6 @@
     <Compile Include="Views\MyAccount\UpgradeView.xaml.cs">
       <DependentUpon>UpgradeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\NodeDetailsPanel.cs" />
     <Compile Include="UserControls\EmptyState.cs" />
     <Compile Include="UserControls\TogglePanel.cs" />
     <Compile Include="ViewModels\AccountDetailsViewModel.cs" />
@@ -484,6 +494,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UserControls\CopyOrMovePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\FolderExplorer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -492,7 +506,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\SharedFolderInformationPanel.xaml">
+    <Page Include="UserControls\NodeInformationPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ShareToPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

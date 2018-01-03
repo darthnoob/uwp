@@ -174,6 +174,8 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
                 nameof(this.HasAllItemsSelected));
+
+            this.OnSelectedItemsCollectionChanged();
         }
 
         protected void SelectionChanged()
@@ -185,7 +187,11 @@ namespace MegaApp.ViewModels
                 this.IsMultiSelectActive = this.IsMultiSelectActive && this.HasSelectedItems;
 
             if (this.HasSelectedItems)
+            {
                 this.FocusedItem = this.SelectedItems.Last();
+                if (this.FocusedItem is ImageNodeViewModel)
+                    (this.FocusedItem as ImageNodeViewModel).InViewingRange = true;
+            }
 
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),

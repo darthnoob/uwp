@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             this.Contact = contact;
 
-            this.GetIncomingSharedItems();
+            this.GetIncomingSharedItems(this.Contact);
 
             this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
@@ -22,8 +22,6 @@ namespace MegaApp.ViewModels.Contacts
         }
 
         #region Methods
-
-        public void GetIncomingSharedItems() => this.GetIncomingSharedItems(this.Contact);
 
         private void OnInSharedFolderAdded(object sender, MNode megaNode)
         {
@@ -39,6 +37,12 @@ namespace MegaApp.ViewModels.Contacts
 
             if (user.getEmail().Equals(this.Contact.getEmail()))
                 this.OnSharedFolderRemoved(sender, megaNode);
+        }
+
+        public override void BrowseToHome()
+        {
+            this.BreadCrumb.Items.Clear();
+            this.GetIncomingSharedItems(this.Contact);
         }
 
         #endregion

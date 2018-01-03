@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using mega;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -9,7 +10,8 @@ namespace MegaApp.ViewModels
     {
         public BreadCrumbViewModel()
         {
-            this.Items = new ObservableCollection<IBaseNode>();           
+            this.Items = new ObservableCollection<IBaseNode>();
+            this.Items.CollectionChanged += OnItemsCollectionChanged;
         }
 
         #region Public Methods
@@ -35,6 +37,11 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.HasPath));
+        }
+
         #endregion
 
         #region Properties
@@ -45,6 +52,8 @@ namespace MegaApp.ViewModels
             get { return _items; }
             set { SetField(ref _items, value); }
         }
+
+        public bool HasPath => this.Items?.Count > 0;
 
         #endregion
     }

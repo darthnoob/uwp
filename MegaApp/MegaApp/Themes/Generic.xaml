@@ -210,7 +210,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="userControls:NodeDetailsPanel">
+    <Style TargetType="userControls:NodeInformationPanel">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -219,7 +219,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="userControls:NodeDetailsPanel">
+                <ControlTemplate TargetType="userControls:NodeInformationPanel">
                     <Grid Background="{ThemeResource MegaNodeDetailsBackgroundBrush}" DataContext="{TemplateBinding Node}">
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
@@ -696,7 +696,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <Style TargetType="userControls:ContactProfilePanel">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />

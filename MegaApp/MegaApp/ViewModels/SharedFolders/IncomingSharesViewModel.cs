@@ -11,7 +11,8 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharesViewModel : SharedFoldersListViewModel
     {
-        public IncomingSharesViewModel() : base(ContainerType.InShares)
+        public IncomingSharesViewModel(bool isCopyOrMoveViewModel = false) : 
+            base(ContainerType.InShares, isCopyOrMoveViewModel)
         {
 
         }
@@ -165,6 +166,12 @@ namespace MegaApp.ViewModels.SharedFolders
         private void OnOrderInverted(object sender, EventArgs args) =>
             SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
+        public override void BrowseToHome()
+        {
+            this.BreadCrumb.Items.Clear();
+            this.GetIncomingSharedItems();
+        }
+
         #endregion
 
         #region Properties        
@@ -179,7 +186,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDate"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"),
                             this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevel"),
@@ -203,7 +210,7 @@ namespace MegaApp.ViewModels.SharedFolders
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_MODIFICATION:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByModificationDateMultiSelect"),
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
                     case IncomingSharesSortOrderType.ORDER_ACCESS:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByAccessLevelMultiSelect"),

@@ -35,7 +35,7 @@ namespace MegaApp.Services
                 return _folderSorting[folderBase64Handle];
 
             return folderName.Equals("Camera Uploads") ? MSortOrderType.ORDER_MODIFICATION_DESC :
-                MSortOrderType.ORDER_DEFAULT_ASC;
+                MSortOrderType.ORDER_ALPHABETICAL_ASC;
         }
 
         /// <summary>

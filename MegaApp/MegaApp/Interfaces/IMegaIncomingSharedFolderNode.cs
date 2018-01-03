@@ -1,6 +1,4 @@
-﻿using MegaApp.ViewModels.SharedFolders;
-
-namespace MegaApp.Interfaces
+﻿namespace MegaApp.Interfaces
 {
     /// <summary>
     /// Interface for incoming shared folder node models in the MegaApp

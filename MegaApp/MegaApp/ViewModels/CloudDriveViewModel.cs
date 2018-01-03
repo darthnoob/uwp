@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -12,10 +9,6 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public event EventHandler ClearSelectedItems;
-        public event EventHandler DisableSelection;
-        public event EventHandler EnableSelection;
-
         public CloudDriveViewModel()
         {
             InitializeModel();
@@ -31,20 +24,6 @@ namespace MegaApp.ViewModels
             this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
             this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
             this.CameraUploads = new CameraUploadsViewModel();
-
-            this.CloudDrive.AcceptCopyEvent += OnAcceptCopy;
-            this.RubbishBin.AcceptCopyEvent += OnAcceptCopy;
-
-            this.CloudDrive.AcceptMoveEvent += OnAcceptMove;
-            this.RubbishBin.AcceptMoveEvent += OnAcceptMove;
-
-            this.CloudDrive.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.RubbishBin.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.CameraUploads.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-
-            this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
-            this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
-            this.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
 
             this.RubbishBin.ChildNodesCollectionChanged += OnRubbishBinChildNodesCollectionChanged;
 
@@ -69,8 +48,12 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded += CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved += CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded += CloudDrive.OnNodeAdded;
+            globalListener.OutSharedFolderRemoved += CloudDrive.OnNodeAdded;
+
             globalListener.NodeAdded += RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved += RubbishBin.OnNodeRemoved;
+
             globalListener.NodeAdded += CameraUploads.OnNodeAdded;
             globalListener.NodeRemoved += CameraUploads.OnNodeRemoved;
         }
@@ -84,8 +67,12 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded -= CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved -= CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded -= CloudDrive.OnNodeAdded;
+            globalListener.OutSharedFolderRemoved -= CloudDrive.OnNodeAdded;
+
             globalListener.NodeAdded -= RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved -= RubbishBin.OnNodeRemoved;
+
             globalListener.NodeAdded -= CameraUploads.OnNodeAdded;
             globalListener.NodeRemoved -= CameraUploads.OnNodeRemoved;
         }
@@ -166,146 +153,6 @@ namespace MegaApp.ViewModels
             OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
-        private void ResetViewStates()
-        {
-            CloudDrive.IsMultiSelectActive = false;
-            CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
-            CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
-
-            RubbishBin.IsMultiSelectActive = false;
-            RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
-            RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
-
-            CameraUploads.IsMultiSelectActive = false;
-            CameraUploads.CurrentViewState = FolderContentViewState.CameraUploads;
-            CameraUploads.PreviousViewState = FolderContentViewState.CameraUploads;
-        }
-
-        private void OnCopyOrMove(object sender, EventArgs e)
-        {
-            if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
-                !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
-
-            this.ActiveFolderView.CloseNodeDetails();
-
-            foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
-                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-
-            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
-            this.ActiveFolderView.IsMultiSelectActive = false;
-
-            ResetViewStates();
-
-            this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
-            this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
-            this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.CameraUploads.PreviousViewState = this.CameraUploads.CurrentViewState;
-            this.CameraUploads.CurrentViewState = FolderContentViewState.CopyOrMove;
-
-            this.SourceFolderView = this.ActiveFolderView;
-
-            this.DisableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Reset the variables used in the copy or move actions
-        /// </summary>
-        private void ResetCopyOrMove()
-        {
-            SourceFolderView.ItemCollection.SelectedItems.Clear();
-            SourceFolderView.CopyOrMoveSelectedNodes.Clear();
-            SourceFolderView = null;
-            ResetViewStates();
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
-            EnableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void OnCancelCopyOrMove(object sender, EventArgs e)
-        {
-            if (SourceFolderView?.CopyOrMoveSelectedNodes != null)
-            {
-                foreach (var node in SourceFolderView.CopyOrMoveSelectedNodes)
-                    if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
-            }
-
-            ResetCopyOrMove();
-        }
-
-        private void OnAcceptCopy(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptCopyAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptCopyAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being copied
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
-                {
-                    if (node != null)
-                    {
-                        result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
-            }
-            catch (Exception) { result = false; }
-            finally
-            {
-                if (!result)
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_CopyFailed"));
-                }
-            }
-        }
-
-        private void OnAcceptMove(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptMoveAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptMoveAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being moved
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
-                {
-                    if (node != null)
-                    {
-                        result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
-            }
-            catch (Exception) { result = false; }
-            finally
-            {
-                if (!result)
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_MoveFailed"));
-                }
-            }
-        }
-
         #endregion
 
         #region Properties
@@ -338,16 +185,6 @@ namespace MegaApp.ViewModels
         {
             get { return _activeFolderView; }
             set { SetField(ref _activeFolderView, value); }
-        }
-
-        /// <summary>
-        /// Property needed to store the source folder in a move/copy action 
-        /// </summary>
-        private FolderViewModel _sourceFolderView;
-        public FolderViewModel SourceFolderView
-        {
-            get { return _sourceFolderView; }
-            set { SetField(ref _sourceFolderView, value); }
         }
 
         #endregion

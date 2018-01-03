@@ -1,0 +1,213 @@
+﻿<userControls:BaseCopyOrMovePanel
+    x:Class="MegaApp.UserControls.CopyOrMovePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:userControls="using:MegaApp.UserControls"
+    xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance userControlsViewModels:CopyOrMovePanelViewModel}">
+
+    <Grid DataContext="{x:Bind ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                x:Name="SectionNameText"
+                Grid.Column="0"
+                Margin="24,14,0,0"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.CopyOrMoveItemsToText, Mode=OneWay}" />
+
+            <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+            <CommandBar
+                x:Name="TopCommandBar"
+                Grid.Column="1"
+                Background="Transparent"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Command="{Binding AddFolderCommand}"
+                    Label="{Binding AddFolderText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                    Visibility="{Binding ActiveFolderView, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding AddFolderPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding CopyCommand}"
+                    Label="{Binding CopyText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                    Visibility="{Binding ActiveFolderView, ConverterParameter='copy', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>False</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding CopyPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding MoveCommand}"
+                    Label="{Binding MoveText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                    Visibility="{Binding ActiveFolderView, ConverterParameter='move', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                    <AppBarButton.CommandParameter>
+                        <x:Boolean>True</x:Boolean>
+                    </AppBarButton.CommandParameter>
+                    <Viewbox MaxWidth="14" MaxHeight="14">
+                        <SymbolIcon Symbol="MoveToFolder" />
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding CancelCommand}"
+                    Label="{Binding CancelText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{Binding CancelPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+
+        <Pivot
+            x:Name="PivotControl"
+            Grid.Row="1"
+            HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
+            Margin="12,0,0,0"
+            SelectionChanged="OnPivotSelectionChanged">
+            <PivotItem
+                x:Name="CloudDrivePivot"
+                CacheMode="{x:Null}"
+                Header="{x:Bind ViewModel.CloudDriveNameText}">
+                <userControls:FolderExplorer
+                    x:Name="CloudDriveExplorer"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
+            </PivotItem>
+            <PivotItem 
+                x:Name="IncomingSharesPivot"
+                CacheMode="{x:Null}"
+                Header="{x:Bind ViewModel.IncomingSharesText}">
+                <userControls:FolderExplorer
+                    x:Name="IncomingSharesExplorer"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Folder="{x:Bind ViewModel.IncomingShares, Mode=OneWay}"/>
+            </PivotItem>
+        </Pivot>
+
+        <!--  BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+        <CommandBar x:Name="BottomCommandBar" Grid.Row="2">
+            <AppBarButton
+                Command="{Binding AddFolderCommand}"
+                Label="{Binding AddFolderText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
+                Visibility="{Binding ActiveFolderView, ConverterParameter='newfolder', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                <AppBarButton.Icon>
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{Binding AddFolderPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Command="{Binding CopyCommand}"
+                Label="{Binding CopyText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
+                Visibility="{Binding ActiveFolderView, ConverterParameter='copy', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                <AppBarButton.CommandParameter>
+                    <x:Boolean>False</x:Boolean>
+                </AppBarButton.CommandParameter>
+                <AppBarButton.Icon>
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{Binding CopyPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Command="{Binding MoveCommand}"
+                Label="{Binding MoveText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
+                Visibility="{Binding ActiveFolderView, ConverterParameter='move', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                <AppBarButton.CommandParameter>
+                    <x:Boolean>True</x:Boolean>
+                </AppBarButton.CommandParameter>
+                <Viewbox MaxWidth="14" MaxHeight="14">
+                    <SymbolIcon Symbol="MoveToFolder" />
+                </Viewbox>
+            </AppBarButton>
+            <AppBarButton
+                Command="{Binding CancelCommand}"
+                Label="{Binding CancelText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding CancelText, Mode=OneTime}">
+                <AppBarButton.Icon>
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{Binding CancelPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="12,0" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="0,0" />
+                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</userControls:BaseCopyOrMovePanel>

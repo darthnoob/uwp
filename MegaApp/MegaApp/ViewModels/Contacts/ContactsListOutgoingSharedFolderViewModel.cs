@@ -35,7 +35,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize()
+        public override void Initialize()
         {
             if (App.GlobalListener == null) return;
             App.GlobalListener.ContactUpdated += this.OnContactUpdated;
@@ -43,7 +43,7 @@ namespace MegaApp.ViewModels.Contacts
             App.GlobalListener.OutSharedFolderRemoved += this.OnOutSharedFolderUpdated;
         }
 
-        public void Deinitialize()
+        public override void Deinitialize()
         {
             if (App.GlobalListener == null) return;
             App.GlobalListener.ContactUpdated -= this.OnContactUpdated;

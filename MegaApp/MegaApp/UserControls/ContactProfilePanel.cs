@@ -158,7 +158,7 @@ namespace MegaApp.UserControls
         {
             if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
 
-            // Disable the view behaviors to avoid extrange behaviors during the view update
+            // Disable the view behaviors to avoid strange behaviors during the view update
             Interaction.GetBehaviors(this._sharedItems).Detach();
 
             // First save the current selection to restore after enable the multi select

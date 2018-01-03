@@ -3,7 +3,6 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -14,12 +13,8 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            this.ContactsList = new ContactsListOutgoingSharedFolderViewModel(megaNode);
-
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_OutgoingSharedFolderPathData");
             this.Update(megaNode);
-
-            this.GetContactsList();
         }
 
         #region Methods
@@ -58,29 +53,6 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 OnUiThread(() => this.ContactsText = string.Format(
                     ResourceService.UiResources.GetString("UI_NumberOfContacts"), outSharesSize));
-            }
-        }
-
-        private async void GetContactsList()
-        {
-            await OnUiThreadAsync(() => this.ContactsList.ItemCollection.Clear());
-
-            var contactsList = SdkService.MegaSdk.getOutShares(this.OriginalMNode);
-            var contactsListSize = contactsList.size();
-
-            for (int i = 0; i < contactsListSize; i++)
-            {
-                // To avoid null values
-                if (contactsList.get(i) == null) continue;
-
-                var megaContact = new ContactOutgoingSharedFolderViewModel(contactsList.get(i), this.ContactsList);
-
-                OnUiThread(() => this.ContactsList.ItemCollection.Items.Add(megaContact));
-
-                megaContact.GetContactFirstname();
-                megaContact.GetContactLastname();
-                megaContact.GetContactAvatarColor();
-                megaContact.GetContactAvatar();
             }
         }
 
@@ -127,25 +99,6 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             get { return _folderLocation; }
             set { SetField(ref _folderLocation, value); }
-        }
-
-        private ContactsListOutgoingSharedFolderViewModel _contactsList;
-        /// <summary>
-        /// List of contacts with the folder is shared
-        /// </summary>
-        public override ContactsListOutgoingSharedFolderViewModel ContactsList
-        {
-            get { return _contactsList; }
-            set
-            {
-                if (_contactsList != null)
-                    _contactsList.Deinitialize();
-
-                SetField(ref _contactsList, value);
-
-                if (_contactsList != null)
-                    _contactsList.Initialize();
-            }
         }
 
         private string _contactsText;

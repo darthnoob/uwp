@@ -24,18 +24,27 @@
         <SplitView.Pane>
             <Grid>
                 <userControls:SharedFolderContentPanel
+                    x:Name="ContentPanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     SharedFolderNode="{Binding ItemCollection.FocusedItem}"
-                    Visibility="{Binding IsContentPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Content', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
                 
-                <userControls:SharedFolderInformationPanel
+                <userControls:NodeInformationPanel
+                    x:Name="InformationPanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    SharedFolder="{Binding ItemCollection.FocusedItem}"
-                    Visibility="{Binding IsInformationPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    Node="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+
+                <userControls:CopyOrMovePanel
+                    x:Name="CopyOrMovePanelControl"
+                    DataContext="{Binding ActiveView}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 
@@ -87,6 +96,19 @@
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
+                                Command="{Binding CopyOrMoveCommand}"
+                                Label="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
+                                Visibility="{Binding SharedFolders, ConverterParameter='copyormove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
                                 Command="{Binding LeaveShareCommand}"
                                 Label="{Binding LeaveShareText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
@@ -122,7 +144,7 @@
                                         <PathIcon
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                            Data="{Binding InformationPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>-->
                                 </AppBarButton>
                                 <AppBarButton
@@ -134,7 +156,7 @@
                                         <PathIcon
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
-                                            Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                            Data="{Binding InformationPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
@@ -147,6 +169,18 @@
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center"
                                             Data="{Binding LinkPathData, Mode=OneTime}" />
+                                    </AppBarButton.Icon>
+                                </AppBarButton>
+                                <AppBarButton
+                                    Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                                    Command="{Binding ShareCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='share', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                    <AppBarButton.Icon>
+                                        <PathIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Data="{Binding ManageSharePathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
@@ -363,7 +397,7 @@
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    Data="{Binding InformationPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>-->
                         </AppBarButton>
                         <AppBarButton
@@ -375,7 +409,7 @@
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Data="{Binding ViewDetailsPathData, Mode=OneTime}" />
+                                    Data="{Binding InformationPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
@@ -388,6 +422,18 @@
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Data="{Binding LinkPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
+                            Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                            ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
+                            Command="{Binding ShareCommand}"
+                            Visibility="{Binding SharedFolders, ConverterParameter='share', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding ManageSharePathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton

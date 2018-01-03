@@ -35,7 +35,7 @@ namespace MegaApp.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.ViewModel.Initialize(App.GlobalListener);
+            this.ViewModel.Initialize();
 
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
@@ -68,7 +68,7 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
             this.ViewModel.OutgoingContactRequests.ItemCollection.AllSelected -= OnAllSelected;
 
-            this.ViewModel.Deinitialize(App.GlobalListener);
+            this.ViewModel.Deinitialize();
             base.OnNavigatedFrom(e);
         }
 
@@ -93,7 +93,7 @@ namespace MegaApp.Views
         {
             this.ContactProfileSplitView.IsPaneOpen = false;
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
