@@ -66,6 +66,7 @@ namespace MegaApp.ViewModels
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
             this.ShareCommand = new RelayCommand(Share);
+            this.OpenLinkCommand = new RelayCommand(OpenLink);
 
             SetViewDefaults();
 
@@ -286,6 +287,7 @@ namespace MegaApp.ViewModels
         public ICommand OpenInformationPanelCommand { get; set; }
         public ICommand ClosePanelCommand { get; set; }
         public ICommand ShareCommand { get; set; }
+        public ICommand OpenLinkCommand { get; }
 
         #endregion
 
@@ -478,6 +480,34 @@ namespace MegaApp.ViewModels
         {
             if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return;
             this.ItemCollection.FocusedItem?.GetLinkAsync();
+        }
+
+        private async void OpenLink()
+        {
+            if (!IsUserOnline()) return;
+
+            var link = await DialogService.ShowInputDialogAsync(OpenLinkText,
+                ResourceService.UiResources.GetString("UI_TypeOrPasteLink"));
+
+            if (string.IsNullOrEmpty(link) || string.IsNullOrWhiteSpace(link)) return;
+
+            App.LinkInformation.ActiveLink = UriService.ReformatUri(link);
+
+            if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#!"))
+            {
+            }
+            else if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#F!"))
+            {
+            }
+            else
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed"));
+                });
+            }
         }
 
         private async void Remove()
@@ -1294,6 +1324,7 @@ namespace MegaApp.ViewModels
         public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
+        public string OpenLinkText => ResourceService.UiResources.GetString("UI_OpenLink");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
@@ -1313,6 +1344,7 @@ namespace MegaApp.ViewModels
         public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
+        public string OpenLinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
         public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string SortByPathData => ResourceService.VisualResources.GetString("VR_SortByPathData");
         public string UploadPathData => ResourceService.VisualResources.GetString("VR_UploadPathData");

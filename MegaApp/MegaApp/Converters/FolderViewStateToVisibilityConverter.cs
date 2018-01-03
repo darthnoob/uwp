@@ -30,6 +30,7 @@ namespace MegaApp.Converters
                     {
                         case "newfolder":
                         case "upload":
+                        case "openlink":
                             return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ? 
                                 Visibility.Visible : Visibility.Collapsed;
 
