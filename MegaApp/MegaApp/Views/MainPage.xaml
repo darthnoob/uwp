@@ -14,7 +14,6 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
         <DataTemplate x:Key="MenuItemTemplate" x:DataType="viewModels:MenuItemViewModel">
             <Grid Height="48">
                 <Grid.ColumnDefinitions>

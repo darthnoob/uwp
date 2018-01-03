@@ -495,9 +495,19 @@ namespace MegaApp.ViewModels
 
             if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#!"))
             {
+                App.LinkInformation.UriLink = UriLinkType.File;
+                //this.MegaSdk.getPublicNode(App.LinkInformation.ActiveLink, new GetPublicNodeRequestListener(this));
             }
             else if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#F!"))
             {
+                App.LinkInformation.UriLink = UriLinkType.Folder;
+
+                // Navigate to the folder link page
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(FolderLinkPage), false,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                });
             }
             else
             {

@@ -243,7 +243,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
   </data>
   <data name="AM_InvalidLink" xml:space="preserve">
     <value>Invalid link</value>
-    <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>
+    <comment>Message of the dialog displayed when the user is trying to open an invliad link.</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
     <value>Could not load files and folders from MEGA. Please try again.</value>
@@ -1139,6 +1139,18 @@ Preserve the {0} code because is for include the price in runtime.</comment>
     <value>Wait {0} for your transfer quota to renew.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
+  </data>
+  <data name="AM_DecryptionKeyAlertMessage" xml:space="preserve">
+    <value>To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.</value>
+    <comment>Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents.</comment>
+  </data>
+  <data name="AM_DecryptionKeyAlertTitle" xml:space="preserve">
+    <value>Enter decryption key</value>
+    <comment>Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DecryptionKeyNotValid" xml:space="preserve">
+    <value>Invalid decryption key</value>
+    <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
     <value>Failed to open link. No valid format.</value>

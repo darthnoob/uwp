@@ -86,6 +86,23 @@ namespace MegaApp.Views
             // Back button in mobile applications is automatic in the nav bar on screen
             AppService.SetAppViewBackButtonVisibility(ContentFrame.CanGoBack);
 
+            // If previous page is a FolderLinkPage and the current page is of other type
+            if (this.ViewModel?.ContentViewModel is FolderLinkViewModel && !(this.ContentFrame?.Content is FolderLinkPage))
+            {
+                // Remove the FolderLinkPage from the BackStack
+                if (NavigateService.MainFrame.BackStack.Any())
+                    NavigateService.MainFrame.BackStack.Remove(NavigateService.MainFrame.BackStack.Last());
+
+                this.ViewModel.MenuItems = MenuItemViewModel.CreateMenuItems();
+                this.ViewModel.OptionItems = MenuItemViewModel.CreateOptionItems();
+            }
+            // If current page is a FolderLinkPage and the previous page is of other type
+            if (!(this.ViewModel?.ContentViewModel is FolderLinkViewModel) && this.ContentFrame?.Content is FolderLinkPage)
+            {
+                this.ViewModel.MenuItems = MenuItemViewModel.CreateFolderLinkMenuItems();
+                this.ViewModel.OptionItems = MenuItemViewModel.CreateFolderLinkOptionItems();
+            }
+            
             // Set current content viewmodel as property of the main page
             // Could be handy in the future
             this.ViewModel.ContentViewModel = (this.ContentFrame.Content as Page)?.DataContext as BasePageViewModel;

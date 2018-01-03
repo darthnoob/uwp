@@ -120,6 +120,7 @@
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\LoginToFolderResult.cs" />
     <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
@@ -213,6 +215,7 @@
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
@@ -343,6 +346,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderLinkPage.xaml.cs">
+      <DependentUpon>FolderLinkPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\ConfirmParkAccountPage.xaml.cs">
       <DependentUpon>ConfirmParkAccountPage.xaml</DependentUpon>
@@ -575,6 +581,10 @@
     <Page Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FolderLinkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\ConfirmParkAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>

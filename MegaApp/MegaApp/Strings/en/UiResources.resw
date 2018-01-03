@@ -1420,6 +1420,11 @@ Keep the {0} code because are for include the total number of folders in runtime
     <value>Share to</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_FolderLink" xml:space="preserve">
+    <value>Folder link</value>
+    <comment>Label for any 'Folder link' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
   <data name="UI_OpenLink" xml:space="preserve">
     <value>Open link</value>
     <comment>Label for any 'Open link' button, link, text, title, etc. - (String as short as possible).
