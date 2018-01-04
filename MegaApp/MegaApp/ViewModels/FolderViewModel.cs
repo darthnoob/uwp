@@ -631,7 +631,7 @@ namespace MegaApp.ViewModels
                 TransferObjectModel uploadTransfer = null;
                 try
                 {
-                    uploadTransfer = new TransferObjectModel(
+                    uploadTransfer = new TransferObjectModel(this.MegaSdk,
                         this.FolderRootNode, MTransferType.TYPE_UPLOAD,
                         Path.Combine(uploadDir, file.Name));
 

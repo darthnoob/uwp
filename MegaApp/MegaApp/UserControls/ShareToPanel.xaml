@@ -212,6 +212,7 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="0,0" />
+                        <Setter Target="MainGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Single" />

@@ -183,7 +183,7 @@ namespace MegaApp.Services
 
                         if (node == null) return null;
 
-                        megaTransfer = new TransferObjectModel(
+                        megaTransfer = new TransferObjectModel(SdkService.MegaSdk,
                             NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, node, null),
                             MTransferType.TYPE_DOWNLOAD, transfer.getPath());
                         break;
@@ -193,7 +193,7 @@ namespace MegaApp.Services
 
                         if (parentNode == null) return null;
 
-                        megaTransfer = new TransferObjectModel(
+                        megaTransfer = new TransferObjectModel(SdkService.MegaSdk,
                             NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, parentNode, null),
                             MTransferType.TYPE_UPLOAD, transfer.getPath());
                         break;

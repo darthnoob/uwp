@@ -539,7 +539,7 @@ namespace MegaApp.ViewModels
         public async void Download(TransferQueue transferQueue)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline()) return;
             if (transferQueue == null) return;
 
             var downloadFolder = await FolderService.SelectFolder();

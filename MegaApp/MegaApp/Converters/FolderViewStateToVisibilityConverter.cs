@@ -179,6 +179,17 @@ namespace MegaApp.Converters
                         default:
                             return Visibility.Collapsed;
                     }
+
+                case ContainerType.FolderLink:
+                    switch (paramString)
+                    {
+                        case "download":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
             }
 
             return Visibility.Collapsed;

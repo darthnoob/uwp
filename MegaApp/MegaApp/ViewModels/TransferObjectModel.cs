@@ -35,9 +35,8 @@ namespace MegaApp.ViewModels
         /// <param name="externalDownloadPath">
         /// Only for downloads. External download path to the application for the selected file / folder
         /// </param>
-        public TransferObjectModel(IMegaNode selectedNode, MTransferType transferType,
-            string transferPath, string externalDownloadPath = null)
-            : base(SdkService.MegaSdk)
+        public TransferObjectModel(MegaSDK megaSdk, IMegaNode selectedNode, MTransferType transferType,
+            string transferPath, string externalDownloadPath = null) : base(megaSdk)
         {
             Initialize(selectedNode, transferType, transferPath, externalDownloadPath);
         }
@@ -118,15 +117,17 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
-                    this.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath,
-                        TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
+                    // Download all nodes with the App instance of the SDK and authorize nodes to be downloaded with this SDK instance.
+                    // Needed to allow transfers resumption of folder link nodes.
+                    SdkService.MegaSdk.startDownloadWithAppData(this.MegaSdk.authorizeNode(this.SelectedNode.OriginalMNode),
+                        this.TransferPath, TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
 
                 case MTransferType.TYPE_UPLOAD:
                     // Start uploads with the flag of temporary source activated to always automatically delete the 
                     // uploaded file from the upload temporary folder in the sandbox of the app
-                    this.MegaSdk.startUploadWithDataTempSource(this.TransferPath,
+                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath,
                         this.SelectedNode.OriginalMNode, string.Empty, true);
                     break;
 
@@ -142,7 +143,7 @@ namespace MegaApp.ViewModels
             var pauseTransfer = new PauseTransferRequestListenerAsync();
             var result = await pauseTransfer.ExecuteAsync(() =>
             {
-                this.MegaSdk.pauseTransfer(this.Transfer, pause, pauseTransfer);
+                SdkService.MegaSdk.pauseTransfer(this.Transfer, pause, pauseTransfer);
             });
 
             if (!result) return;
@@ -169,12 +170,12 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            this.MegaSdk.cancelTransfer(this.Transfer);
+            SdkService.MegaSdk.cancelTransfer(this.Transfer);
         }
 
         public void RetryTransfer()
         {
-            this.MegaSdk.retryTransfer(this.Transfer);
+            SdkService.MegaSdk.retryTransfer(this.Transfer);
         }
 
         public void RemoveTransfer()

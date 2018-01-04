@@ -300,6 +300,8 @@ namespace MegaApp.ViewModels.UserControls
         {
             get
             {
+                if (this.Folder?.Type == ContainerType.FolderLink) return false;
+
                 if (this.FolderRootNode is IncomingSharedFolderNodeViewModel)
                 {
                     var folderRootNode = this.FolderRootNode as IncomingSharedFolderNodeViewModel;
@@ -314,8 +316,25 @@ namespace MegaApp.ViewModels.UserControls
         /// <summary>
         /// Gets the "Folder options" button visibility
         /// </summary>
-        public Visibility FolderOptionsButtonVisibility => 
-            this.FolderRootNode is SharedFolderNodeViewModel ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility FolderOptionsButtonVisibility
+        {
+            get
+            {
+                switch(this.Folder?.Type)
+                {
+                    case ContainerType.FolderLink:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
+                    case ContainerType.ContactInShares:
+                        return Visibility.Visible;
+
+                    default:
+                        return Visibility.Collapsed;
+                }
+
+                return Visibility.Collapsed;
+            }
+        }
 
         #endregion
 
