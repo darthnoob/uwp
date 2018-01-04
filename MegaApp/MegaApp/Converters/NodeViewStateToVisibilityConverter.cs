@@ -112,10 +112,14 @@ namespace MegaApp.Converters
                     }
                 
                 case ContainerType.FolderLink:
-                    break;
+                    switch (command)
+                    {
+                        case "download":
+                            return Visibility.Visible;
 
-                default:
-                    throw new ArgumentOutOfRangeException();
+                        default:
+                            return Visibility.Collapsed;
+                    }
             }
 
             return Visibility.Collapsed;
