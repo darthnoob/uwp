@@ -14,11 +14,12 @@ namespace MegaApp.ViewModels.Contacts
         /// View model to manage a contact requests list
         /// </summary>
         /// <param name="isOutgoing">Indicate the contact request list is for outgoing requests or not</param>
-        public ContactRequestsListViewModel(bool isOutgoing) : base(isOutgoing)
+        public ContactRequestsListViewModel(bool isOutgoing) : 
+            base(SdkService.MegaSdk, isOutgoing)
         {
             this._isOutgoing = isOutgoing;
             this.ContentType = this._isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
-            this.ItemCollection = new CollectionViewModel<IMegaContactRequest>();
+            this.ItemCollection = new CollectionViewModel<IMegaContactRequest>(this.MegaSdk);
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
@@ -65,8 +66,8 @@ namespace MegaApp.ViewModels.Contacts
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
 
             var contactRequestsList = _isOutgoing ?
-                SdkService.MegaSdk.getOutgoingContactRequests() : 
-                SdkService.MegaSdk.getIncomingContactRequests();
+                this.MegaSdk.getOutgoingContactRequests() : 
+                this.MegaSdk.getIncomingContactRequests();
 
             var contactRequestsListSize = contactRequestsList.size();
 

@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels.SharedFolders
     public class SharedFoldersListViewModel : FolderViewModel
     {
         public SharedFoldersListViewModel(ContainerType containerType, bool isCopyOrMoveViewModel = false) : 
-            base(containerType, isCopyOrMoveViewModel)
+            base(SdkService.MegaSdk, containerType, isCopyOrMoveViewModel)
         {
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);

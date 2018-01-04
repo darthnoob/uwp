@@ -37,6 +37,7 @@ namespace MegaApp.ViewModels
         /// </param>
         public TransferObjectModel(IMegaNode selectedNode, MTransferType transferType,
             string transferPath, string externalDownloadPath = null)
+            : base(SdkService.MegaSdk)
         {
             Initialize(selectedNode, transferType, transferPath, externalDownloadPath);
         }
@@ -117,7 +118,7 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
-                    SdkService.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath,
+                    this.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath,
                         TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
@@ -125,7 +126,7 @@ namespace MegaApp.ViewModels
                 case MTransferType.TYPE_UPLOAD:
                     // Start uploads with the flag of temporary source activated to always automatically delete the 
                     // uploaded file from the upload temporary folder in the sandbox of the app
-                    SdkService.MegaSdk.startUploadWithDataTempSource(this.TransferPath,
+                    this.MegaSdk.startUploadWithDataTempSource(this.TransferPath,
                         this.SelectedNode.OriginalMNode, string.Empty, true);
                     break;
 
@@ -141,7 +142,7 @@ namespace MegaApp.ViewModels
             var pauseTransfer = new PauseTransferRequestListenerAsync();
             var result = await pauseTransfer.ExecuteAsync(() =>
             {
-                SdkService.MegaSdk.pauseTransfer(this.Transfer, pause, pauseTransfer);
+                this.MegaSdk.pauseTransfer(this.Transfer, pause, pauseTransfer);
             });
 
             if (!result) return;
@@ -168,12 +169,12 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            SdkService.MegaSdk.cancelTransfer(this.Transfer);
+            this.MegaSdk.cancelTransfer(this.Transfer);
         }
 
         public void RetryTransfer()
         {
-            SdkService.MegaSdk.retryTransfer(this.Transfer);
+            this.MegaSdk.retryTransfer(this.Transfer);
         }
 
         public void RemoveTransfer()

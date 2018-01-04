@@ -13,9 +13,9 @@ namespace MegaApp.ViewModels
     {
         private static bool isMessageVisible = false;
 
-        protected BaseSdkViewModel()
+        protected BaseSdkViewModel(MegaSDK megaSdk)
         {
-            this.MegaSdk = SdkService.MegaSdk;
+            this.MegaSdk = megaSdk;
         }
 
         #region Methods

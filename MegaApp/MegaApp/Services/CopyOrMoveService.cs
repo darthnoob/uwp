@@ -45,7 +45,7 @@ namespace MegaApp.Services
             {
                 if (_cloudDrive != null) return _cloudDrive;
 
-                _cloudDrive = new FolderViewModel(ContainerType.CloudDrive, true);
+                _cloudDrive = new FolderViewModel(SdkService.MegaSdk, ContainerType.CloudDrive, true);
                 _cloudDrive.FolderRootNode =
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
                     SdkService.MegaSdk.getRootNode(), _cloudDrive);

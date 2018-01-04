@@ -7,7 +7,7 @@ namespace MegaApp.ViewModels
 {
     public class MyAccountViewModel : BaseSdkViewModel
     {
-        public MyAccountViewModel()
+        public MyAccountViewModel() : base(SdkService.MegaSdk)
         {
             this.LogOutCommand = new RelayCommand(LogOut);
         }

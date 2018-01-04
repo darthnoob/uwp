@@ -15,10 +15,10 @@ namespace MegaApp.ViewModels
     /// </summary>
     public class TransferListViewModel: BaseSdkViewModel
     {
-        public TransferListViewModel(MTransferType type)
+        public TransferListViewModel(MTransferType type) : base(SdkService.MegaSdk)
         {
             this.Type = type;
-            this.ItemCollection = new CollectionViewModel<TransferObjectModel>();
+            this.ItemCollection = new CollectionViewModel<TransferObjectModel>(this.MegaSdk);
 
             switch (this.Type)
             {
@@ -52,9 +52,9 @@ namespace MegaApp.ViewModels
             this.ItemCollection.Items.CollectionChanged += ItemsOnCollectionChanged;
         }
 
-        public TransferListViewModel()
+        public TransferListViewModel() : base(SdkService.MegaSdk)
         {
-            this.ItemCollection = new CollectionViewModel<TransferObjectModel>();
+            this.ItemCollection = new CollectionViewModel<TransferObjectModel>(this.MegaSdk);
 
             this.Description = ResourceService.UiResources.GetString("UI_Completed");
             this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_CompletedTransfersHeader"); ;
@@ -93,7 +93,7 @@ namespace MegaApp.ViewModels
             var pauseTransfers = new PauseTransfersRequestListenerAsync();
             var result = await pauseTransfers.ExecuteAsync(() =>
             {
-                SdkService.MegaSdk.pauseTransfersDirection(playPauseStatus,
+                this.MegaSdk.pauseTransfersDirection(playPauseStatus,
                     (int)this.Type, pauseTransfers);
             });
 
@@ -131,7 +131,7 @@ namespace MegaApp.ViewModels
                 }
             }
 
-            SdkService.MegaSdk.cancelTransfers((int)this.Type);
+            this.MegaSdk.cancelTransfers((int)this.Type);
         }
 
         #region Commands

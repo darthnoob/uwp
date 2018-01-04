@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using mega;
 using MegaApp.Enums;
-using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 
@@ -9,7 +8,7 @@ namespace MegaApp.ViewModels
 {
     public class FolderLinkViewModel : BaseSdkViewModel
     {
-        public FolderLinkViewModel()
+        public FolderLinkViewModel() : base(SdkService.MegaSdkFolderLinks)
         {
             InitializeModel();
         }
@@ -18,7 +17,7 @@ namespace MegaApp.ViewModels
 
         private void InitializeModel()
         {
-            this.FolderLink = new FolderViewModel(ContainerType.FolderLink);
+            this.FolderLink = new FolderViewModel(this.MegaSdk, ContainerType.FolderLink);
         }
 
         public async void LoginToFolder(string link)
@@ -32,7 +31,7 @@ namespace MegaApp.ViewModels
 
             var result = await _loginToFolder.ExecuteAsync(() =>
             {
-                SdkService.MegaSdkFolderLinks.loginToFolder(_link, _loginToFolder);
+                this.MegaSdk.loginToFolder(_link, _loginToFolder);
             });
 
             switch(result)
@@ -71,7 +70,7 @@ namespace MegaApp.ViewModels
             //fetchNodes.DecryptNodes += OnDecryptNodes;
             //fetchNodes.ServerBusy += OnServerBusy;
 
-            var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdkFolderLinks.fetchNodes(fetchNodes));
+            var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
             if (!fetchNodesResult)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
@@ -82,7 +81,7 @@ namespace MegaApp.ViewModels
             }
 
             // Enable the transfer resumption for the main MegaSDK instance
-            //SdkService.MegaSdkFolderLinks.enableTransferResumption();
+            //SdkService.MegaSdk.enableTransferResumption();
 
             this.ControlState = true;
             this.IsBusy = false;
@@ -95,8 +94,8 @@ namespace MegaApp.ViewModels
             if (this.FolderLink.FolderRootNode == null)
             {
                 this.FolderLink.FolderRootNode = NodeService.CreateNew(
-                    SdkService.MegaSdkFolderLinks, App.AppInformation,
-                    SdkService.MegaSdkFolderLinks.getRootNode(), this.FolderLink);
+                    this.MegaSdk, App.AppInformation,
+                    this.MegaSdk.getRootNode(), this.FolderLink);
             }
 
             // Store the absolute root node of the folder link

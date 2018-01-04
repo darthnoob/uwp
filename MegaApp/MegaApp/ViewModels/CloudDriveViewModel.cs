@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public CloudDriveViewModel()
+        public CloudDriveViewModel() : base(SdkService.MegaSdk)
         {
             InitializeModel();
 
@@ -21,8 +21,8 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void InitializeModel()
         {
-            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
-            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
+            this.CloudDrive = new FolderViewModel(this.MegaSdk, ContainerType.CloudDrive);
+            this.RubbishBin = new FolderViewModel(this.MegaSdk, ContainerType.RubbishBin);
             this.CameraUploads = new CameraUploadsViewModel();
 
             this.RubbishBin.ChildNodesCollectionChanged += OnRubbishBinChildNodesCollectionChanged;
@@ -85,8 +85,8 @@ namespace MegaApp.ViewModels
             if (this.CloudDrive?.FolderRootNode == null)
             {
                 this.CloudDrive.FolderRootNode = 
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRootNode(), this.CloudDrive);
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                    this.MegaSdk.getRootNode(), this.CloudDrive);
             }
 
             if(this.ActiveFolderView.Equals(this.CloudDrive))
@@ -95,8 +95,8 @@ namespace MegaApp.ViewModels
             if (this.RubbishBin?.FolderRootNode == null)
             {
                 this.RubbishBin.FolderRootNode = 
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRubbishNode(), this.RubbishBin);
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                    this.MegaSdk.getRubbishNode(), this.RubbishBin);
             }
 
             if (this.ActiveFolderView.Equals(this.RubbishBin))
@@ -106,7 +106,7 @@ namespace MegaApp.ViewModels
             {
                 var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
                 this.CameraUploads.FolderRootNode =
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
                         cameraUploadsNode, this.CameraUploads);
             }
 

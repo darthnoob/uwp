@@ -188,8 +188,11 @@ namespace MegaApp.ViewModels.UserControls
 
                 if (this.Folder?.FolderRootNode == null) return string.Empty;
 
-                var numChildFolders = SdkService.MegaSdk.getNumChildFolders(this.Folder.FolderRootNode.OriginalMNode);
-                var numChildFiles = SdkService.MegaSdk.getNumChildFiles(this.Folder.FolderRootNode.OriginalMNode);
+                var megaSdk = this.Folder.Type == ContainerType.FolderLink ?
+                    SdkService.MegaSdkFolderLinks : SdkService.MegaSdk;
+
+                var numChildFolders = megaSdk.getNumChildFolders(this.Folder.FolderRootNode.OriginalMNode);
+                var numChildFiles = megaSdk.getNumChildFiles(this.Folder.FolderRootNode.OriginalMNode);
 
                 switch (UiService.GetSortOrder(this.Folder.FolderRootNode.Base64Handle, this.Folder.FolderRootNode.Name))
                 {

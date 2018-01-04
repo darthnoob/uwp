@@ -8,7 +8,7 @@ namespace MegaApp.ViewModels
 {
     public class BreadCrumbViewModel: BaseSdkViewModel
     {
-        public BreadCrumbViewModel()
+        public BreadCrumbViewModel(MegaSDK megaSdk) : base(megaSdk)
         {
             this.Items = new ObservableCollection<IBaseNode>();
             this.Items.CollectionChanged += OnItemsCollectionChanged;

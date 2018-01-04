@@ -16,10 +16,10 @@ namespace MegaApp.ViewModels.Contacts
 {
     public class ContactsListViewModel : ContactsBaseViewModel<IMegaContact>
     {
-        public ContactsListViewModel()
+        public ContactsListViewModel() : base(SdkService.MegaSdk)
         {
             this.ContentType = ContactsContentType.Contacts;
-            this.ItemCollection = new CollectionViewModel<IMegaContact>();
+            this.ItemCollection = new CollectionViewModel<IMegaContact>(this.MegaSdk);
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
@@ -92,7 +92,7 @@ namespace MegaApp.ViewModels.Contacts
 
             var inviteContact = new InviteContactRequestListenerAsync();
             var result = await inviteContact.ExecuteAsync(() =>
-                SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
+                this.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
                     MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
 
             switch (result)
@@ -176,7 +176,7 @@ namespace MegaApp.ViewModels.Contacts
             CreateLoadCancelOption();
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
-            MUserList contactsList = SdkService.MegaSdk.getContacts();
+            MUserList contactsList = this.MegaSdk.getContacts();
 
             await Task.Factory.StartNew(() =>
             {

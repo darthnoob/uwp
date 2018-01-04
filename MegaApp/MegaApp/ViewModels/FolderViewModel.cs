@@ -37,7 +37,8 @@ namespace MegaApp.ViewModels
 
         public event EventHandler ChildNodesCollectionChanged;
 
-        public FolderViewModel(ContainerType containerType, bool isCopyOrMoveViewModel = false)
+        public FolderViewModel(MegaSDK megaSdk, ContainerType containerType, bool isCopyOrMoveViewModel = false) 
+            : base(megaSdk)
         {
             this.Type = containerType;
 
@@ -47,8 +48,8 @@ namespace MegaApp.ViewModels
             this.IsLoaded = false;
             this.IsBusy = false;
             this.BusyText = null;
-            this.BreadCrumb = new BreadCrumbViewModel();
-            this.ItemCollection = new CollectionViewModel<IMegaNode>();
+            this.BreadCrumb = new BreadCrumbViewModel(megaSdk);
+            this.ItemCollection = new CollectionViewModel<IMegaNode>(megaSdk);
             this.VisiblePanel = PanelType.None;
 
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
@@ -888,15 +889,15 @@ namespace MegaApp.ViewModels
             {
                 case ContainerType.CloudDrive:
                     homeNode = this.MegaSdk.getRootNode();
-                    homeFolder = new FolderViewModel(ContainerType.CloudDrive);
+                    homeFolder = new FolderViewModel(this.MegaSdk, ContainerType.CloudDrive);
                     break;
                 case ContainerType.RubbishBin:
                     homeNode = this.MegaSdk.getRubbishNode();
-                    homeFolder = new FolderViewModel(ContainerType.RubbishBin);
+                    homeFolder = new FolderViewModel(this.MegaSdk, ContainerType.RubbishBin);
                     break;
                 case ContainerType.CameraUploads:
                     homeNode = await SdkService.GetCameraUploadRootNodeAsync();
-                    homeFolder = new FolderViewModel(ContainerType.CameraUploads);
+                    homeFolder = new FolderViewModel(this.MegaSdk, ContainerType.CameraUploads);
                     break;
             }
 
@@ -973,7 +974,7 @@ namespace MegaApp.ViewModels
                 // To avoid pass null values to CreateNew
                 if (childList.get(i) == null) continue;
 
-                var node = NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, childList.get(i), this, this.ItemCollection.Items);
+                var node = NodeService.CreateNew(this.MegaSdk, App.AppInformation, childList.get(i), this, this.ItemCollection.Items);
 
                 // If node creation failed for some reason, continue with the rest and leave this one
                 if (node == null) continue;

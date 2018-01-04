@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels
         public LoginViewModel LoginViewModel { get; }
         public CreateAccountViewModel CreateAccountViewModel { get; }
 
-        public LoginAndCreateAccountViewModel()
+        public LoginAndCreateAccountViewModel() : base(SdkService.MegaSdk)
         {
             this.LoginViewModel = new LoginViewModel();
             this.CreateAccountViewModel = new CreateAccountViewModel();

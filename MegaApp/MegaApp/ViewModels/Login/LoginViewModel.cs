@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels.Login
 {
     public class LoginViewModel : BaseSdkViewModel
     {
-        public LoginViewModel()
+        public LoginViewModel() : base(SdkService.MegaSdk)
         {
             this.ControlState = true;
             this.LoginCommand = new RelayCommand(Login);
@@ -187,7 +187,7 @@ namespace MegaApp.ViewModels.Login
 
                 fastLoginResult = await fastLogin.ExecuteAsync(() =>
                 {
-                    SdkService.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
+                    this.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
                         ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
                         fastLogin);
                 });
@@ -226,7 +226,7 @@ namespace MegaApp.ViewModels.Login
                 fetchNodes.DecryptNodes += OnDecryptNodes;
                 fetchNodes.ServerBusy += OnServerBusy;
 
-                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
+                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
                 if (!fetchNodesResult)
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
@@ -236,8 +236,8 @@ namespace MegaApp.ViewModels.Login
                     return false;
                 }
 
-                // Enable the transfer resumption for the main MegaSDK instance
-                SdkService.MegaSdk.enableTransferResumption();
+                // Enable the transfer resumption for the MegaSDK instance
+                this.MegaSdk.enableTransferResumption();
 
                 this.ControlState = true;
                 this.IsBusy = false;
