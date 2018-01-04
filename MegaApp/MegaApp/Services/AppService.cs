@@ -105,6 +105,15 @@ namespace MegaApp.Services
                         ResourceService.UiResources.GetString("UI_ChangeEmail"),
                         ResourceService.AppMessages.GetString("AM_UserNotOnline"));
                 }
+                else if (App.LinkInformation.ActiveLink.Contains("#F!"))
+                {
+                    if (hasActiveAndOnlineSession)
+                        return await SpecialNavigation();
+
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.UiResources.GetString("UI_FolderLink"),
+                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+                }
             }
 
             return false;
@@ -204,6 +213,16 @@ namespace MegaApp.Services
                         break;
 
                 }
+            }
+
+            if (App.LinkInformation.ActiveLink.Contains("#F!"))
+            {
+                App.LinkInformation.UriLink = UriLinkType.Folder;
+
+                // Navigate to the folder link page
+                UiService.OnUiThread(() =>
+                    NavigateService.Instance.Navigate(typeof(FolderLinkPage), false));
+                return true;
             }
 
             return false;
