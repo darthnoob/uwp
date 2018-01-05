@@ -36,6 +36,7 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
+            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.CloudDrive;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
 

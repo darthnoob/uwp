@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -114,8 +115,8 @@ namespace MegaApp.ViewModels.UserControls
                 OnPropertyChanged(nameof(this.IsFolder), 
                     nameof(this.FolderNode), nameof(this.SharedFolderNode), 
                     nameof(this.IsInShare), nameof(this.IsOutShare),
-                    nameof(this.ContentsOrTypeLabelText), nameof(this.ContentsOrTypeText),
-                    nameof(this.DateCreatedLabelText));
+                    nameof(this.IsFolderLinkChild), nameof(this.ContentsOrTypeLabelText),
+                    nameof(this.ContentsOrTypeText), nameof(this.DateCreatedLabelText));
 
                 this.GetLinkWithKey();
             }
@@ -124,6 +125,7 @@ namespace MegaApp.ViewModels.UserControls
         public bool IsFolder => this.Node is FolderNodeViewModel;
         public bool IsInShare => this.Node is IncomingSharedFolderNodeViewModel;
         public bool IsOutShare => this.Node is OutgoingSharedFolderNodeViewModel;
+        public bool IsFolderLinkChild => this.Node?.Parent?.Type == ContainerType.FolderLink;
 
         public FolderNodeViewModel FolderNode => this.Node as FolderNodeViewModel;
         public SharedFolderNodeViewModel SharedFolderNode => this.Node as SharedFolderNodeViewModel;

@@ -10,164 +10,208 @@
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
+    d:DataContext="{d:DesignInstance viewModels:FolderLinkViewModel}"
     mc:Ignorable="d">
 
-    <Grid
-        DataContext="{x:Bind ViewModel}"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock
-                x:Name="SectionNameText"
-                Grid.Column="0"
-                Margin="24,14,0,0"
-                FontSize="12"
-                Foreground="{StaticResource MegaRedColorBrush}"
-                Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
-
-            <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
-            <CommandBar
-                x:Name="TopCommandBar"
-                Grid.Column="1"
-                DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
-                Background="Transparent"
-                extensions:CommandBarExtensions.HideMoreButton="True">
-                <AppBarButton
-                    Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
-                    Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
-                    Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
-                    Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
-                    Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.MultiSelectPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar>
-
-            <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
-            <CommandBar
-                DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
-                Background="Transparent"
-                Grid.Column="2"
-                extensions:CommandBarExtensions.HideMoreButton="True"
-                IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}">
-                <AppBarSeparator
-                    x:Name="PermanentTopCommandBarSeparator"
-                    Margin="-12,0"
-                    VerticalAlignment="Center"/>
-                <AppBarButton
-                    x:Name="BtnSort"
-                    Click="OnSortClick"
-                    Label="{x:Bind ViewModel.FolderLink.SortByText}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.SortByText}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.SortByPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    x:Name="BtnChangeView"
-                    Command="{x:Bind ViewModel.FolderLink.ChangeViewCommand}"
-                    Label="{x:Bind ViewModel.FolderLink.NextViewButtonLabelText}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.NextViewButtonLabelText}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.NextViewButtonPathData, Mode=OneWay}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar>
-        </Grid>
+    <SplitView
+        x:Name="FolderLinkSplitView"
+        DisplayMode="Inline"
+        IsPaneOpen="{Binding FolderLink.IsPanelOpen}"
+        PanePlacement="Right">
+        <SplitView.Pane>
+            <Grid>
+                <userControls:NodeInformationPanel
+                    x:Name="InformationPanelControl"
+                    DataContext="{x:Bind ViewModel.FolderLink}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Node="{Binding ItemCollection.FocusedItem}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+            </Grid>
+        </SplitView.Pane>
 
         <Grid
-            x:Name="MainGrid"
-            Grid.Row="1"
-            Background="Transparent"
-            Margin="24,8,12,0">
+            DataContext="{x:Bind ViewModel}"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
-            <TextBlock
-                Grid.Row="0"
-                FontSize="20"
-                Text="{x:Bind ViewModel.FolderLinkRootNode.Name, Mode=OneWay}" />
-            
-            <userControls:FolderExplorer
-                x:Name="FolderLinkExplorer"
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    x:Name="SectionNameText"
+                    Grid.Column="0"
+                    Margin="24,14,0,0"
+                    FontSize="12"
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
+
+                <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
+                <Grid
+                    Grid.Column="1"
+                    Visibility="{Binding FolderLink.IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Grid x:Name="TopCommandBar">
+
+                        <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+                        <CommandBar
+                            DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
+                            Background="Transparent"
+                            extensions:CommandBarExtensions.HideMoreButton="True">
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                                Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                                Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{x:Bind ViewModel.FolderLink.MultiSelectPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
+                    </Grid>
+                </Grid>
+
+                <!--  CLOSE PANEL TOP COMMAND BAR (ONLY DESKTOP)  -->
+                <CommandBar 
+                    DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
+                    Grid.Column="2"
+                    Background="Transparent"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FolderLink.ClosePanelCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.ClosePanelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ClosePanelText, Mode=OneTime}">
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xEA5B;"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+                
+                <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+                <CommandBar
+                    DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
+                    Background="Transparent"
+                    Grid.Column="2"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <AppBarSeparator
+                        x:Name="PermanentTopCommandBarSeparator"
+                        Margin="-12,0"
+                        VerticalAlignment="Center"/>
+                    <AppBarButton
+                        x:Name="BtnSort"
+                        Click="OnSortClick"
+                        Label="{x:Bind ViewModel.FolderLink.SortByText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.SortByText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.FolderLink.SortByPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        x:Name="BtnChangeView"
+                        Command="{x:Bind ViewModel.FolderLink.ChangeViewCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.NextViewButtonLabelText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.NextViewButtonLabelText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.FolderLink.NextViewButtonPathData, Mode=OneWay}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+
+            <Grid
+                x:Name="MainGrid"
                 Grid.Row="1"
-                Margin="0,12,0,0"
-                Background="{StaticResource MegaAppBackgroundBrush}"
-                Foreground="{StaticResource MegaAppForegroundBrush}"
-                Folder="{x:Bind ViewModel.FolderLink, Mode=OneWay}"/>
-        </Grid>
+                Background="Transparent"
+                Margin="24,8,12,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-        <Grid x:Name="BottomCommandBar" Grid.Row="2">
-            <CommandBar 
-                DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
-                Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton
-                    Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
-                    Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
-                    Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
-                    Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}">
-                    <AppBarButton.Icon>
-                        <PathIcon
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{x:Bind ViewModel.FolderLink.MultiSelectPathData, Mode=OneTime}" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar>
-        </Grid>
+                <TextBlock
+                    Grid.Row="0"
+                    FontSize="20"
+                    Text="{x:Bind ViewModel.FolderLinkRootNode.Name, Mode=OneWay}" />
 
+                <userControls:FolderExplorer
+                    x:Name="FolderLinkExplorer"
+                    Grid.Row="1"
+                    Margin="0,12,0,0"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Folder="{x:Bind ViewModel.FolderLink, Mode=OneWay}"/>
+            </Grid>
+
+            <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
+            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+                <CommandBar 
+                    DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
+                    Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
+                        Visibility="{Binding Folder, ConverterParameter='download', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.FolderLink.MultiSelectPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+        </Grid>
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Desktop">
@@ -213,6 +257,6 @@
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
-    </Grid>
+    </SplitView>
 </views:BaseFolderLinkPage>
     

@@ -3,6 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Converters
 {
@@ -84,12 +85,30 @@ namespace MegaApp.Converters
                             return Visibility.Visible;
 
                         case "remove":
-                            return parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                            if (parentFolder is SharedFoldersListViewModel)
+                                return Visibility.Collapsed;
+
+                            return parentFolder.FolderRootNode != null && parentFolder.FolderRootNode.HasFullAccessPermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "rename":
-                            return parentFolder.ItemCollection.MoreThanOneSelected || !parentFolder.FolderRootNode.HasFullAccessPermissions ?
-                                Visibility.Collapsed: Visibility.Visible;
+                            if (parentFolder.ItemCollection != null && parentFolder.ItemCollection.OnlyOneSelectedItem)
+                            {
+                                if (parentFolder is SharedFoldersListViewModel)
+                                {
+                                    return parentFolder.ItemCollection.FocusedItem != null && parentFolder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                        Visibility.Visible : Visibility.Collapsed;
+                                }
+
+                                return parentFolder.FolderRootNode != null && parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                                    Visibility.Visible : Visibility.Collapsed;
+                            }
+
+                            return Visibility.Collapsed;
+
+                        case "leaveshare":
+                            return parentFolder is SharedFoldersListViewModel ?
+                                Visibility.Visible : Visibility.Collapsed;
 
                         default:
                             return Visibility.Collapsed;
@@ -114,6 +133,14 @@ namespace MegaApp.Converters
                 case ContainerType.FolderLink:
                     switch (command)
                     {
+                        case "preview":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsImage ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "information":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "download":
                             return Visibility.Visible;
 

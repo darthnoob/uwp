@@ -326,10 +326,7 @@ namespace MegaApp.ViewModels.UserControls
                     case ContainerType.InShares:
                     case ContainerType.OutShares:
                     case ContainerType.ContactInShares:
-                        return Visibility.Visible;
-
-                    default:
-                        return Visibility.Collapsed;
+                        return Visibility.Visible;                    
                 }
 
                 return Visibility.Collapsed;
