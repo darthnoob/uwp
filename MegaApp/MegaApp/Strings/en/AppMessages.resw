@@ -1168,4 +1168,12 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Import failed</value>
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_LoginToFolderFailed" xml:space="preserve">
+    <value>Failed opening the folder link. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
+  </data>
+  <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
+    <value>Open folder link failed</value>
+    <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
+  </data>
 </root>

@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
-using mega;
+﻿using mega;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Login;
 
 namespace MegaApp.ViewModels
 {
-    public class FolderLinkViewModel : BaseSdkViewModel
+    public class FolderLinkViewModel : LoginViewModel
     {
         public FolderLinkViewModel() : base(SdkService.MegaSdkFolderLinks)
         {
@@ -28,11 +28,16 @@ namespace MegaApp.ViewModels
 
             if (_loginToFolder == null)
                 _loginToFolder = new LoginToFolderRequestListenerAsync();
+            _loginToFolder.ServerBusy += OnServerBusy;
+
+            this.ControlState = false;
+            this.IsBusy = true;
+
+            this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginToFolderHeader");
+            this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginToFolderSubHeader");
 
             var result = await _loginToFolder.ExecuteAsync(() =>
-            {
-                this.MegaSdk.loginToFolder(_link, _loginToFolder);
-            });
+                this.MegaSdk.loginToFolder(_link, _loginToFolder));
 
             switch(result)
             {
@@ -42,6 +47,7 @@ namespace MegaApp.ViewModels
                     break;
 
                 case LoginToFolderResult.InvalidHandleOrDecryptionKey:
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Login to folder failed. Invalid handle or decryption key.");
                     this.ShowFolderLinkNoValidAlert();
                     break;
 
@@ -54,39 +60,15 @@ namespace MegaApp.ViewModels
                     break;
 
                 case LoginToFolderResult.Unknown:
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login to folder failed.");
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_LoginToFolderFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_LoginToFolderFailed"));
                     break;
             }
-        }
-
-        /// <summary>
-        /// Fetch nodes and show an alert if something went wrong.
-        /// </summary>
-        /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        private async Task<bool> FetchNodes()
-        {
-            //this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
-
-            var fetchNodes = new FetchNodesRequestListenerAsync();
-            //fetchNodes.DecryptNodes += OnDecryptNodes;
-            //fetchNodes.ServerBusy += OnServerBusy;
-
-            var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
-            if (!fetchNodesResult)
-            {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
-                return false;
-            }
-
-            // Enable the transfer resumption for the main MegaSDK instance
-            //SdkService.MegaSdk.enableTransferResumption();
 
             this.ControlState = true;
             this.IsBusy = false;
-
-            return true;
         }
 
         private void LoadFolder()

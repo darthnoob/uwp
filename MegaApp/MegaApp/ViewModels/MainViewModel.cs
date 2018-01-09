@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels
 {
     public class MainViewModel : LoginViewModel
     {
-        public MainViewModel()
+        public MainViewModel() : base(SdkService.MegaSdk)
         {
             this.MenuItems = MenuItemViewModel.CreateMenuItems();
             this.OptionItems = MenuItemViewModel.CreateOptionItems();

@@ -195,6 +195,31 @@
                     Folder="{x:Bind ViewModel.FolderLink, Mode=OneWay}"/>
             </Grid>
 
+            <Grid
+                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                extensions:IsVisibleAnimation.IsVisible="{Binding IsBusy}"
+                Background="{StaticResource MegaAppBackgroundBrush}"
+                Visibility="Collapsed">
+                <userControls:ActivityIndicator
+                    x:Name="ActivityIndicator"
+                    Grid.Row="1"
+                    Margin="72,0,0,0"
+                    HorizontalContentAlignment="Stretch"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    HeaderText="{Binding ProgressHeaderText}"
+                    IsVisible="{Binding IsBusy}"
+                    ProgressText="{Binding ProgressSubHeaderText}">
+                    <userControls:ActivityIndicator.SubHeaderForeground>
+                        <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
+                    </userControls:ActivityIndicator.SubHeaderForeground>
+                    <userControls:ActivityIndicator.ProgressTextForeground>
+                        <SolidColorBrush Opacity="0.5" Color="{ThemeResource MegaAppForeground}" />
+                    </userControls:ActivityIndicator.ProgressTextForeground>
+                </userControls:ActivityIndicator>
+            </Grid>
+
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
             <Grid x:Name="BottomCommandBar" Grid.Row="2">
                 <CommandBar 
@@ -249,6 +274,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
+                        <Setter Target="ActivityIndicator.Margin" Value="72,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -259,6 +285,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                        <Setter Target="ActivityIndicator.Margin" Value="20,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

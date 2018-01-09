@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels.Login
 {
     public class LoginViewModel : BaseSdkViewModel
     {
-        public LoginViewModel() : base(SdkService.MegaSdk)
+        public LoginViewModel(MegaSDK megaSdk) : base(megaSdk)
         {
             this.ControlState = true;
             this.LoginCommand = new RelayCommand(Login);
@@ -22,12 +22,12 @@ namespace MegaApp.ViewModels.Login
 
         #region Methods
 
-        private void OnDecryptNodes(object sender, EventArgs e)
+        protected void OnDecryptNodes(object sender, EventArgs e)
         {
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
-        private void OnServerBusy(object sender, EventArgs e)
+        protected void OnServerBusy(object sender, EventArgs e)
         {
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
@@ -216,7 +216,7 @@ namespace MegaApp.ViewModels.Login
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        private async Task<bool> FetchNodes()
+        protected async Task<bool> FetchNodes()
         {
             try
             {
