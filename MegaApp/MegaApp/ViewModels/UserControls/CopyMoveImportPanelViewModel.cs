@@ -10,9 +10,9 @@ using MegaApp.Views;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class CopyOrMovePanelViewModel : BaseViewModel
+    public class CopyMoveImportPanelViewModel : BaseViewModel
     {
-        public CopyOrMovePanelViewModel()
+        public CopyMoveImportPanelViewModel()
         {
             SelectedNodesService.SelectedNodesChanged += (sender, args) =>
             {

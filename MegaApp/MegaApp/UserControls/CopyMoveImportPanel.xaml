@@ -1,5 +1,5 @@
-﻿<userControls:BaseCopyOrMovePanel
-    x:Class="MegaApp.UserControls.CopyOrMovePanel"
+﻿<userControls:BaseCopyMoveImportPanel
+    x:Class="MegaApp.UserControls.CopyMoveImportPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MegaApp.UserControls"
@@ -10,7 +10,7 @@
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance userControlsViewModels:CopyOrMovePanelViewModel}">
+    d:DataContext="{d:DesignInstance userControlsViewModels:CopyMoveImportPanelViewModel}">
 
     <Grid DataContext="{x:Bind ViewModel}">
         <Grid.RowDefinitions>
@@ -236,4 +236,4 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-</userControls:BaseCopyOrMovePanel>
+</userControls:BaseCopyMoveImportPanel>

@@ -39,7 +39,7 @@
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
 
-                <userControls:CopyOrMovePanel
+                <userControls:CopyMoveImportPanel
                     x:Name="CopyOrMovePanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"

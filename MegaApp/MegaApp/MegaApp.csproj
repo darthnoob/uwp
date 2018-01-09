@@ -139,8 +139,8 @@
     <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
-    <Compile Include="UserControls\CopyOrMovePanel.xaml.cs">
-      <DependentUpon>CopyOrMovePanel.xaml</DependentUpon>
+    <Compile Include="UserControls\CopyMoveImportPanel.xaml.cs">
+      <DependentUpon>CopyMoveImportPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
@@ -225,7 +225,7 @@
     <Compile Include="ViewModels\AccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\CopyOrMovePanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CopyMoveImportPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\NodeInformationPanelViewModel.cs" />
@@ -500,7 +500,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UserControls\CopyOrMovePanel.xaml">
+    <Page Include="UserControls\CopyMoveImportPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
