@@ -43,6 +43,7 @@ namespace MegaApp.ViewModels
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
+            this.ImportCommand = new RelayCommand(Import);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
@@ -63,6 +64,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
+        public ICommand ImportCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
@@ -327,6 +329,27 @@ namespace MegaApp.ViewModels
             return NodeActionResult.Succeeded;
         }
 
+        /// <summary>
+        /// Import the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
+        {
+            // User must be online to perform this operation
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline())
+                return NodeActionResult.NotOnline;
+
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
+                newParentNode.OriginalMNode, copyNode));
+
+            if (!result) return NodeActionResult.Failed;
+
+            return NodeActionResult.Succeeded;
+        }
+
         private void Preview()
         {
             this.Parent.FocusedNode = this;
@@ -550,6 +573,16 @@ namespace MegaApp.ViewModels
             this.Transfer.ExternalDownloadPath = downloadFolder.Path;
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
+        }
+
+        private void Import()
+        {
+            if (this.Parent != null && this.Parent.ItemCollection.IsMultiSelectActive)
+            {
+                if (this.Parent.ImportCommand.CanExecute(null))
+                    this.Parent.ImportCommand.Execute(null);
+                return;
+            }
         }
 
         /// <summary>
@@ -816,6 +849,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");

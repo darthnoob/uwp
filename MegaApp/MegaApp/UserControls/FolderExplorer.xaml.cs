@@ -110,6 +110,8 @@ namespace MegaApp.UserControls
 
         public void EnableSelection()
         {
+            this.FolderOptionsButton.IsEnabled = true;
+
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
             this.ListView.SelectionMode = ListViewSelectionMode.Extended;
             this.GridView.SelectionMode = ListViewSelectionMode.Extended;
@@ -117,6 +119,8 @@ namespace MegaApp.UserControls
 
         public void DisableSelection()
         {
+            this.FolderOptionsButton.IsEnabled = false;
+
             this.ListView.SelectionMode = ListViewSelectionMode.None;
             this.GridView.SelectionMode = ListViewSelectionMode.None;
         }
@@ -329,6 +333,15 @@ namespace MegaApp.UserControls
                 Text = ResourceService.UiResources.GetString("UI_Download"),
                 Command = this.ViewModel.DownloadFolderCommand
             });
+
+            if (this.ViewModel?.Folder?.Type == ContainerType.FolderLink)
+            {
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_Import"),
+                    Command = this.ViewModel.ImportFolderCommand
+                });
+            }
 
             //menuFlyout.Items?.Add(new MenuFlyoutItem()
             //{

@@ -6,6 +6,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels.UserControls
 {
@@ -22,6 +23,7 @@ namespace MegaApp.ViewModels.UserControls
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCommand = new RelayCommand(CancelCopyOrMove);
             this.CopyCommand = new RelayCommand<bool>(CopyOrMove);
+            this.ImportCommand = new RelayCommand(Import);
             this.MoveCommand = new RelayCommand<bool>(CopyOrMove);
 
             this.ActiveFolderView = this.CloudDrive;
@@ -32,6 +34,7 @@ namespace MegaApp.ViewModels.UserControls
         public ICommand AddFolderCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand CopyCommand { get; }
+        public ICommand ImportCommand { get; }
         public ICommand MoveCommand { get; }
 
         #endregion
@@ -118,6 +121,48 @@ namespace MegaApp.ViewModels.UserControls
             }
         }
 
+        private async void Import()
+        {
+            if (CopyOrMoveService.SelectedNodes == null || !CopyOrMoveService.SelectedNodes.Any()) return;
+
+            bool finalResult = true;
+            try
+            {
+                // Use a temporal list of nodes to copy/move to allow close the panel and
+                // deselect the nodes in the main view meanwhile the nodes are imported
+                var selectedNodes = CopyOrMoveService.SelectedNodes.ToList();
+
+                this.OnCopyOrMoveFinished();
+
+                var newParentNode = this.ActiveFolderView.FolderRootNode;
+                foreach (var node in selectedNodes)
+                {
+                    if (node == null) continue;
+                    node.DisplayMode = NodeDisplayMode.Normal;
+                    var result = await node.ImportAsync(newParentNode);
+                    finalResult = finalResult & (result == NodeActionResult.Succeeded);
+                }
+            }
+            catch (Exception) { finalResult = false; }
+            finally
+            {
+                this.OnCopyOrMoveFinished();
+
+                if (finalResult)
+                {
+                    // Navigate to the Cloud Drive page
+                    UiService.OnUiThread(() =>
+                        NavigateService.Instance.Navigate(typeof(CloudDrivePage), false));
+                }
+                else
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_ImportFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_ImportFailed"));
+                }
+            }
+        }
+
         private void OnActiveFolderPropertyChanged(object sender, PropertyChangedEventArgs e) => 
             OnPropertyChanged(nameof(this.ActiveFolderView));
 
@@ -157,16 +202,24 @@ namespace MegaApp.ViewModels.UserControls
             get
             {
                 if (CopyOrMoveService.SelectedNodes == null) return string.Empty;
-                return CopyOrMoveService.SelectedNodes.Count == 1 ?
-                    ResourceService.UiResources.GetString("UI_CopyOrMoveItemTo") :
-                    string.Format(ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo"),
-                    CopyOrMoveService.SelectedNodes.Count);
+
+                var singleItemString = CopyOrMoveService.IsSourceFolderLink ?
+                    ResourceService.UiResources.GetString("UI_ImportItemTo") :
+                    ResourceService.UiResources.GetString("UI_CopyOrMoveItemTo");
+
+                var multipleItemString = CopyOrMoveService.IsSourceFolderLink ?
+                    ResourceService.UiResources.GetString("UI_ImportMultipleItemsTo") :
+                    ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo");
+
+                return CopyOrMoveService.SelectedNodes.Count == 1 ? singleItemString : 
+                    string.Format(multipleItemString, CopyOrMoveService.SelectedNodes.Count);
             }
         }
 
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
 
         #endregion
@@ -175,6 +228,7 @@ namespace MegaApp.ViewModels.UserControls
 
         public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
+        public string ConfirmPathData => ResourceService.VisualResources.GetString("VR_ConfirmPathData");
         public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");
 
         #endregion

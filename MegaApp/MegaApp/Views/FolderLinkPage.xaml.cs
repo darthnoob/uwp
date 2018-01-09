@@ -17,6 +17,7 @@ namespace MegaApp.Views
     public sealed partial class FolderLinkPage : BaseFolderLinkPage
     {
         private const double InformationPanelMinWidth = 432;
+        private const double ImportPanelMinWidth = 432;
 
         public FolderLinkPage()
         {
@@ -41,6 +42,10 @@ namespace MegaApp.Views
                 {
                     case PanelType.Information:
                         this.FolderLinkSplitView.OpenPaneLength = InformationPanelMinWidth;
+                        break;
+
+                    case PanelType.CopyOrMove:
+                        this.FolderLinkSplitView.OpenPaneLength = ImportPanelMinWidth;
                         break;
                 }
             }
@@ -74,6 +79,11 @@ namespace MegaApp.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.ViewModel.FolderLink.FolderNavigatedTo -= OnFolderNavigatedTo;
+            this.ViewModel.FolderLink.CopyOrMoveEvent -= OnCopyOrMove;
+            this.ViewModel.FolderLink.CancelCopyOrMoveEvent -= OnResetCopyOrMove;
+
+            this.ImportPanelControl.ViewModel.CopyOrMoveFinished -= OnResetCopyOrMove;
+            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled -= OnResetCopyOrMove;
 
             base.OnNavigatedFrom(e);
         }
@@ -83,6 +93,11 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
 
             this.ViewModel.FolderLink.FolderNavigatedTo += OnFolderNavigatedTo;
+            this.ViewModel.FolderLink.CopyOrMoveEvent += OnCopyOrMove;
+            this.ViewModel.FolderLink.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+
+            this.ImportPanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
+            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
 
             this.ViewModel.LoginToFolder(App.LinkInformation.ActiveLink);
         }
@@ -90,6 +105,18 @@ namespace MegaApp.Views
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
         {
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
+        }
+
+        private void OnCopyOrMove(object sender, EventArgs e)
+        {
+            this.FolderLinkExplorer.DisableSelection();
+        }
+
+        private void OnResetCopyOrMove(object sender, EventArgs e)
+        {
+            this.ViewModel.FolderLink.ResetCopyOrMove();
+            this.FolderLinkExplorer.ClearSelectedItems();
+            this.FolderLinkExplorer.EnableSelection();
         }
 
         private void OnSortClick(object sender, RoutedEventArgs e)

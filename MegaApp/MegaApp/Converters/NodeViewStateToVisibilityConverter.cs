@@ -142,6 +142,7 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "download":
+                        case "import":
                             return Visibility.Visible;
 
                         default:

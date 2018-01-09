@@ -38,6 +38,17 @@ namespace MegaApp.Services
         public static bool IsMoveAllowed => SelectedNodes.Count > 0 && 
             SelectedNodes[0] is IncomingSharedFolderNodeViewModel;
 
+        public static bool IsSourceFolderLink
+        {
+            get
+            {
+                if (SelectedNodes?.Count > 0 && (SelectedNodes[0] as NodeViewModel)?.Parent?.Type == ContainerType.FolderLink)
+                    return true;
+
+                return false;
+            }
+        }
+
         private static FolderViewModel _cloudDrive;
         public static FolderViewModel CloudDrive
         {

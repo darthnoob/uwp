@@ -82,6 +82,19 @@
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
+                    Command="{Binding ImportCommand}"
+                    Label="{Binding ImportText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding ImportText, Mode=OneTime}"
+                    Visibility="{Binding ActiveFolderView, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                    <Viewbox MaxHeight="14" MaxWidth="14">
+                        <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
                     Command="{Binding CancelCommand}"
                     Label="{Binding CancelText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
@@ -166,6 +179,19 @@
                 </AppBarButton.CommandParameter>
                 <Viewbox MaxWidth="14" MaxHeight="14">
                     <SymbolIcon Symbol="MoveToFolder" />
+                </Viewbox>
+            </AppBarButton>
+            <AppBarButton
+                Command="{Binding ImportCommand}"
+                Label="{Binding ImportText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding ImportText, Mode=OneTime}"
+                Visibility="{Binding ActiveFolderView, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                <Viewbox MaxHeight="14" MaxWidth="14">
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
                 </Viewbox>
             </AppBarButton>
             <AppBarButton

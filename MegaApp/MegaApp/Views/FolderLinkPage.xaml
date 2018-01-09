@@ -27,6 +27,13 @@
                     Foreground="{StaticResource MegaAppForegroundBrush}"
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+
+                <userControls:CopyOrMovePanel
+                    x:Name="ImportPanelControl"
+                    DataContext="{x:Bind ViewModel.FolderLink}"
+                    Background="{StaticResource MegaAppBackgroundBrush}"
+                    Foreground="{StaticResource MegaAppForegroundBrush}"
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 
@@ -65,6 +72,16 @@
                             DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
                             Background="Transparent"
                             extensions:CommandBarExtensions.HideMoreButton="True">
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                                Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <Viewbox MaxHeight="16" MaxWidth="16">
+                                    <FontIcon Glyph="&#xEA52;" />
+                                </Viewbox>
+                            </AppBarButton>
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
                                 Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
@@ -183,6 +200,16 @@
                 <CommandBar 
                     DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                        Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xEA52;" />
+                        </Viewbox>
+                    </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
                         Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"

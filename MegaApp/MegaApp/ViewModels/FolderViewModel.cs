@@ -68,6 +68,7 @@ namespace MegaApp.ViewModels
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
             this.ShareCommand = new RelayCommand(Share);
             this.OpenLinkCommand = new RelayCommand(OpenLink);
+            this.ImportCommand = new RelayCommand(Import);
 
             SetViewDefaults();
 
@@ -289,6 +290,7 @@ namespace MegaApp.ViewModels
         public ICommand ClosePanelCommand { get; set; }
         public ICommand ShareCommand { get; set; }
         public ICommand OpenLinkCommand { get; }
+        public ICommand ImportCommand { get; }
 
         #endregion
 
@@ -519,6 +521,33 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_OpenLinkFailed"));
                 });
             }
+        }
+
+        private void Import()
+        {
+            if (this.ItemCollection.SelectedItems == null ||
+                !this.ItemCollection.HasSelectedItems) return;
+
+            this.VisiblePanel = PanelType.CopyOrMove;
+
+            foreach (var node in this.ItemCollection.SelectedItems)
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+
+            CopyOrMoveService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
+            this.ItemCollection.IsMultiSelectActive = false;
+
+            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void ImportFolder()
+        {
+            this.VisiblePanel = PanelType.CopyOrMove;
+
+            CopyOrMoveService.SelectedNodes.Clear();
+            CopyOrMoveService.SelectedNodes.Add(this.FolderRootNode);
+            this.ItemCollection.IsMultiSelectActive = false;
+
+            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
         }
 
         private async void Remove()
@@ -1332,6 +1361,7 @@ namespace MegaApp.ViewModels
         public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string GridViewText => ResourceService.UiResources.GetString("UI_GridView");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");

@@ -16,6 +16,7 @@ namespace MegaApp.ViewModels.UserControls
         {
             this.CopyFolderCommand = new RelayCommand(CopyFolder);
             this.DownloadFolderCommand = new RelayCommand(DownloadFolder);
+            this.ImportFolderCommand = new RelayCommand(ImportFolder);
             this.InformationCommand = new RelayCommand(ShowFolderInformation);
             this.RenameFolderCommand = new RelayCommand(RenameFolder);
         }
@@ -24,6 +25,7 @@ namespace MegaApp.ViewModels.UserControls
 
         public ICommand CopyFolderCommand { get; }
         public ICommand DownloadFolderCommand { get; }
+        public ICommand ImportFolderCommand { get; }
         public ICommand InformationCommand { get; }
         public ICommand RenameFolderCommand { get; }
 
@@ -56,6 +58,11 @@ namespace MegaApp.ViewModels.UserControls
         {
             var folder = this.Folder.FolderRootNode as NodeViewModel;
             folder?.Download(TransferService.MegaTransfers);
+        }
+
+        private void ImportFolder()
+        {
+            this.Folder.ImportFolder();
         }
 
         private void ShowFolderInformation()
