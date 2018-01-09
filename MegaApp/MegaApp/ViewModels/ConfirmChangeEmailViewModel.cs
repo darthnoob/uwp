@@ -125,11 +125,11 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void ProcessVerifyEmailLink()
         {
-            if (string.IsNullOrWhiteSpace(App.LinkInformation.ActiveLink) ||
-                !App.LinkInformation.ActiveLink.Contains("#verify")) return;
+            if (string.IsNullOrWhiteSpace(LinkInformationService.ActiveLink) ||
+                !LinkInformationService.ActiveLink.Contains("#verify")) return;
 
-            this.VerifyEmailLink = App.LinkInformation.ActiveLink;
-            App.LinkInformation.Reset();
+            this.VerifyEmailLink = LinkInformationService.ActiveLink;
+            LinkInformationService.Reset();
 
             var verifyEmail = new QueryChangeEmailLinkRequestListenerAsync();
             var result = await verifyEmail.ExecuteAsync(() =>

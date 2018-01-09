@@ -437,7 +437,7 @@ namespace MegaApp.ViewModels
             foreach (var node in this.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
-            CopyOrMoveService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
+            SelectedNodesService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
             this.ItemCollection.IsMultiSelectActive = false;
 
             CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
@@ -449,7 +449,7 @@ namespace MegaApp.ViewModels
         public void ResetCopyOrMove()
         {
             this.ItemCollection.ClearSelection();
-            CopyOrMoveService.ClearSelectedNodes();
+            SelectedNodesService.ClearSelectedNodes();
             this.VisiblePanel = PanelType.None;
         }
 
@@ -494,16 +494,16 @@ namespace MegaApp.ViewModels
 
             if (string.IsNullOrEmpty(link) || string.IsNullOrWhiteSpace(link)) return;
 
-            App.LinkInformation.ActiveLink = UriService.ReformatUri(link);
+            LinkInformationService.ActiveLink = UriService.ReformatUri(link);
 
-            if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#!"))
+            if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#!"))
             {
-                App.LinkInformation.UriLink = UriLinkType.File;
-                //this.MegaSdk.getPublicNode(App.LinkInformation.ActiveLink, new GetPublicNodeRequestListener(this));
+                LinkInformationService.UriLink = UriLinkType.File;
+                //this.MegaSdk.getPublicNode(LinkInformationService.ActiveLink, new GetPublicNodeRequestListener(this));
             }
-            else if (App.LinkInformation.ActiveLink.Contains("https://mega.nz/#F!"))
+            else if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#F!"))
             {
-                App.LinkInformation.UriLink = UriLinkType.Folder;
+                LinkInformationService.UriLink = UriLinkType.Folder;
 
                 // Navigate to the folder link page
                 OnUiThread(() =>
@@ -533,7 +533,7 @@ namespace MegaApp.ViewModels
             foreach (var node in this.ItemCollection.SelectedItems)
                 if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
 
-            CopyOrMoveService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
+            SelectedNodesService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
             this.ItemCollection.IsMultiSelectActive = false;
 
             CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
@@ -543,8 +543,8 @@ namespace MegaApp.ViewModels
         {
             this.VisiblePanel = PanelType.CopyOrMove;
 
-            CopyOrMoveService.SelectedNodes.Clear();
-            CopyOrMoveService.SelectedNodes.Add(this.FolderRootNode);
+            SelectedNodesService.SelectedNodes.Clear();
+            SelectedNodesService.SelectedNodes.Add(this.FolderRootNode);
             this.ItemCollection.IsMultiSelectActive = false;
 
             CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
@@ -1013,7 +1013,7 @@ namespace MegaApp.ViewModels
                 if (this.VisiblePanel == PanelType.CopyOrMove)
                 {
                     // Check if it is one of the selected nodes
-                    CopyOrMoveService.IsCopyOrMoveSelectedNode(node, true);
+                    SelectedNodesService.IsSelectedNode(node, true);
                 }
 
                 helperList.Add(node);

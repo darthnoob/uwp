@@ -66,11 +66,11 @@ namespace MegaApp.Services
         /// <returns>True if navigates or false in other case.</returns>
         public static async Task<bool> CheckSpecialNavigation(bool hasActiveAndOnlineSession = true)
         {
-            if (App.LinkInformation?.ActiveLink != null)
+            if (LinkInformationService.ActiveLink != null)
             {
-                if (App.LinkInformation.ActiveLink.Contains("#newsignup") || 
-                    App.LinkInformation.ActiveLink.Contains("#confirm") ||
-                    App.LinkInformation.ActiveLink.Contains("#recover"))
+                if (LinkInformationService.ActiveLink.Contains("#newsignup") ||
+                    LinkInformationService.ActiveLink.Contains("#confirm") ||
+                    LinkInformationService.ActiveLink.Contains("#recover"))
                 {
                     if(hasActiveAndOnlineSession)
                     {
@@ -96,7 +96,7 @@ namespace MegaApp.Services
                         return await SpecialNavigation();
                     }
                 }
-                else if (App.LinkInformation.ActiveLink.Contains("#verify"))
+                else if (LinkInformationService.ActiveLink.Contains("#verify"))
                 {
                     if (hasActiveAndOnlineSession)
                         return await SpecialNavigation();
@@ -105,7 +105,7 @@ namespace MegaApp.Services
                         ResourceService.UiResources.GetString("UI_ChangeEmail"),
                         ResourceService.AppMessages.GetString("AM_UserNotOnline"));
                 }
-                else if (App.LinkInformation.ActiveLink.Contains("#F!"))
+                else if (LinkInformationService.ActiveLink.Contains("#F!"))
                 {
                     if (hasActiveAndOnlineSession)
                         return await SpecialNavigation();
@@ -125,19 +125,19 @@ namespace MegaApp.Services
         /// <returns>TRUE if navigates or FALSE in other case.</returns>
         private static async Task<bool> SpecialNavigation()
         {
-            if (App.LinkInformation.ActiveLink.Contains("#newsignup"))
+            if (LinkInformationService.ActiveLink.Contains("#newsignup"))
             {
                 UiService.OnUiThread(() =>
                     NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                 return true;
             }
 
-            if (App.LinkInformation.ActiveLink.Contains("#confirm"))
+            if (LinkInformationService.ActiveLink.Contains("#confirm"))
             {
                 var signUp = new QuerySignUpLinkRequestListenerAsync();
                 var result = await signUp.ExecuteAsync(() =>
                 {
-                    SdkService.MegaSdk.querySignupLink(App.LinkInformation.ActiveLink, signUp);
+                    SdkService.MegaSdk.querySignupLink(LinkInformationService.ActiveLink, signUp);
                 });
 
                 switch (result)
@@ -151,7 +151,7 @@ namespace MegaApp.Services
                                     Parameters = new Dictionary<NavigationParamType, object>
                                     {
                                         { NavigationParamType.Email, signUp.EmailAddress },
-                                        { NavigationParamType.Data, App.LinkInformation.ActiveLink },
+                                        { NavigationParamType.Data, LinkInformationService.ActiveLink },
                                     }
                                 }));
                         return true;
@@ -176,20 +176,20 @@ namespace MegaApp.Services
                 return false;
             }
 
-            if (App.LinkInformation.ActiveLink.Contains("#verify"))
+            if (LinkInformationService.ActiveLink.Contains("#verify"))
             {
                 UiService.OnUiThread(() =>
                     NavigateService.Instance.Navigate(typeof(ConfirmChangeEmailPage), true));
                 return true;
             }
 
-            if (App.LinkInformation.ActiveLink.Contains("#recover"))
+            if (LinkInformationService.ActiveLink.Contains("#recover"))
             {
                 // Check if it is recover or park account
                 var query = new QueryPasswordLinkRequestListenerAsync();
                 var result = await query.ExecuteAsync(() =>
                 {
-                    SdkService.MegaSdk.queryResetPasswordLink(App.LinkInformation.ActiveLink, query);
+                    SdkService.MegaSdk.queryResetPasswordLink(LinkInformationService.ActiveLink, query);
                 });
 
                 switch (result)
@@ -215,9 +215,9 @@ namespace MegaApp.Services
                 }
             }
 
-            if (App.LinkInformation.ActiveLink.Contains("#F!"))
+            if (LinkInformationService.ActiveLink.Contains("#F!"))
             {
-                App.LinkInformation.UriLink = UriLinkType.Folder;
+                LinkInformationService.UriLink = UriLinkType.Folder;
 
                 // Navigate to the folder link page
                 UiService.OnUiThread(() =>

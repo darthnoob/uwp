@@ -99,7 +99,7 @@ namespace MegaApp.Views
             this.ImportPanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
             this.ImportPanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
 
-            this.ViewModel.LoginToFolder(App.LinkInformation.ActiveLink);
+            this.ViewModel.LoginToFolder(LinkInformationService.ActiveLink);
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)

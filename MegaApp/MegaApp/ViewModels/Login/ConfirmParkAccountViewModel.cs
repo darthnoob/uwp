@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels.Login
                     var result = await reset.ExecuteAsync(() =>
                     {
                         SdkService.MegaSdk.confirmResetPasswordWithoutMasterKey(
-                            App.LinkInformation.ActiveLink,
+                            LinkInformationService.ActiveLink,
                             this.Password,
                             reset);
                     });

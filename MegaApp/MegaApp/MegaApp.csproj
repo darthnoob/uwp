@@ -136,7 +136,7 @@
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
-    <Compile Include="Services\CopyOrMoveService.cs" />
+    <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
     <Compile Include="UserControls\CopyOrMovePanel.xaml.cs">
@@ -163,7 +163,7 @@
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
-    <Compile Include="Classes\LinkInformation.cs" />
+    <Compile Include="Services\LinkInformationService.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\ProductBase.cs" />

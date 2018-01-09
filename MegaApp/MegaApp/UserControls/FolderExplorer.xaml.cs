@@ -26,7 +26,7 @@ namespace MegaApp.UserControls
         {
             this.InitializeComponent();
 
-            CopyOrMoveService.SelectedNodesChanged += this.OnSelectedNodesChanged;
+            SelectedNodesService.SelectedNodesChanged += this.OnSelectedNodesChanged;
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace MegaApp.UserControls
             if (folderNode != null)
             {
                 viewItem.IsEnabled = !(folderNode.Parent.IsCopyOrMoveViewModel &&
-                    CopyOrMoveService.IsCopyOrMoveSelectedNode(folderNode));
+                    SelectedNodesService.IsSelectedNode(folderNode));
             }
         }
 

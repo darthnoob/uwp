@@ -7,7 +7,7 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
-    public static class CopyOrMoveService
+    public static class SelectedNodesService
     {
         #region Events
 
@@ -98,11 +98,11 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Check if a node is in the selected nodes group for move, copy or any other action.
+        /// Check if a node is in the selected nodes group for move, copy, import or any other action.
         /// </summary>        
         /// <param name="node">Node to check if is in the selected node list</param>        
         /// <returns>True if is a selected node or false in other case</returns>
-        public static bool IsCopyOrMoveSelectedNode(IMegaNode node, bool setDisplayMode = false)
+        public static bool IsSelectedNode(IMegaNode node, bool setDisplayMode = false)
         {
             if (!(SelectedNodes?.Count > 0)) return false;
 

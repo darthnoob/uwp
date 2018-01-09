@@ -41,15 +41,15 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsSourceFolderLink ? 
+                            return folder.IsCopyOrMoveViewModel && !SelectedNodesService.IsSourceFolderLink ? 
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsSourceFolderLink &&
-                                !CopyOrMoveService.IsMoveAllowed ? Visibility.Visible : Visibility.Collapsed;
+                            return folder.IsCopyOrMoveViewModel && !SelectedNodesService.IsSourceFolderLink &&
+                                !SelectedNodesService.IsMoveAllowed ? Visibility.Visible : Visibility.Collapsed;
 
                         case "import":
-                            return folder.IsCopyOrMoveViewModel && CopyOrMoveService.IsSourceFolderLink ?
+                            return folder.IsCopyOrMoveViewModel && SelectedNodesService.IsSourceFolderLink ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:
@@ -142,17 +142,17 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsSourceFolderLink &&
+                            return folder.IsCopyOrMoveViewModel && !SelectedNodesService.IsSourceFolderLink &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsSourceFolderLink && !CopyOrMoveService.IsMoveAllowed &&
+                            return folder.IsCopyOrMoveViewModel && !SelectedNodesService.IsSourceFolderLink && !SelectedNodesService.IsMoveAllowed &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "import":
-                            return folder.IsCopyOrMoveViewModel && CopyOrMoveService.IsSourceFolderLink &&
+                            return folder.IsCopyOrMoveViewModel && SelectedNodesService.IsSourceFolderLink &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
 

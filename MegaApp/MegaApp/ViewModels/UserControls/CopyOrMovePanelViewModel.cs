@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels.UserControls
     {
         public CopyOrMovePanelViewModel()
         {
-            CopyOrMoveService.SelectedNodesChanged += (sender, args) =>
+            SelectedNodesService.SelectedNodesChanged += (sender, args) =>
             {
                 OnPropertyChanged(nameof(this.ActiveFolderView));
                 OnPropertyChanged(nameof(this.CopyOrMoveItemsToText));
@@ -84,14 +84,14 @@ namespace MegaApp.ViewModels.UserControls
 
         private async void CopyOrMove(bool move)
         {
-            if (CopyOrMoveService.SelectedNodes == null || !CopyOrMoveService.SelectedNodes.Any()) return;
+            if (SelectedNodesService.SelectedNodes == null || !SelectedNodesService.SelectedNodes.Any()) return;
 
             bool finalResult = true;
             try
             {
                 // Use a temporal list of nodes to copy/move to allow close the panel and
                 // deselect the nodes in the main view meanwhile the nodes are copied/moved
-                var selectedNodes = CopyOrMoveService.SelectedNodes.ToList();
+                var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
                 this.OnCopyOrMoveFinished();
 
@@ -123,14 +123,14 @@ namespace MegaApp.ViewModels.UserControls
 
         private async void Import()
         {
-            if (CopyOrMoveService.SelectedNodes == null || !CopyOrMoveService.SelectedNodes.Any()) return;
+            if (SelectedNodesService.SelectedNodes == null || !SelectedNodesService.SelectedNodes.Any()) return;
 
             bool finalResult = true;
             try
             {
                 // Use a temporal list of nodes to copy/move to allow close the panel and
                 // deselect the nodes in the main view meanwhile the nodes are imported
-                var selectedNodes = CopyOrMoveService.SelectedNodes.ToList();
+                var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
                 this.OnCopyOrMoveFinished();
 
@@ -170,9 +170,9 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Properties
 
-        public FolderViewModel CloudDrive => CopyOrMoveService.CloudDrive;
+        public FolderViewModel CloudDrive => SelectedNodesService.CloudDrive;
 
-        public IncomingSharesViewModel IncomingShares => CopyOrMoveService.IncomingShares;
+        public IncomingSharesViewModel IncomingShares => SelectedNodesService.IncomingShares;
 
         private FolderViewModel _activeFolderView;
         public FolderViewModel ActiveFolderView
@@ -201,18 +201,18 @@ namespace MegaApp.ViewModels.UserControls
         {
             get
             {
-                if (CopyOrMoveService.SelectedNodes == null) return string.Empty;
+                if (SelectedNodesService.SelectedNodes == null) return string.Empty;
 
-                var singleItemString = CopyOrMoveService.IsSourceFolderLink ?
+                var singleItemString = SelectedNodesService.IsSourceFolderLink ?
                     ResourceService.UiResources.GetString("UI_ImportItemTo") :
                     ResourceService.UiResources.GetString("UI_CopyOrMoveItemTo");
 
-                var multipleItemString = CopyOrMoveService.IsSourceFolderLink ?
+                var multipleItemString = SelectedNodesService.IsSourceFolderLink ?
                     ResourceService.UiResources.GetString("UI_ImportMultipleItemsTo") :
                     ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo");
 
-                return CopyOrMoveService.SelectedNodes.Count == 1 ? singleItemString : 
-                    string.Format(multipleItemString, CopyOrMoveService.SelectedNodes.Count);
+                return SelectedNodesService.SelectedNodes.Count == 1 ? singleItemString : 
+                    string.Format(multipleItemString, SelectedNodesService.SelectedNodes.Count);
             }
         }
 
