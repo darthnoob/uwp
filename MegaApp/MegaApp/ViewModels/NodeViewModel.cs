@@ -573,16 +573,24 @@ namespace MegaApp.ViewModels
             this.Transfer.ExternalDownloadPath = downloadFolder.Path;
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
+
+            // If is a folder link, navigate to the Cloud Drive page
+            if (this.Parent?.Type == ContainerType.FolderLink)
+            {
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                });
+            }
         }
 
         private void Import()
         {
-            if (this.Parent != null && this.Parent.ItemCollection.IsMultiSelectActive)
-            {
-                if (this.Parent.ImportCommand.CanExecute(null))
-                    this.Parent.ImportCommand.Execute(null);
-                return;
-            }
+            if (this.Parent == null) return;
+
+            if (this.Parent.ImportCommand.CanExecute(null))
+                this.Parent.ImportCommand.Execute(null);
         }
 
         /// <summary>

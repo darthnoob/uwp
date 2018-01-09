@@ -477,6 +477,16 @@ namespace MegaApp.ViewModels
                     }
                 }
             }
+
+            // If is a folder link, navigate to the Cloud Drive page
+            if (this.Type == ContainerType.FolderLink)
+            {
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                });
+            }
         }
 
         private void GetLink()

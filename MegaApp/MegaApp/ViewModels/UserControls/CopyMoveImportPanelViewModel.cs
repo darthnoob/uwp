@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
@@ -10,7 +11,7 @@ using MegaApp.Views;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class CopyMoveImportPanelViewModel : BaseViewModel
+    public class CopyMoveImportPanelViewModel : BaseUiViewModel
     {
         public CopyMoveImportPanelViewModel()
         {
@@ -146,20 +147,15 @@ namespace MegaApp.ViewModels.UserControls
             catch (Exception) { finalResult = false; }
             finally
             {
-                this.OnCopyOrMoveFinished();
-
-                if (finalResult)
+                if (!finalResult)
                 {
-                    // Navigate to the Cloud Drive page
-                    UiService.OnUiThread(() =>
-                        NavigateService.Instance.Navigate(typeof(CloudDrivePage), false));
-                }
-                else
-                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Import failed.");
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_ImportFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_ImportFailed"));
                 }
+
+                this.OnCopyOrMoveFinished();
             }
         }
 

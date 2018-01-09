@@ -7,6 +7,7 @@ using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
+using MegaApp.Classes;
 
 namespace MegaApp.Views
 {
@@ -79,11 +80,11 @@ namespace MegaApp.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.ViewModel.FolderLink.FolderNavigatedTo -= OnFolderNavigatedTo;
-            this.ViewModel.FolderLink.CopyOrMoveEvent -= OnCopyOrMove;
-            this.ViewModel.FolderLink.CancelCopyOrMoveEvent -= OnResetCopyOrMove;
+            this.ViewModel.FolderLink.CopyOrMoveEvent -= OnImportStarted;
+            this.ViewModel.FolderLink.CancelCopyOrMoveEvent -= OnImportCanceled;
 
-            this.ImportPanelControl.ViewModel.CopyOrMoveFinished -= OnResetCopyOrMove;
-            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled -= OnResetCopyOrMove;
+            this.ImportPanelControl.ViewModel.CopyOrMoveFinished -= OnImportFinished;
+            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled -= OnImportCanceled;
 
             base.OnNavigatedFrom(e);
         }
@@ -93,11 +94,11 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
 
             this.ViewModel.FolderLink.FolderNavigatedTo += OnFolderNavigatedTo;
-            this.ViewModel.FolderLink.CopyOrMoveEvent += OnCopyOrMove;
-            this.ViewModel.FolderLink.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.FolderLink.CopyOrMoveEvent += OnImportStarted;
+            this.ViewModel.FolderLink.CancelCopyOrMoveEvent += OnImportCanceled;
 
-            this.ImportPanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
-            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
+            this.ImportPanelControl.ViewModel.CopyOrMoveFinished += OnImportFinished;
+            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled += OnImportCanceled;
 
             this.ViewModel.LoginToFolder(LinkInformationService.ActiveLink);
         }
@@ -107,12 +108,26 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
-        private void OnCopyOrMove(object sender, EventArgs e)
+        private void OnImportStarted(object sender, EventArgs e)
         {
             this.FolderLinkExplorer.DisableSelection();
         }
 
-        private void OnResetCopyOrMove(object sender, EventArgs e)
+        private void OnImportFinished(object sender, EventArgs e)
+        {
+            ResetImport();
+
+            // Navigate to the Cloud Drive page
+            NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+        }
+
+        private void OnImportCanceled(object sender, EventArgs e)
+        {
+            ResetImport();
+        }
+
+        private void ResetImport()
         {
             this.ViewModel.FolderLink.ResetCopyOrMove();
             this.FolderLinkExplorer.ClearSelectedItems();
