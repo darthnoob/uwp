@@ -339,18 +339,11 @@ namespace MegaApp.ViewModels.Login
             set { SetField(ref _progressHeaderText, value); }
         }
 
-        // TODO -> Remove when remove the ProgressPanel control
-        public string ProgressSubHeaderText => this.ProgressText;
-
         private string _progressText;
         public string ProgressText
         {
             get { return _progressText; }
-            set
-            {
-                SetField(ref _progressText, value);
-                OnPropertyChanged(nameof(this.ProgressSubHeaderText));
-            }
+            set { SetField(ref _progressText, value); }
         }
 
         #endregion

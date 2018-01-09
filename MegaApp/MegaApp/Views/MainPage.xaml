@@ -125,7 +125,7 @@
                 Foreground="{StaticResource MegaAppForegroundBrush}"
                 HeaderText="{Binding ProgressHeaderText}"
                 IsVisible="{Binding IsBusy}"
-                ProgressText="{Binding ProgressSubHeaderText}">
+                ProgressText="{Binding ProgressText}">
                 <userControls:ActivityIndicator.SubHeaderForeground>
                     <SolidColorBrush Opacity="0.8" Color="{ThemeResource MegaAppForeground}" />
                 </userControls:ActivityIndicator.SubHeaderForeground>
