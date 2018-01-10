@@ -7,7 +7,17 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
-using MegaApp.Views;
+using MegaApp.ViewModels.UserControls.CopyMoveImportPanel;
+
+namespace MegaApp.ViewModels.UserControls.CopyMoveImportPanel
+{
+    public enum ActionType
+    {
+        COPY = 0,
+        MOVE = 1,
+        IMPORT = 2
+    }
+}
 
 namespace MegaApp.ViewModels.UserControls
 {
@@ -23,9 +33,9 @@ namespace MegaApp.ViewModels.UserControls
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCommand = new RelayCommand(Cancel);
-            this.CopyCommand = new RelayCommand<bool>(CopyOrMove);
-            this.ImportCommand = new RelayCommand(Import);
-            this.MoveCommand = new RelayCommand<bool>(CopyOrMove);
+            this.CopyCommand = new RelayCommand<ActionType>(ExecuteAction);
+            this.ImportCommand = new RelayCommand<ActionType>(ExecuteAction);
+            this.MoveCommand = new RelayCommand<ActionType>(ExecuteAction);
 
             this.ActiveFolderView = this.CloudDrive;
         }
@@ -83,15 +93,15 @@ namespace MegaApp.ViewModels.UserControls
             this.OnActionCanceled();
         }
 
-        private async void CopyOrMove(bool move)
+        private async void ExecuteAction(ActionType actionType)
         {
             if (SelectedNodesService.SelectedNodes == null || !SelectedNodesService.SelectedNodes.Any()) return;
 
             bool finalResult = true;
             try
             {
-                // Use a temporal list of nodes to copy/move to allow close the panel and
-                // deselect the nodes in the main view meanwhile the nodes are copied/moved
+                // Use a temporal list of nodes to copy/move/import to allow close the panel and
+                // deselect the nodes in the main view meanwhile the nodes are copied/moved/imported
                 var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
                 this.OnActionFinished();
@@ -101,7 +111,27 @@ namespace MegaApp.ViewModels.UserControls
                 {
                     if (node == null) continue;
                     node.DisplayMode = NodeDisplayMode.Normal;
-                    var result = move ? await node.MoveAsync(newParentNode) : await node.CopyAsync(newParentNode);
+                    NodeActionResult result;
+                    
+                    switch(actionType)
+                    {
+                        case ActionType.COPY:
+                            result = await node.CopyAsync(newParentNode);
+                            break;
+
+                        case ActionType.MOVE:
+                            result = await node.MoveAsync(newParentNode);
+                            break;
+
+                        case ActionType.IMPORT:
+                            result = await node.ImportAsync(newParentNode);
+                            break;
+
+                        default:
+                            result = NodeActionResult.Failed;
+                            break;
+                    }
+
                     finalResult = finalResult & (result == NodeActionResult.Succeeded);
                 }
             }
@@ -112,50 +142,35 @@ namespace MegaApp.ViewModels.UserControls
 
                 if (!finalResult)
                 {
-                    string title = move ? ResourceService.AppMessages.GetString("AM_MoveFailed_Title") :
-                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title");
-                    string message = move ? ResourceService.AppMessages.GetString("AM_MoveFailed") :
-                        ResourceService.AppMessages.GetString("AM_CopyFailed");
+                    string title = string.Empty, message = string.Empty;
+                    switch (actionType)
+                    {
+                        case ActionType.COPY:
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Copy failed.");
+                            title = ResourceService.AppMessages.GetString("AM_CopyFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_CopyFailed");
+                            break;
 
-                    await DialogService.ShowAlertAsync(title, message);
+                        case ActionType.MOVE:
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Move failed.");
+                            title = ResourceService.AppMessages.GetString("AM_MoveFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_MoveFailed");
+                            break;
+
+                        case ActionType.IMPORT:
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Import failed.");
+                            title = ResourceService.AppMessages.GetString("AM_ImportFailed_Title");
+                            message = ResourceService.AppMessages.GetString("AM_ImportFailed");
+                            break;
+
+                        default:
+                            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Action failed.");
+                            break;
+                    }
+
+                    if(!string.IsNullOrWhiteSpace(title) && !string.IsNullOrWhiteSpace(message))
+                        await DialogService.ShowAlertAsync(title, message);
                 }
-            }
-        }
-
-        private async void Import()
-        {
-            if (SelectedNodesService.SelectedNodes == null || !SelectedNodesService.SelectedNodes.Any()) return;
-
-            bool finalResult = true;
-            try
-            {
-                // Use a temporal list of nodes to copy/move to allow close the panel and
-                // deselect the nodes in the main view meanwhile the nodes are imported
-                var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
-
-                this.OnActionFinished();
-
-                var newParentNode = this.ActiveFolderView.FolderRootNode;
-                foreach (var node in selectedNodes)
-                {
-                    if (node == null) continue;
-                    node.DisplayMode = NodeDisplayMode.Normal;
-                    var result = await node.ImportAsync(newParentNode);
-                    finalResult = finalResult & (result == NodeActionResult.Succeeded);
-                }
-            }
-            catch (Exception) { finalResult = false; }
-            finally
-            {
-                if (!finalResult)
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Import failed.");
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_ImportFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_ImportFailed"));
-                }
-
-                this.OnActionFinished();
             }
         }
 
