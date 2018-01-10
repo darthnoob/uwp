@@ -41,7 +41,7 @@ namespace MegaApp.Views
             this.ViewModel.CameraUploads.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
             this.ViewModel.RubbishBin.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionCanceled;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionFinished;
             this.CopyOrMovePanelControl.ViewModel.ActionCanceled += OnSelectedNodesActionCanceled;
 
             this.CloudDriveSplitView.RegisterPropertyChangedCallback(
@@ -296,9 +296,20 @@ namespace MegaApp.Views
             this.DisableSelection();
         }
 
+        private void OnSelectedNodesActionFinished(object sender, EventArgs e)
+        {
+            this.ResetCopyOrMove();
+        }
+
         private void OnSelectedNodesActionCanceled(object sender, EventArgs e)
         {
+            this.ResetCopyOrMove();
+        }
+
+        private void ResetCopyOrMove()
+        {
             this.ViewModel.ActiveFolderView.ResetSelectedNodes();
+            this.CopyOrMovePanelControl.Reset();
             this.ClearSelectedItems();
             this.EnableSelection();
         }

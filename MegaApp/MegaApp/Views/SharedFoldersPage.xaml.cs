@@ -48,7 +48,7 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingShares.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
             this.ViewModel.OutgoingShares.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionCanceled;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionFinished;
             this.CopyOrMovePanelControl.ViewModel.ActionCanceled += OnSelectedNodesActionCanceled;
 
             this.SharedFolderSplitView.RegisterPropertyChangedCallback(
@@ -71,7 +71,7 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingShares.SelectedNodesActionStarted -= OnSelectedNodesActionStarted;
             this.ViewModel.OutgoingShares.SelectedNodesActionCanceled -= OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.ActionFinished -= OnSelectedNodesActionCanceled;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished -= OnSelectedNodesActionFinished;
             this.CopyOrMovePanelControl.ViewModel.ActionCanceled -= OnSelectedNodesActionCanceled;
 
             this.ViewModel.Deinitialize();
@@ -285,9 +285,20 @@ namespace MegaApp.Views
             this.DisableSelection();
         }
 
+        private void OnSelectedNodesActionFinished(object sender, EventArgs e)
+        {
+            ResetCopyOrMove();
+        }
+
         private void OnSelectedNodesActionCanceled(object sender, EventArgs e)
         {
+            ResetCopyOrMove();
+        }
+
+        private void ResetCopyOrMove()
+        {
             this.ViewModel.ActiveView.ResetSelectedNodes();
+            this.CopyOrMovePanelControl.Reset();
             this.ClearSelectedItems();
             this.EnableSelection();
         }

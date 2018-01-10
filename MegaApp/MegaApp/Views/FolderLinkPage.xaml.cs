@@ -130,6 +130,7 @@ namespace MegaApp.Views
         private void ResetImport()
         {
             this.ViewModel.FolderLink.ResetSelectedNodes();
+            this.ImportPanelControl.Reset();
             this.FolderLinkExplorer.ClearSelectedItems();
             this.FolderLinkExplorer.EnableSelection();
         }

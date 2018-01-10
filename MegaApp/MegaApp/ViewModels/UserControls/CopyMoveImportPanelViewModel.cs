@@ -104,9 +104,11 @@ namespace MegaApp.ViewModels.UserControls
                 // deselect the nodes in the main view meanwhile the nodes are copied/moved/imported
                 var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
+                // Store the new parent node to allow close and reset the panel meanwhile the action is being done
+                var newParentNode = this.ActiveFolderView.FolderRootNode;
+
                 this.OnActionFinished();
 
-                var newParentNode = this.ActiveFolderView.FolderRootNode;
                 foreach (var node in selectedNodes)
                 {
                     if (node == null) continue;

@@ -14,6 +14,14 @@ namespace MegaApp.UserControls
             this.InitializeComponent();
         }
 
+        public void Reset()
+        {
+            this.ViewModel.CloudDrive.BrowseToHome();
+            this.ViewModel.IncomingShares.BrowseToHome();
+
+            this.PivotControl.SelectedItem = this.CloudDrivePivot;
+        }
+
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (PivotControl.SelectedItem.Equals(CloudDrivePivot))
