@@ -115,7 +115,7 @@ namespace MegaApp.Services
                     if (setDisplayMode)
                     {
                         //Update the selected nodes list values
-                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+                        node.DisplayMode = NodeDisplayMode.SelectedNode;
                         SelectedNodes[index] = node;
                     }
 

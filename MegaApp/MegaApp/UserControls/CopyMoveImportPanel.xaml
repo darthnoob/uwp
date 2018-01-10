@@ -31,7 +31,7 @@
                 Margin="24,14,0,0"
                 FontSize="12"
                 Foreground="{StaticResource MegaRedColorBrush}"
-                Text="{x:Bind ViewModel.CopyOrMoveItemsToText, Mode=OneWay}" />
+                Text="{x:Bind ViewModel.CopyMoveImportItemsToText, Mode=OneWay}" />
 
             <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
             <CommandBar

@@ -207,7 +207,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_DEFAULT_DESC:
                         if(this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByType"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
@@ -217,7 +217,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByName"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
@@ -227,7 +227,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_CREATION_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateCreated"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
@@ -237,7 +237,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_MODIFICATION_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateModified"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
@@ -247,7 +247,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_SIZE_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedBySize"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),

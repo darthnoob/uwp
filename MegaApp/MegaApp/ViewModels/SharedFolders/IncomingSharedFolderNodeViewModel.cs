@@ -88,7 +88,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public bool AllowRename => !this.Parent.ItemCollection.IsMultiSelectActive && this.HasFullAccessPermissions;
 
-        public bool IsEnabledForCopyOrMove => this.Parent.IsCopyOrMoveViewModel && this.HasReadWritePermissions;
+        public bool IsEnabledForCopyMoveImport => this.Parent.IsForSelectFolder && this.HasReadWritePermissions;
 
         #endregion
 

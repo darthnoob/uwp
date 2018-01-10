@@ -26,23 +26,12 @@ namespace MegaApp.ViewModels
     /// </summary>
     public class FolderViewModel : BaseSdkViewModel
     {
-        public event EventHandler FolderNavigatedTo;
-
-        public event EventHandler ChangeViewEvent;
-
-        public event EventHandler CancelCopyOrMoveEvent;
-        public event EventHandler CopyOrMoveEvent;
-
-        public event EventHandler ShareEvent;
-
-        public event EventHandler ChildNodesCollectionChanged;
-
-        public FolderViewModel(MegaSDK megaSdk, ContainerType containerType, bool isCopyOrMoveViewModel = false) 
+        public FolderViewModel(MegaSDK megaSdk, ContainerType containerType, bool isForSelectFolder = false) 
             : base(megaSdk)
         {
             this.Type = containerType;
 
-            this.IsCopyOrMoveViewModel = isCopyOrMoveViewModel;
+            this.IsForSelectFolder = isForSelectFolder;
 
             this.FolderRootNode = null;
             this.IsLoaded = false;
@@ -75,6 +64,44 @@ namespace MegaApp.ViewModels
             SetEmptyContent(true);
         }
 
+        #region Events
+
+        public event EventHandler ChildNodesCollectionChanged;
+
+        public event EventHandler FolderNavigatedTo;
+
+        public event EventHandler ChangeViewEvent;
+
+        /// <summary>
+        /// Event triggered when a copy/move/import action over selected nodes is started
+        /// </summary>
+        public event EventHandler SelectedNodesActionStarted;
+
+        /// <summary>
+        /// Event invocator method called when a copy/move/import action over selected nodes is started
+        /// </summary>
+        protected virtual void OnSelectedNodesActionStarted()
+        {
+            this.SelectedNodesActionStarted?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when a copy/move/import action over selected nodes is canceled
+        /// </summary>
+        public event EventHandler SelectedNodesActionCanceled;
+
+        /// <summary>
+        /// Event invocator method called when a copy/move/import action over selected nodes is canceled
+        /// </summary>
+        protected virtual void OnSelectedNodesActionCanceled()
+        {
+            this.SelectedNodesActionCanceled?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler ShareEvent;
+
+        #endregion
+
         private void OnSelectedItemsCollectionChanged(object sender, EventArgs e)
         {
             OnPropertyChanged(nameof(this.Folder));
@@ -84,8 +111,8 @@ namespace MegaApp.ViewModels
 
         public void ClosePanels()
         {
-            if (this.VisiblePanel == PanelType.CopyOrMove)
-                CancelCopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+            if (this.VisiblePanel == PanelType.CopyMoveImport)
+                this.OnSelectedNodesActionCanceled();
 
             this.VisiblePanel = PanelType.None;
         }
@@ -276,7 +303,6 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }
-        public ICommand CancelCopyOrMoveCommand { get; }
         public ICommand ChangeViewCommand { get; }
         public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
@@ -333,7 +359,7 @@ namespace MegaApp.ViewModels
             // Get the MNodes from the Mega SDK in the correct sorting order for the current folder
             MNodeList childList = this.Type == ContainerType.CameraUploads ?
                 NodeService.GetFileChildren(this.MegaSdk, this.FolderRootNode) : 
-                this.IsCopyOrMoveViewModel ? 
+                this.IsForSelectFolder ? 
                 NodeService.GetFolderChildren(this.MegaSdk, this.FolderRootNode) :
                 NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
 
@@ -432,21 +458,21 @@ namespace MegaApp.ViewModels
             if (this.ItemCollection.SelectedItems == null ||
                 !this.ItemCollection.HasSelectedItems) return;
 
-            this.VisiblePanel = PanelType.CopyOrMove;
+            this.VisiblePanel = PanelType.CopyMoveImport;
 
             foreach (var node in this.ItemCollection.SelectedItems)
-                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedNode;
 
             SelectedNodesService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
             this.ItemCollection.IsMultiSelectActive = false;
 
-            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+            this.OnSelectedNodesActionStarted();
         }
 
         /// <summary>
-        /// Reset the variables used in the copy or move actions
+        /// Reset the the selected nodes
         /// </summary>
-        public void ResetCopyOrMove()
+        public void ResetSelectedNodes()
         {
             this.ItemCollection.ClearSelection();
             SelectedNodesService.ClearSelectedNodes();
@@ -538,26 +564,26 @@ namespace MegaApp.ViewModels
             if (this.ItemCollection.SelectedItems == null ||
                 !this.ItemCollection.HasSelectedItems) return;
 
-            this.VisiblePanel = PanelType.CopyOrMove;
+            this.VisiblePanel = PanelType.CopyMoveImport;
 
             foreach (var node in this.ItemCollection.SelectedItems)
-                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedNode;
 
             SelectedNodesService.SelectedNodes = this.ItemCollection.SelectedItems.ToList();
             this.ItemCollection.IsMultiSelectActive = false;
 
-            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+            this.OnSelectedNodesActionStarted();
         }
 
         public void ImportFolder()
         {
-            this.VisiblePanel = PanelType.CopyOrMove;
+            this.VisiblePanel = PanelType.CopyMoveImport;
 
             SelectedNodesService.SelectedNodes.Clear();
             SelectedNodesService.SelectedNodes.Add(this.FolderRootNode);
             this.ItemCollection.IsMultiSelectActive = false;
 
-            CopyOrMoveEvent?.Invoke(this, EventArgs.Empty);
+            this.OnSelectedNodesActionStarted();
         }
 
         private async void Remove()
@@ -1020,7 +1046,7 @@ namespace MegaApp.ViewModels
 
                 // If the user is moving nodes, check if the node had been selected to move 
                 // and establish the corresponding display mode
-                if (this.VisiblePanel == PanelType.CopyOrMove)
+                if (this.VisiblePanel == PanelType.CopyMoveImport)
                 {
                     // Check if it is one of the selected nodes
                     SelectedNodesService.IsSelectedNode(node, true);
@@ -1116,7 +1142,7 @@ namespace MegaApp.ViewModels
         {
             if (this.FolderRootNode == null) return;
 
-            if (this.IsCopyOrMoveViewModel)
+            if (this.IsForSelectFolder)
             {
                 SetViewDefaults();
                 return;
@@ -1270,7 +1296,7 @@ namespace MegaApp.ViewModels
 
         public ContainerType Type { get; private set; }
 
-        public bool IsCopyOrMoveViewModel { get; private set; }
+        public bool IsForSelectFolder { get; private set; }
 
         private FolderContentViewMode _viewMode;
         public FolderContentViewMode ViewMode

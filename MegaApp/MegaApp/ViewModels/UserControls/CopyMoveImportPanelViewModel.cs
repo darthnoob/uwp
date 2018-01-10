@@ -18,11 +18,11 @@ namespace MegaApp.ViewModels.UserControls
             SelectedNodesService.SelectedNodesChanged += (sender, args) =>
             {
                 OnPropertyChanged(nameof(this.ActiveFolderView));
-                OnPropertyChanged(nameof(this.CopyOrMoveItemsToText));
+                OnPropertyChanged(nameof(this.CopyMoveImportItemsToText));
             };
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
-            this.CancelCommand = new RelayCommand(CancelCopyOrMove);
+            this.CancelCommand = new RelayCommand(Cancel);
             this.CopyCommand = new RelayCommand<bool>(CopyOrMove);
             this.ImportCommand = new RelayCommand(Import);
             this.MoveCommand = new RelayCommand<bool>(CopyOrMove);
@@ -43,29 +43,29 @@ namespace MegaApp.ViewModels.UserControls
         #region Events
 
         /// <summary>
-        /// Event triggered when the copy/move process is finished
+        /// Event triggered when the action is finished
         /// </summary>
-        public event EventHandler CopyOrMoveFinished;
+        public event EventHandler ActionFinished;
 
         /// <summary>
-        /// Event invocator method called when the copy/move process is finished
+        /// Event invocator method called when the action is finished
         /// </summary>
-        protected void OnCopyOrMoveFinished()
+        protected void OnActionFinished()
         {
-            this.CopyOrMoveFinished?.Invoke(this, EventArgs.Empty);
+            this.ActionFinished?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
-        /// Event triggered when the copy/move process is cancelled
+        /// Event triggered when the action is cancelled
         /// </summary>
-        public event EventHandler CopyOrMoveCanceled;
+        public event EventHandler ActionCanceled;
 
         /// <summary>
-        /// Event invocator method called when the copy/move process is cancelled
+        /// Event invocator method called when the action is cancelled
         /// </summary>
-        protected void OnCopyOrMoveCanceled()
+        protected void OnActionCanceled()
         {
-            this.CopyOrMoveCanceled?.Invoke(this, EventArgs.Empty);
+            this.ActionCanceled?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -78,9 +78,9 @@ namespace MegaApp.ViewModels.UserControls
                 this.ActiveFolderView.AddFolderCommand.Execute(null);
         }
 
-        private void CancelCopyOrMove()
+        private void Cancel()
         {
-            this.OnCopyOrMoveCanceled();
+            this.OnActionCanceled();
         }
 
         private async void CopyOrMove(bool move)
@@ -94,7 +94,7 @@ namespace MegaApp.ViewModels.UserControls
                 // deselect the nodes in the main view meanwhile the nodes are copied/moved
                 var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
-                this.OnCopyOrMoveFinished();
+                this.OnActionFinished();
 
                 var newParentNode = this.ActiveFolderView.FolderRootNode;
                 foreach (var node in selectedNodes)
@@ -108,7 +108,7 @@ namespace MegaApp.ViewModels.UserControls
             catch (Exception) { finalResult = false; }
             finally
             {
-                this.OnCopyOrMoveFinished();
+                this.OnActionFinished();
 
                 if (!finalResult)
                 {
@@ -133,7 +133,7 @@ namespace MegaApp.ViewModels.UserControls
                 // deselect the nodes in the main view meanwhile the nodes are imported
                 var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
-                this.OnCopyOrMoveFinished();
+                this.OnActionFinished();
 
                 var newParentNode = this.ActiveFolderView.FolderRootNode;
                 foreach (var node in selectedNodes)
@@ -155,7 +155,7 @@ namespace MegaApp.ViewModels.UserControls
                         ResourceService.AppMessages.GetString("AM_ImportFailed"));
                 }
 
-                this.OnCopyOrMoveFinished();
+                this.OnActionFinished();
             }
         }
 
@@ -193,7 +193,7 @@ namespace MegaApp.ViewModels.UserControls
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string IncomingSharesText => ResourceService.UiResources.GetString("UI_IncomingShares");
 
-        public string CopyOrMoveItemsToText
+        public string CopyMoveImportItemsToText
         {
             get
             {

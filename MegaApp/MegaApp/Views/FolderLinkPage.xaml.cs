@@ -45,7 +45,7 @@ namespace MegaApp.Views
                         this.FolderLinkSplitView.OpenPaneLength = InformationPanelMinWidth;
                         break;
 
-                    case PanelType.CopyOrMove:
+                    case PanelType.CopyMoveImport:
                         this.FolderLinkSplitView.OpenPaneLength = ImportPanelMinWidth;
                         break;
                 }
@@ -80,11 +80,11 @@ namespace MegaApp.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.ViewModel.FolderLink.FolderNavigatedTo -= OnFolderNavigatedTo;
-            this.ViewModel.FolderLink.CopyOrMoveEvent -= OnImportStarted;
-            this.ViewModel.FolderLink.CancelCopyOrMoveEvent -= OnImportCanceled;
+            this.ViewModel.FolderLink.SelectedNodesActionStarted -= OnImportStarted;
+            this.ViewModel.FolderLink.SelectedNodesActionCanceled -= OnImportCanceled;
 
-            this.ImportPanelControl.ViewModel.CopyOrMoveFinished -= OnImportFinished;
-            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled -= OnImportCanceled;
+            this.ImportPanelControl.ViewModel.ActionFinished -= OnImportFinished;
+            this.ImportPanelControl.ViewModel.ActionCanceled -= OnImportCanceled;
 
             base.OnNavigatedFrom(e);
         }
@@ -94,11 +94,11 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
 
             this.ViewModel.FolderLink.FolderNavigatedTo += OnFolderNavigatedTo;
-            this.ViewModel.FolderLink.CopyOrMoveEvent += OnImportStarted;
-            this.ViewModel.FolderLink.CancelCopyOrMoveEvent += OnImportCanceled;
+            this.ViewModel.FolderLink.SelectedNodesActionStarted += OnImportStarted;
+            this.ViewModel.FolderLink.SelectedNodesActionCanceled += OnImportCanceled;
 
-            this.ImportPanelControl.ViewModel.CopyOrMoveFinished += OnImportFinished;
-            this.ImportPanelControl.ViewModel.CopyOrMoveCanceled += OnImportCanceled;
+            this.ImportPanelControl.ViewModel.ActionFinished += OnImportFinished;
+            this.ImportPanelControl.ViewModel.ActionCanceled += OnImportCanceled;
 
             this.ViewModel.LoginToFolder(LinkInformationService.ActiveLink);
         }
@@ -129,7 +129,7 @@ namespace MegaApp.Views
 
         private void ResetImport()
         {
-            this.ViewModel.FolderLink.ResetCopyOrMove();
+            this.ViewModel.FolderLink.ResetSelectedNodes();
             this.FolderLinkExplorer.ClearSelectedItems();
             this.FolderLinkExplorer.EnableSelection();
         }

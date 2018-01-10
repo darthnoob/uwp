@@ -8,6 +8,6 @@
         None,
         Information,
         Content,
-        CopyOrMove
+        CopyMoveImport
     }
 }

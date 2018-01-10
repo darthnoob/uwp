@@ -11,8 +11,8 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharesViewModel : SharedFoldersListViewModel
     {
-        public IncomingSharesViewModel(bool isCopyOrMoveViewModel = false) : 
-            base(ContainerType.InShares, isCopyOrMoveViewModel)
+        public IncomingSharesViewModel(bool isForSelectFolder = false) : 
+            base(ContainerType.InShares, isForSelectFolder)
         {
 
         }

@@ -18,7 +18,7 @@ namespace MegaApp.Converters
             {
                 case NodeDisplayMode.Normal:
                     return new SolidColorBrush(Colors.Transparent);
-                case NodeDisplayMode.SelectedForCopyOrMove:
+                case NodeDisplayMode.SelectedNode:
                 {
                     var solidColor = new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"])
                     {
