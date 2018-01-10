@@ -266,7 +266,7 @@
                     </CommandBar>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" Margin="12,0,0,0">
+            <Grid x:Name="MainGrid" Grid.Row="1">
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -346,7 +346,9 @@
                                 IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
                                 IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
                                 SubHeaderMargin="0,14,0,28"
-                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
+                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}"
+                                ToggleAlignment="Below"
+                                VerticalContentAlignment="Center">
                                 <userControls:TogglePanel.SubHeaderForeground>
                                     <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                                 </userControls:TogglePanel.SubHeaderForeground>
@@ -526,10 +528,12 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,-12,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Overlay" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,12,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,12,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16,18,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
@@ -539,10 +543,13 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97, 0, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97,0,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
@@ -552,10 +559,13 @@
                         <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 0, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178,0,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="44" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="18" />
                     </VisualState.Setters>
