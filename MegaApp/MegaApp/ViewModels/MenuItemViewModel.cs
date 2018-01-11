@@ -208,7 +208,7 @@ namespace MegaApp.ViewModels
 
         private static string MenuCloudPathData => ResourceService.VisualResources.GetString("VR_MenuCloudPathData");
         private static string MenuContactsPathData => ResourceService.VisualResources.GetString("VR_MenuContactsPathData");
-        private static string MenuFolderLinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        private static string MenuFolderLinkPathData => ResourceService.VisualResources.GetString("VR_FolderLinkPathData");
         private static string MenuSaveForOfflinePathData => ResourceService.VisualResources.GetString("VR_MenuSaveForOfflinePathData");
         private static string MenuSettingsPathData => ResourceService.VisualResources.GetString("VR_MenuSettingsPathData");
         private static string MenuSharedPathData => ResourceService.VisualResources.GetString("VR_MenuSharedPathData");

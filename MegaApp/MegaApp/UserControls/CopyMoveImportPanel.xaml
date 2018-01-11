@@ -91,12 +91,12 @@
                     <AppBarButton.CommandParameter>
                         <copyMoveImportPanel:ActionType>IMPORT</copyMoveImportPanel:ActionType>
                     </AppBarButton.CommandParameter>
-                    <Viewbox MaxHeight="14" MaxWidth="14">
+                    <AppBarButton.Icon>
                         <PathIcon
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
-                    </Viewbox>
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding CancelCommand}"
@@ -191,12 +191,12 @@
                 Style="{StaticResource MegaAppBarButtonStyle}"
                 ToolTipService.ToolTip="{Binding ImportText, Mode=OneTime}"
                 Visibility="{Binding ActiveFolderView, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                <Viewbox MaxHeight="14" MaxWidth="14">
+                <AppBarButton.Icon>
                     <PathIcon
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
-                </Viewbox>
+                        Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton
                 Command="{Binding CancelCommand}"
