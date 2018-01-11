@@ -170,6 +170,19 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            Command="{Binding Node.ImportCommand}"
+                            Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                            Visibility="{Binding Node, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
                             Command="{Binding Node.CopyOrMoveCommand}"
                             Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
@@ -571,6 +584,19 @@
                     x:Name="MainBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
+                        Command="{Binding Node.PreviewCommand}"
+                        Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                        Visibility="{Binding Node, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
                         Command="{Binding Node.DownloadCommand}"
                         Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -584,16 +610,16 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        Command="{Binding Node.PreviewCommand}"
-                        Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
+                        Command="{Binding Node.ImportCommand}"
+                        Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
-                        Visibility="{Binding Node, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                        Visibility="{Binding Node, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
-                            <PathIcon
+                            <PathIcon 
+                                Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Data="{x:Bind ViewModel.PreviewImagePathData, Mode=OneTime}" />
+                                VerticalAlignment="Center"/>
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
