@@ -1,4 +1,5 @@
 ﻿using mega;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -34,6 +35,12 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeViewModel, value); }
         }
 
+        #endregion
+
+        #region UiResources
+
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_TransferManager");
+        
         #endregion
     }
 }

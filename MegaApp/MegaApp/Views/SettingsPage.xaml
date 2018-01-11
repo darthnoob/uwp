@@ -133,38 +133,47 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TopRow" Grid.Row="0" />
+        <Grid x:Name="TopRowGrid" Grid.Row="0">
+            <TextBlock
+                x:Name="SectionNameText"
+                Grid.Row="0" Grid.Column="0"
+                Margin="24,14,0,0"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
+        </Grid>
 
-        <ListView
-            Grid.Row="1"
-            Padding="20"
-            HorizontalAlignment="Stretch"
-            ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
-            ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
-            ItemsSource="{Binding Source={StaticResource SettingsCollectionSource}}"
-            SelectionMode="None">
-            <ListView.GroupStyle>
-                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,16">
-                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsStackPanel
-                        MaxWidth="{StaticResource ViewAreaMaxWidth}"
-                        HorizontalAlignment="Left"
-                        AreStickyGroupHeadersEnabled="True"
-                        GroupPadding="0, 0, 0, 80"
-                        Orientation="Vertical" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-        </ListView>
+        <Grid x:Name="MainGrid" Grid.Row="1">
+            <ListView
+                Padding="20"
+                HorizontalAlignment="Stretch"
+                ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
+                ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
+                ItemsSource="{Binding Source={StaticResource SettingsCollectionSource}}"
+                SelectionMode="None">
+                <ListView.GroupStyle>
+                    <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,16">
+                                    <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel
+                            MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                            HorizontalAlignment="Left"
+                            AreStickyGroupHeadersEnabled="True"
+                            GroupPadding="0, 0, 0, 80"
+                            Orientation="Vertical" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -173,7 +182,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Background" Value="{StaticResource MegaAppBarBackgroundBrush}"/>
+                        <Setter Target="TopRowGrid.Background" Value="{StaticResource MegaAppBarBackgroundBrush}"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
@@ -181,7 +190,28 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="TopRow.Background" Value="Transparent"/>
+                        <Setter Target="TopRowGrid.Background" Value="Transparent"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="-4,-8,0,0"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="4,-12,12,0"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

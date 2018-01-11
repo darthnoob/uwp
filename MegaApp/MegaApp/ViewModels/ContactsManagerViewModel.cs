@@ -61,6 +61,7 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_Contacts");
         public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
         public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
         public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");

@@ -68,7 +68,7 @@
                     Margin="24,14,0,0"
                     FontSize="12"
                     Foreground="{StaticResource MegaRedColorBrush}"
-                    Text="{Binding CloudDriveNameText, Mode=OneTime}" />
+                    Text="{x:Bind ViewModel.CloudDriveNameText, Mode=OneTime}" />
 
                 <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
                 <Grid 
@@ -506,6 +506,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
+                        <Setter Target="TopRowGrid.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -517,6 +518,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
