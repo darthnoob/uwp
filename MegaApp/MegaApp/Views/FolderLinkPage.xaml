@@ -73,16 +73,6 @@
                             Background="Transparent"
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
-                                Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
-                                Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
-                                Style="{StaticResource MegaAppBarButtonStyle}"
-                                ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
-                                Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                                <Viewbox MaxHeight="16" MaxWidth="16">
-                                    <FontIcon Glyph="&#xEA52;" />
-                                </Viewbox>
-                            </AppBarButton>
-                            <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
                                 Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
@@ -93,6 +83,19 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                                Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{x:Bind ViewModel.FolderLink.ImportPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -226,16 +229,6 @@
                     DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
-                        Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
-                        Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                        <Viewbox MaxHeight="16" MaxWidth="16">
-                            <FontIcon Glyph="&#xEA52;" />
-                        </Viewbox>
-                    </AppBarButton>
-                    <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
                         Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -246,6 +239,19 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{x:Bind ViewModel.FolderLink.DownloadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                        Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
+                        Visibility="{Binding Folder, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{x:Bind ViewModel.FolderLink.ImportPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton

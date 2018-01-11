@@ -241,8 +241,8 @@ namespace MegaApp.ViewModels.UserControls
 
         public string AddFolderPathData => ResourceService.VisualResources.GetString("VR_CreateFolderPathData");
         public string CancelPathData => ResourceService.VisualResources.GetString("VR_CancelPathData");
-        public string ConfirmPathData => ResourceService.VisualResources.GetString("VR_ConfirmPathData");
         public string CopyPathData => ResourceService.VisualResources.GetString("VR_CopyPathData");
+        public string ImportPathData => ResourceService.VisualResources.GetString("VR_ImportPathData");
 
         #endregion
     }
