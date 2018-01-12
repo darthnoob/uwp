@@ -107,6 +107,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
                     </VisualState.Setters>
@@ -116,6 +117,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopRowGrid.Background" Value="Transparent" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
