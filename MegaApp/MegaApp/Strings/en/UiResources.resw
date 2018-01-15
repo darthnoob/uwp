@@ -1447,4 +1447,9 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label to indicate how many items have been selected for import - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
+  <data name="UI_FileLink" xml:space="preserve">
+    <value>File link</value>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
 </root>

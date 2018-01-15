@@ -36,7 +36,7 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
-            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.CloudDrive;
+            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
 
@@ -574,8 +574,9 @@ namespace MegaApp.ViewModels
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
 
-            // If is a folder link, navigate to the Cloud Drive page
-            if (this.Parent?.Type == ContainerType.FolderLink)
+            // If is a file or folder link, navigate to the Cloud Drive page
+            if (this.ParentContainerType == ContainerType.FileLink ||
+                this.ParentContainerType == ContainerType.FolderLink)
             {
                 OnUiThread(() =>
                 {

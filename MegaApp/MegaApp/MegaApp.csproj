@@ -119,6 +119,7 @@
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
+    <Compile Include="Enums\GetPublicNodeResult.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\LoginToFolderResult.cs" />
     <Compile Include="Enums\PanelType.cs" />
@@ -130,12 +131,14 @@
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
+    <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
+    <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
@@ -215,6 +218,7 @@
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
@@ -346,6 +350,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileLinkPage.xaml.cs">
+      <DependentUpon>FileLinkPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FolderLinkPage.xaml.cs">
       <DependentUpon>FolderLinkPage.xaml</DependentUpon>
@@ -581,6 +588,10 @@
     <Page Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FileLinkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\FolderLinkPage.xaml">
       <SubType>Designer</SubType>

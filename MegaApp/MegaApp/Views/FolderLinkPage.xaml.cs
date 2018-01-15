@@ -3,11 +3,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using MegaApp.Classes;
 
 namespace MegaApp.Views
 {

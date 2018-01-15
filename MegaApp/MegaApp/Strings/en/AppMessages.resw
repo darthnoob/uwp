@@ -1176,4 +1176,34 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Open folder link failed</value>
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
+  <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
+    <value>The account that created this link has been terminated due to multiple violations of our Terms of Service.</value>
+    <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
+  </data>
+  <data name="AM_FileLinkUnavailable" xml:space="preserve">
+    <value>This could be due to the following reasons:
+- The file has been removed because of a ToS/AUP violation.
+- Invalid URL – the link you are trying to access does not exist.
+- The file has been deleted by the user.</value>
+    <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
+  </data>
+  <data name="AM_FolderLinkUnavailable" xml:space="preserve">
+    <value>This could be due to the following reasons:
+- The folder link has been removed because of a ToS/AUP violation.
+- Invalid URL – the link you are trying to access does not exist.
+- The folder link has been deleted by the user.</value>
+    <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
+  </data>
+  <data name="AM_GetPublicNodeFailed" xml:space="preserve">
+    <value>Failed opening the file link. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
+  </data>
+  <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
+    <value>Open file link failed</value>
+    <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LinkUnavailableTitle" xml:space="preserve">
+    <value>Unavailable link</value>
+    <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
+  </data>
 </root>

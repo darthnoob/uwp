@@ -4,6 +4,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
@@ -14,6 +15,7 @@ namespace MegaApp.ViewModels
             InitializeModel();
 
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.OpenLinkCommand = new RelayCommand(OpenLink);
         }
 
         /// <summary>
@@ -34,6 +36,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand CleanRubbishBinCommand { get; }
+        public ICommand OpenLinkCommand { get; }
 
         #endregion
 
@@ -153,6 +156,50 @@ namespace MegaApp.ViewModels
             OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
+        private async void OpenLink()
+        {
+            if (!IsUserOnline()) return;
+
+            var link = await DialogService.ShowInputDialogAsync(OpenLinkText,
+                ResourceService.UiResources.GetString("UI_TypeOrPasteLink"));
+
+            if (string.IsNullOrEmpty(link) || string.IsNullOrWhiteSpace(link)) return;
+
+            LinkInformationService.ActiveLink = UriService.ReformatUri(link);
+
+            if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#!"))
+            {
+                LinkInformationService.UriLink = UriLinkType.File;
+
+                // Navigate to the file link page
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(FileLinkPage), false,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                });
+            }
+            else if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#F!"))
+            {
+                LinkInformationService.UriLink = UriLinkType.Folder;
+
+                // Navigate to the folder link page
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(FolderLinkPage), false,
+                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                });
+            }
+            else
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed"));
+                });
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -195,6 +242,7 @@ namespace MegaApp.ViewModels
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string OpenLinkText => ResourceService.UiResources.GetString("UI_OpenLink");
 
         #endregion
 
@@ -204,6 +252,7 @@ namespace MegaApp.ViewModels
         public string EmptyFolderPathData => ResourceService.VisualResources.GetString("VR_EmptyFolderPathData");
         public string EmptyRubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string FolderLoadingPathData => ResourceService.VisualResources.GetString("VR_FolderLoadingPathData");
+        public string OpenLinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
 
         #endregion
     }

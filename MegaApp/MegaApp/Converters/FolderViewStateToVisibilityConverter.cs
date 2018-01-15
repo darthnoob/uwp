@@ -41,15 +41,15 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourceFolderLink ? 
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink ? 
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourceFolderLink &&
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
                                 !SelectedNodesService.IsMoveAllowed ? Visibility.Visible : Visibility.Collapsed;
 
                         case "import":
-                            return folder.IsForSelectFolder && SelectedNodesService.IsSourceFolderLink ?
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:
@@ -142,17 +142,17 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourceFolderLink &&
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourceFolderLink && !SelectedNodesService.IsMoveAllowed &&
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink && !SelectedNodesService.IsMoveAllowed &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "import":
-                            return folder.IsForSelectFolder && SelectedNodesService.IsSourceFolderLink &&
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
 

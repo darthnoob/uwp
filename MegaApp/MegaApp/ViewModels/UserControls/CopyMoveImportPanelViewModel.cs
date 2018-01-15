@@ -216,11 +216,11 @@ namespace MegaApp.ViewModels.UserControls
             {
                 if (SelectedNodesService.SelectedNodes == null) return string.Empty;
 
-                var singleItemString = SelectedNodesService.IsSourceFolderLink ?
+                var singleItemString = SelectedNodesService.IsSourcePublicLink ?
                     ResourceService.UiResources.GetString("UI_ImportItemTo") :
                     ResourceService.UiResources.GetString("UI_CopyOrMoveItemTo");
 
-                var multipleItemString = SelectedNodesService.IsSourceFolderLink ?
+                var multipleItemString = SelectedNodesService.IsSourcePublicLink ?
                     ResourceService.UiResources.GetString("UI_ImportMultipleItemsTo") :
                     ResourceService.UiResources.GetString("UI_CopyOrMoveMultipleItemsTo");
 
