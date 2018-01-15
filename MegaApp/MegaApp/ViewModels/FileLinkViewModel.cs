@@ -90,7 +90,7 @@ namespace MegaApp.ViewModels
                     break;
 
                 case GetPublicNodeResult.AssociatedUserAccountTerminated:
-                    PublicLinkService.ShowAssociatedUserAccountTerminatedFileLinkAlert();
+                    PublicLinkService.ShowAssociatedUserAccountTerminatedAlert();
                     break;
 
                 case GetPublicNodeResult.Unknown:

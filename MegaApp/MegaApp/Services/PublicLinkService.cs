@@ -41,7 +41,7 @@ namespace MegaApp.Services
                 ResourceService.AppMessages.GetString("AM_InvalidLink"));
         }
 
-        public static async void ShowAssociatedUserAccountTerminatedFileLinkAlert()
+        public static async void ShowAssociatedUserAccountTerminatedAlert()
         {
             await DialogService.ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_LinkUnavailableTitle"),
