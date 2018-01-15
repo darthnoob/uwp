@@ -117,39 +117,45 @@
                 <Grid
                     Grid.Row="0"
                     Visibility="{Binding PreviewImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
-                    <Path
-                        MaxHeight="200" MaxWidth="200"
-                        Data="{x:Bind ViewModel.Node.DefaultImagePathData, Mode=OneWay}"
-                        Stretch="Uniform"
-                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
-                        <Path.Fill>
-                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
-                        </Path.Fill>
-                    </Path>
-                    <Image
-                        MaxHeight="200" MaxWidth="200"
+                    <Viewbox StretchDirection="DownOnly">
+                        <Path
+                            MaxHeight="200" MaxWidth="200"
+                            Data="{x:Bind ViewModel.Node.DefaultImagePathData, Mode=OneWay}"
+                            Stretch="Uniform"
+                            Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                            <Path.Fill>
+                                <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                            </Path.Fill>
+                        </Path>
+                    </Viewbox>
+                    <Viewbox StretchDirection="DownOnly">
+                        <Image
                         HorizontalAlignment="Center"
                         Stretch="Uniform"
                         VerticalAlignment="Center"
                         Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
-                        <Image.Source>
-                            <BitmapImage
+                            <Image.Source>
+                                <BitmapImage
                                 DecodePixelType="Logical"
                                 UriSource="{x:Bind ViewModel.Node.ThumbnailImageUri, Mode=OneWay}" />
-                        </Image.Source>
-                    </Image>
+                            </Image.Source>
+                        </Image>
+                    </Viewbox>
                 </Grid>
                 <Grid 
                     Grid.Row="0"
                     Visibility="{Binding PreviewImageUri, Converter={StaticResource StringVisibilityConverter}}">
-                    <Image
-                        HorizontalAlignment="Center"
-                        Stretch="Uniform"
-                        VerticalAlignment="Center">
-                        <Image.Source>
-                            <BitmapImage UriSource="{x:Bind ViewModel.Node.PreviewImageUri, Mode=OneWay}" />
-                        </Image.Source>
-                    </Image>
+                    <Viewbox StretchDirection="DownOnly">
+                        <Image
+                            x:Name="PreviewImage"
+                            HorizontalAlignment="Center"
+                            Stretch="Uniform"
+                            VerticalAlignment="Center">
+                            <Image.Source>
+                                <BitmapImage UriSource="{x:Bind ViewModel.Node.PreviewImageUri, Mode=OneWay}" />
+                            </Image.Source>
+                        </Image>
+                    </Viewbox>
                 </Grid>
 
                 <TextBlock
