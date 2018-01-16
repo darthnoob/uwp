@@ -91,7 +91,7 @@ namespace MegaApp.Views
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
@@ -172,7 +172,7 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
                 this.ViewModel.ActiveView = this.ViewModel.MegaContacts;
@@ -285,12 +285,12 @@ namespace MegaApp.Views
 
         private void OnOpenContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = true;
+            this.ViewModel.IsPanelOpen = true;
         }
 
         private void OnCloseContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
         }
     }
 }
