@@ -1,4 +1,5 @@
-﻿using mega;
+﻿using System.Threading.Tasks;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
@@ -47,7 +48,7 @@ namespace MegaApp.ViewModels
             switch(result)
             {
                 case LoginToFolderResult.Success:
-                    if (!await this.FetchNodes()) return;
+                    if (!await this.FetchNodesFromFolder()) break;
                     this.LoadFolder();
                     navigateBack = false;
                     break;
@@ -95,6 +96,50 @@ namespace MegaApp.ViewModels
                 NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
                     NavigationObject.Create(this.GetType(), NavigationActionType.Default));
             });
+        }
+
+        private async Task<bool> FetchNodesFromFolder()
+        {
+            var fetchNodesResult = await this.FetchNodes();
+            switch(fetchNodesResult)
+            {
+                case FetchNodesResult.Success:
+                    return true;
+
+                case FetchNodesResult.InvalidHandleOrDecryptionKey:
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        "Fetch nodes from folder link failed. Invalid handle or decryption key.");
+                    PublicLinkService.ShowLinkNoValidAlert();
+                    break;
+
+                case FetchNodesResult.InvalidDecryptionKey:
+                    PublicLinkService.Link = await PublicLinkService.ShowDecryptionKeyNotValidAlertAsync();
+                    if (PublicLinkService.Link != null)
+                        this.LoginToFolder(PublicLinkService.Link);
+                    break;
+
+                case FetchNodesResult.NoDecryptionKey:
+                    PublicLinkService.Link = await PublicLinkService.ShowDecryptionAlertAsync();
+                    this._loginToFolder.DecryptionAlert = true;
+                    if (PublicLinkService.Link != null)
+                        this.LoginToFolder(PublicLinkService.Link);
+                    break;
+
+                case FetchNodesResult.UnavailableLink:
+                    this.ShowUnavailableFolderLinkAlert();
+                    break;
+
+                case FetchNodesResult.AssociatedUserAccountTerminated:
+                    PublicLinkService.ShowAssociatedUserAccountTerminatedAlert();
+                    break;
+
+                case FetchNodesResult.Unknown:
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                    this.ShowFetchNodesFailedAlertDialog();
+                    break;
+            }
+
+            return false;
         }
 
         private void LoadFolder()

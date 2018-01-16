@@ -60,6 +60,7 @@ namespace MegaApp.ViewModels.Login
             catch (BlockedAccountException)
             {
                 // Do nothing, app is already logging out
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Blocked account.");
                 return;
             }
 
@@ -74,7 +75,14 @@ namespace MegaApp.ViewModels.Login
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
 
                     // Fetch nodes from MEGA
-                    if (!await this.FetchNodes()) return;
+                    var fetchNodesResult = await this.FetchNodes();
+                    if (fetchNodesResult != FetchNodesResult.Success)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                        if (fetchNodesResult != FetchNodesResult.BlockedAccount)
+                            this.ShowFetchNodesFailedAlertDialog();
+                        return;
+                    }
 
                     // Navigate to the main page to load the main application for the user
                     NavigateService.Instance.Navigate(typeof(MainPage), true,
@@ -193,8 +201,16 @@ namespace MegaApp.ViewModels.Login
                 });
             }
             // Do nothing, app is already logging out
-            catch (BadSessionIdException) { return false; }
-            catch (BlockedAccountException) { return false; }
+            catch (BadSessionIdException)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Bad session ID.");
+                return false;
+            }
+            catch (BlockedAccountException)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Blocked account.");
+                return false;
+            }
 
             if (!fastLoginResult)
             {
@@ -209,14 +225,23 @@ namespace MegaApp.ViewModels.Login
             Task.Run(() => LicenseService.ValidateLicensesAsync());
 
             // Fetch nodes from MEGA
-            return await this.FetchNodes();
+            var fetchNodesResult = await this.FetchNodes();
+            if (fetchNodesResult != FetchNodesResult.Success)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                if (fetchNodesResult != FetchNodesResult.BlockedAccount)
+                    this.ShowFetchNodesFailedAlertDialog();
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        protected async Task<bool> FetchNodes()
+        protected async Task<FetchNodesResult> FetchNodes()
         {
             try
             {
@@ -227,28 +252,30 @@ namespace MegaApp.ViewModels.Login
                 fetchNodes.ServerBusy += OnServerBusy;
 
                 var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
-                if (!fetchNodesResult)
+                if (fetchNodesResult == FetchNodesResult.Success)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
-                    return false;
+                    // Enable the transfer resumption for the MegaSDK instance
+                    this.MegaSdk.enableTransferResumption();
                 }
-
-                // Enable the transfer resumption for the MegaSDK instance
-                this.MegaSdk.enableTransferResumption();
 
                 this.ControlState = true;
                 this.IsBusy = false;
 
-                return true;
+                return fetchNodesResult;
             }
             catch (BlockedAccountException)
             {
                 // Do nothing, app is already logging out
-                return false;
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed. Blocked account.");
+                return FetchNodesResult.BlockedAccount;
             }
+        }
+
+        protected async void ShowFetchNodesFailedAlertDialog()
+        {
+            await DialogService.ShowAlertAsync(
+                ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
         }
 
         #endregion

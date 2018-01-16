@@ -119,6 +119,7 @@
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
+    <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\LoginToFolderResult.cs" />

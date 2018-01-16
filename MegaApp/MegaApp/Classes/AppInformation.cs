@@ -10,8 +10,6 @@
             IsStartupModeActivate = false;
 
             HasPinLockIntroduced = false;
-
-            HasFetchedNodes = false;
         }
         
         public bool PickerOrAsyncDialogIsOpen { get; set; }
@@ -20,7 +18,5 @@
         public bool IsStartupModeActivate { get; set; }
         
         public bool HasPinLockIntroduced { get; set; }
-
-        public bool HasFetchedNodes { get; set; }
     }
 }
