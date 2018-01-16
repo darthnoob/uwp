@@ -89,6 +89,24 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
+        public override bool CanGoBack
+        {
+            get
+            {
+                bool canGoBack = false;
+                if (this.ViewModel != null)
+                    canGoBack = this.ViewModel.IsPanelOpen;
+
+                return canGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (ContactProfileSplitView.IsPaneOpen)
+                this.ViewModel.ClosePanels();
+        }
+
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
             this.ViewModel.IsPanelOpen = false;

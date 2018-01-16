@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.OutgoingContactRequests));
         }
 
-        private void ClosePanels()
+        public void ClosePanels()
         {
             this.IsPanelOpen = false;
         }
