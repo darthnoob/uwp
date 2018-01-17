@@ -125,6 +125,11 @@ namespace MegaApp.ViewModels
             this.VisiblePanel = PanelType.Information;
         }
 
+        /// <summary>
+        /// Method that should be called when a node is added or updated
+        /// </summary>
+        /// <param name="sender">Object that sent the notification</param>
+        /// <param name="mNode">Node added or updated</param>
         public void OnNodeAdded(object sender, MNode mNode)
         {
             if (mNode == null) return;

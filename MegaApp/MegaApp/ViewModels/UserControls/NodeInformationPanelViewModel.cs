@@ -11,6 +11,7 @@ namespace MegaApp.ViewModels.UserControls
     {
         public NodeInformationPanelViewModel()
         {
+            this.AddContactToFolderCommand = new RelayCommand(AddContactToFolder);
             this.CopyLinkCommand = new RelayCommand(CopyLink);
             this.DecryptionKeyCommand = new RelayCommand(GetDecryptiontKey);
             this.LinkWithKeyCommand = new RelayCommand(GetLinkWithKey);
@@ -20,6 +21,7 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Commands
 
+        public ICommand AddContactToFolderCommand { get; }
         public ICommand CopyLinkCommand { get; }
         public ICommand DecryptionKeyCommand { get; }
         public ICommand LinkWithKeyCommand { get; }
@@ -85,18 +87,33 @@ namespace MegaApp.ViewModels.UserControls
             }
             else if (isOn && !folderNode.IsOutShare)
             {
-                if (ContactsService.MegaContacts.ItemCollection.HasItems)
-                {
-                    this.OpenShareToPanelEvent?.Invoke(this, EventArgs.Empty);
-                    return;
-                }
-
-                if (folderNode?.ContactsList == null)
-                    folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
-
-                if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
-                    folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
+                this.AddContactToFolderAction(folderNode);
             }
+        }
+
+        private void AddContactToFolder()
+        {
+            if (this.Node is FolderNodeViewModel == false) return;
+
+            var folderNode = (FolderNodeViewModel)this.Node;
+            if (!folderNode.IsOutShare) return;
+
+            this.AddContactToFolderAction(folderNode);
+        }
+
+        private void AddContactToFolderAction(FolderNodeViewModel folderNode)
+        {
+            if (ContactsService.MegaContacts.ItemCollection.HasItems)
+            {
+                this.OpenShareToPanelEvent?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+
+            if (folderNode?.ContactsList == null)
+                folderNode.ContactsList = new Contacts.ContactsListOutgoingSharedFolderViewModel(this.Node.OriginalMNode);
+
+            if (folderNode?.ContactsList?.AddContactToFolderCommand?.CanExecute(null) == true)
+                folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
         }
 
         #endregion

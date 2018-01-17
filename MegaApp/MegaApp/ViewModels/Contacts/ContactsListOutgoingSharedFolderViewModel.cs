@@ -160,13 +160,13 @@ namespace MegaApp.ViewModels.Contacts
                 {
                     var contact = SdkService.MegaSdk.getContact(outSharesList.get(i).getUser());
 
-                    var existingContact = (ContactOutgoingSharedFolderViewModel)this.ItemCollection.Items.FirstOrDefault(
+                    var existingContact = this.ItemCollection.Items.FirstOrDefault(
                         c => c.Handle.Equals(contact.getHandle()));
 
                     // If the contact exists in the contact list (UPDATE SCENARIO)
-                    if (existingContact != null)
+                    if (existingContact != null && existingContact is ContactOutgoingSharedFolderViewModel)
                     {
-                        existingContact.GetAccesLevel(outSharesList.get(i));
+                        (existingContact as ContactOutgoingSharedFolderViewModel).GetAccesLevel(outSharesList.get(i));
                     }
                     // If the shared folder is shared with a new contact (ADD SCENARIO)
                     else
