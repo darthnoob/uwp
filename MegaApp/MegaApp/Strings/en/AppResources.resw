@@ -257,4 +257,12 @@
     <value>support@mega.nz</value>
     <comment>Email for contact and/or support - (NO-TRANSLATION).</comment>
   </data>
+  <data name="AR_FileLinkHeader" xml:space="preserve">
+    <value>https://mega.nz/#!</value>
+    <comment>Header of a file link - (NO-TRANSLATION)</comment>
+  </data>
+  <data name="AR_FolderLinkHeader" xml:space="preserve">
+    <value>https://mega.nz/#F!</value>
+    <comment>Header of a folder link - (NO-TRANSLATION)</comment>
+  </data>
 </root>

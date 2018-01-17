@@ -7,7 +7,7 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
-    public static class CopyOrMoveService
+    public static class SelectedNodesService
     {
         #region Events
 
@@ -38,6 +38,14 @@ namespace MegaApp.Services
         public static bool IsMoveAllowed => SelectedNodes.Count > 0 && 
             SelectedNodes[0] is IncomingSharedFolderNodeViewModel;
 
+        public static bool IsSourceFileLink => SelectedNodes?.Count == 1 && 
+            (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FileLink;
+
+        public static bool IsSourceFolderLink => SelectedNodes?.Count > 0 &&
+            (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FolderLink;
+
+        public static bool IsSourcePublicLink => IsSourceFileLink || IsSourceFolderLink;
+
         private static FolderViewModel _cloudDrive;
         public static FolderViewModel CloudDrive
         {
@@ -45,7 +53,7 @@ namespace MegaApp.Services
             {
                 if (_cloudDrive != null) return _cloudDrive;
 
-                _cloudDrive = new FolderViewModel(ContainerType.CloudDrive, true);
+                _cloudDrive = new FolderViewModel(SdkService.MegaSdk, ContainerType.CloudDrive, true);
                 _cloudDrive.FolderRootNode =
                     NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
                     SdkService.MegaSdk.getRootNode(), _cloudDrive);
@@ -55,7 +63,7 @@ namespace MegaApp.Services
                     App.GlobalListener.NodeAdded += _cloudDrive.OnNodeAdded;
                     App.GlobalListener.NodeRemoved += _cloudDrive.OnNodeRemoved;
                     App.GlobalListener.OutSharedFolderAdded += _cloudDrive.OnNodeAdded;
-                    App.GlobalListener.OutSharedFolderRemoved += _cloudDrive.OnNodeAdded;
+                    App.GlobalListener.OutSharedFolderRemoved += _cloudDrive.OnNodeRemoved;
                 }
 
                 _cloudDrive.LoadChildNodes();
@@ -87,11 +95,12 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Check if a node is in the selected nodes group for move, copy or any other action.
+        /// Check if a node is in the selected nodes group for move, copy, import or any other action.
         /// </summary>        
-        /// <param name="node">Node to check if is in the selected node list</param>        
+        /// <param name="node">Node to check if is in the selected node list</param>
+        /// <param name="setDisplayMode">Indicates if is needed to set the display mode of the node</param>
         /// <returns>True if is a selected node or false in other case</returns>
-        public static bool IsCopyOrMoveSelectedNode(IMegaNode node, bool setDisplayMode = false)
+        public static bool IsSelectedNode(IMegaNode node, bool setDisplayMode = false)
         {
             if (!(SelectedNodes?.Count > 0)) return false;
 
@@ -104,7 +113,7 @@ namespace MegaApp.Services
                     if (setDisplayMode)
                     {
                         //Update the selected nodes list values
-                        node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
+                        node.DisplayMode = NodeDisplayMode.SelectedNode;
                         SelectedNodes[index] = node;
                     }
 

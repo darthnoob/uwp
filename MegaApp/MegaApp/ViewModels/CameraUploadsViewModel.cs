@@ -12,7 +12,8 @@ namespace MegaApp.ViewModels
 {
     public class CameraUploadsViewModel: FolderViewModel
     {
-        public CameraUploadsViewModel() : base(ContainerType.CameraUploads)
+        public CameraUploadsViewModel() 
+            : base(SdkService.MegaSdk, ContainerType.CameraUploads)
         { 
             Items = new ObservableCollection<GroupedByDateItemViewModel>();
             ItemCollection.Items.CollectionChanged += ItemsOnCollectionChanged;
@@ -43,7 +44,7 @@ namespace MegaApp.ViewModels
                         }
                         else
                         {
-                            group = new GroupedByDateItemViewModel {Date = date};
+                            group = new GroupedByDateItemViewModel(this.MegaSdk) {Date = date};
                             group.ItemCollection.Items.Add(node);
                             Items.Add(group);
                         }
@@ -168,7 +169,7 @@ namespace MegaApp.ViewModels
 
         public string OrderTypeAndNumberOfItems => this.FolderRootNode != null ? 
             string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), 
-                SdkService.MegaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode)) : string.Empty;
+                this.MegaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode)) : string.Empty;
 
         public string OrderTypeAndNumberOfSelectedItems => this.FolderRootNode != null ?
             string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),

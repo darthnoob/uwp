@@ -5,7 +5,7 @@ namespace MegaApp.ViewModels
 {
     public class SharedFoldersViewModel : BaseSdkViewModel
     {
-        public SharedFoldersViewModel()
+        public SharedFoldersViewModel() : base(SdkService.MegaSdk)
         {
             this.IncomingShares = new IncomingSharesViewModel();
             this.OutgoingShares = new OutgoingSharesViewModel();

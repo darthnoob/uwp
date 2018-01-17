@@ -26,7 +26,7 @@ namespace MegaApp.UserControls
         {
             this.InitializeComponent();
 
-            CopyOrMoveService.SelectedNodesChanged += this.OnSelectedNodesChanged;
+            SelectedNodesService.SelectedNodesChanged += this.OnSelectedNodesChanged;
         }
 
         /// <summary>
@@ -84,12 +84,12 @@ namespace MegaApp.UserControls
             this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
 
-            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsForSelectFolder);
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
         {
-            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsForSelectFolder);
         }
 
         private void OnViewChanged(object sender, EventArgs e)
@@ -110,6 +110,8 @@ namespace MegaApp.UserControls
 
         public void EnableSelection()
         {
+            this.FolderOptionsButton.IsEnabled = true;
+
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
             this.ListView.SelectionMode = ListViewSelectionMode.Extended;
             this.GridView.SelectionMode = ListViewSelectionMode.Extended;
@@ -117,6 +119,8 @@ namespace MegaApp.UserControls
 
         public void DisableSelection()
         {
+            this.FolderOptionsButton.IsEnabled = false;
+
             this.ListView.SelectionMode = ListViewSelectionMode.None;
             this.GridView.SelectionMode = ListViewSelectionMode.None;
         }
@@ -330,6 +334,15 @@ namespace MegaApp.UserControls
                 Command = this.ViewModel.DownloadFolderCommand
             });
 
+            if (this.ViewModel?.Folder?.Type == ContainerType.FolderLink)
+            {
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_Import"),
+                    Command = this.ViewModel.ImportFolderCommand
+                });
+            }
+
             //menuFlyout.Items?.Add(new MenuFlyoutItem()
             //{
             //    Text = ResourceService.UiResources.GetString("UI_Copy"),
@@ -382,21 +395,21 @@ namespace MegaApp.UserControls
             var incomingSharedFolderNode = item as IncomingSharedFolderNodeViewModel;
             if (incomingSharedFolderNode != null)
             {
-                viewItem.IsEnabled = incomingSharedFolderNode.IsEnabledForCopyOrMove;
+                viewItem.IsEnabled = incomingSharedFolderNode.IsEnabledForCopyMoveImport;
                 return;
             }
 
             var folderNode = item as FolderNodeViewModel;
             if (folderNode != null)
             {
-                viewItem.IsEnabled = !(folderNode.Parent.IsCopyOrMoveViewModel &&
-                    CopyOrMoveService.IsCopyOrMoveSelectedNode(folderNode));
+                viewItem.IsEnabled = !(folderNode.Parent.IsForSelectFolder &&
+                    SelectedNodesService.IsSelectedNode(folderNode));
             }
         }
 
         private void OnSelectedNodesChanged(object sender, EventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             this.OnListViewLoaded(sender, new RoutedEventArgs());
             this.OnGridViewLoaded(sender, new RoutedEventArgs());
@@ -404,7 +417,7 @@ namespace MegaApp.UserControls
 
         private void OnListViewLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             var listViewItems = this.ListView.Items;
             if (listViewItems == null) return;
@@ -419,7 +432,7 @@ namespace MegaApp.UserControls
 
         private void OnGridViewLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             var gridViewItems = this.GridView.Items;
             if (gridViewItems == null) return;

@@ -39,12 +39,12 @@
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
 
-                <userControls:CopyOrMovePanel
+                <userControls:CopyMoveImportPanel
                     x:Name="CopyOrMovePanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyMoveImport', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 

@@ -128,6 +128,61 @@ namespace MegaApp.ViewModels
             };
         }
 
+        /// <summary>
+        /// Create list of default menu items for the file link view
+        /// </summary>
+        /// <returns>Default menu item list</returns>
+        public static IList<MenuItemViewModel> CreateFileLinkMenuItems()
+        {
+            return new List<MenuItemViewModel>()
+            {
+                new MenuItemViewModel()
+                {
+                    Label = FileLinkText,
+                    ToolTip = FileLinkText,
+                    Icon = GetIconFromXamlPath(MenuFileLinkPathData),
+                    TargetViewModel = typeof(FileLinkViewModel)
+                }
+            };
+        }
+
+        /// <summary>
+        /// Create list of default menu items for the folder link view
+        /// </summary>
+        /// <returns>Default menu item list</returns>
+        public static IList<MenuItemViewModel> CreateFolderLinkMenuItems()
+        {
+            return new List<MenuItemViewModel>()
+            {
+                new MenuItemViewModel()
+                {
+                    Label = FolderLinkText,
+                    ToolTip = FolderLinkText,
+                    Icon = GetIconFromXamlPath(MenuFolderLinkPathData),
+                    TargetViewModel = typeof(FolderLinkViewModel)
+                }
+            };
+        }
+
+        /// <summary>
+        /// Create list of option menu items for the file or folder link view
+        /// </summary>
+        /// <returns>Option menu items list</returns>
+        public static IList<MenuItemViewModel> CreatePublicLinkOptionItems()
+        {
+            return new List<MenuItemViewModel>()
+            {
+                new MenuItemViewModel()
+                {
+                    Label = AccountService.UserData.UserName,
+                    SubLabel = AccountService.UserData.UserEmail,
+                    ToolTip = MyAccountText,
+                    Icon = new SymbolIcon(Symbol.Contact),
+                    TargetViewModel = typeof(MyAccountViewModel)
+                }
+            };
+        }
+
         #endregion
 
         #region Private Methods
@@ -158,6 +213,8 @@ namespace MegaApp.ViewModels
         private static string CameraUploadsText => ResourceService.UiResources.GetString("UI_CameraUploads");
         private static string ContactsText => ResourceService.UiResources.GetString("UI_Contacts");
         private static string CloudDriveText => ResourceService.UiResources.GetString("UI_CloudDriveName");
+        private static string FileLinkText => ResourceService.UiResources.GetString("UI_FileLink");
+        private static string FolderLinkText => ResourceService.UiResources.GetString("UI_FolderLink");
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
@@ -170,6 +227,8 @@ namespace MegaApp.ViewModels
 
         private static string MenuCloudPathData => ResourceService.VisualResources.GetString("VR_MenuCloudPathData");
         private static string MenuContactsPathData => ResourceService.VisualResources.GetString("VR_MenuContactsPathData");
+        private static string MenuFileLinkPathData => ResourceService.VisualResources.GetString("VR_FileLinkPathData");
+        private static string MenuFolderLinkPathData => ResourceService.VisualResources.GetString("VR_FolderLinkPathData");
         private static string MenuSaveForOfflinePathData => ResourceService.VisualResources.GetString("VR_MenuSaveForOfflinePathData");
         private static string MenuSettingsPathData => ResourceService.VisualResources.GetString("VR_MenuSettingsPathData");
         private static string MenuSharedPathData => ResourceService.VisualResources.GetString("VR_MenuSharedPathData");

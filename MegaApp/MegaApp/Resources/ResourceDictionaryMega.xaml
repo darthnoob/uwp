@@ -382,6 +382,10 @@
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
@@ -517,13 +521,17 @@
                                 Text="{Binding InformationText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding OpenInformationPanelCommand}"
+                                Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
@@ -641,6 +649,10 @@
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
@@ -767,6 +779,10 @@
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"

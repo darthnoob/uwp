@@ -197,4 +197,12 @@
     <value>Please be patient</value>
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
+  <data name="PM_LoginToFolderHeader" xml:space="preserve">
+    <value>Opening folder link...</value>
+    <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
+    <value>Please wait while we open the folder link.</value>
+    <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
 </root>

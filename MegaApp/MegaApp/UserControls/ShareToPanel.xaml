@@ -12,8 +12,8 @@
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:userControls="using:MegaApp.UserControls"
     xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance userControlsViewModels:ShareToPanelViewModel}">
+    d:DataContext="{d:DesignInstance userControlsViewModels:ShareToPanelViewModel}"
+    mc:Ignorable="d">
 
     <Grid DataContext="{x:Bind ViewModel}">
         <Grid.RowDefinitions>
@@ -212,6 +212,7 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="0,0" />
+                        <Setter Target="MainGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Single" />

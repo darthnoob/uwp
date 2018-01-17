@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             SizeText = Size.ToStringAndSuffix(1);
-            Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
+            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
         }
 
         #region Override Methods

@@ -123,8 +123,8 @@ namespace MegaApp.UserControls
 
             if (this.PivotControl.Items != null)
             {
-                // Node is an InShare
-                if (this.ViewModel.IsInShare)
+                // Node is an InShare or child of a Folder Link
+                if (this.ViewModel.IsInShare || this.ViewModel.IsFolderLinkChild)
                 {
                     this.PivotControl.Items.Remove(this.LinkPivot);
                     this.PivotControl.Items.Remove(this.SharePivot);

@@ -30,6 +30,7 @@ namespace MegaApp.Converters
                     {
                         case "newfolder":
                         case "upload":
+                        case "openlink":
                             return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ? 
                                 Visibility.Visible : Visibility.Collapsed;
 
@@ -40,10 +41,15 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsCopyOrMoveViewModel ? Visibility.Visible : Visibility.Collapsed;
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink ? 
+                                Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsMoveAllowed ? 
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
+                                !SelectedNodesService.IsMoveAllowed ? Visibility.Visible : Visibility.Collapsed;
+
+                        case "import":
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:
@@ -136,13 +142,19 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "copy":
-                            return folder.IsCopyOrMoveViewModel && folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
 
                         case "move":
-                            return folder.IsCopyOrMoveViewModel && !CopyOrMoveService.IsMoveAllowed &&
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink && !SelectedNodesService.IsMoveAllowed &&
                                 folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
                                 Visibility.Visible : Visibility.Collapsed;
+
+                        case "import":
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                    Visibility.Visible : Visibility.Collapsed;
 
                         default:
                             return Visibility.Collapsed;
@@ -173,6 +185,18 @@ namespace MegaApp.Converters
                         case "removeshare":
                             return folder is SharedFoldersListViewModel &&
                                 folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.FolderLink:
+                    switch (paramString)
+                    {
+                        case "download":
+                        case "import":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:

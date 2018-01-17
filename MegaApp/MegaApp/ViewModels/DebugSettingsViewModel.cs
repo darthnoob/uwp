@@ -12,7 +12,7 @@ namespace MegaApp.ViewModels
 {
     class DebugSettingsViewModel : BaseSdkViewModel
     {
-        public DebugSettingsViewModel()
+        public DebugSettingsViewModel() : base(SdkService.MegaSdk)
         {
             this._isDebugMode = SettingsService.LoadSetting(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"), false);
             

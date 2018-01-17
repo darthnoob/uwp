@@ -1,16 +1,12 @@
-﻿using System;
-using System.ComponentModel;
-using mega;
-using MegaApp.MegaApi;
+﻿using System.ComponentModel;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
 {
     public class ContactsManagerViewModel : BaseSdkViewModel
     {
-        public ContactsManagerViewModel()
+        public ContactsManagerViewModel() : base(SdkService.MegaSdk)
         {
             
         }

@@ -28,6 +28,7 @@ namespace MegaApp.ViewModels
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
 
@@ -35,12 +36,14 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
+            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
+            this.ImportCommand = new RelayCommand(Import);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
@@ -61,6 +64,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
+        public ICommand ImportCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
@@ -325,6 +329,25 @@ namespace MegaApp.ViewModels
             return NodeActionResult.Succeeded;
         }
 
+        /// <summary>
+        /// Import the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
+        {
+            // User must be online to perform this operation
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline())
+                return NodeActionResult.NotOnline;
+
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
+                newParentNode.OriginalMNode, copyNode));
+
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
+        }
+
         private void Preview()
         {
             this.Parent.FocusedNode = this;
@@ -538,7 +561,7 @@ namespace MegaApp.ViewModels
         public async void Download(TransferQueue transferQueue)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline()) return;
             if (transferQueue == null) return;
 
             var downloadFolder = await FolderService.SelectFolder();
@@ -548,6 +571,25 @@ namespace MegaApp.ViewModels
             this.Transfer.ExternalDownloadPath = downloadFolder.Path;
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
+
+            // If is a file or folder link, navigate to the Cloud Drive page
+            if (this.ParentContainerType == ContainerType.FileLink ||
+                this.ParentContainerType == ContainerType.FolderLink)
+            {
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                        NavigationObject.Create(this.GetType()));
+                });
+            }
+        }
+
+        private void Import()
+        {
+            if (this.Parent == null) return;
+
+            if (this.Parent.ImportCommand.CanExecute(null))
+                this.Parent.ImportCommand.Execute(null);
         }
 
         /// <summary>
@@ -567,7 +609,7 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
-            this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
+            this.AccessLevel.AccessType = (MShareType)this.MegaSdk.getAccess(megaNode);
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
@@ -814,6 +856,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");

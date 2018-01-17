@@ -16,6 +16,7 @@ namespace MegaApp.ViewModels.UserControls
         {
             this.CopyFolderCommand = new RelayCommand(CopyFolder);
             this.DownloadFolderCommand = new RelayCommand(DownloadFolder);
+            this.ImportFolderCommand = new RelayCommand(ImportFolder);
             this.InformationCommand = new RelayCommand(ShowFolderInformation);
             this.RenameFolderCommand = new RelayCommand(RenameFolder);
         }
@@ -24,6 +25,7 @@ namespace MegaApp.ViewModels.UserControls
 
         public ICommand CopyFolderCommand { get; }
         public ICommand DownloadFolderCommand { get; }
+        public ICommand ImportFolderCommand { get; }
         public ICommand InformationCommand { get; }
         public ICommand RenameFolderCommand { get; }
 
@@ -56,6 +58,11 @@ namespace MegaApp.ViewModels.UserControls
         {
             var folder = this.Folder.FolderRootNode as NodeViewModel;
             folder?.Download(TransferService.MegaTransfers);
+        }
+
+        private void ImportFolder()
+        {
+            this.Folder.ImportFolder();
         }
 
         private void ShowFolderInformation()
@@ -188,8 +195,11 @@ namespace MegaApp.ViewModels.UserControls
 
                 if (this.Folder?.FolderRootNode == null) return string.Empty;
 
-                var numChildFolders = SdkService.MegaSdk.getNumChildFolders(this.Folder.FolderRootNode.OriginalMNode);
-                var numChildFiles = SdkService.MegaSdk.getNumChildFiles(this.Folder.FolderRootNode.OriginalMNode);
+                var megaSdk = this.Folder.Type == ContainerType.FolderLink ?
+                    SdkService.MegaSdkFolderLinks : SdkService.MegaSdk;
+
+                var numChildFolders = megaSdk.getNumChildFolders(this.Folder.FolderRootNode.OriginalMNode);
+                var numChildFiles = megaSdk.getNumChildFiles(this.Folder.FolderRootNode.OriginalMNode);
 
                 switch (UiService.GetSortOrder(this.Folder.FolderRootNode.Base64Handle, this.Folder.FolderRootNode.Name))
                 {
@@ -197,7 +207,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_DEFAULT_DESC:
                         if(this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByType"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
@@ -207,7 +217,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_ALPHABETICAL_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByName"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
@@ -217,7 +227,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_CREATION_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateCreated"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
@@ -227,7 +237,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_MODIFICATION_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateModified"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
@@ -237,7 +247,7 @@ namespace MegaApp.ViewModels.UserControls
                     case MSortOrderType.ORDER_SIZE_DESC:
                         if (this.Folder.Type == ContainerType.CameraUploads)
                             return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), numChildFiles);
-                        else if (this.Folder.IsCopyOrMoveViewModel)
+                        else if (this.Folder.IsForSelectFolder)
                             return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedBySize"), numChildFolders);
 
                         return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
@@ -297,6 +307,8 @@ namespace MegaApp.ViewModels.UserControls
         {
             get
             {
+                if (this.Folder?.Type == ContainerType.FolderLink) return false;
+
                 if (this.FolderRootNode is IncomingSharedFolderNodeViewModel)
                 {
                     var folderRootNode = this.FolderRootNode as IncomingSharedFolderNodeViewModel;
@@ -311,8 +323,22 @@ namespace MegaApp.ViewModels.UserControls
         /// <summary>
         /// Gets the "Folder options" button visibility
         /// </summary>
-        public Visibility FolderOptionsButtonVisibility => 
-            this.FolderRootNode is SharedFolderNodeViewModel ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility FolderOptionsButtonVisibility
+        {
+            get
+            {
+                switch(this.Folder?.Type)
+                {
+                    case ContainerType.FolderLink:
+                    case ContainerType.InShares:
+                    case ContainerType.OutShares:
+                    case ContainerType.ContactInShares:
+                        return Visibility.Visible;                    
+                }
+
+                return Visibility.Collapsed;
+            }
+        }
 
         #endregion
 

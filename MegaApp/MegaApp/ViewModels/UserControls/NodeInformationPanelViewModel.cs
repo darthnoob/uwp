@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -114,8 +115,8 @@ namespace MegaApp.ViewModels.UserControls
                 OnPropertyChanged(nameof(this.IsFolder), 
                     nameof(this.FolderNode), nameof(this.SharedFolderNode), 
                     nameof(this.IsInShare), nameof(this.IsOutShare),
-                    nameof(this.ContentsOrTypeLabelText), nameof(this.ContentsOrTypeText),
-                    nameof(this.DateCreatedLabelText));
+                    nameof(this.IsFolderLinkChild), nameof(this.ContentsOrTypeLabelText),
+                    nameof(this.ContentsOrTypeText), nameof(this.DateCreatedLabelText));
 
                 this.GetLinkWithKey();
             }
@@ -124,6 +125,7 @@ namespace MegaApp.ViewModels.UserControls
         public bool IsFolder => this.Node is FolderNodeViewModel;
         public bool IsInShare => this.Node is IncomingSharedFolderNodeViewModel;
         public bool IsOutShare => this.Node is OutgoingSharedFolderNodeViewModel;
+        public bool IsFolderLinkChild => this.Node?.Parent?.Type == ContainerType.FolderLink;
 
         public FolderNodeViewModel FolderNode => this.Node as FolderNodeViewModel;
         public SharedFolderNodeViewModel SharedFolderNode => this.Node as SharedFolderNodeViewModel;
@@ -149,6 +151,7 @@ namespace MegaApp.ViewModels.UserControls
         public string CopyOrMoveText => CopyText + "/" + MoveText;
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
@@ -207,6 +210,7 @@ namespace MegaApp.ViewModels.UserControls
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
         public string LeaveSharePathData => ResourceService.VisualResources.GetString("VR_LeaveSharePathData");
+        public string ImportPathData => ResourceService.VisualResources.GetString("VR_ImportPathData");
         public string MultiSelectPathData => ResourceService.VisualResources.GetString("VR_MultiSelectPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");

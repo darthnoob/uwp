@@ -5,13 +5,21 @@ namespace MegaApp.UserControls
 {
     // Helper class to define the viewmodel of this view
     // XAML cannot use generics in it's declaration.
-    public class BaseCopyOrMovePanel : UserControlEx<CopyOrMovePanelViewModel> { }
+    public class BaseCopyMoveImportPanel : UserControlEx<CopyMoveImportPanelViewModel> { }
 
-    public sealed partial class CopyOrMovePanel : BaseCopyOrMovePanel
+    public sealed partial class CopyMoveImportPanel : BaseCopyMoveImportPanel
     {
-        public CopyOrMovePanel()
+        public CopyMoveImportPanel()
         {
             this.InitializeComponent();
+        }
+
+        public void Reset()
+        {
+            this.ViewModel.CloudDrive.BrowseToHome();
+            this.ViewModel.IncomingShares.BrowseToHome();
+
+            this.PivotControl.SelectedItem = this.CloudDrivePivot;
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)

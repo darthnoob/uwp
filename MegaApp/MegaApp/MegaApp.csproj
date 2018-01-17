@@ -119,7 +119,10 @@
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
+    <Compile Include="Enums\FetchNodesResult.cs" />
+    <Compile Include="Enums\GetPublicNodeResult.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
+    <Compile Include="Enums\LoginToFolderResult.cs" />
     <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Interfaces\IMegaContact.cs" />
@@ -129,16 +132,19 @@
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
+    <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
-    <Compile Include="Services\CopyOrMoveService.cs" />
+    <Compile Include="Services\PublicLinkService.cs" />
+    <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
-    <Compile Include="UserControls\CopyOrMovePanel.xaml.cs">
-      <DependentUpon>CopyOrMovePanel.xaml</DependentUpon>
+    <Compile Include="UserControls\CopyMoveImportPanel.xaml.cs">
+      <DependentUpon>CopyMoveImportPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
@@ -161,7 +167,7 @@
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
     <Compile Include="Classes\CustomInputDialog.cs" />
     <Compile Include="Classes\CustomMessageDialog.cs" />
-    <Compile Include="Classes\LinkInformation.cs" />
+    <Compile Include="Services\LinkInformationService.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\ProductBase.cs" />
@@ -213,6 +219,8 @@
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\FileLinkViewModel.cs" />
+    <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
@@ -222,7 +230,7 @@
     <Compile Include="ViewModels\AccessLevelViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\SharedFoldersListViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\CopyOrMovePanelViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CopyMoveImportPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\FolderExplorerViewModel.cs" />
     <Compile Include="ViewModels\UserControls\SharedFolderContentPanelViewModel.cs" />
     <Compile Include="ViewModels\UserControls\NodeInformationPanelViewModel.cs" />
@@ -343,6 +351,12 @@
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FileLinkPage.xaml.cs">
+      <DependentUpon>FileLinkPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FolderLinkPage.xaml.cs">
+      <DependentUpon>FolderLinkPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Login\ConfirmParkAccountPage.xaml.cs">
       <DependentUpon>ConfirmParkAccountPage.xaml</DependentUpon>
@@ -494,7 +508,7 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UserControls\CopyOrMovePanel.xaml">
+    <Page Include="UserControls\CopyMoveImportPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -575,6 +589,14 @@
     <Page Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FileLinkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FolderLinkPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Login\ConfirmParkAccountPage.xaml">
       <Generator>MSBuild:Compile</Generator>

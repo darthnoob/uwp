@@ -8,7 +8,7 @@
         InShares        = 3,
         OutShares       = 4,
         ContactInShares = 5,
-        PublicLink      = 6,
+        FileLink        = 6,
         FolderLink      = 7,
         CameraUploads   = 8
     }

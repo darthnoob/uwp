@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
+using mega;
 using MegaApp.Enums;
 using MegaApp.Services;
 
@@ -7,7 +7,7 @@ namespace MegaApp.ViewModels.Contacts
 {
     public class ContactsBaseViewModel<T> : BaseSdkViewModel
     {
-        public ContactsBaseViewModel(bool? isOutgoing = null)
+        public ContactsBaseViewModel(MegaSDK megaSdk, bool? isOutgoing = null) : base(megaSdk)
         {
             this._isOutgoing = isOutgoing;
         }

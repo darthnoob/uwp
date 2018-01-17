@@ -6,7 +6,7 @@ namespace MegaApp.ViewModels
 {
     public class SettingsViewModel: BaseSdkViewModel
     {
-        public SettingsViewModel()
+        public SettingsViewModel() : base(SdkService.MegaSdk)
         {
             this.SettingSections = new List<SettingSectionViewModel>();
 

@@ -34,11 +34,6 @@ namespace MegaApp
         public static GlobalListener GlobalListener { get; private set; }
 
         /// <summary>
-        /// Provides easy access to usefull links information
-        /// </summary>
-        public static LinkInformation LinkInformation { get; set; }
-
-        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
@@ -99,10 +94,9 @@ namespace MegaApp
             {
                 // Handle URI activation
                 ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
-                
+
                 // Initialize the links information
-                if (LinkInformation == null)
-                    LinkInformation = new LinkInformation();
+                LinkInformationService.Reset();
 
                 bool validUri = true;
                 Exception exception = null;
@@ -112,7 +106,7 @@ namespace MegaApp
                     if (validUri)
                     {
                         // Use OriginalString to keep uppercase and lowercase letters
-                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+                        LinkInformationService.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
                     }
                 }
                 catch (UriFormatException ex)
@@ -280,8 +274,7 @@ namespace MegaApp
                 AppInformation = new AppInformation();
 
             // Initialize the links information
-            if (LinkInformation == null)
-                LinkInformation = new LinkInformation();
+            LinkInformationService.Reset();
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();

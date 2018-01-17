@@ -15,7 +15,7 @@ namespace MegaApp.ViewModels.Contacts
 {
     public class ContactViewModel : BaseSdkViewModel, IMegaContact
     {
-        public ContactViewModel(MUser contact, ContactsListViewModel contactList)
+        public ContactViewModel(MUser contact, ContactsListViewModel contactList) : base(SdkService.MegaSdk)
         {
             this.MegaUser = contact;
             this.ContactList = contactList;
@@ -24,7 +24,7 @@ namespace MegaApp.ViewModels.Contacts
             this.Email = contact.getEmail();
             this.Timestamp = contact.getTimestamp();
             this.Visibility = contact.getVisibility();
-            this.AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
+            this.AvatarColor = UiService.GetColorFromHex(this.MegaSdk.getUserAvatarColor(contact));
             this.SharedItems = new ContactSharedItemsViewModel(contact);
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
@@ -47,7 +47,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
+                this.MegaSdk.getUserAttribute(this.MegaUser,
                 (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
             UiService.OnUiThread(() => this.FirstName = firstName);
         }
@@ -59,7 +59,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
             var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
+                this.MegaSdk.getUserAttribute(this.MegaUser,
                 (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
             UiService.OnUiThread(() => this.LastName = lastName);
         }
@@ -69,7 +69,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public void GetContactAvatarColor()
         {
-            var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(this.MegaUser));
+            var avatarColor = UiService.GetColorFromHex(this.MegaSdk.getUserAvatarColor(this.MegaUser));
             UiService.OnUiThread(() => this.AvatarColor = avatarColor);
         }
 
@@ -80,7 +80,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
             var contactAvatarResult = await contactAvatarRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAvatar(this.MegaUser, this.AvatarPath, contactAvatarRequestListener));
+                this.MegaSdk.getUserAvatar(this.MegaUser, this.AvatarPath, contactAvatarRequestListener));
 
             if (contactAvatarResult)
             {
@@ -156,7 +156,7 @@ namespace MegaApp.ViewModels.Contacts
 
             var removeContact = new RemoveContactRequestListenerAsync();
             var result = await removeContact.ExecuteAsync(() =>
-                SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
+                this.MegaSdk.removeContact(this.MegaUser, removeContact));
 
             if (result) return true;
 
