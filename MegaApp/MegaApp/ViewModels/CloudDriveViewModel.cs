@@ -52,7 +52,7 @@ namespace MegaApp.ViewModels
             globalListener.NodeAdded += CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved += CloudDrive.OnNodeRemoved;
             globalListener.OutSharedFolderAdded += CloudDrive.OnNodeAdded;
-            globalListener.OutSharedFolderRemoved += CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderRemoved += CloudDrive.OnNodeAdded;
 
             globalListener.NodeAdded += RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved += RubbishBin.OnNodeRemoved;
