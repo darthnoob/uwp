@@ -44,10 +44,9 @@ namespace MegaApp.MegaApi
                         //If getFlag() returns true, the folder link key is invalid.
                         if (request.getFlag())
                         {
-                            if (DecryptionAlert) // No valid decryption key
-                                Tcs?.TrySetResult(FetchNodesResult.InvalidDecryptionKey);
-                            else // Handle length or Key length no valid
-                                Tcs?.TrySetResult(FetchNodesResult.InvalidHandleOrDecryptionKey);
+                            Tcs?.TrySetResult(DecryptionAlert ?
+                                FetchNodesResult.InvalidDecryptionKey : // No valid decryption key
+                                FetchNodesResult.InvalidHandleOrDecryptionKey); // Handle length or Key length no valid
                         }
 
                         AccountService.GetUserData();

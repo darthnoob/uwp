@@ -92,19 +92,17 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "rename":
-                            if (parentFolder.ItemCollection != null && parentFolder.ItemCollection.OnlyOneSelectedItem)
-                            {
-                                if (parentFolder is SharedFoldersListViewModel)
-                                {
-                                    return parentFolder.ItemCollection.FocusedItem != null && parentFolder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
-                                        Visibility.Visible : Visibility.Collapsed;
-                                }
+                            if (parentFolder.ItemCollection == null || !parentFolder.ItemCollection.OnlyOneSelectedItem)
+                                return Visibility.Collapsed;
 
-                                return parentFolder.FolderRootNode != null && parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                            if (parentFolder is SharedFoldersListViewModel)
+                            {
+                                return parentFolder.ItemCollection.FocusedItem != null && parentFolder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
                             }
 
-                            return Visibility.Collapsed;
+                            return parentFolder.FolderRootNode != null && parentFolder.FolderRootNode.HasFullAccessPermissions ?
+                                Visibility.Visible : Visibility.Collapsed;
 
                         case "leaveshare":
                             return parentFolder is SharedFoldersListViewModel ?

@@ -167,7 +167,8 @@ namespace MegaApp.ViewModels
 
             LinkInformationService.ActiveLink = UriService.ReformatUri(link);
 
-            if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#!"))
+            if (LinkInformationService.ActiveLink.Contains(
+                ResourceService.AppResources.GetString("AR_FileLinkHeader")))
             {
                 LinkInformationService.UriLink = UriLinkType.File;
 
@@ -175,10 +176,11 @@ namespace MegaApp.ViewModels
                 OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(FileLinkPage), false,
-                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                        NavigationObject.Create(this.GetType()));
                 });
             }
-            else if (LinkInformationService.ActiveLink.Contains("https://mega.nz/#F!"))
+            else if (LinkInformationService.ActiveLink.Contains(
+                ResourceService.AppResources.GetString("AR_FolderLinkHeader")))
             {
                 LinkInformationService.UriLink = UriLinkType.Folder;
 
@@ -186,7 +188,7 @@ namespace MegaApp.ViewModels
                 OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(FolderLinkPage), false,
-                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                        NavigationObject.Create(this.GetType()));
                 });
             }
             else

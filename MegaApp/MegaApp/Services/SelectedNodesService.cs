@@ -38,27 +38,11 @@ namespace MegaApp.Services
         public static bool IsMoveAllowed => SelectedNodes.Count > 0 && 
             SelectedNodes[0] is IncomingSharedFolderNodeViewModel;
 
-        public static bool IsSourceFileLink
-        {
-            get
-            {
-                if (SelectedNodes?.Count == 1 && (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FileLink)
-                    return true;
+        public static bool IsSourceFileLink => SelectedNodes?.Count == 1 && 
+            (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FileLink;
 
-                return false;
-            }
-        }
-
-        public static bool IsSourceFolderLink
-        {
-            get
-            {
-                if (SelectedNodes?.Count > 0 && (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FolderLink)
-                    return true;
-
-                return false;
-            }
-        }
+        public static bool IsSourceFolderLink => SelectedNodes?.Count > 0 &&
+            (SelectedNodes[0] as NodeViewModel)?.ParentContainerType == ContainerType.FolderLink;
 
         public static bool IsSourcePublicLink => IsSourceFileLink || IsSourceFolderLink;
 
@@ -113,7 +97,8 @@ namespace MegaApp.Services
         /// <summary>
         /// Check if a node is in the selected nodes group for move, copy, import or any other action.
         /// </summary>        
-        /// <param name="node">Node to check if is in the selected node list</param>        
+        /// <param name="node">Node to check if is in the selected node list</param>
+        /// <param name="setDisplayMode">Indicates if is needed to set the display mode of the node</param>
         /// <returns>True if is a selected node or false in other case</returns>
         public static bool IsSelectedNode(IMegaNode node, bool setDisplayMode = false)
         {

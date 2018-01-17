@@ -19,8 +19,8 @@ namespace MegaApp.Services
                 ResourceService.AppMessages.GetString("AM_DecryptionKeyAlertMessage"));
 
             if (decryptionKey == null) return null;
-            if (string.IsNullOrWhiteSpace(decryptionKey)) return Link;
-            return FormatLink(decryptionKey);
+            return string.IsNullOrWhiteSpace(decryptionKey) ?
+                Link : FormatLink(decryptionKey);
         }
 
         public static async Task<string> ShowDecryptionKeyNotValidAlertAsync()
@@ -30,8 +30,8 @@ namespace MegaApp.Services
                 ResourceService.AppMessages.GetString("AM_DecryptionKeyAlertMessage"));
 
             if (decryptionKey == null) return null;
-            if (string.IsNullOrWhiteSpace(decryptionKey)) return Link;
-            return FormatLink(decryptionKey);
+            return string.IsNullOrWhiteSpace(decryptionKey) ?
+                Link : FormatLink(decryptionKey);
         }
 
         public static async void ShowLinkNoValidAlert()

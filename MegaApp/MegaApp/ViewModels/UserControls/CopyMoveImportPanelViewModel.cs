@@ -13,9 +13,9 @@ namespace MegaApp.ViewModels.UserControls.CopyMoveImportPanel
 {
     public enum ActionType
     {
-        COPY = 0,
-        MOVE = 1,
-        IMPORT = 2
+        Copy = 0,
+        Move = 1,
+        Import = 2
     }
 }
 
@@ -117,15 +117,15 @@ namespace MegaApp.ViewModels.UserControls
                     
                     switch(actionType)
                     {
-                        case ActionType.COPY:
+                        case ActionType.Copy:
                             result = await node.CopyAsync(newParentNode);
                             break;
 
-                        case ActionType.MOVE:
+                        case ActionType.Move:
                             result = await node.MoveAsync(newParentNode);
                             break;
 
-                        case ActionType.IMPORT:
+                        case ActionType.Import:
                             result = await node.ImportAsync(newParentNode);
                             break;
 
@@ -147,19 +147,19 @@ namespace MegaApp.ViewModels.UserControls
                     string title = string.Empty, message = string.Empty;
                     switch (actionType)
                     {
-                        case ActionType.COPY:
+                        case ActionType.Copy:
                             LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Copy failed.");
                             title = ResourceService.AppMessages.GetString("AM_CopyFailed_Title");
                             message = ResourceService.AppMessages.GetString("AM_CopyFailed");
                             break;
 
-                        case ActionType.MOVE:
+                        case ActionType.Move:
                             LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Move failed.");
                             title = ResourceService.AppMessages.GetString("AM_MoveFailed_Title");
                             message = ResourceService.AppMessages.GetString("AM_MoveFailed");
                             break;
 
-                        case ActionType.IMPORT:
+                        case ActionType.Import:
                             LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Import failed.");
                             title = ResourceService.AppMessages.GetString("AM_ImportFailed_Title");
                             message = ResourceService.AppMessages.GetString("AM_ImportFailed");

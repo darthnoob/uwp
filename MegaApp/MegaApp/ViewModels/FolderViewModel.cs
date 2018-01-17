@@ -508,7 +508,7 @@ namespace MegaApp.ViewModels
                 OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
-                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                        NavigationObject.Create(this.GetType()));
                 });
             }
         }

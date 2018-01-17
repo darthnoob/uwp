@@ -66,63 +66,58 @@ namespace MegaApp.Services
         /// <returns>True if navigates or false in other case.</returns>
         public static async Task<bool> CheckSpecialNavigation(bool hasActiveAndOnlineSession = true)
         {
-            if (LinkInformationService.ActiveLink != null)
+            if (LinkInformationService.ActiveLink == null) return false;
+
+            if (LinkInformationService.ActiveLink.Contains("#newsignup") ||
+                LinkInformationService.ActiveLink.Contains("#confirm") ||
+                LinkInformationService.ActiveLink.Contains("#recover"))
             {
-                if (LinkInformationService.ActiveLink.Contains("#newsignup") ||
-                    LinkInformationService.ActiveLink.Contains("#confirm") ||
-                    LinkInformationService.ActiveLink.Contains("#recover"))
-                {
-                    if(hasActiveAndOnlineSession)
-                    {
-                        var customMessageDialog = new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
-                            ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
-                            App.AppInformation,
-                            MessageDialogButtons.YesNo);
+                if (!hasActiveAndOnlineSession) return await SpecialNavigation();
 
-                        var dialogResult = await customMessageDialog.ShowDialogAsync();
-                        if(dialogResult == MessageDialogResult.OkYes)
-                        {
-                            // First need to log out of the current account
-                            var waitHandleLogout = new AutoResetEvent(false);
-                            SdkService.MegaSdk.logout(new LogOutRequestListener(false, waitHandleLogout));
-                            waitHandleLogout.WaitOne();
+                var customMessageDialog = new CustomMessageDialog(
+                    ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
+                    ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
+                    App.AppInformation,
+                    MessageDialogButtons.YesNo);
 
-                            return await SpecialNavigation();
-                        }
-                    }
-                    else
-                    {
-                        return await SpecialNavigation();
-                    }
-                }
-                else if (LinkInformationService.ActiveLink.Contains("#verify"))
-                {
-                    if (hasActiveAndOnlineSession)
-                        return await SpecialNavigation();
+                var dialogResult = await customMessageDialog.ShowDialogAsync();
+                if (dialogResult != MessageDialogResult.OkYes) return false;
 
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
-                }
-                else if (LinkInformationService.ActiveLink.Contains("#F!"))
-                {
-                    if (hasActiveAndOnlineSession)
-                        return await SpecialNavigation();
+                // First need to log out of the current account
+                var waitHandleLogout = new AutoResetEvent(false);
+                SdkService.MegaSdk.logout(new LogOutRequestListener(false, waitHandleLogout));
+                waitHandleLogout.WaitOne();
 
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.UiResources.GetString("UI_FolderLink"),
-                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
-                }
-                else if (LinkInformationService.ActiveLink.Contains("#!"))
-                {
-                    if (hasActiveAndOnlineSession)
-                        return await SpecialNavigation();
+                return await SpecialNavigation();
 
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.UiResources.GetString("UI_FileLink"),
-                        ResourceService.AppMessages.GetString("AM_UserNotOnline"));
-                }
+            }
+
+            if (LinkInformationService.ActiveLink.Contains("#verify"))
+            {
+                if (hasActiveAndOnlineSession)
+                    return await SpecialNavigation();
+
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_ChangeEmail"),
+                    ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+            }
+            else if (LinkInformationService.ActiveLink.Contains("#F!"))
+            {
+                if (hasActiveAndOnlineSession)
+                    return await SpecialNavigation();
+
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_FolderLink"),
+                    ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+            }
+            else if (LinkInformationService.ActiveLink.Contains("#!"))
+            {
+                if (hasActiveAndOnlineSession)
+                    return await SpecialNavigation();
+
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_FileLink"),
+                    ResourceService.AppMessages.GetString("AM_UserNotOnline"));
             }
 
             return false;
@@ -230,7 +225,7 @@ namespace MegaApp.Services
 
                 // Navigate to the folder link page
                 UiService.OnUiThread(() =>
-                    NavigateService.Instance.Navigate(typeof(FolderLinkPage), false));
+                    NavigateService.Instance.Navigate(typeof(FolderLinkPage)));
                 return true;
             }
 
@@ -240,7 +235,7 @@ namespace MegaApp.Services
 
                 // Navigate to the file link page
                 UiService.OnUiThread(() =>
-                    NavigateService.Instance.Navigate(typeof(FileLinkPage), false));
+                    NavigateService.Instance.Navigate(typeof(FileLinkPage)));
                 return true;
             }
 

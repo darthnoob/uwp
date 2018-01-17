@@ -345,9 +345,7 @@ namespace MegaApp.ViewModels
                 SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
                 newParentNode.OriginalMNode, copyNode));
 
-            if (!result) return NodeActionResult.Failed;
-
-            return NodeActionResult.Succeeded;
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
         }
 
         private void Preview()
@@ -581,7 +579,7 @@ namespace MegaApp.ViewModels
                 OnUiThread(() =>
                 {
                     NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
-                        NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                        NavigationObject.Create(this.GetType()));
                 });
             }
         }

@@ -24,7 +24,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand ClosePanelCommand { get; set; }
-        public ICommand DownloadCommand { get; private set; }
+        public ICommand DownloadCommand { get; }
         public ICommand ImportCommand { get; }
 
         #endregion
@@ -110,7 +110,7 @@ namespace MegaApp.ViewModels
             {
                 // Navigate to the Cloud Drive page
                 NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
-                    NavigationObject.Create(this.GetType(), NavigationActionType.Default));
+                    NavigationObject.Create(this.GetType()));
             });
         }
 

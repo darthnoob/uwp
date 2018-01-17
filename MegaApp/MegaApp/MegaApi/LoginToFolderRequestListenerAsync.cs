@@ -26,10 +26,9 @@ namespace MegaApp.MegaApi
                         Tcs?.TrySetResult(LoginToFolderResult.Success);
                         return;
                     case MErrorType.API_EARGS:
-                        if (DecryptionAlert) // No valid decryption key
-                            Tcs?.TrySetResult(LoginToFolderResult.InvalidDecryptionKey);
-                        else // Handle length or Key length no valid
-                            Tcs?.TrySetResult(LoginToFolderResult.InvalidHandleOrDecryptionKey);
+                        Tcs?.TrySetResult(DecryptionAlert ?
+                            LoginToFolderResult.InvalidDecryptionKey : // No valid decryption key
+                            LoginToFolderResult.InvalidHandleOrDecryptionKey); // Handle length or Key length no valid
                         return;
                     case MErrorType.API_EINCOMPLETE: // Link has not decryption key
                         Tcs?.TrySetResult(LoginToFolderResult.NoDecryptionKey);
