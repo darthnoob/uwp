@@ -60,6 +60,7 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_Settings");
         public string OnText => ResourceService.UiResources.GetString("UI_On");
         public string OffText => ResourceService.UiResources.GetString("UI_Off");
 

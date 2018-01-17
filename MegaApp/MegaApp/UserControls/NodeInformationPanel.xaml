@@ -735,8 +735,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
-                        <Setter Target="PivotControl.Margin" Value="12,0" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
@@ -748,8 +746,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
-                        <Setter Target="PivotControl.Margin" Value="0,0" />
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
@@ -758,13 +754,15 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
             <VisualStateGroup>
                 <VisualState x:Name="Small">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="0,0" />                        
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.Below)" Value="DateCreatedLabelText" />
@@ -794,6 +792,8 @@
                         <AdaptiveTrigger MinWindowWidth="360" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="0,0" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
@@ -828,6 +828,8 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="12,0" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />

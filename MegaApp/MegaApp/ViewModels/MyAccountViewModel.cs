@@ -41,6 +41,8 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_MyAccount");
+
         public string GeneralTitle => ResourceService.UiResources.GetString("UI_General");
         public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");
         public string StorageAndTransferTitle => ResourceService.UiResources.GetString("UI_StorageAndTransfer");

@@ -310,7 +310,6 @@ namespace MegaApp.ViewModels.Contacts
         #region UiResources
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string ProfileText => ResourceService.UiResources.GetString("UI_Profile");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");
