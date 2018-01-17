@@ -304,6 +304,21 @@ namespace MegaApp.ViewModels
             UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
 
+        public void OnOutSharedFolderUpdated(object sender, MNode mNode)
+        {
+            var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            if (nodeToUpdateInView == null) return;
+
+            UiService.OnUiThread(() =>
+            {
+                try { nodeToUpdateInView.Update(mNode, true); }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
+            });
+        }
+        
+
         #region Commands
 
         public ICommand AddFolderCommand { get; private set; }

@@ -62,8 +62,8 @@ namespace MegaApp.Services
                 {
                     App.GlobalListener.NodeAdded += _cloudDrive.OnNodeAdded;
                     App.GlobalListener.NodeRemoved += _cloudDrive.OnNodeRemoved;
-                    App.GlobalListener.OutSharedFolderAdded += _cloudDrive.OnNodeAdded;
-                    App.GlobalListener.OutSharedFolderRemoved += _cloudDrive.OnNodeRemoved;
+                    App.GlobalListener.OutSharedFolderAdded += _cloudDrive.OnOutSharedFolderUpdated;
+                    App.GlobalListener.OutSharedFolderRemoved += _cloudDrive.OnOutSharedFolderUpdated;
                 }
 
                 _cloudDrive.LoadChildNodes();
