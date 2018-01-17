@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
-using MegaApp.MegaApi;
 
 namespace MegaApp.ViewModels.UserControls
 {
@@ -53,8 +54,11 @@ namespace MegaApp.ViewModels.UserControls
 
             this.OnClosePanelEvent();
 
+            // Use a temp variable to avoid "InvalidOperationException" tracing the selected items
+            var selectedItems = this.MegaContacts.ItemCollection.SelectedItems.ToList();
+
             bool result = true;
-            foreach (var contact in this.MegaContacts.ItemCollection.SelectedItems)
+            foreach (var contact in selectedItems)
             {
                 var share = new ShareRequestListenerAsync();
                 result = result & await share.ExecuteAsync(() =>
