@@ -122,6 +122,18 @@ namespace MegaApp.Services
             return megaSdk.getChildren(rootNode.OriginalMNode, (int)UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name));
         }
 
+        public static MNodeList GetFileChildren(MegaSDK megaSdk, IMegaNode rootNode)
+        {
+            return megaSdk.getFileFolderChildren(rootNode.OriginalMNode,
+                (int)UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name)).getFileList();
+        }
+
+        public static MNodeList GetFolderChildren(MegaSDK megaSdk, IMegaNode rootNode)
+        {
+            return megaSdk.getFileFolderChildren(rootNode.OriginalMNode,
+                (int)UiService.GetSortOrder(rootNode.Base64Handle, rootNode.Name)).getFolderList();
+        }
+
         public static MNode FindCameraUploadNode(MegaSDK megaSdk, MNode rootNode)
         {
             var childs = megaSdk.getChildren(rootNode);

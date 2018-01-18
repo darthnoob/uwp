@@ -1,0 +1,224 @@
+﻿<userControls:BaseShareToPanel
+    x:Class="MegaApp.UserControls.ShareToPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.UserControls"
+    xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:userControls="using:MegaApp.UserControls"
+    xmlns:userControlsViewModels="using:MegaApp.ViewModels.UserControls"
+    d:DataContext="{d:DesignInstance userControlsViewModels:ShareToPanelViewModel}"
+    mc:Ignorable="d">
+
+    <Grid DataContext="{x:Bind ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                x:Name="SectionNameText"
+                Grid.Column="0"
+                Margin="24,14,0,12"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.ShareToText, Mode=OneWay}" />
+
+            <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+            <CommandBar
+                x:Name="TopCommandBar"
+                DataContext="{x:Bind ViewModel.MegaContacts}"
+                Grid.Column="1"
+                Background="Transparent"
+                extensions:CommandBarExtensions.HideMoreButton="True">
+                <AppBarButton
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
+                    ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
+                    Command="{x:Bind ViewModel.AddContactAndShareCommand}"
+                    Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="16" MaxWidth="16">
+                        <FontIcon Glyph="&#xE8FA;" />
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.ConfirmShareCommand}"
+                    Label="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
+                    Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox MaxHeight="14" MaxWidth="14">
+                        <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
+                    </Viewbox>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{x:Bind ViewModel.CancelCommand}"
+                    Label="{x:Bind ViewModel.CancelText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.CancelText, Mode=OneTime}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.CancelPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton
+                    Command="{Binding ItemCollection.MultiSelectCommand}"
+                    Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
+                    Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
+                    <AppBarButton.Icon>
+                        <PathIcon
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{x:Bind ViewModel.MultiSelectPathData, Mode=OneTime}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+            </CommandBar>
+        </Grid>
+
+        <Grid 
+            x:Name="MainGrid"
+            DataContext="{x:Bind ViewModel.MegaContacts}"
+            Grid.Row="1" 
+            Margin="12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="12,12"
+                FontSize="20"
+                Text="{x:Bind ViewModel.AllContactsText, Mode=OneWay}" />
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="12,0">
+                    <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
+                    <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
+                </Grid>
+                <ListView
+                    x:Name="ListViewContacts"
+                    Grid.Row="1"
+                    Margin="0,-8,0,0"
+                    IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
+                    ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                    ItemTemplate="{StaticResource MegaContactShareToPanelItem}"
+                    ItemsSource="{Binding ItemCollection.Items}">
+                    <interactivity:Interaction.Behaviors>
+                        <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:EventTriggerBehavior.Actions>
+                                <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
+                            </core:EventTriggerBehavior.Actions>
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <!--  BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
+        <CommandBar
+            x:Name="BottomCommandBar"
+            DataContext="{x:Bind ViewModel.MegaContacts}"
+            Grid.Row="2">
+            <AppBarButton
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
+                ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
+                Command="{x:Bind ViewModel.AddContactAndShareCommand}"
+                Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Viewbox MaxHeight="16" MaxWidth="16">
+                    <FontIcon Glyph="&#xE8FA;" />
+                </Viewbox>
+            </AppBarButton>
+            <AppBarButton
+                Command="{x:Bind ViewModel.ConfirmShareCommand}"
+                Label="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
+                Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Viewbox MaxHeight="14" MaxWidth="14">
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.ConfirmPathData, Mode=OneTime}" />
+                </Viewbox>
+            </AppBarButton>
+            <AppBarButton
+                Command="{x:Bind ViewModel.CancelCommand}"
+                Label="{x:Bind ViewModel.CancelText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{x:Bind ViewModel.CancelText, Mode=OneTime}">
+                <AppBarButton.Icon>
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.CancelPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton
+                Command="{Binding ItemCollection.MultiSelectCommand}"
+                Label="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{x:Bind ViewModel.MultiSelectText, Mode=OneTime}">
+                <AppBarButton.Icon>
+                    <PathIcon
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{x:Bind ViewModel.MultiSelectPathData, Mode=OneTime}" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+        </CommandBar>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Desktop">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Mobile">
+                    <VisualState.StateTriggers>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0" />
+                        <Setter Target="MainGrid.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="ListViewContacts.SelectionMode" Value="Single" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</userControls:BaseShareToPanel>

@@ -28,6 +28,7 @@ namespace MegaApp.ViewModels
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
 
@@ -35,21 +36,23 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
+            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
+            this.ImportCommand = new RelayCommand(Import);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
-            this.ViewDetailsCommand = new RelayCommand(ViewDetails);
+            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Parent.CurrentViewState))
+            if (e.PropertyName == nameof(this.Parent.Folder))
             {
                 OnPropertyChanged(nameof(this.Parent));
                 OnPropertyChanged(nameof(this.NodeBinding));
@@ -61,10 +64,11 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
+        public ICommand ImportCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
-        public ICommand ViewDetailsCommand { get; }
+        public ICommand OpenInformationPanelCommand { get; set; }
 
         #endregion
 
@@ -145,13 +149,6 @@ namespace MegaApp.ViewModels
                 return Path.Combine(ApplicationData.Current.LocalFolder.Path,
                     ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), this.OriginalMNode.getBase64Handle());
             }
-        }
-
-        private string _information;
-        public string Information
-        {
-            get { return _information; }
-            set { SetField(ref _information, value); }
         }
 
         private int _childFiles;
@@ -275,7 +272,7 @@ namespace MegaApp.ViewModels
         {
             // In case that copy or move a single node using the flyout menu and the selected 
             // nodes list is empty, we need add the current node to the selected nodes
-            if (this.Parent != null && !this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && !this.Parent.ItemCollection.IsMultiSelectActive)
             {
                 if (!this.Parent.ItemCollection.HasSelectedItems)
                     this.Parent.ItemCollection.SelectedItems.Add(this);
@@ -332,6 +329,25 @@ namespace MegaApp.ViewModels
             return NodeActionResult.Succeeded;
         }
 
+        /// <summary>
+        /// Import the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
+        {
+            // User must be online to perform this operation
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline())
+                return NodeActionResult.NotOnline;
+
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
+                newParentNode.OriginalMNode, copyNode));
+
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
+        }
+
         private void Preview()
         {
             this.Parent.FocusedNode = this;
@@ -347,7 +363,7 @@ namespace MegaApp.ViewModels
             });
         }
 
-        private void ViewDetails()
+        private void OpenInformationPanel()
         {
             if(Parent != null)
             {
@@ -356,8 +372,8 @@ namespace MegaApp.ViewModels
 
                 this.Parent.FocusedNode = this;
 
-                if (this.Parent.OpenNodeDetailsCommand.CanExecute(null))
-                    this.Parent.OpenNodeDetailsCommand.Execute(null);
+                if (this.Parent.OpenInformationPanelCommand.CanExecute(null))
+                    this.Parent.OpenInformationPanelCommand.Execute(null);
             }
         }
 
@@ -439,7 +455,7 @@ namespace MegaApp.ViewModels
                 }
 
                 if (result)
-                    this.Parent.CloseNodeDetails();
+                    this.Parent.ClosePanels();
             }
 
             return result;
@@ -533,7 +549,7 @@ namespace MegaApp.ViewModels
 
         private void Download()
         {
-            if (this.Parent != null && this.Parent.IsMultiSelectActive)
+            if (this.Parent != null && this.Parent.ItemCollection.IsMultiSelectActive)
             {
                 if(this.Parent.DownloadCommand.CanExecute(null))
                     this.Parent.DownloadCommand.Execute(null);
@@ -545,7 +561,7 @@ namespace MegaApp.ViewModels
         public async void Download(TransferQueue transferQueue)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline()) return;
             if (transferQueue == null) return;
 
             var downloadFolder = await FolderService.SelectFolder();
@@ -555,6 +571,25 @@ namespace MegaApp.ViewModels
             this.Transfer.ExternalDownloadPath = downloadFolder.Path;
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
+
+            // If is a file or folder link, navigate to the Cloud Drive page
+            if (this.ParentContainerType == ContainerType.FileLink ||
+                this.ParentContainerType == ContainerType.FolderLink)
+            {
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                        NavigationObject.Create(this.GetType()));
+                });
+            }
+        }
+
+        private void Import()
+        {
+            if (this.Parent == null) return;
+
+            if (this.Parent.ImportCommand.CanExecute(null))
+                this.Parent.ImportCommand.Execute(null);
         }
 
         /// <summary>
@@ -574,7 +609,7 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
-            this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
+            this.AccessLevel.AccessType = (MShareType)this.MegaSdk.getAccess(megaNode);
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
@@ -812,8 +847,8 @@ namespace MegaApp.ViewModels
         public string EnableOfflineViewText => ResourceService.UiResources.GetString("UI_EnableOfflineVIew");
         public string EnableLinkText => ResourceService.UiResources.GetString("UI_EnableLink");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
-        public string CopyOrMoveText => CopyText + "/" + MoveText.ToLower();
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
+        public string CopyOrMoveText => CopyText + "/" + MoveText;
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string FileLabelText => ResourceService.UiResources.GetString("UI_File");
         public string FilesLabelText => ResourceService.UiResources.GetString("UI_Files");
@@ -821,6 +856,8 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
+        public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
@@ -832,7 +869,6 @@ namespace MegaApp.ViewModels
         public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");
         public string UnknownLabelText => ResourceService.UiResources.GetString("UI_Unknown");
         public string VideoLabelText => ResourceService.UiResources.GetString("UI_Video");
-        public string ViewDetailsText => ResourceService.UiResources.GetString("UI_ViewDetails");
 
         public string SetLinkExpirationDateText => string.Format("{0} {1}",
             ResourceService.UiResources.GetString("UI_SetExpirationDate"),
@@ -844,10 +880,11 @@ namespace MegaApp.ViewModels
 
         public string CopyOrMovePathData => ResourceService.VisualResources.GetString("VR_CopyOrMovePathData");
         public string DownloadPathData => ResourceService.VisualResources.GetString("VR_DownloadPathData");
+        public string LinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
+        public string InformationPathData => ResourceService.VisualResources.GetString("VR_InformationPathData");
         public string PreviewImagePathData => ResourceService.VisualResources.GetString("VR_PreviewImagePathData");
         public string RenamePathData => ResourceService.VisualResources.GetString("VR_RenamePathData");
-        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
-        public string ViewDetailsPathData => ResourceService.VisualResources.GetString("VR_ViewDetailsPathData");
+        public string RubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");        
 
         #endregion
     }

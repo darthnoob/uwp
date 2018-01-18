@@ -153,7 +153,7 @@ namespace MegaApp.ViewModels.CreateAccount
                 fetchNodes.ServerBusy += OnServerBusy;
 
                 var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
-                if (!fetchNodesResult)
+                if (fetchNodesResult != FetchNodesResult.Success)
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
                     await DialogService.ShowAlertAsync(
@@ -174,6 +174,7 @@ namespace MegaApp.ViewModels.CreateAccount
             catch (BlockedAccountException)
             {
                 // Do nothing, app is already logging out
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed. Blocked account.");
                 return false;
             }
         }

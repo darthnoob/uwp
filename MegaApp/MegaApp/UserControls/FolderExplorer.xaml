@@ -20,19 +20,22 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <breadcrumb:BreadcrumbControl
-            x:Name="BreadCrumb"
+
+        <Grid 
             Grid.Row="0"
-            DisplayMemberPath="Name"
-            HomeCommand="{Binding Folder.HomeSelectedCommand}"
-            HomeTemplate="{StaticResource BreadcrumbHomeTemplate}"
-            ItemCommand="{Binding Folder.ItemSelectedCommand}"
-            ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
-            ItemsSource="{Binding Folder.BreadCrumb.Items}"
-            OverFlow="..."
-            Seperator="&gt;"
-            Visibility="{Binding Folder.HasBreadCrumbPath, Converter={StaticResource BoolToVisibilityConverter}}" />
+            Visibility="{Binding Folder.Type, ConverterParameter=CameraUploads, Converter={StaticResource InverseContainerTypeToVisibilityConverter}}">
+            <breadcrumb:BreadcrumbControl
+                x:Name="BreadCrumb"
+                DisplayMemberPath="Name"
+                HomeCommand="{Binding Folder.HomeSelectedCommand}"
+                HomeTemplate="{StaticResource BreadcrumbHomeTemplate}"
+                ItemCommand="{Binding Folder.ItemSelectedCommand}"
+                ItemTemplate="{StaticResource BreadcrumbItemTemplate}"
+                ItemsSource="{Binding Folder.BreadCrumb.Items}"
+                OverFlow="..."
+                Seperator="&gt;"
+                Visibility="{Binding Folder.BreadCrumb.HasPath, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </Grid>
         <Grid 
             Grid.Row="1"
             Visibility="{Binding Folder.ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
@@ -41,7 +44,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             
-            <Grid Grid.Row="0" Margin="0,0,24,0">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -57,17 +60,19 @@
                     Content="{Binding FolderOptionsText, Mode=OneTime}" 
                     FontSize="14"
                     MinWidth="136"
-                    Click="OnFolderOptionsButtonClicked"/>
+                    Click="OnFolderOptionsButtonClicked"
+                    Visibility="{Binding FolderOptionsButtonVisibility}"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ListView
                     x:Name="ListView"
-                    Margin="-12,-8,12,0"
+                    ContainerContentChanging="OnContainerContentChanging"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
                     ItemTemplateSelector="{Binding Folder.NodeTemplateSelector}"
                     ItemsSource="{Binding Folder.ItemCollection.Items}"
+                    Loaded="OnListViewLoaded"
                     RightTapped="OnRightItemTapped"
                     Tapped="OnItemTapped"
                     Visibility="{Binding Folder.IsListViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
@@ -83,10 +88,12 @@
                 <GridView
                     x:Name="GridView"
                     Padding="2,4"
+                    ContainerContentChanging="OnContainerContentChanging"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
                     ItemTemplateSelector="{Binding Folder.NodeTemplateSelector}"
                     ItemsSource="{Binding Folder.ItemCollection.Items}"
+                    Loaded="OnListViewLoaded"
                     RightTapped="OnRightItemTapped"
                     Tapped="OnItemTapped"
                     Visibility="{Binding Folder.IsGridViewMode, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
@@ -125,6 +132,36 @@
                     <VisualState.Setters>
                         <Setter Target="ListView.SelectionMode" Value="None" />
                         <Setter Target="GridView.SelectionMode" Value="None" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,-12,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,-12,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,0,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,0,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

@@ -12,10 +12,16 @@ namespace MegaApp.ViewModels
 {
     public class CameraUploadsViewModel: FolderViewModel
     {
-        public CameraUploadsViewModel() : base(ContainerType.CameraUploads)
+        public CameraUploadsViewModel() 
+            : base(SdkService.MegaSdk, ContainerType.CameraUploads)
         { 
             Items = new ObservableCollection<GroupedByDateItemViewModel>();
             ItemCollection.Items.CollectionChanged += ItemsOnCollectionChanged;
+
+            ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
+            ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
+
+            ItemCollection.OrderInverted += OnOrderInverted;
         }
 
         private void ItemsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -38,7 +44,7 @@ namespace MegaApp.ViewModels
                         }
                         else
                         {
-                            group = new GroupedByDateItemViewModel {Date = date};
+                            group = new GroupedByDateItemViewModel(this.MegaSdk) {Date = date};
                             group.ItemCollection.Items.Add(node);
                             Items.Add(group);
                         }
@@ -77,6 +83,35 @@ namespace MegaApp.ViewModels
             }
         }
 
+        private void OnItemCollectionChanged(object sender, EventArgs args)
+        {
+            OnUiThread(() =>
+            {
+                OnPropertyChanged(nameof(this.ItemCollection.Items),
+                    nameof(this.OrderTypeAndNumberOfItems),
+                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+            });
+        }
+
+        private void OnSelectedItemsCollectionChanged(object sender, EventArgs args)
+        {
+            OnUiThread(() =>
+            {
+                OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
+                    nameof(this.OrderTypeAndNumberOfSelectedItems));
+            });
+        }
+
+        private void OnOrderInverted(object sender, EventArgs args)
+        {
+            UiService.SetSortOrder(this.FolderRootNode.Base64Handle, 
+                this.ItemCollection.IsCurrentOrderAscending ? 
+                    MSortOrderType.ORDER_MODIFICATION_ASC : 
+                    MSortOrderType.ORDER_MODIFICATION_DESC);
+
+            this.LoadChildNodes();
+        }
+
         private async void SetBackgroundTask(bool value)
         {
             if (value)
@@ -106,33 +141,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        protected override MNodeList GetChildren()
-        {
-            if(IsListViewMode)
-                return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
-
-            var sortOrder = UiService.GetSortOrder(FolderRootNode.Base64Handle, FolderRootNode.Name);
-            if (sortOrder != MSortOrderType.ORDER_MODIFICATION_DESC &&
-                sortOrder != MSortOrderType.ORDER_MODIFICATION_ASC)
-            {
-                UiService.SetSortOrder(FolderRootNode.Base64Handle, MSortOrderType.ORDER_MODIFICATION_DESC);
-            }
-            return NodeService.GetChildren(this.MegaSdk, this.FolderRootNode);
-        }
-
-        public override void SetView(FolderContentViewMode viewMode)
-        {
-            base.SetView(viewMode);
-            if (viewMode != FolderContentViewMode.GridView) return;
-
-            var sortOrder = UiService.GetSortOrder(FolderRootNode.Base64Handle, FolderRootNode.Name);
-            if (sortOrder != MSortOrderType.ORDER_MODIFICATION_DESC &&
-                sortOrder != MSortOrderType.ORDER_MODIFICATION_ASC)
-            {
-                LoadChildNodes();
-            }
-        }
-
         #region Properties
 
         public ObservableCollection<GroupedByDateItemViewModel> Items { get; set; }
@@ -159,17 +167,25 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public string OrderTypeAndNumberOfItems => this.FolderRootNode != null ? 
+            string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), 
+                this.MegaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode)) : string.Empty;
+
+        public string OrderTypeAndNumberOfSelectedItems => this.FolderRootNode != null ?
+            string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
+                this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count) : string.Empty;
+
         #endregion
 
         #region UiResources
 
         public string EmptyContentHeaderText => ResourceService.EmptyStates.GetString("ES_CameraUploadsHeader");
-
         public string EmptyContentSubHeaderText => ResourceService.EmptyStates.GetString("ES_CameraUploadsSubHeader");
 
         public string OnText => ResourceService.UiResources.GetString("UI_On");
-
         public string OffText => ResourceService.UiResources.GetString("UI_Off");
+
+        public string SelectOrDeselectAllText => ResourceService.UiResources.GetString("UI_SelectOrDeselectAll");
 
         #endregion
     }

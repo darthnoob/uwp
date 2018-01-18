@@ -84,9 +84,11 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             get { return _owner; }
             set { SetField(ref _owner, value); }
-        }        
+        }
 
-        public bool AllowRename => (this.AccessLevel.AccessType == MShareType.ACCESS_FULL) && !this.Parent.ItemCollection.IsMultiSelectActive;
+        public bool AllowRename => !this.Parent.ItemCollection.IsMultiSelectActive && this.HasFullAccessPermissions;
+
+        public bool IsEnabledForCopyMoveImport => this.Parent.IsForSelectFolder && this.HasReadWritePermissions;
 
         #endregion
 

@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
-using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels
 {
     public class CloudDriveViewModel: BaseSdkViewModel
     {
-        public event EventHandler ClearSelectedItems;
-        public event EventHandler DisableSelection;
-        public event EventHandler EnableSelection;
-
-        public CloudDriveViewModel()
+        public CloudDriveViewModel() : base(SdkService.MegaSdk)
         {
             InitializeModel();
 
             this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.OpenLinkCommand = new RelayCommand(OpenLink);
         }
 
         /// <summary>
@@ -28,23 +23,9 @@ namespace MegaApp.ViewModels
         /// </summary>
         private void InitializeModel()
         {
-            this.CloudDrive = new FolderViewModel(ContainerType.CloudDrive);
-            this.RubbishBin = new FolderViewModel(ContainerType.RubbishBin);
+            this.CloudDrive = new FolderViewModel(this.MegaSdk, ContainerType.CloudDrive);
+            this.RubbishBin = new FolderViewModel(this.MegaSdk, ContainerType.RubbishBin);
             this.CameraUploads = new CameraUploadsViewModel();
-
-            this.CloudDrive.AcceptCopyEvent += OnAcceptCopy;
-            this.RubbishBin.AcceptCopyEvent += OnAcceptCopy;
-
-            this.CloudDrive.AcceptMoveEvent += OnAcceptMove;
-            this.RubbishBin.AcceptMoveEvent += OnAcceptMove;
-
-            this.CloudDrive.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.RubbishBin.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-            this.CameraUploads.CancelCopyOrMoveEvent += OnCancelCopyOrMove;
-
-            this.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
-            this.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
-            this.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
 
             this.RubbishBin.ChildNodesCollectionChanged += OnRubbishBinChildNodesCollectionChanged;
 
@@ -55,6 +36,7 @@ namespace MegaApp.ViewModels
         #region Commands
 
         public ICommand CleanRubbishBinCommand { get; }
+        public ICommand OpenLinkCommand { get; }
 
         #endregion
 
@@ -69,8 +51,12 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded += CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved += CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded += CloudDrive.OnOutSharedFolderUpdated;
+            globalListener.OutSharedFolderRemoved += CloudDrive.OnOutSharedFolderUpdated;
+
             globalListener.NodeAdded += RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved += RubbishBin.OnNodeRemoved;
+
             globalListener.NodeAdded += CameraUploads.OnNodeAdded;
             globalListener.NodeRemoved += CameraUploads.OnNodeRemoved;
         }
@@ -84,8 +70,12 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded -= CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved -= CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded -= CloudDrive.OnOutSharedFolderUpdated;
+            globalListener.OutSharedFolderRemoved -= CloudDrive.OnOutSharedFolderUpdated;
+
             globalListener.NodeAdded -= RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved -= RubbishBin.OnNodeRemoved;
+
             globalListener.NodeAdded -= CameraUploads.OnNodeAdded;
             globalListener.NodeRemoved -= CameraUploads.OnNodeRemoved;
         }
@@ -98,8 +88,8 @@ namespace MegaApp.ViewModels
             if (this.CloudDrive?.FolderRootNode == null)
             {
                 this.CloudDrive.FolderRootNode = 
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRootNode(), this.CloudDrive);
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                    this.MegaSdk.getRootNode(), this.CloudDrive);
             }
 
             if(this.ActiveFolderView.Equals(this.CloudDrive))
@@ -108,8 +98,8 @@ namespace MegaApp.ViewModels
             if (this.RubbishBin?.FolderRootNode == null)
             {
                 this.RubbishBin.FolderRootNode = 
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation, 
-                    SdkService.MegaSdk.getRubbishNode(), this.RubbishBin);
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
+                    this.MegaSdk.getRubbishNode(), this.RubbishBin);
             }
 
             if (this.ActiveFolderView.Equals(this.RubbishBin))
@@ -119,7 +109,7 @@ namespace MegaApp.ViewModels
             {
                 var cameraUploadsNode = await SdkService.GetCameraUploadRootNodeAsync();
                 this.CameraUploads.FolderRootNode =
-                    NodeService.CreateNew(SdkService.MegaSdk, App.AppInformation,
+                    NodeService.CreateNew(this.MegaSdk, App.AppInformation,
                         cameraUploadsNode, this.CameraUploads);
             }
 
@@ -166,143 +156,49 @@ namespace MegaApp.ViewModels
             OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
         }
 
-        private void ResetViewStates()
+        private async void OpenLink()
         {
-            CloudDrive.IsMultiSelectActive = false;
-            CloudDrive.CurrentViewState = FolderContentViewState.CloudDrive;
-            CloudDrive.PreviousViewState = FolderContentViewState.CloudDrive;
+            if (!IsUserOnline()) return;
 
-            RubbishBin.IsMultiSelectActive = false;
-            RubbishBin.CurrentViewState = FolderContentViewState.RubbishBin;
-            RubbishBin.PreviousViewState = FolderContentViewState.RubbishBin;
+            var link = await DialogService.ShowInputDialogAsync(OpenLinkText,
+                ResourceService.UiResources.GetString("UI_TypeOrPasteLink"));
 
-            CameraUploads.IsMultiSelectActive = false;
-            CameraUploads.CurrentViewState = FolderContentViewState.CameraUploads;
-            CameraUploads.PreviousViewState = FolderContentViewState.CameraUploads;
-        }
+            if (string.IsNullOrEmpty(link) || string.IsNullOrWhiteSpace(link)) return;
 
-        private void OnCopyOrMove(object sender, EventArgs e)
-        {
-            if (this.ActiveFolderView.ItemCollection.SelectedItems == null || 
-                !this.ActiveFolderView.ItemCollection.HasSelectedItems) return;
+            LinkInformationService.ActiveLink = UriService.ReformatUri(link);
 
-            this.ActiveFolderView.CloseNodeDetails();
-
-            foreach (var node in this.ActiveFolderView.ItemCollection.SelectedItems)
-                if (node != null) node.DisplayMode = NodeDisplayMode.SelectedForCopyOrMove;
-
-            this.ActiveFolderView.CopyOrMoveSelectedNodes = this.ActiveFolderView.ItemCollection.SelectedItems.ToList();            
-            this.ActiveFolderView.IsMultiSelectActive = false;
-
-            ResetViewStates();
-
-            this.CloudDrive.PreviousViewState = this.CloudDrive.CurrentViewState;
-            this.CloudDrive.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.RubbishBin.PreviousViewState = this.RubbishBin.CurrentViewState;
-            this.RubbishBin.CurrentViewState = FolderContentViewState.CopyOrMove;
-            this.CameraUploads.PreviousViewState = this.CameraUploads.CurrentViewState;
-            this.CameraUploads.CurrentViewState = FolderContentViewState.CopyOrMove;
-
-            this.SourceFolderView = this.ActiveFolderView;
-
-            this.DisableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Reset the variables used in the copy or move actions
-        /// </summary>
-        private void ResetCopyOrMove()
-        {
-            SourceFolderView.ItemCollection.SelectedItems.Clear();
-            SourceFolderView.CopyOrMoveSelectedNodes.Clear();
-            SourceFolderView = null;
-            ResetViewStates();
-            ClearSelectedItems?.Invoke(this, EventArgs.Empty);
-            EnableSelection?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void OnCancelCopyOrMove(object sender, EventArgs e)
-        {
-            if (SourceFolderView?.CopyOrMoveSelectedNodes != null)
+            if (LinkInformationService.ActiveLink.Contains(
+                ResourceService.AppResources.GetString("AR_FileLinkHeader")))
             {
-                foreach (var node in SourceFolderView.CopyOrMoveSelectedNodes)
-                    if (node != null) node.DisplayMode = NodeDisplayMode.Normal;
-            }
+                LinkInformationService.UriLink = UriLinkType.File;
 
-            ResetCopyOrMove();
-        }
-
-        private void OnAcceptCopy(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptCopyAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptCopyAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being copied
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
+                // Navigate to the file link page
+                OnUiThread(() =>
                 {
-                    if (node != null)
-                    {
-                        result = result & (await node.CopyAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
+                    NavigateService.Instance.Navigate(typeof(FileLinkPage), false,
+                        NavigationObject.Create(this.GetType()));
+                });
             }
-            catch (Exception) { result = false; }
-            finally
+            else if (LinkInformationService.ActiveLink.Contains(
+                ResourceService.AppResources.GetString("AR_FolderLinkHeader")))
             {
-                if (!result)
+                LinkInformationService.UriLink = UriLinkType.Folder;
+
+                // Navigate to the folder link page
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(FolderLinkPage), false,
+                        NavigationObject.Create(this.GetType()));
+                });
+            }
+            else
+            {
+                OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_CopyFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_CopyFailed"));
-                }
-            }
-        }
-
-        private void OnAcceptMove(object sender, EventArgs e)
-        {
-            // Use a temp variable to avoid InvalidOperationException
-            AcceptMoveAction(SourceFolderView.CopyOrMoveSelectedNodes.ToList());
-            ResetCopyOrMove();
-        }
-
-        private async void AcceptMoveAction(IList<IMegaNode> nodes)
-        {
-            if (nodes == null || !nodes.Any()) return;
-
-            bool result = true;
-            try
-            {
-                // Fix the new parent node to allow navigation while the nodes are being moved
-                var newParentNode = ActiveFolderView.FolderRootNode;
-                foreach (var node in nodes)
-                {
-                    if (node != null)
-                    {
-                        result = result & (await node.MoveAsync(newParentNode) == NodeActionResult.Succeeded);
-                        node.DisplayMode = NodeDisplayMode.Normal;
-                    }
-                }
-            }
-            catch (Exception) { result = false; }
-            finally
-            {
-                if (!result)
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_MoveFailed"));
-                }
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_OpenLinkFailed"));
+                });
             }
         }
 
@@ -340,16 +236,6 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeFolderView, value); }
         }
 
-        /// <summary>
-        /// Property needed to store the source folder in a move/copy action 
-        /// </summary>
-        private FolderViewModel _sourceFolderView;
-        public FolderViewModel SourceFolderView
-        {
-            get { return _sourceFolderView; }
-            set { SetField(ref _sourceFolderView, value); }
-        }
-
         #endregion
 
         #region UiResources
@@ -358,6 +244,7 @@ namespace MegaApp.ViewModels
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        public string OpenLinkText => ResourceService.UiResources.GetString("UI_OpenLink");
 
         #endregion
 
@@ -367,6 +254,7 @@ namespace MegaApp.ViewModels
         public string EmptyFolderPathData => ResourceService.VisualResources.GetString("VR_EmptyFolderPathData");
         public string EmptyRubbishBinPathData => ResourceService.VisualResources.GetString("VR_RubbishBinPathData");
         public string FolderLoadingPathData => ResourceService.VisualResources.GetString("VR_FolderLoadingPathData");
+        public string OpenLinkPathData => ResourceService.VisualResources.GetString("VR_LinkPathData");
 
         #endregion
     }

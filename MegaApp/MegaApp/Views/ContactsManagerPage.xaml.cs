@@ -35,7 +35,7 @@ namespace MegaApp.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            this.ViewModel.Initialize(App.GlobalListener);
+            this.ViewModel.Initialize();
 
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
@@ -68,7 +68,7 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
             this.ViewModel.OutgoingContactRequests.ItemCollection.AllSelected -= OnAllSelected;
 
-            this.ViewModel.Deinitialize(App.GlobalListener);
+            this.ViewModel.Deinitialize();
             base.OnNavigatedFrom(e);
         }
 
@@ -89,11 +89,29 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
+        public override bool CanGoBack
+        {
+            get
+            {
+                bool canGoBack = false;
+                if (this.ViewModel != null)
+                    canGoBack = this.ViewModel.IsPanelOpen;
+
+                return canGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (ContactProfileSplitView.IsPaneOpen)
+                this.ViewModel.ClosePanels();
+        }
+
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
-            // Needed to avoid extrange behaviors during the view update
+            // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
@@ -172,7 +190,7 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
                 this.ViewModel.ActiveView = this.ViewModel.MegaContacts;
@@ -285,12 +303,12 @@ namespace MegaApp.Views
 
         private void OnOpenContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = true;
+            this.ViewModel.IsPanelOpen = true;
         }
 
         private void OnCloseContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
         }
     }
 }

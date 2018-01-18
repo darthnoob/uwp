@@ -10,15 +10,16 @@ using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
 {
     public class ContactsListViewModel : ContactsBaseViewModel<IMegaContact>
     {
-        public ContactsListViewModel()
+        public ContactsListViewModel() : base(SdkService.MegaSdk)
         {
             this.ContentType = ContactsContentType.Contacts;
-            this.ItemCollection = new CollectionViewModel<IMegaContact>();
+            this.ItemCollection = new CollectionViewModel<IMegaContact>(this.MegaSdk);
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
@@ -60,33 +61,58 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public virtual void Initialize()
         {
             this.ItemCollection.ItemCollectionChanged += OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted += OnOrderInverted;
 
-            this.GetMegaContacts();
-
             if (App.GlobalListener == null) return;
-            globalListener.ContactUpdated += this.OnContactUpdated;
+            App.GlobalListener.ContactUpdated += this.OnContactUpdated;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public virtual void Deinitialize()
         {
             this.ItemCollection.ItemCollectionChanged -= OnItemCollectionChanged;
             this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
             this.ItemCollection.OrderInverted -= OnOrderInverted;
 
-            if (globalListener == null) return;
-            globalListener.ContactUpdated -= this.OnContactUpdated;
+            if (App.GlobalListener == null) return;
+            App.GlobalListener.ContactUpdated -= this.OnContactUpdated;
         }
 
-        private void AddContact()
+        private async void AddContact()
         {
-            this.OnAddContactTapped();
+            var addContactDialog = new AddContactDialog();
+            await addContactDialog.ShowAsync();
+
+            if (!addContactDialog.DialogResult) return;
+
+            var inviteContact = new InviteContactRequestListenerAsync();
+            var result = await inviteContact.ExecuteAsync(() =>
+                this.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
+                    MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
+
+            switch (result)
+            {
+                case InviteContactResult.Success:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
+                        addContactDialog.ContactEmail));
+                    break;
+
+                case InviteContactResult.AlreadyExists:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
+                    break;
+
+                case InviteContactResult.Unknown:
+                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
+                        ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
+                    break;
+            }
         }
 
         private async void RemoveContact()
@@ -150,7 +176,7 @@ namespace MegaApp.ViewModels.Contacts
             CreateLoadCancelOption();
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
-            MUserList contactsList = SdkService.MegaSdk.getContacts();
+            MUserList contactsList = this.MegaSdk.getContacts();
 
             await Task.Factory.StartNew(() =>
             {

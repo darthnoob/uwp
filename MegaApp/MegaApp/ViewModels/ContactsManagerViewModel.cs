@@ -1,71 +1,61 @@
-﻿using System;
-using mega;
-using MegaApp.MegaApi;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
 {
     public class ContactsManagerViewModel : BaseSdkViewModel
     {
-        public ContactsManagerViewModel()
+        public ContactsManagerViewModel() : base(SdkService.MegaSdk)
         {
-            this.MegaContacts = new ContactsListViewModel();
-            this.MegaContacts.AddContactTapped += OnAddContactTapped;
+            this.IsPanelOpen = false;
 
-            this.IncomingContactRequests = new ContactRequestsListViewModel(false);
-
-            this.OutgoingContactRequests = new ContactRequestsListViewModel(true);
-            this.OutgoingContactRequests.AddContactTapped += OnAddContactTapped;
+            this.ClosePanelCommand = new RelayCommand(ClosePanels);
         }
+
+        #region Commands
+
+        public ICommand ClosePanelCommand { get; set; }
+
+        #endregion
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public void Initialize()
         {
-            this.MegaContacts.Initialize(globalListener);
-            this.IncomingContactRequests.Initialize(globalListener);
-            this.OutgoingContactRequests.Initialize(globalListener);
+            this.MegaContacts.PropertyChanged += this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged += this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged += this.OnOutgoingContactRequestsPropertyChanged;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public void Deinitialize()
         {
-            this.MegaContacts.Deinitialize(globalListener);
-            this.IncomingContactRequests.Deinitialize(globalListener);
-            this.OutgoingContactRequests.Deinitialize(globalListener);
+            this.MegaContacts.PropertyChanged -= this.OnMegaContactsPropertyChanged;
+            this.IncomingContactRequests.PropertyChanged -= this.OnIncomingContactRequestsPropertyChanged;
+            this.OutgoingContactRequests.PropertyChanged -= this.OnOutgoingContactRequestsPropertyChanged;
         }
 
-        private async void OnAddContactTapped(object sender, EventArgs e)
+        private void OnMegaContactsPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var addContactDialog = new AddContactDialog();
-            await addContactDialog.ShowAsync();
+            OnPropertyChanged(nameof(this.MegaContacts));
+        }
 
-            if (!addContactDialog.DialogResult) return;
+        private void OnIncomingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.IncomingContactRequests));
+        }
 
-            var inviteContact = new InviteContactRequestListenerAsync();
-            var result = await inviteContact.ExecuteAsync(() =>
-                SdkService.MegaSdk.inviteContact(addContactDialog.ContactEmail, addContactDialog.EmailContent,
-                    MContactRequestInviteActionType.INVITE_ACTION_ADD, inviteContact));
+        private void OnOutgoingContactRequestsPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(this.OutgoingContactRequests));
+        }
 
-            switch (result)
-            {
-                case Enums.InviteContactResult.Success:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_InviteContactSuccessfully"),
-                        addContactDialog.ContactEmail));
-                    break;
-
-                case Enums.InviteContactResult.AlreadyExists:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        ResourceService.AppMessages.GetString("AM_ContactAlreadyExists"));
-                    break;
-
-                case Enums.InviteContactResult.Unknown:
-                    await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_AddContact"),
-                        ResourceService.AppMessages.GetString("AM_InviteContactFailed"));
-                    break;
-            }
+        public void ClosePanels()
+        {
+            this.IsPanelOpen = false;
         }
 
         #endregion
@@ -79,35 +69,27 @@ namespace MegaApp.ViewModels
             set { SetField(ref _activeView, value); }
         }
 
-        private ContactsListViewModel _megaContacts;
-        public ContactsListViewModel MegaContacts
-        {
-            get { return _megaContacts; }
-            set { SetField(ref _megaContacts, value); }
-        }
+        public ContactsListViewModel MegaContacts => ContactsService.MegaContacts;
+        public ContactRequestsListViewModel IncomingContactRequests => ContactsService.IncomingContactRequests;
+        public ContactRequestsListViewModel OutgoingContactRequests => ContactsService.OutgoingContactRequests;
 
-        private ContactRequestsListViewModel _incomingContactRequests;
-        public ContactRequestsListViewModel IncomingContactRequests
+        private bool _isPanelOpen;
+        public bool IsPanelOpen
         {
-            get { return _incomingContactRequests; }
-            set { SetField(ref _incomingContactRequests, value); }
-        }
-
-        private ContactRequestsListViewModel _outgoingContactRequest;
-        public ContactRequestsListViewModel OutgoingContactRequests
-        {
-            get { return _outgoingContactRequest; }
-            set { SetField(ref _outgoingContactRequest, value); }
+            get { return _isPanelOpen; }
+            set { SetField(ref _isPanelOpen, value); }
         }
 
         #endregion
 
         #region UiResources
 
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_Contacts");
         public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
         public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
         public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");
-        
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
+
         #endregion
     }
 }

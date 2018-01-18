@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.SharedFolders;
 
@@ -24,6 +25,67 @@ namespace MegaApp.Converters
             var containerType = folder.Type;
             switch (containerType)
             {
+                case ContainerType.CloudDrive:
+                    switch (paramString)
+                    {
+                        case "newfolder":
+                        case "upload":
+                        case "openlink":
+                            return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ? 
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "copy":
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink ? 
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "move":
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
+                                !SelectedNodesService.IsMoveAllowed ? Visibility.Visible : Visibility.Collapsed;
+
+                        case "import":
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.CameraUploads:
+                    switch (paramString)
+                    {
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.RubbishBin:
+                    switch (paramString)
+                    {
+                        case "clean":
+                            return folder.ItemCollection != null && !folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "download":
+                        case "copyormove":
+                        case "remove":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
                 case ContainerType.InShares:
                 case ContainerType.ContactInShares:
                     switch (paramString)
@@ -35,6 +97,7 @@ namespace MegaApp.Converters
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "download":
+                        case "copyormove":
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
@@ -78,7 +141,22 @@ namespace MegaApp.Converters
                                 folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
-                                default:
+                        case "copy":
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                    Visibility.Visible : Visibility.Collapsed;
+
+                        case "move":
+                            return folder.IsForSelectFolder && !SelectedNodesService.IsSourcePublicLink && !SelectedNodesService.IsMoveAllowed &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "import":
+                            return folder.IsForSelectFolder && SelectedNodesService.IsSourcePublicLink &&
+                                folder.FolderRootNode != null && folder.FolderRootNode.HasReadWritePermissions ?
+                                    Visibility.Visible : Visibility.Collapsed;
+
+                        default:
                             return Visibility.Collapsed;
                     }
 
@@ -91,6 +169,7 @@ namespace MegaApp.Converters
                                 Visibility.Collapsed : Visibility.Visible;
 
                         case "download":
+                        case "copyormove":
                         case "remove":
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
@@ -99,12 +178,25 @@ namespace MegaApp.Converters
                         case "information":
                         case "getlink":
                         case "rename":
+                        case "share":
                             return folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         case "removeshare":
                             return folder is SharedFoldersListViewModel &&
                                 folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        default:
+                            return Visibility.Collapsed;
+                    }
+
+                case ContainerType.FolderLink:
+                    switch (paramString)
+                    {
+                        case "download":
+                        case "import":
+                            return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:

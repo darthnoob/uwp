@@ -4,7 +4,6 @@ using System.Linq;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
-using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Contacts
@@ -15,11 +14,12 @@ namespace MegaApp.ViewModels.Contacts
         /// View model to manage a contact requests list
         /// </summary>
         /// <param name="isOutgoing">Indicate the contact request list is for outgoing requests or not</param>
-        public ContactRequestsListViewModel(bool isOutgoing) : base(isOutgoing)
+        public ContactRequestsListViewModel(bool isOutgoing) : 
+            base(SdkService.MegaSdk, isOutgoing)
         {
             this._isOutgoing = isOutgoing;
             this.ContentType = this._isOutgoing ? ContactsContentType.OutgoingRequests : ContactsContentType.IncomingRequests;
-            this.ItemCollection = new CollectionViewModel<IMegaContactRequest>();
+            this.ItemCollection = new CollectionViewModel<IMegaContactRequest>(this.MegaSdk);
 
             this.AddContactCommand = new RelayCommand(AddContact);
             this.AcceptContactRequestCommand = new RelayCommand(AcceptContactRequest);
@@ -33,28 +33,26 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize(GlobalListener globalListener)
+        public void Initialize()
         {
-            this.GetMegaContactRequests();
-
             this.ItemCollection.OrderInverted += OnOrderInverted;
 
-            if (globalListener == null) return;
+            if (App.GlobalListener == null) return;
             if (_isOutgoing)
-                globalListener.OutgoingContactRequestUpdated += OnOutgoingContactRequestUpdated;
+                App.GlobalListener.OutgoingContactRequestUpdated += OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated += OnIncomingContactRequestUpdated;
+                App.GlobalListener.IncomingContactRequestUpdated += OnIncomingContactRequestUpdated;
         }
 
-        public void Deinitialize(GlobalListener globalListener)
+        public void Deinitialize()
         {
             this.ItemCollection.OrderInverted -= OnOrderInverted;
 
-            if (globalListener == null) return;
+            if (App.GlobalListener == null) return;
             if (_isOutgoing)
-                globalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
+                App.GlobalListener.OutgoingContactRequestUpdated -= OnOutgoingContactRequestUpdated;
             else
-                globalListener.IncomingContactRequestUpdated -= OnIncomingContactRequestUpdated;
+                App.GlobalListener.IncomingContactRequestUpdated -= OnIncomingContactRequestUpdated;
         }
 
         private void OnIncomingContactRequestUpdated(object sender, EventArgs args) => this.GetMegaContactRequests();
@@ -68,8 +66,8 @@ namespace MegaApp.ViewModels.Contacts
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
 
             var contactRequestsList = _isOutgoing ?
-                SdkService.MegaSdk.getOutgoingContactRequests() : 
-                SdkService.MegaSdk.getIncomingContactRequests();
+                this.MegaSdk.getOutgoingContactRequests() : 
+                this.MegaSdk.getIncomingContactRequests();
 
             var contactRequestsListSize = contactRequestsList.size();
 
@@ -87,7 +85,8 @@ namespace MegaApp.ViewModels.Contacts
 
         private void AddContact()
         {
-            this.OnAddContactTapped();
+            if (ContactsService.MegaContacts.AddContactCommand.CanExecute(null))
+                ContactsService.MegaContacts.AddContactCommand.Execute(null);
         }
 
         private void AcceptContactRequest()

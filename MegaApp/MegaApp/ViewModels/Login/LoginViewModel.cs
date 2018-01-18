@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels.Login
 {
     public class LoginViewModel : BaseSdkViewModel
     {
-        public LoginViewModel()
+        public LoginViewModel(MegaSDK megaSdk) : base(megaSdk)
         {
             this.ControlState = true;
             this.LoginCommand = new RelayCommand(Login);
@@ -22,12 +22,12 @@ namespace MegaApp.ViewModels.Login
 
         #region Methods
 
-        private void OnDecryptNodes(object sender, EventArgs e)
+        protected void OnDecryptNodes(object sender, EventArgs e)
         {
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
-        private void OnServerBusy(object sender, EventArgs e)
+        protected void OnServerBusy(object sender, EventArgs e)
         {
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
         }
@@ -60,6 +60,7 @@ namespace MegaApp.ViewModels.Login
             catch (BlockedAccountException)
             {
                 // Do nothing, app is already logging out
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Blocked account.");
                 return;
             }
 
@@ -74,7 +75,14 @@ namespace MegaApp.ViewModels.Login
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
 
                     // Fetch nodes from MEGA
-                    if (!await this.FetchNodes()) return;
+                    var fetchNodesResult = await this.FetchNodes();
+                    if (fetchNodesResult != FetchNodesResult.Success)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                        if (fetchNodesResult != FetchNodesResult.BlockedAccount)
+                            this.ShowFetchNodesFailedAlertDialog();
+                        return;
+                    }
 
                     // Navigate to the main page to load the main application for the user
                     NavigateService.Instance.Navigate(typeof(MainPage), true,
@@ -187,14 +195,22 @@ namespace MegaApp.ViewModels.Login
 
                 fastLoginResult = await fastLogin.ExecuteAsync(() =>
                 {
-                    SdkService.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
+                    this.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
                         ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
                         fastLogin);
                 });
             }
             // Do nothing, app is already logging out
-            catch (BadSessionIdException) { return false; }
-            catch (BlockedAccountException) { return false; }
+            catch (BadSessionIdException)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Bad session ID.");
+                return false;
+            }
+            catch (BlockedAccountException)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Login failed. Blocked account.");
+                return false;
+            }
 
             if (!fastLoginResult)
             {
@@ -209,14 +225,23 @@ namespace MegaApp.ViewModels.Login
             Task.Run(() => LicenseService.ValidateLicensesAsync());
 
             // Fetch nodes from MEGA
-            return await this.FetchNodes();
+            var fetchNodesResult = await this.FetchNodes();
+            if (fetchNodesResult != FetchNodesResult.Success)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                if (fetchNodesResult != FetchNodesResult.BlockedAccount)
+                    this.ShowFetchNodesFailedAlertDialog();
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        private async Task<bool> FetchNodes()
+        protected async Task<FetchNodesResult> FetchNodes()
         {
             try
             {
@@ -226,29 +251,31 @@ namespace MegaApp.ViewModels.Login
                 fetchNodes.DecryptNodes += OnDecryptNodes;
                 fetchNodes.ServerBusy += OnServerBusy;
 
-                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
-                if (!fetchNodesResult)
+                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
+                if (fetchNodesResult == FetchNodesResult.Success)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
-                    return false;
+                    // Enable the transfer resumption for the MegaSDK instance
+                    this.MegaSdk.enableTransferResumption();
                 }
-
-                // Enable the transfer resumption for the main MegaSDK instance
-                SdkService.MegaSdk.enableTransferResumption();
 
                 this.ControlState = true;
                 this.IsBusy = false;
 
-                return true;
+                return fetchNodesResult;
             }
             catch (BlockedAccountException)
             {
                 // Do nothing, app is already logging out
-                return false;
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed. Blocked account.");
+                return FetchNodesResult.BlockedAccount;
             }
+        }
+
+        protected async void ShowFetchNodesFailedAlertDialog()
+        {
+            await DialogService.ShowAlertAsync(
+                ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
         }
 
         #endregion
@@ -339,18 +366,11 @@ namespace MegaApp.ViewModels.Login
             set { SetField(ref _progressHeaderText, value); }
         }
 
-        // TODO -> Remove when remove the ProgressPanel control
-        public string ProgressSubHeaderText => this.ProgressText;
-
         private string _progressText;
         public string ProgressText
         {
             get { return _progressText; }
-            set
-            {
-                SetField(ref _progressText, value);
-                OnPropertyChanged(nameof(this.ProgressSubHeaderText));
-            }
+            set { SetField(ref _progressText, value); }
         }
 
         #endregion

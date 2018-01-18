@@ -31,7 +31,8 @@ namespace MegaApp.ViewModels.UserControls
                 OnPropertyChanged(nameof(this.SectionNameText));
 
                 var sharedFolder = (this._sharedFolderNode?.OriginalMNode?.isInShare() == true) ?
-                    new FolderViewModel(ContainerType.InShares) : new FolderViewModel(ContainerType.OutShares);
+                    new FolderViewModel(SdkService.MegaSdk, ContainerType.InShares) : 
+                    new FolderViewModel(SdkService.MegaSdk, ContainerType.OutShares);
                 sharedFolder.FolderRootNode = this.SharedFolderNode;
 
                 this.SharedFolder = sharedFolder;

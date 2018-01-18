@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -22,7 +23,7 @@ namespace MegaApp.ViewModels
     /// </typeparam>
     public class CollectionViewModel<T> : BaseSdkViewModel
     {
-        public CollectionViewModel()
+        public CollectionViewModel(MegaSDK megaSdk) : base(megaSdk)
         {
             this.Items = new ObservableCollection<T>();
             this.SelectedItems = new ObservableCollection<T>();
@@ -174,6 +175,8 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),
                 nameof(this.HasAllItemsSelected));
+
+            this.OnSelectedItemsCollectionChanged();
         }
 
         protected void SelectionChanged()
@@ -185,7 +188,11 @@ namespace MegaApp.ViewModels
                 this.IsMultiSelectActive = this.IsMultiSelectActive && this.HasSelectedItems;
 
             if (this.HasSelectedItems)
+            {
                 this.FocusedItem = this.SelectedItems.Last();
+                if (this.FocusedItem is ImageNodeViewModel)
+                    (this.FocusedItem as ImageNodeViewModel).InViewingRange = true;
+            }
 
             OnPropertyChanged(nameof(this.SelectedItems), nameof(this.HasSelectedItems),
                 nameof(this.OnlyOneSelectedItem), nameof(this.MoreThanOneSelected),

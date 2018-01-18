@@ -1,13 +1,14 @@
 ﻿using System;
+using mega;
 using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
 {
     public class GroupedByDateItemViewModel
     {
-        public GroupedByDateItemViewModel()
+        public GroupedByDateItemViewModel(MegaSDK megaSdk)
         {
-            ItemCollection = new CollectionViewModel<IMegaNode>();
+            ItemCollection = new CollectionViewModel<IMegaNode>(megaSdk);
         }
 
         #region Properties

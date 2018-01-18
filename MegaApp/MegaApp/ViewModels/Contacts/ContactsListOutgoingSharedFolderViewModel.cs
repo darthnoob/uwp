@@ -35,7 +35,7 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Methods
 
-        public void Initialize()
+        public override void Initialize()
         {
             if (App.GlobalListener == null) return;
             App.GlobalListener.ContactUpdated += this.OnContactUpdated;
@@ -43,7 +43,7 @@ namespace MegaApp.ViewModels.Contacts
             App.GlobalListener.OutSharedFolderRemoved += this.OnOutSharedFolderUpdated;
         }
 
-        public void Deinitialize()
+        public override void Deinitialize()
         {
             if (App.GlobalListener == null) return;
             App.GlobalListener.ContactUpdated -= this.OnContactUpdated;
@@ -160,13 +160,13 @@ namespace MegaApp.ViewModels.Contacts
                 {
                     var contact = SdkService.MegaSdk.getContact(outSharesList.get(i).getUser());
 
-                    var existingContact = (ContactOutgoingSharedFolderViewModel)this.ItemCollection.Items.FirstOrDefault(
+                    var existingContact = this.ItemCollection.Items.FirstOrDefault(
                         c => c.Handle.Equals(contact.getHandle()));
 
                     // If the contact exists in the contact list (UPDATE SCENARIO)
-                    if (existingContact != null)
+                    if (existingContact != null && existingContact is ContactOutgoingSharedFolderViewModel)
                     {
-                        existingContact.GetAccesLevel(outSharesList.get(i));
+                        (existingContact as ContactOutgoingSharedFolderViewModel).GetAccesLevel(outSharesList.get(i));
                     }
                     // If the shared folder is shared with a new contact (ADD SCENARIO)
                     else

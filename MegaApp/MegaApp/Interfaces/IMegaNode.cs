@@ -35,6 +35,13 @@ namespace MegaApp.Interfaces
         Task<NodeActionResult> CopyAsync(IMegaNode newParentNode);
 
         /// <summary>
+        /// Import the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        Task<NodeActionResult> ImportAsync(IMegaNode newParentNode);
+
+        /// <summary>
         /// Delete the node permanently
         /// </summary>
         /// <param name="isMultiSelect">True if the node is in a multi-select scenario</param>
