@@ -242,7 +242,7 @@
                         extensions:CommandBarExtensions.HideMoreButton="True"
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
-                            Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
+                            Command="{x:Bind ViewModel.AddContactToFolderCommand}"
                             Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -681,7 +681,7 @@
                     x:Name="SharePivotBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
+                        Command="{x:Bind ViewModel.AddContactToFolderCommand}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"

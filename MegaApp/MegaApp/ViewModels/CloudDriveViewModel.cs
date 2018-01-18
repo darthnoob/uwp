@@ -51,8 +51,8 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded += CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved += CloudDrive.OnNodeRemoved;
-            globalListener.OutSharedFolderAdded += CloudDrive.OnNodeAdded;
-            globalListener.OutSharedFolderRemoved += CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded += CloudDrive.OnOutSharedFolderUpdated;
+            globalListener.OutSharedFolderRemoved += CloudDrive.OnOutSharedFolderUpdated;
 
             globalListener.NodeAdded += RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved += RubbishBin.OnNodeRemoved;
@@ -70,8 +70,8 @@ namespace MegaApp.ViewModels
             if (globalListener == null) return;
             globalListener.NodeAdded -= CloudDrive.OnNodeAdded;
             globalListener.NodeRemoved -= CloudDrive.OnNodeRemoved;
-            globalListener.OutSharedFolderAdded -= CloudDrive.OnNodeAdded;
-            globalListener.OutSharedFolderRemoved -= CloudDrive.OnNodeRemoved;
+            globalListener.OutSharedFolderAdded -= CloudDrive.OnOutSharedFolderUpdated;
+            globalListener.OutSharedFolderRemoved -= CloudDrive.OnOutSharedFolderUpdated;
 
             globalListener.NodeAdded -= RubbishBin.OnNodeAdded;
             globalListener.NodeRemoved -= RubbishBin.OnNodeRemoved;

@@ -47,7 +47,7 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
                     ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
-                    Command="{x:Bind ViewModel.MegaContacts.AddContactCommand}"
+                    Command="{x:Bind ViewModel.AddContactAndShareCommand}"
                     Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Viewbox MaxHeight="16" MaxWidth="16">
                         <FontIcon Glyph="&#xE8FA;" />
@@ -146,7 +146,7 @@
                 Style="{StaticResource MegaAppBarButtonStyle}"
                 Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
                 ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
-                Command="{x:Bind ViewModel.MegaContacts.AddContactCommand}"
+                Command="{x:Bind ViewModel.AddContactAndShareCommand}"
                 Visibility="{Binding ItemCollection.HasSelectedItems, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <Viewbox MaxHeight="16" MaxWidth="16">
                     <FontIcon Glyph="&#xE8FA;" />

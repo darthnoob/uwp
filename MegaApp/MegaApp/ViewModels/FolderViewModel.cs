@@ -125,6 +125,11 @@ namespace MegaApp.ViewModels
             this.VisiblePanel = PanelType.Information;
         }
 
+        /// <summary>
+        /// Method that should be called when a node is added or updated
+        /// </summary>
+        /// <param name="sender">Object that sent the notification</param>
+        /// <param name="mNode">Node added or updated</param>
         public void OnNodeAdded(object sender, MNode mNode)
         {
             if (mNode == null) return;
@@ -298,6 +303,21 @@ namespace MegaApp.ViewModels
             this.ChildNodesCollectionChanged?.Invoke(this, EventArgs.Empty);
             UiService.OnUiThread(() => OnPropertyChanged("IsEmpty"));
         }
+
+        public void OnOutSharedFolderUpdated(object sender, MNode mNode)
+        {
+            var nodeToUpdateInView = ItemCollection.Items.FirstOrDefault(
+                node => node.Base64Handle.Equals(mNode.getBase64Handle()));
+
+            if (nodeToUpdateInView == null) return;
+
+            UiService.OnUiThread(() =>
+            {
+                try { nodeToUpdateInView.Update(mNode, true); }
+                catch (Exception) { /* Dummy catch, supress possible exception */ }
+            });
+        }
+        
 
         #region Commands
 
