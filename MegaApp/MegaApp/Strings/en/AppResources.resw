@@ -146,7 +146,7 @@
     <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
-    <value>uwp.alpha@mega.nz</value>
+    <value>uwp@mega.nz</value>
     <comment>UWP Team email for contact and/or support - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DownloadsDirectory" xml:space="preserve">
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/9aad11fe59f980e054776b31fb05a0983a2380a0</value>
+    <value>https://github.com/meganz/sdk/tree/8aff40928420420c296b46a1018515f4a58bd227</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>9aad11f</value>
+    <value>8aff409</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
