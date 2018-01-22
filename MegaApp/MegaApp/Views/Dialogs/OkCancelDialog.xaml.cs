@@ -1,5 +1,4 @@
-﻿using MegaApp.Services;
-using MegaApp.UserControls;
+﻿using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Views.Dialogs
@@ -10,24 +9,24 @@ namespace MegaApp.Views.Dialogs
 
     public sealed partial class OkCancelDialog : BaseOkCancelDialog
     {
-        public OkCancelDialog(string title, string message)
+        /// <summary>
+        /// Creates a dialog with a message, a warning and two buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="warning">Optinal warning message of the dialog (optional).</param>
+        /// <param name="primaryButton">Label of the primary button of the dialog. Default value "Ok".</param>
+        /// <param name="secondaryButton">Label of the secondary button of the dialog. Default value "Cancel".</param>
+        public OkCancelDialog(string title, string message, string warning = null,
+            string primaryButton = null, string secondaryButton = null)
         {
             this.InitializeComponent();
 
-            this.ViewModel.Title = title;
-            this.ViewModel.Message = message;
-            this.ViewModel.PrimaryButtonLabel = ResourceService.UiResources.GetString("UI_Ok");
-            this.ViewModel.SecondaryButtonLabel = ResourceService.UiResources.GetString("UI_Cancel");
-        }
-
-        public OkCancelDialog(string title, string message, string primaryButton, string secondaryButton)
-        {
-            this.InitializeComponent();
-
-            this.ViewModel.Title = title;
-            this.ViewModel.Message = message;
-            this.ViewModel.PrimaryButtonLabel = primaryButton;
-            this.ViewModel.SecondaryButtonLabel = secondaryButton;
+            this.ViewModel.TitleText = title;
+            this.ViewModel.MessageText = message;
+            this.ViewModel.WarningText = warning ?? string.Empty;
+            this.ViewModel.PrimaryButtonLabel = primaryButton ?? this.ViewModel.OkText;
+            this.ViewModel.SecondaryButtonLabel = secondaryButton ?? this.ViewModel.CancelText;
         }
     }
 }

@@ -24,72 +24,110 @@ namespace MegaApp.Services
         /// <summary>
         /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="message">Content message of the dialog</param>
-        /// <param name="button">Label of the dialog button</param>
-        public static async Task ShowAlertAsync(string title, string message, string button = null)
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Content message of the dialog.</param>
+        public static async Task ShowAlertAsync(string title, string message)
         {
-            if (button == null)
-                button = ResourceService.UiResources.GetString("UI_Ok");
+            var dialog = new AlertDialog(title, message);
+            await dialog.ShowAsyncQueue();
+        }
 
+        /// <summary>
+        /// Show an Alert Dialog that can be dismissed by a button.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Content message of the dialog.</param>
+        /// <param name="button">Label of the dialog button.</param>
+        public static async Task ShowAlertAsync(string title, string message, string button)
+        {
             var dialog = new AlertDialog(title, message, button);
             await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
-        /// Show a dialog with a message and an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and "Ok"/"Cancel" buttons.
         /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="message">Message of the dialog</param>
-        /// <param name="okButton">Label for the "Ok" button</param>
-        /// <param name="cancelButton">Label for the "Cancel" button</param>
-        /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            string okButton = null, string cancelButton = null)
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <returns>True if the "Ok" button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message)
         {
-            return await ShowOkCancelAndWarningAsync(title, message, null, okButton, cancelButton);
+            var dialog = new OkCancelDialog(title, message);
+            return await dialog.ShowAsyncQueueBool();
         }
 
         /// <summary>
-        /// Show a dialog with a message, a warning and an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and two buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="primaryButton">Label for the primary button.</param>
+        /// <param name="secondaryButton">Label for the secondary button.</param>
+        /// <returns>True if the primary button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message,
+            string primaryButton, string secondaryButton)
+        {
+            var dialog = new OkCancelDialog(title, message, primaryButton, secondaryButton);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and "Ok"/"Cancel" buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="warning">Warning of the dialog.</param>
+        /// <returns>True if the "Ok" button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning)
+        {
+            var dialog = new OkCancelDialog(title, message, warning);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and two buttons.
         /// </summary>
         /// <param name="title">Title of the dialog</param>
         /// <param name="message">Message of the dialog</param>
         /// <param name="warning">Warning of the dialog</param>
-        /// <param name="okButton">Label for the "Ok" button</param>
-        /// <param name="cancelButton">Label for the "Cancel" button</param>
-        /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAndWarningAsync(string title, string message, 
-            string warning, string okButton = null, string cancelButton = null)
+        /// <param name="primaryButton">Label for the primary button.</param>
+        /// <param name="secondaryButton">Label for the secondary button.</param>
+        /// <returns>True if the primary button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message,
+            string warning, string primaryButton, string secondaryButton)
         {
-            if (okButton == null)
-                okButton = ResourceService.UiResources.GetString("UI_Ok");
-            if (cancelButton == null)
-                cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
-
-            var dialog = new OkCancelAndWarningDialog(title, message, warning, okButton, cancelButton);
-            await dialog.ShowAsync();
-
-            return dialog.DialogResult;
+            var dialog = new OkCancelDialog(title, message, warning, primaryButton, secondaryButton);
+            return await dialog.ShowAsyncQueueBool();
         }
 
+        /// <summary>
+        /// Show an standard input dialog.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
         public static async Task<string> ShowInputDialogAsync(string title, string message,
-            string primaryButton = null, string secondaryButton = null,
             InputDialogSettings settings = null)
         {
+            var dialog = new InputDialog(title, message, null, null, settings);
+            var result = await dialog.ShowAsyncQueueBool();
+            return result ? dialog.ViewModel.InputText : null;
+        }
+
+        /// <summary>
+        /// Show an standard input dialog.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        public static async Task<string> ShowInputDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, InputDialogSettings settings = null)
+        {
             var dialog = new InputDialog(title, message, primaryButton, secondaryButton, settings);
-            var result = await dialog.ShowAsyncQueue();
-
-            switch (result)
-            {
-                case ContentDialogResult.Primary:
-                    return dialog.ViewModel.InputText;
-
-                case ContentDialogResult.Secondary:
-                case ContentDialogResult.None:
-                default:
-                    return null;
-            }
+            var result = await dialog.ShowAsyncQueueBool();
+            return result ? dialog.ViewModel.InputText : null;
         }
 
         public static async void ShowOverquotaAlert()

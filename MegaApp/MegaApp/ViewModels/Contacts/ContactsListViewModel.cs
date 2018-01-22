@@ -128,7 +128,7 @@ namespace MegaApp.ViewModels.Contacts
             {
                 int count = this.ItemCollection.SelectedItems.Count;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),

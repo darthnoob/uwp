@@ -65,7 +65,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 return;
             }
 
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),

@@ -146,7 +146,7 @@ namespace MegaApp.ViewModels.Contacts
 
             if(!isMultiSelect)
             {
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
                     this.RemoveContactWarningText, this.RemoveText, this.CancelText);

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
@@ -30,24 +31,24 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Properties
 
-        private string _title;
+        private string _titleText;
         /// <summary>
         /// Title of the alert dialog
         /// </summary>
-        public string Title
+        public string TitleText
         {
-            get { return _title; }
-            set { SetField(ref _title, value); }
+            get { return _titleText; }
+            set { SetField(ref _titleText, value); }
         }
 
-        private string _message;
+        private string _messageText;
         /// <summary>
         /// Message of the alert dialog
         /// </summary>
-        public string Message
+        public string MessageText
         {
-            get { return _message; }
-            set { SetField(ref _message, value); }
+            get { return _messageText; }
+            set { SetField(ref _messageText, value); }
         }
 
         private string _buttonLabel;
@@ -60,6 +61,12 @@ namespace MegaApp.ViewModels.Dialogs
             set { SetField(ref _buttonLabel, value); }
         }
 
+        #endregion
+
+        #region UiResources
+
+        public string OkText => ResourceService.UiResources.GetString("UI_Ok");
+        
         #endregion
     }
 }

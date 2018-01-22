@@ -53,7 +53,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 return;
             }
 
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),

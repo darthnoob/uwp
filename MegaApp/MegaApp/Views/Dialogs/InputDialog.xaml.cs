@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Windows.UI.Xaml;
-using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
@@ -13,23 +12,22 @@ namespace MegaApp.Views.Dialogs
     public sealed partial class InputDialog : BaseInputDialog
     {
         /// <summary>
-        /// Creates an standard input dialog
+        /// Creates an standard input dialog.
         /// </summary>
-        /// <param name="title">Title of the input dialog</param>
-        /// <param name="message">Message of the input dialog</param>
-        /// <param name="primaryButton">Label of the primary button of the input dialog</param>
-        /// <param name="secondaryButton">Label of the secondary button of the input dialog</param>
-        /// <param name="settings">Input dialog behavior/option settings</param>
-        public InputDialog(string title, string message,
-            string primaryButton = null, string secondaryButton = null,
-            InputDialogSettings settings = null)
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog. Default value "Ok".</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog. Default value "Cancel".</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        public InputDialog(string title, string message, string primaryButton = null, 
+            string secondaryButton = null, InputDialogSettings settings = null)
         {
             this.InitializeComponent();
 
             this.ViewModel.TitleText = title;
             this.ViewModel.MessageText = message;
-            this.ViewModel.PrimaryButtonLabel = primaryButton ?? ViewModel.OkText;
-            this.ViewModel.SecondaryButtonLabel = secondaryButton ?? ViewModel.CancelText;
+            this.ViewModel.PrimaryButtonLabel = primaryButton ?? this.ViewModel.OkText;
+            this.ViewModel.SecondaryButtonLabel = secondaryButton ?? this.ViewModel.CancelText;
 
             // Create default input settings if null
             this.ViewModel.Settings = settings ?? new InputDialogSettings();

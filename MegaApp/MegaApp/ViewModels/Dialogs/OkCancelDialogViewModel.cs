@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
@@ -18,10 +19,10 @@ namespace MegaApp.ViewModels.Dialogs
 
         #endregion
 
-        #region Private Methods
+        #region Methods
 
         /// <summary>
-        /// Action to do by the primary button of the alert dialog
+        /// Action to do by the primary button of the dialog
         /// </summary>
         protected virtual void PrimaryButtonAction()
         {
@@ -29,7 +30,7 @@ namespace MegaApp.ViewModels.Dialogs
         }
 
         /// <summary>
-        /// Action to do by the secondary button of the alert dialog
+        /// Action to do by the secondary button of the dialog
         /// </summary>
         protected virtual void SecondaryButtonAction()
         {
@@ -40,29 +41,39 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Properties
 
-        private string _title;
+        private string _titleText;
         /// <summary>
-        /// Title of the alert dialog
+        /// Title of the dialog
         /// </summary>
-        public string Title
+        public string TitleText
         {
-            get { return _title; }
-            set { SetField(ref _title, value); }
+            get { return _titleText; }
+            set { SetField(ref _titleText, value); }
         }
 
-        private string _message;
+        private string _messageText;
         /// <summary>
-        /// Message of the alert dialog
+        /// Message of the dialog
         /// </summary>
-        public string Message
+        public string MessageText
         {
-            get { return _message; }
-            set { SetField(ref _message, value); }
+            get { return _messageText; }
+            set { SetField(ref _messageText, value); }
+        }
+
+        private string _warningText;
+        /// <summary>
+        /// Warning to display in the dialog
+        /// </summary>
+        public string WarningText
+        {
+            get { return _warningText; }
+            set { SetField(ref _warningText, value); }
         }
 
         private string _primaryButtonLabel;
         /// <summary>
-        /// Label of the primary button of the alert dialog
+        /// Label of the primary button of the dialog
         /// </summary>
         public string PrimaryButtonLabel
         {
@@ -72,13 +83,26 @@ namespace MegaApp.ViewModels.Dialogs
 
         private string _secondaryButtonLabel;
         /// <summary>
-        /// Label of the secondary button of the alert dialog
+        /// Label of the secondary button of the dialog
         /// </summary>
         public string SecondaryButtonLabel
         {
             get { return _secondaryButtonLabel; }
             set { SetField(ref _secondaryButtonLabel, value); }
         }
+
+        #endregion
+
+        #region UiResources
+
+        public string OkText => ResourceService.UiResources.GetString("UI_Ok");
+        public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+
+        #endregion
+
+        #region VisualResources
+
+        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }

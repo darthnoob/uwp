@@ -100,7 +100,7 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var node = this.ItemCollection.SelectedItems.First();
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
@@ -122,7 +122,7 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var count = this.ItemCollection.SelectedItems.Count;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
@@ -165,7 +165,7 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var node = this.ItemCollection.SelectedItems.First() as IMegaOutgoingSharedFolderNode;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
@@ -187,7 +187,7 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var count = this.ItemCollection.SelectedItems.Count;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersWarning"),
