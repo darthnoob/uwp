@@ -93,11 +93,11 @@ namespace MegaApp.Views
             this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
         }
 
-        private void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
+        private async void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key != VirtualKey.Enter) return;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             // On enter in password box. Start the login process
             this.ViewModel?.LoginViewModel?.Login();

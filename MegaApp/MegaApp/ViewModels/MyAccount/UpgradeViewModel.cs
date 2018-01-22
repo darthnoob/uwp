@@ -117,7 +117,7 @@ namespace MegaApp.ViewModels.MyAccount
                             throw new ArgumentOutOfRangeException("PurchaseResponse.Type");
                     }
 
-                    this.OnUiThread(() => new CustomMessageDialog(title, message, App.AppInformation).ShowDialog());
+                    this.OnUiThread(async () => await DialogService.ShowAlertAsync(title, message));
                     break;
             }
         }

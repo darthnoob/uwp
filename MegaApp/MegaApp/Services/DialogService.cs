@@ -61,13 +61,15 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="title">Title of the dialog.</param>
         /// <param name="message">Message of the dialog.</param>
+        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
         /// <param name="primaryButton">Label for the primary button.</param>
         /// <param name="secondaryButton">Label for the secondary button.</param>
         /// <returns>True if the primary button is pressed, else False.</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            string primaryButton, string secondaryButton)
+            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
         {
-            var dialog = new OkCancelDialog(title, message, primaryButton, secondaryButton);
+            var dialog = new OkCancelDialog(title, message, null, 
+                dialogButtons, primaryButton, secondaryButton);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -90,13 +92,15 @@ namespace MegaApp.Services
         /// <param name="title">Title of the dialog</param>
         /// <param name="message">Message of the dialog</param>
         /// <param name="warning">Warning of the dialog</param>
+        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
         /// <param name="primaryButton">Label for the primary button.</param>
         /// <param name="secondaryButton">Label for the secondary button.</param>
         /// <returns>True if the primary button is pressed, else False.</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            string warning, string primaryButton, string secondaryButton)
+        public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning,
+            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
         {
-            var dialog = new OkCancelDialog(title, message, warning, primaryButton, secondaryButton);
+            var dialog = new OkCancelDialog(title, message, warning,
+                dialogButtons, primaryButton, secondaryButton);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -135,17 +139,15 @@ namespace MegaApp.Services
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No"));
+                OkCancelDialogButtons.YesNo);
 
-            if(result)
+            if (!result) return;
+
+            UiService.OnUiThread(() =>
             {
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
-                });
-            }
+                NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
+            });
         }
 
         public static async void ShowTransferOverquotaWarning()
@@ -163,8 +165,7 @@ namespace MegaApp.Services
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
-                ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No"));
+                OkCancelDialogButtons.YesNo);
 
             if (result)
                 DebugService.DebugSettings.DisableDebugMode();

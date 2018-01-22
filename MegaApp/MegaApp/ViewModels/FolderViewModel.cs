@@ -347,10 +347,10 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Load the mega nodes for this specific folder using the Mega SDK
         /// </summary>
-        public void LoadChildNodes()
+        public async void LoadChildNodes()
         {
             // User must be online to perform this operation
-            if ((this.Type != ContainerType.FolderLink) && !IsUserOnline())
+            if ((this.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync())
                 return;
 
             // First cancel any other loading task that is busy
@@ -359,11 +359,9 @@ namespace MegaApp.ViewModels
             // FolderRootNode should not be null
             if (this.FolderRootNode == null)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"));
                 return;
             }
 
@@ -383,13 +381,11 @@ namespace MegaApp.ViewModels
 
             if (childList == null)
             {
-                new CustomMessageDialog(
-                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
-
                 SetEmptyContent(false);
+
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_LoadNodesFailed"));
 
                 return;
             }
@@ -435,7 +431,7 @@ namespace MegaApp.ViewModels
         /// </summary>
         private async void AddFolder()
         {
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             var folderName = await DialogService.ShowInputDialogAsync(
                 ResourceService.UiResources.GetString("UI_NewFolder"),

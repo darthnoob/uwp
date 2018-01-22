@@ -7,6 +7,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels
 {
@@ -138,7 +139,7 @@ namespace MegaApp.ViewModels
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                this.RemoveText, this.CancelText);
+                OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
             if (!dialogResult) return;
 

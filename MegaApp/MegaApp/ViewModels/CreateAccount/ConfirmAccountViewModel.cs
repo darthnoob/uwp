@@ -26,7 +26,7 @@ namespace MegaApp.ViewModels.CreateAccount
             this.EmailInputState = InputState.Normal;
             this.PasswordInputState = InputState.Normal;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             if (!CheckInputParameters()) return;
 

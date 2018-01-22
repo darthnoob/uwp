@@ -3,6 +3,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -69,11 +70,11 @@ namespace MegaApp.ViewModels.SharedFolders
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                this.RemoveText, this.CancelText);
+                OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
             if (!dialogResult) return;
 
-            if(! await this.RemoveSharedAccessAsync())
+            if(!await this.RemoveSharedAccessAsync())
             {
                 OnUiThread(async () =>
                 {

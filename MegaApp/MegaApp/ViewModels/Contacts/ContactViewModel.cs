@@ -10,6 +10,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
 {
@@ -140,7 +141,7 @@ namespace MegaApp.ViewModels.Contacts
         public async Task<bool> RemoveContactAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return false;
+            if (!await IsUserOnlineAsync()) return false;
 
             if (this.MegaUser == null) return false;
 
@@ -149,7 +150,8 @@ namespace MegaApp.ViewModels.Contacts
                 var dialogResult = await DialogService.ShowOkCancelAsync(
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
-                    this.RemoveContactWarningText, this.RemoveText, this.CancelText);
+                    this.RemoveContactWarningText,
+                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return true;
             }

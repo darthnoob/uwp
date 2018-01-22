@@ -165,8 +165,6 @@
     <Compile Include="ViewModels\Contacts\ContactsListOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
-    <Compile Include="Classes\CustomInputDialog.cs" />
-    <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Services\LinkInformationService.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\Product.cs" />

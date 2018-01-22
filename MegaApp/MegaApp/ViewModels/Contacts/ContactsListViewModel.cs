@@ -10,6 +10,7 @@ using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
@@ -132,7 +133,7 @@ namespace MegaApp.ViewModels.Contacts
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
-                    this.RemoveText, this.CancelText);
+                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -167,7 +168,7 @@ namespace MegaApp.ViewModels.Contacts
         public async void GetMegaContacts()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             // First cancel any other loading task that is busy
             CancelLoad();

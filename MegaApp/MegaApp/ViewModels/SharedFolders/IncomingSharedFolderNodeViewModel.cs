@@ -3,6 +3,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -57,6 +58,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
+                OkCancelDialogButtons.Custom,
                 ResourceService.UiResources.GetString("UI_Leave"), this.CancelText);
 
             if (!dialogResult) return;

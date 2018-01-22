@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Controls;
 using mega;
 using MegaApp.Extensions;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
@@ -14,8 +15,15 @@ namespace MegaApp.ViewModels
     {
         public DebugSettingsViewModel() : base(SdkService.MegaSdk)
         {
-            this._isDebugMode = SettingsService.LoadSetting(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"), false);
-            
+            this.Initialize();
+        }
+
+        #region Methods
+
+        private async void Initialize()
+        {
+            this._isDebugMode = await SettingsService.LoadSettingAsync(ResourceService.SettingsResources.GetString("SR_DebugModeIsEnabled"), false);
+
             if (this._isDebugMode)
             {
                 ShowDebugAlert = true;
@@ -27,8 +35,6 @@ namespace MegaApp.ViewModels
                 LogService.SetLogLevel(MLogLevel.LOG_LEVEL_DEBUG);
             }
         }
-
-        #region Methods
 
         /// <summary>
         /// Method to enable the DEBUG mode.
@@ -79,12 +85,12 @@ namespace MegaApp.ViewModels
             var basicPropertiesAsync = logFile?.GetBasicPropertiesAsync();
             if (basicPropertiesAsync != null && (await basicPropertiesAsync).Size > 0)
             {
-                var result = await new OkCancelDialog(ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
+                var result = await DialogService.ShowOkCancelAsync(
+                    ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
                     ResourceService.AppMessages.GetString("AM_SaveLogFile"),
-                    ResourceService.UiResources.GetString("UI_Yes"),
-                    ResourceService.UiResources.GetString("UI_No")).ShowAsyncQueue();
+                    OkCancelDialogButtons.YesNo);
 
-                if (result == ContentDialogResult.Primary)
+                if (result)
                 {
                     // Ask the user a save location
                     var folder = await FolderService.SelectFolder();
@@ -127,16 +133,15 @@ namespace MegaApp.ViewModels
 
                 OnUiThread(async () =>
                 {
-                    var result = await new OkCancelDialog(title, message).ShowAsyncQueue();
-                    if(result == ContentDialogResult.Primary)
-                    {
-                        if (value)
-                            EnableDebugMode();
-                        else
-                            DisableDebugMode();
+                    var result = await DialogService.ShowOkCancelAsync(title, message);
+                    if (!result) return;
 
-                        SetField(ref _isDebugMode, value);
-                    }
+                    if (value)
+                        EnableDebugMode();
+                    else
+                        DisableDebugMode();
+
+                    SetField(ref _isDebugMode, value);
                 });
             }
         }

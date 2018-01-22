@@ -97,6 +97,8 @@ namespace MegaApp.ViewModels.Dialogs
 
         public string OkText => ResourceService.UiResources.GetString("UI_Ok");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
+        public string YesText => ResourceService.UiResources.GetString("UI_Yes");
+        public string NoText => ResourceService.UiResources.GetString("UI_No");
 
         #endregion
 
@@ -105,5 +107,23 @@ namespace MegaApp.ViewModels.Dialogs
         public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
+    }
+
+    public enum OkCancelDialogButtons
+    {
+        /// <summary>
+        /// Displays Ok and Cancel buttons
+        /// </summary>
+        OkCancel,
+
+        /// <summary>
+        /// Displays Yes and No buttons
+        /// </summary>
+        YesNo,
+
+        /// <summary>
+        /// Displays custom buttons
+        /// </summary>
+        Custom
     }
 }
