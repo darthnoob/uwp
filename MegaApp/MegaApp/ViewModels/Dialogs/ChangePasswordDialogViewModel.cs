@@ -74,9 +74,7 @@ namespace MegaApp.ViewModels.Dialogs
             SetInputState();
             
             if (!this.CheckInputParameters() || !this.CheckNewPassword()) return;
-
             
-
             this.IsBusy = true;
             this.ControlState = false;
             this.SaveButtonState = false;

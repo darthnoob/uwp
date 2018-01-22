@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,10 +8,11 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.Dialogs;
+using MegaApp.ViewModels.SharedFolders;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
-using MegaApp.ViewModels.Contacts;
-using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
@@ -71,6 +71,25 @@ namespace MegaApp.Services
             await dialog.ShowAsync();
 
             return dialog.DialogResult;
+        }
+
+        public static async Task<string> ShowInputDialogAsync(string title, string message,
+            string primaryButton = null, string secondaryButton = null,
+            InputDialogSettings settings = null)
+        {
+            var dialog = new InputDialog(title, message, primaryButton, secondaryButton, settings);
+            var result = await dialog.ShowAsyncQueue();
+
+            switch (result)
+            {
+                case ContentDialogResult.Primary:
+                    return dialog.ViewModel.InputText;
+
+                case ContentDialogResult.Secondary:
+                case ContentDialogResult.None:
+                default:
+                    return null;
+            }
         }
 
         public static async void ShowOverquotaAlert()
@@ -140,73 +159,6 @@ namespace MegaApp.Services
         public static void CloseAwaitEmailConfirmationDialog()
         {
             awaitEmailConfirmationDialog?.Hide();
-        }
-
-        /// <summary>
-        /// Show an Input Dialog to the uses
-        /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
-        /// <param name="settings">Input dialog behavior/option settings</param>
-        /// <returns>The value of the input dialog when primary button was pressed, else NULL</returns>
-        public static async Task<string> ShowInputDialogAsync(string title, string content,
-            InputDialogSettings settings = null)
-        {
-            // Create default input settings if null
-            if (settings == null)
-                settings = new InputDialogSettings();
-
-            var dialog = new ContentDialog
-            {
-                IsPrimaryButtonEnabled = true,
-                IsSecondaryButtonEnabled = true,
-                PrimaryButtonText = ResourceService.UiResources.GetString("UI_Ok"),
-                SecondaryButtonText = ResourceService.UiResources.GetString("UI_Cancel"),
-                Title = title
-            };
-
-            var stackPanel = new StackPanel
-            {
-                Margin = new Thickness(0, 20, 0, 0)
-            };
-            var messageText = new TextBlock
-            {
-                Text = content,
-                Margin = new Thickness(0, 0, 0, 12),
-                TextWrapping = TextWrapping.WrapWholeWords,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-            };
-            var input = new TextBox
-            {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                Text = settings.InputText,
-                SelectionStart = 0,
-            };
-
-            if (settings.IgnoreExtensionInSelection)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(settings.InputText);
-                input.SelectionLength = fileName.Length;
-            }
-            else
-            {
-                input.SelectionLength = settings.InputText.Length;
-            }
-
-            stackPanel.Children.Add(messageText);
-            stackPanel.Children.Add(input);
-            dialog.Content = stackPanel;
-            var result = await dialog.ShowAsyncQueue();
-            switch (result)
-            {
-                case ContentDialogResult.Primary:
-                    return input.Text;
-                case ContentDialogResult.Secondary:
-                case ContentDialogResult.None:
-                    return null;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         /// <summary>
@@ -616,23 +568,5 @@ namespace MegaApp.Services
 
             return menuFlyout;
         }
-    }
-
-    public class InputDialogSettings
-    {
-        /// <summary>
-        /// Default text for the input in the dialog
-        /// </summary>
-        public string InputText { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Is the text in the input selected as default
-        /// </summary>
-        public bool IsTextSelected { get; set; }
-
-        /// <summary>
-        /// Ignore extensions when the text is default selected.
-        /// </summary>
-        public bool IgnoreExtensionInSelection { get; set; }
     }
 }

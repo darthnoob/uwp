@@ -1,0 +1,46 @@
+﻿<dialogViews:BaseInputDialog
+    x:Class="MegaApp.Views.Dialogs.InputDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogViews="using:MegaApp.Views.Dialogs"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    d:DataContext="{d:DesignInstance dialogViewModels:InputDialogViewModel}"
+    mc:Ignorable="d"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonLabel, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.SecondaryButtonLabel, Mode=OneTime}"
+    PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}"
+    IsPrimaryButtonEnabled="{Binding PrimaryButtonState}"
+    Loaded="OnLoaded">
+    <dialogViews:BaseInputDialog.Title>
+        <TextBlock
+            Margin="24, 24, 0, 0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
+    </dialogViews:BaseInputDialog.Title>
+
+    <Grid Margin="24, 0, 0, 0">
+        <StackPanel>
+            <TextBlock 
+                x:Name="Message"
+                Margin="0,16,0,16"
+                Style="{StaticResource MegaDialogContentFontStyle}"
+                Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"/>
+            <TextBox
+                x:Name="InputTextBox"
+                Height="{StaticResource InputHeight}"
+                Margin="{StaticResource StackedInputMargin}"
+                IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
+                Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Style="{StaticResource MegaTextBoxStyle}"
+                TabIndex="0"/>
+        </StackPanel>
+    </Grid>
+</dialogViews:BaseInputDialog>

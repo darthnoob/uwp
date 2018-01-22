@@ -14,6 +14,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
@@ -238,6 +239,7 @@ namespace MegaApp.ViewModels
             var inputName = await DialogService.ShowInputDialogAsync(
                 ResourceService.UiResources.GetString("UI_Rename"),
                 ResourceService.UiResources.GetString("UI_TypeNewName"),
+                null, null,
                 new InputDialogSettings
                 {
                     InputText = this.Name,

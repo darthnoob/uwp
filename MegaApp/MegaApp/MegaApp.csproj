@@ -216,6 +216,7 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
@@ -337,6 +338,9 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\UserControlEx.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
+    <Compile Include="Views\Dialogs\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\OkCancelAndWarningDialog.xaml.cs">
       <DependentUpon>OkCancelAndWarningDialog.xaml</DependentUpon>
     </Compile>
@@ -569,6 +573,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\Dialogs\InputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\OkCancelAndWarningDialog.xaml">
       <SubType>Designer</SubType>
