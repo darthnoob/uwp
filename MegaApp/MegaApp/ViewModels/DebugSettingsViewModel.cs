@@ -2,12 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml.Controls;
 using mega;
-using MegaApp.Extensions;
 using MegaApp.Services;
 using MegaApp.ViewModels.Dialogs;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
 {
