@@ -43,11 +43,11 @@ namespace MegaApp.Services
         {
             try
             {
-#if DEBUG
-                return await CurrentAppSimulator.LoadListingInformationAsync();
-#else
+//#if DEBUG
+//                return await CurrentAppSimulator.LoadListingInformationAsync();
+//#else
                 return await CurrentApp.LoadListingInformationAsync();
-#endif 
+//#endif 
             }
             catch (Exception e)
             {
@@ -88,8 +88,7 @@ namespace MegaApp.Services
                 // If listing information can not be loaded. No Internet is available or the 
                 // Windows Store is unavailable for retrieving data
                 return false;
-            }
-           
+            }           
         }
 
         /// <summary>
@@ -116,8 +115,33 @@ namespace MegaApp.Services
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, $"Failure retrieving product id for {megaProductId}", e);
                 return null;
+            }           
+        }
+
+        /// <summary>
+        /// Get Windows Store product matching a MEGA product
+        /// </summary>
+        /// <param name="megaProductId">MEGA product identifier to match</param>
+        /// <returns>Windows Store product or NULL if none available</returns>
+        public static async Task<ProductListing> GetProductAsync(string megaProductId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(megaProductId)) return null;
+
+                var listing = await GetListingInformationAsync();
+                if (listing == null || !listing.ProductListings.Any()) return null;
+
+                var result = listing.ProductListings.First(
+                    p => p.Key.ToLower().Equals(megaProductId.ToLower()));
+
+                return result.Value;
             }
-           
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, $"Failure retrieving store product for {megaProductId}", e);
+                return null;
+            }
         }
 
         public static async Task<PurchaseResponse> PurchaseProductAsync(string productId)
@@ -258,7 +282,6 @@ namespace MegaApp.Services
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error (re-)checking licenses", e);
                 // if an error occurs, ignore. App will try again on restart
             }
-
         }
 
         /// <summary>

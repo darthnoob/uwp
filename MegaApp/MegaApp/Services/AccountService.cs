@@ -311,7 +311,7 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Gets all pricing details info
+        /// Gets all pricing details info.
         /// </summary>
         private static async void GetPricingDetails()
         {
@@ -337,7 +337,7 @@ namespace MegaApp.Services
                 var product = new Product
                 {
                     AccountType = accountType,
-                    Amount = pricingDetails.getAmount(i),
+                    FormattedPrice = string.Format("{0:N} {1}", (double)pricingDetails.getAmount(i) / 100, GetCurrencySymbol(pricingDetails.getCurrency(i))),
                     Currency = GetCurrencySymbol(pricingDetails.getCurrency(i)),
                     GbStorage = pricingDetails.getGBStorage(i),
                     GbTransfer = pricingDetails.getGBTransfer(i),
@@ -345,10 +345,20 @@ namespace MegaApp.Services
                     Handle = pricingDetails.getHandle(i)
                 };
 
+                // Try get the local pricing details from the store
+                var storeProduct = await LicenseService.GetProductAsync(product.MicrosoftStoreId);
+                if (storeProduct != null)
+                {
+                    product.FormattedPrice = storeProduct.FormattedPrice;
+                    product.Currency = GetCurrencySymbol(
+                        GetCurrencyFromFormattedPrice(storeProduct.FormattedPrice) ?? storeProduct.CurrencyCode);
+                }
+
                 switch (accountType)
                 {
                     case MAccountType.ACCOUNT_TYPE_FREE:
                         product.Name = ResourceService.AppResources.GetString("AR_AccountTypeFree");
+                        product.ProductColor = (Color)Application.Current.Resources["MegaFreeAccountColor"];
                         product.ProductPathData = ResourceService.VisualResources.GetString("VR_AccountTypeFreePathData");
                         break;
 
@@ -363,7 +373,7 @@ namespace MegaApp.Services
                         {
                             product.IsCentiliPaymentMethodAvailable = UpgradeAccount.IsCentiliPaymentMethodAvailable;
                             product.IsFortumoPaymentMethodAvailable = UpgradeAccount.IsFortumoPaymentMethodAvailable;
-                            UpgradeAccount.LiteMonthlyPriceAndCurrency = product.PriceAndCurrency;
+                            UpgradeAccount.LiteMonthlyFormattedPrice = product.FormattedPrice;
                         }
                         break;
 
@@ -404,7 +414,7 @@ namespace MegaApp.Services
                     {
                         AccountType = accountType,
                         Name = product.Name,
-                        Amount = product.Amount,
+                        FormattedPrice = product.FormattedPrice,
                         Currency = product.Currency,
                         GbStorage = product.GbStorage,
                         GbTransfer = product.GbTransfer,
@@ -417,7 +427,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async Task<string> GetLitePriceAndCurrency()
+        public static async Task<string> GetLiteFormattedPrice()
         {
             var pricingRequestListener = new GetPricingRequestListenerAsync();
             var pricingDetails = await pricingRequestListener.ExecuteAsync(() =>
@@ -434,21 +444,52 @@ namespace MegaApp.Services
 
                 if ((accountType == MAccountType.ACCOUNT_TYPE_LITE) && (pricingDetails.getMonths(i) == 1))
                 {
-                    var price = (double)pricingDetails.getAmount(i) / 100;
-                    var currency = GetCurrencySymbol(pricingDetails.getCurrency(i));
+                    // Try get the local pricing details from the store
+                    var storeProduct = await LicenseService.GetProductAsync(ResourceService.AppResources.GetString("AR_ProLiteMonth"));
+                    if (storeProduct != null)
+                    {
+                        UpgradeAccount.LiteMonthlyFormattedPrice = storeProduct.FormattedPrice;
+                        break;
+                    }
 
-                    UpgradeAccount.LiteMonthlyPriceAndCurrency = string.Format("{0:N} {1}", price, currency);
+                    // Get the price from the MEGA server
+                    UpgradeAccount.LiteMonthlyFormattedPrice = string.Format("{0:N} {1}",
+                        (double)pricingDetails.getAmount(i) / 100, GetCurrencySymbol(pricingDetails.getCurrency(i)));
                 }
             }
 
-            return UpgradeAccount.LiteMonthlyPriceAndCurrency;
+            return UpgradeAccount.LiteMonthlyFormattedPrice;
+        }
+
+        /// <summary>
+        /// Gets the currency (ISO code or symbol) from a formatted price string
+        /// </summary>
+        /// <param name="formattedPrice">String with the price and the currency.</param>
+        /// <returns>Currency ISO code or symbol of the formatted price string</returns>
+        private static string GetCurrencyFromFormattedPrice(string formattedPrice)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(formattedPrice)) return string.Empty;
+
+                var substrings = formattedPrice.Split(null);
+                if (substrings.Length == 2)
+                    return substrings[1];
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, $"Failure getting currency from {formattedPrice}", e);
+                return null;
+            }
         }
 
         /// <summary>
         /// Gets the currency symbol corresponding to a currency ISO code
         /// </summary>
         /// <param name="currencyCode">Currency ISO code</param>
-        /// <returns></returns>
+        /// <returns>Currency symbol associated with the curreny ISO code.</returns>
         private static string GetCurrencySymbol(string currencyCode)
         {
             if (string.IsNullOrWhiteSpace(currencyCode)) return string.Empty;

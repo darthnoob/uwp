@@ -2802,7 +2802,7 @@
                         <TextBlock
                             Grid.Column="1"
                             Style="{ThemeResource MegaBodyFontStyle}"
-                            Text="{Binding PriceAndCurrency, Mode=OneTime}"
+                            Text="{Binding FormattedPrice, Mode=OneTime}"
                             TextAlignment="Right">
                             <TextBlock.Foreground>
                                 <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />

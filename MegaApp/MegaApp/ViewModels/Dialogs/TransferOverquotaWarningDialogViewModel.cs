@@ -16,8 +16,8 @@ namespace MegaApp.ViewModels.Dialogs
             AccountService.AccountDetails.TimerTransferOverquotaChanged += (sender, args) =>
                 OnPropertyChanged(nameof(this.WaitMessageText));
 
-            if (string.IsNullOrWhiteSpace(AccountService.UpgradeAccount.LiteMonthlyPriceAndCurrency))
-                this.GetLitePriceAndCurrency();
+            if (string.IsNullOrWhiteSpace(AccountService.UpgradeAccount.LiteMonthlyFormattedPrice))
+                this.GetLiteFormattedPrice();
 
             AccountService.GetTransferOverquotaDetails();
         }
@@ -42,9 +42,9 @@ namespace MegaApp.ViewModels.Dialogs
             
         }
 
-        private async void GetLitePriceAndCurrency()
+        private async void GetLiteFormattedPrice()
         {
-            AccountService.UpgradeAccount.LiteMonthlyPriceAndCurrency = await AccountService.GetLitePriceAndCurrency();
+            AccountService.UpgradeAccount.LiteMonthlyFormattedPrice = await AccountService.GetLiteFormattedPrice();
             OnPropertyChanged(nameof(this.UpgradeMessageText));
         }
 
@@ -55,7 +55,7 @@ namespace MegaApp.ViewModels.Dialogs
         public string TitleText => ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title");
         public string MessageText => ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning");
         public string UpgradeMessageText => string.Format(ResourceService.AppMessages.GetString("AM_TransferOverquotaWarningUpgrade"),
-            AccountService.UpgradeAccount.LiteMonthlyPriceAndCurrency);
+            AccountService.UpgradeAccount.LiteMonthlyFormattedPrice);
         public string WaitMessageText => string.Format(ResourceService.AppMessages.GetString("AM_TransferOverquotaWarningWaitTime"),
             AccountService.AccountDetails.TransferOverquotaDelayText);
 
