@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -315,11 +316,9 @@ namespace MegaApp.Services
         /// </summary>
         private static async void GetPricingDetails()
         {
-            await UiService.OnUiThreadAsync(() =>
-            {
-                UpgradeAccount.Plans.Clear();
-                UpgradeAccount.Products.Clear();
-            });
+            // Only if they were not obtained before
+            if (UpgradeAccount.Plans.Any() && UpgradeAccount.Products.Any())
+                return;
 
             var pricingRequestListener = new GetPricingRequestListenerAsync();
             var pricingDetails = await pricingRequestListener.ExecuteAsync(() =>
@@ -427,7 +426,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async Task<string> GetLiteFormattedPrice()
+        public static async Task<string> GetLiteMonthlyFormattedPrice()
         {
             var pricingRequestListener = new GetPricingRequestListenerAsync();
             var pricingDetails = await pricingRequestListener.ExecuteAsync(() =>

@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
         public ObservableCollection<ProductBase> Plans { get; set; }
         public ObservableCollection<Product> Products { get; set; }
 
-        private string _LiteMonthlyFormattedPrice;
+        private static string _LiteMonthlyFormattedPrice;
         public string LiteMonthlyFormattedPrice
         {
             get { return _LiteMonthlyFormattedPrice; }

@@ -17,7 +17,7 @@ namespace MegaApp.ViewModels.Dialogs
                 OnPropertyChanged(nameof(this.WaitMessageText));
 
             if (string.IsNullOrWhiteSpace(AccountService.UpgradeAccount.LiteMonthlyFormattedPrice))
-                this.GetLiteFormattedPrice();
+                this.GetLiteMonthlyFormattedPrice();
 
             AccountService.GetTransferOverquotaDetails();
         }
@@ -42,9 +42,9 @@ namespace MegaApp.ViewModels.Dialogs
             
         }
 
-        private async void GetLiteFormattedPrice()
+        private async void GetLiteMonthlyFormattedPrice()
         {
-            AccountService.UpgradeAccount.LiteMonthlyFormattedPrice = await AccountService.GetLiteFormattedPrice();
+            AccountService.UpgradeAccount.LiteMonthlyFormattedPrice = await AccountService.GetLiteMonthlyFormattedPrice();
             OnPropertyChanged(nameof(this.UpgradeMessageText));
         }
 
