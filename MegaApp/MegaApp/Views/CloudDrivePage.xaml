@@ -402,13 +402,12 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding OpenLinkCommand}"
                         Label="{Binding OpenLinkText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
-                        Visibility="{Binding Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
