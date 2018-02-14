@@ -1,10 +1,7 @@
 ﻿using System;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
-using MegaApp.Views;
-using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -48,16 +45,6 @@ namespace MegaApp.MegaApi
 
                     if (NavigateOnSucces)
                         UiService.OnUiThread(() => NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
-                    break;
-
-                case MErrorType.API_EBLOCKED: // If the account has been blocked
-                    api.logout(new LogOutRequestListener(false));
-
-                    UiService.OnUiThread(() =>
-                    {
-                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-                    });
                     break;
 
                 case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota

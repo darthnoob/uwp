@@ -11,7 +11,6 @@
         NoDecryptionKey,                    // Folder link has not decryption key.
         UnavailableLink,                    // Folder link taken down or not exists or has been deleted by user.
         AssociatedUserAccountTerminated,    // Folder link taken down and the link owner's account is blocked.
-        BlockedAccount,                     // User account is blocked.
         Unknown                             // Unknown error.
     }
 }
