@@ -213,6 +213,9 @@ namespace MegaApp
         {
             try
             {
+                // Save the exception in a local variable to preserve the stack trace
+                var exception = e.Exception;
+
                 // An unhandled exception has occurred. Break into the debugger
                 if (Debugger.IsAttached)
                     Debugger.Break();
@@ -229,11 +232,11 @@ namespace MegaApp
                     ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
 
                 if (result)
-                    await DebugService.ComposeErrorReportEmailAsync(e.Exception);
+                    await DebugService.ComposeErrorReportEmailAsync(exception);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error managing an unhandled exception.", exception);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error managing an unhandled exception.", ex);
             }
             finally
             {
