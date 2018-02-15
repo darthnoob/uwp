@@ -37,11 +37,14 @@ namespace MegaApp.ViewModels.Settings
                 TaskService.UnregisterBackgroundTask(
                     TaskService.CameraUploadTaskEntryPoint,
                     TaskService.CameraUploadTaskName);
+
                 TaskService.RegisterBackgroundTask(
                     TaskService.CameraUploadTaskEntryPoint,
                     TaskService.CameraUploadTaskName,
                     new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
                     null);
+
+                await SdkService.GetCameraUploadRootNodeAsync();
 
                 return true;
             }

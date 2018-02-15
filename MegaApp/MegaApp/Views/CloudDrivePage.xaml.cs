@@ -128,8 +128,6 @@ namespace MegaApp.Views
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
             if (navActionType == NavigationActionType.RubbishBin)
                 this.MainPivot.SelectedItem = this.RubbishBinPivot;
-
-            this.ViewModel.LoadFolders();
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
