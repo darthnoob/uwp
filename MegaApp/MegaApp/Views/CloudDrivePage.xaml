@@ -317,6 +317,7 @@
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
                                             ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                            RightTapped="OnRightItemTapped"
                                             Tapped="OnItemTapped">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />

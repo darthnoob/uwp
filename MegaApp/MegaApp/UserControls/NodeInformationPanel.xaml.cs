@@ -315,10 +315,13 @@ namespace MegaApp.UserControls
 
             folderNode.ContactsList.ItemCollection.FocusedItem = itemTapped;
 
-            if (!folderNode.ContactsList.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (folderNode.ContactsList.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
     }
 }

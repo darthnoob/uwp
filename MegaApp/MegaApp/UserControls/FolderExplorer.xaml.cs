@@ -309,10 +309,13 @@ namespace MegaApp.UserControls
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive) return;
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems.Clear();
-            ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnFolderOptionsButtonClicked(object sender, RoutedEventArgs e)

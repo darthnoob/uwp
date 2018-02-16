@@ -225,10 +225,13 @@ namespace MegaApp.Views
 
             this.ViewModel.MegaContacts.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
-                ((ListView)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListView)sender).SelectedItems?.Add(itemTapped);
+            if (this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnContactRequestTapped(object sender, TappedRoutedEventArgs e)
@@ -254,10 +257,13 @@ namespace MegaApp.Views
             var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
             activeView.ItemCollection.FocusedItem = itemTapped;
 
-            if (!activeView.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (activeView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private ListView GetSelectedListView()

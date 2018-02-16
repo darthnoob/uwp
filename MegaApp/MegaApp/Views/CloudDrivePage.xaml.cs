@@ -191,11 +191,13 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive)
-            {
-                ((ListViewBase)sender).SelectedItems.Clear();
-                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
-            }
+            var view = (ListViewBase)sender;
+            if (view == null) return;
+
+            if (this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)

@@ -138,10 +138,13 @@ namespace MegaApp.UserControls
 
             this.Contact.SharedItems.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.Contact.SharedItems.ItemCollection.IsMultiSelectActive)
-                ((ListView)sender)?.SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListView)sender)?.SelectedItems?.Add(itemTapped);
+            if (this.Contact.SharedItems.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)

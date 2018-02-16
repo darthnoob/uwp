@@ -282,10 +282,13 @@ namespace MegaApp.Views
 
             this.ViewModel.ActiveView.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.ViewModel.ActiveView.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (this.ViewModel.ActiveView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnSelectedNodesActionStarted(object sender, EventArgs e)
