@@ -1270,8 +1270,6 @@ namespace MegaApp.ViewModels
 
         public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
-        public bool IsFlyoutActionAvailable => !this.IsPanelOpen;
-
         public bool IsEmpty => !this.ItemCollection.HasItems;
 
         public ContainerType Type { get; private set; }
@@ -1358,8 +1356,8 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _visiblePanel, value);
-                OnPropertyChanged(nameof(this.IsPanelOpen),
-                    nameof(this.IsFlyoutActionAvailable));
+                OnPropertyChanged(nameof(this.Folder),
+                    nameof(this.IsPanelOpen));
 
                 this.ItemCollection.IsOnlyAllowSingleSelectActive = (_visiblePanel != PanelType.None);
             }
