@@ -513,7 +513,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
+                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="Single" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />

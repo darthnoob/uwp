@@ -131,8 +131,6 @@ namespace MegaApp.UserControls
 
         private void OnSharedItemRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
             if (itemTapped == null) return;
 
@@ -181,10 +179,8 @@ namespace MegaApp.UserControls
         {
             if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
 
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                this._sharedItems.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                this._sharedItems.SelectionMode = ListViewSelectionMode.None;
+            this._sharedItems.SelectionMode = DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
         }
 
         private void OnAllSelected(object sender, bool value)

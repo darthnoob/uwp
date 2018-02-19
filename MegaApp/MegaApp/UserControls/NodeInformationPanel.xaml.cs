@@ -305,8 +305,7 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop ||
-                this.ViewModel.Node is FolderNodeViewModel == false) return;
+            if (this.ViewModel.Node is FolderNodeViewModel == false) return;
 
             var folderNode = (FolderNodeViewModel)this.ViewModel.Node;
 

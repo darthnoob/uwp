@@ -154,10 +154,10 @@ namespace MegaApp.Views
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
             var listView = this.GetSelectedListView();
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+
+            listView.SelectionMode = 
+                DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
         }
 
         /// <summary>
@@ -247,8 +247,6 @@ namespace MegaApp.Views
 
         private void OnContactRequestRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaContactRequest itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContactRequest;
             if (itemTapped == null) return;
 

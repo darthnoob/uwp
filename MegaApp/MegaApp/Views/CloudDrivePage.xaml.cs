@@ -172,8 +172,6 @@ namespace MegaApp.Views
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             this.CloudDriveSplitView.IsPaneOpen = false;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
@@ -184,8 +182,6 @@ namespace MegaApp.Views
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
@@ -272,7 +268,7 @@ namespace MegaApp.Views
             {
                 this.GridViewCameraUploads.SelectionMode = 
                     DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
-                    ListViewSelectionMode.Extended : ListViewSelectionMode.None;
+                    ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
             }
         }
 

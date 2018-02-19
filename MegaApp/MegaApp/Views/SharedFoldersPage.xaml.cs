@@ -162,11 +162,9 @@ namespace MegaApp.Views
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
             var listView = this.GetSelectedListView();
-
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+            listView.SelectionMode = 
+                DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
 
             // Restore the selected item
             listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
@@ -186,10 +184,9 @@ namespace MegaApp.Views
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
             var listView = this.GetSelectedListView();
-            if (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+            listView.SelectionMode =
+                (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop) ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
 
             // Restore the selected item
             listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
@@ -275,8 +272,6 @@ namespace MegaApp.Views
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
             if (itemTapped == null) return;
 
