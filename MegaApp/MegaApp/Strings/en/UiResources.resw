@@ -1452,4 +1452,8 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>Saved for offline</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

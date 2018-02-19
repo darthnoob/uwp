@@ -77,6 +77,14 @@ namespace MegaApp.ViewModels
 
                 new MenuItemViewModel()
                 {
+                    Label = SavedForOfflineText,
+                    ToolTip = SavedForOfflineText,
+                    Icon = GetIconFromXamlPath(MenuSaveForOfflinePathData),
+                    TargetViewModel = typeof(SavedForOfflineViewModel)
+                },
+
+                new MenuItemViewModel()
+                {
                     Label = SharedFoldersText,
                     ToolTip = SharedFoldersText,
                     Icon = GetIconFromXamlPath(MenuSharedPathData),
@@ -217,6 +225,7 @@ namespace MegaApp.ViewModels
         private static string FolderLinkText => ResourceService.UiResources.GetString("UI_FolderLink");
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        private static string SavedForOfflineText => ResourceService.UiResources.GetString("UI_SavedForOffline");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
         private static string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         private static string TransferManagerText => ResourceService.UiResources.GetString("UI_TransferManager");
