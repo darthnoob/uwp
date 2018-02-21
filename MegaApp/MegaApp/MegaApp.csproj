@@ -118,6 +118,8 @@
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />

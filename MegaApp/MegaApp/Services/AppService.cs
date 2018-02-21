@@ -11,6 +11,7 @@ using Windows.Storage;
 using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Views;
@@ -331,6 +332,14 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Initialize the DB (create tables if no exist).
+        /// </summary>
+        public static void InitializeDatabase()
+        {
+            SavedForOfflineDB.CreateTable();
+        }
+
+        /// <summary>
         /// Create working directories for the app to use if they do not exist yet
         /// </summary>
         public static void InitializeAppFolders()
@@ -433,13 +442,16 @@ namespace MegaApp.Services
             ClearDownloadCache();
             ClearUploadCache();
 
-            //ClearAppDatabase();
+            ClearAppDatabase();
         }
 
-        //public static void ClearAppDatabase()
-        //{
-        //    SavedForOffline.DeleteAllNodes();
-        //}
+        /// <summary>
+        /// Clear the database cache
+        /// </summary>
+        public static void ClearAppDatabase()
+        {
+            SavedForOfflineDB.DeleteAllNodes();
+        }
 
         /// <summary>
         /// Clear the thumbnails cache
