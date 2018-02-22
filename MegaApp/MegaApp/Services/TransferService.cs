@@ -337,6 +337,30 @@ namespace MegaApp.Services
             return true;
         }
 
+        /// <summary>
+        /// Cancel all the pending offline transfer of a node and wait until all transfers are canceled.
+        /// </summary>
+        /// <param name="nodePath">Path of the node.</param>
+        /// <param name="isFolder">Boolean value which indicates if the node is a folder or not.</param>
+        public static async void CancelPendingNodeOfflineTransfers(string nodePath, bool isFolder)
+        {
+            var transferData = SdkService.MegaSdk.getTransferData();
+            var numDownloads = transferData.getNumDownloads();
+
+            for (int i = 0; i < numDownloads; i++)
+            {
+                var transfer = SdkService.MegaSdk.getTransferByTag(transferData.getDownloadTag(i));
+                if (transfer == null) continue;
+
+                var transferPathToCompare = isFolder ? transfer.getParentPath() : transfer.getPath();
+                if (string.Compare(nodePath, transferPathToCompare) == 0)
+                {
+                    var cancelTransfer = new CancelTransferRequestListenerAsync();
+                    await cancelTransfer.ExecuteAsync(() => SdkService.MegaSdk.cancelTransfer(transfer));
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
