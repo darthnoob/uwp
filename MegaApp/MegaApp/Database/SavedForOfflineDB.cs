@@ -10,7 +10,7 @@ namespace MegaApp.Database
     {
         #region Properties
 
-        private const string DB_TABLE_NAME = "SavedForOffline";
+        private const string DB_TABLE_NAME = "SavedForOfflineDB";
 
         private const string FIELD_LOCAL_PATH = "LocalPath";
         private const string FIELD_FINGERPRINT = "Fingerprint";
