@@ -135,6 +135,7 @@
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="Interfaces\IOfflineNode.cs" />
+    <Compile Include="MegaApi\CancelTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
