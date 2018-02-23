@@ -43,11 +43,11 @@ namespace MegaApp.Services
         {
             try
             {
-//#if DEBUG
-//                return await CurrentAppSimulator.LoadListingInformationAsync();
-//#else
+#if DEBUG
+                return await CurrentAppSimulator.LoadListingInformationAsync();
+#else
                 return await CurrentApp.LoadListingInformationAsync();
-//#endif 
+#endif 
             }
             catch (Exception e)
             {
