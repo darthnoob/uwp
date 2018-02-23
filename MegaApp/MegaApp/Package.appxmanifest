@@ -29,39 +29,6 @@
             <uap:DisplayName>MEGA Privacy</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
-        </uap:Extension>
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="megafile">
-            <uap:DisplayName>MEGA files</uap:DisplayName>
-            <uap:SupportedFileTypes>
-              <uap:FileType ContentType="image/png">.png</uap:FileType>
-              <uap:FileType ContentType="image/jpeg">.jpg</uap:FileType>
-              <uap:FileType ContentType="image/jpeg">.jpeg</uap:FileType>
-              <uap:FileType ContentType="video/x-msvideo">.avi</uap:FileType>
-              <uap:FileType ContentType="video/mp4">.mp4</uap:FileType>
-              <uap:FileType ContentType="video/mpeg">.mpeg</uap:FileType>
-              <uap:FileType ContentType="video/quicktime">.mov</uap:FileType>
-              <uap:FileType ContentType="video/x-ms-wmv">.wmv</uap:FileType>
-              <uap:FileType ContentType="application/msword">.docx</uap:FileType>
-              <uap:FileType ContentType="audio/mpeg">.mp3</uap:FileType>
-              <uap:FileType ContentType="audio/x-ms-wma">.wma</uap:FileType>
-              <uap:FileType ContentType="application/pdf">.pdf</uap:FileType>
-              <uap:FileType ContentType="application/mspowerpoint">.ppt</uap:FileType>
-              <uap:FileType ContentType="application/vnd.openxmlformats">.pptx</uap:FileType>
-              <uap:FileType ContentType="text/plain">.txt</uap:FileType>
-              <uap:FileType ContentType="application/rtf">.rtf</uap:FileType>
-              <uap:FileType ContentType="application/vnd.ms-excel">.xls</uap:FileType>
-              <uap:FileType ContentType="application/vnd.openxmlformat">.xlsx</uap:FileType>
-              <uap:FileType ContentType="application/x-zip-compressed">.zip</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTaskService.CameraUploadTask">
           <BackgroundTasks>
             <Task Type="timer" />
