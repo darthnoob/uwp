@@ -24,16 +24,16 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="mega">
-            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTaskService.CameraUploadTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mega">
+            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
