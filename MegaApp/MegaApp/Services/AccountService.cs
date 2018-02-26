@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
@@ -349,8 +350,19 @@ namespace MegaApp.Services
                 if (storeProduct != null)
                 {
                     product.FormattedPrice = storeProduct.FormattedPrice;
-                    product.Currency = GetCurrencySymbol(
-                        GetCurrencyFromFormattedPrice(storeProduct.FormattedPrice) ?? storeProduct.CurrencyCode);
+
+                    try
+                    {
+                        // 'ProductListing.CurrencyCode' property was introduced on the Windows 10.0.10586 build.
+                        // In previous builds like Windows 10.0.10240, it will throw an 'InvalidCastException'.
+                        product.Currency = GetCurrencySymbol(
+                            ApiInformation.IsPropertyPresent("Windows.ApplicationModel.Store.ProductListing", "CurrencyCode") ?
+                                storeProduct.CurrencyCode : GetCurrencyFromFormattedPrice(storeProduct.FormattedPrice));
+                    }
+                    catch (InvalidCastException)
+                    {
+                        product.Currency = GetCurrencySymbol(GetCurrencyFromFormattedPrice(storeProduct.FormattedPrice));
+                    }
                 }
 
                 switch (accountType)
@@ -471,16 +483,13 @@ namespace MegaApp.Services
             {
                 if (string.IsNullOrWhiteSpace(formattedPrice)) return string.Empty;
 
-                var substrings = formattedPrice.Split(null);
-                if (substrings.Length == 2)
-                    return substrings[1];
-
-                return null;
+                char[] charsToTrim = { '0','1','2','3','4','5','6','7','8','9',' ','.',',' };
+                return formattedPrice.Trim(charsToTrim);
             }
             catch (Exception e)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, $"Failure getting currency from {formattedPrice}", e);
-                return null;
+                return "n/a";
             }
         }
 

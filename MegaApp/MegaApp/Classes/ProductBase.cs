@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using Windows.UI;
 using Windows.UI.Xaml.Media;
 using mega;
@@ -36,7 +37,7 @@ namespace MegaApp.Classes
             ResourceService.UiResources.GetString("UI_Dynamic") :
             Convert.ToUInt64(GbTransfer).FromGBToBytes().ToStringAndSuffix();
 
-        public double Price => double.Parse(FormattedPrice.Replace(',','.').Split(null)[0]);
+        public double Price => double.Parse(Regex.Replace(FormattedPrice.Replace(',', '.'), "[^0-9.]", ""));
         public string PriceIntegerPart => Price.ToString(CultureInfo.InvariantCulture).Split('.')[0];
         public string PriceDecimalPart => Price.ToString(CultureInfo.InvariantCulture).Split('.')[1];
 
