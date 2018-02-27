@@ -216,10 +216,10 @@ namespace MegaApp.ViewModels.MyAccount
         }
 
         public string MonthlyProductPrice => (MonthlyProduct == null) ? string.Empty :
-            string.Format("{0} {1}", MonthlyProduct.PriceAndCurrency, MonthlyProduct.Period.ToLower());
+            string.Format("{0} {1}", MonthlyProduct.FormattedPrice, MonthlyProduct.Period.ToLower());
 
         public string AnnualProductPrice => (AnnualProduct == null) ? string.Empty :
-            string.Format("{0} {1}", AnnualProduct.PriceAndCurrency, AnnualProduct.Period.ToLower());
+            string.Format("{0} {1}", AnnualProduct.FormattedPrice, AnnualProduct.Period.ToLower());
 
         public string SavedMoney => (MonthlyProduct == null) || (AnnualProduct == null) ? string.Empty :
             string.Format(ResourceService.UiResources.GetString("UI_SaveMoney"),
