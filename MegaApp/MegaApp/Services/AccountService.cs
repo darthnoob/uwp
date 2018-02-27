@@ -17,6 +17,11 @@ namespace MegaApp.Services
         private const string DateFormat = "dd MMM yyyy";
 
         /// <summary>
+        /// Flag to store if the account has been blocked
+        /// </summary>
+        public static bool IsAccountBlocked;
+
+        /// <summary>
         /// Storages all the account details info
         /// </summary>
         private static AccountDetailsViewModel _accountDetails;

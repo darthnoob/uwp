@@ -2,11 +2,7 @@
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using mega;
-using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
-using MegaApp.Views;
-using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -81,19 +77,6 @@ namespace MegaApp.MegaApi
 
             switch(e.getErrorCode())
             {
-                case MErrorType.API_EBLOCKED: // If the account has been blocked
-                    api.logout(new LogOutRequestListener(false));
-
-                    UiService.OnUiThread(() =>
-                    {
-                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-                    });
-
-                    // Throw task exception to catch and do nothing on logging out
-                    Tcs?.TrySetException(new BlockedAccountException());
-                    break;
-
                 case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: // Storage overquota error
                     UiService.OnUiThread(DialogService.ShowOverquotaAlert);
