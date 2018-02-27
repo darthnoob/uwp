@@ -169,28 +169,26 @@ namespace MegaApp.MegaApi
 
         public void onEvent(MegaSDK api, MEvent ev)
         {
-            // If the account has been blocked
-            if (ev.getType() == MEventType.EVENT_ACCOUNT_BLOCKED)
+            if (ev.getType() != MEventType.EVENT_ACCOUNT_BLOCKED) return;
+
+            AccountService.IsAccountBlocked = true;
+
+            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Blocked account: " + ev.getText());
+
+            // A blocked account automatically triggers a logout
+            AppService.LogoutActions();
+
+            // Show the login page with the corresponding navigation parameter
+            UiService.OnUiThread(() =>
             {
-                AccountService.IsAccountBlocked = true;
-
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Blocked account: " + ev.getText());
-
-                // A blocked account automatically triggers a logout
-                AppService.LogoutActions();
-
-                // Show the login page with the corresponding navigation parameter
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED,
-                        new Dictionary<NavigationParamType, object>
-                        {
+                NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED,
+                    new Dictionary<NavigationParamType, object>
+                    {
                             { NavigationParamType.Number, ev.getNumber() },
                             { NavigationParamType.Text, ev.getText() }
-                        }));
-                });
-            }
+                    }));
+            });
         }
 
         #endregion
