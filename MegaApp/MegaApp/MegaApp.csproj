@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MegaApp_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>EA2CC66D016324B939B2AFD74671150B7829709F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>138D5F99F522E00E934BDF46CDE71BE0373DCED7</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
@@ -114,12 +114,12 @@
     <Compile Include="Behaviors\MultiSelect.cs" />
     <Compile Include="Classes\AppInformation.cs" />
     <Compile Include="Classes\BadSessionIdException.cs" />
-    <Compile Include="Classes\BlockedAccountException.cs" />
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
     <Compile Include="Database\DatabaseHelper.cs" />
     <Compile Include="Database\SavedForOfflineDB.cs" />
+    <Compile Include="Enums\AccountBlockedReason.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
