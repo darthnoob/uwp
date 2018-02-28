@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels
     public class FolderNodeViewModel: NodeViewModel, IMegaFolderNode
     {
         public FolderNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             this.ShareCommand = new RelayCommand(Share);

@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -91,20 +90,11 @@ namespace MegaApp.Interfaces
         /// </summary>
         ulong Handle { get; set; }
 
-        ObservableCollection<IMegaNode> ParentCollection { get; set; }
-
-        ObservableCollection<IMegaNode> ChildCollection { get; set; }
-
         /// <summary>
         /// Specifies the node type TYPE_UNKNOWN = -1, TYPE_FILE = 0, TYPE_FOLDER = 1, TYPE_ROOT = 2, TYPE_INCOMING = 3, 
         /// TYPE_RUBBISH = 4, TYPE_MAIL = 5
         /// </summary>
         MNodeType Type { get; }
-
-        /// <summary>
-        /// Indicates how the node should be drawn on the screen
-        /// </summary>
-        NodeDisplayMode DisplayMode { get; set; }
 
         /// <summary>
         /// The TransferObjectModel that controls upload and download transfers of this node

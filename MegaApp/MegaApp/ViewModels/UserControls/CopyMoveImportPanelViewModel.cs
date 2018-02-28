@@ -5,6 +5,7 @@ using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.ViewModels.SharedFolders;
 using MegaApp.ViewModels.UserControls.CopyMoveImportPanel;
@@ -109,8 +110,9 @@ namespace MegaApp.ViewModels.UserControls
 
                 this.OnActionFinished();
 
-                foreach (var node in selectedNodes)
+                foreach (var n in selectedNodes)
                 {
+                    var node = n as IMegaNode;
                     if (node == null) continue;
                     node.DisplayMode = NodeDisplayMode.Normal;
                     NodeActionResult result;

@@ -62,7 +62,7 @@ namespace MegaApp.ViewModels.UserControls
 
         private void ImportFolder()
         {
-            this.Folder.ImportFolder();
+            (this.Folder as FolderViewModel)?.ImportFolder();
         }
 
         private void ShowFolderInformation()
@@ -161,10 +161,10 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Properties
 
-        public IMegaNode FolderRootNode;
+        public IBaseNode FolderRootNode;
 
-        private FolderViewModel _folder;
-        public FolderViewModel Folder
+        private BaseFolderViewModel _folder;
+        public BaseFolderViewModel Folder
         {
             get { return _folder; }
             set
@@ -182,126 +182,11 @@ namespace MegaApp.ViewModels.UserControls
             }
         }
 
-        public CollectionViewModel<IMegaNode> ItemCollection => this.Folder?.ItemCollection;
+        public CollectionViewModel<IBaseNode> ItemCollection => this.Folder?.ItemCollection;
 
-        public string OrderTypeAndNumberOfItems
-        {
-            get
-            {
-                if (this.Folder is IncomingSharesViewModel)
-                    return (this.Folder as IncomingSharesViewModel).OrderTypeAndNumberOfItems;
-                if (this.Folder is OutgoingSharesViewModel)
-                    return (this.Folder as OutgoingSharesViewModel).OrderTypeAndNumberOfItems;
+        public string OrderTypeAndNumberOfItems => this.Folder?.OrderTypeAndNumberOfItems;
 
-                if (this.Folder?.FolderRootNode == null) return string.Empty;
-
-                var megaSdk = this.Folder.Type == ContainerType.FolderLink ?
-                    SdkService.MegaSdkFolderLinks : SdkService.MegaSdk;
-
-                var numChildFolders = megaSdk.getNumChildFolders(this.Folder.FolderRootNode.OriginalMNode);
-                var numChildFiles = megaSdk.getNumChildFiles(this.Folder.FolderRootNode.OriginalMNode);
-
-                switch (UiService.GetSortOrder(this.Folder.FolderRootNode.Base64Handle, this.Folder.FolderRootNode.Name))
-                {
-                    case MSortOrderType.ORDER_DEFAULT_ASC:
-                    case MSortOrderType.ORDER_DEFAULT_DESC:
-                        if(this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), numChildFiles);
-                        else if (this.Folder.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByType"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        if (this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), numChildFiles);
-                        else if (this.Folder.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByName"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_CREATION_ASC:
-                    case MSortOrderType.ORDER_CREATION_DESC:
-                        if (this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), numChildFiles);
-                        else if (this.Folder.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateCreated"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_MODIFICATION_ASC:
-                    case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        if (this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), numChildFiles);
-                        else if (this.Folder.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateModified"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_SIZE_ASC:
-                    case MSortOrderType.ORDER_SIZE_DESC:
-                        if (this.Folder.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), numChildFiles);
-                        else if (this.Folder.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedBySize"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
-                            numChildFolders, numChildFiles);
-
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
-        public string OrderTypeAndNumberOfSelectedItems
-        {
-            get
-            {
-                if (this.Folder is IncomingSharesViewModel)
-                    return (this.Folder as IncomingSharesViewModel).OrderTypeAndNumberOfSelectedItems;
-                if (this.Folder is OutgoingSharesViewModel)
-                    return (this.Folder as OutgoingSharesViewModel).OrderTypeAndNumberOfSelectedItems;
-
-                if (this.Folder?.FolderRootNode == null) return string.Empty;
-
-                switch (UiService.GetSortOrder(this.Folder.FolderRootNode.Base64Handle, this.Folder.FolderRootNode.Name))
-                {
-                    case MSortOrderType.ORDER_DEFAULT_ASC:
-                    case MSortOrderType.ORDER_DEFAULT_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByTypeMultiSelect"),
-                            this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
-                            this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
-
-                    case MSortOrderType.ORDER_CREATION_ASC:
-                    case MSortOrderType.ORDER_CREATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreatedMultiSelect"),
-                            this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
-
-                    case MSortOrderType.ORDER_MODIFICATION_ASC:
-                    case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
-                            this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
-
-                    case MSortOrderType.ORDER_SIZE_ASC:
-                    case MSortOrderType.ORDER_SIZE_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySizeMultiSelect"),
-                            this.Folder.ItemCollection.SelectedItems.Count, this.Folder.ItemCollection.Items.Count);
-
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string OrderTypeAndNumberOfSelectedItems => this.Folder?.OrderTypeAndNumberOfSelectedItems;
 
         public bool IsRenameFolderOptionAvailable
         {

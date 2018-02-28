@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.SharedFolders;
@@ -111,7 +112,8 @@ namespace MegaApp.Converters
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                    var focusedItem = folder.ItemCollection.FocusedItem as IMegaNode;
+                                    return focusedItem != null && focusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 
@@ -126,7 +128,8 @@ namespace MegaApp.Converters
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                    var focusedItem = folder.ItemCollection.FocusedItem as IMegaNode;
+                                    return focusedItem != null && focusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 

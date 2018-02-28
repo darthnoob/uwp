@@ -108,7 +108,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case OutgoingSharesSortOrderType.ORDER_NAME:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IBaseNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.Name) : this.ItemCollection.Items.OrderByDescending(item => item.Name));
                     });
                     break;
@@ -143,7 +143,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Properties
 
-        public string OrderTypeAndNumberOfItems
+        public override string OrderTypeAndNumberOfItems
         {
             get
             {
@@ -158,7 +158,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        public string OrderTypeAndNumberOfSelectedItems
+        public override string OrderTypeAndNumberOfSelectedItems
         {
             get
             {

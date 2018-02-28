@@ -241,8 +241,8 @@ namespace MegaApp.ViewModels
                     (item as IMegaContact).IsMultiSelected = onOff;
                 if (item is IMegaContactRequest)
                     (item as IMegaContactRequest).IsMultiSelected = onOff;
-                if (item is IMegaNode)
-                    (item as IMegaNode).IsMultiSelected = onOff;
+                if (item is IBaseNode)
+                    (item as IBaseNode).IsMultiSelected = onOff;
             }
         }
 

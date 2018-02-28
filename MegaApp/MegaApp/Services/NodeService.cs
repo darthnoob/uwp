@@ -29,7 +29,7 @@ namespace MegaApp.Services
         }
 
         public static NodeViewModel CreateNew(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel folder,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
         {
             if (megaNode == null) return null;
 

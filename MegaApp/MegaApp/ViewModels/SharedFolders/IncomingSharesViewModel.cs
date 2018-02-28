@@ -107,7 +107,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_NAME:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IBaseNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.Name) : this.ItemCollection.Items.OrderByDescending(item => item.Name));
                     });
                     break;
@@ -115,7 +115,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_MODIFICATION:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ? 
+                        this.ItemCollection.Items = new ObservableCollection<IBaseNode>(this.ItemCollection.IsCurrentOrderAscending ? 
                             this.ItemCollection.Items.OrderBy(item => item.ModificationTime) : this.ItemCollection.Items.OrderByDescending(item => item.ModificationTime));
                     });
                     break;
@@ -123,7 +123,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_ACCESS:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ?
+                        this.ItemCollection.Items = new ObservableCollection<IBaseNode>(this.ItemCollection.IsCurrentOrderAscending ?
                             this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType) : 
                             this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).AccessLevel.AccessType));
                     });
@@ -132,7 +132,7 @@ namespace MegaApp.ViewModels.SharedFolders
                 case IncomingSharesSortOrderType.ORDER_OWNER:
                     OnUiThread(() =>
                     {
-                        this.ItemCollection.Items = new ObservableCollection<IMegaNode>(this.ItemCollection.IsCurrentOrderAscending ?
+                        this.ItemCollection.Items = new ObservableCollection<IBaseNode>(this.ItemCollection.IsCurrentOrderAscending ?
                             this.ItemCollection.Items.OrderBy(item => (item as IMegaIncomingSharedFolderNode).Owner) : 
                             this.ItemCollection.Items.OrderByDescending(item => (item as IMegaIncomingSharedFolderNode).Owner));
                     });
@@ -176,7 +176,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region Properties        
 
-        public string OrderTypeAndNumberOfItems
+        public override string OrderTypeAndNumberOfItems
         {
             get
             {
@@ -200,7 +200,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        public string OrderTypeAndNumberOfSelectedItems
+        public override string OrderTypeAndNumberOfSelectedItems
         {
             get
             {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using MegaApp.Enums;
 
 namespace MegaApp.Interfaces
 {
@@ -49,7 +51,7 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Returns if a node is a folder.        
         /// </summary>
-        bool IsFolder { get; }
+        bool IsFolder { get; set; }
 
         /// <summary>
         /// Returns if a node is an image. Based on its file extension.
@@ -67,6 +69,15 @@ namespace MegaApp.Interfaces
         /// Vector data that represents the default image for a specific filetype / folder
         /// </summary>
         string DefaultImagePathData { get; set; }
+
+        /// <summary>
+        /// Indicates how the node should be drawn on the screen
+        /// </summary>
+        NodeDisplayMode DisplayMode { get; set; }
+
+        ObservableCollection<IBaseNode> ParentCollection { get; set; }
+
+        ObservableCollection<IBaseNode> ChildCollection { get; set; }
 
         #endregion
     }

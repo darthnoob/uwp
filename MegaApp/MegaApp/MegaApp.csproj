@@ -162,6 +162,8 @@
     <Compile Include="UserControls\ShareToPanel.xaml.cs">
       <DependentUpon>ShareToPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BaseFolderViewModel.cs" />
+    <Compile Include="ViewModels\BaseNodeViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />

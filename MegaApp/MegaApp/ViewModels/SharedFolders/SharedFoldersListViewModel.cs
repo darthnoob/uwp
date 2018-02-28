@@ -18,10 +18,8 @@ namespace MegaApp.ViewModels.SharedFolders
             this.LeaveShareCommand = new RelayCommand(LeaveShare);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            this.ClosePanelCommand = new RelayCommand(ClosePanels);
             this.OpenContentPanelCommand = new RelayCommand(OpenContentPanel);
-            this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
-
+            
             this.ItemCollection.ItemCollectionChanged += OnFolderListViewStateChanged;
             this.ItemCollection.SelectedItemsCollectionChanged += OnFolderListViewStateChanged;
         }
@@ -46,7 +44,7 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             if (megaNode == null) return;
 
-            var node = this.ItemCollection.Items.FirstOrDefault(
+            var node = (IMegaNode)this.ItemCollection.Items.FirstOrDefault(
                 n => n.Base64Handle.Equals(megaNode.getBase64Handle()));
 
             // If exists update it
@@ -98,7 +96,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
             if (this.ItemCollection.OnlyOneSelectedItem)
             {
-                var node = this.ItemCollection.SelectedItems.First();
+                var node = (IMegaNode)this.ItemCollection.SelectedItems.First();
 
                 var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
@@ -135,15 +133,19 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void LeaveMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
+        private async void LeaveMultipleSharedFolders(ICollection<IBaseNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 
             bool result = true;
             if (sharedFolders != null)
             {
-                foreach (var node in sharedFolders)
+                foreach (var n in sharedFolders)
+                {
+                    var node = n as IMegaNode;
+                    if (node == null) continue;
                     result = result & await node.RemoveAsync(true);
+                }
             }
 
             if (!result)
@@ -200,7 +202,7 @@ namespace MegaApp.ViewModels.SharedFolders
             }
         }
 
-        private async void RemoveAccessMultipleSharedFolders(ICollection<IMegaNode> sharedFolders)
+        private async void RemoveAccessMultipleSharedFolders(ICollection<IBaseNode> sharedFolders)
         {
             if (sharedFolders?.Count < 1) return;
 

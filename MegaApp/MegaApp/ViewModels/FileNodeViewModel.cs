@@ -11,7 +11,7 @@ namespace MegaApp.ViewModels
     public class FileNodeViewModel: NodeViewModel
     {
         public FileNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             SizeText = Size.ToStringAndSuffix(1);

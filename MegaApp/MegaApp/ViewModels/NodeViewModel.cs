@@ -21,13 +21,13 @@ namespace MegaApp.ViewModels
     /// <summary>
     /// ViewModel of the main MEGA datatype (MNode)
     /// </summary>
-    public abstract class NodeViewModel : BaseSdkViewModel, IMegaNode
+    public abstract class NodeViewModel : BaseNodeViewModel, IMegaNode
     {
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
@@ -124,32 +124,11 @@ namespace MegaApp.ViewModels
 
         #region IBaseNode Interface
 
+        public override bool IsFolder => this.Type == MNodeType.TYPE_FOLDER;
+
+        #endregion
+
         public NodeViewModel NodeBinding => this;
-
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                SetField(ref _name, value);
-                if(!this.IsFolder)
-                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-            }
-        }
-
-        public string CreationTime { get; private set; }
-
-        public string ModificationTime { get; private set; }
-
-        public string ThumbnailPath
-        {
-            get
-            {
-                return Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), this.OriginalMNode.getBase64Handle());
-            }
-        }
 
         private int _childFiles;
         public int ChildFiles
@@ -165,38 +144,6 @@ namespace MegaApp.ViewModels
             set { SetField(ref _childFolders, value); }
         }
 
-        public string Base64Handle { get; set; }
-
-        public ulong Size { get; set; }
-
-        private string _sizeText;
-        public string SizeText
-        {
-            get { return _sizeText; }
-            set { SetField(ref _sizeText, value); }
-        }
-
-        private bool _isMultiSelected;
-        public bool IsMultiSelected
-        {
-            get { return _isMultiSelected; }
-            set { SetField(ref _isMultiSelected, value); }
-        }
-
-        public bool IsFolder
-        {
-            get { return this.Type == MNodeType.TYPE_FOLDER ? true : false; }
-        }
-
-        public bool IsImage => ImageService.IsImage(this.Name);
-
-        private Uri _thumbnailImageUri;
-        public Uri ThumbnailImageUri
-        {
-            get { return _thumbnailImageUri; }
-            set { SetField(ref _thumbnailImageUri, value); }
-        }
-
         public virtual Uri PreviewImageUri
         {
             get
@@ -210,16 +157,7 @@ namespace MegaApp.ViewModels
                 if((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
                     (this as ImageNodeViewModel).PreviewImageUri = value;
             }
-        }
-
-        private string _defaultImagePathData;
-        public string DefaultImagePathData
-        {
-            get { return _defaultImagePathData; }
-            set { SetField(ref _defaultImagePathData, value); }
-        }
-
-        #endregion
+        }        
 
         #region IMegaNode Interface
 
@@ -699,10 +637,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public ObservableCollection<IMegaNode> ParentCollection { get; set; }
-
-        public ObservableCollection<IMegaNode> ChildCollection { get; set; }
-
         public MNodeType Type { get; private set; }
 
         private string _typeText;
@@ -714,13 +648,7 @@ namespace MegaApp.ViewModels
 
         public ContainerType ParentContainerType { get; private set; }
 
-        private NodeDisplayMode _displayMode;
-        public NodeDisplayMode DisplayMode
-        {
-            get { return _displayMode; }
-            set { SetField(ref _displayMode, value); }
-        }
-
+        
         private bool _isSelectedForOffline;
         public bool IsSelectedForOffline
         {

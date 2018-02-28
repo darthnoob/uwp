@@ -35,7 +35,7 @@ namespace MegaApp.Services
         /// <summary>
         /// Selected nodes to process from a folder link.
         /// </summary>
-        public static List<IMegaNode> SelectedNodes => SelectedNodesService.SelectedNodes;
+        public static List<IBaseNode> SelectedNodes => SelectedNodesService.SelectedNodes;
 
         /// <summary>
         /// The download path for the selected nodes in case of download operation.

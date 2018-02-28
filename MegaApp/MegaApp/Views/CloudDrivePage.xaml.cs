@@ -336,7 +336,7 @@ namespace MegaApp.Views
         /// Update the selected nodes of the active view
         /// </summary>
         /// <param name="selectedNodes">Listo of selected nodes</param>
-        private void UpdateSelectedItems(List<IMegaNode> selectedNodes)
+        private void UpdateSelectedItems(List<IBaseNode> selectedNodes)
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
