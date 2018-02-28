@@ -227,6 +227,10 @@
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFileNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
     <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />

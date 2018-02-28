@@ -1082,6 +1082,324 @@
         </Border>
     </DataTemplate>
 
+    <DataTemplate x:Key="OfflineNodeListViewFileItemContent">
+        <Border
+            Margin="-12,1"
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="2,2,2,2">
+            <Grid Margin="12,4" Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding PreviewCommand}"
+                                Text="{Binding PreviewText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Path
+                        Width="36"
+                        Height="36"
+                        Margin="0,0,12,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Data="{Binding DefaultImagePathData}"
+                        Stretch="Uniform"
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                        <Path.Fill>
+                            <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                        </Path.Fill>
+                    </Path>
+                    <Image
+                        Width="36"
+                        Height="36"
+                        Margin="0,0,12,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Stretch="UniformToFill"
+                        Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
+                        <Image.Source>
+                            <BitmapImage
+                                DecodePixelHeight="36"
+                                DecodePixelType="Logical"
+                                UriSource="{Binding ThumbnailImageUri}" />
+                        </Image.Source>
+                    </Image>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="txtFileName"
+                        Grid.Row="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BaseTextBlockStyle}"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <TextBlock
+                        x:Name="txtSize"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Opacity="0.5"
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Text="{Binding SizeText}"
+                        TextWrapping="NoWrap" />
+                </Grid>
+                <TextBlock
+                    x:Name="txtCreated"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Opacity="0.5"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding ModificationTime}"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OfflineNodeGridViewFileItemContent">
+        <Border
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="1">
+            <Grid
+                Width="96"
+                Margin="4"
+                Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding PreviewCommand}"
+                                Text="{Binding PreviewText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Path
+                    Grid.Row="0"
+                    Width="64"
+                    Height="64"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding DefaultImagePathData}"
+                    Stretch="Uniform"
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource InverseStringVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+                <Image
+                    Grid.Row="0"
+                    Width="96"
+                    Height="96"
+                    Stretch="UniformToFill"
+                    Visibility="{Binding ThumbnailImageUri, Converter={StaticResource StringVisibilityConverter}}">
+                    <Image.Source>
+                        <BitmapImage
+                            DecodePixelHeight="96"
+                            DecodePixelType="Logical"
+                            UriSource="{Binding ThumbnailImageUri}" />
+                    </Image.Source>
+                </Image>
+                <TextBlock
+                    Grid.Column="0" Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="{Binding Name}"
+                    TextAlignment="Center"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OfflineNodeListViewFolderItemContent">
+        <Border
+            Margin="-12,1"
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="2,2,2,2">
+            <Grid Margin="12,4" Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+
+                <Path
+                    Grid.Column="0"
+                    Width="36"
+                    Height="36"
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding DefaultImagePathData}"
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="txtFolderName"
+                        Grid.Row="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{ThemeResource BaseTextBlockStyle}"
+                        Text="{Binding Name}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                    <TextBlock
+                        x:Name="txtCount"
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Opacity="0.5"
+                        Style="{ThemeResource CaptionTextBlockStyle}"
+                        Text="{Binding Contents}"
+                        TextWrapping="NoWrap" />
+                </Grid>
+                <TextBlock
+                    x:Name="txtCreated"
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Opacity="0.5"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{Binding CreationTime}"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="OfflineNodeGridViewFolderItemContent">
+        <Border
+            Background="{Binding DisplayMode, ConverterParameter=0\,4, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderBrush="{Binding DisplayMode, ConverterParameter=1\,0, Converter={StaticResource NodeDisplayModeToColorBrushConverter}}"
+            BorderThickness="1">
+            <Grid
+                Width="96"
+                Margin="4"
+                Background="Transparent">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyout.Items>
+                            <MenuFlyoutItem
+                                Command="{Binding OpenInformationPanelCommand}"
+                                Text="{Binding InformationText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveCommand}"
+                                Text="{Binding RemoveText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                        </MenuFlyout.Items>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="RightTapped">
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="96" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Path
+                    Width="64"
+                    Height="64"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding DefaultImagePathData}"
+                    Stretch="Uniform">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{StaticResource MegaAppForeground}" />
+                    </Path.Fill>
+                </Path>
+                <TextBlock
+                    Grid.Column="0" Grid.Row="1" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="{Binding Name}"
+                    TextAlignment="Center"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </Grid>
+        </Border>
+    </DataTemplate>
+
     <DataTemplate x:Key="MegaContactIncomingSharedItemListViewDesktop">
         <Border
             Margin="-12,1"

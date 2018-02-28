@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:WindowsStateTriggers"
+    xmlns:userControls="using:MegaApp.UserControls"
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
     d:DataContext="{d:DesignInstance viewModels:SavedForOfflineViewModel}"
@@ -51,6 +52,11 @@
                         x:Name="SavedForOfflinePivot"
                         CacheMode="{x:Null}"
                         Header="{Binding SavedForOfflineText}">
+                        <userControls:FolderExplorer
+                            x:Name="SavedForOfflineExplorer"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"
+                            Folder="{x:Bind ViewModel.SavedForOffline, Mode=OneWay}"/>
                     </PivotItem>
                 </Pivot>
             </Grid>

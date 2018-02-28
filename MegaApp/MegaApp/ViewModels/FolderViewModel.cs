@@ -482,7 +482,6 @@ namespace MegaApp.ViewModels
                     {
                         var node = n as IMegaNode;
                         if (node == null) continue;
-
                         node.Transfer.ExternalDownloadPath = downloadFolder.Path;
                         TransferService.MegaTransfers.Add(node.Transfer);
                         node.Transfer.StartTransfer();
@@ -1264,8 +1263,8 @@ namespace MegaApp.ViewModels
         }
 
         #endregion
-
-            #region UiResources
+            
+        #region UiResources
 
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CopyOrMoveText => this is IncomingSharesViewModel ? CopyText : CopyText + "/" + MoveText;
