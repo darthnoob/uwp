@@ -116,6 +116,14 @@ namespace MegaApp.ViewModels.UserControls
                 folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
         }
 
+        public void SaveForOffline(bool isOn)
+        {
+            if (isOn && !this.Node.IsSavedForOffline)
+                this.Node.SaveForOffline();
+            else if (!isOn && this.Node.IsSavedForOffline)
+                this.Node.RemoveForOffline();
+        }
+
         #endregion
 
         #region Properties

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Interfaces;
@@ -561,12 +562,145 @@ namespace MegaApp.ViewModels
             else
                 this.ModificationTime = this.CreationTime;
 
-            //if (!App.MegaSdk.isInShare(megaNode) && ParentContainerType != ContainerType.PublicLink &&
-            //    ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
-            //    ParentContainerType != ContainerType.FolderLink)
-            //    CheckAndUpdateSFO(megaNode);
-            this.IsAvailableOffline = false;
-            this.IsSelectedForOffline = false;
+            if (!this.MegaSdk.isInShare(megaNode) &&
+                ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
+                ParentContainerType != ContainerType.FileLink && ParentContainerType != ContainerType.FolderLink)
+                CheckAndUpdateSFO(megaNode);
+        }
+
+        private void CheckAndUpdateSFO(MNode megaNode)
+        {
+            var nodePath = SdkService.MegaSdk.getNodePath(megaNode);
+            if (string.IsNullOrWhiteSpace(nodePath)) return;
+
+            var nodeOfflineLocalPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_OfflineDirectory"), nodePath.Remove(0, 1).Replace("/", "\\"));
+
+            if (SavedForOfflineDB.ExistsNodeByLocalPath(nodeOfflineLocalPath))
+            {
+                if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(nodeOfflineLocalPath)) ||
+                    (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(nodeOfflineLocalPath)))
+                {
+                    this.IsSavedForOffline = true;
+                    return;
+                }
+
+                SavedForOfflineDB.DeleteNodeByLocalPath(nodeOfflineLocalPath);
+                this.IsSavedForOffline = false;
+            }
+            else
+            {
+                if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(nodeOfflineLocalPath)) ||
+                    (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(nodeOfflineLocalPath)))
+                {
+                    SavedForOfflineDB.InsertNode(megaNode);
+                    this.IsSavedForOffline = true;
+                    return;
+                }
+
+                this.IsSavedForOffline = false;
+            }
+        }
+
+        public async void SaveForOffline()
+        {
+            // User must be online to perform this operation
+            if (!IsUserOnline()) return;
+
+            MNode parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
+
+            string sfoRootPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_OfflineDirectory").Replace("\\", ""));
+
+            string parentNodePath;
+            if (ParentContainerType != ContainerType.FileLink)
+            {
+                parentNodePath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                    ResourceService.AppResources.GetString("AR_OfflineDirectory").Replace("\\", ""),
+                    (SdkService.MegaSdk.getNodePath(parentNode)).Remove(0, 1).Replace("/", "\\"));
+            }
+            else
+            {
+                // If is a public node (link) the destination folder is the SFO root
+                parentNodePath = sfoRootPath;
+            }
+
+            if (!FolderService.FolderExists(parentNodePath))
+                FolderService.CreateFolder(parentNodePath);
+
+            var existingNode = SavedForOfflineDB.SelectNodeByFingerprint(MegaSdk.getNodeFingerprint(this.OriginalMNode));
+            if (existingNode != null)
+            {
+                if (this.IsFolder)
+                    await FolderService.CopyFolder(existingNode.LocalPath, parentNodePath);
+                else
+                    await FileService.CopyFile(existingNode.LocalPath, parentNodePath);
+
+                SavedForOfflineDB.InsertNode(this.OriginalMNode);
+            }
+            else
+            {
+                TransferService.MegaTransfers.Add(this.Transfer);
+                this.Transfer.ExternalDownloadPath = parentNodePath;
+                this.Transfer.StartTransfer(true);
+            }
+
+            this.IsSavedForOffline = true;
+
+            // Check and add to the DB if necessary the previous folders of the path
+            while (string.Compare(parentNodePath, sfoRootPath) != 0)
+            {
+                var folderPathToAdd = parentNodePath;
+                parentNodePath = ((new DirectoryInfo(parentNodePath)).Parent).FullName;
+
+                if (!SavedForOfflineDB.ExistsNodeByLocalPath(folderPathToAdd))
+                    SavedForOfflineDB.InsertNode(parentNode);
+
+                parentNode = SdkService.MegaSdk.getParentNode(parentNode);
+            }
+        }
+
+        public bool RemoveForOffline()
+        {
+            bool result;
+
+            MNode parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
+
+            string parentNodePath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_OfflineDirectory").Replace("\\", ""),
+                (SdkService.MegaSdk.getNodePath(parentNode)).Remove(0, 1).Replace("/", "\\"));
+
+            string sfoRootPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
+                ResourceService.AppResources.GetString("AR_OfflineDirectory").Replace("\\", ""));
+
+            var nodePath = Path.Combine(parentNodePath, this.Name);
+
+            // Search if the file has a pending transfer for offline and cancel it on this case                
+            TransferService.CancelPendingNodeOfflineTransfers(nodePath, this.IsFolder);
+
+            if (this.IsFolder)
+                result = FolderService.DeleteFolder(nodePath, true);
+            else
+                result = FileService.DeleteFile(nodePath);
+
+            SavedForOfflineDB.DeleteNodeByLocalPath(nodePath);
+            this.IsSavedForOffline = false;
+
+            // Check if the previous folders of the path are empty and 
+            // remove from the offline and the DB on this case
+            while (string.Compare(parentNodePath, sfoRootPath) != 0)
+            {
+                var folderPathToRemove = parentNodePath;
+                parentNodePath = ((new DirectoryInfo(parentNodePath)).Parent).FullName;
+
+                if (FolderService.IsEmptyFolder(folderPathToRemove))
+                {
+                    result = result & FolderService.DeleteFolder(folderPathToRemove);
+                    SavedForOfflineDB.DeleteNodeByLocalPath(folderPathToRemove);
+                }
+            }
+
+            return result;
         }
 
         private string GetTypeText()
