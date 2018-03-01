@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
 using mega;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.ViewModels.Offline;
 
 namespace MegaApp.ViewModels
 {
@@ -34,6 +36,24 @@ namespace MegaApp.ViewModels
             {
                 this.Items.Insert(0, NodeService.CreateNew(this.MegaSdk, App.AppInformation, parentNode, folder));
                 parentNode = this.MegaSdk.getParentNode(parentNode);
+            }
+        }
+
+        public void Create(OfflineFolderViewModel folder)
+        {
+            this.Items.Clear();
+
+            // Top root nodes have no breadcrumbs
+            if (folder.FolderRootNode == null ||
+                FolderService.IsOfflineRootFolder(folder.FolderRootNode.NodePath)) return;
+
+            this.Items.Add(folder.FolderRootNode);
+
+            DirectoryInfo parentNode = (new DirectoryInfo(folder.FolderRootNode.NodePath)).Parent;
+            while ((parentNode != null) && !FolderService.IsOfflineRootFolder(parentNode.FullName))
+            {
+                this.Items.Insert(0, new OfflineFolderNodeViewModel(parentNode));
+                parentNode = (new DirectoryInfo(parentNode.FullName)).Parent;
             }
         }
 

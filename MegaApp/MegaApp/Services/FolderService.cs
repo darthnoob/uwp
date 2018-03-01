@@ -283,5 +283,18 @@ namespace MegaApp.Services
                 folderNode.SetFolderInfo();
             }
         }
+
+        /// <summary>
+        /// Check if a path is the root of the offline folder
+        /// </summary>
+        /// <param name="path">Path to check</param>
+        /// <returns>TRUE if is the root of the offline folder or FALSE in other case</returns>
+        public static bool IsOfflineRootFolder(string path)
+        {
+            if (!path.Trim().EndsWith("\\"))
+                path = path.Insert(path.Length, "\\");
+
+            return (string.Compare(AppService.GetOfflineDirectoryPath(), path) == 0) ? true : false;
+        }
     }    
 }

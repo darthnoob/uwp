@@ -68,7 +68,7 @@ namespace MegaApp.ViewModels.Offline
             SetViewOnLoad();
 
             // Build the bread crumbs. Do this before loading the nodes so that the user can click on home
-            //OnUiThread(this.BreadCrumb.Create(this));
+            OnUiThread(() => this.BreadCrumb.Create(this));
 
             // Create the option to cancel
             CreateLoadCancelOption();
@@ -153,9 +153,24 @@ namespace MegaApp.ViewModels.Offline
             base.SetViewDefaults();
         }
 
+        public override void BrowseToHome()
+        {
+            if (this.FolderRootNode == null) return;
+
+            ClosePanels();
+
+            this.FolderRootNode = new OfflineFolderNodeViewModel(
+                new DirectoryInfo(AppService.GetOfflineDirectoryPath()));
+
+            OnFolderNavigatedTo();
+
+            LoadChildNodes();
+        }
+
         public override void OnChildNodeTapped(IBaseNode node)
         {
-            throw new NotImplementedException();
+            if (node.IsFolder)
+                BrowseToFolder(node);
         }
 
         #endregion

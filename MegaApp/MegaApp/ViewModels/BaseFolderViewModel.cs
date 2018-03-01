@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Input;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using GoedWare.Controls.Breadcrumb;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -26,6 +28,8 @@ namespace MegaApp.ViewModels
             this.ItemCollection = new CollectionViewModel<IBaseNode>(megaSdk);
 
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
+            this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
+            this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
         }
 
@@ -97,6 +101,24 @@ namespace MegaApp.ViewModels
 
         public abstract void OnChildNodeTapped(IBaseNode baseNode);
 
+        protected void BrowseToFolder(IBaseNode node)
+        {
+            if (node == null) return;
+
+            this.ClosePanels();
+
+            // Show the back button in desktop and tablet applications
+            // Back button in mobile applications is automatic in the nav bar on screen
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+
+            this.FolderRootNode = node;
+            OnFolderNavigatedTo();
+
+            this.LoadChildNodes();
+        }
+
+        public abstract void BrowseToHome();
+
         /// <summary>
         /// Cancel any running load process of this folder
         /// </summary>
@@ -145,7 +167,12 @@ namespace MegaApp.ViewModels
             this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
             this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_GridView");
-        }        
+        }
+
+        private void ItemSelected(BreadcrumbEventArgs e)
+        {
+            BrowseToFolder((IBaseNode)e.Item);
+        }
 
         #endregion
 

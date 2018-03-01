@@ -6,9 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
-using GoedWare.Controls.Breadcrumb;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -37,8 +35,6 @@ namespace MegaApp.ViewModels
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand(GetLink);
-            this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
-            this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.UploadCommand = new RelayCommand(Upload);
@@ -887,12 +883,7 @@ namespace MegaApp.ViewModels
             return true;
         }
 
-        private void ItemSelected(BreadcrumbEventArgs e)
-        {
-            BrowseToFolder((IMegaNode)e.Item);
-        }
-
-        public virtual async void BrowseToHome()
+        public override async void BrowseToHome()
         {
             if (this.FolderRootNode == null) return;
 
@@ -920,22 +911,6 @@ namespace MegaApp.ViewModels
             if (homeNode == null) return;
 
             this.FolderRootNode = NodeService.CreateNew(this.MegaSdk, App.AppInformation, homeNode, homeFolder, this.ItemCollection.Items);
-            OnFolderNavigatedTo();
-
-            LoadChildNodes();
-        }
-
-        public void BrowseToFolder(IMegaNode node)
-        {
-            if (node == null) return;
-
-            ClosePanels();
-
-            // Show the back button in desktop and tablet applications
-            // Back button in mobile applications is automatic in the nav bar on screen
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-            
-            this.FolderRootNode = node;
             OnFolderNavigatedTo();
 
             LoadChildNodes();
