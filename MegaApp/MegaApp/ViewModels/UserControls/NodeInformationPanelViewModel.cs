@@ -182,6 +182,7 @@ namespace MegaApp.ViewModels.UserControls
         public string FolderLocationLabelText => ResourceService.UiResources.GetString("UI_FolderLocation");        
         public string OwnerLabelText => ResourceService.UiResources.GetString("UI_Owner");
         public string PermissionsLabelText => ResourceService.UiResources.GetString("UI_Permissions");
+        public string SaveForOfflineText => ResourceService.UiResources.GetString("UI_SaveForOffline");
         public string SharedOnLabelText => ResourceService.UiResources.GetString("UI_SharedOn");
         public string SharedToLabelText => ResourceService.UiResources.GetString("UI_SharedTo");
         public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");

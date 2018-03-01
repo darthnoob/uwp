@@ -648,31 +648,11 @@ namespace MegaApp.ViewModels
 
         public ContainerType ParentContainerType { get; private set; }
 
-        
-        private bool _isSelectedForOffline;
-        public bool IsSelectedForOffline
+        private bool _isSavedForOffline;
+        public bool IsSavedForOffline
         {
-            get { return _isSelectedForOffline; }
-            set
-            {
-                SetField(ref _isSelectedForOffline, value);
-                this.IsSelectedForOfflineText = _isSelectedForOffline ? 
-                    ResourceService.UiResources.GetString("UI_On") : ResourceService.UiResources.GetString("UI_Off");
-            }
-        }
-
-        private string _isSelectedForOfflineText;
-        public string IsSelectedForOfflineText
-        {
-            get { return _isSelectedForOfflineText; }
-            set { SetField(ref _isSelectedForOfflineText, value); }
-        }
-
-        private bool _isAvailableOffline;
-        public bool IsAvailableOffline
-        {
-            get { return _isAvailableOffline; }
-            set { SetField(ref _isAvailableOffline, value); }
+            get { return _isSavedForOffline; }
+            set { SetField(ref _isSavedForOffline, value); }
         }
 
         private bool _isExported;

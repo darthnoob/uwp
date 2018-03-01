@@ -302,6 +302,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <ContentControl
@@ -309,7 +310,21 @@
                                 Grid.Row="0"
                                 DataContext="{Binding Node}"
                                 ContentTemplate="{StaticResource NodeInformationPanelHeader}"/>
-                            <RelativePanel Grid.Row="1" Margin="24,0,24,12">
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="24,0"
+                                Orientation="Vertical">
+                                <TextBlock
+                                    FontSize="16"
+                                    Opacity="0.4"
+                                    Text="{x:Bind ViewModel.SaveForOfflineText, Mode=OneTime}" />
+                                <ToggleSwitch
+                                    x:Name="SaveForOfflineSwitch"
+                                    Margin="0,0,0,24"
+                                    IsOn="{x:Bind ViewModel.Node.IsSavedForOffline, Mode=TwoWay}"
+                                    Toggled="OnSaveForOfflineSwitchToggled"/>
+                            </StackPanel>
+                            <RelativePanel Grid.Row="2" Margin="24,0,24,12">
                                 <TextBlock
                                     x:Name="SizeLabelText"
                                     Opacity="0.4"
