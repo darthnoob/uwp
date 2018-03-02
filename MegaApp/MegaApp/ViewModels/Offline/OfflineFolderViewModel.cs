@@ -32,9 +32,25 @@ namespace MegaApp.ViewModels.Offline
 
         #region Methods
 
+        public override void BrowseToHome()
+        {
+            if (this.FolderRootNode == null) return;
+
+            ClosePanels();
+
+            this.FolderRootNode = new OfflineFolderNodeViewModel(
+                new DirectoryInfo(AppService.GetOfflineDirectoryPath()));
+
+            OnFolderNavigatedTo();
+
+            LoadChildNodes();
+        }
+
         public void ClearChildNodes() => this.ItemCollection.Clear();
+        
+        public void DeselectAll() => this.ItemCollection.SelectAll(false);
+
         public void SelectAll() => this.ItemCollection.SelectAll(true);
-        public void DeselectAll() => this.ItemCollection.SelectAll(false);        
 
         /// <summary>
         /// Load the nodes for this specific folder
@@ -136,6 +152,12 @@ namespace MegaApp.ViewModels.Offline
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
         }
 
+        public override void OnChildNodeTapped(IBaseNode node)
+        {
+            if (node.IsFolder)
+                BrowseToFolder(node);
+        }
+
         /// <summary>
         /// Sets the default view mode for the folder content.
         /// </summary>
@@ -151,26 +173,6 @@ namespace MegaApp.ViewModels.Offline
             });
 
             base.SetViewDefaults();
-        }
-
-        public override void BrowseToHome()
-        {
-            if (this.FolderRootNode == null) return;
-
-            ClosePanels();
-
-            this.FolderRootNode = new OfflineFolderNodeViewModel(
-                new DirectoryInfo(AppService.GetOfflineDirectoryPath()));
-
-            OnFolderNavigatedTo();
-
-            LoadChildNodes();
-        }
-
-        public override void OnChildNodeTapped(IBaseNode node)
-        {
-            if (node.IsFolder)
-                BrowseToFolder(node);
         }
 
         #endregion

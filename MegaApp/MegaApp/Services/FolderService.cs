@@ -168,7 +168,7 @@ namespace MegaApp.Services
         {
             try
             {
-                DirectoryInfo srcFolder = new DirectoryInfo(srcFolderPath);                
+                DirectoryInfo srcFolder = new DirectoryInfo(srcFolderPath);
                 if (!srcFolder.Exists)
                 {
                     string errorMessage = "Source folder does not exist or could not be found: " + srcFolderPath;
@@ -212,7 +212,7 @@ namespace MegaApp.Services
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
                 }
-                    
+
                 return false;
             }
         }

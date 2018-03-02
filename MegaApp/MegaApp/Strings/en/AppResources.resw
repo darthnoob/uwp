@@ -250,7 +250,7 @@
     <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_OfflineDirectory" xml:space="preserve">
-    <value>offline\</value>
+    <value>offline</value>
     <comment>Path of the 'offline' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SupportEmailAddress" xml:space="preserve">

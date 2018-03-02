@@ -171,7 +171,7 @@ namespace MegaApp.Services
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFilePath);
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
                 }
-                
+
                 return false;
             }
         }

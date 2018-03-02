@@ -143,15 +143,14 @@ namespace MegaApp.Database
         /// <param name="isSelectedForOffline"></param>
         public static void UpdateNode(MNode megaNode)
         {
-            var nodeOfflineLocalPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                ResourceService.AppResources.GetString("AR_OfflineDirectory"),
+            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
                 SdkService.MegaSdk.getNodePath(megaNode).Remove(0, 1).Replace("/", "\\"));
 
             var sfoNode = new SavedForOfflineDB()
             {
                 Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaNode),
                 Base64Handle = megaNode.getBase64Handle(),
-                LocalPath = nodeOfflineLocalPath,
+                LocalPath = offlineNodePath,
                 ParentBase64Handle = (SdkService.MegaSdk.getParentNode(megaNode)).getBase64Handle()
             };
 
@@ -170,15 +169,14 @@ namespace MegaApp.Database
         /// <param name="megaNode">Node to insert.</param>
         public static void InsertNode(MNode megaNode)
         {
-            var nodeOfflineLocalPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                ResourceService.AppResources.GetString("AR_OfflineDirectory"),
+            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
                 SdkService.MegaSdk.getNodePath(megaNode).Remove(0, 1).Replace("/", "\\"));
 
             var sfoNode = new SavedForOfflineDB()
             {
                 Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaNode),
                 Base64Handle = megaNode.getBase64Handle(),
-                LocalPath = nodeOfflineLocalPath,
+                LocalPath = offlineNodePath,
                 ParentBase64Handle = (SdkService.MegaSdk.getParentNode(megaNode)).getBase64Handle()
             };
 

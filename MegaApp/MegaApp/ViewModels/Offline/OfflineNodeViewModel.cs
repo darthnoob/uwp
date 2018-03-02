@@ -87,9 +87,6 @@ namespace MegaApp.ViewModels.Offline
         {
             string parentNodePath = ((new DirectoryInfo(this.NodePath)).Parent).FullName;
 
-            string sfoRootPath = Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                ResourceService.AppResources.GetString("AR_OfflineDirectory").Replace("\\", ""));
-
             if (this.IsFolder)
             {
                 await RecursiveRemoveForOffline(parentNodePath, this.Name);
