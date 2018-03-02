@@ -14,6 +14,7 @@ using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp
 {
@@ -140,7 +141,7 @@ namespace MegaApp
                 Window.Current.Activate();
 
                 // Check session and special navigation
-                await AppService.CheckActiveAndOnlineSession();
+                await AppService.CheckActiveAndOnlineSessionAsync();
 
                 // Validate product subscription license on background thread
                 Task.Run(() => LicenseService.ValidateLicensesAsync());
@@ -229,7 +230,7 @@ namespace MegaApp
 
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                    ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
+                    OkCancelDialogButtons.YesNo);
 
                 if (result)
                     await DebugService.ComposeErrorReportEmailAsync(exception);

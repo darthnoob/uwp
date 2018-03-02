@@ -30,9 +30,9 @@ namespace MegaApp.ViewModels
 
         #region Private Methods
 
-        private void LogOut()
+        private async void LogOut()
         {
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             this.MegaSdk.logout(new LogOutRequestListener());
         }

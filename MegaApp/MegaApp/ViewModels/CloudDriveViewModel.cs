@@ -163,7 +163,7 @@ namespace MegaApp.ViewModels
 
         private async void OpenLink()
         {
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             var link = await DialogService.ShowInputDialogAsync(OpenLinkText,
                 ResourceService.UiResources.GetString("UI_TypeOrPasteLink"));

@@ -67,5 +67,19 @@ namespace MegaApp.Extensions
 
             return result;
         }
+
+        /// <summary>
+        /// Begins an asynchronous operation showing a <see cref="ContentDialog"/>.
+        /// If another <see cref="ContentDialog"/> is already shown using this method, it will wait for that previous dialog
+        /// to be dismissed before showing the new one.
+        /// </summary>
+        /// <param name="dialog">The <see cref="ContentDialog"/>.</param>
+        /// <returns>The <see cref="ContentDialog"/> result as <see cref="bool"/> value.</returns>
+        /// <exception cref="InvalidOperationException">This method can only be invoked from the UI thread.</exception>
+        public static async Task<bool> ShowAsyncQueueBool(this ContentDialog dialog)
+        {
+            var result = await ShowAsyncQueue(dialog);
+            return result == ContentDialogResult.Primary;
+        }
     }
 }

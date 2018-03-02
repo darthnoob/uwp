@@ -26,18 +26,15 @@ namespace MegaApp.MegaApi
 
         #region MRequestListenerInterface
 
-        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public async virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             switch(e.getErrorCode())
             {
                 case MErrorType.API_OK:
                     if (ShowSuccesMessage)
                     {
-                        new CustomMessageDialog(
-                            SuccessMessageTitle,
-                            SuccessMessage,
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialog();
+                        await DialogService.ShowAlertAsync(
+                            SuccessMessageTitle, SuccessMessage);
                     }
 
                     if (ActionOnSucces)
@@ -70,11 +67,8 @@ namespace MegaApp.MegaApi
                     {
                         if (ShowErrorMessage)
                         {
-                            new CustomMessageDialog(
-                                ErrorMessageTitle,
-                                string.Format(ErrorMessage, e.getErrorString()),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialog();
+                            await DialogService.ShowAlertAsync(ErrorMessageTitle,
+                                string.Format(ErrorMessage, e.getErrorString()));
                         }
                     }
                     break;

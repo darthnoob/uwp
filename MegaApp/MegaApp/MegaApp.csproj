@@ -165,8 +165,6 @@
     <Compile Include="ViewModels\Contacts\ContactsListOutgoingSharedFolderViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactViewModel.cs" />
-    <Compile Include="Classes\CustomInputDialog.cs" />
-    <Compile Include="Classes\CustomMessageDialog.cs" />
     <Compile Include="Services\LinkInformationService.cs" />
     <Compile Include="Classes\NavigationObject.cs" />
     <Compile Include="Classes\Product.cs" />
@@ -216,7 +214,7 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\OkCancelAndWarningDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
@@ -337,8 +335,8 @@
     <Compile Include="Services\VideoService.cs" />
     <Compile Include="UserControls\UserControlEx.cs" />
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
-    <Compile Include="Views\Dialogs\OkCancelAndWarningDialog.xaml.cs">
-      <DependentUpon>OkCancelAndWarningDialog.xaml</DependentUpon>
+    <Compile Include="Views\Dialogs\InputDialog.xaml.cs">
+      <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\OkCancelDialog.xaml.cs">
       <DependentUpon>OkCancelDialog.xaml</DependentUpon>
@@ -570,7 +568,7 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\Dialogs\OkCancelAndWarningDialog.xaml">
+    <Page Include="Views\Dialogs\InputDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

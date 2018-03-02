@@ -7,6 +7,7 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -100,11 +101,11 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var node = this.ItemCollection.SelectedItems.First();
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
-                    this.LeaveText, this.CancelText);
+                    OkCancelDialogButtons.Custom, this.LeaveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -122,11 +123,11 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var count = this.ItemCollection.SelectedItems.Count;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
-                    this.LeaveText, this.CancelText);
+                    OkCancelDialogButtons.Custom, this.LeaveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -165,11 +166,11 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var node = this.ItemCollection.SelectedItems.First() as IMegaOutgoingSharedFolderNode;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                    this.RemoveText, this.CancelText);
+                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -187,11 +188,11 @@ namespace MegaApp.ViewModels.SharedFolders
             {
                 var count = this.ItemCollection.SelectedItems.Count;
 
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersWarning"),
-                    this.RemoveText, this.CancelText);
+                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 

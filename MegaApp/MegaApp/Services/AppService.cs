@@ -16,6 +16,7 @@ using MegaApp.MegaApi;
 using MegaApp.Views;
 using MegaApp.Views.CreateAccount;
 using MegaApp.Views.Login;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Services
 {
@@ -26,11 +27,11 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="byMainPage">The caller of method</param>
         /// <returns>True if the user has an active and online session or false in other case</returns>
-        public static async Task<bool> CheckActiveAndOnlineSession(bool byMainPage = false)
+        public static async Task<bool> CheckActiveAndOnlineSessionAsync(bool byMainPage = false)
         {
-
-            var hasActiveAndOnlineSession = Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) ||
-                                            SettingsService.HasValidSession();
+            var hasActiveAndOnlineSession = 
+                Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()) ||
+                await SettingsService.HasValidSessionAsync();
 
             if (byMainPage)
             {
@@ -74,14 +75,12 @@ namespace MegaApp.Services
             {
                 if (!hasActiveAndOnlineSession) return await SpecialNavigation();
 
-                var customMessageDialog = new CustomMessageDialog(
+                var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
                     ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
-                    App.AppInformation,
-                    MessageDialogButtons.YesNo);
+                    OkCancelDialogButtons.YesNo);
 
-                var dialogResult = await customMessageDialog.ShowDialogAsync();
-                if (dialogResult != MessageDialogResult.OkYes) return false;
+                if (!result) return false;
 
                 // First need to log out of the current account
                 var waitHandleLogout = new AutoResetEvent(false);
@@ -89,7 +88,6 @@ namespace MegaApp.Services
                 waitHandleLogout.WaitOne();
 
                 return await SpecialNavigation();
-
             }
 
             if (LinkInformationService.ActiveLink.Contains("#verify"))

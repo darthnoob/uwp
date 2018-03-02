@@ -1,5 +1,4 @@
-﻿using MegaApp.Services;
-using MegaApp.UserControls;
+﻿using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Views.Dialogs
@@ -10,24 +9,43 @@ namespace MegaApp.Views.Dialogs
 
     public sealed partial class OkCancelDialog : BaseOkCancelDialog
     {
-        public OkCancelDialog(string title, string message)
+        /// <summary>
+        /// Creates a dialog with a message, a warning and two buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="warning">Optinal warning message of the dialog (optional).</param>
+        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
+        /// <param name="primaryButton">Label of the primary button of the dialog. Default value "Ok".</param>
+        /// <param name="secondaryButton">Label of the secondary button of the dialog. Default value "Cancel".</param>
+        public OkCancelDialog(string title, string message, string warning = null,
+            OkCancelDialogButtons dialogButtons = OkCancelDialogButtons.OkCancel,
+            string primaryButton = null, string secondaryButton = null)
         {
             this.InitializeComponent();
 
-            this.ViewModel.Title = title;
-            this.ViewModel.Message = message;
-            this.ViewModel.PrimaryButtonLabel = ResourceService.UiResources.GetString("UI_Ok");
-            this.ViewModel.SecondaryButtonLabel = ResourceService.UiResources.GetString("UI_Cancel");
-        }
+            this.ViewModel.TitleText = title;
+            this.ViewModel.MessageText = message;
+            this.ViewModel.WarningText = warning ?? string.Empty;
 
-        public OkCancelDialog(string title, string message, string primaryButton, string secondaryButton)
-        {
-            this.InitializeComponent();
+            switch (dialogButtons)
+            {
+                case OkCancelDialogButtons.OkCancel:
+                default:
+                    this.ViewModel.PrimaryButtonLabel = this.ViewModel.OkText;
+                    this.ViewModel.SecondaryButtonLabel = this.ViewModel.CancelText;
+                    break;
 
-            this.ViewModel.Title = title;
-            this.ViewModel.Message = message;
-            this.ViewModel.PrimaryButtonLabel = primaryButton;
-            this.ViewModel.SecondaryButtonLabel = secondaryButton;
+                case OkCancelDialogButtons.YesNo:
+                    this.ViewModel.PrimaryButtonLabel = this.ViewModel.YesText;
+                    this.ViewModel.SecondaryButtonLabel = this.ViewModel.NoText;
+                    break;
+
+                case OkCancelDialogButtons.Custom:
+                    this.ViewModel.PrimaryButtonLabel = primaryButton ?? this.ViewModel.OkText;
+                    this.ViewModel.SecondaryButtonLabel = secondaryButton ?? this.ViewModel.CancelText;
+                    break;
+            }
         }
     }
 }

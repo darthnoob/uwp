@@ -14,6 +14,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
@@ -231,13 +232,14 @@ namespace MegaApp.ViewModels
         public async Task RenameAsync()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             var oldName = this.Name;
 
             var inputName = await DialogService.ShowInputDialogAsync(
                 ResourceService.UiResources.GetString("UI_Rename"),
                 ResourceService.UiResources.GetString("UI_TypeNewName"),
+                null, null,
                 new InputDialogSettings
                 {
                     InputText = this.Name,
@@ -290,7 +292,7 @@ namespace MegaApp.ViewModels
         public async Task<NodeActionResult> MoveAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
             if (MegaSdk.checkMove(OriginalMNode, newParentNode.OriginalMNode).getErrorCode() != MErrorType.API_OK)
             {
@@ -318,7 +320,7 @@ namespace MegaApp.ViewModels
         public async Task<NodeActionResult> CopyAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
             var copyNode = new CopyNodeRequestListenerAsync();
             var result = await copyNode.ExecuteAsync(() =>
@@ -337,7 +339,7 @@ namespace MegaApp.ViewModels
         public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
-            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline())
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync())
                 return NodeActionResult.NotOnline;
 
             var copyNode = new CopyNodeRequestListenerAsync();
@@ -391,7 +393,7 @@ namespace MegaApp.ViewModels
         public async Task<bool> RemoveAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return false;
+            if (!await IsUserOnlineAsync()) return false;
 
             if (this.OriginalMNode == null) return false;
 
@@ -464,7 +466,7 @@ namespace MegaApp.ViewModels
         public async void GetLinkAsync(bool showLinkDialog = true)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             if (this.OriginalMNode.isExported())
             {
@@ -499,7 +501,7 @@ namespace MegaApp.ViewModels
         public async void SetLinkExpirationTime(long expireTime)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline() || expireTime < 0) return;
+            if (!await IsUserOnlineAsync() || expireTime < 0) return;
 
             var exportNode = new ExporNodeRequestListenerAsync();
             this.ExportLink = await exportNode.ExecuteAsync(() =>
@@ -524,7 +526,7 @@ namespace MegaApp.ViewModels
         public async void RemoveLink()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline() || !this.OriginalMNode.isExported()) return;
+            if (!await IsUserOnlineAsync() || !this.OriginalMNode.isExported()) return;
 
             var disableExportNode = new DisableExportRequestListenerAsync();
             var result = await disableExportNode.ExecuteAsync(() =>
@@ -561,7 +563,7 @@ namespace MegaApp.ViewModels
         public async void Download(TransferQueue transferQueue)
         {
             // User must be online to perform this operation
-            if ((this.Parent?.Type != ContainerType.FolderLink) && !IsUserOnline()) return;
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync()) return;
             if (transferQueue == null) return;
 
             var downloadFolder = await FolderService.SelectFolder();

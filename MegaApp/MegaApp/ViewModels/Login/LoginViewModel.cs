@@ -172,7 +172,7 @@ namespace MegaApp.ViewModels.Login
         /// Log in to a MEGA account using a session key and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        public async Task<bool> FastLogin()
+        public async Task<bool> FastLoginAsync()
         {
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;
@@ -189,9 +189,9 @@ namespace MegaApp.ViewModels.Login
                 this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
                 this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
-                fastLoginResult = await fastLogin.ExecuteAsync(() =>
+                fastLoginResult = await fastLogin.ExecuteAsync(async () =>
                 {
-                    this.MegaSdk.fastLogin(SettingsService.LoadSetting<string>(
+                    this.MegaSdk.fastLogin(await SettingsService.LoadSettingAsync<string>(
                         ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
                         fastLogin);
                 });

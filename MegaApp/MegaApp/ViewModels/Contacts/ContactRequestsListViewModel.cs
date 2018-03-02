@@ -61,7 +61,7 @@ namespace MegaApp.ViewModels.Contacts
         public async void GetMegaContactRequests()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             await OnUiThreadAsync(() => this.ItemCollection.Clear());
 
