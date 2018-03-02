@@ -114,7 +114,12 @@ namespace MegaApp.ViewModels
             }
 
             if (this.ActiveFolderView.Equals(this.CameraUploads))
+            {
+                if (!TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName) &&
+                    this.CameraUploads?.FolderRootNode == null) return;
+
                 this.CameraUploads.LoadChildNodes();
+            }
         }
 
         #endregion
