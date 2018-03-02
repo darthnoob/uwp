@@ -125,11 +125,9 @@ namespace MegaApp.Services
         /// <param name="srcFilePath">Path of the source file</param>
         /// <param name="destFolderPath">Path of the destination folder</param>
         /// <param name="fileNewName">New name for the destination file</param>
-        /// <exception cref="DirectoryNotFoundException"/>        
-        /// <exception cref="FileNotFoundException"/>
-        /// <exception cref="UnauthorizedAccessException"/>
-        /// <exception cref="Exception"/>
-        public static async Task CopyFile(string srcFilePath, string destFolderPath, string fileNewName = null)
+        /// <returns>TRUE if the file was copied or FALSE if something failed</returns>
+        public static async Task<bool> CopyFileAsync(string srcFilePath, string destFolderPath,
+            string fileNewName = null, bool isForMove = false)
         {
             try 
             {
@@ -138,7 +136,7 @@ namespace MegaApp.Services
                 {
                     string errorMessage = "Source file does not exist or could not be found: " + srcFilePath;
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, errorMessage);
-                    throw new FileNotFoundException(errorMessage);
+                    return false;
                 }
 
                 // If the destination directory doesn't exist, create it.
@@ -150,7 +148,7 @@ namespace MegaApp.Services
                 {
                     string errorMessage = "Destination folder does not exist or could not be found: " + destFolderPath;
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, errorMessage);
-                    throw new DirectoryNotFoundException(errorMessage);
+                    return false;
                 }
 
                 fileNewName = fileNewName ?? srcFile.Name;
@@ -162,22 +160,19 @@ namespace MegaApp.Services
                     await fileStream.CopyToAsync(folderStream, 8192);
                     await folderStream.FlushAsync();
                 }
+
+                return true;
             }
             catch (Exception e) 
             {
-                string errorMessage;
-                if(e is UnauthorizedAccessException)
-                    errorMessage = "Error copying file (unauthorized access) \"" + fileNewName + "\": " + e.Message;
-                else
-                    errorMessage = "Error copying file \"" + fileNewName + "\": " + e.Message;
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, errorMessage);
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFilePath);
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
-
-                if (e is UnauthorizedAccessException)
-                    throw new UnauthorizedAccessException(errorMessage);
-                else
-                    throw new Exception(errorMessage);
+                if (!isForMove)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error copying file:", e);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFilePath);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                }
+                
+                return false;
             }
         }
 
@@ -188,21 +183,23 @@ namespace MegaApp.Services
         /// <param name="srcFilePath">Path of the source file</param>
         /// <param name="destFolderPath">Path of the destination folder</param>
         /// <param name="fileNewName">New name for the destination file</param>
-        /// <exception cref="DirectoryNotFoundException"/>
-        /// <exception cref="FileNotFoundException"/>
-        /// <exception cref="UnauthorizedAccessException"/>
-        /// <exception cref="Exception"/>
-        public static async Task MoveFile(string srcFilePath, string destFolderPath, string fileNewName = null)
+        /// <returns>TRUE if the file was moved or FALSE if something failed</returns>
+        public static async Task<bool> MoveFileAsync(string srcFilePath, string destFolderPath, string fileNewName = null)
         {
             try
             {
-                await CopyFile(srcFilePath, destFolderPath, fileNewName);
-                DeleteFile(srcFilePath);
+                bool result = true;
+                result &= await CopyFileAsync(srcFilePath, destFolderPath, fileNewName, true);
+                result &= DeleteFile(srcFilePath);
+                return result;
             }
-            catch (DirectoryNotFoundException e) { throw new DirectoryNotFoundException(e.Message); }
-            catch (FileNotFoundException e) { throw new FileNotFoundException(e.Message); }
-            catch (UnauthorizedAccessException e) { throw new UnauthorizedAccessException(e.Message); }
-            catch (Exception e) { throw new Exception(e.Message); }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error moving file:", e);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFilePath);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                return false;
+            }
         }
        
         public static async Task<bool> OpenFile(string filePath)

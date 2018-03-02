@@ -162,21 +162,18 @@ namespace MegaApp.Services
         /// <param name="srcFolderPath">Path of the source folder</param>
         /// <param name="destFolderPath">Path of the destination folder for the copied folder</param>
         /// <param name="folderNewName">New name for the folder</param>
-        /// <exception cref="DirectoryNotFoundException"/>
-        /// <exception cref="UnauthorizedAccessException"/>
-        /// <exception cref="Exception"/>
-        public static async Task CopyFolder(string srcFolderPath, string destFolderPath, string folderNewName = null)
+        /// <returns>TRUE if the folder was copied or FALSE if something failed</returns>
+        public static async Task<bool> CopyFolderAsync(string srcFolderPath, string destFolderPath,
+            string folderNewName = null, bool isForMove = false)
         {
             try
             {
-                // Get the subfolders for the specified folder.
-                DirectoryInfo srcFolder = new DirectoryInfo(srcFolderPath);
-
+                DirectoryInfo srcFolder = new DirectoryInfo(srcFolderPath);                
                 if (!srcFolder.Exists)
                 {
                     string errorMessage = "Source folder does not exist or could not be found: " + srcFolderPath;
                     LogService.Log(MLogLevel.LOG_LEVEL_ERROR, errorMessage);
-                    throw new DirectoryNotFoundException(errorMessage);
+                    return false;
                 }
 
                 folderNewName = folderNewName ?? srcFolder.Name;
@@ -186,32 +183,37 @@ namespace MegaApp.Services
                 if (!Directory.Exists(destFolderPath))
                     Directory.CreateDirectory(destFolderPath);
 
+                bool result = true;
+
                 // Get the files in the folder and copy them to the new location.
                 FileInfo[] files = srcFolder.GetFiles();
                 foreach (FileInfo file in files)
-                    file.CopyTo(Path.Combine(destFolderPath, file.Name), false);
+                    result &= await FileService.CopyFileAsync(file.FullName, destFolderPath, file.Name);
 
                 // Get the subfolders in the folder and copy them to the new location.
                 DirectoryInfo[] subfolders = srcFolder.GetDirectories();
                 foreach (DirectoryInfo subfolder in subfolders)
-                    await CopyFolder(subfolder.FullName, destFolderPath, subfolder.Name);
+                    result &= await CopyFolderAsync(subfolder.FullName, destFolderPath, subfolder.Name);
+
+                if (!result && !isForMove)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error copying folder:");
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                }
+
+                return result;
             }
             catch (Exception e)
             {
-                string errorMessage;
-                if (e is UnauthorizedAccessException)
-                    errorMessage = "Error copying folder (unauthorized access) \"" + folderNewName + "\": " + e.Message;
-                else
-                    errorMessage = "Error copying folder \"" + folderNewName + "\": " + e.Message;
-
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, errorMessage);
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
-                
-                if (e is UnauthorizedAccessException)
-                    throw new UnauthorizedAccessException(errorMessage);
-                else
-                    throw new Exception(errorMessage);
+                if (!isForMove)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error copying folder:", e);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                }
+                    
+                return false;
             }
         }
 
@@ -222,19 +224,23 @@ namespace MegaApp.Services
         /// <param name="srcFolderPath">Path of the source folder</param>
         /// <param name="destFolderPath">Path of the destination folder for the moved folder</param>
         /// <param name="newFolderName">New name for the folder</param>
-        /// <exception cref="DirectoryNotFoundException"/>
-        /// <exception cref="UnauthorizedAccessException"/>
-        /// <exception cref="Exception"/>
-        public static async Task MoveFolder(string srcFolderPath, string destFolderPath, string folderNewName = null)
+        /// <returns>TRUE if the folder was moved or FALSE if something failed</returns>
+        public static async Task<bool> MoveFolderAsync(string srcFolderPath, string destFolderPath, string folderNewName = null)
         {
             try
             {
-                await CopyFolder(srcFolderPath, destFolderPath, folderNewName);
-                DeleteFolder(srcFolderPath, true);
+                bool result = true;
+                result &= await CopyFolderAsync(srcFolderPath, destFolderPath, folderNewName, true);
+                result &= DeleteFolder(srcFolderPath, true);
+                return result;
             }
-            catch (DirectoryNotFoundException e) { throw new DirectoryNotFoundException(e.Message); }
-            catch (UnauthorizedAccessException e) { throw new UnauthorizedAccessException(e.Message); }
-            catch (Exception e) { throw new Exception(e.Message); }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error moving folder:", e);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                return false;
+            }
         }
 
         public static async Task<StorageFolder> SelectFolder()
@@ -289,12 +295,7 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="path">Path to check</param>
         /// <returns>TRUE if is the root of the offline folder or FALSE in other case</returns>
-        public static bool IsOfflineRootFolder(string path)
-        {
-            if (!path.Trim().EndsWith("\\"))
-                path = path.Insert(path.Length, "\\");
-
-            return (string.Compare(AppService.GetOfflineDirectoryPath(), path) == 0) ? true : false;
-        }
+        public static bool IsOfflineRootFolder(string path) =>
+            string.Compare(AppService.GetOfflineDirectoryPath(), path) == 0;
     }    
 }

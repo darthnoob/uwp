@@ -228,9 +228,9 @@ namespace MegaApp.ViewModels
                 if (this.ExternalDownloadPath == null) return false;
                 
                 if (this.Transfer.isFolderTransfer())
-                    await FolderService.MoveFolder(srcPath, this.ExternalDownloadPath, destName);
+                    await FolderService.MoveFolderAsync(srcPath, this.ExternalDownloadPath, destName);
                 else
-                    await FileService.MoveFile(srcPath, this.ExternalDownloadPath, destName);
+                    await FileService.MoveFileAsync(srcPath, this.ExternalDownloadPath, destName);
 
                 return true;
             }

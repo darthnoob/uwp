@@ -632,9 +632,9 @@ namespace MegaApp.ViewModels
             if (existingNode != null)
             {
                 if (this.IsFolder)
-                    await FolderService.CopyFolder(existingNode.LocalPath, parentNodePath);
+                    await FolderService.CopyFolderAsync(existingNode.LocalPath, parentNodePath);
                 else
-                    await FileService.CopyFile(existingNode.LocalPath, parentNodePath);
+                    await FileService.CopyFileAsync(existingNode.LocalPath, parentNodePath);
 
                 SavedForOfflineDB.InsertNode(this.OriginalMNode);
             }
