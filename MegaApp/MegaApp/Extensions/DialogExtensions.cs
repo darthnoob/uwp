@@ -79,7 +79,7 @@ namespace MegaApp.Extensions
         public static async Task<bool> ShowAsyncQueueBool(this ContentDialog dialog)
         {
             var result = await ShowAsyncQueue(dialog);
-            return result == ContentDialogResult.Primary ? true : false;
+            return result == ContentDialogResult.Primary;
         }
     }
 }
