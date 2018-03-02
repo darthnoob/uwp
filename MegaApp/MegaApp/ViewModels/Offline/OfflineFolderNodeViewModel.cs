@@ -21,6 +21,17 @@ namespace MegaApp.ViewModels.Offline
             this.DefaultImagePathData = ResourceService.VisualResources.GetString("VR_FolderTypePath_default");
         }
 
+        #region Properties
+
+        private string _contents;
+        public string Contents
+        {
+            get { return _contents; }
+            set { SetField(ref _contents, value); }
+        }
+
+        #endregion
+
         #region Methods
 
         public void Update(DirectoryInfo folderInfo)
@@ -33,7 +44,6 @@ namespace MegaApp.ViewModels.Offline
             this.Name = folderInfo.Name;
             this.NodePath = folderInfo.FullName;
             this.Size = 0;
-            this.SizeText = this.Size.ToStringAndSuffix(2);
             this.IsFolder = true;
             this.CreationTime = folderInfo.CreationTime.ToString("dd MMM yyyy");
             this.ModificationTime = folderInfo.LastWriteTime.ToString("dd MMM yyyy");
@@ -69,7 +79,7 @@ namespace MegaApp.ViewModels.Offline
                         childFiles == 1 ? this.SingleFileString : this.MultipleFilesString);
                 }
 
-                OnUiThread(() => this.Information = infoString);
+                OnUiThread(() => this.Contents = infoString);
             }
             catch (Exception) { }
         }

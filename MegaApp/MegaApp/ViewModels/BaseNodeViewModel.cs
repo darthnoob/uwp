@@ -6,6 +6,7 @@ using mega;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
+using MegaApp.Extensions;
 
 namespace MegaApp.ViewModels
 {
@@ -65,7 +66,16 @@ namespace MegaApp.ViewModels
 
         public ObservableCollection<IBaseNode> ParentCollection { get; set; }
 
-        public ulong Size { get; set; }
+        private ulong _size;
+        public ulong Size
+        {
+            get { return _size; }
+            set
+            {
+                SetField(ref _size, value);
+                OnPropertyChanged(nameof(this.SizeText));
+            }
+        }
 
         private Uri _thumbnailImageUri;
         public Uri ThumbnailImageUri
@@ -87,13 +97,6 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        private string _information;
-        public string Information
-        {
-            get { return _information; }
-            set { SetField(ref _information, value); }
-        }
-
         private bool _IsDefaultImage;
         public bool IsDefaultImage
         {
@@ -101,12 +104,7 @@ namespace MegaApp.ViewModels
             set { SetField(ref _IsDefaultImage, value); }
         }
 
-        private string _sizeText;
-        public string SizeText
-        {
-            get { return _sizeText; }
-            set { SetField(ref _sizeText, value); }
-        }
+        public string SizeText => this.Size.ToStringAndSuffix(1);
 
         #endregion
     }

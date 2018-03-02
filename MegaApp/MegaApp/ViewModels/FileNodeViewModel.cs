@@ -14,7 +14,6 @@ namespace MegaApp.ViewModels
             ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
-            SizeText = Size.ToStringAndSuffix(1);
             Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
         }
 
