@@ -10,7 +10,6 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Database;
 using MegaApp.Enums;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -608,10 +607,10 @@ namespace MegaApp.ViewModels
 
             MNode parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
 
-            // If is a public node (link) the destination folder is the SFO root
-            string parentNodePath = ParentContainerType == ContainerType.FileLink || ParentContainerType == ContainerType.FolderLink ?
-                AppService.GetOfflineDirectoryPath() :
-                Path.Combine(AppService.GetOfflineDirectoryPath(), (SdkService.MegaSdk.getNodePath(parentNode)).Remove(0, 1).Replace("/", "\\"));
+            // If is an incoming share, file link or folder link, the destination folder is the SFO root,
+            // so the parent handle is the handle of the root node.
+            string parentNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
+                parentNode != null ? SdkService.MegaSdk.getNodePath(parentNode).Remove(0, 1).Replace("/", "\\") : string.Empty);
 
             if (!FolderService.FolderExists(parentNodePath))
                 FolderService.CreateFolder(parentNodePath);
@@ -653,9 +652,11 @@ namespace MegaApp.ViewModels
 
             MNode parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
 
+            // If is an incoming share, file link or folder link, the destination folder is the SFO root,
+            // so the parent handle is the handle of the root node.
             string parentNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
-                (SdkService.MegaSdk.getNodePath(parentNode)).Remove(0, 1).Replace("/", "\\"));
-
+                parentNode != null ? SdkService.MegaSdk.getNodePath(parentNode).Remove(0, 1).Replace("/", "\\") : string.Empty);
+            
             var nodePath = Path.Combine(parentNodePath, this.Name);
 
             // Search if the file has a pending transfer for offline and cancel it on this case                

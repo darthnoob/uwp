@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using mega;
+using MegaApp.Database;
+using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Services;
 using MegaApp.ViewModels;
@@ -31,22 +34,16 @@ namespace MegaApp.MegaApi
             switch (e.getErrorCode())
             {
                 case MErrorType.API_OK:
-                    switch (transfer.getType())
+                    if (transfer.getType() == MTransferType.TYPE_DOWNLOAD)
                     {
-                        case MTransferType.TYPE_DOWNLOAD:
-                            var folderNode = megaTransfer.SelectedNode as FolderNodeViewModel;
-                            if (folderNode != null)
-                            {
-                                if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, folderNode.Name))
-                                    UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
-                            }
-                            break;
+                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                        {
+                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
+                            return;
+                        }
 
-                        case MTransferType.TYPE_UPLOAD:
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        if (megaTransfer.IsSaveForOfflineTransfer)
+                            this.AddOfflineNodeFromTransfer(megaTransfer);
                     }
                     break;
 
@@ -94,53 +91,37 @@ namespace MegaApp.MegaApi
             {
                 case MErrorType.API_OK:
                     UiService.OnUiThread(() => megaTransfer.TransferedBytes = megaTransfer.TotalBytes);
-                    switch (megaTransfer.Type)
+                    if (megaTransfer.Type == MTransferType.TYPE_DOWNLOAD)
                     {
-                        case MTransferType.TYPE_DOWNLOAD:
-                            bool result = false;
-
-                            //If is download transfer of an image file 
+                        //If is download transfer of an image file 
+                        if (megaTransfer.SelectedNode is ImageNodeViewModel)
+                        {
                             var imageNode = megaTransfer.SelectedNode as ImageNodeViewModel;
-                            if (imageNode != null)
-                            {
-                                UiService.OnUiThread(() => imageNode.ImageUri = new Uri(megaTransfer.TransferPath));
 
-                                if (megaTransfer.AutoLoadImageOnFinish)
+                            UiService.OnUiThread(() => imageNode.ImageUri = new Uri(megaTransfer.TransferPath));
+
+                            if (megaTransfer.AutoLoadImageOnFinish)
+                            {
+                                UiService.OnUiThread(() =>
                                 {
-                                    UiService.OnUiThread(() =>
-                                    {
-                                        if (imageNode.OriginalMNode.hasPreview()) return;
-                                        imageNode.PreviewImageUri = new Uri(imageNode.PreviewPath);
-                                        imageNode.IsBusy = false;
-                                    });
-                                }
-
-                                result = await megaTransfer.FinishDownload(megaTransfer.TransferPath, imageNode.Name);
+                                    if (imageNode.OriginalMNode.hasPreview()) return;
+                                    imageNode.PreviewImageUri = new Uri(imageNode.PreviewPath);
+                                    imageNode.IsBusy = false;
+                                });
                             }
-                            else //If is a download transfer of other file type
-                            {
-                                var node = megaTransfer.SelectedNode as FileNodeViewModel;
-                                if (node != null)
-                                    result = await megaTransfer.FinishDownload(megaTransfer.TransferPath, node.Name);
-                            }
+                        }
 
-                            UiService.OnUiThread(() =>
-                            {
-                                if (!result)
-                                    megaTransfer.TransferState = MTransferState.STATE_FAILED;
-                                else
-                                    TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer);
-                            });
-                            break;
+                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                        {
+                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
+                            return;
+                        }
 
-                        case MTransferType.TYPE_UPLOAD:
-                            UiService.OnUiThread(() =>
-                                TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));
-                            break;
-
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        if (megaTransfer.IsSaveForOfflineTransfer)
+                            this.AddOfflineNodeFromTransfer(megaTransfer);
                     }
+
+                    UiService.OnUiThread(() => TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));
                     break;
 
                 case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
@@ -155,6 +136,35 @@ namespace MegaApp.MegaApi
                     ProcessDefaultError(transfer);
                     break;
             }
+        }
+
+        private void AddOfflineNodeFromTransfer(TransferObjectModel megaTransfer)
+        {
+            var parentNode = SdkService.MegaSdk.getParentNode(megaTransfer.SelectedNode.OriginalMNode);
+
+            // Need get the path on the transfer finish because the file name can be changed if already exists in the destiny path.
+            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
+                parentNode != null ? SdkService.MegaSdk.getNodePath(parentNode).Remove(0, 1).Replace("/", "\\") : string.Empty,
+                megaTransfer.Transfer.getFileName());
+
+            var sfoNode = new SavedForOfflineDB
+            {
+                Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaTransfer.SelectedNode.OriginalMNode),
+                Base64Handle = megaTransfer.SelectedNode.OriginalMNode.getBase64Handle(),
+                LocalPath = offlineNodePath
+            };
+
+            // If is an incoming share, file link or folder link, the destination folder is the SFO root,
+            // so the parent handle is the handle of the root node.
+            sfoNode.ParentBase64Handle = parentNode != null ? parentNode.getBase64Handle() :
+                SdkService.MegaSdk.getRootNode().getBase64Handle();
+
+            if (SavedForOfflineDB.ExistsNodeByLocalPath(sfoNode.LocalPath))
+                SavedForOfflineDB.UpdateNode(sfoNode);
+            else
+                SavedForOfflineDB.InsertNode(sfoNode);
+
+            UiService.OnUiThread(() => megaTransfer.SelectedNode.IsSavedForOffline = true);
         }
 
         /// <summary>

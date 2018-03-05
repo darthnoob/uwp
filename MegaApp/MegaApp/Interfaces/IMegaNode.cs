@@ -103,6 +103,11 @@ namespace MegaApp.Interfaces
         MNode OriginalMNode { get; }
 
         /// <summary>
+        /// Specifies if the node is saved for offline
+        /// </summary>
+        bool IsSavedForOffline { get; set; }
+
+        /// <summary>
         /// Access level to the node
         /// </summary>
         AccessLevelViewModel AccessLevel { get; set; }

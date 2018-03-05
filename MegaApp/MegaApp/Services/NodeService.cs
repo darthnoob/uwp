@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.SharedFolders;
@@ -28,13 +29,25 @@ namespace MegaApp.Services
             return nodeList;
         }
 
-        public static NodeViewModel CreateNew(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel folder,
+        public static NodeViewModel CreateNew(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel folder = null,
             ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
         {
             if (megaNode == null) return null;
 
             try
             {
+                if (folder == null)
+                {
+                    if (megaSdk.isInCloud(megaNode))
+                        folder = new FolderViewModel(megaSdk, ContainerType.CloudDrive);
+                    if (megaSdk.isInRubbish(megaNode))
+                        folder = new FolderViewModel(megaSdk, ContainerType.RubbishBin);
+                    if (megaSdk.isInShare(megaNode))
+                        folder = new FolderViewModel(megaSdk, ContainerType.InShares);
+                    if (megaSdk.isOutShare(megaNode))
+                        folder = new FolderViewModel(megaSdk, ContainerType.OutShares);
+                }
+
                 switch (megaNode.getType())
                 {
                     case MNodeType.TYPE_UNKNOWN:
