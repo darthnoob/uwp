@@ -153,7 +153,8 @@ namespace MegaApp.Database
                 {
                     db.RunInTransaction(() =>
                     {
-                        db.Update(item);
+                        try { db.Update(item); }
+                        catch (Exception e){ LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error updating item of the DB", e); }
                     });
                 }
             }
@@ -175,7 +176,8 @@ namespace MegaApp.Database
                 {
                     db.RunInTransaction(() =>
                     {
-                        db.Insert(newItem);
+                        try { db.Insert(newItem); }
+                        catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error inserting item in the DB", e); }
                     });
                 }
             }
@@ -202,7 +204,8 @@ namespace MegaApp.Database
                     {
                         db.RunInTransaction(() =>
                         {
-                            db.Delete(existingItem);
+                            try { db.Delete(existingItem); }
+                            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error deleting item from the DB", e); }
                         });
                     }
                 }
@@ -225,7 +228,8 @@ namespace MegaApp.Database
                 {
                     db.RunInTransaction(() =>
                     {
-                        db.Delete(item);
+                        try { db.Delete(item); }
+                        catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error deleting item from the DB", e); }
                     });
                 }
             }
