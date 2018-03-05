@@ -2,7 +2,6 @@
 using System.IO;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 

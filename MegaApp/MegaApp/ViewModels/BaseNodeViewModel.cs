@@ -93,6 +93,8 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public abstract void SetThumbnailImage();
+
         #endregion
 
         #region Properties

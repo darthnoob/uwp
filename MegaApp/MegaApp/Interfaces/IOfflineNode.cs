@@ -25,11 +25,6 @@ namespace MegaApp.Interfaces
         Task<NodeActionResult> RemoveAsync(bool isMultiRemove);
 
         /// <summary>
-        /// Load node thumbnail if available on disk
-        /// </summary>
-        void SetThumbnailImage();
-
-        /// <summary>
         /// Open the file that is represented by this node
         /// </summary>
         void Open();

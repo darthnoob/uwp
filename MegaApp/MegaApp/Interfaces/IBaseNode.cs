@@ -80,5 +80,14 @@ namespace MegaApp.Interfaces
         ObservableCollection<IBaseNode> ChildCollection { get; set; }
 
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Load node thumbnail if available on disk
+        /// </summary>
+        void SetThumbnailImage();
+
+        #endregion
     }
 }

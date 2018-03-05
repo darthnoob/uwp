@@ -17,9 +17,9 @@ namespace MegaApp.ViewModels
     /// </summary>
     /// <typeparam name="T">
     /// Type of the collection items. Supported types:
+    /// - IBaseNode
     /// - IMegaContact
     /// - IMegaContactRequest
-    /// - IMegaNode
     /// </typeparam>
     public class CollectionViewModel<T> : BaseSdkViewModel
     {
@@ -255,8 +255,8 @@ namespace MegaApp.ViewModels
                 {
                     foreach (var item in e.NewItems)
                     {
-                        if (item is IMegaNode)
-                            (item as IMegaNode)?.SetThumbnailImage();
+                        if (item is IBaseNode)
+                            (item as IBaseNode)?.SetThumbnailImage();
                     }
                 });
             }

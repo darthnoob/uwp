@@ -72,11 +72,6 @@ namespace MegaApp.Interfaces
         void Update(MNode megaNode, bool externalUpdate = false);
 
         /// <summary>
-        /// Load node thumbnail if available on disk. If not availble download it with the Mega SDK
-        /// </summary>
-        void SetThumbnailImage();
-
-        /// <summary>
         /// Open the file that is represented by this node
         /// </summary>
         void Open();

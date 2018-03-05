@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using MegaApp.Database;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 

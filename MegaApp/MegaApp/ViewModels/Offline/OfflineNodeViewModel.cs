@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.Storage;
 using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -19,6 +18,35 @@ namespace MegaApp.ViewModels.Offline
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
         }
+
+        #region IBaseNode Interface
+
+        #region Methods
+
+        public override void SetThumbnailImage()
+        {
+            if (this.IsFolder) return;
+
+            if (this.ThumbnailImageUri != null && !IsDefaultImage) return;
+
+            if (this.IsImage)
+            {
+                if (FileService.FileExists(ThumbnailPath))
+                {
+                    this.IsDefaultImage = false;
+                    this.ThumbnailImageUri = new Uri(ThumbnailPath);
+                }
+                else
+                {
+                    this.IsDefaultImage = true;
+                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
 
         #region IOfflineNode Interface
 
@@ -49,27 +77,6 @@ namespace MegaApp.ViewModels.Offline
             await RemoveForOffline();
 
             return NodeActionResult.IsBusy;
-        }
-
-        public void SetThumbnailImage()
-        {
-            if (this.IsFolder) return;
-
-            if (this.ThumbnailImageUri != null && !IsDefaultImage) return;
-
-            if (this.IsImage)
-            {
-                if (FileService.FileExists(ThumbnailPath))
-                {
-                    this.IsDefaultImage = false;
-                    this.ThumbnailImageUri = new Uri(ThumbnailPath);
-                }
-                else
-                {
-                    this.IsDefaultImage = true;
-                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-                }
-            }
         }
 
         public virtual void Open()

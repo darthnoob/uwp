@@ -721,7 +721,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public void SetThumbnailImage()
+        public override void SetThumbnailImage()
         {
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
