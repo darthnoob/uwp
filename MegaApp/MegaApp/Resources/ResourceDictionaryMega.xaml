@@ -421,6 +421,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
@@ -480,8 +481,19 @@
                         TextWrapping="NoWrap" />
                 </Grid>
 
-                <Path
+                <Viewbox
                     Grid.Column="2"
+                    Height="10"
+                    Width="10"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
+                </Viewbox>
+
+                <Path
+                    Grid.Column="3"
                     Height="6"
                     Width="10"
                     Margin="12,0,0,0"
@@ -497,7 +509,7 @@
 
                 <TextBlock
                     x:Name="txtCreated"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Opacity="0.5"
@@ -598,6 +610,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock
                         Grid.Column="0"
@@ -611,20 +624,30 @@
                     <StackPanel
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding IsExportedOrSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
-                            Margin="8,0"
+                            Margin="8,0,0,0"
                             Fill="{ThemeResource MegaAppForegroundBrush}"
                             Height="4" Width="4"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center" />
+                        <Viewbox
+                            Margin="8,0,0,0"
+                            Height="10" Width="10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
+                        </Viewbox>
                         <Path
+                            Margin="8,0,0,0"
                             Height="6"
                             Width="10"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
-                            Stretch="Uniform">
+                            Stretch="Uniform"
+                            Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Path.Fill>
                                 <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
                             </Path.Fill>
@@ -693,6 +716,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
@@ -735,8 +759,19 @@
                         TextWrapping="NoWrap" />
                 </Grid>
 
-                <Path
+                <Viewbox
                     Grid.Column="2"
+                    Height="10"
+                    Width="10"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
+                </Viewbox>
+                
+                <Path
+                    Grid.Column="3"
                     Height="6"
                     Width="10"
                     Margin="12,0,0,0"
@@ -752,7 +787,7 @@
 
                 <TextBlock
                     x:Name="txtCreated"
-                    Grid.Column="3"
+                    Grid.Column="4"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Opacity="0.5"
@@ -851,20 +886,30 @@
                     <StackPanel
                         Grid.Column="1"
                         Orientation="Horizontal"
-                        Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding IsExportedOrSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
-                            Margin="8,0"
+                            Margin="8,0,0,0"
                             Fill="{ThemeResource MegaAppForegroundBrush}"
                             Height="4" Width="4"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center" />
+                        <Viewbox
+                            Margin="8,0,0,0"
+                            Height="10" Width="10"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
+                        </Viewbox>
                         <Path
+                            Margin="8,0,0,0"
                             Height="6"
                             Width="10"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
-                            Stretch="Uniform">
+                            Stretch="Uniform"
+                            Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Path.Fill>
                                 <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
                             </Path.Fill>

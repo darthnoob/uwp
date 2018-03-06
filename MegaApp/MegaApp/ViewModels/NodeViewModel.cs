@@ -772,15 +772,25 @@ namespace MegaApp.ViewModels
         public bool IsSavedForOffline
         {
             get { return _isSavedForOffline; }
-            set { SetField(ref _isSavedForOffline, value); }
+            set
+            {
+                SetField(ref _isSavedForOffline, value);
+                OnPropertyChanged(nameof(this.IsExportedOrSavedForOffline));
+            }
         }
 
         private bool _isExported;
         public bool IsExported
         {
             get { return _isExported; }
-            set { SetField(ref _isExported, value); }
+            set
+            {
+                SetField(ref _isExported, value);
+                OnPropertyChanged(nameof(this.IsExportedOrSavedForOffline));
+            }
         }
+
+        public bool IsExportedOrSavedForOffline => this.IsExported || this.IsSavedForOffline;
 
         public TransferObjectModel Transfer { get; set; }
 
