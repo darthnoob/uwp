@@ -19,7 +19,7 @@
         <TextBlock
             Margin="24, 24, 0, 0"
             Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.Title, Mode=OneWay}"/>
+            Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"/>
     </dialogViews:BaseAlertDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
@@ -27,6 +27,6 @@
             x:Name="Message"
             Margin="0, 16, 0, 24"
             Style="{StaticResource MegaDialogContentFontStyle}"
-            Text="{x:Bind ViewModel.Message, Mode=OneWay}"/>
+            Text="{x:Bind ViewModel.MessageText, Mode=OneWay}"/>
     </Grid>
 </dialogViews:BaseAlertDialog>

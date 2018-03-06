@@ -224,7 +224,7 @@ namespace MegaApp.ViewModels
                 if (this.Transfer.getFolderTransferTag() > 0) return true;
 
                 string defaultDownloadLocation = ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation");
-                this.ExternalDownloadPath = this.ExternalDownloadPath ?? SettingsService.LoadSetting<string>(defaultDownloadLocation, null);
+                this.ExternalDownloadPath = this.ExternalDownloadPath ?? await SettingsService.LoadSettingAsync<string>(defaultDownloadLocation, null);
                 if (this.ExternalDownloadPath == null) return false;
                 
                 if (this.Transfer.isFolderTransfer())

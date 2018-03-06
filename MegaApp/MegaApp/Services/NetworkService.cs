@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
-using MegaApp.Classes;
 
 namespace MegaApp.Services
 {
@@ -13,7 +13,7 @@ namespace MegaApp.Services
         /// </summary>        
         /// <param name="showMessageDialog">Boolean parameter to indicate if show a message if no Intenert connection</param>
         /// <returns>True if there is an available network connection., False in other case.</returns>
-        public static bool IsNetworkAvailable(bool showMessageDialog = false)
+        public static async Task<bool> IsNetworkAvailableAsync(bool showMessageDialog = false)
         {
             if (NetworkInterface.GetIsNetworkAvailable())
             {
@@ -24,12 +24,9 @@ namespace MegaApp.Services
 
             if (showMessageDialog)
             {
-                // TODO change to dialog service
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.UiResources.GetString("UI_NoInternetConnection"),
-                    ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"));
             }
 
             return false;

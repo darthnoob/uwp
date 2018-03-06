@@ -244,7 +244,7 @@ namespace MegaApp.Services
         public static async Task ValidateLicensesAsync()
         {
             // If no Internet connection, stop the check
-            if(!NetworkService.IsNetworkAvailable()) return;
+            if(!await NetworkService.IsNetworkAvailableAsync()) return;
             // If the Windows Store product listing is not available, stop the check
             var available = await GetIsAvailableAsync();
             if (!available) return;

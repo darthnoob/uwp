@@ -22,6 +22,11 @@ namespace MegaApp.UserControls
 
     public sealed partial class FolderExplorer : BaseFolderExplorer
     {
+        /// <summary>
+        /// Flag to indicate that the multi select is being disabled
+        /// </summary>
+        private bool isMultiSelectDisabling;
+
         public FolderExplorer()
         {
             this.InitializeComponent();
@@ -112,9 +117,16 @@ namespace MegaApp.UserControls
         {
             this.FolderOptionsButton.IsEnabled = true;
 
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-            this.ListView.SelectionMode = ListViewSelectionMode.Extended;
-            this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Extended;
+                this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+            }
+            else
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Single;
+                this.GridView.SelectionMode = ListViewSelectionMode.Single;
+            }
         }
 
         public void DisableSelection()
@@ -154,6 +166,9 @@ namespace MegaApp.UserControls
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
+            // Set the flag to indicate that the multi select is being disabled
+            this.isMultiSelectDisabling = true;
+
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
@@ -169,8 +184,8 @@ namespace MegaApp.UserControls
             }
             else
             {
-                this.ListView.SelectionMode = ListViewSelectionMode.None;
-                this.GridView.SelectionMode = ListViewSelectionMode.None;
+                this.ListView.SelectionMode = ListViewSelectionMode.Single;
+                this.GridView.SelectionMode = ListViewSelectionMode.Single;
             }
 
             // Restore the selected item
@@ -276,11 +291,13 @@ namespace MegaApp.UserControls
             IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
             if (itemTapped == null) return;
 
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop && !this.isMultiSelectDisabling)
             {
                 this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
                 return;
             }
+
+            if (this.isMultiSelectDisabling) this.isMultiSelectDisabling = false;
 
             if (itemTapped is ImageNodeViewModel)
                 (itemTapped as ImageNodeViewModel).InViewingRange = true;
@@ -290,7 +307,7 @@ namespace MegaApp.UserControls
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (this.ViewModel.Folder.IsPanelOpen)
                 return;
 
             IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
@@ -305,14 +322,18 @@ namespace MegaApp.UserControls
                 return;
 
             IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
+
             if (itemTapped == null) return;
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive) return;
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems.Clear();
-            ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnFolderOptionsButtonClicked(object sender, RoutedEventArgs e)

@@ -6,6 +6,7 @@ using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.Views;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.MegaApi
 {
@@ -79,21 +80,17 @@ namespace MegaApp.MegaApi
 
         public void onAccountUpdate(MegaSDK api)
         {
-            UiService.OnUiThread(() =>
+            UiService.OnUiThread(async () =>
             {
-                var customMessageDialog = new CustomMessageDialog(
+                var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_AccountUpdated_Title"),
                     ResourceService.AppMessages.GetString("AM_AccountUpdate"),
-                    App.AppInformation,
-                    MessageDialogButtons.YesNo);
+                    OkCancelDialogButtons.YesNo);
 
-                customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Default));
-                };
+                if (!result) return;
 
-                customMessageDialog.ShowDialog();
+                NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Default));
             });
         }
 

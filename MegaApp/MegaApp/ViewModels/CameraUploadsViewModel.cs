@@ -121,6 +121,7 @@ namespace MegaApp.ViewModels
                     CameraUploadsTaskIsOn = false;
                     return;
                 }
+
                 TaskService.UnregisterBackgroundTask(
                     TaskService.CameraUploadTaskEntryPoint,
                     TaskService.CameraUploadTaskName);
@@ -129,7 +130,10 @@ namespace MegaApp.ViewModels
                     TaskService.CameraUploadTaskEntryPoint,
                     TaskService.CameraUploadTaskName,
                     new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
-                    null);}
+                    null);
+
+                await SdkService.GetCameraUploadRootNodeAsync();
+            }
             else
             {
                 TaskService.UnregisterBackgroundTask(

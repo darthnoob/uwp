@@ -6,28 +6,55 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dialogViews="using:MegaApp.Views.Dialogs"
-    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
     mc:Ignorable="d"
     Margin="0, 0, 24, 24"
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
-    PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonLabel, Mode=OneWay}"
+    PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonLabel, Mode=OneTime}"
+    SecondaryButtonText="{x:Bind ViewModel.SecondaryButtonLabel, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
-    SecondaryButtonText="{x:Bind ViewModel.SecondaryButtonLabel, Mode=OneWay}"
     SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}">
     <dialogViews:BaseOkCancelDialog.Title>
         <TextBlock
             Margin="24, 24, 0, 0"
             Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.Title, Mode=OneWay}"/>
+            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
     </dialogViews:BaseOkCancelDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
-        <TextBlock
-            x:Name="Message"
-            Margin="0, 16, 0, 24"
-            Style="{StaticResource MegaDialogContentFontStyle}"
-            Text="{x:Bind ViewModel.Message, Mode=OneWay}"/>
+        <StackPanel>
+            <TextBlock 
+                x:Name="MessageText"
+                Margin="0,16,0,0"
+                Opacity="0.8"
+                Style="{StaticResource MegaDialogContentFontStyle}"
+                Text="{x:Bind ViewModel.MessageText, Mode=OneWay}"
+                TextWrapping="WrapWholeWords"/>
+            <Grid
+                Margin="0,16,0,0"
+                Visibility="{x:Bind ViewModel.WarningText, Converter={StaticResource StringVisibilityConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,4,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top">
+                    <PathIcon 
+                        Data="{x:Bind ViewModel.WarningIconPathData, Mode=OneTime}"
+                        Foreground="{StaticResource MegaRedColorBrush}" />
+                </Viewbox>
+                <TextBlock 
+                    x:Name="WarningText"
+                    Grid.Column="1"
+                    Opacity="0.8"
+                    Style="{StaticResource MegaDialogContentFontStyle}"
+                    Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"
+                    TextWrapping="WrapWholeWords"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </dialogViews:BaseOkCancelDialog>

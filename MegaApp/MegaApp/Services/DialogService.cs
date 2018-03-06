@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,10 +8,11 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.Dialogs;
+using MegaApp.ViewModels.SharedFolders;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
-using MegaApp.ViewModels.Contacts;
-using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
 {
@@ -24,53 +24,114 @@ namespace MegaApp.Services
         /// <summary>
         /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="message">Content message of the dialog</param>
-        /// <param name="button">Label of the dialog button</param>
-        public static async Task ShowAlertAsync(string title, string message, string button = null)
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Content message of the dialog.</param>
+        public static async Task ShowAlertAsync(string title, string message)
         {
-            if (button == null)
-                button = ResourceService.UiResources.GetString("UI_Ok");
+            var dialog = new AlertDialog(title, message);
+            await dialog.ShowAsyncQueue();
+        }
 
+        /// <summary>
+        /// Show an Alert Dialog that can be dismissed by a button.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Content message of the dialog.</param>
+        /// <param name="button">Label of the dialog button.</param>
+        public static async Task ShowAlertAsync(string title, string message, string button)
+        {
             var dialog = new AlertDialog(title, message, button);
             await dialog.ShowAsyncQueue();
         }
 
         /// <summary>
-        /// Show a dialog with a message and an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and "Ok"/"Cancel" buttons.
         /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="message">Message of the dialog</param>
-        /// <param name="okButton">Label for the "Ok" button</param>
-        /// <param name="cancelButton">Label for the "Cancel" button</param>
-        /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            string okButton = null, string cancelButton = null)
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <returns>True if the "Ok" button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message)
         {
-            return await ShowOkCancelAndWarningAsync(title, message, null, okButton, cancelButton);
+            var dialog = new OkCancelDialog(title, message);
+            return await dialog.ShowAsyncQueueBool();
         }
 
         /// <summary>
-        /// Show a dialog with a message, a warning and an "OK" and a "Cancel" button option
+        /// Show a dialog with a message and two buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
+        /// <param name="primaryButton">Label for the primary button.</param>
+        /// <param name="secondaryButton">Label for the secondary button.</param>
+        /// <returns>True if the primary button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message,
+            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
+        {
+            var dialog = new OkCancelDialog(title, message, null, 
+                dialogButtons, primaryButton, secondaryButton);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and "Ok"/"Cancel" buttons.
+        /// </summary>
+        /// <param name="title">Title of the dialog.</param>
+        /// <param name="message">Message of the dialog.</param>
+        /// <param name="warning">Warning of the dialog.</param>
+        /// <returns>True if the "Ok" button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning)
+        {
+            var dialog = new OkCancelDialog(title, message, warning);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show a dialog with a message, a warning and two buttons.
         /// </summary>
         /// <param name="title">Title of the dialog</param>
         /// <param name="message">Message of the dialog</param>
         /// <param name="warning">Warning of the dialog</param>
-        /// <param name="okButton">Label for the "Ok" button</param>
-        /// <param name="cancelButton">Label for the "Cancel" button</param>
-        /// <returns>True if the "OK" button is pressed, else False</returns>
-        public static async Task<bool> ShowOkCancelAndWarningAsync(string title, string message, 
-            string warning, string okButton = null, string cancelButton = null)
+        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
+        /// <param name="primaryButton">Label for the primary button.</param>
+        /// <param name="secondaryButton">Label for the secondary button.</param>
+        /// <returns>True if the primary button is pressed, else False.</returns>
+        public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning,
+            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
         {
-            if (okButton == null)
-                okButton = ResourceService.UiResources.GetString("UI_Ok");
-            if (cancelButton == null)
-                cancelButton = ResourceService.UiResources.GetString("UI_Cancel");
+            var dialog = new OkCancelDialog(title, message, warning,
+                dialogButtons, primaryButton, secondaryButton);
+            return await dialog.ShowAsyncQueueBool();
+        }
 
-            var dialog = new OkCancelAndWarningDialog(title, message, warning, okButton, cancelButton);
-            await dialog.ShowAsync();
+        /// <summary>
+        /// Show an standard input dialog.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        public static async Task<string> ShowInputDialogAsync(string title, string message,
+            InputDialogSettings settings = null)
+        {
+            var dialog = new InputDialog(title, message, null, null, settings);
+            var result = await dialog.ShowAsyncQueueBool();
+            return result ? dialog.ViewModel.InputText : null;
+        }
 
-            return dialog.DialogResult;
+        /// <summary>
+        /// Show an standard input dialog.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        public static async Task<string> ShowInputDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, InputDialogSettings settings = null)
+        {
+            var dialog = new InputDialog(title, message, primaryButton, secondaryButton, settings);
+            var result = await dialog.ShowAsyncQueueBool();
+            return result ? dialog.ViewModel.InputText : null;
         }
 
         public static async void ShowOverquotaAlert()
@@ -78,17 +139,15 @@ namespace MegaApp.Services
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No"));
+                OkCancelDialogButtons.YesNo);
 
-            if(result)
+            if (!result) return;
+
+            UiService.OnUiThread(() =>
             {
-                UiService.OnUiThread(() =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
-                });
-            }
+                NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Upgrade));
+            });
         }
 
         public static async void ShowTransferOverquotaWarning()
@@ -106,8 +165,7 @@ namespace MegaApp.Services
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
-                ResourceService.UiResources.GetString("UI_Yes"),
-                ResourceService.UiResources.GetString("UI_No"));
+                OkCancelDialogButtons.YesNo);
 
             if (result)
                 DebugService.DebugSettings.DisableDebugMode();
@@ -140,73 +198,6 @@ namespace MegaApp.Services
         public static void CloseAwaitEmailConfirmationDialog()
         {
             awaitEmailConfirmationDialog?.Hide();
-        }
-
-        /// <summary>
-        /// Show an Input Dialog to the uses
-        /// </summary>
-        /// <param name="title">Title of the dialog</param>
-        /// <param name="content">Content message of the dialog</param>
-        /// <param name="settings">Input dialog behavior/option settings</param>
-        /// <returns>The value of the input dialog when primary button was pressed, else NULL</returns>
-        public static async Task<string> ShowInputDialogAsync(string title, string content,
-            InputDialogSettings settings = null)
-        {
-            // Create default input settings if null
-            if (settings == null)
-                settings = new InputDialogSettings();
-
-            var dialog = new ContentDialog
-            {
-                IsPrimaryButtonEnabled = true,
-                IsSecondaryButtonEnabled = true,
-                PrimaryButtonText = ResourceService.UiResources.GetString("UI_Ok"),
-                SecondaryButtonText = ResourceService.UiResources.GetString("UI_Cancel"),
-                Title = title
-            };
-
-            var stackPanel = new StackPanel
-            {
-                Margin = new Thickness(0, 20, 0, 0)
-            };
-            var messageText = new TextBlock
-            {
-                Text = content,
-                Margin = new Thickness(0, 0, 0, 12),
-                TextWrapping = TextWrapping.WrapWholeWords,
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-            };
-            var input = new TextBox
-            {
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                Text = settings.InputText,
-                SelectionStart = 0,
-            };
-
-            if (settings.IgnoreExtensionInSelection)
-            {
-                var fileName = Path.GetFileNameWithoutExtension(settings.InputText);
-                input.SelectionLength = fileName.Length;
-            }
-            else
-            {
-                input.SelectionLength = settings.InputText.Length;
-            }
-
-            stackPanel.Children.Add(messageText);
-            stackPanel.Children.Add(input);
-            dialog.Content = stackPanel;
-            var result = await dialog.ShowAsyncQueue();
-            switch (result)
-            {
-                case ContentDialogResult.Primary:
-                    return input.Text;
-                case ContentDialogResult.Secondary:
-                case ContentDialogResult.None:
-                    return null;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
         }
 
         /// <summary>
@@ -616,23 +607,5 @@ namespace MegaApp.Services
 
             return menuFlyout;
         }
-    }
-
-    public class InputDialogSettings
-    {
-        /// <summary>
-        /// Default text for the input in the dialog
-        /// </summary>
-        public string InputText { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Is the text in the input selected as default
-        /// </summary>
-        public bool IsTextSelected { get; set; }
-
-        /// <summary>
-        /// Ignore extensions when the text is default selected.
-        /// </summary>
-        public bool IgnoreExtensionInSelection { get; set; }
     }
 }

@@ -317,6 +317,7 @@
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
                                             ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                            RightTapped="OnRightItemTapped"
                                             Tapped="OnItemTapped">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
@@ -402,13 +403,12 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
-                        DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding OpenLinkCommand}"
                         Label="{Binding OpenLinkText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
-                        Visibility="{Binding Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -513,7 +513,7 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
+                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="Single" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />

@@ -114,7 +114,12 @@ namespace MegaApp.ViewModels
             }
 
             if (this.ActiveFolderView.Equals(this.CameraUploads))
+            {
+                if (!TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName) &&
+                    this.CameraUploads?.FolderRootNode == null) return;
+
                 this.CameraUploads.LoadChildNodes();
+            }
         }
 
         #endregion
@@ -158,7 +163,7 @@ namespace MegaApp.ViewModels
 
         private async void OpenLink()
         {
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             var link = await DialogService.ShowInputDialogAsync(OpenLinkText,
                 ResourceService.UiResources.GetString("UI_TypeOrPasteLink"));

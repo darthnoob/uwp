@@ -995,7 +995,7 @@
                                         <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="None" />
+                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="Single" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -1007,7 +1007,7 @@
                                     <VisualState.Setters>
                                         <Setter Target="ContactNameText.Margin" Value="64,14,0,0" />
                                         <Setter Target="PART_PivotControl.Margin" Value="0,0" />
-                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />                                        
+                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Medium">
@@ -1017,7 +1017,7 @@
                                     <VisualState.Setters>
                                         <Setter Target="ContactNameText.Margin" Value="64,14,0,0" />
                                         <Setter Target="PART_PivotControl.Margin" Value="0,0" />
-                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />                                        
+                                        <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Wide">
