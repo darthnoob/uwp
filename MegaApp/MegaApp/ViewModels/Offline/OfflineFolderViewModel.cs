@@ -204,6 +204,30 @@ namespace MegaApp.ViewModels.Offline
         }
 
         /// <summary>
+        /// Sets the view mode for the folder content.
+        /// </summary>
+        /// <param name="viewMode">View mode to set.</param>
+        protected override void SetView(FolderContentViewMode viewMode)
+        {
+            switch (viewMode)
+            {
+                case FolderContentViewMode.GridView:
+                    this.NodeTemplateSelector = new OfflineNodeTemplateSelector()
+                    {
+                        FileItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFileItemContent"],
+                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFolderItemContent"]
+                    };
+                    break;
+
+                case FolderContentViewMode.ListView:
+                    SetViewDefaults();
+                    break;
+            }
+
+            base.SetView(viewMode);
+        }
+
+        /// <summary>
         /// Sets the default view mode for the folder content.
         /// </summary>
         protected override void SetViewDefaults()

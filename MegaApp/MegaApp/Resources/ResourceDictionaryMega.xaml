@@ -75,6 +75,10 @@
         x:Key="NodeTemplateSelector"
         FileItemTemplate="{StaticResource MegaNodeListViewFileItemContent}"
         FolderItemTemplate="{StaticResource MegaNodeListViewFolderItemContent}" />
+    <classes:OfflineNodeTemplateSelector
+        x:Key="OfflineNodeTemplateSelector"
+        FileItemTemplate="{StaticResource OfflineNodeListViewFileItemContent}"
+        FolderItemTemplate="{StaticResource OfflineNodeListViewFolderItemContent}" />
 
     <!--  TEMPLATES  -->
     <ControlTemplate x:Name="EmptyStateTemplate">

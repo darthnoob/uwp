@@ -27,6 +27,7 @@ namespace MegaApp.ViewModels
             this.BreadCrumb = new BreadCrumbViewModel(megaSdk);
             this.ItemCollection = new CollectionViewModel<IBaseNode>(megaSdk);
 
+            this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.ClosePanelCommand = new RelayCommand(ClosePanels);
             this.HomeSelectedCommand = new RelayCommand(BrowseToHome);
             this.ItemSelectedCommand = new RelayCommand<BreadcrumbEventArgs>(ItemSelected);
@@ -73,32 +74,6 @@ namespace MegaApp.ViewModels
 
         public abstract void LoadChildNodes();
 
-        /// <summary>
-        /// Sets the view mode for the folder content.
-        /// </summary>
-        /// <param name="viewMode">View mode to set.</param>
-        public virtual void SetView(FolderContentViewMode viewMode)
-        {
-            switch (viewMode)
-            {
-                case FolderContentViewMode.GridView:
-                    this.NodeTemplateSelector = new NodeTemplateSelector()
-                    {
-                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
-                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
-                    };
-
-                    this.ViewMode = FolderContentViewMode.GridView;
-                    this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
-                    this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_ListView");
-                    break;
-
-                case FolderContentViewMode.ListView:
-                    SetViewDefaults();
-                    break;
-            }
-        }
-
         public abstract void OnChildNodeTapped(IBaseNode baseNode);
 
         protected void BrowseToFolder(IBaseNode node)
@@ -144,6 +119,26 @@ namespace MegaApp.ViewModels
         protected void SetProgressIndication(bool onOff) => OnUiThread(() => this.IsBusy = onOff);
 
         /// <summary>
+        /// Sets the view mode for the folder content.
+        /// </summary>
+        /// <param name="viewMode">View mode to set.</param>
+        protected virtual void SetView(FolderContentViewMode viewMode)
+        {
+            switch (viewMode)
+            {
+                case FolderContentViewMode.GridView:
+                    this.ViewMode = FolderContentViewMode.GridView;
+                    this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_ListViewPathData");
+                    this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_ListView");
+                    break;
+
+                case FolderContentViewMode.ListView:
+                    SetViewDefaults();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Sets the view mode for the folder on load content.
         /// </summary>
         protected void SetViewOnLoad()
@@ -167,6 +162,28 @@ namespace MegaApp.ViewModels
             this.ViewMode = FolderContentViewMode.ListView;
             this.NextViewButtonPathData = ResourceService.VisualResources.GetString("VR_GridViewPathData");
             this.NextViewButtonLabelText = ResourceService.UiResources.GetString("UI_GridView");
+        }
+
+        /// <summary>
+        /// Changes the view mode for the folder content.
+        /// </summary>
+        private void ChangeView()
+        {
+            if (this.FolderRootNode == null) return;
+
+            switch (this.ViewMode)
+            {
+                case FolderContentViewMode.ListView:
+                    UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.GridView);
+                    SetView(FolderContentViewMode.GridView);
+                    break;
+                case FolderContentViewMode.GridView:
+                    UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
+                    SetView(FolderContentViewMode.ListView);
+                    break;
+            }
+
+            this.OnChangeViewEvent();
         }
 
         private void ItemSelected(BreadcrumbEventArgs e)

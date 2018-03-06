@@ -31,7 +31,6 @@ namespace MegaApp.ViewModels
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
-            this.ChangeViewCommand = new RelayCommand(ChangeView);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand(GetLink);
@@ -935,18 +934,39 @@ namespace MegaApp.ViewModels
         }
 
         /// <summary>
+        /// Sets the view mode for the folder content.
+        /// </summary>
+        /// <param name="viewMode">View mode to set.</param>
+        protected override void SetView(FolderContentViewMode viewMode)
+        {
+            switch (viewMode)
+            {
+                case FolderContentViewMode.GridView:
+                    this.NodeTemplateSelector = new NodeTemplateSelector()
+                    {
+                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
+                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
+                    };
+                    break;
+
+                case FolderContentViewMode.ListView:
+                    SetViewDefaults();
+                    break;
+            }
+
+            base.SetView(viewMode);
+        }
+
+        /// <summary>
         /// Sets the default view mode for the folder content.
         /// </summary>
         protected override void SetViewDefaults()
         {
-            OnUiThread(() =>
+            this.NodeTemplateSelector = new NodeTemplateSelector()
             {
-                this.NodeTemplateSelector = new NodeTemplateSelector()
-                {
-                    FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
-                    FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
-                };
-            });
+                FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
+            };
 
             base.SetViewDefaults();
         }
@@ -1056,28 +1076,6 @@ namespace MegaApp.ViewModels
                     backgroundItemCount = 512;
                     break;
             }
-        }
-
-        /// <summary>
-        /// Changes the view mode for the folder content.
-        /// </summary>
-        private void ChangeView()
-        {
-            if (this.FolderRootNode == null) return;
-
-            switch (this.ViewMode)
-            {
-                case FolderContentViewMode.ListView:
-                    UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.GridView);
-                    SetView(FolderContentViewMode.GridView);
-                    break;
-                case FolderContentViewMode.GridView:
-                    UiService.SetViewMode(this.FolderRootNode.Base64Handle, FolderContentViewMode.ListView);
-                    SetView(FolderContentViewMode.ListView);
-                    break;
-            }
-
-            this.OnChangeViewEvent();
         }
 
         private void GetCurrentOrderDirection()

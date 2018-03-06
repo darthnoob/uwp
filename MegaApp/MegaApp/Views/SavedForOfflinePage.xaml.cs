@@ -18,6 +18,12 @@ namespace MegaApp.Views
             this.InitializeComponent();
         }
 
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            // Needed on every UI interaction
+            SdkService.MegaSdk.retryPendingConnections();
+        }
+
         private void OnSortClick(object sender, RoutedEventArgs e)
         {
             var sortButton = sender as Button;

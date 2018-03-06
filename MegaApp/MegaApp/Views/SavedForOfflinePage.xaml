@@ -98,6 +98,20 @@
                                     Data="{Binding SortByPathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
+                        <AppBarButton
+                            x:Name="BtnChangeView"
+                            Click="OnButtonClick"
+                            Command="{Binding ChangeViewCommand}"
+                            Label="{Binding NextViewButtonLabelText}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding NextViewButtonLabelText}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding NextViewButtonPathData, Mode=OneWay}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
                     </CommandBar>
                 </Grid>
             </Grid>
