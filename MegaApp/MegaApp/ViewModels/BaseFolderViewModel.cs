@@ -286,7 +286,45 @@ namespace MegaApp.ViewModels
         }
 
         public virtual string OrderTypeAndNumberOfItems => string.Empty;
-        public virtual string OrderTypeAndNumberOfSelectedItems => string.Empty;
+
+        public virtual string OrderTypeAndNumberOfSelectedItems
+        {
+            get
+            {
+                if (this.FolderRootNode == null) return string.Empty;
+
+                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
+                {
+                    case MSortOrderType.ORDER_DEFAULT_ASC:
+                    case MSortOrderType.ORDER_DEFAULT_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByTypeMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByNameMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    case MSortOrderType.ORDER_CREATION_ASC:
+                    case MSortOrderType.ORDER_CREATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreatedMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    case MSortOrderType.ORDER_MODIFICATION_ASC:
+                    case MSortOrderType.ORDER_MODIFICATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    case MSortOrderType.ORDER_SIZE_ASC:
+                    case MSortOrderType.ORDER_SIZE_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySizeMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
 
         #endregion
 

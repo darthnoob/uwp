@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MegaApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:userControls="using:MegaApp.UserControls"
@@ -43,7 +44,64 @@
                     FontSize="12"
                     Foreground="{StaticResource MegaRedColorBrush}"
                     Text="{x:Bind ViewModel.SavedForOfflineText, Mode=OneTime}" />
+
+                <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
+                <Grid 
+                    Grid.Row="0" Grid.Column="1"
+                    Visibility="{Binding SavedForOffline.IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Grid x:Name="TopCommandBar">
+
+                    </Grid>
+                </Grid>
+
+                <!--  CLOSE PANEL TOP COMMAND BAR (ONLY DESKTOP)  -->
+                <CommandBar 
+                    DataContext="{Binding SavedForOffline}"
+                    Grid.Row="0" Grid.Column="2"
+                    Background="Transparent"
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Visibility="{Binding IsPanelOpen, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <AppBarButton
+                        Command="{Binding ClosePanelCommand}"
+                        Label="{Binding ClosePanelText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding ClosePanelText, Mode=OneTime}">
+                        <Viewbox MaxHeight="16" MaxWidth="16">
+                            <FontIcon Glyph="&#xEA5B;"/>
+                        </Viewbox>
+                    </AppBarButton>
+                </CommandBar>
+
+                <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+                <Grid 
+                    DataContext="{Binding SavedForOffline}"
+                    Grid.Row="0" Grid.Column="2">
+                    <CommandBar
+                        Background="Transparent"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        IsEnabled="{Binding ItemCollection.HasItems, Mode=OneWay}"
+                        Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <AppBarSeparator 
+                            x:Name="PermanentTopCommandBarSeparator"
+                            Margin="-12,0"
+                            VerticalAlignment="Center"/>
+                        <AppBarButton
+                            x:Name="BtnSort"
+                            Click="OnSortClick"
+                            Label="{Binding SortByText}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding SortByText}">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="{Binding SortByPathData, Mode=OneTime}" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
             </Grid>
+
             <Grid x:Name="MainGrid" Grid.Row="1">
                 <Pivot
                     x:Name="MainPivot"

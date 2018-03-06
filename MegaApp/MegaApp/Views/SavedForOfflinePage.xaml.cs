@@ -1,4 +1,8 @@
-﻿using MegaApp.UserControls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Views
@@ -12,6 +16,17 @@ namespace MegaApp.Views
         public SavedForOfflinePage()
         {
             this.InitializeComponent();
+        }
+
+        private void OnSortClick(object sender, RoutedEventArgs e)
+        {
+            var sortButton = sender as Button;
+            if (sortButton == null) return;
+
+            MenuFlyout menuFlyout = DialogService.CreateSortMenu(ViewModel.SavedForOffline);
+
+            menuFlyout.Placement = FlyoutPlacementMode.Bottom;
+            menuFlyout.ShowAt(sortButton);
         }
     }
 }

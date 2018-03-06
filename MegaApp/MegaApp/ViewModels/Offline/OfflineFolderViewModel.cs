@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
+using mega;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
-using MegaApp.Classes;
-using Windows.UI.Xaml;
 
 namespace MegaApp.ViewModels.Offline
 {
@@ -26,6 +29,48 @@ namespace MegaApp.ViewModels.Offline
         {
             get { return base.FolderRootNode as IOfflineNode; }
             set { base.FolderRootNode = value; }
+        }
+
+        public override string OrderTypeAndNumberOfItems
+        {
+            get
+            {
+                if (this.FolderRootNode == null) return string.Empty;
+
+                var numChildFolders = FolderService.GetNumChildFolders(this.FolderRootNode.NodePath);
+                var numChildFiles = FolderService.GetNumChildFiles(this.FolderRootNode.NodePath, true);
+
+                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
+                {
+                    case MSortOrderType.ORDER_DEFAULT_ASC:
+                    case MSortOrderType.ORDER_DEFAULT_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
+                            numChildFolders, numChildFiles);
+
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
+                            numChildFolders, numChildFiles);
+
+                    case MSortOrderType.ORDER_CREATION_ASC:
+                    case MSortOrderType.ORDER_CREATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
+                            numChildFolders, numChildFiles);
+
+                    case MSortOrderType.ORDER_MODIFICATION_ASC:
+                    case MSortOrderType.ORDER_MODIFICATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
+                            numChildFolders, numChildFiles);
+
+                    case MSortOrderType.ORDER_SIZE_ASC:
+                    case MSortOrderType.ORDER_SIZE_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
+                            numChildFolders, numChildFiles);
+
+                    default:
+                        return string.Empty;
+                }
+            }
         }
 
         #endregion
@@ -136,7 +181,7 @@ namespace MegaApp.ViewModels.Offline
 
                     this.ItemCollection.EnableCollectionChangedDetection();
 
-                    //OrderChildNodes(tempChildNodes);
+                    this.OrderChildNodes();
 
                     // Show the user that processing the childnodes is done
                     SetProgressIndication(false);
@@ -173,6 +218,58 @@ namespace MegaApp.ViewModels.Offline
             });
 
             base.SetViewDefaults();
+        }
+
+        private void OrderChildNodes()
+        {
+            IOrderedEnumerable<IBaseNode> orderedNodes;
+
+            switch (UiService.GetSortOrder(FolderRootNode.Base64Handle, FolderRootNode.Name))
+            {
+                case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    orderedNodes = this.ItemCollection.Items.OrderBy(node => node.Name);
+                    break;
+
+                case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                    orderedNodes = this.ItemCollection.Items.OrderByDescending(node => node.Name);
+                    break;
+
+                case MSortOrderType.ORDER_CREATION_ASC:
+                    orderedNodes = this.ItemCollection.Items.OrderBy(node => node.CreationTime);
+                    break;
+
+                case MSortOrderType.ORDER_CREATION_DESC:
+                    orderedNodes = this.ItemCollection.Items.OrderByDescending(node => node.CreationTime);
+                    break;
+
+                case MSortOrderType.ORDER_MODIFICATION_ASC:
+                    orderedNodes = this.ItemCollection.Items.OrderBy(node => node.ModificationTime);
+                    break;
+
+                case MSortOrderType.ORDER_MODIFICATION_DESC:
+                    orderedNodes = this.ItemCollection.Items.OrderByDescending(node => node.ModificationTime);
+                    break;
+
+                case MSortOrderType.ORDER_SIZE_ASC:
+                    orderedNodes = this.ItemCollection.Items.OrderBy(node => node.Size);
+                    break;
+
+                case MSortOrderType.ORDER_SIZE_DESC:
+                    orderedNodes = this.ItemCollection.Items.OrderByDescending(node => node.Size);
+                    break;
+
+                case MSortOrderType.ORDER_DEFAULT_DESC:
+                    orderedNodes = this.ItemCollection.Items.OrderBy(node => node.IsFolder);
+                    break;
+
+                case MSortOrderType.ORDER_DEFAULT_ASC:
+                case MSortOrderType.ORDER_NONE:
+                default:
+                    orderedNodes = this.ItemCollection.Items.OrderByDescending(node => node.IsFolder);
+                    break;
+            }
+
+            OnUiThread(() => this.ItemCollection.Items = new ObservableCollection<IBaseNode>(orderedNodes));
         }
 
         #endregion
