@@ -121,7 +121,7 @@ namespace MegaApp.ViewModels.UserControls
             if (isOn && !this.Node.IsSavedForOffline)
                 this.Node.SaveForOffline();
             else if (!isOn && this.Node.IsSavedForOffline)
-                this.Node.RemoveForOffline();
+                this.Node.RemoveFromOffline();
         }
 
         #endregion

@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using mega;
 using MegaApp.Database;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
@@ -11,9 +10,9 @@ namespace MegaApp.ViewModels.Offline
 {
     public class OfflineFileNodeViewModel : OfflineNodeViewModel
     {
-        public OfflineFileNodeViewModel(FileInfo fileInfo,
+        public OfflineFileNodeViewModel(FileInfo fileInfo, OfflineFolderViewModel parent,
             ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
-            : base(parentCollection, childCollection)
+            : base(parent, parentCollection, childCollection)
         {
             Update(fileInfo);
             

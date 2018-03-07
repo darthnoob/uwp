@@ -143,6 +143,7 @@
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
+    <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />

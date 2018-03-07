@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using mega;
 using MegaApp.Classes;
@@ -21,9 +22,21 @@ namespace MegaApp.ViewModels.Offline
         public OfflineFolderViewModel() : base(SdkService.MegaSdk, ContainerType.Offline)
         {
             this.FolderRootNode = null;
+
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
+
+            this.RemoveFromOfflineCommand = new RelayCommand(RemoveFromOffline);
         }
 
+        #region Commands
+
+        public ICommand RemoveFromOfflineCommand { get; }
+
+        #endregion
+
         #region Properties
+
+        public OfflineFolderViewModel Folder => this;
 
         public new IOfflineNode FolderRootNode
         {
@@ -84,7 +97,7 @@ namespace MegaApp.ViewModels.Offline
             ClosePanels();
 
             this.FolderRootNode = new OfflineFolderNodeViewModel(
-                new DirectoryInfo(AppService.GetOfflineDirectoryPath()));
+                new DirectoryInfo(AppService.GetOfflineDirectoryPath()), this);
 
             OnFolderNavigatedTo();
 
@@ -149,7 +162,7 @@ namespace MegaApp.ViewModels.Offline
                     string[] childFolders = Directory.GetDirectories(FolderRootNode.NodePath);
                     foreach (var folder in childFolders)
                     {
-                        var childNode = new OfflineFolderNodeViewModel(new DirectoryInfo(folder), this.ItemCollection.Items);
+                        var childNode = new OfflineFolderNodeViewModel(new DirectoryInfo(folder), this, this.ItemCollection.Items);
                         if (childNode == null) continue;
 
                         if (FolderService.IsEmptyFolder(childNode.NodePath))
@@ -173,7 +186,7 @@ namespace MegaApp.ViewModels.Offline
                             continue;
                         }
 
-                        var childNode = new OfflineFileNodeViewModel(fileInfo, this.ItemCollection.Items);
+                        var childNode = new OfflineFileNodeViewModel(fileInfo, this, this.ItemCollection.Items);
                         if (childNode == null) continue;
 
                         OnUiThread(() => this.ItemCollection.Items.Add(childNode));
@@ -294,6 +307,43 @@ namespace MegaApp.ViewModels.Offline
             }
 
             OnUiThread(() => this.ItemCollection.Items = new ObservableCollection<IBaseNode>(orderedNodes));
+        }
+
+        private void OnSelectedItemsCollectionChanged(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(this.Folder));
+        }
+
+        private async void RemoveFromOffline()
+        {
+            if (!this.ItemCollection.HasSelectedItems) return;
+
+            int count = this.ItemCollection.SelectedItems.Count;
+            var title = ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion_Title");
+            var message = this.ItemCollection.OnlyOneSelectedItem ?
+                string.Format(ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion"), this.ItemCollection.SelectedItems.First().Name) :
+                string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveFromOfflineQuestion"), count);
+
+            var result = await DialogService.ShowOkCancelAsync(title, message);
+
+            if (!result) return;
+
+            // Use a temp variable to avoid InvalidOperationException
+            MultipleRemoveFromOffline(this.ItemCollection.SelectedItems.ToList());
+
+            this.ItemCollection.IsMultiSelectActive = false;
+        }
+
+        private async void MultipleRemoveFromOffline(ICollection<IBaseNode> nodes)
+        {
+            if (nodes == null || nodes.Count < 1) return;
+
+            foreach (var n in nodes)
+            {
+                var node = n as IOfflineNode;
+                if (node == null) continue;
+                await node.RemoveFromOfflineAsync(true);
+            }
         }
 
         #endregion

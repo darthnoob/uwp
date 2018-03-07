@@ -13,7 +13,8 @@ namespace MegaApp.ViewModels
             if (this.SavedForOffline.FolderRootNode == null)
             {
                 this.SavedForOffline.FolderRootNode =
-                    new OfflineFolderNodeViewModel(new DirectoryInfo(AppService.GetOfflineDirectoryPath()));
+                    new OfflineFolderNodeViewModel(new DirectoryInfo(AppService.GetOfflineDirectoryPath()),
+                    this.SavedForOffline);
             }
 
             this.SavedForOffline.LoadChildNodes();

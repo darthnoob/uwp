@@ -9,9 +9,9 @@ namespace MegaApp.ViewModels.Offline
 {
     public class OfflineFolderNodeViewModel : OfflineNodeViewModel
     {
-        public OfflineFolderNodeViewModel(DirectoryInfo folderInfo,
+        public OfflineFolderNodeViewModel(DirectoryInfo folderInfo, OfflineFolderViewModel parent,
             ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
-            : base(parentCollection, childCollection)
+            : base(parent, parentCollection, childCollection)
         {
             Update(folderInfo);
             SetFolderInfo();

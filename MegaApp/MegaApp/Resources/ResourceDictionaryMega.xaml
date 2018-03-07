@@ -1141,17 +1141,17 @@
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem
+                            <!--<MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />-->
                             <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
+                                Command="{Binding RemoveFromOfflineCommand}"
+                                Text="{Binding RemoveFromOfflineText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1247,17 +1247,17 @@
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem
+                            <!--<MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />-->
                             <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
+                                Command="{Binding RemoveFromOfflineCommand}"
+                                Text="{Binding RemoveFromOfflineText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1320,13 +1320,13 @@
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem
+                            <!--<MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />-->
                             <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
+                                Command="{Binding RemoveFromOfflineCommand}"
+                                Text="{Binding RemoveFromOfflineText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1405,13 +1405,13 @@
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem
+                            <!--<MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
-                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                                Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />-->
                             <MenuFlyoutItem
-                                Command="{Binding RemoveCommand}"
-                                Text="{Binding RemoveText}"
+                                Command="{Binding RemoveFromOfflineCommand}"
+                                Text="{Binding RemoveFromOfflineText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>

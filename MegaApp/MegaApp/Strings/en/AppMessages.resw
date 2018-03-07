@@ -1210,4 +1210,18 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
+  <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} items from offline?</value>
+    <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove '{0}' from offline?</value>
+    <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
+    <value>Remove from offline?</value>
+    <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
+  </data>
 </root>

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using MegaApp.Classes;
 using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -12,12 +15,22 @@ namespace MegaApp.ViewModels.Offline
 {
     public abstract class OfflineNodeViewModel : BaseNodeViewModel, IOfflineNode
     {
-        protected OfflineNodeViewModel(ObservableCollection<IBaseNode> parentCollection = null,
-            ObservableCollection<IBaseNode> childCollection = null) : base(SdkService.MegaSdk)
+        protected OfflineNodeViewModel(OfflineFolderViewModel parent,
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
+            : base(SdkService.MegaSdk)
         {
+            this.Parent = parent;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
+
+            this.RemoveFromOfflineCommand = new RelayCommand(RemoveFromOffline);
         }
+
+        #region Commands
+
+        public ICommand RemoveFromOfflineCommand { get; }
+
+        #endregion
 
         #region IBaseNode Interface
 
@@ -63,20 +76,34 @@ namespace MegaApp.ViewModels.Offline
 
         #region Methods
 
-        public async Task<NodeActionResult> RemoveAsync(bool isMultiRemove)
+        public async Task RemoveFromOfflineAsync(bool isMultiSelect = false)
         {
-            if (!isMultiRemove)
+            if (!isMultiSelect)
             {
                 var result = await DialogService.ShowOkCancelAsync(
-                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion_Title"),
-                    ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"));
+                    ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion"), this.Name));
 
-                if (!result) return NodeActionResult.Cancelled;
+                if (!result) return;
             }
 
-            await RemoveForOffline();
+            var parentFolderPath = ((new DirectoryInfo(this.NodePath)).Parent).FullName;
 
-            return NodeActionResult.IsBusy;
+            if (this.IsFolder)
+            {
+                OfflineService.RemoveFolderFromOfflineDB(this.NodePath);
+                FolderService.DeleteFolder(this.NodePath, true);
+            }
+            else
+            {
+                SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
+                FileService.DeleteFile(this.NodePath);
+            }
+
+            OfflineService.CleanOfflineFolderNodePath(parentFolderPath);
+
+            if (this.Parent?.ItemCollection?.Items != null)
+                this.Parent.ItemCollection.Items.Remove(this);
         }
 
         public virtual void Open()
@@ -88,30 +115,29 @@ namespace MegaApp.ViewModels.Offline
 
         #endregion
 
-        #region Methods
+        #region Properties
 
-        public async Task RemoveForOffline()
+        public OfflineNodeViewModel NodeBinding => this;
+
+        private OfflineFolderViewModel _parent;
+        public OfflineFolderViewModel Parent
         {
-            string parentNodePath = ((new DirectoryInfo(this.NodePath)).Parent).FullName;
-
-            if (this.IsFolder)
+            get { return _parent; }
+            set
             {
-                await RecursiveRemoveForOffline(parentNodePath, this.Name);
-                FolderService.DeleteFolder(this.NodePath, true);
+                if (_parent != null)
+                    _parent.PropertyChanged -= ParentOnPropertyChanged;
+
+                SetField(ref _parent, value);
+
+                if (_parent != null)
+                    _parent.PropertyChanged += ParentOnPropertyChanged;
             }
-            else
-            {
-                // Search if the file has a pending transfer for offline and cancel it on this case                
-                TransferService.CancelPendingNodeOfflineTransfers(this.NodePath, this.IsFolder);
-
-                FileService.DeleteFile(this.NodePath);
-            }
-
-            SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
-
-            if (this.ParentCollection != null)
-                this.ParentCollection.Remove((IMegaNode)this);
         }
+
+        #endregion
+
+        #region Methods
 
         protected void SetDefaultValues()
         {
@@ -138,39 +164,32 @@ namespace MegaApp.ViewModels.Offline
             }
         }
 
-        private async Task RecursiveRemoveForOffline(string sfoPath, string nodeName)
+        private async void RemoveFromOffline()
         {
-            string newSfoPath = Path.Combine(sfoPath, nodeName);
-
-            if (FolderService.FolderExists(newSfoPath))
+            if (this.Parent != null && this.Parent.ItemCollection.MoreThanOneSelected)
             {
-                // Search if the folder has a pending transfer for offline and cancel it on this case            
-                TransferService.CancelPendingNodeOfflineTransfers(string.Concat(newSfoPath, "\\"), this.IsFolder);
+                if (this.Parent.RemoveFromOfflineCommand.CanExecute(null))
+                    this.Parent.RemoveFromOfflineCommand.Execute(null);
+                return;
+            }
 
-                IEnumerable<string> childFolders = Directory.GetDirectories(newSfoPath);
-                if (childFolders != null)
-                {
-                    foreach (var folder in childFolders)
-                    {
-                        if (folder != null)
-                        {
-                            await RecursiveRemoveForOffline(newSfoPath, folder);
-                            SavedForOfflineDB.DeleteNodeByLocalPath(Path.Combine(newSfoPath, folder));
-                        }
-                    }
-                }
+            await this.RemoveFromOfflineAsync();
+        }
 
-                IEnumerable<string> childFiles = Directory.GetFiles(newSfoPath);
-                if (childFiles != null)
-                {
-                    foreach (var file in childFiles)
-                    {
-                        if (file != null)
-                            SavedForOfflineDB.DeleteNodeByLocalPath(Path.Combine(newSfoPath, file));
-                    }
-                }
+        private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(this.Parent.Folder))
+            {
+                OnPropertyChanged(nameof(this.Parent));
+                OnPropertyChanged(nameof(this.NodeBinding));
             }
         }
+
+        #endregion
+
+        #region UiResources
+
+        public string RemoveFromOfflineText => ResourceService.UiResources.GetString("UI_RemoveFromOffline");
 
         #endregion
     }

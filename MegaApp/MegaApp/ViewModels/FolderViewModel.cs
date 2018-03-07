@@ -547,7 +547,6 @@ namespace MegaApp.ViewModels
 
                 case ContainerType.RubbishBin:
                     title = ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion_Title");
-                    message = string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
                     message = this.ItemCollection.OnlyOneSelectedItem ?
                         string.Format(ResourceService.AppMessages.GetString("AM_RemoveItemQuestion"), this.ItemCollection.SelectedItems.First().Name) :
                         string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveQuestion"), count);
