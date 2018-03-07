@@ -45,12 +45,42 @@
                     Foreground="{StaticResource MegaRedColorBrush}"
                     Text="{x:Bind ViewModel.SavedForOfflineText, Mode=OneTime}" />
 
-                <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
+                <!--  TOP COMMAND BAR AREA  -->
                 <Grid 
                     Grid.Row="0" Grid.Column="1"
                     Visibility="{Binding SavedForOffline.IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Grid x:Name="TopCommandBar">
 
+                    <!--  TOP COMMAND BAR (ONLY DESKTOP)  -->
+                    <Grid x:Name="TopCommandBar">
+                        <CommandBar
+                            Background="Transparent"
+                            DataContext="{Binding SavedForOffline}"
+                            extensions:CommandBarExtensions.HideMoreButton="True">
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding RemoveFromOfflineCommand}"
+                                Label="{Binding RemoveFromOfflineText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding RemoveFromOfflineText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <Viewbox Height="12" Width="12">
+                                    <SymbolIcon Symbol="Cancel" />
+                                </Viewbox>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{Binding ItemCollection.MultiSelectCommand}"
+                                Label="{Binding MultiSelectText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.IsMultiSelectActive, Mode=OneWay}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                        </CommandBar>
                     </Grid>
                 </Grid>
 
@@ -132,6 +162,37 @@
                     </PivotItem>
                 </Pivot>
             </Grid>
+
+            <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
+            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+                <CommandBar 
+                    DataContext="{Binding SavedForOffline}"
+                    Style="{StaticResource MegaCommandBarStyle}">
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding RemoveFromOfflineCommand}"
+                        Label="{Binding RemoveFromOfflineText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RemoveFromOfflineText, Mode=OneTime}"
+                        Visibility="{Binding Folder, ConverterParameter='remove', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <Viewbox Height="12" Width="12">
+                            <SymbolIcon Symbol="Cancel" />
+                        </Viewbox>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding ItemCollection.MultiSelectCommand}"
+                        Label="{Binding MultiSelectText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding MultiSelectPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -141,6 +202,9 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
                         <Setter Target="TopRowGrid.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
@@ -149,6 +213,9 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                     </VisualState.Setters>
                 </VisualState>
@@ -162,6 +229,8 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="0,0,-12,0" />
+                        <Setter Target="SavedForOfflineSplitView.DisplayMode" Value="Overlay" />
+                        <Setter Target="SavedForOfflineExplorer.Margin" Value="0,0,12,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Normal">
@@ -171,6 +240,8 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
+                        <Setter Target="SavedForOfflineSplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="SavedForOfflineExplorer.Margin" Value="0,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

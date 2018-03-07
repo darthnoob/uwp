@@ -347,5 +347,11 @@ namespace MegaApp.ViewModels.Offline
         }
 
         #endregion
+
+        #region UiResources
+
+        public string RemoveFromOfflineText => ResourceService.UiResources.GetString("UI_RemoveFromOffline");
+
+        #endregion
     }
 }
