@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using Windows.System;
 using mega;
 using MegaApp.ViewModels;
 
@@ -239,6 +240,32 @@ namespace MegaApp.Services
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error moving folder:", e);
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Source: " + srcFolderPath);
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Destination: " + destFolderPath);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Open a folder in the file explorer
+        /// </summary>
+        /// <param name="folderPath">Path of the folder to open</param>
+        /// <returns>TRUE if the folder could be opened or FALSE if something failed</returns>
+        public static async Task<bool> OpenFolder(string folderPath)
+        {
+            try
+            {
+                var folder = await StorageFolder.GetFolderFromPathAsync(folderPath);
+                return await Launcher.LaunchFolderAsync(folder);
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error opening folder", e);
+                UiService.OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                       ResourceService.AppMessages.GetString("AM_OpenFolderFailed_Title"),
+                       ResourceService.AppMessages.GetString("AM_OpenFolderFailed"));
+                });
+
                 return false;
             }
         }
