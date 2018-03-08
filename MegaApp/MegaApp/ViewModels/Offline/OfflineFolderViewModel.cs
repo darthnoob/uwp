@@ -210,10 +210,17 @@ namespace MegaApp.ViewModels.Offline
             }, LoadingCancelToken, TaskCreationOptions.PreferFairness, TaskScheduler.Current);
         }
 
-        public override void OnChildNodeTapped(IBaseNode node)
+        public override void OnChildNodeTapped(IBaseNode baseNode)
         {
+            // Needed to avoid process the node when the user is in MultiSelect.
+            if (this.ItemCollection.IsMultiSelectActive) return;
+            if (!(baseNode is IOfflineNode)) return;
+
+            var node = baseNode as IOfflineNode;
             if (node.IsFolder)
                 BrowseToFolder(node);
+            else
+                node.Open();
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.System;
 using mega;
 using MegaApp.Enums;
 
@@ -209,7 +210,7 @@ namespace MegaApp.Services
                 var file = await StorageFile.GetFileFromPathAsync(filePath);
 
                 if (file != null)
-                    return await Windows.System.Launcher.LaunchFileAsync(file);
+                    return await Launcher.LaunchFileAsync(file);
 
                 UiService.OnUiThread(async() =>
                 {
@@ -230,7 +231,7 @@ namespace MegaApp.Services
                 });
 
                 return false;
-            }            
+            }
         }
 
         /// <summary>
