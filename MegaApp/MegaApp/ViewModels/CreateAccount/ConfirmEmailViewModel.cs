@@ -22,7 +22,7 @@ namespace MegaApp.ViewModels.CreateAccount
             SetWarning(false, string.Empty);
             this.EmailInputState = InputState.Normal;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             if (!CheckInputParameters()) return;
 

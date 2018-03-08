@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
-using MegaApp.Classes;
 
 namespace MegaApp.Services
 {
@@ -106,7 +105,7 @@ namespace MegaApp.Services
         //    }
         //}
 
-        public static T LoadSetting<T>(string key, T defaultValue)
+        public static async Task<T> LoadSettingAsync<T>(string key, T defaultValue)
         {
             var returnValue = defaultValue;
 
@@ -119,11 +118,9 @@ namespace MegaApp.Services
             }
             catch(Exception e)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message));
             }
             finally
             {
@@ -170,12 +167,12 @@ namespace MegaApp.Services
         //    return returnValue;
         //}
 
-        public static T LoadSetting<T>(string key)
+        public static async Task<T> LoadSettingAsync<T>(string key)
         {
-            return LoadSetting(key, default(T));
+            return await LoadSettingAsync(key, default(T));
         }
 
-        public static void DeleteSetting(string key)
+        public static async void DeleteSetting(string key)
         {
             try
             {
@@ -187,11 +184,9 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message));
             }
             finally
             {
@@ -199,7 +194,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static void DeleteFileSetting(string key)
+        public static async void DeleteFileSetting(string key)
         {
             try
             {
@@ -223,11 +218,9 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    string.Format(ResourceService.AppMessages.GetString("AM_DeleteSettingsFailed"), e.Message));
             }
             finally
             {
@@ -235,7 +228,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static void SaveSettingToFile<T>(string key, T value)
+        public static async void SaveSettingToFile<T>(string key, T value)
         {
             try
             {
@@ -256,11 +249,9 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_SaveSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    string.Format(ResourceService.AppMessages.GetString("AM_SaveSettingsFailed"), e.Message));
             }
             finally
             {
@@ -268,7 +259,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static async Task<T> LoadSettingFromFile<T>(string key)
+        public static async Task<T> LoadSettingFromFileAsync<T>(string key)
         {
             var returnValue = default(T);
 
@@ -288,11 +279,9 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
-                new CustomMessageDialog(
+                await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_LoadSettingsFailed_Title"),
-                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message),
-                    App.AppInformation,
-                    MessageDialogButtons.Ok).ShowDialog();
+                    string.Format(ResourceService.AppMessages.GetString("AM_LoadSettingsFailed"), e.Message));
             }
             finally
             {
@@ -302,14 +291,12 @@ namespace MegaApp.Services
             return returnValue;
         }
 
-        public static bool HasValidSession()
+        public static async Task<bool> HasValidSessionAsync()
         {
             try
             {
-                if (LoadSetting<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession")) != null)
-                    return true;
-                else
-                    return false;
+                var hasValidSession = await LoadSettingAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+                return hasValidSession != null ? true : false;
             }
             catch (ArgumentNullException) { return false; }
         }

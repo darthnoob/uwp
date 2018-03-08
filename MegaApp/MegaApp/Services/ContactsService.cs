@@ -48,9 +48,12 @@ namespace MegaApp.Services
 
         public static void Clear()
         {
-            MegaContacts.ItemCollection.Clear();
-            IncomingContactRequests.ItemCollection.Clear();
-            OutgoingContactRequests.ItemCollection.Clear();
+            UiService.OnUiThread(() =>
+            {
+                MegaContacts.ItemCollection.Clear();
+                IncomingContactRequests.ItemCollection.Clear();
+                OutgoingContactRequests.ItemCollection.Clear();
+            });
         }
     }
 }

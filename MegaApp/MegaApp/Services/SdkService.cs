@@ -82,7 +82,7 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Locate the Camera Uploads folder node to use as parent for the uploads
+        /// Locate or create the Camera Uploads folder node to use as parent for the uploads
         /// </summary>
         /// <returns>Camera Uploads root folder node</returns>
         public static async Task<MNode> GetCameraUploadRootNodeAsync()
@@ -97,13 +97,18 @@ namespace MegaApp.Services
             // If node found, return the node
             if (cameraUploadNode != null) return cameraUploadNode;
 
-            // If node not found, create a new Camera Uploads node
-            var createFolder = new CreateFolderRequestListenerAsync();
-            var result = await createFolder.ExecuteAsync(() =>
+            // If node not found and the service is enabled, create a new Camera Uploads node
+            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
             {
-                MegaSdk.createFolder("Camera Uploads", rootNode, createFolder);
-            });
-            return result ? FindCameraUploadNode(rootNode) : null;
+                var createFolder = new CreateFolderRequestListenerAsync();
+                var result = await createFolder.ExecuteAsync(() =>
+                {
+                    MegaSdk.createFolder("Camera Uploads", rootNode, createFolder);
+                });
+                return result ? FindCameraUploadNode(rootNode) : null;
+            }
+
+            return null;
         }
 
         /// <summary>

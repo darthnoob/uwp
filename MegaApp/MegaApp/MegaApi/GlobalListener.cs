@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.Views;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.MegaApi
 {
@@ -78,21 +80,17 @@ namespace MegaApp.MegaApi
 
         public void onAccountUpdate(MegaSDK api)
         {
-            UiService.OnUiThread(() =>
+            UiService.OnUiThread(async () =>
             {
-                var customMessageDialog = new CustomMessageDialog(
+                var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_AccountUpdated_Title"),
                     ResourceService.AppMessages.GetString("AM_AccountUpdate"),
-                    App.AppInformation,
-                    MessageDialogButtons.YesNo);
+                    OkCancelDialogButtons.YesNo);
 
-                customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                {
-                    NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
-                        NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Default));
-                };
+                if (!result) return;
 
-                customMessageDialog.ShowDialog();
+                NavigateService.Instance.Navigate(typeof(MyAccountPage), false,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.Default));
             });
         }
 
@@ -164,6 +162,30 @@ namespace MegaApp.MegaApi
                     OnContactUpdated(user);
                 }
             }
+        }
+
+        public void onEvent(MegaSDK api, MEvent ev)
+        {
+            if (ev.getType() != MEventType.EVENT_ACCOUNT_BLOCKED) return;
+
+            AccountService.IsAccountBlocked = true;
+
+            LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Blocked account: " + ev.getText());
+
+            // A blocked account automatically triggers a logout
+            AppService.LogoutActions();
+
+            // Show the login page with the corresponding navigation parameter
+            UiService.OnUiThread(() =>
+            {
+                NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                    NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED,
+                    new Dictionary<NavigationParamType, object>
+                    {
+                            { NavigationParamType.Number, ev.getNumber() },
+                            { NavigationParamType.Text, ev.getText() }
+                    }));
+            });
         }
 
         #endregion

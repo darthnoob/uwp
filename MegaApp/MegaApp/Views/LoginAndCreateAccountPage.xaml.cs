@@ -1,4 +1,5 @@
-﻿using Windows.System;
+﻿using System;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,6 +54,7 @@ namespace MegaApp.Views
                         this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
                         this.ViewModel.LoginViewModel.Password = navObj.Parameters[NavigationParamType.Password] as string;
                         break;
+
                     case NavigationActionType.API_ESID:
                         // Show a message notifying the error
                         await DialogService.ShowAlertAsync(
@@ -61,10 +63,21 @@ namespace MegaApp.Views
                         break;
 
                     case NavigationActionType.API_EBLOCKED:
+                        string message;
+                        switch ((AccountBlockedReason) navObj.Parameters[NavigationParamType.Number])
+                        {
+                            case AccountBlockedReason.Copyright:
+                                message = ResourceService.AppMessages.GetString("AM_AccountBlockedCopyright");
+                                break;
+                            case AccountBlockedReason.OtherReason:
+                            default:
+                                message = ResourceService.AppMessages.GetString("AM_AccountBlocked");
+                                break;
+                        }
+                        
                         // Show a message notifying the error
                         await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_AccountBlocked_Title"),
-                            ResourceService.AppMessages.GetString("AM_AccountBlocked"));
+                            ResourceService.AppMessages.GetString("AM_AccountBlocked_Title"), message);
                         break;
 
                     case NavigationActionType.API_ESSL:
@@ -93,11 +106,11 @@ namespace MegaApp.Views
             this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
         }
 
-        private void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
+        private async void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key != VirtualKey.Enter) return;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             // On enter in password box. Start the login process
             this.ViewModel?.LoginViewModel?.Login();

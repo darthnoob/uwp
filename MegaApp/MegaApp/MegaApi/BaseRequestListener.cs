@@ -1,10 +1,7 @@
 ﻿using System;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
-using MegaApp.Views;
-using MegaApp.ViewModels;
 
 namespace MegaApp.MegaApi
 {
@@ -29,18 +26,15 @@ namespace MegaApp.MegaApi
 
         #region MRequestListenerInterface
 
-        public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
+        public async virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
             switch(e.getErrorCode())
             {
                 case MErrorType.API_OK:
                     if (ShowSuccesMessage)
                     {
-                        new CustomMessageDialog(
-                            SuccessMessageTitle,
-                            SuccessMessage,
-                            App.AppInformation,
-                            MessageDialogButtons.Ok).ShowDialog();
+                        await DialogService.ShowAlertAsync(
+                            SuccessMessageTitle, SuccessMessage);
                     }
 
                     if (ActionOnSucces)
@@ -48,16 +42,6 @@ namespace MegaApp.MegaApi
 
                     if (NavigateOnSucces)
                         UiService.OnUiThread(() => NavigateService.Instance.Navigate(NavigateToPage, true, NavigationObject));
-                    break;
-
-                case MErrorType.API_EBLOCKED: // If the account has been blocked
-                    api.logout(new LogOutRequestListener(false));
-
-                    UiService.OnUiThread(() =>
-                    {
-                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_EBLOCKED));
-                    });
                     break;
 
                 case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
@@ -83,11 +67,8 @@ namespace MegaApp.MegaApi
                     {
                         if (ShowErrorMessage)
                         {
-                            new CustomMessageDialog(
-                                ErrorMessageTitle,
-                                string.Format(ErrorMessage, e.getErrorString()),
-                                App.AppInformation,
-                                MessageDialogButtons.Ok).ShowDialog();
+                            await DialogService.ShowAlertAsync(ErrorMessageTitle,
+                                string.Format(ErrorMessage, e.getErrorString()));
                         }
                     }
                     break;

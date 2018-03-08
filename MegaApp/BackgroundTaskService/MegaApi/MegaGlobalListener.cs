@@ -49,5 +49,10 @@ namespace BackgroundTaskService.MegaApi
         {
             // Reload is needed
         }
+
+        public void onEvent(MegaSDK api, MEvent ev)
+        {
+            // Event received
+        }
     }
 }
