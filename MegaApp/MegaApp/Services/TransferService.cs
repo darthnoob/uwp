@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 
@@ -340,9 +341,8 @@ namespace MegaApp.Services
         /// <summary>
         /// Cancel all the pending offline transfer of a node and wait until all transfers are canceled.
         /// </summary>
-        /// <param name="nodePath">Path of the node.</param>
-        /// <param name="isFolder">Boolean value which indicates if the node is a folder or not.</param>
-        public static async void CancelPendingNodeOfflineTransfers(string nodePath, bool isFolder)
+        /// <param name="nodePath">Node to check offline transfers</param>
+        public static async void CancelPendingNodeOfflineTransfers(IMegaNode node)
         {
             var transferData = SdkService.MegaSdk.getTransferData();
             var numDownloads = transferData.getNumDownloads();
@@ -352,8 +352,8 @@ namespace MegaApp.Services
                 var transfer = SdkService.MegaSdk.getTransferByTag(transferData.getDownloadTag(i));
                 if (transfer == null) continue;
 
-                var transferPathToCompare = isFolder ? transfer.getParentPath() : transfer.getPath();
-                if (string.Compare(nodePath, transferPathToCompare) == 0)
+                var transferPathToCompare = node.IsFolder ? transfer.getParentPath() : transfer.getPath();
+                if (string.Compare(OfflineService.GetOfflineNodePath(node.OriginalMNode), transferPathToCompare) == 0)
                 {
                     var cancelTransfer = new CancelTransferRequestListenerAsync();
                     await cancelTransfer.ExecuteAsync(() => SdkService.MegaSdk.cancelTransfer(transfer));

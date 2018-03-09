@@ -32,7 +32,7 @@ namespace MegaApp.ViewModels
             : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
-
+            
             Update(megaNode);
             SetDefaultValues();
 
@@ -49,6 +49,9 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+
+            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
+            OfflineTransfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, OfflinePath);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -623,9 +626,8 @@ namespace MegaApp.ViewModels
             }
             else
             {
-                TransferService.MegaTransfers.Add(this.Transfer);
-                this.Transfer.ExternalDownloadPath = parentNodePath;
-                this.Transfer.StartTransfer(true);
+                TransferService.MegaTransfers.Add(this.OfflineTransfer);
+                this.OfflineTransfer.StartTransfer(true);
             }
 
             this.IsSavedForOffline = true;
@@ -650,7 +652,7 @@ namespace MegaApp.ViewModels
             var parentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
 
             // Search if the file has a pending transfer for offline and cancel it on this case                
-            TransferService.CancelPendingNodeOfflineTransfers(nodePath, this.IsFolder);
+            TransferService.CancelPendingNodeOfflineTransfers(this);
 
             if (this.IsFolder)
             {
@@ -772,6 +774,8 @@ namespace MegaApp.ViewModels
 
         public TransferObjectModel Transfer { get; set; }
 
+        public TransferObjectModel OfflineTransfer { get; set; }
+
         public MNode OriginalMNode { get; private set; }
 
         private AccessLevelViewModel _accessLevel;
@@ -851,6 +855,8 @@ namespace MegaApp.ViewModels
 
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
             ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
+
+        public string OfflinePath => OfflineService.GetOfflineNodePath(this.OriginalMNode);
 
         #endregion
 

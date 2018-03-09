@@ -36,14 +36,14 @@ namespace MegaApp.MegaApi
                 case MErrorType.API_OK:
                     if (transfer.getType() == MTransferType.TYPE_DOWNLOAD)
                     {
-                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                        if (megaTransfer.IsSaveForOfflineTransfer)
                         {
-                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
+                            this.AddOfflineNodeFromTransfer(megaTransfer);
                             return;
                         }
 
-                        if (megaTransfer.IsSaveForOfflineTransfer)
-                            this.AddOfflineNodeFromTransfer(megaTransfer);
+                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
                     }
                     break;
 
@@ -111,14 +111,14 @@ namespace MegaApp.MegaApi
                             }
                         }
 
-                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                        if (megaTransfer.IsSaveForOfflineTransfer)
                         {
-                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
+                            this.AddOfflineNodeFromTransfer(megaTransfer);
                             return;
                         }
 
-                        if (megaTransfer.IsSaveForOfflineTransfer)
-                            this.AddOfflineNodeFromTransfer(megaTransfer);
+                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
                     }
 
                     UiService.OnUiThread(() => TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));

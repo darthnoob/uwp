@@ -13,7 +13,7 @@ namespace MegaApp.ViewModels
             ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
-            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
+            this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
         }
 
         #region Override Methods

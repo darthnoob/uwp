@@ -20,8 +20,6 @@ namespace MegaApp.ViewModels
             this.ShareCommand = new RelayCommand(Share);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
-
             this.Update(megaNode);
         }
 
