@@ -71,5 +71,11 @@ namespace MegaApp.Extensions
         {
             return (value * 1024).FromMBToBytes();
         }
+
+        public static DateTime ConvertTimestampToDateTime(this long timestamp)
+        {
+            var origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            return origin.AddSeconds(timestamp);
+        }
     }
 }

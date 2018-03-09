@@ -12,6 +12,7 @@ using MegaApp.ViewModels;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
 using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.MyAccount;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Services
@@ -132,6 +133,18 @@ namespace MegaApp.Services
                 awaitEmailConfirmationDialog.ViewModel.Email = email;
 
             await awaitEmailConfirmationDialog.ShowAsyncQueue();
+        }
+
+        private static AchievementInformationDialog achievementInformationDialog;
+
+        public static async void ShowAchievementInformationDialog(AwardViewModel award)
+        {
+            if (achievementInformationDialog == null)
+                achievementInformationDialog = new AchievementInformationDialog(award);
+            else
+                achievementInformationDialog.ViewModel.Award = award;
+
+            await achievementInformationDialog.ShowAsyncQueue();
         }
 
         /// <summary>

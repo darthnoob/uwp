@@ -1,0 +1,102 @@
+﻿<local:BaseAchievementInformationDialog
+    x:Class="MegaApp.Views.Dialogs.AchievementInformationDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
+    xmlns:local="using:MegaApp.Views.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MaxWidth="420"
+    Margin="0,0,24,24"
+    d:DataContext="{d:DesignInstance dialogViewModels:AchievementInformationDialogViewModel}"
+    Background="{ThemeResource MegaAppBackgroundBrush}"
+    BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Closed="DialogOnClosed"
+    Opened="DialogOnOpened"
+    PrimaryButtonCommand="{Binding InstallButtonCommand}"
+    SecondaryButtonCommand="{x:Bind ViewModel.CloseButtonCommand}"
+    SecondaryButtonText="{x:Bind ViewModel.CloseText, Mode=OneTime}"
+    Style="{ThemeResource MegaContentDialogStyle}"
+    mc:Ignorable="d">
+    <local:BaseAchievementInformationDialog.Title>
+        <TextBlock
+            Margin="24,24,0,0"
+            Style="{StaticResource MegaDialogTitleFontStyle}"
+            Text="{Binding Award.Title}" />
+    </local:BaseAchievementInformationDialog.Title>
+
+    <Grid Margin="24,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0,16,0,24"
+            Style="{StaticResource MegaDialogContentFontStyle}"
+            Text="{Binding Award.Information}" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="0"
+            Style="{ThemeResource MegaTitleFontStyle}"
+            Text="{x:Bind ViewModel.StorageText, Mode=OneTime}" />
+        <TextBlock
+            Grid.Row="1"
+            Grid.Column="1"
+            Style="{ThemeResource MegaTitleFontStyle}"
+            Text="{x:Bind ViewModel.TransferText, Mode=OneTime}" />
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Style="{ThemeResource MegaAchievementValueBodyStyle}"
+            Text="{Binding Award.StorageRewardText}">
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{ThemeResource UsedStorageQuotaColor}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="1"
+            Style="{ThemeResource MegaAchievementValueBodyStyle}"
+            Text="{Binding Award.TransferRewardText}">
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{ThemeResource UsedTransferQuotaColor}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            Padding="0,24,0,0"
+            Style="{ThemeResource MegaTitleFontStyle}"
+            Text="{x:Bind ViewModel.AchievedOnText, Mode=OneTime}"
+            Visibility="{Binding Award.IsGranted, Converter={StaticResource BoolToVisibilityConverter}}" />
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="1"
+            Padding="0,24,0,0"
+            Style="{ThemeResource MegaTitleFontStyle}"
+            Text="{x:Bind ViewModel.ExpiresInText, Mode=OneTime}"
+            Visibility="{Binding Award.IsGranted, Converter={StaticResource BoolToVisibilityConverter}}" />
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            Style="{StaticResource MegaDialogContentFontStyle}"
+            Text="{Binding Award.AchievedOnText}"
+            Visibility="{Binding Award.IsGranted, Converter={StaticResource BoolToVisibilityConverter}}" />
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="1"
+            Style="{StaticResource MegaDialogContentFontStyle}"
+            Text="{Binding Award.ExpiresInText}"
+            Visibility="{Binding Award.IsGranted, Converter={StaticResource BoolToVisibilityConverter}}" />
+    </Grid>
+</local:BaseAchievementInformationDialog>

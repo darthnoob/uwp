@@ -1420,4 +1420,153 @@ Keep the {0} code because are for include the total number of folders in runtime
     <value>Share to</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_StorageQuota" xml:space="preserve">
+    <value>Storage quota</value>
+    <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonuses" xml:space="preserve">
+    <value>Unlocked bonuses</value>
+    <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonusesText" xml:space="preserve">
+    <value>You can unlock more free storage and transfer quota by using our products. Simple. Easy.</value>
+    <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_GetMoreBonuses" xml:space="preserve">
+    <value>Get more bonuses</value>
+    <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseStorage" xml:space="preserve">
+    <value>Base storage</value>
+    <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseTransferQuota" xml:space="preserve">
+    <value>Base transfer quota</value>
+    <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallDesktopApp" xml:space="preserve">
+    <value>Install desktop app</value>
+    <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallMobileApp" xml:space="preserve">
+    <value>Install mobile app</value>
+    <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReferralBonus" xml:space="preserve">
+    <value>Referral bonuses</value>
+    <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RegistrationBonus" xml:space="preserve">
+    <value>Registration bonus</value>
+    <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusStorage" xml:space="preserve">
+    <value>Bonus storage</value>
+    <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusTransferQuota" xml:space="preserve">
+    <value>Bonus transfer quota</value>
+    <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Achievements" xml:space="preserve">
+    <value>Achievements</value>
+    <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AchievementsText" xml:space="preserve">
+    <value>Your easy route to more storage and transfer quota on MEGA. You can maintain a generous free storage and transfer allowance by completing any of the actions outlined below.</value>
+    <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_Available" xml:space="preserve">
+    <value>Available</value>
+    <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedRewards" xml:space="preserve">
+    <value>Unlocked rewards</value>
+    <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Expired" xml:space="preserve">
+    <value>Expired</value>
+    <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriends" xml:space="preserve">
+    <value>Invite friends</value>
+    <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDay" xml:space="preserve">
+    <value>day remaining</value>
+    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDays" xml:space="preserve">
+    <value>{0} days remaining</value>
+    <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
+Keep the {0} code because is for include the number of days in runtime.</comment>
+  </data>
+  <data name="UI_SendInvites" xml:space="preserve">
+    <value>Send invites</value>
+    <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewStatus" xml:space="preserve">
+    <value>View status</value>
+    <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Install" xml:space="preserve">
+    <value>Install</value>
+    <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AccountRegistrationInformation" xml:space="preserve">
+    <value>Create your free account and get {0} of complimentary storage spance, valid for {1} days.</value>
+    <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
+  </data>
+  <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
+    <value>When you install MEGAsync you get {0} of complimentary storage space plus {1} of transfer quota, both valid for {2} days. MEGAsync is available for Windows, macOS and most Linux distros.</value>
+    <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_InstallMobileAppInformation" xml:space="preserve">
+    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quoto, both valid for {2} days. We provice mobile apps for iOS, Android &amp; Windows Phone</value>
+    <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_AchievedOn" xml:space="preserve">
+    <value>Achieved on</value>
+    <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExpiresIn" xml:space="preserve">
+    <value>Expires in</value>
+    <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Days" xml:space="preserve">
+    <value>Days</value>
+    <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorks" xml:space="preserve">
+    <value>How it works</value>
+    <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorksText" xml:space="preserve">
+    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you receive bonus storage and transfer quota.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
+  </data>
+  <data name="UI_Invite" xml:space="preserve">
+    <value>Invite</value>
+    <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriendsText" xml:space="preserve">
+    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
+  </data>
+  <data name="UI_WhyNotWorking" xml:space="preserve">
+    <value>Why it is not working</value>
+    <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
+    <value>You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
+    <value>Invited contacts must install MEGA mobile app or MEGA app on their devices.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
+  </data>
 </root>

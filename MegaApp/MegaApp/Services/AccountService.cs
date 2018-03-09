@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Services
 {
@@ -25,6 +32,20 @@ namespace MegaApp.Services
                 if (_accountDetails != null) return _accountDetails;
                 _accountDetails = new AccountDetailsViewModel();
                 return _accountDetails;
+            }
+        }
+
+        /// <summary>
+        /// Storages all the account achievements info
+        /// </summary>
+        private static AccountAchievementsViewModel _accountAchievements;
+        public static AccountAchievementsViewModel AccountAchievements
+        {
+            get
+            {
+                if (_accountAchievements != null) return _accountAchievements;
+                _accountAchievements = new AccountAchievementsViewModel();
+                return _accountAchievements;
             }
         }
 
@@ -104,8 +125,92 @@ namespace MegaApp.Services
             }
         }
 
+        public static async void GetAccountAchievements()
+        {
+            var accountAchievementsRequestListener = new GetAccountAchievementsRequestListenerAsync();
+            var accountAchievements = await accountAchievementsRequestListener.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.getAccountAchievements(accountAchievementsRequestListener);
+            });
+
+            if (accountAchievements == null) return;
+            
+            var awards = new List<AwardViewModel>
+            {
+                // Add Base storage & transfer
+                new AwardViewModel(null, true)
+                {
+                    StorageReward = accountAchievements.getBaseStorage(),
+                    IsTransferAmountVisible = false,
+                }
+            };
+
+            
+            var awardsCount = accountAchievements.getAwardsCount();
+
+            for (uint i = 0; i < awardsCount; i++)
+            {
+                var awardId = accountAchievements.getAwardId(i);
+                var awardClass = (MAchievementClass) accountAchievements.getAwardClass(i);
+                
+                awards.Add(new AwardViewModel(awardClass)
+                {
+                    StorageReward = accountAchievements.getRewardStorageByAwardId(awardId),
+                    TransferReward = accountAchievements.getRewardTransferByAwardId(awardId),
+                    ExpireDate = accountAchievements.getAwardExpirationTs(i).ConvertTimestampToDateTime(),
+                    AchievedOnDate = accountAchievements.getAwardTimestamp(i).ConvertTimestampToDateTime(),
+                    DurationInDays = accountAchievements.getClassExpire((int)awardClass),
+                    IsGranted = true
+                });
+
+            }
+
+            var awardClasses = Enum.GetValues(typeof(MAchievementClass)).OfType<MAchievementClass>();
+            var availableAwards = new List<AwardViewModel>();
+            foreach (var awardClass in awardClasses)
+            {
+                switch (awardClass)
+                {
+                    case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
+                        continue;
+                    case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
+                    {
+                        availableAwards.Add(new AwardViewModel(awardClass)
+                        {
+                            StorageReward = accountAchievements.getClassStorage((int)awardClass),
+                            TransferReward = accountAchievements.getClassTransfer((int)awardClass),
+                            DurationInDays = accountAchievements.getClassExpire((int)awardClass)
+                        });
+                        continue;
+                    };
+                }
+                var available = awards.FirstOrDefault(a => a.AchievementClass == awardClass);
+                if(available != null) continue;
+                availableAwards.Add(new AwardViewModel(awardClass)
+                {
+                    StorageReward = accountAchievements.getClassStorage((int)awardClass),
+                    TransferReward = accountAchievements.getClassTransfer((int)awardClass),
+                    DurationInDays = accountAchievements.getClassExpire((int)awardClass)
+                });
+            }
+
+               
+
+            UiService.OnUiThread(() =>
+            {
+                if (accountAchievements.currentStorage() != -1)
+                    AccountAchievements.CurrentStorageQuota = (ulong) accountAchievements.currentStorage();
+                if (accountAchievements.currentTransfer() != -1)
+                    AccountAchievements.CurrentTransferQuota = (ulong) accountAchievements.currentTransfer();
+                AccountAchievements.Awards = awards;
+                AccountAchievements.AvailableAwards = availableAwards;
+                AccountAchievements.CompletedAwards = awards.Where(a => a.IsGranted).ToList();
+            });
+
+        }
+
         /// <summary>
-        /// Gets the specific details related to a transfer overquota
+        /// Gets the specific details related to a transfer over-quota
         /// </summary>
         public static void GetTransferOverquotaDetails()
         {

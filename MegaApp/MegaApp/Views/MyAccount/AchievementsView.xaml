@@ -1,0 +1,182 @@
+﻿<myAccountViews:BaseAchievementsView
+    x:Class="MegaApp.Views.MyAccount.AchievementsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myAccountViewModels="using:MegaApp.ViewModels.MyAccount"
+    xmlns:myAccountViews="using:MegaApp.Views.MyAccount"
+    xmlns:userControls="using:MegaApp.UserControls"
+    d:DataContext="{d:DesignInstance myAccountViewModels:AchievementsViewModel}"
+    mc:Ignorable="d">
+
+    <myAccountViews:BaseAchievementsView.Resources>
+        <ItemsPanelTemplate x:Key="AchievementPanelTemplate">
+            <ItemsWrapGrid MaximumRowsOrColumns="5" Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+        <DataTemplate x:Key="AchievementItemTemplate">
+            <Grid
+                Width="280"
+                Height="88"
+                Margin="6"
+                Padding="16"
+                VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="52" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Ellipse
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Width="32"
+                    Height="32"
+                    HorizontalAlignment="Stretch"
+                    AutomationProperties.AccessibilityView="Raw"
+                    Fill="Aqua" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="20,0"
+                    VerticalAlignment="Bottom"
+                    FontSize="14"
+                    Opacity="0.9"
+                    Text="{Binding Title, Mode=OneTime}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="20,0"
+                    VerticalAlignment="Top"
+                    FontSize="13"
+                    Opacity="0.6"
+                    Text="{Binding Description, Mode=OneTime}" />
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Height="24"
+                    Margin="0,0,0,2">
+                    <Border.Background>
+                        <SolidColorBrush Color="{ThemeResource UsedStorageQuotaColor}" />
+                    </Border.Background>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding StorageRewardText}" />
+                </Border>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Height="24"
+                    Margin="0,2,0,0">
+                    <Border.Background>
+                        <SolidColorBrush Color="{ThemeResource UsedTransferQuotaColor}" />
+                    </Border.Background>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Text="{Binding TransferRewardText}" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </myAccountViews:BaseAchievementsView.Resources>
+
+    <Grid SizeChanged="OnSizeChanged">
+        <ScrollViewer Margin="0,0,-12,0" VerticalScrollBarVisibility="Auto">
+            <StackPanel
+                x:Name="MainStackPanel"
+                MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                Margin="0,0,12,0"
+                HorizontalAlignment="Left">
+                <TextBlock
+                    Margin="0,56,0,20"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{Binding UnlockedRewardsTitle, Mode=OneTime}" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding StorageQuotaText, Mode=OneTime}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{ThemeResource MegaAchievementsSizeStyle}" Text="{Binding AccountAchievements.CurrentStorageQuotaReadableSize, Mode=OneWay}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource UsedStorageQuotaColor}" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                Style="{ThemeResource MegaAchievementsUnitsStyle}"
+                                Text="{Binding AccountAchievements.CurrentStorageQuotaReadableUnits, Mode=OneWay}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource UsedStorageQuotaColor}" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding TransferQuotaText, Mode=OneTime}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Style="{ThemeResource MegaAchievementsSizeStyle}" Text="{Binding AccountAchievements.CurrentTransferQuotaReadableSize, Mode=OneWay}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource UsedTransferQuotaColor}" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                            <TextBlock
+                                Margin="8,0,0,0"
+                                Style="{ThemeResource MegaAchievementsUnitsStyle}"
+                                Text="{Binding AccountAchievements.CurrentTransferQuotaReadableUnits, Mode=OneWay}">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{StaticResource UsedTransferQuotaColor}" />
+                                </TextBlock.Foreground>
+                            </TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+                <TextBlock
+                    Margin="0,40,0,20"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{Binding AchievementsTitle, Mode=OneTime}" />
+                <TextBlock
+                    FontSize="14"
+                    Opacity="0.7"
+                    Text="{Binding AchievementsText, Mode=OneTime}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Margin="0,32,0,16"
+                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Text="{Binding AvailableText, Mode=OneTime}" />
+
+                <GridView
+                    ItemContainerStyle="{ThemeResource AchievementsItemContainerStyle}"
+                    ItemTemplate="{StaticResource AchievementItemTemplate}"
+                    ItemsPanel="{StaticResource AchievementPanelTemplate}"
+                    ItemsSource="{Binding AccountAchievements.AvailableAwards}"
+                    SelectionChanged="GridViewOnSelectionChanged" />
+
+                <TextBlock
+                    Margin="0,28,0,16"
+                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Text="{Binding CompletedText, Mode=OneTime}" />
+
+                <GridView
+                    ItemContainerStyle="{ThemeResource AchievementsItemContainerStyle}"
+                    ItemTemplate="{StaticResource AchievementItemTemplate}"
+                    ItemsPanel="{StaticResource AchievementPanelTemplate}"
+                    ItemsSource="{Binding AccountAchievements.CompletedAwards}"
+                    SelectionChanged="GridViewOnSelectionChanged" />
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</myAccountViews:BaseAchievementsView>

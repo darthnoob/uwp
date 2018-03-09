@@ -12,8 +12,8 @@
     <Color x:Key="MegaFreeAccountColor">#00B294</Color>
     <Color x:Key="MegaProLiteAccountColor">#FFC159</Color>
     <Color x:Key="MegaProAccountColor">#EB4444</Color>
-    <Color x:Key="UsedStorageQuotaColor">#0078D7</Color>
-    <Color x:Key="UsedTransferQuotaColor">#1DBA9F</Color>
+    <Color x:Key="UsedStorageQuotaColor">#46B4E5</Color>
+    <Color x:Key="UsedTransferQuotaColor">#1FA300</Color>
     <Color x:Key="CloudDriveColor">#EB4444</Color>
     <Color x:Key="IncomingSharesColor">#FF8B01</Color>
     <Color x:Key="RubbishBinColor">#00CC6A</Color>
@@ -65,6 +65,27 @@
         <Setter Property="Foreground" Value="{StaticResource MegaAppForegroundBrush}" />
         <Setter Property="Opacity" Value=".4" />
         <Setter Property="Padding" Value="0,0,0,4" />
+    </Style>
+
+    <Style x:Key="MegaAchievementsSizeStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="LineHeight" Value="48" />
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+    </Style>
+
+    <Style x:Key="MegaAchievementsUnitsStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="LineHeight" Value="48" />
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+    </Style>
+
+    <Style x:Key="MegaAchievementValueBodyStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextWrapping" Value="WrapWholeWords" />
+        <Setter Property="Opacity" Value=".9" />
     </Style>
 
     <Style x:Key="MegaDialogTitleFontStyle" TargetType="TextBlock">
@@ -1226,7 +1247,7 @@
                                             HorizontalAlignment="Right">
                                             <Border.Resources>
                                                 <Style TargetType="Button">
-                                                    <Setter Property="Background" Value="{ThemeResource MegaDialogSecondaryButtonBackgroundBrush}"/>
+                                                    <Setter Property="Background" Value="{ThemeResource MegaDialogSecondaryButtonBackgroundBrush}" />
                                                 </Style>
                                             </Border.Resources>
                                         </Border>
@@ -1235,6 +1256,52 @@
                             </Border>
                         </Grid>
                     </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AchievementsItemContainerStyle" TargetType="GridViewItem">
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="Background" Value="{ThemeResource MegaAchievementsBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource MegaAchievementsBackgroundBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="TabNavigation" Value="Local" />
+        <Setter Property="IsHoldingEnabled" Value="True" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,4,4" />
+        <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+        <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewItem">
+                    <ListViewItemPresenter
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                        CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+                        CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                        CheckMode="Inline"
+                        ContentMargin="{TemplateBinding Padding}"
+                        ContentTransitions="{TemplateBinding ContentTransitions}"
+                        DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                        DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                        DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                        DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                        FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+                        FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                        PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                        PointerOverBackground="{ThemeResource MegaAppBackgroundBrush}"
+                        PointerOverForeground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                        PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+                        ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                        SelectedBackground="{ThemeResource SystemControlHighlightAccentBrush}"
+                        SelectedForeground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                        SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+                        SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+                        SelectionCheckMarkVisualEnabled="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1249,25 +1316,26 @@
             <Color x:Key="MegaAppBarBackground">#111111</Color>
             <Color x:Key="MegaAppBarForeground">#FFFFFF</Color>
 
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
-            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
-            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>
-            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="{ThemeResource MegaAppBarForeground}"/>
-            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222"/>
-            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222"/>
-            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaContactProfileBackgroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaContactProfileForegroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#222222"/>
-            <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#191919"/>
-            <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#666666"/>
-            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444"/>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}" />
+            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}" />
+            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}" />
+            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}" />
+            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}" />
+            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="{ThemeResource MegaAppBarForeground}" />
+            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#222222" />
+            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#222222" />
+            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaContactProfileBackgroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaContactProfileForegroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#222222" />
+            <SolidColorBrush x:Key="MegaAchievementsBackgroundBrush" Color="#222222" />
+            <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#191919" />
+            <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#666666" />
+            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444" />
         </ResourceDictionary>
 
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
@@ -1277,25 +1345,26 @@
             <Color x:Key="MegaAppBarBackground">#FFFFFF</Color>
             <Color x:Key="MegaAppBarForeground">#000000</Color>
 
-            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}"/>
-            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}"/>
-            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}"/>
-            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}"/>
-            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="{ThemeResource MegaAppBarForeground}"/>
-            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333"/>
-            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA"/>
-            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA"/>
-            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaContactProfileBackgroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaContactProfileForegroundBrush" Color="#111111"/>
-            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#E6E6E6"/>
-            <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#FFFFFF"/>
-            <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#DDDDDD"/>
-            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444"/>
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="{ThemeResource MegaAppBackground}" />
+            <SolidColorBrush x:Key="ApplicationPageForegroundThemeBrush" Color="{ThemeResource MegaAppForeground}" />
+            <SolidColorBrush x:Key="MegaAppBackgroundBrush" Color="{ThemeResource MegaAppBackground}" />
+            <SolidColorBrush x:Key="MegaAppForegroundBrush" Color="{ThemeResource MegaAppForeground}" />
+            <SolidColorBrush x:Key="MegaAppBarBackgroundBrush" Color="{ThemeResource MegaAppBarBackground}" />
+            <SolidColorBrush x:Key="MegaAppBarForegroundBrush" Color="{ThemeResource MegaAppBarForeground}" />
+            <SolidColorBrush x:Key="MegaHamburgerMenuBackgroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaHamburgerMenuForegroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaHeaderIconColorBrush" Color="#333333" />
+            <SolidColorBrush x:Key="MegaTextBoxBackgroundBrush" Color="#EAEAEA" />
+            <SolidColorBrush x:Key="MegaPasswordBoxBackgroundBrush" Color="#EAEAEA" />
+            <SolidColorBrush x:Key="MegaNodeDetailsBackgroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaNodeDetailsForegroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaContactProfileBackgroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaContactProfileForegroundBrush" Color="#111111" />
+            <SolidColorBrush x:Key="MegaProgressBarBackgroundBrush" Color="#E6E6E6" />
+            <SolidColorBrush x:Key="MegaAchievementsBackgroundBrush" Color="#E6E6E6" />
+            <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#DDDDDD" />
+            <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>

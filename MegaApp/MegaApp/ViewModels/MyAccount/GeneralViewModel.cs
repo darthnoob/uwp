@@ -28,6 +28,13 @@ namespace MegaApp.ViewModels.MyAccount
         public string TotalTransferQuotaText => ResourceService.UiResources.GetString("UI_TotalTransferQuota");
         public string UsedTransferQuotaText => ResourceService.UiResources.GetString("UI_UsedTransferQuota");
 
+        // Achievements
+        public string UnlockedBonusesTitle => ResourceService.UiResources.GetString("UI_UnlockedBonuses");
+        public string UnlockedBonusesText => ResourceService.UiResources.GetString("UI_UnlockedBonusesText");
+        public string StorageQuotaText => ResourceService.UiResources.GetString("UI_StorageQuota");
+        public string TransferQuotaText => ResourceService.UiResources.GetString("UI_TransferQuota");
+        public string GetMoreBonusesText => ResourceService.UiResources.GetString("UI_GetMoreBonuses");
+
         #endregion
     }
 }

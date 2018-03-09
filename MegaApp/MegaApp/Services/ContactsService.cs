@@ -1,4 +1,7 @@
-﻿using MegaApp.ViewModels.Contacts;
+﻿using System.Threading.Tasks;
+using mega;
+using MegaApp.MegaApi;
+using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.Services
 {
@@ -51,6 +54,28 @@ namespace MegaApp.Services
             MegaContacts.ItemCollection.Clear();
             IncomingContactRequests.ItemCollection.Clear();
             OutgoingContactRequests.ItemCollection.Clear();
+        }
+
+        public static async Task<string> GetContactFirstName(MUser contact)
+        {
+            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.getUserAttribute(
+                    contact, (int) MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener);
+            });
+            return firstName;
+        }
+
+        public static async Task<string> GetContactLastName(MUser contact)
+        {
+            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
+            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.getUserAttribute(
+                    contact, (int) MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener);
+            });
+            return lastName;
         }
     }
 }

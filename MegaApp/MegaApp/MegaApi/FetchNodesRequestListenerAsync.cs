@@ -35,6 +35,7 @@ namespace MegaApp.MegaApi
                         App.AppInformation.HasFetchedNodes = true;
                         AccountService.GetUserData();
                         AccountService.GetAccountDetails();
+                        AccountService.GetAccountAchievements();
                         Tcs?.TrySetResult(true);
                         break;
                     default: // Default error processing

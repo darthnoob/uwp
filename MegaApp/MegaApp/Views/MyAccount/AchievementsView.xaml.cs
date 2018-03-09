@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
@@ -7,11 +8,11 @@ namespace MegaApp.Views.MyAccount
 {
     // Helper class to define the viewmodel of this view
     // XAML cannot use generics in it's declaration.
-    public class BaseStorageAndTransferView : UserControlEx<StorageAndTransferViewModel> { }
+    public class BaseAchievementsView : UserControlEx<AchievementsViewModel> { }
 
-    public sealed partial class StorageAndTransferView : BaseStorageAndTransferView
+    public sealed partial class AchievementsView : BaseAchievementsView
     {
-        public StorageAndTransferView()
+        public AchievementsView()
         {
             this.InitializeComponent();
         }
@@ -24,6 +25,14 @@ namespace MegaApp.Views.MyAccount
             MainStackPanel.Width = element.ActualWidth >= MainStackPanel.MaxWidth 
                 ? MainStackPanel.MaxWidth
                 : element.Width;
+        }
+
+        private void GridViewOnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems == null || !e.AddedItems.Any()) return;
+            var award = e.AddedItems[0] as AwardViewModel;
+            award?.ActionCommand.Execute(null);
+            ((GridView) sender).SelectedItem = null;
         }
     }
 }

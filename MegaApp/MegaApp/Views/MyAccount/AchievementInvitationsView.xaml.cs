@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
@@ -7,11 +9,11 @@ namespace MegaApp.Views.MyAccount
 {
     // Helper class to define the viewmodel of this view
     // XAML cannot use generics in it's declaration.
-    public class BaseStorageAndTransferView : UserControlEx<StorageAndTransferViewModel> { }
+    public class BaseAchievementInvitationsView : UserControlEx<AchievementInvitationsViewModel> { }
 
-    public sealed partial class StorageAndTransferView : BaseStorageAndTransferView
+    public sealed partial class AchievementInvitationsView : BaseAchievementInvitationsView
     {
-        public StorageAndTransferView()
+        public AchievementInvitationsView()
         {
             this.InitializeComponent();
         }
@@ -24,6 +26,11 @@ namespace MegaApp.Views.MyAccount
             MainStackPanel.Width = element.ActualWidth >= MainStackPanel.MaxWidth 
                 ? MainStackPanel.MaxWidth
                 : element.Width;
+        }
+
+        private void OnKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

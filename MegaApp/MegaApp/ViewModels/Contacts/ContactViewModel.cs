@@ -45,10 +45,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public async void GetContactFirstname()
         {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
-                (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
+            var firstName = await ContactsService.GetContactFirstName(this.MegaUser);
             UiService.OnUiThread(() => this.FirstName = firstName);
         }
 
@@ -57,10 +54,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public async void GetContactLastname()
         {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAttribute(this.MegaUser,
-                (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
+            var lastName = await ContactsService.GetContactLastName(this.MegaUser);
             UiService.OnUiThread(() => this.LastName = lastName);
         }
 

@@ -63,7 +63,7 @@
     <toolkit:EmptyCollectionToObjectConverter
         x:Key="CollectionToBoolConverter"
         EmptyValue="False"
-        NotEmptyValue="True"/>
+        NotEmptyValue="True" />
     <toolkit:EmptyCollectionToObjectConverter
         x:Key="InverseCollectionToBoolConverter"
         EmptyValue="True"
@@ -190,7 +190,7 @@
             </Viewbox>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="BreadcrumbHomeMegaTemplate">
         <Grid>
             <Path
@@ -244,41 +244,45 @@
 
     <ControlTemplate x:Name="AscendingOrderIcon">
         <CommandBar
-            Background="{TemplateBinding Background}"
             extensions:CommandBarExtensions.HideMoreButton="True"
+            Background="{TemplateBinding Background}"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
-                Height="36" Width="36"
+                Width="36"
+                Height="36"
+                Click="OnButtonClick"
                 Command="{Binding ItemCollection.InvertOrderCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                Click="OnButtonClick">
-                <Viewbox 
+                Style="{StaticResource MegaAppBarButtonStyle}">
+                <Viewbox
+                    Width="36"
+                    Height="10"
                     Margin="0,0,0,12"
-                    Height="10" Width="36"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE70E;"/>
+                    <FontIcon Glyph="&#xE70E;" />
                 </Viewbox>
             </AppBarButton>
         </CommandBar>
     </ControlTemplate>
-    
+
     <ControlTemplate x:Name="DescendingOrderIcon">
         <CommandBar
-            Background="{TemplateBinding Background}"
             extensions:CommandBarExtensions.HideMoreButton="True"
+            Background="{TemplateBinding Background}"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
-                Height="36" Width="36"
+                Width="36"
+                Height="36"
+                Click="OnButtonClick"
                 Command="{Binding ItemCollection.InvertOrderCommand}"
-                Style="{StaticResource MegaAppBarButtonStyle}"
-                Click="OnButtonClick">
-                <Viewbox 
+                Style="{StaticResource MegaAppBarButtonStyle}">
+                <Viewbox
+                    Width="36"
+                    Height="10"
                     Margin="0,0,0,12"
-                    Height="10" Width="36"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE70D;"/>
+                    <FontIcon Glyph="&#xE70D;" />
                 </Viewbox>
             </AppBarButton>
         </CommandBar>
@@ -287,78 +291,78 @@
     <ControlTemplate x:Name="SelectAllCheckBoxWithOrderTypeAndNumberOfItems">
         <CheckBox
             Margin="0,8,0,0"
-            IsChecked="{Binding ItemCollection.HasAllItemsSelected}"
             Command="{Binding ItemCollection.SelectAllCommand}"
             CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+            IsChecked="{Binding ItemCollection.HasAllItemsSelected}"
             ToolTipService.ToolTip="{Binding SelectOrDeselectAllText, Mode=OneTime}"
             Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-            <Grid 
+            <Grid
                 Margin="4,-8,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ContentControl
                     Grid.Column="0"
                     Template="{StaticResource AscendingOrderIcon}"
-                    Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                <ContentControl 
+                    Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <ContentControl
                     Grid.Column="0"
                     Template="{StaticResource DescendingOrderIcon}"
-                    Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                    Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                 <TextBlock
                     Grid.Column="1"
                     Margin="8,0,0,12"
+                    VerticalAlignment="Center"
                     FontSize="13"
                     Foreground="{StaticResource MegaRedColorBrush}"
-                    Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
                     Opacity="0.8"
-                    VerticalAlignment="Center" />
+                    Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}" />
             </Grid>
         </CheckBox>
     </ControlTemplate>
-    
+
     <ControlTemplate x:Name="OrderTypeAndNumberOfItems">
-        <Grid 
+        <Grid
             Margin="0,6,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ContentControl
                 Grid.Column="0"
                 Template="{StaticResource AscendingOrderIcon}"
-                Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            <ContentControl 
+                Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <ContentControl
                 Grid.Column="0"
                 Template="{StaticResource DescendingOrderIcon}"
-                Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                Visibility="{Binding ItemCollection.IsCurrentOrderAscending, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
             <TextBlock
                 Grid.Column="1"
                 Margin="8,0,0,12"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Foreground="{StaticResource MegaRedColorBrush}"
+                Opacity="0.8"
                 Text="{Binding OrderTypeAndNumberOfItems, Mode=OneWay}"
-                Opacity="0.8"
-                VerticalAlignment="Center"
-                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
             <TextBlock
                 Grid.Column="1"
                 Margin="8,0,0,12"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Foreground="{StaticResource MegaRedColorBrush}"
-                Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
                 Opacity="0.8"
-                VerticalAlignment="Center"
-                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                Text="{Binding OrderTypeAndNumberOfSelectedItems, Mode=OneWay}"
+                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}" />
         </Grid>
     </ControlTemplate>
-    
+
     <DataTemplate x:Key="MegaNodeListViewFileItemContent">
         <Border
             Margin="-12,1"
@@ -474,8 +478,8 @@
 
                 <Path
                     Grid.Column="2"
-                    Height="6"
                     Width="10"
+                    Height="6"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -601,14 +605,15 @@
                         Orientation="Horizontal"
                         Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
+                            Width="4"
+                            Height="4"
                             Margin="8,0"
-                            Fill="{ThemeResource MegaAppForegroundBrush}"
-                            Height="4" Width="4"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Fill="{ThemeResource MegaAppForegroundBrush}" />
                         <Path
-                            Height="6"
                             Width="10"
+                            Height="6"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
@@ -721,8 +726,8 @@
 
                 <Path
                     Grid.Column="2"
-                    Height="6"
                     Width="10"
+                    Height="6"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -833,14 +838,15 @@
                         Orientation="Horizontal"
                         Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
+                            Width="4"
+                            Height="4"
                             Margin="8,0"
-                            Fill="{ThemeResource MegaAppForegroundBrush}"
-                            Height="4" Width="4"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Fill="{ThemeResource MegaAppForegroundBrush}" />
                         <Path
-                            Height="6"
                             Width="10"
+                            Height="6"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
@@ -1076,16 +1082,12 @@
                 <FlyoutBase.AttachedFlyout>
                     <MenuFlyout>
                         <MenuFlyout.Items>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}" />
+                            <MenuFlyoutItem Command="{Binding DownloadCommand}" Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
-                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyText}" />
+                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding CopyOrMoveCommand}" Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1107,7 +1109,8 @@
                 </Grid.ColumnDefinitions>
                 <Path
                     Grid.Column="0"
-                    Width="36" Height="36"
+                    Width="36"
+                    Height="36"
                     Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -1124,50 +1127,51 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
-                        FontSize="14"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="14"
                         Text="{Binding Name}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
                     <TextBlock
                         Grid.Row="1"
-                        FontSize="13"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="13"
+                        Opacity="0.5"
                         Text="{Binding Contents}"
-                        TextWrapping="NoWrap"
-                        Opacity="0.5"/>
+                        TextWrapping="NoWrap" />
                 </Grid>
                 <TextBlock
                     Grid.Column="2"
-                    FontSize="14"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    FontSize="14"
+                    Opacity="0.9"
                     Text="{Binding ModificationTime}"
-                    TextWrapping="NoWrap"
-                    Opacity="0.9" />
+                    TextWrapping="NoWrap" />
                 <Path
                     Grid.Column="3"
-                    Width="12" Height="12"
+                    Width="12"
+                    Height="12"
                     Margin="46,0,18,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding AccessLevel.AccessLevelPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9" >
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Grid.Column="4"
-                    FontSize="14"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    FontSize="14"
+                    Opacity="0.9"
                     Text="{Binding AccessLevel.AccessLevelText}"
-                    TextWrapping="NoWrap"
-                    Opacity="0.9" />
+                    TextWrapping="NoWrap" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -1185,21 +1189,17 @@
                             <MenuFlyoutItem
                                 Command="{Binding OpenContentPanelCommand}"
                                 Text="{Binding OpenText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}" />
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding DownloadCommand}" Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
-                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyText}" />
+                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding CopyOrMoveCommand}" Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1221,7 +1221,8 @@
                 </Grid.ColumnDefinitions>
                 <Path
                     Grid.Column="0"
-                    Width="36" Height="36"
+                    Width="36"
+                    Height="36"
                     Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -1238,50 +1239,51 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
-                        FontSize="14"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="14"
                         Text="{Binding Name}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
                     <TextBlock
                         Grid.Row="1"
-                        FontSize="13"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="13"
+                        Opacity="0.5"
                         Text="{Binding Owner}"
-                        TextWrapping="NoWrap"
-                        Opacity="0.5"/>
+                        TextWrapping="NoWrap" />
                 </Grid>
                 <TextBlock
                     Grid.Column="2"
-                    FontSize="14"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
+                    FontSize="14"
+                    Opacity="0.9"
                     Text="{Binding ModificationTime}"
-                    TextWrapping="NoWrap"
-                    Opacity="0.9" />
+                    TextWrapping="NoWrap" />
                 <Path
                     Grid.Column="3"
-                    Width="12" Height="12"
+                    Width="12"
+                    Height="12"
                     Margin="46,0,18,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding AccessLevel.AccessLevelPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9" >
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Grid.Column="4"
-                    FontSize="14"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    FontSize="14"
+                    Opacity="0.9"
                     Text="{Binding AccessLevel.AccessLevelText}"
-                    TextWrapping="NoWrap"
-                    Opacity="0.9" />
+                    TextWrapping="NoWrap" />
             </Grid>
         </Border>
     </DataTemplate>
@@ -1299,21 +1301,17 @@
                             <MenuFlyoutItem
                                 Command="{Binding OpenContentPanelCommand}"
                                 Text="{Binding OpenText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}" />
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding DownloadCommand}" Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
-                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyText}" />
+                                Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding CopyOrMoveCommand}" Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1333,7 +1331,8 @@
                 </Grid.ColumnDefinitions>
                 <Path
                     Grid.Column="0"
-                    Width="36" Height="36"
+                    Width="36"
+                    Height="36"
                     Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -1350,30 +1349,31 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
-                        FontSize="14"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="14"
                         Text="{Binding Name}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
                     <TextBlock
                         Grid.Row="1"
-                        FontSize="13"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="13"
+                        Opacity="0.5"
                         Text="{Binding Owner}"
-                        TextWrapping="NoWrap"
-                        Opacity="0.5"/>
+                        TextWrapping="NoWrap" />
                 </Grid>
                 <Path
                     Grid.Column="2"
-                    Width="12" Height="12"
+                    Width="12"
+                    Height="12"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding AccessLevel.AccessLevelPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9" >
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
@@ -1395,14 +1395,12 @@
                             <MenuFlyoutItem
                                 Command="{Binding OpenContentPanelCommand}"
                                 Text="{Binding OpenText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding OpenInformationPanelCommand}"
                                 Text="{Binding InformationText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding DownloadCommand}"
-                                Text="{Binding DownloadText}" />
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding DownloadCommand}" Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
@@ -1414,14 +1412,12 @@
                             <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
                                 Text="{Binding SharingText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 Text="{Binding RenameText}"
-                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                            <MenuFlyoutItem
-                                Command="{Binding CopyOrMoveCommand}"
-                                Text="{Binding CopyOrMoveText}" />
+                                Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <MenuFlyoutItem Command="{Binding CopyOrMoveCommand}" Text="{Binding CopyOrMoveText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveSharedAccessCommand}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
@@ -1440,7 +1436,8 @@
                 </Grid.ColumnDefinitions>
                 <Path
                     Grid.Column="0"
-                    Width="36" Height="36"
+                    Width="36"
+                    Height="36"
                     Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -1457,9 +1454,9 @@
                     </Grid.RowDefinitions>
                     <TextBlock
                         Grid.Row="0"
-                        FontSize="14"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontSize="14"
                         Text="{Binding Name}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
@@ -1470,20 +1467,20 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"
-                            FontSize="13"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontSize="13"
+                            Opacity="0.5"
                             Text="{Binding ContactsText}"
-                            TextWrapping="NoWrap"
-                            Opacity="0.5"/>
+                            TextWrapping="NoWrap" />
                         <TextBlock
                             Grid.Column="1"
-                            FontSize="13"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
+                            FontSize="13"
+                            Opacity="0.5"
                             Text="{Binding Contents}"
-                            TextWrapping="NoWrap"
-                            Opacity="0.5"/>
+                            TextWrapping="NoWrap" />
                     </Grid>
                 </Grid>
             </Grid>
@@ -1931,23 +1928,17 @@
             <FlyoutBase.AttachedFlyout>
                 <MenuFlyout>
                     <MenuFlyout.Items>
-                        <MenuFlyoutItem
-                            Command="{Binding ChangePermissionsCommand}"
-                            Text="{Binding PermissionReadOnlyText}">
+                        <MenuFlyoutItem Command="{Binding ChangePermissionsCommand}" Text="{Binding PermissionReadOnlyText}">
                             <MenuFlyoutItem.CommandParameter>
                                 <mega:MShareType>ACCESS_READ</mega:MShareType>
                             </MenuFlyoutItem.CommandParameter>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem
-                            Command="{Binding ChangePermissionsCommand}"
-                            Text="{Binding PermissionReadAndWriteText}">
+                        <MenuFlyoutItem Command="{Binding ChangePermissionsCommand}" Text="{Binding PermissionReadAndWriteText}">
                             <MenuFlyoutItem.CommandParameter>
                                 <mega:MShareType>ACCESS_READWRITE</mega:MShareType>
                             </MenuFlyoutItem.CommandParameter>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem
-                            Command="{Binding ChangePermissionsCommand}"
-                            Text="{Binding PermissionFullAccessText}">
+                        <MenuFlyoutItem Command="{Binding ChangePermissionsCommand}" Text="{Binding PermissionFullAccessText}">
                             <MenuFlyoutItem.CommandParameter>
                                 <mega:MShareType>ACCESS_FULL</mega:MShareType>
                             </MenuFlyoutItem.CommandParameter>
@@ -1955,7 +1946,7 @@
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactFromFolderCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
-                            Text="{Binding RemoveFromFolderText}"/>
+                            Text="{Binding RemoveFromFolderText}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -1965,72 +1956,81 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
             <Path
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
-                Width="12" Height="12"
+                Grid.Column="2"
+                Width="12"
+                Height="12"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Data="{Binding AccessLevel.AccessLevelPathData}"
-                Stretch="Uniform"
-                Opacity="0.9">
+                Opacity="0.9"
+                Stretch="Uniform">
                 <Path.Fill>
                     <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                 </Path.Fill>
@@ -2066,89 +2066,98 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
             <StackPanel
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
+                Grid.Column="2"
                 Orientation="Horizontal">
                 <Path
-                    Width="15" Height="15"
+                    Width="15"
+                    Height="15"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding ShareIconPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9">
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Margin="8,0,0,0"
-                    FontSize="13"
-                    Text="{Binding SharedItems.NumberOfSharedItems}"
-                    Opacity="0.9"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Opacity="0.9"
+                    Text="{Binding SharedItems.NumberOfSharedItems}" />
             </StackPanel>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="MegaContactItemContentDesktop">
         <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
@@ -2177,85 +2186,94 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto" MinWidth="116"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" MinWidth="116" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
             <StackPanel
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
+                Grid.Column="2"
                 Orientation="Horizontal">
                 <Path
-                    Width="15" Height="15"
+                    Width="15"
+                    Height="15"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding ShareIconPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9">
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Margin="8,0,0,0"
-                    FontSize="13"
-                    Text="{Binding SharedItems.NumberOfSharedItemsText}"
-                    Opacity="0.9"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Opacity="0.9"
+                    Text="{Binding SharedItems.NumberOfSharedItemsText}" />
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -2263,63 +2281,70 @@
     <DataTemplate x:Key="MegaContactShareToPanelItem">
         <Grid Margin="0,6" Background="Transparent">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto" MinWidth="116"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" MinWidth="116" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
         </Grid>
     </DataTemplate>
 
@@ -2359,86 +2384,94 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"  
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding AvatarColor}"/>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
                 Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding Email}" 
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding Email}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Date}"
-                VerticalAlignment="Center" />
+                Text="{Binding Date}" />
             <CommandBar
-                Grid.Row="0" Grid.Column="2" 
+                Grid.Row="0"
                 Grid.RowSpan="2"
-                Margin="8,0,0,0"
+                Grid.Column="2"
                 Height="36"
-                Background="Transparent"
+                Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
+                Background="Transparent"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding AcceptContactRequestCommand}"
-                    Label="{Binding AcceptContactText}" 
+                    Label="{Binding AcceptContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding AcceptContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="14" MaxWidth="14">
-                        <PathIcon 
+                    <Viewbox MaxWidth="14" MaxHeight="14">
+                        <PathIcon
                             Margin="0,-12,0,0"
-                            Data="{Binding AcceptPathData, Mode=OneTime}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding AcceptPathData, Mode=OneTime}" />
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding RemindContactRequestCommand}"
-                    Label="{Binding RemindContactText}" 
+                    Label="{Binding RemindContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding RemindContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="16" MaxWidth="16">
-                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;"/>
+                    <Viewbox MaxWidth="16" MaxHeight="16">
+                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;" />
                     </Viewbox>
                 </AppBarButton>
             </CommandBar>
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="MegaContactRequestItemContentDesktop">
         <Grid Margin="0,6" Background="Transparent">
             <FlyoutBase.AttachedFlyout>
@@ -2475,110 +2508,120 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"  
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
-                    <SolidColorBrush Color="{Binding AvatarColor}"/>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
                 Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding Email}" 
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding Email}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Date}"
-                VerticalAlignment="Center" />
+                Text="{Binding Date}" />
             <CommandBar
-                Grid.Row="0" Grid.Column="2" 
+                Grid.Row="0"
                 Grid.RowSpan="2"
-                Margin="8,0,0,0"
+                Grid.Column="2"
                 Height="36"
-                Background="Transparent"
+                Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
+                Background="Transparent"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding AcceptContactRequestCommand}"
-                    Label="{Binding AcceptContactText}" 
+                    Label="{Binding AcceptContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding AcceptContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="14" MaxWidth="14">
-                        <PathIcon 
+                    <Viewbox MaxWidth="14" MaxHeight="14">
+                        <PathIcon
                             Margin="0,-12,0,0"
-                            Data="{Binding AcceptPathData, Mode=OneTime}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding AcceptPathData, Mode=OneTime}" />
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding DeclineContactRequestCommand}"
-                    Label="{Binding DenyContactText}" 
+                    Label="{Binding DenyContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding DenyContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <AppBarButton.Icon>
-                        <PathIcon 
+                        <PathIcon
                             Margin="0,-12,0,0"
-                            Data="{Binding DeclinePathData, Mode=OneTime}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding DeclinePathData, Mode=OneTime}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding RemindContactRequestCommand}"
-                    Label="{Binding RemindContactText}" 
+                    Label="{Binding RemindContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding RemindContactText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Viewbox MaxHeight="16" MaxWidth="16">
-                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;"/>
+                    <Viewbox MaxWidth="16" MaxHeight="16">
+                        <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;" />
                     </Viewbox>
                 </AppBarButton>
                 <AppBarButton
-                    Height="36" Width="36"
+                    Width="36"
+                    Height="36"
                     Command="{Binding CancelContactRequestCommand}"
-                    Label="{Binding CancelInviteText}" 
+                    Label="{Binding CancelInviteText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding CancelInviteText}"
                     Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
                     <AppBarButton.Icon>
-                        <PathIcon 
+                        <PathIcon
                             Margin="0,-12,0,0"
-                            Data="{Binding CancelPathData, Mode=OneTime}"
                             HorizontalAlignment="Center"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center"
+                            Data="{Binding CancelPathData, Mode=OneTime}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar>
@@ -2797,4 +2840,88 @@
             </Grid>
         </Grid>
     </DataTemplate>
+
+    <DataTemplate x:Key="StorageToolTipItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="48" />
+            </Grid.ColumnDefinitions>
+            <Ellipse
+                Width="32"
+                Height="32"
+                HorizontalAlignment="Stretch"
+                AutomationProperties.AccessibilityView="Raw"
+                Fill="{Binding BackgroundColor}" />
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Foreground="{Binding ForegroundColor}"
+                Text="{Binding AwardLetter}" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="12,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{Binding DisplayNameStorage, Mode=OneTime}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap" />
+            <TextBlock
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{Binding StorageRewardText, Mode=OneTime}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{ThemeResource UsedStorageQuotaColor}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TransferToolTipItemTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="32" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="48" />
+            </Grid.ColumnDefinitions>
+            <Ellipse
+                Width="32"
+                Height="32"
+                HorizontalAlignment="Stretch"
+                AutomationProperties.AccessibilityView="Raw"
+                Fill="{Binding BackgroundColor}" />
+            <TextBlock
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Foreground="{Binding ForegroundColor}"
+                Text="{Binding AwardLetter}" />
+            <TextBlock
+                Grid.Column="1"
+                Margin="12,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{Binding DisplayNameTransfer, Mode=OneTime}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap" />
+            <TextBlock
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Text="{Binding TransferRewardText, Mode=OneTime}"
+                Visibility="{Binding IsTransferAmountVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="{ThemeResource UsedTransferQuotaColor}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+        </Grid>
+    </DataTemplate>
+
 </ResourceDictionary>
