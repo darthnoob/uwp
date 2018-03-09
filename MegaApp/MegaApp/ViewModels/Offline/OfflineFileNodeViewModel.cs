@@ -22,7 +22,18 @@ namespace MegaApp.ViewModels.Offline
 
         #region Methods
 
-        public override async void Open() => await FileService.OpenFile(this.NodePath);
+        public override async void Open()
+        {
+            if (!await FileService.OpenFile(this.NodePath))
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_OpenFileFailed"));
+                });
+            }
+        }
 
         public void Update(FileInfo fileInfo)
         {

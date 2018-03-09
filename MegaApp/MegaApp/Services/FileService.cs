@@ -202,34 +202,36 @@ namespace MegaApp.Services
                 return false;
             }
         }
-       
+
+        /// <summary>
+        /// Opens a file with the default app or allow select the app if no default app exists
+        /// </summary>
+        /// <param name="filePath">Path of the file to open</param>
+        /// <returns>TRUE if the file was opened or FALSE if something failed</returns>
         public static async Task<bool> OpenFile(string filePath)
         {
             try
             {
                 var file = await StorageFile.GetFileFromPathAsync(filePath);
-
-                if (file != null)
-                    return await Launcher.LaunchFileAsync(file);
-
-                UiService.OnUiThread(async() =>
+                if (file == null)
                 {
-                     await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_FileNotFound_Title"),
-                        ResourceService.AppMessages.GetString("AM_FileNotFound"));
-                });
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error opening a file. File not found");
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "File path: " + filePath);
+                    return false;
+                }
 
-                return false;
+                // If there is a default app to open the file
+                if (await Launcher.LaunchFileAsync(file)) return true;
+
+                // If not, allow the user select an app
+                var options = new LauncherOptions();
+                options.DisplayApplicationPicker = true;
+                return await Launcher.LaunchFileAsync(file, options);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                UiService.OnUiThread(async() =>
-                {
-                     await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_OpenFileFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_OpenFileFailed"));
-                });
-
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error opening a file", e);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "File path: " + filePath);
                 return false;
             }
         }

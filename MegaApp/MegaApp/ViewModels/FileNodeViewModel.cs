@@ -16,15 +16,6 @@ namespace MegaApp.ViewModels
             this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
         }
 
-        #region Override Methods
-
-        public override async void Open()
-        {
-            await FileService.OpenFile(LocalDownloadPath);
-        }
-
-        #endregion
-
         #region Public Methods
 
         public void SetFile()

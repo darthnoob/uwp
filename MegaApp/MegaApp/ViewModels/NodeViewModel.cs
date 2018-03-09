@@ -714,11 +714,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public virtual void Open()
-        {
-            throw new NotImplementedException();
-        }
-
         public ulong Handle { get; set; }
 
         private FolderViewModel _parent;

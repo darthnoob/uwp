@@ -20,15 +20,6 @@ namespace MegaApp.ViewModels
             InViewingRange = false;
         }
 
-        #region Override Methods
-
-        public override async void Open()
-        {
-            await FileService.OpenFile(LocalDownloadPath);
-        }
-
-        #endregion
-
         #region Public Methods
 
         public bool HasPreviewInCache()

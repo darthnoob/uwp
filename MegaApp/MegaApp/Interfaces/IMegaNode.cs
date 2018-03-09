@@ -71,11 +71,6 @@ namespace MegaApp.Interfaces
         /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
         void Update(MNode megaNode, bool externalUpdate = false);
 
-        /// <summary>
-        /// Open the file that is represented by this node
-        /// </summary>
-        void Open();
-
         #endregion
 
         #region Properties
