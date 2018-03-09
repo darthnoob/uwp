@@ -505,6 +505,10 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Achievements\desktopApp.png" />
+    <Content Include="Assets\Achievements\gettingStarted.png" />
+    <Content Include="Assets\Achievements\inviteFriend.png" />
+    <Content Include="Assets\Achievements\mobileApp.png" />
     <Content Include="Resources\WindowsStoreProxy.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />

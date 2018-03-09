@@ -30,15 +30,16 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Ellipse
+                <Image
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="0"
-                    Width="32"
-                    Height="32"
-                    HorizontalAlignment="Stretch"
-                    AutomationProperties.AccessibilityView="Raw"
-                    Fill="Aqua" />
+                    Width="36"
+                    Height="36"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding ImageUri}"
+                    Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}" />
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"

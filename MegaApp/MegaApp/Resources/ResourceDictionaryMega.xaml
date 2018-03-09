@@ -2864,19 +2864,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="48" />
             </Grid.ColumnDefinitions>
-            <Ellipse
-                Width="32"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                AutomationProperties.AccessibilityView="Raw"
-                Fill="{Binding BackgroundColor}" />
-            <TextBlock
+            <Path
                 Grid.Column="0"
+                Width="24"
+                Height="24"
+                Data="{StaticResource MegaIconVector}"
+                Fill="{StaticResource MegaHeaderIconColorBrush}"
+                FlowDirection="LeftToRight"
+                Stretch="UniformToFill"
+                StrokeThickness="0"
+                Visibility="{Binding IsBaseAward, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Image
+                Grid.Column="0"
+                Width="24"
+                Height="24"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="16"
-                Foreground="{Binding ForegroundColor}"
-                Text="{Binding AwardLetter}" />
+                Source="{Binding ImageUri}"
+                Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}" />
             <TextBlock
                 Grid.Column="1"
                 Margin="12,0"
@@ -2905,19 +2910,24 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="48" />
             </Grid.ColumnDefinitions>
-            <Ellipse
-                Width="32"
-                Height="32"
-                HorizontalAlignment="Stretch"
-                AutomationProperties.AccessibilityView="Raw"
-                Fill="{Binding BackgroundColor}" />
-            <TextBlock
+            <Path
                 Grid.Column="0"
+                Width="24"
+                Height="24"
+                Data="{StaticResource MegaIconVector}"
+                Fill="{StaticResource MegaHeaderIconColorBrush}"
+                FlowDirection="LeftToRight"
+                Stretch="UniformToFill"
+                StrokeThickness="0"
+                Visibility="{Binding IsBaseAward, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <Image
+                Grid.Column="0"
+                Width="24"
+                Height="24"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="16"
-                Foreground="{Binding ForegroundColor}"
-                Text="{Binding AwardLetter}" />
+                Source="{Binding ImageUri}"
+                Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}" />
             <TextBlock
                 Grid.Column="1"
                 Margin="12,0"

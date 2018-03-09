@@ -128,45 +128,24 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        public Brush GetBackgroundColor()
+        public Uri GetAwardImageUri()
         {
-            if (IsBaseAward) return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush;
-            if (!AchievementClass.HasValue) return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush;
-
+            if (!AchievementClass.HasValue) return null;
             switch (AchievementClass)
             {
                 case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
-                    return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush;
-                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
-                    return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush;
+                    return new Uri("ms-appx:///Assets/Achievements/gettingStarted.png");
                 case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
-                    return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush; ;
+                    return new Uri("ms-appx:///Assets/Achievements/desktopApp.png");
                 case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
-                    return Application.Current.Resources["MegaAppForegroundBrush"] as SolidColorBrush; ;
+                    return new Uri("ms-appx:///Assets/Achievements/mobileApp.png");
+                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
+                    return new Uri("ms-appx:///Assets/Achievements/inviteFriend.png");
                 default:
                     return null;
             }
         }
-
-        public Brush GetForegroundColor()
-        {
-            if (IsBaseAward) return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush;
-            if (!AchievementClass.HasValue) return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush;
-
-            switch (AchievementClass)
-            {
-                case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
-                    return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush;
-                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
-                    return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush;
-                case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
-                    return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush; ;
-                case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
-                    return Application.Current.Resources["MegaAppBackgroundBrush"] as SolidColorBrush; ;
-                default:
-                    return null;
-            }
-        }
+       
 
         public ICommand ActionCommand { get; }
 
@@ -175,12 +154,7 @@ namespace MegaApp.ViewModels.MyAccount
         public MAchievementClass? AchievementClass { get; }
 
         public bool IsBaseAward { get; }
-
-       
-        public Brush BackgroundColor => GetBackgroundColor();
-
-        public Brush ForegroundColor => GetForegroundColor();
-
+      
         public string DisplayNameStorage => IsBaseAward
             ? ResourceService.UiResources.GetString("UI_BaseStorage")
             : GetAwardTitle();
@@ -194,6 +168,10 @@ namespace MegaApp.ViewModels.MyAccount
         public string Description => GetAwardDescription();
 
         public string Information => GetAwardInformation();
+
+        public Uri ImageUri => GetAwardImageUri();
+
+        public bool HasImage => ImageUri != null;
 
         private bool _isGranted;
         public bool IsGranted
@@ -248,13 +226,9 @@ namespace MegaApp.ViewModels.MyAccount
             : "- GB";
 
         public string TransferRewardText => TransferReward > 0
-            ? ((ulong) TransferReward).ToStringAndSuffix()
-            : "- GB";
+            ? ((ulong) TransferReward).ToStringAndSuffix(): "- GB";
 
-        public string AwardLetter => IsBaseAward
-            ? "M"
-            : null;
-
+      
         public bool IsTransferAmountVisible { get; set; } = true;
 
         #endregion
