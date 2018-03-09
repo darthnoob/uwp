@@ -162,10 +162,10 @@
             </CommandBar>
         </Grid>
 
-        <Grid 
+        <Grid
+            x:Name="MainGrid"
             Grid.Row="1"
-            Background="Transparent"
-            Margin="24,8,12,0">
+            Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -174,6 +174,7 @@
             <TextBlock
                 Grid.Row="0"
                 FontSize="20"
+                Margin="0,10,0,0"
                 Text="{x:Bind ViewModel.SharedFolderNode.Name, Mode=OneWay}" />
 
             <userControls:FolderExplorer
@@ -274,7 +275,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
@@ -285,10 +285,30 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,12,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="24,0,12,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

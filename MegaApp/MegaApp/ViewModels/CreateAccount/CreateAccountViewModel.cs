@@ -12,7 +12,7 @@ namespace MegaApp.ViewModels.CreateAccount
 {
     public class CreateAccountViewModel : BaseSdkViewModel
     {
-        public CreateAccountViewModel()
+        public CreateAccountViewModel() : base(SdkService.MegaSdk)
         {
             this.ControlState = true;
             this.CreateAccountCommand = new RelayCommand(CreateAccount);

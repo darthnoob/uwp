@@ -11,8 +11,8 @@ namespace MegaApp.ViewModels.SharedFolders
 {
     public class IncomingSharesViewModel : SharedFoldersListViewModel
     {
-        public IncomingSharesViewModel(bool isCopyOrMoveViewModel = false) : 
-            base(ContainerType.InShares, isCopyOrMoveViewModel)
+        public IncomingSharesViewModel(bool isForSelectFolder = false) : 
+            base(ContainerType.InShares, isForSelectFolder)
         {
 
         }
@@ -48,7 +48,7 @@ namespace MegaApp.ViewModels.SharedFolders
         protected async void GetIncomingSharedItems(MUser contact = null)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             // First cancel any other loading task that is busy
             CancelLoad();

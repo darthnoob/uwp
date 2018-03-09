@@ -719,29 +719,17 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
-                            <CommandBar
-                                Grid.Row="0"
+                            <TextBlock
+                                x:Name="ContactNameText"
                                 Grid.Column="0"
-                                extensions:CommandBarExtensions.HideMoreButton="True"
-                                Style="{StaticResource MegaCommandBarStyle}">
-                                <CommandBar.Content>
-                                    <AppBarButton
-                                        x:Name="CloseContactProfilePanelButton"
-                                        Command="{Binding ContactList.CloseContactProfileCommand}"
-                                        Style="{StaticResource MegaAppBarButtonStyle}"
-                                        ToolTipService.ToolTip="{Binding CloseText}">
-                                        <Viewbox MaxWidth="16" MaxHeight="16">
-                                            <FontIcon Glyph="&#xEA5B;" />
-                                        </Viewbox>
-                                    </AppBarButton>
-                                </CommandBar.Content>
-                            </CommandBar>
-
+                                Margin="24,14,0,0"
+                                FontSize="12"
+                                Foreground="{StaticResource MegaRedColorBrush}"
+                                Text="{Binding FullName, Mode=OneWay}" />
+                            
                             <!--  SHARED ITEMS TOP COMMAND BAR AREA (DESKTOP ONLY)  -->
                             <Grid
                                 x:Name="PART_SharedItemsTopCommandBarArea"
-                                Grid.Row="0"
                                 Grid.Column="1"
                                 DataContext="{Binding SharedItems}">
                                 <Grid.ColumnDefinitions>
@@ -751,7 +739,6 @@
                                 <!--  SHARED ITEMS TOP COMMAND BAR (DESKTOP ONLY)  -->
                                 <CommandBar
                                     x:Name="TopCommandBar"
-                                    Grid.Row="0"
                                     Grid.Column="0"
                                     extensions:CommandBarExtensions.HideMoreButton="True"
                                     Style="{StaticResource MegaCommandBarStyle}">
@@ -802,7 +789,6 @@
 
                                 <!--  PERMANENT SHARED ITEMS TOP COMMAND BAR (ALL DEVICES)  -->
                                 <CommandBar
-                                    Grid.Row="0"
                                     Grid.Column="1"
                                     extensions:CommandBarExtensions.HideMoreButton="True"
                                     Style="{StaticResource MegaCommandBarStyle}">
@@ -932,7 +918,6 @@
                             </PivotItem>
                             <PivotItem x:Name="PART_SharedItemsPivot" Header="{Binding SharedItemsText}">
                                 <Grid
-                                    Background="{ThemeResource MegaContactProfileBackgroundBrush}"
                                     DataContext="{Binding SharedItems}"
                                     Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <Grid.RowDefinitions>
@@ -943,7 +928,7 @@
                                         <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}" />
                                         <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}" />
                                     </Grid>
-                                    <Grid Grid.Row="1" Margin="-12,-8,0,0">
+                                    <Grid Grid.Row="1" Margin="-12,-8,-12,0">
                                         <ListView
                                             x:Name="PART_ListViewSharedItems"
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
@@ -997,7 +982,6 @@
                                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="TopRow.Height" Value="Auto" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                                         <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="Extended" />
@@ -1008,11 +992,10 @@
                                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="TopRow.Height" Value="{StaticResource PageHeaderRowHeight}" />
                                         <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
-                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="None" />
+                                        <Setter Target="PART_ListViewSharedItems.SelectionMode" Value="Single" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
@@ -1022,8 +1005,9 @@
                                         <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
+                                        <Setter Target="ContactNameText.Margin" Value="64,14,0,0" />
+                                        <Setter Target="PART_PivotControl.Margin" Value="0,0" />
                                         <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Medium">
@@ -1031,8 +1015,9 @@
                                         <AdaptiveTrigger MinWindowWidth="360" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
+                                        <Setter Target="ContactNameText.Margin" Value="64,14,0,0" />
+                                        <Setter Target="PART_PivotControl.Margin" Value="0,0" />
                                         <Setter Target="PART_PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
-                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Collapsed" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="Wide">
@@ -1040,7 +1025,8 @@
                                         <AdaptiveTrigger MinWindowWidth="600" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="CloseContactProfilePanelButton.Visibility" Value="Visible" />
+                                        <Setter Target="ContactNameText.Margin" Value="24,14,0,0" />
+                                        <Setter Target="PART_PivotControl.Margin" Value="12,0" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

@@ -43,17 +43,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0" Margin="0,0,12,0">
+
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid Grid.Column="0">
                     <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
                     <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
-                </Grid>                
+                </Grid>
                 <Button
                     x:Name="FolderOptionsButton"
                     Grid.Column="1" 
@@ -66,7 +66,6 @@
             <Grid Grid.Row="1">
                 <ListView
                     x:Name="ListView"
-                    Margin="-12,-8,0,0"
                     ContainerContentChanging="OnContainerContentChanging"
                     DoubleTapped="OnItemDoubleTapped"
                     IsMultiSelectCheckBoxEnabled="{Binding Folder.ItemCollection.IsMultiSelectActive}"
@@ -131,8 +130,38 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ListView.SelectionMode" Value="None" />
-                        <Setter Target="GridView.SelectionMode" Value="None" />
+                        <Setter Target="ListView.SelectionMode" Value="Single" />
+                        <Setter Target="GridView.SelectionMode" Value="Single" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,-12,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,-12,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,0,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1200" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="ListView.Margin" Value="-12,0,0,0" />
+                        <Setter Target="GridView.Margin" Value="0,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

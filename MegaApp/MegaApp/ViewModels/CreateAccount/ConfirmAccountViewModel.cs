@@ -26,7 +26,7 @@ namespace MegaApp.ViewModels.CreateAccount
             this.EmailInputState = InputState.Normal;
             this.PasswordInputState = InputState.Normal;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             if (!CheckInputParameters()) return;
 
@@ -144,38 +144,30 @@ namespace MegaApp.ViewModels.CreateAccount
 
         private async Task<bool> FetchNodes()
         {
-            try
+            this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+
+            var fetchNodes = new FetchNodesRequestListenerAsync();
+            fetchNodes.DecryptNodes += OnDecryptNodes;
+            fetchNodes.ServerBusy += OnServerBusy;
+
+            var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
+            if (fetchNodesResult != FetchNodesResult.Success)
             {
-                this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
-
-                var fetchNodes = new FetchNodesRequestListenerAsync();
-                fetchNodes.DecryptNodes += OnDecryptNodes;
-                fetchNodes.ServerBusy += OnServerBusy;
-
-                var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
-                if (!fetchNodesResult)
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
-                    return false;
-                }
-
-                // Enable the transfer resumption for the main MegaSDK instance
-                SdkService.MegaSdk.enableTransferResumption();
-
-                this.ControlState = true;
-                this.ConfirmAccountButtonState = true;
-                this.IsBusy = false;
-
-                return true;
-            }
-            catch (BlockedAccountException)
-            {
-                // Do nothing, app is already logging out
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
                 return false;
             }
+
+            // Enable the transfer resumption for the main MegaSDK instance
+            SdkService.MegaSdk.enableTransferResumption();
+
+            this.ControlState = true;
+            this.ConfirmAccountButtonState = true;
+            this.IsBusy = false;
+
+            return true;
         }
 
         private void OnDecryptNodes(object sender, EventArgs e)

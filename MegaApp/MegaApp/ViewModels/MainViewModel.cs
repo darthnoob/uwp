@@ -9,7 +9,7 @@ namespace MegaApp.ViewModels
 {
     public class MainViewModel : LoginViewModel
     {
-        public MainViewModel()
+        public MainViewModel() : base(SdkService.MegaSdk)
         {
             this.MenuItems = MenuItemViewModel.CreateMenuItems();
             this.OptionItems = MenuItemViewModel.CreateOptionItems();
@@ -31,13 +31,13 @@ namespace MegaApp.ViewModels
             this.SelectedItem = this.MenuItems.FirstOrDefault();
         }
 
-        private void UserNameChanged(object sender, EventArgs e)
+        protected void UserNameChanged(object sender, EventArgs e)
         {
             if (MyAccountMenuItem == null) return;
             OnUiThread(() => MyAccountMenuItem.Label = AccountService.UserData.UserName);
         }
 
-        private void UserEmailChanged(object sender, EventArgs e)
+        protected void UserEmailChanged(object sender, EventArgs e)
         {
             if (MyAccountMenuItem == null) return;
             OnUiThread(() => MyAccountMenuItem.SubLabel = AccountService.UserData.UserEmail);
@@ -104,15 +104,25 @@ namespace MegaApp.ViewModels
             set { SetField(ref _contentViewModel, value); }
         }
 
+        private IList<MenuItemViewModel> _menuItems;
         /// <summary>
         /// List of default menu items
         /// </summary>
-        public IList<MenuItemViewModel> MenuItems { get; }
+        public IList<MenuItemViewModel> MenuItems
+        {
+            get { return _menuItems; }
+            set { SetField(ref _menuItems, value); }
+        }
 
+        private IList<MenuItemViewModel> _optionItems;
         /// <summary>
         /// List of option menu items
         /// </summary>
-        public IList<MenuItemViewModel> OptionItems { get; }
+        public IList<MenuItemViewModel> OptionItems
+        {
+            get { return _optionItems; }
+            set { SetField(ref _optionItems, value); }
+        }
 
         /// <summary>
         /// Navigation action used to arrive to the MainPage

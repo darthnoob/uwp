@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -22,7 +23,7 @@ namespace MegaApp.ViewModels
     /// </typeparam>
     public class CollectionViewModel<T> : BaseSdkViewModel
     {
-        public CollectionViewModel()
+        public CollectionViewModel(MegaSDK megaSdk) : base(megaSdk)
         {
             this.Items = new ObservableCollection<T>();
             this.SelectedItems = new ObservableCollection<T>();

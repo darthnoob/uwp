@@ -25,7 +25,7 @@ namespace MegaApp.ViewModels.Login
             this.PasswordInputState = InputState.Normal;
             this.ConfirmPasswordInputState = InputState.Normal;
 
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             if (!CheckInputParameters()) return;
 
@@ -41,7 +41,7 @@ namespace MegaApp.ViewModels.Login
                     var result = await reset.ExecuteAsync(() =>
                     {
                         SdkService.MegaSdk.confirmResetPassword(
-                            App.LinkInformation.ActiveLink,
+                            LinkInformationService.ActiveLink,
                             this.Password,
                             RecoveryKey,
                             reset);

@@ -7,6 +7,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels
 {
@@ -19,7 +20,7 @@ namespace MegaApp.ViewModels
             this.ShareCommand = new RelayCommand(Share);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
 
-            Transfer = new TransferObjectModel(this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
+            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
 
             this.Update(megaNode);
         }
@@ -134,11 +135,11 @@ namespace MegaApp.ViewModels
         /// </summary>
         private async void RemoveSharedAccess()
         {
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                this.RemoveText, this.CancelText);
+                OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
             if (!dialogResult) return;
 

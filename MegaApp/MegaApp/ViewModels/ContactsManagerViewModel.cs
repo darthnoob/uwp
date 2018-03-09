@@ -1,19 +1,26 @@
-﻿using System;
-using System.ComponentModel;
-using mega;
-using MegaApp.MegaApi;
+﻿using System.ComponentModel;
+using System.Windows.Input;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels
 {
     public class ContactsManagerViewModel : BaseSdkViewModel
     {
-        public ContactsManagerViewModel()
+        public ContactsManagerViewModel() : base(SdkService.MegaSdk)
         {
-            
+            this.IsPanelOpen = false;
+
+            this.ClosePanelCommand = new RelayCommand(ClosePanels);
         }
+
+        #region Commands
+
+        public ICommand ClosePanelCommand { get; set; }
+
+        #endregion
 
         #region Methods
 
@@ -46,6 +53,11 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(nameof(this.OutgoingContactRequests));
         }
 
+        public void ClosePanels()
+        {
+            this.IsPanelOpen = false;
+        }
+
         #endregion
 
         #region Properties
@@ -61,14 +73,23 @@ namespace MegaApp.ViewModels
         public ContactRequestsListViewModel IncomingContactRequests => ContactsService.IncomingContactRequests;
         public ContactRequestsListViewModel OutgoingContactRequests => ContactsService.OutgoingContactRequests;
 
+        private bool _isPanelOpen;
+        public bool IsPanelOpen
+        {
+            get { return _isPanelOpen; }
+            set { SetField(ref _isPanelOpen, value); }
+        }
+
         #endregion
 
         #region UiResources
 
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_Contacts");
         public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
         public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
         public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");
-        
+        public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
+
         #endregion
     }
 }

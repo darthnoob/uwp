@@ -9,13 +9,19 @@ namespace MegaApp.Views.Dialogs
 
     public sealed partial class AlertDialog : BaseAlertDialog
     {
-        public AlertDialog(string title, string message, string button)
+        /// <summary>
+        /// Creates an standard alert dialog.
+        /// </summary>
+        /// <param name="title">Title of the alert dialog.</param>
+        /// <param name="message">Message of the alert dialog.</param>
+        /// <param name="button">Label of the button of the alert dialog. Default value "Ok".</param>
+        public AlertDialog(string title, string message, string button = null)
         {
             this.InitializeComponent();
 
-            this.ViewModel.Title = title;
-            this.ViewModel.Message = message;
-            this.ViewModel.ButtonLabel = button;
+            this.ViewModel.TitleText = title;
+            this.ViewModel.MessageText = message;
+            this.ViewModel.ButtonLabel = button ?? this.ViewModel.OkText;
         }
     }
 }

@@ -123,8 +123,8 @@ namespace MegaApp.UserControls
 
             if (this.PivotControl.Items != null)
             {
-                // Node is an InShare
-                if (this.ViewModel.IsInShare)
+                // Node is an InShare or child of a Folder Link
+                if (this.ViewModel.IsInShare || this.ViewModel.IsFolderLinkChild)
                 {
                     this.PivotControl.Items.Remove(this.LinkPivot);
                     this.PivotControl.Items.Remove(this.SharePivot);
@@ -305,8 +305,7 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop ||
-                this.ViewModel.Node is FolderNodeViewModel == false) return;
+            if (this.ViewModel.Node is FolderNodeViewModel == false) return;
 
             var folderNode = (FolderNodeViewModel)this.ViewModel.Node;
 
@@ -315,10 +314,13 @@ namespace MegaApp.UserControls
 
             folderNode.ContactsList.ItemCollection.FocusedItem = itemTapped;
 
-            if (!folderNode.ContactsList.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (folderNode.ContactsList.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
     }
 }

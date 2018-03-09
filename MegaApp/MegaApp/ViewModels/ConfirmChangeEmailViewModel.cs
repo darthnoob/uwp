@@ -10,7 +10,7 @@ namespace MegaApp.ViewModels
 {
     public class ConfirmChangeEmailViewModel : BaseSdkViewModel
     {
-        public ConfirmChangeEmailViewModel()
+        public ConfirmChangeEmailViewModel() : base(SdkService.MegaSdk)
         {
             this.ControlState = true;
             this.ConfirmEmailCommand = new RelayCommand(ConfirmEmail);
@@ -70,7 +70,7 @@ namespace MegaApp.ViewModels
 
             var changeEmail = new ConfirmChangeEmailRequestListenerAsync();
             var result = await changeEmail.ExecuteAsync(() =>
-                    SdkService.MegaSdk.confirmChangeEmail(this.VerifyEmailLink, this.Password, changeEmail));
+                    this.MegaSdk.confirmChangeEmail(this.VerifyEmailLink, this.Password, changeEmail));
 
             switch(result)
             {
@@ -125,15 +125,15 @@ namespace MegaApp.ViewModels
         /// </summary>
         public async void ProcessVerifyEmailLink()
         {
-            if (string.IsNullOrWhiteSpace(App.LinkInformation.ActiveLink) ||
-                !App.LinkInformation.ActiveLink.Contains("#verify")) return;
+            if (string.IsNullOrWhiteSpace(LinkInformationService.ActiveLink) ||
+                !LinkInformationService.ActiveLink.Contains("#verify")) return;
 
-            this.VerifyEmailLink = App.LinkInformation.ActiveLink;
-            App.LinkInformation.Reset();
+            this.VerifyEmailLink = LinkInformationService.ActiveLink;
+            LinkInformationService.Reset();
 
             var verifyEmail = new QueryChangeEmailLinkRequestListenerAsync();
             var result = await verifyEmail.ExecuteAsync(() =>
-                SdkService.MegaSdk.queryChangeEmailLink(this.VerifyEmailLink, verifyEmail));
+                this.MegaSdk.queryChangeEmailLink(this.VerifyEmailLink, verifyEmail));
 
             switch (result)
             {

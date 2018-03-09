@@ -243,7 +243,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
   </data>
   <data name="AM_InvalidLink" xml:space="preserve">
     <value>Invalid link</value>
-    <comment>Message of the dialog displayed when the user is trying to open an invliad lick (NO KEY).</comment>
+    <comment>Message of the dialog displayed when the user is trying to open an invliad link.</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
     <value>Could not load files and folders from MEGA. Please try again.</value>
@@ -624,11 +624,11 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account has been blocked. Please contact support@mega.co.nz</value>
+    <value>Your account was terminated due to breach of Mega's Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
-    <value>Account blocked</value>
+    <value>Suspended account</value>
     <comment>Title of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_SessionIDError" xml:space="preserve">
@@ -1139,5 +1139,75 @@ Preserve the {0} code because is for include the price in runtime.</comment>
     <value>Wait {0} for your transfer quota to renew.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
+  </data>
+  <data name="AM_DecryptionKeyAlertMessage" xml:space="preserve">
+    <value>To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.</value>
+    <comment>Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents.</comment>
+  </data>
+  <data name="AM_DecryptionKeyAlertTitle" xml:space="preserve">
+    <value>Enter decryption key</value>
+    <comment>Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents - (String as short as possible).</comment>
+  </data>
+  <data name="AM_DecryptionKeyNotValid" xml:space="preserve">
+    <value>Invalid decryption key</value>
+    <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
+  </data>
+  <data name="AM_OpenLinkFailed" xml:space="preserve">
+    <value>Failed to open link. No valid format.</value>
+    <comment>Message of the dialog displayed when failed to open a link.</comment>
+  </data>
+  <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
+    <value>Open link failed</value>
+    <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ImportFailed" xml:space="preserve">
+    <value>Failed importing nodes. Please try again.</value>
+    <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
+  </data>
+  <data name="AM_ImportFailed_Title" xml:space="preserve">
+    <value>Import failed</value>
+    <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LoginToFolderFailed" xml:space="preserve">
+    <value>Failed opening the folder link. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
+  </data>
+  <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
+    <value>Open folder link failed</value>
+    <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
+  </data>
+  <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
+    <value>The account that created this link has been terminated due to multiple violations of our Terms of Service.</value>
+    <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
+  </data>
+  <data name="AM_FileLinkUnavailable" xml:space="preserve">
+    <value>This could be due to the following reasons:
+- The file has been removed because of a ToS/AUP violation.
+- Invalid URL – the link you are trying to access does not exist.
+- The file has been deleted by the user.</value>
+    <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
+  </data>
+  <data name="AM_FolderLinkUnavailable" xml:space="preserve">
+    <value>This could be due to the following reasons:
+- The folder link has been removed because of a ToS/AUP violation.
+- Invalid URL – the link you are trying to access does not exist.
+- The folder link has been deleted by the user.</value>
+    <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
+  </data>
+  <data name="AM_GetPublicNodeFailed" xml:space="preserve">
+    <value>Failed opening the file link. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
+  </data>
+  <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
+    <value>Open file link failed</value>
+    <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
+  </data>
+  <data name="AM_LinkUnavailableTitle" xml:space="preserve">
+    <value>Unavailable link</value>
+    <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
+  </data>
+  <data name="AM_AccountBlockedCopyright" xml:space="preserve">
+    <value>Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.</value>
+    <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
 </root>

@@ -3,6 +3,7 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.SharedFolders
 {
@@ -53,10 +54,11 @@ namespace MegaApp.ViewModels.SharedFolders
                 return;
             }
 
-            var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+            var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
+                OkCancelDialogButtons.Custom,
                 ResourceService.UiResources.GetString("UI_Leave"), this.CancelText);
 
             if (!dialogResult) return;
@@ -88,7 +90,7 @@ namespace MegaApp.ViewModels.SharedFolders
 
         public bool AllowRename => !this.Parent.ItemCollection.IsMultiSelectActive && this.HasFullAccessPermissions;
 
-        public bool IsEnabledForCopyOrMove => this.Parent.IsCopyOrMoveViewModel && this.HasReadWritePermissions;
+        public bool IsEnabledForCopyMoveImport => this.Parent.IsForSelectFolder && this.HasReadWritePermissions;
 
         #endregion
 

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Xaml.Interactivity;
+using System;
 using System.Linq;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
-using Microsoft.Xaml.Interactivity;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -22,7 +23,8 @@ namespace MegaApp.Views
     {
         private const double InformationPanelMinWidth = 432;
         private const double CopyOrMovePanelMinWidth = 432;
-        private const double ContentPanelMinWidth = 888;
+        private const double ContentPanelMaxWidth = 888;
+        private const double ContentPanelMinWidth = 432;
 
         public SharedFoldersPage()
         {
@@ -38,21 +40,23 @@ namespace MegaApp.Views
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected += OnAllSelected;
-            this.ViewModel.IncomingShares.CopyOrMoveEvent += OnCopyOrMove;
-            this.ViewModel.IncomingShares.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.IncomingShares.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
+            this.ViewModel.IncomingShares.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
 
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.OutgoingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected += OnAllSelected;
-            this.ViewModel.OutgoingShares.CopyOrMoveEvent += OnCopyOrMove;
-            this.ViewModel.OutgoingShares.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.OutgoingShares.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
+            this.ViewModel.OutgoingShares.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionFinished;
+            this.CopyOrMovePanelControl.ViewModel.ActionCanceled += OnSelectedNodesActionCanceled;
 
             this.SharedFolderSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
+
+            Window.Current.SizeChanged += OnWindowSizeChanged;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -61,24 +65,29 @@ namespace MegaApp.Views
             this.ViewModel.IncomingShares.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
             this.ViewModel.IncomingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.IncomingShares.ItemCollection.AllSelected -= OnAllSelected;
-            this.ViewModel.IncomingShares.CopyOrMoveEvent -= OnCopyOrMove;
-            this.ViewModel.IncomingShares.CancelCopyOrMoveEvent -= OnResetCopyOrMove;
+            this.ViewModel.IncomingShares.SelectedNodesActionStarted -= OnSelectedNodesActionStarted;
+            this.ViewModel.IncomingShares.SelectedNodesActionCanceled -= OnSelectedNodesActionCanceled;
 
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.OutgoingShares.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
             this.ViewModel.OutgoingShares.ItemCollection.OnlyAllowSingleSelectStatusChanged -= OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.OutgoingShares.ItemCollection.AllSelected -= OnAllSelected;
-            this.ViewModel.OutgoingShares.CopyOrMoveEvent -= OnCopyOrMove;
-            this.ViewModel.OutgoingShares.CancelCopyOrMoveEvent -= OnResetCopyOrMove;
+            this.ViewModel.OutgoingShares.SelectedNodesActionStarted -= OnSelectedNodesActionStarted;
+            this.ViewModel.OutgoingShares.SelectedNodesActionCanceled -= OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished -= OnResetCopyOrMove;
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled -= OnResetCopyOrMove;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished -= OnSelectedNodesActionFinished;
+            this.CopyOrMovePanelControl.ViewModel.ActionCanceled -= OnSelectedNodesActionCanceled;
+
+            Window.Current.SizeChanged -= OnWindowSizeChanged;
 
             this.ViewModel.Deinitialize();
             base.OnNavigatedFrom(e);
         }
 
-        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp)
+        private void IsSplitViewOpenPropertyChanged(DependencyObject sender, DependencyProperty dp) => this.SetPanelWidth();
+        private void OnWindowSizeChanged(object sender, WindowSizeChangedEventArgs e) => this.SetPanelWidth();
+
+        private void SetPanelWidth()
         {
             if (this.ViewModel.ActiveView.IsPanelOpen)
             {
@@ -89,23 +98,22 @@ namespace MegaApp.Views
                     return;
                 }
 
-                switch(this.ViewModel.ActiveView.VisiblePanel)
+                switch (this.ViewModel.ActiveView.VisiblePanel)
                 {
                     case PanelType.Information:
                         this.SharedFolderSplitView.OpenPaneLength = InformationPanelMinWidth;
                         break;
 
                     case PanelType.Content:
-                        this.SharedFolderSplitView.OpenPaneLength = ContentPanelMinWidth;
+                        this.SharedFolderSplitView.OpenPaneLength = this.SharedFolderSplitView.ActualWidth < 1200 ?
+                            ContentPanelMinWidth : ContentPanelMaxWidth;
                         break;
 
-                    case PanelType.CopyOrMove:
+                    case PanelType.CopyMoveImport:
                         this.SharedFolderSplitView.OpenPaneLength = CopyOrMovePanelMinWidth;
                         break;
                 }
             }
-
-            AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
         public override bool CanGoBack
@@ -154,11 +162,9 @@ namespace MegaApp.Views
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
             var listView = this.GetSelectedListView();
-
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+            listView.SelectionMode = 
+                DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
 
             // Restore the selected item
             listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
@@ -178,10 +184,9 @@ namespace MegaApp.Views
                 selectedItem = this.ViewModel.ActiveView.ItemCollection.SelectedItems.First();
 
             var listView = this.GetSelectedListView();
-            if (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+            listView.SelectionMode =
+                (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop) ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
 
             // Restore the selected item
             listView.SelectedItem = this.ViewModel.ActiveView.ItemCollection.FocusedItem = selectedItem;
@@ -267,27 +272,39 @@ namespace MegaApp.Views
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaSharedFolderNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaSharedFolderNode;
             if (itemTapped == null) return;
 
             this.ViewModel.ActiveView.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.ViewModel.ActiveView.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (this.ViewModel.ActiveView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
-        private void OnCopyOrMove(object sender, EventArgs e)
+        private void OnSelectedNodesActionStarted(object sender, EventArgs e)
         {
             this.DisableSelection();
         }
 
-        private void OnResetCopyOrMove(object sender, EventArgs e)
+        private void OnSelectedNodesActionFinished(object sender, EventArgs e)
         {
-            this.ViewModel.ActiveView.ResetCopyOrMove();
+            ResetCopyOrMove();
+        }
+
+        private void OnSelectedNodesActionCanceled(object sender, EventArgs e)
+        {
+            ResetCopyOrMove();
+        }
+
+        private void ResetCopyOrMove()
+        {
+            this.ViewModel.ActiveView.ResetSelectedNodes();
+            this.CopyOrMovePanelControl.Reset();
             this.ClearSelectedItems();
             this.EnableSelection();
         }

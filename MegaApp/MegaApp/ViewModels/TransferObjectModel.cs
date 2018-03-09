@@ -35,8 +35,8 @@ namespace MegaApp.ViewModels
         /// <param name="externalDownloadPath">
         /// Only for downloads. External download path to the application for the selected file / folder
         /// </param>
-        public TransferObjectModel(IMegaNode selectedNode, MTransferType transferType,
-            string transferPath, string externalDownloadPath = null)
+        public TransferObjectModel(MegaSDK megaSdk, IMegaNode selectedNode, MTransferType transferType,
+            string transferPath, string externalDownloadPath = null) : base(megaSdk)
         {
             Initialize(selectedNode, transferType, transferPath, externalDownloadPath);
         }
@@ -117,8 +117,10 @@ namespace MegaApp.ViewModels
             switch (this.Type)
             {
                 case MTransferType.TYPE_DOWNLOAD:
-                    SdkService.MegaSdk.startDownloadWithAppData(this.SelectedNode.OriginalMNode, this.TransferPath,
-                        TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
+                    // Download all nodes with the App instance of the SDK and authorize nodes to be downloaded with this SDK instance.
+                    // Needed to allow transfers resumption of folder link nodes.
+                    SdkService.MegaSdk.startDownloadWithAppData(this.MegaSdk.authorizeNode(this.SelectedNode.OriginalMNode),
+                        this.TransferPath, TransferService.CreateTransferAppDataString(isSaveForOffline, this.ExternalDownloadPath));
                     this.IsSaveForOfflineTransfer = isSaveForOffline;
                     break;
 
@@ -222,7 +224,7 @@ namespace MegaApp.ViewModels
                 if (this.Transfer.getFolderTransferTag() > 0) return true;
 
                 string defaultDownloadLocation = ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation");
-                this.ExternalDownloadPath = this.ExternalDownloadPath ?? SettingsService.LoadSetting<string>(defaultDownloadLocation, null);
+                this.ExternalDownloadPath = this.ExternalDownloadPath ?? await SettingsService.LoadSettingAsync<string>(defaultDownloadLocation, null);
                 if (this.ExternalDownloadPath == null) return false;
                 
                 if (this.Transfer.isFolderTransfer())

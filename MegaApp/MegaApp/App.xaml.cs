@@ -14,6 +14,7 @@ using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp
 {
@@ -32,11 +33,6 @@ namespace MegaApp
         /// Global notifications listener
         /// </summary>
         public static GlobalListener GlobalListener { get; private set; }
-
-        /// <summary>
-        /// Provides easy access to usefull links information
-        /// </summary>
-        public static LinkInformation LinkInformation { get; set; }
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -99,10 +95,9 @@ namespace MegaApp
             {
                 // Handle URI activation
                 ProtocolActivatedEventArgs eventArgs = e as ProtocolActivatedEventArgs;
-                
+
                 // Initialize the links information
-                if (LinkInformation == null)
-                    LinkInformation = new LinkInformation();
+                LinkInformationService.Reset();
 
                 bool validUri = true;
                 Exception exception = null;
@@ -112,7 +107,7 @@ namespace MegaApp
                     if (validUri)
                     {
                         // Use OriginalString to keep uppercase and lowercase letters
-                        LinkInformation.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
+                        LinkInformationService.ActiveLink = UriService.ReformatUri(eventArgs.Uri.OriginalString);
                     }
                 }
                 catch (UriFormatException ex)
@@ -146,7 +141,7 @@ namespace MegaApp
                 Window.Current.Activate();
 
                 // Check session and special navigation
-                await AppService.CheckActiveAndOnlineSession();
+                await AppService.CheckActiveAndOnlineSessionAsync();
 
                 // Validate product subscription license on background thread
                 Task.Run(() => LicenseService.ValidateLicensesAsync());
@@ -219,6 +214,9 @@ namespace MegaApp
         {
             try
             {
+                // Save the exception in a local variable to preserve the stack trace
+                var exception = e.Exception;
+
                 // An unhandled exception has occurred. Break into the debugger
                 if (Debugger.IsAttached)
                     Debugger.Break();
@@ -232,14 +230,14 @@ namespace MegaApp
 
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                    ResourceService.UiResources.GetString("UI_Yes"), ResourceService.UiResources.GetString("UI_No"));
+                    OkCancelDialogButtons.YesNo);
 
                 if (result)
-                    await DebugService.ComposeErrorReportEmailAsync(e.Exception);
+                    await DebugService.ComposeErrorReportEmailAsync(exception);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error managing an unhandled exception.", exception);
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error managing an unhandled exception.", ex);
             }
             finally
             {
@@ -280,8 +278,7 @@ namespace MegaApp
                 AppInformation = new AppInformation();
 
             // Initialize the links information
-            if (LinkInformation == null)
-                LinkInformation = new LinkInformation();
+            LinkInformationService.Reset();
 
             // Initialize SDK parameters
             SdkService.InitializeSdkParams();

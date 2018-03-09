@@ -10,12 +10,13 @@ using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.Contacts
 {
     public class ContactViewModel : BaseSdkViewModel, IMegaContact
     {
-        public ContactViewModel(MUser contact, ContactsListViewModel contactList)
+        public ContactViewModel(MUser contact, ContactsListViewModel contactList) : base(SdkService.MegaSdk)
         {
             this.MegaUser = contact;
             this.ContactList = contactList;
@@ -24,7 +25,7 @@ namespace MegaApp.ViewModels.Contacts
             this.Email = contact.getEmail();
             this.Timestamp = contact.getTimestamp();
             this.Visibility = contact.getVisibility();
-            this.AvatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(contact));
+            this.AvatarColor = UiService.GetColorFromHex(this.MegaSdk.getUserAvatarColor(contact));
             this.SharedItems = new ContactSharedItemsViewModel(contact);
 
             this.RemoveContactCommand = new RelayCommand(RemoveContact);
@@ -63,7 +64,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public void GetContactAvatarColor()
         {
-            var avatarColor = UiService.GetColorFromHex(SdkService.MegaSdk.getUserAvatarColor(this.MegaUser));
+            var avatarColor = UiService.GetColorFromHex(this.MegaSdk.getUserAvatarColor(this.MegaUser));
             UiService.OnUiThread(() => this.AvatarColor = avatarColor);
         }
 
@@ -74,7 +75,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             var contactAvatarRequestListener = new GetUserAvatarRequestListenerAsync();
             var contactAvatarResult = await contactAvatarRequestListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.getUserAvatar(this.MegaUser, this.AvatarPath, contactAvatarRequestListener));
+                this.MegaSdk.getUserAvatar(this.MegaUser, this.AvatarPath, contactAvatarRequestListener));
 
             if (contactAvatarResult)
             {
@@ -134,23 +135,24 @@ namespace MegaApp.ViewModels.Contacts
         public async Task<bool> RemoveContactAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return false;
+            if (!await IsUserOnlineAsync()) return false;
 
             if (this.MegaUser == null) return false;
 
             if(!isMultiSelect)
             {
-                var dialogResult = await DialogService.ShowOkCancelAndWarningAsync(
+                var dialogResult = await DialogService.ShowOkCancelAsync(
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
-                    this.RemoveContactWarningText, this.RemoveText, this.CancelText);
+                    this.RemoveContactWarningText,
+                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return true;
             }
 
             var removeContact = new RemoveContactRequestListenerAsync();
             var result = await removeContact.ExecuteAsync(() =>
-                SdkService.MegaSdk.removeContact(this.MegaUser, removeContact));
+                this.MegaSdk.removeContact(this.MegaUser, removeContact));
 
             if (result) return true;
 
@@ -304,7 +306,6 @@ namespace MegaApp.ViewModels.Contacts
         #region UiResources
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string ProfileText => ResourceService.UiResources.GetString("UI_Profile");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RemoveContactText => ResourceService.UiResources.GetString("UI_RemoveContact");

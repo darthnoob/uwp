@@ -39,12 +39,12 @@
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
 
-                <userControls:CopyOrMovePanel
+                <userControls:CopyMoveImportPanel
                     x:Name="CopyOrMovePanelControl"
                     DataContext="{Binding ActiveView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyMoveImport', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 
@@ -253,7 +253,7 @@
                 </CommandBar>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="12,0">
+            <Grid x:Name="MainGrid" Grid.Row="1" Margin="12,0">
                 <Pivot
                     x:Name="SharedFoldersPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -474,6 +474,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
+                        <Setter Target="TopRowGrid.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -486,6 +487,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -497,6 +499,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,0,0" />
                         <Setter Target="ListViewIncomingShares.ItemTemplate" Value="{StaticResource MegaIncomingSharedItemListViewMobile}" />                        
                     </VisualState.Setters>
                 </VisualState>

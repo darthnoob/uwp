@@ -89,9 +89,27 @@ namespace MegaApp.Views
             AppService.SetAppViewBackButtonVisibility(this.CanGoBack);
         }
 
+        public override bool CanGoBack
+        {
+            get
+            {
+                bool canGoBack = false;
+                if (this.ViewModel != null)
+                    canGoBack = this.ViewModel.IsPanelOpen;
+
+                return canGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (ContactProfileSplitView.IsPaneOpen)
+                this.ViewModel.ClosePanels();
+        }
+
         private void OnMultiSelectEnabled(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
@@ -136,10 +154,10 @@ namespace MegaApp.Views
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
             var listView = this.GetSelectedListView();
-            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
-                listView.SelectionMode = ListViewSelectionMode.Extended;
-            else
-                listView.SelectionMode = ListViewSelectionMode.Single;
+
+            listView.SelectionMode = 
+                DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
+                ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
         }
 
         /// <summary>
@@ -172,7 +190,7 @@ namespace MegaApp.Views
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
 
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.ContactsPivot))
                 this.ViewModel.ActiveView = this.ViewModel.MegaContacts;
@@ -207,10 +225,13 @@ namespace MegaApp.Views
 
             this.ViewModel.MegaContacts.ItemCollection.FocusedItem = itemTapped;
 
-            if (!this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
-                ((ListView)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListView)sender).SelectedItems?.Add(itemTapped);
+            if (this.ViewModel.MegaContacts.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnContactRequestTapped(object sender, TappedRoutedEventArgs e)
@@ -226,8 +247,6 @@ namespace MegaApp.Views
 
         private void OnContactRequestRightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaContactRequest itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaContactRequest;
             if (itemTapped == null) return;
 
@@ -236,10 +255,13 @@ namespace MegaApp.Views
             var activeView = this.ViewModel.ActiveView as ContactRequestsListViewModel;
             activeView.ItemCollection.FocusedItem = itemTapped;
 
-            if (!activeView.ItemCollection.IsMultiSelectActive)
-                ((ListViewBase)sender).SelectedItems?.Clear();
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems?.Add(itemTapped);
+            if (activeView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems?.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private ListView GetSelectedListView()
@@ -285,12 +307,12 @@ namespace MegaApp.Views
 
         private void OnOpenContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = true;
+            this.ViewModel.IsPanelOpen = true;
         }
 
         private void OnCloseContactProfile(object sender, EventArgs e)
         {
-            this.ContactProfileSplitView.IsPaneOpen = false;
+            this.ViewModel.IsPanelOpen = false;
         }
     }
 }

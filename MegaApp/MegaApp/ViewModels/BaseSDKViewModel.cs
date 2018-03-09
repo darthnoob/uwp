@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using mega;
-using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.Views;
 using IApplicationBar = MegaApp.Interfaces.IApplicationBar;
@@ -13,9 +13,9 @@ namespace MegaApp.ViewModels
     {
         private static bool isMessageVisible = false;
 
-        protected BaseSdkViewModel()
+        protected BaseSdkViewModel(MegaSDK megaSdk)
         {
-            this.MegaSdk = SdkService.MegaSdk;
+            this.MegaSdk = megaSdk;
         }
 
         #region Methods
@@ -30,9 +30,9 @@ namespace MegaApp.ViewModels
         /// <para>Default value is false.</para>
         /// </param>
         /// <returns>True if the user is online. False in other case.</returns>
-        public bool IsUserOnline(bool showMessageDialog = false)
+        public async Task<bool> IsUserOnlineAsync(bool showMessageDialog = false)
         {
-            if (!NetworkService.IsNetworkAvailable(showMessageDialog)) return false;
+            if (!await NetworkService.IsNetworkAvailableAsync(showMessageDialog)) return false;
 
             bool isOnline = Convert.ToBoolean(this.MegaSdk.isLoggedIn());
             if (!isOnline)
@@ -41,20 +41,14 @@ namespace MegaApp.ViewModels
                 {
                     if (!isMessageVisible)
                     {
-                        var customMessageDialog = new CustomMessageDialog(
-                            ResourceService.AppMessages.GetString("AM_UserNotOnline_Title"),
-                            ResourceService.AppMessages.GetString("AM_UserNotOnline"),
-                            App.AppInformation,
-                            MessageDialogButtons.Ok);
-
-                        customMessageDialog.OkOrYesButtonTapped += (sender, args) =>
-                        {
-                            isMessageVisible = false;
-                            OnUiThread(() => NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
-                        };
-
-                        customMessageDialog.ShowDialog();
                         isMessageVisible = true;
+
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_UserNotOnline_Title"),
+                            ResourceService.AppMessages.GetString("AM_UserNotOnline"));
+
+                        isMessageVisible = false;
+                        OnUiThread(() => NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true));
                     }
                 }
                 else

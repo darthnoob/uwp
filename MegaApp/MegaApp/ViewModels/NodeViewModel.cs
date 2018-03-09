@@ -14,6 +14,7 @@ using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.Views;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels
@@ -28,6 +29,7 @@ namespace MegaApp.ViewModels
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
             ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
 
@@ -35,12 +37,14 @@ namespace MegaApp.ViewModels
             SetDefaultValues();
 
             this.Parent = parent;
+            this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
             this.ChildCollection = childCollection;
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
             this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
+            this.ImportCommand = new RelayCommand(Import);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
@@ -61,6 +65,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }
         public ICommand DownloadCommand { get; set; }
         public ICommand GetLinkCommand { get; }
+        public ICommand ImportCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
@@ -227,13 +232,14 @@ namespace MegaApp.ViewModels
         public async Task RenameAsync()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             var oldName = this.Name;
 
             var inputName = await DialogService.ShowInputDialogAsync(
                 ResourceService.UiResources.GetString("UI_Rename"),
                 ResourceService.UiResources.GetString("UI_TypeNewName"),
+                null, null,
                 new InputDialogSettings
                 {
                     InputText = this.Name,
@@ -286,7 +292,7 @@ namespace MegaApp.ViewModels
         public async Task<NodeActionResult> MoveAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
             if (MegaSdk.checkMove(OriginalMNode, newParentNode.OriginalMNode).getErrorCode() != MErrorType.API_OK)
             {
@@ -314,7 +320,7 @@ namespace MegaApp.ViewModels
         public async Task<NodeActionResult> CopyAsync(IMegaNode newParentNode)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return NodeActionResult.NotOnline;
+            if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
             var copyNode = new CopyNodeRequestListenerAsync();
             var result = await copyNode.ExecuteAsync(() =>
@@ -323,6 +329,25 @@ namespace MegaApp.ViewModels
             if (!result) return NodeActionResult.Failed;
             
             return NodeActionResult.Succeeded;
+        }
+
+        /// <summary>
+        /// Import the node from its current location to a new folder destination
+        /// </summary>
+        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <returns>Result of the action</returns>
+        public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
+        {
+            // User must be online to perform this operation
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync())
+                return NodeActionResult.NotOnline;
+
+            var copyNode = new CopyNodeRequestListenerAsync();
+            var result = await copyNode.ExecuteAsync(() =>
+                SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
+                newParentNode.OriginalMNode, copyNode));
+
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
         }
 
         private void Preview()
@@ -368,7 +393,7 @@ namespace MegaApp.ViewModels
         public async Task<bool> RemoveAsync(bool isMultiSelect = false)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return false;
+            if (!await IsUserOnlineAsync()) return false;
 
             if (this.OriginalMNode == null) return false;
 
@@ -441,7 +466,7 @@ namespace MegaApp.ViewModels
         public async void GetLinkAsync(bool showLinkDialog = true)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if (!await IsUserOnlineAsync()) return;
 
             if (this.OriginalMNode.isExported())
             {
@@ -476,7 +501,7 @@ namespace MegaApp.ViewModels
         public async void SetLinkExpirationTime(long expireTime)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline() || expireTime < 0) return;
+            if (!await IsUserOnlineAsync() || expireTime < 0) return;
 
             var exportNode = new ExporNodeRequestListenerAsync();
             this.ExportLink = await exportNode.ExecuteAsync(() =>
@@ -501,7 +526,7 @@ namespace MegaApp.ViewModels
         public async void RemoveLink()
         {
             // User must be online to perform this operation
-            if (!IsUserOnline() || !this.OriginalMNode.isExported()) return;
+            if (!await IsUserOnlineAsync() || !this.OriginalMNode.isExported()) return;
 
             var disableExportNode = new DisableExportRequestListenerAsync();
             var result = await disableExportNode.ExecuteAsync(() =>
@@ -538,7 +563,7 @@ namespace MegaApp.ViewModels
         public async void Download(TransferQueue transferQueue)
         {
             // User must be online to perform this operation
-            if (!IsUserOnline()) return;
+            if ((this.Parent?.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync()) return;
             if (transferQueue == null) return;
 
             var downloadFolder = await FolderService.SelectFolder();
@@ -548,6 +573,25 @@ namespace MegaApp.ViewModels
             this.Transfer.ExternalDownloadPath = downloadFolder.Path;
             transferQueue.Add(this.Transfer);
             this.Transfer.StartTransfer();
+
+            // If is a file or folder link, navigate to the Cloud Drive page
+            if (this.ParentContainerType == ContainerType.FileLink ||
+                this.ParentContainerType == ContainerType.FolderLink)
+            {
+                OnUiThread(() =>
+                {
+                    NavigateService.Instance.Navigate(typeof(CloudDrivePage), false,
+                        NavigationObject.Create(this.GetType()));
+                });
+            }
+        }
+
+        private void Import()
+        {
+            if (this.Parent == null) return;
+
+            if (this.Parent.ImportCommand.CanExecute(null))
+                this.Parent.ImportCommand.Execute(null);
         }
 
         /// <summary>
@@ -567,7 +611,7 @@ namespace MegaApp.ViewModels
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
-            this.AccessLevel.AccessType = (MShareType)SdkService.MegaSdk.getAccess(megaNode);
+            this.AccessLevel.AccessType = (MShareType)this.MegaSdk.getAccess(megaNode);
 
             // Needed to filtering when the change is done inside the app or externally and is received by an `onNodesUpdate`
             if (!externalUpdate || megaNode.hasChanged((int)MNodeChangeType.CHANGE_TYPE_PUBLIC_LINK))
@@ -814,6 +858,7 @@ namespace MegaApp.ViewModels
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
         public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
+        public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LinkText => ResourceService.UiResources.GetString("UI_Link");
         public string ModifiedLabelText => ResourceService.UiResources.GetString("UI_Modified");

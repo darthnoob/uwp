@@ -386,6 +386,10 @@
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
@@ -410,7 +414,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.ColumnDefinitions>
@@ -521,13 +525,17 @@
                                 Text="{Binding InformationText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
-                                Command="{Binding OpenInformationPanelCommand}"
+                                Command="{Binding PreviewCommand}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
@@ -553,7 +561,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -647,6 +655,10 @@
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
@@ -675,7 +687,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.ColumnDefinitions>
@@ -773,6 +785,10 @@
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding ImportCommand}"
+                                Text="{Binding ImportText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
@@ -801,7 +817,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.RowDefinitions>
@@ -908,7 +924,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Grid.ColumnDefinitions>
@@ -1040,7 +1056,7 @@
                 </FlyoutBase.AttachedFlyout>
                 <interactivity:Interaction.Behaviors>
                     <core:EventTriggerBehavior EventName="RightTapped">
-                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsFlyoutActionAvailable}" />
+                        <behaviors:OpenFlyoutAction IsEnabled="{Binding Parent.IsPanelOpen, Converter={StaticResource InverseBoolConverter}}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <Path
@@ -2829,7 +2845,7 @@
                         <TextBlock
                             Grid.Column="1"
                             Style="{ThemeResource MegaBodyFontStyle}"
-                            Text="{Binding PriceAndCurrency, Mode=OneTime}"
+                            Text="{Binding FormattedPrice, Mode=OneTime}"
                             TextAlignment="Right">
                             <TextBlock.Foreground>
                                 <SolidColorBrush Color="{Binding ProductColor, Mode=OneTime}" />

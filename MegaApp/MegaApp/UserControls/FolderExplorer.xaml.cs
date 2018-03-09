@@ -22,11 +22,16 @@ namespace MegaApp.UserControls
 
     public sealed partial class FolderExplorer : BaseFolderExplorer
     {
+        /// <summary>
+        /// Flag to indicate that the multi select is being disabled
+        /// </summary>
+        private bool isMultiSelectDisabling;
+
         public FolderExplorer()
         {
             this.InitializeComponent();
 
-            CopyOrMoveService.SelectedNodesChanged += this.OnSelectedNodesChanged;
+            SelectedNodesService.SelectedNodesChanged += this.OnSelectedNodesChanged;
         }
 
         /// <summary>
@@ -84,12 +89,12 @@ namespace MegaApp.UserControls
             this.ViewModel.Folder.ItemCollection.OnlyAllowSingleSelectStatusChanged += OnOnlyAllowSingleSelectStatusChanged;
             this.ViewModel.Folder.ItemCollection.AllSelected += OnAllSelected;
 
-            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsForSelectFolder);
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
         {
-            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsCopyOrMoveViewModel);
+            this.OnlyAllowSingleSelect(this.ViewModel.Folder.IsForSelectFolder);
         }
 
         private void OnViewChanged(object sender, EventArgs e)
@@ -110,13 +115,24 @@ namespace MegaApp.UserControls
 
         public void EnableSelection()
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-            this.ListView.SelectionMode = ListViewSelectionMode.Extended;
-            this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+            this.FolderOptionsButton.IsEnabled = true;
+
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Extended;
+                this.GridView.SelectionMode = ListViewSelectionMode.Extended;
+            }
+            else
+            {
+                this.ListView.SelectionMode = ListViewSelectionMode.Single;
+                this.GridView.SelectionMode = ListViewSelectionMode.Single;
+            }
         }
 
         public void DisableSelection()
         {
+            this.FolderOptionsButton.IsEnabled = false;
+
             this.ListView.SelectionMode = ListViewSelectionMode.None;
             this.GridView.SelectionMode = ListViewSelectionMode.None;
         }
@@ -150,6 +166,9 @@ namespace MegaApp.UserControls
 
         private void OnMultiSelectDisabled(object sender, EventArgs e)
         {
+            // Set the flag to indicate that the multi select is being disabled
+            this.isMultiSelectDisabling = true;
+
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
 
@@ -165,8 +184,8 @@ namespace MegaApp.UserControls
             }
             else
             {
-                this.ListView.SelectionMode = ListViewSelectionMode.None;
-                this.GridView.SelectionMode = ListViewSelectionMode.None;
+                this.ListView.SelectionMode = ListViewSelectionMode.Single;
+                this.GridView.SelectionMode = ListViewSelectionMode.Single;
             }
 
             // Restore the selected item
@@ -272,11 +291,13 @@ namespace MegaApp.UserControls
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop && !this.isMultiSelectDisabling)
             {
                 this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
                 return;
             }
+
+            if (this.isMultiSelectDisabling) this.isMultiSelectDisabling = false;
 
             if (itemTapped is ImageNodeViewModel)
                 (itemTapped as ImageNodeViewModel).InViewingRange = true;
@@ -286,7 +307,7 @@ namespace MegaApp.UserControls
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (this.ViewModel.Folder.IsPanelOpen)
                 return;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
@@ -297,18 +318,18 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
-                return;
-
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
             this.ViewModel.Folder.FocusedNode = itemTapped;
 
-            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive) return;
+            var view = (ListViewBase)sender;
+            if (view == null) return;
 
-            ((ListViewBase)sender).SelectedItems.Clear();
-            ((ListViewBase)sender).SelectedItems.Add(itemTapped);
+            if (this.ViewModel.Folder.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnFolderOptionsButtonClicked(object sender, RoutedEventArgs e)
@@ -329,6 +350,15 @@ namespace MegaApp.UserControls
                 Text = ResourceService.UiResources.GetString("UI_Download"),
                 Command = this.ViewModel.DownloadFolderCommand
             });
+
+            if (this.ViewModel?.Folder?.Type == ContainerType.FolderLink)
+            {
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_Import"),
+                    Command = this.ViewModel.ImportFolderCommand
+                });
+            }
 
             //menuFlyout.Items?.Add(new MenuFlyoutItem()
             //{
@@ -382,21 +412,21 @@ namespace MegaApp.UserControls
             var incomingSharedFolderNode = item as IncomingSharedFolderNodeViewModel;
             if (incomingSharedFolderNode != null)
             {
-                viewItem.IsEnabled = incomingSharedFolderNode.IsEnabledForCopyOrMove;
+                viewItem.IsEnabled = incomingSharedFolderNode.IsEnabledForCopyMoveImport;
                 return;
             }
 
             var folderNode = item as FolderNodeViewModel;
             if (folderNode != null)
             {
-                viewItem.IsEnabled = !(folderNode.Parent.IsCopyOrMoveViewModel &&
-                    CopyOrMoveService.IsCopyOrMoveSelectedNode(folderNode));
+                viewItem.IsEnabled = !(folderNode.Parent.IsForSelectFolder &&
+                    SelectedNodesService.IsSelectedNode(folderNode));
             }
         }
 
         private void OnSelectedNodesChanged(object sender, EventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             this.OnListViewLoaded(sender, new RoutedEventArgs());
             this.OnGridViewLoaded(sender, new RoutedEventArgs());
@@ -404,7 +434,7 @@ namespace MegaApp.UserControls
 
         private void OnListViewLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             var listViewItems = this.ListView.Items;
             if (listViewItems == null) return;
@@ -419,7 +449,7 @@ namespace MegaApp.UserControls
 
         private void OnGridViewLoaded(object sender, RoutedEventArgs e)
         {
-            if (this.Folder == null || !this.Folder.IsCopyOrMoveViewModel) return;
+            if (this.Folder == null || !this.Folder.IsForSelectFolder) return;
 
             var gridViewItems = this.GridView.Items;
             if (gridViewItems == null) return;

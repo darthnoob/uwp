@@ -148,7 +148,7 @@
                             Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
-                            Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding Node, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -160,7 +160,8 @@
                             Command="{Binding Node.DownloadCommand}"
                             Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
+                            ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                            Visibility="{Binding Node, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon 
                                     Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
@@ -169,10 +170,24 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            Command="{Binding Node.ImportCommand}"
+                            Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                            Visibility="{Binding Node, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                            <AppBarButton.Icon>
+                                <PathIcon 
+                                    Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                        <AppBarButton
                             Command="{Binding Node.CopyOrMoveCommand}"
                             Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}">
+                            ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
+                            Visibility="{Binding Node, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -184,7 +199,8 @@
                             Command="{Binding Node.RenameCommand}"
                             Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}"
+                            Visibility="{Binding Node, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -197,7 +213,7 @@
                             Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
-                            Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            Visibility="{Binding Node, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
@@ -210,7 +226,7 @@
                             Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
-                            Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                            Visibility="{Binding Node, ConverterParameter='leaveshare', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon 
                                     Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
@@ -226,7 +242,7 @@
                         extensions:CommandBarExtensions.HideMoreButton="True"
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
-                            Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
+                            Command="{x:Bind ViewModel.AddContactToFolderCommand}"
                             Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -568,23 +584,11 @@
                     x:Name="MainBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{Binding Node.DownloadCommand}"
-                        Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
-                        Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
-                        <AppBarButton.Icon>
-                            <PathIcon 
-                                Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    <AppBarButton
                         Command="{Binding Node.PreviewCommand}"
                         Label="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.PreviewText, Mode=OneTime}"
-                        Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding Node, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -593,11 +597,37 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
+                        Command="{Binding Node.DownloadCommand}"
+                        Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
+                        Visibility="{Binding Node, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon 
+                                Data="{x:Bind ViewModel.DownloadPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Command="{Binding Node.ImportCommand}"
+                        Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}"
+                        Visibility="{Binding Node, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon 
+                                Data="{x:Bind ViewModel.ImportPathData, Mode=OneTime}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
                         Command="{Binding Node.CopyOrMoveCommand}"
                         Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
-                        Visibility="{Binding Node.IsImage, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding Node, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -610,7 +640,7 @@
                         Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText}"
-                        Visibility="{Binding IsInShare, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        Visibility="{Binding Node, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon
                                 HorizontalAlignment="Center"
@@ -623,7 +653,7 @@
                         Label="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.LeaveShareText, Mode=OneTime}"
-                        Visibility="{Binding IsInShare, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding Node, ConverterParameter='leaveshare', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon 
                                 Data="{x:Bind ViewModel.LeaveSharePathData, Mode=OneTime}"
@@ -635,24 +665,13 @@
                         <AppBarButton
                             Command="{Binding Node.RenameCommand}"
                             Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}">
+                            ToolTipService.ToolTip="{x:Bind ViewModel.RenameText}"
+                            Visibility="{Binding Node, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <PathIcon
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Data="{x:Bind ViewModel.RenamePathData, Mode=OneTime}" />
-                            </AppBarButton.Icon>
-                        </AppBarButton>
-                        <AppBarButton
-                            Command="{Binding Node.CopyOrMoveCommand}"
-                            Label="{x:Bind ViewModel.CopyOrMoveText, Mode=OneTime}"
-                            ToolTipService.ToolTip="{x:Bind ViewModel.CopyOrMoveText}"
-                            Visibility="{Binding Node.IsImage, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <AppBarButton.Icon>
-                                <PathIcon
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Data="{x:Bind ViewModel.CopyOrMovePathData, Mode=OneTime}" />
                             </AppBarButton.Icon>
                         </AppBarButton>
                     </CommandBar.SecondaryCommands>
@@ -662,7 +681,7 @@
                     x:Name="SharePivotBottomCommandBar"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
-                        Command="{Binding FolderNode.ContactsList.AddContactToFolderCommand}"
+                        Command="{x:Bind ViewModel.AddContactToFolderCommand}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -716,8 +735,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
-                        <Setter Target="PivotControl.Margin" Value="12,0" />
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="ListViewContacts.SelectionMode" Value="Extended" />
@@ -729,8 +746,6 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
-                        <Setter Target="PivotControl.Margin" Value="0,0" />
                         <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
@@ -739,13 +754,15 @@
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
+
             <VisualStateGroup>
                 <VisualState x:Name="Small">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="PivotControl.Background" Value="{ThemeResource MegaAppBackgroundBrush}" />
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="0,0" />                        
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="DateCreatedLabelText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
                         <Setter Target="DateModifiedLabelText.(RelativePanel.Below)" Value="DateCreatedLabelText" />
@@ -775,6 +792,8 @@
                         <AdaptiveTrigger MinWindowWidth="360" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="0,0" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />
@@ -809,6 +828,8 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="PivotControl.Margin" Value="12,0" />
                         <Setter Target="SizeText.(RelativePanel.Below)" Value="SizeLabelText" />
                         <Setter Target="ContentsOrTypeLabelText.(RelativePanel.AlignHorizontalCenterWithPanel)" Value="True" />
                         <Setter Target="ContentsOrTypeText.(RelativePanel.Below)" Value="ContentsOrTypeLabelText" />

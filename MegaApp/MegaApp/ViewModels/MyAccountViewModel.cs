@@ -7,7 +7,7 @@ namespace MegaApp.ViewModels
 {
     public class MyAccountViewModel : BaseSdkViewModel
     {
-        public MyAccountViewModel()
+        public MyAccountViewModel() : base(SdkService.MegaSdk)
         {
             this.LogOutCommand = new RelayCommand(LogOut);
         }
@@ -30,9 +30,9 @@ namespace MegaApp.ViewModels
 
         #region Private Methods
 
-        private void LogOut()
+        private async void LogOut()
         {
-            if (!NetworkService.IsNetworkAvailable(true)) return;
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             this.MegaSdk.logout(new LogOutRequestListener());
         }
@@ -40,6 +40,8 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region UiResources
+
+        public string SectionNameText => ResourceService.UiResources.GetString("UI_MyAccount");
 
         public string GeneralTitle => ResourceService.UiResources.GetString("UI_General");
         public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");

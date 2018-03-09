@@ -33,16 +33,16 @@ namespace MegaApp.Views
             this.ViewModel.CameraUploads.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.CameraUploads.ItemCollection.AllSelected += OnAllSelected;
 
-            this.ViewModel.CloudDrive.CopyOrMoveEvent += OnCopyOrMove;
-            this.ViewModel.CameraUploads.CopyOrMoveEvent += OnCopyOrMove;
-            this.ViewModel.RubbishBin.CopyOrMoveEvent += OnCopyOrMove;
+            this.ViewModel.CloudDrive.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
+            this.ViewModel.CameraUploads.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
+            this.ViewModel.RubbishBin.SelectedNodesActionStarted += OnSelectedNodesActionStarted;
 
-            this.ViewModel.CloudDrive.CancelCopyOrMoveEvent += OnResetCopyOrMove;
-            this.ViewModel.CameraUploads.CancelCopyOrMoveEvent += OnResetCopyOrMove;
-            this.ViewModel.RubbishBin.CancelCopyOrMoveEvent += OnResetCopyOrMove;
+            this.ViewModel.CloudDrive.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
+            this.ViewModel.CameraUploads.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
+            this.ViewModel.RubbishBin.SelectedNodesActionCanceled += OnSelectedNodesActionCanceled;
 
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveFinished += OnResetCopyOrMove;
-            this.CopyOrMovePanelControl.ViewModel.CopyOrMoveCanceled += OnResetCopyOrMove;
+            this.CopyOrMovePanelControl.ViewModel.ActionFinished += OnSelectedNodesActionFinished;
+            this.CopyOrMovePanelControl.ViewModel.ActionCanceled += OnSelectedNodesActionCanceled;
 
             this.CloudDriveSplitView.RegisterPropertyChangedCallback(
                 SplitView.IsPaneOpenProperty, IsSplitViewOpenPropertyChanged);
@@ -65,7 +65,7 @@ namespace MegaApp.Views
                         this.CloudDriveSplitView.OpenPaneLength = InformationPanelMinWidth;
                         break;
                     
-                    case PanelType.CopyOrMove:
+                    case PanelType.CopyMoveImport:
                         this.CloudDriveSplitView.OpenPaneLength = CopyOrMovePanelMinWidth;
                         break;
                 }
@@ -128,8 +128,6 @@ namespace MegaApp.Views
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
             if (navActionType == NavigationActionType.RubbishBin)
                 this.MainPivot.SelectedItem = this.RubbishBinPivot;
-
-            this.ViewModel.LoadFolders();
         }
 
         private void OnFolderNavigatedTo(object sender, EventArgs eventArgs)
@@ -174,8 +172,6 @@ namespace MegaApp.Views
 
         private void OnItemDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             this.CloudDriveSplitView.IsPaneOpen = false;
 
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
@@ -186,18 +182,18 @@ namespace MegaApp.Views
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop) return;
-
             IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
             if (itemTapped == null) return;
 
             this.ViewModel.ActiveFolderView.FocusedNode = itemTapped;
 
-            if (!this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive)
-            {
-                ((ListViewBase)sender).SelectedItems.Clear();
-                ((ListViewBase)sender).SelectedItems.Add(itemTapped);
-            }
+            var view = (ListViewBase)sender;
+            if (view == null) return;
+
+            if (this.ViewModel.ActiveFolderView.ItemCollection.IsMultiSelectActive)
+                view.SelectedItems.Add(itemTapped);
+            else
+                view.SelectedItem = itemTapped;
         }
 
         private void OnButtonClick(object sender, RoutedEventArgs e)
@@ -272,7 +268,7 @@ namespace MegaApp.Views
             {
                 this.GridViewCameraUploads.SelectionMode = 
                     DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop ?
-                    ListViewSelectionMode.Extended : ListViewSelectionMode.None;
+                    ListViewSelectionMode.Extended : ListViewSelectionMode.Single;
             }
         }
 
@@ -291,14 +287,25 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnCopyOrMove(object sender, EventArgs e)
+        private void OnSelectedNodesActionStarted(object sender, EventArgs e)
         {
             this.DisableSelection();
         }
 
-        private void OnResetCopyOrMove(object sender, EventArgs e)
+        private void OnSelectedNodesActionFinished(object sender, EventArgs e)
         {
-            this.ViewModel.ActiveFolderView.ResetCopyOrMove();
+            this.ResetCopyOrMove();
+        }
+
+        private void OnSelectedNodesActionCanceled(object sender, EventArgs e)
+        {
+            this.ResetCopyOrMove();
+        }
+
+        private void ResetCopyOrMove()
+        {
+            this.ViewModel.ActiveFolderView.ResetSelectedNodes();
+            this.CopyOrMovePanelControl.Reset();
             this.ClearSelectedItems();
             this.EnableSelection();
         }

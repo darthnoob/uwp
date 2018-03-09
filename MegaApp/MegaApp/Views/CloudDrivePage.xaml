@@ -40,12 +40,12 @@
                     Node="{Binding ItemCollection.FocusedItem}"
                     Visibility="{Binding VisiblePanel, ConverterParameter='Information', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
                 
-                <userControls:CopyOrMovePanel
+                <userControls:CopyMoveImportPanel
                     x:Name="CopyOrMovePanelControl"
                     DataContext="{Binding ActiveFolderView}"
                     Background="{StaticResource MegaAppBackgroundBrush}"
                     Foreground="{StaticResource MegaAppForegroundBrush}"
-                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyOrMove', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
+                    Visibility="{Binding VisiblePanel, ConverterParameter='CopyMoveImport', Converter={StaticResource PanelTypeToVisibilityConverter}}" />
             </Grid>
         </SplitView.Pane>
 
@@ -68,7 +68,7 @@
                     Margin="24,14,0,0"
                     FontSize="12"
                     Foreground="{StaticResource MegaRedColorBrush}"
-                    Text="{Binding CloudDriveNameText, Mode=OneTime}" />
+                    Text="{x:Bind ViewModel.CloudDriveNameText, Mode=OneTime}" />
 
                 <!--  TOP COMMAND BAR AREA (ONLY DESKTOP)  -->
                 <Grid 
@@ -108,6 +108,20 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Data="{Binding UploadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Click="OnButtonClick"
+                                Command="{Binding OpenLinkCommand}"
+                                Label="{Binding OpenLinkText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
+                                Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding OpenLinkPathData, Mode=OneTime}" />
                                 </AppBarButton.Icon>
                             </AppBarButton>
                             <AppBarButton
@@ -251,7 +265,7 @@
                     </CommandBar>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1" Margin="12,0,0,0">
+            <Grid x:Name="MainGrid" Grid.Row="1">
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -303,6 +317,7 @@
                                             IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
                                             ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
                                             ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                            RightTapped="OnRightItemTapped"
                                             Tapped="OnItemTapped">
                                             <interactivity:Interaction.Behaviors>
                                                 <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
@@ -331,7 +346,9 @@
                                 IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
                                 IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
                                 SubHeaderMargin="0,14,0,28"
-                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}">
+                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}"
+                                ToggleAlignment="Below"
+                                VerticalContentAlignment="Center">
                                 <userControls:TogglePanel.SubHeaderForeground>
                                     <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
                                 </userControls:TogglePanel.SubHeaderForeground>
@@ -383,6 +400,20 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Data="{Binding UploadPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        Click="OnButtonClick"
+                        Command="{Binding OpenLinkCommand}"
+                        Label="{Binding OpenLinkText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
+                        Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='openlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding OpenLinkPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton
@@ -474,6 +505,7 @@
                         <Setter Target="TopCommandBar.Visibility" Value="Visible" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Visible" />
+                        <Setter Target="TopRowGrid.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -481,10 +513,11 @@
                         <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="None" />
+                        <Setter Target="GridViewCameraUploads.SelectionMode" Value="Single" />
                         <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
                         <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                         <Setter Target="PermanentTopCommandBarSeparator.Visibility" Value="Collapsed" />
+                        <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -496,10 +529,12 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,-12,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Overlay" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16, 18, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,12,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,12,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="16,18,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
@@ -509,10 +544,13 @@
                         <AdaptiveTrigger MinWindowWidth="600" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97, 0, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="97,0,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="24" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="16" />
                     </VisualState.Setters>
@@ -522,10 +560,13 @@
                         <AdaptiveTrigger MinWindowWidth="1200" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
                         <Setter Target="CloudDriveSplitView.DisplayMode" Value="Inline" />
-                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178, 0, 0, 16" />
-                        <Setter Target="CameraUploadsTogglePanelControl.ToggleAlignment" Value="Below" />
-                        <Setter Target="CameraUploadsTogglePanelControl.VerticalContentAlignment" Value="Center" />
+                        <Setter Target="CloudDriveExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="RubbishBinExplorer.Margin" Value="0,0,0,0" />
+                        <Setter Target="GridViewCameraUploads.Margin" Value="12,0,0,0" />
+                        <Setter Target="CameraUploadsTogglePanelControl.Padding" Value="178,0,0,16" />
                         <Setter Target="CameraUploadsTogglePanelControl.HeaderFontSize" Value="44" />
                         <Setter Target="CameraUploadsTogglePanelControl.SubHeaderFontSize" Value="18" />
                     </VisualState.Setters>
