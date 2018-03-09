@@ -565,19 +565,13 @@ namespace MegaApp.ViewModels
             else
                 this.ModificationTime = this.CreationTime;
 
-            if (!this.MegaSdk.isInShare(megaNode) &&
-                ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
-                ParentContainerType != ContainerType.FileLink && ParentContainerType != ContainerType.FolderLink)
+            if (ParentContainerType != ContainerType.FileLink && ParentContainerType != ContainerType.FolderLink)
                 CheckAndUpdateOffline(megaNode);
         }
 
         private void CheckAndUpdateOffline(MNode megaNode)
         {
-            var nodePath = SdkService.MegaSdk.getNodePath(megaNode);
-            if (string.IsNullOrWhiteSpace(nodePath)) return;
-
-            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
-                nodePath.Remove(0, 1).Replace("/", "\\"));
+            var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);
 
             if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
             {
@@ -634,6 +628,8 @@ namespace MegaApp.ViewModels
 
             // Check and add to the DB if necessary the previous folders of the path
             var parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
+            if (parentNode == null) return;
+
             while (string.Compare(parentNodePath, AppService.GetOfflineDirectoryPath()) != 0)
             {
                 var folderPathToAdd = parentNodePath;

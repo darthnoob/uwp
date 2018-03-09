@@ -16,8 +16,20 @@ namespace MegaApp.Services
         {
             if (node == null) return null;
 
+            var rootNode = SdkService.MegaSdk.getRootNode(node);
+            if (rootNode.isInShare())
+            {
+                return Path.Combine(AppService.GetOfflineDirectoryPath(),
+                    SdkService.MegaSdk.getUserFromInShare(rootNode).getHandle().ToString(),
+                    SdkService.MegaSdk.getNodePath(node).Split(':')[1].Replace("/", "\\"));
+            }
+
+            var nodePath = SdkService.MegaSdk.getNodePath(node);
+            if (string.IsNullOrWhiteSpace(nodePath))
+                return AppService.GetOfflineDirectoryPath();
+
             return Path.Combine(AppService.GetOfflineDirectoryPath(),
-                SdkService.MegaSdk.getNodePath(node).Remove(0, 1).Replace("/", "\\"));
+                nodePath.Remove(0, 1).Replace("/", "\\"));
         }
 
         /// <summary>
@@ -29,8 +41,32 @@ namespace MegaApp.Services
         {
             if (node == null) return null;
 
-            return Path.Combine(AppService.GetOfflineDirectoryPath(), SdkService.MegaSdk.getNodePath(
-                SdkService.MegaSdk.getParentNode(node)).Remove(0, 1).Replace("/", "\\"));
+            var parentNode = SdkService.MegaSdk.getParentNode(node);
+            if (parentNode == null)
+            {
+                if (node.isInShare())
+                {
+                    return Path.Combine(AppService.GetOfflineDirectoryPath(),
+                        SdkService.MegaSdk.getUserFromInShare(node).getHandle().ToString());
+                }
+
+                return AppService.GetOfflineDirectoryPath();
+            }
+
+            var parentNodePath = SdkService.MegaSdk.getNodePath(parentNode);
+            if (string.IsNullOrWhiteSpace(parentNodePath))
+                return AppService.GetOfflineDirectoryPath();
+
+            var rootNode = SdkService.MegaSdk.getRootNode(node);
+            if (rootNode.isInShare())
+            {
+                return Path.Combine(AppService.GetOfflineDirectoryPath(),
+                    SdkService.MegaSdk.getUserFromInShare(rootNode).getHandle().ToString(),
+                    parentNodePath.Split(':')[1]).Replace("/", "\\");
+            }
+
+            return Path.Combine(AppService.GetOfflineDirectoryPath(),
+                parentNodePath.Remove(0, 1).Replace("/", "\\"));
         }
 
         /// <summary>

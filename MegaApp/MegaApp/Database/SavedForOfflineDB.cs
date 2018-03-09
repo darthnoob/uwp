@@ -143,15 +143,16 @@ namespace MegaApp.Database
         /// <param name="isSelectedForOffline"></param>
         public static void UpdateNode(MNode megaNode)
         {
-            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
-                SdkService.MegaSdk.getNodePath(megaNode).Remove(0, 1).Replace("/", "\\"));
+            var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);
+            var parentNode = SdkService.MegaSdk.getParentNode(megaNode);
 
             var sfoNode = new SavedForOfflineDB()
             {
                 Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaNode),
                 Base64Handle = megaNode.getBase64Handle(),
                 LocalPath = offlineNodePath,
-                ParentBase64Handle = (SdkService.MegaSdk.getParentNode(megaNode)).getBase64Handle()
+                ParentBase64Handle = parentNode != null ?
+                    parentNode.getBase64Handle() : string.Empty
             };
 
             UpdateNode(sfoNode);
@@ -169,15 +170,16 @@ namespace MegaApp.Database
         /// <param name="megaNode">Node to insert.</param>
         public static void InsertNode(MNode megaNode)
         {
-            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
-                SdkService.MegaSdk.getNodePath(megaNode).Remove(0, 1).Replace("/", "\\"));
+            var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);
+            var parentNode = SdkService.MegaSdk.getParentNode(megaNode);
 
             var sfoNode = new SavedForOfflineDB()
             {
                 Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaNode),
                 Base64Handle = megaNode.getBase64Handle(),
                 LocalPath = offlineNodePath,
-                ParentBase64Handle = (SdkService.MegaSdk.getParentNode(megaNode)).getBase64Handle()
+                ParentBase64Handle = parentNode != null ? 
+                    parentNode.getBase64Handle() : string.Empty
             };
 
             InsertItem(sfoNode);            

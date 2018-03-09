@@ -114,11 +114,12 @@ namespace MegaApp.MegaApi
                         if (megaTransfer.IsSaveForOfflineTransfer)
                         {
                             this.AddOfflineNodeFromTransfer(megaTransfer);
+                        }
+                        else if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
+                        {
+                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
                             return;
                         }
-
-                        if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
-                            UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
                     }
 
                     UiService.OnUiThread(() => TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));
