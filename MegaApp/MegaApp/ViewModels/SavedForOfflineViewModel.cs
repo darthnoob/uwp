@@ -33,6 +33,7 @@ namespace MegaApp.ViewModels
 
         #region UiResources
 
+        public string OfflineFilesText => ResourceService.UiResources.GetString("UI_OfflineFiles");
         public string SavedForOfflineText => ResourceService.UiResources.GetString("UI_SavedForOffline");
 
         #endregion

@@ -133,7 +133,7 @@ namespace MegaApp.ViewModels.Offline
             SetProgressIndication(true);
 
             // Process is started so we can set the empty content template to loading already
-            //SetEmptyContentTemplate(true);
+            SetEmptyContent(true);
 
             // Clear the child nodes to make a fresh start
             ClearChildNodes();
@@ -200,7 +200,7 @@ namespace MegaApp.ViewModels.Offline
                     SetProgressIndication(false);
 
                     // Set empty content to folder instead of loading view
-                    //SetEmptyContentTemplate(false);
+                    SetEmptyContent(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -350,6 +350,26 @@ namespace MegaApp.ViewModels.Offline
                 var node = n as IOfflineNode;
                 if (node == null) continue;
                 await node.RemoveFromOfflineAsync(true);
+            }
+        }
+
+        private void SetEmptyContent(bool isLoading)
+        {
+            if (isLoading)
+            {
+                OnUiThread(() =>
+                {
+                    this.EmptyStateHeaderText = string.Empty;
+                    this.EmptyStateSubHeaderText = string.Empty;
+                });
+            }
+            else
+            {
+                OnUiThread(() =>
+                {
+                    this.EmptyStateHeaderText = ResourceService.EmptyStates.GetString("ES_OfflineHeader");
+                    this.EmptyStateSubHeaderText = ResourceService.EmptyStates.GetString("ES_OfflineSubHeader");
+                });
             }
         }
 

@@ -1464,4 +1464,8 @@ Keep the {0} code because is for include the number of selected items in runtime
     <value>Remove from offline</value>
     <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
   </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>Offline files</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
