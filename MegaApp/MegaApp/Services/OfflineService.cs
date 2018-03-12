@@ -84,9 +84,8 @@ namespace MegaApp.Services
                     {
                         if (folder != null)
                         {
-                            var subFolderPath = Path.Combine(folderPath, folder);
-                            RemoveFolderFromOfflineDB(subFolderPath);
-                            SavedForOfflineDB.DeleteNodeByLocalPath(subFolderPath);
+                            RemoveFolderFromOfflineDB(folder);
+                            SavedForOfflineDB.DeleteNodeByLocalPath(folder);
                         }
                     }
                 }
@@ -97,12 +96,37 @@ namespace MegaApp.Services
                     foreach (var file in childFiles)
                     {
                         if (file != null)
-                            SavedForOfflineDB.DeleteNodeByLocalPath(Path.Combine(folderPath, file));
+                            SavedForOfflineDB.DeleteNodeByLocalPath(file);
                     }
                 }
             }
 
             SavedForOfflineDB.DeleteNodeByLocalPath(folderPath);
+        }
+
+        /// <summary>
+        /// Check and add to the DB if necessary the previous folders of the path
+        /// </summary>
+        /// <param name="node">Node to check the path</param>
+        public static void CheckOfflineNodePath(MNode node)
+        {
+            if (node == null) return;
+
+            var offlineParentNodePath = GetOfflineParentNodePath(node);
+            var parentNode = SdkService.MegaSdk.getParentNode(node);
+            if (parentNode == null) return;
+
+            while (string.Compare(offlineParentNodePath, AppService.GetOfflineDirectoryPath()) != 0)
+            {
+                var folderPathToAdd = offlineParentNodePath;
+
+                if (!SavedForOfflineDB.ExistsNodeByLocalPath(folderPathToAdd))
+                    SavedForOfflineDB.InsertNode(parentNode);
+
+                offlineParentNodePath = GetOfflineParentNodePath(parentNode);
+                parentNode = SdkService.MegaSdk.getParentNode(parentNode);
+                if (parentNode == null) return;
+            }
         }
 
         /// <summary>

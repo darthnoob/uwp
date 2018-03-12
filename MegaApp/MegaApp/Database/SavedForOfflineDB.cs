@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using Windows.Storage;
 using mega;
 using MegaApp.Services;
 
@@ -140,7 +138,6 @@ namespace MegaApp.Database
         /// Update existing node.
         /// </summary>
         /// <param name="megaNode">Node to update.</param>
-        /// <param name="isSelectedForOffline"></param>
         public static void UpdateNode(MNode megaNode)
         {
             var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);

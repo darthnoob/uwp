@@ -53,6 +53,8 @@ namespace MegaApp.MegaApi
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
+                    if (megaTransfer.IsSaveForOfflineTransfer)
+                        this.RemoveOfflineNodeFromTransfer(megaTransfer);
                     break;
 
                 default:
@@ -131,6 +133,8 @@ namespace MegaApp.MegaApi
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
+                    if (megaTransfer.IsSaveForOfflineTransfer)
+                        this.RemoveOfflineNodeFromTransfer(megaTransfer);
                     break;
 
                 default:
@@ -144,21 +148,18 @@ namespace MegaApp.MegaApi
             var parentNode = SdkService.MegaSdk.getParentNode(megaTransfer.SelectedNode.OriginalMNode);
 
             // Need get the path on the transfer finish because the file name can be changed if already exists in the destiny path.
-            var offlineNodePath = Path.Combine(AppService.GetOfflineDirectoryPath(),
-                parentNode != null ? SdkService.MegaSdk.getNodePath(parentNode).Remove(0, 1).Replace("/", "\\") : string.Empty,
+            var offlineNodePath = Path.Combine(
+                OfflineService.GetOfflineParentNodePath(megaTransfer.SelectedNode.OriginalMNode),
                 megaTransfer.Transfer.getFileName());
 
             var sfoNode = new SavedForOfflineDB
             {
                 Fingerprint = SdkService.MegaSdk.getNodeFingerprint(megaTransfer.SelectedNode.OriginalMNode),
                 Base64Handle = megaTransfer.SelectedNode.OriginalMNode.getBase64Handle(),
-                LocalPath = offlineNodePath
+                LocalPath = offlineNodePath,
+                ParentBase64Handle = parentNode != null ? 
+                    parentNode.getBase64Handle() : string.Empty
             };
-
-            // If is an incoming share, file link or folder link, the destination folder is the SFO root,
-            // so the parent handle is the handle of the root node.
-            sfoNode.ParentBase64Handle = parentNode != null ? parentNode.getBase64Handle() :
-                SdkService.MegaSdk.getRootNode().getBase64Handle();
 
             if (SavedForOfflineDB.ExistsNodeByLocalPath(sfoNode.LocalPath))
                 SavedForOfflineDB.UpdateNode(sfoNode);
@@ -166,6 +167,14 @@ namespace MegaApp.MegaApi
                 SavedForOfflineDB.InsertNode(sfoNode);
 
             UiService.OnUiThread(() => megaTransfer.SelectedNode.IsSavedForOffline = true);
+
+            OfflineService.CheckOfflineNodePath(megaTransfer.SelectedNode.OriginalMNode);
+        }
+
+        private void RemoveOfflineNodeFromTransfer(TransferObjectModel megaTransfer)
+        {
+            if (SavedForOfflineDB.ExistsNodeByLocalPath(megaTransfer.TransferPath))
+                SavedForOfflineDB.DeleteNodeByLocalPath(megaTransfer.TransferPath);
         }
 
         /// <summary>

@@ -573,30 +573,23 @@ namespace MegaApp.ViewModels
         {
             var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);
 
-            if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
+            if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(offlineNodePath)) ||
+                (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(offlineNodePath)) ||
+                TransferService.ExistPendingNodeOfflineTransfer(this))
             {
-                if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(offlineNodePath)) ||
-                    (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(offlineNodePath)))
-                {
-                    this.IsSavedForOffline = true;
-                    return;
-                }
-
-                SavedForOfflineDB.DeleteNodeByLocalPath(offlineNodePath);
-                this.IsSavedForOffline = false;
-            }
-            else
-            {
-                if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(offlineNodePath)) ||
-                    (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(offlineNodePath)))
-                {
+                if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
+                    SavedForOfflineDB.UpdateNode(megaNode);
+                else
                     SavedForOfflineDB.InsertNode(megaNode);
-                    this.IsSavedForOffline = true;
-                    return;
-                }
 
-                this.IsSavedForOffline = false;
+                this.IsSavedForOffline = true;
+                return;
             }
+
+            if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
+                SavedForOfflineDB.DeleteNodeByLocalPath(offlineNodePath);
+
+            this.IsSavedForOffline = false;
         }
 
         public async void SaveForOffline()
@@ -604,17 +597,17 @@ namespace MegaApp.ViewModels
             // User must be online to perform this operation
             if (!await IsUserOnlineAsync()) return;
 
-            var parentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
+            var offlineParentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
             
-            if (!FolderService.FolderExists(parentNodePath))
-                FolderService.CreateFolder(parentNodePath);
+            if (!FolderService.FolderExists(offlineParentNodePath))
+                FolderService.CreateFolder(offlineParentNodePath);
 
             var existingNode = SavedForOfflineDB.SelectNodeByFingerprint(MegaSdk.getNodeFingerprint(this.OriginalMNode));
             if (existingNode != null)
             {
                 bool result = this.IsFolder ?
-                    await FolderService.CopyFolderAsync(existingNode.LocalPath, parentNodePath) :
-                    await FileService.CopyFileAsync(existingNode.LocalPath, parentNodePath);
+                    await FolderService.CopyFolderAsync(existingNode.LocalPath, offlineParentNodePath) :
+                    await FileService.CopyFileAsync(existingNode.LocalPath, offlineParentNodePath);
 
                 if (result) SavedForOfflineDB.InsertNode(this.OriginalMNode);
             }
@@ -626,20 +619,7 @@ namespace MegaApp.ViewModels
 
             this.IsSavedForOffline = true;
 
-            // Check and add to the DB if necessary the previous folders of the path
-            var parentNode = SdkService.MegaSdk.getParentNode(this.OriginalMNode);
-            if (parentNode == null) return;
-
-            while (string.Compare(parentNodePath, AppService.GetOfflineDirectoryPath()) != 0)
-            {
-                var folderPathToAdd = parentNodePath;
-                parentNodePath = ((new DirectoryInfo(parentNodePath)).Parent).FullName;
-
-                if (!SavedForOfflineDB.ExistsNodeByLocalPath(folderPathToAdd))
-                    SavedForOfflineDB.InsertNode(parentNode);
-
-                parentNode = SdkService.MegaSdk.getParentNode(parentNode);
-            }
+            OfflineService.CheckOfflineNodePath(this.OriginalMNode);
         }
 
         public void RemoveFromOffline()

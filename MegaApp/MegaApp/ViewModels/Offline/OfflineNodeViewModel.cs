@@ -86,6 +86,9 @@ namespace MegaApp.ViewModels.Offline
                 if (!result) return;
             }
 
+            // Search if the node has pending transfers for offline and cancel them on this case                
+            TransferService.CancelPendingNodeOfflineTransfers(this);
+
             var parentFolderPath = ((new DirectoryInfo(this.NodePath)).Parent).FullName;
 
             if (this.IsFolder)
