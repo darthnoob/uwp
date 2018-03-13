@@ -54,6 +54,9 @@ namespace MegaApp.ViewModels
 
         public UserDataViewModel UserData => AccountService.UserData;
 
+        private static bool showMyAccountIcon => AccountService.UserData.AvatarUri == null && 
+            string.IsNullOrWhiteSpace(AccountService.UserData.AvatarLetter);
+
         #endregion
 
         #region Public Methods
@@ -122,7 +125,7 @@ namespace MegaApp.ViewModels
                     Label = AccountService.UserData.UserName,
                     SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
-                    Icon = new SymbolIcon(Symbol.Contact),
+                    Icon = showMyAccountIcon ? new SymbolIcon(Symbol.Contact) : null,
                     TargetViewModel = typeof(MyAccountViewModel)
                 },
 
@@ -185,7 +188,7 @@ namespace MegaApp.ViewModels
                     Label = AccountService.UserData.UserName,
                     SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
-                    Icon = new SymbolIcon(Symbol.Contact),
+                    Icon = showMyAccountIcon ? new SymbolIcon(Symbol.Contact) : null,
                     TargetViewModel = typeof(MyAccountViewModel)
                 }
             };
