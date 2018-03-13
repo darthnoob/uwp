@@ -42,6 +42,14 @@ namespace MegaApp.Views
             // Check if the user has an active and online session, because this is the first page loaded
             if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;
 
+            // Check if the user has an active internet connection
+            if (!await NetworkService.IsNetworkAvailableAsync())
+            {
+                // If not active internet connection, navigate to the offline section
+                NavigateService.Instance.Navigate(typeof(SavedForOfflinePage));
+                return;
+            }
+
             // If user has an active and online session but is not logged in, resume the session
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
             {
