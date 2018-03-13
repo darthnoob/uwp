@@ -37,6 +37,8 @@ namespace MegaApp.ViewModels.Login
         /// </summary>
         public async void Login()
         {
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
+
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;
 
