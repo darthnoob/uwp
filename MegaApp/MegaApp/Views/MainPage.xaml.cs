@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Windows.Networking.Connectivity;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +11,6 @@ using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using Windows.UI;
 
 namespace MegaApp.Views
 {
@@ -32,6 +33,10 @@ namespace MegaApp.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            // Register for network connection changed events
+            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
             
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -143,6 +148,23 @@ namespace MegaApp.Views
                 return;
 
             HamburgerMenuControl.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// Method called when a network status changed event is triggered
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        private async void OnNetworkStatusChanged(object sender)
+        {
+            // If no network connection, nothing to do
+            if (!await NetworkService.IsNetworkAvailableAsync()) return;
+
+            // Check if the user has an active and online session
+            if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;
+
+            // If user is not already logged in, resume the session
+            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
+                UiService.OnUiThread(async () => await this.ViewModel.FastLoginAsync());
         }
     }
 }
