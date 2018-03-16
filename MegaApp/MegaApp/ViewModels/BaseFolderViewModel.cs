@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows.Input;
 using Windows.UI.Core;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using GoedWare.Controls.Breadcrumb;
 using mega;

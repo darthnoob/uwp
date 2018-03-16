@@ -26,6 +26,7 @@ namespace MegaApp.ViewModels.Offline
             this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             this.RemoveFromOfflineCommand = new RelayCommand(RemoveFromOffline);
+            SetViewDefaults();
         }
 
         #region Commands
@@ -232,11 +233,14 @@ namespace MegaApp.ViewModels.Offline
             switch (viewMode)
             {
                 case FolderContentViewMode.GridView:
-                    this.NodeTemplateSelector = new OfflineNodeTemplateSelector()
+                    OnUiThread(() =>
                     {
-                        FileItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFileItemContent"],
-                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFolderItemContent"]
-                    };
+                        this.NodeTemplateSelector = new OfflineNodeTemplateSelector()
+                        {
+                            FileItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFileItemContent"],
+                            FolderItemTemplate = (DataTemplate)Application.Current.Resources["OfflineNodeGridViewFolderItemContent"]
+                        };
+                    });
                     break;
 
                 case FolderContentViewMode.ListView:

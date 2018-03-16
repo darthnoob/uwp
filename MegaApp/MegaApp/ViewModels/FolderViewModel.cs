@@ -41,6 +41,7 @@ namespace MegaApp.ViewModels
             this.ImportCommand = new RelayCommand(Import);
 
             SetEmptyContent(true);
+            SetViewDefaults();
         }
 
         #region Events
@@ -938,11 +939,14 @@ namespace MegaApp.ViewModels
             switch (viewMode)
             {
                 case FolderContentViewMode.GridView:
-                    this.NodeTemplateSelector = new NodeTemplateSelector()
+                    OnUiThread(() =>
                     {
-                        FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
-                        FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
-                    };
+                        this.NodeTemplateSelector = new NodeTemplateSelector()
+                        {
+                            FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFileItemContent"],
+                            FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeGridViewFolderItemContent"]
+                        };
+                    });
                     break;
 
                 case FolderContentViewMode.ListView:
@@ -958,11 +962,14 @@ namespace MegaApp.ViewModels
         /// </summary>
         protected override void SetViewDefaults()
         {
-            this.NodeTemplateSelector = new NodeTemplateSelector()
+            OnUiThread(() =>
             {
-                FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
-                FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
-            };
+                this.NodeTemplateSelector = new NodeTemplateSelector()
+                {
+                    FileItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFileItemContent"],
+                    FolderItemTemplate = (DataTemplate)Application.Current.Resources["MegaNodeListViewFolderItemContent"]
+                };
+            });            
 
             base.SetViewDefaults();
         }
