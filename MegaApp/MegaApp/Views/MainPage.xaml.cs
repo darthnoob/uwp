@@ -162,7 +162,19 @@ namespace MegaApp.Views
 
             // If user is not already logged in, resume the session
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
-                UiService.OnUiThread(async () => await this.ViewModel.FastLoginAsync());
+            {
+                UiService.OnUiThread(async () =>
+                {
+                    await this.ViewModel.FastLoginAsync();
+
+                    if (this.ViewModel?.ContentViewModel is CloudDriveViewModel)
+                    {
+                        var contentViewModel = this.ViewModel.ContentViewModel as CloudDriveViewModel;
+                        if (!contentViewModel.ActiveFolderView.IsLoaded)
+                            contentViewModel.LoadFolders();
+                    }
+                });
+            }
         }
     }
 }

@@ -1468,4 +1468,8 @@ Keep the {0} code because is for include the number of selected items in runtime
     <value>Offline files</value>
     <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
+  </data>
 </root>

@@ -91,5 +91,11 @@ namespace MegaApp.ViewModels
         }
 
         #endregion
+
+        #region UiResources
+
+        public string OfflineBannerText => ResourceService.UiResources.GetString("UI_OfflineBanner");
+
+        #endregion
     }
 }
