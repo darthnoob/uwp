@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Windows.Networking.Connectivity;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -33,9 +32,6 @@ namespace MegaApp.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            // Register for network connection changed events
-            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
 
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
             
@@ -154,8 +150,10 @@ namespace MegaApp.Views
         /// Method called when a network status changed event is triggered
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
-        private async void OnNetworkStatusChanged(object sender)
+        protected override async void OnNetworkStatusChanged(object sender)
         {
+            base.OnNetworkStatusChanged(sender);
+
             // If no network connection, nothing to do
             if (!await NetworkService.IsNetworkAvailableAsync()) return;
 

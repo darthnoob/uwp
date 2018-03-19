@@ -1,5 +1,7 @@
 ﻿using System;
+using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 using MegaApp.ViewModels;
 
 namespace MegaApp.UserControls
@@ -22,6 +24,27 @@ namespace MegaApp.UserControls
         /// Current view-model binded to the datacontext
         /// </summary>
         public T ViewModel { get; }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // Register for network connection changed events
+            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+
+            this.ViewModel.CheckNetworkAvailability();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            // Unregister for network connection changed events
+            NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
+
+            base.OnNavigatedFrom(e);
+        }
+
+        protected virtual void OnNetworkStatusChanged(object sender) =>
+            this.ViewModel.CheckNetworkAvailability();
     }
 
     /// <summary>

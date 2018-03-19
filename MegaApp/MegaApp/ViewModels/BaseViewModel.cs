@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -37,6 +38,24 @@ namespace MegaApp.ViewModels
         {
             get { return _isBusy; }
             set { SetField(ref _isBusy, value); }
+        }
+
+        /// <summary>
+        /// State of the network connection
+        /// </summary>
+        public bool IsNetworkAvailable => NetworkService.IsNetworkAvailable;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Checks the availability of the network connection
+        /// </summary>
+        public async void CheckNetworkAvailability()
+        {
+            await NetworkService.IsNetworkAvailableAsync();
+            UiService.OnUiThread(() => OnPropertyChanged(nameof(this.IsNetworkAvailable)));
         }
 
         #endregion
