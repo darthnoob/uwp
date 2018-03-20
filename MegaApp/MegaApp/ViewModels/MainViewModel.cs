@@ -101,7 +101,11 @@ namespace MegaApp.ViewModels
         public BasePageViewModel ContentViewModel
         {
             get { return _contentViewModel; }
-            set { SetField(ref _contentViewModel, value); }
+            set
+            {
+                SetField(ref _contentViewModel, value);
+                OnPropertyChanged(nameof(this.ShowOfflineBanner));
+            }
         }
 
         private IList<MenuItemViewModel> _menuItems;
@@ -128,6 +132,8 @@ namespace MegaApp.ViewModels
         /// Navigation action used to arrive to the MainPage
         /// </summary>
         private NavigationActionType NavActionType { get; set; }
+
+        public bool ShowOfflineBanner => !(this.ContentViewModel is SavedForOfflineViewModel);
 
         #endregion
     }

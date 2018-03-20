@@ -41,7 +41,6 @@
             Visibility="{Binding Folder.ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -64,11 +63,7 @@
                     Click="OnFolderOptionsButtonClicked"
                     Visibility="{Binding FolderOptionsButtonVisibility}"/>
             </Grid>
-            <ContentPresenter 
-                Grid.Row="1"
-                Margin="-12,0"
-                ContentTemplate="{StaticResource OfflineBanner}"/>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="1">
                 <ListView
                     x:Name="ListView"
                     ContainerContentChanging="OnContainerContentChanging"

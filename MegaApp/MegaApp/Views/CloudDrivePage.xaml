@@ -275,140 +275,98 @@
                         x:Name="CloudDrivePivot"
                         CacheMode="{x:Null}"
                         Header="{Binding CloudDriveNameText}">
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ContentPresenter
-                                Grid.Row="0"
-                                Margin="-12,0,0,0"
-                                ContentTemplate="{StaticResource OfflineBanner}"
-                                Visibility="{Binding ActiveFolderView.IsLoaded, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                            <userControls:FolderExplorer
-                                x:Name="CloudDriveExplorer"
-                                Grid.Row="1"
-                                Background="{StaticResource MegaAppBackgroundBrush}"
-                                Foreground="{StaticResource MegaAppForegroundBrush}"
-                                Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
-                        </Grid>
+                        <userControls:FolderExplorer
+                            x:Name="CloudDriveExplorer"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"
+                            Folder="{x:Bind ViewModel.CloudDrive, Mode=OneWay}"/>
                     </PivotItem>
                     <PivotItem
                         x:Name="CameraUploadsPivot"
                         CacheMode="{x:Null}"
                         Header="{Binding CameraUploadsNameText}">
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ContentPresenter
-                                x:Name="CloudDriveOfflineBanner"
-                                Grid.Row="0"
-                                Margin="-12,0,0,0"
-                                ContentTemplate="{StaticResource OfflineBanner}"
-                                Visibility="{Binding ActiveFolderView.IsLoaded, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                            <Grid
-                                x:Name="CameraUploadsRoot"
-                                Grid.Row="1"
-                                Margin="{StaticResource RootGridMargin}"
-                                Background="Transparent"
-                                DataContext="{Binding CameraUploads}">
-                                <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
-                                        <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
-                                    </Grid>
-                                    <ContentPresenter
-                                        x:Name="CameraUploadsOfflineBanner"
-                                        Grid.Row="1"
-                                        Margin="-12,0"
-                                        ContentTemplate="{StaticResource OfflineBanner}"/>
-                                    <SemanticZoom
-                                        Grid.Row="2"
-                                        Margin="-12,-12,-12,0"
-                                        ScrollViewer.ZoomMode="Enabled">
-                                        <SemanticZoom.ZoomedOutView>
-                                            <ListView
-                                                ItemTemplate="{StaticResource CameraUploadsGroupItem}" 
-                                                ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
-                                        </SemanticZoom.ZoomedOutView>
-                                        <SemanticZoom.ZoomedInView>
-                                            <GridView
-                                                x:Name="GridViewCameraUploads"
-                                                Margin="12,0,0,0"
-                                                Padding="2,4"
-                                                Background="{StaticResource MegaAppBackgroundBrush}"
-                                                DoubleTapped="OnItemDoubleTapped"
-                                                IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
-                                                ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
-                                                ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
-                                                RightTapped="OnRightItemTapped"
-                                                Tapped="OnItemTapped">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
-                                                    <core:EventTriggerBehavior EventName="SelectionChanged">
-                                                        <core:EventTriggerBehavior.Actions>
-                                                            <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
-                                                        </core:EventTriggerBehavior.Actions>
-                                                    </core:EventTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                                <GridView.GroupStyle>
-                                                    <GroupStyle
-                                                        HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
-                                                        HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
-                                                        HidesIfEmpty="True" />
-                                                </GridView.GroupStyle>
-                                            </GridView>
-                                        </SemanticZoom.ZoomedInView>
-                                    </SemanticZoom>
+                        <Grid
+                            x:Name="CameraUploadsRoot"
+                            Grid.Row="1"
+                            Margin="{StaticResource RootGridMargin}"
+                            Background="Transparent"
+                            DataContext="{Binding CameraUploads}">
+                            <Grid Visibility="{Binding ItemCollection.HasItems, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}"/>
+                                    <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}"/>
                                 </Grid>
-                                <userControls:TogglePanel
-                                    x:Name="CameraUploadsTogglePanelControl"
-                                    VerticalAlignment="Center"
-                                    Background="{StaticResource MegaAppBackgroundBrush}"
-                                    Foreground="{StaticResource MegaAppForegroundBrush}"
-                                    HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
-                                    IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
-                                    IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
-                                    SubHeaderMargin="0,14,0,28"
-                                    SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}"
-                                    ToggleAlignment="Below"
-                                    VerticalContentAlignment="Center">
-                                    <userControls:TogglePanel.SubHeaderForeground>
-                                        <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
-                                    </userControls:TogglePanel.SubHeaderForeground>
-                                </userControls:TogglePanel>
+                                <SemanticZoom
+                                    Grid.Row="1"
+                                    Margin="-12,-12,-12,0"
+                                    ScrollViewer.ZoomMode="Enabled">
+                                    <SemanticZoom.ZoomedOutView>
+                                        <ListView
+                                            ItemTemplate="{StaticResource CameraUploadsGroupItem}" 
+                                            ItemsSource="{x:Bind CameraUploadsCollection.View.CollectionGroups}" />
+                                    </SemanticZoom.ZoomedOutView>
+                                    <SemanticZoom.ZoomedInView>
+                                        <GridView
+                                            x:Name="GridViewCameraUploads"
+                                            Margin="12,0,0,0"
+                                            Padding="2,4"
+                                            Background="{StaticResource MegaAppBackgroundBrush}"
+                                            DoubleTapped="OnItemDoubleTapped"
+                                            IsMultiSelectCheckBoxEnabled="{Binding ItemCollection.IsMultiSelectActive}"
+                                            ItemTemplate="{StaticResource CameraUploadsGridViewFileItemContent}"
+                                            ItemsSource="{Binding Source={StaticResource CameraUploadsCollection}}"
+                                            RightTapped="OnRightItemTapped"
+                                            Tapped="OnItemTapped">
+                                            <interactivity:Interaction.Behaviors>
+                                                <behaviors:MultiSelect SelectedItems="{Binding ItemCollection.SelectedItems, Mode=TwoWay}" />
+                                                <core:EventTriggerBehavior EventName="SelectionChanged">
+                                                    <core:EventTriggerBehavior.Actions>
+                                                        <core:InvokeCommandAction Command="{Binding ItemCollection.SelectionChangedCommand}" />
+                                                    </core:EventTriggerBehavior.Actions>
+                                                </core:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <GridView.GroupStyle>
+                                                <GroupStyle
+                                                    HeaderContainerStyle="{StaticResource MegaGroupGridViewHeaderItemStyle}"
+                                                    HeaderTemplate="{StaticResource CameraUploadsGroupHeader}"
+                                                    HidesIfEmpty="True" />
+                                            </GridView.GroupStyle>
+                                        </GridView>
+                                    </SemanticZoom.ZoomedInView>
+                                </SemanticZoom>
                             </Grid>
+                            <userControls:TogglePanel
+                                x:Name="CameraUploadsTogglePanelControl"
+                                VerticalAlignment="Center"
+                                Background="{StaticResource MegaAppBackgroundBrush}"
+                                Foreground="{StaticResource MegaAppForegroundBrush}"
+                                HeaderText="{Binding EmptyContentHeaderText, Mode=OneTime}"
+                                IsOn="{Binding CameraUploadsTaskIsOn, Mode=TwoWay}"
+                                IsVisible="{Binding ItemCollection.HasItems, Converter={StaticResource InverseBoolConverter}}"
+                                SubHeaderMargin="0,14,0,28"
+                                SubHeaderText="{Binding EmptyContentSubHeaderText, Mode=OneTime}"
+                                ToggleAlignment="Below"
+                                VerticalContentAlignment="Center">
+                                <userControls:TogglePanel.SubHeaderForeground>
+                                    <SolidColorBrush Opacity="0.6" Color="{ThemeResource MegaAppForeground}" />
+                                </userControls:TogglePanel.SubHeaderForeground>
+                            </userControls:TogglePanel>
                         </Grid>
                     </PivotItem>
                     <PivotItem
                         x:Name="RubbishBinPivot"
                         CacheMode="{x:Null}"
                         Header="{Binding RubbishBinNameText}">
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ContentPresenter
-                                x:Name="RubishBinOfflineBanner"
-                                Grid.Row="0"
-                                Margin="-12,0,0,0"
-                                ContentTemplate="{StaticResource OfflineBanner}"
-                                Visibility="{Binding ActiveFolderView.IsLoaded, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
-                            <userControls:FolderExplorer
-                                x:Name="RubbishBinExplorer"
-                                Grid.Row="1"
-                                Background="{StaticResource MegaAppBackgroundBrush}"
-                                Foreground="{StaticResource MegaAppForegroundBrush}"
-                                Folder="{x:Bind ViewModel.RubbishBin, Mode=OneWay}"/>
-                        </Grid>
+                        <userControls:FolderExplorer
+                            x:Name="RubbishBinExplorer"
+                            Grid.Row="1"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            Foreground="{StaticResource MegaAppForegroundBrush}"
+                            Folder="{x:Bind ViewModel.RubbishBin, Mode=OneWay}"/>
                     </PivotItem>
                 </Pivot>
             </Grid>
