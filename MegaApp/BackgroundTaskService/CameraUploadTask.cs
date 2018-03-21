@@ -43,6 +43,7 @@ namespace BackgroundTaskService
                         // No camera upload node found or created
                         // Just finish this run and try again next time
                         LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "No Camera Uploads folder detected/created");
+                        _deferral.Complete();
                         return;
                     }
 
