@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Microsoft.Xaml.Interactivity;
+using mega;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
 using MegaApp.Services;
@@ -140,10 +141,34 @@ namespace MegaApp.UserControls
         public void ClearSelectedItems()
         {
             if (this.ListView?.SelectedItems?.Count > 0)
-                this.ListView.SelectedItems.Clear();
+            {
+                try { this.ListView.SelectedItems.Clear(); }
+                catch (Exception) // To try avoid Possible bug #8950
+                {
+                    try
+                    {
+                        foreach (var item in this.ListView.SelectedItems)
+                            this.ListView.SelectedItems.Remove(item);
+                    }
+                    catch (Exception e)
+                    { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error clearing the selected items of the list view", e); }
+                }
+            }
 
             if (this.GridView?.SelectedItems?.Count > 0)
-                this.GridView.SelectedItems.Clear();
+            {
+                try { this.GridView.SelectedItems.Clear(); }
+                catch (Exception) // To try avoid Possible bug #8950
+                {
+                    try
+                    {
+                        foreach (var item in this.GridView.SelectedItems)
+                            this.GridView.SelectedItems.Remove(item);
+                    }
+                    catch (Exception e)
+                    { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error clearing the selected items of the grid view", e); }
+                }
+            }
         }
 
         private void OnMultiSelectEnabled(object sender, EventArgs e)

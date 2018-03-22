@@ -14,9 +14,9 @@ namespace MegaApp.ViewModels.UserControls.CopyMoveImportPanel
 {
     public enum ActionType
     {
-        Copy = 0,
-        Move = 1,
-        Import = 2
+        Copy    = 0,
+        Move    = 1,
+        Import  = 2
     }
 }
 
@@ -34,9 +34,9 @@ namespace MegaApp.ViewModels.UserControls
 
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CancelCommand = new RelayCommand(Cancel);
-            this.CopyCommand = new RelayCommand<ActionType>(ExecuteAction);
-            this.ImportCommand = new RelayCommand<ActionType>(ExecuteAction);
-            this.MoveCommand = new RelayCommand<ActionType>(ExecuteAction);
+            this.CopyCommand = new RelayCommand(Copy);
+            this.ImportCommand = new RelayCommand(Import);
+            this.MoveCommand = new RelayCommand(Move);
 
             this.ActiveFolderView = this.CloudDrive;
         }
@@ -94,6 +94,10 @@ namespace MegaApp.ViewModels.UserControls
             this.OnActionCanceled();
         }
 
+        private void Copy() => ExecuteAction(ActionType.Copy);
+        private void Import() => ExecuteAction(ActionType.Import);
+        private void Move() => ExecuteAction(ActionType.Move);
+        
         private async void ExecuteAction(ActionType actionType)
         {
             if (SelectedNodesService.SelectedNodes == null || !SelectedNodesService.SelectedNodes.Any()) return;
