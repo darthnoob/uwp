@@ -157,6 +157,19 @@ namespace MegaApp.ViewModels.UserControls
             this.Folder.LoadChildNodes();
         }
 
+        public override void UpdateGUI()
+        {
+            base.UpdateGUI();
+            if (this.ItemCollection == null) return;
+
+            foreach (var item in this.ItemCollection.Items)
+            {
+                var node = item as BaseNodeViewModel;
+                if (node == null) continue;
+                node.UpdateGUI();
+            }
+        }
+
         #endregion
 
         #region Properties

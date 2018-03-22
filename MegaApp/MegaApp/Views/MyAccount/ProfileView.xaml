@@ -91,8 +91,9 @@
                         x:Name="FirstNameTextBox"
                         Style="{StaticResource MegaTextBoxStyle}"
                         HorizontalAlignment="Stretch"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Text="{Binding UserData.Firstname, Mode=OneWay}"
-                        TextChanged="OnUserAttributeChanged"/>
+                        TextChanged="OnUserAttributeChanged" />
                     <TextBlock
                         x:Name="LastNameTitle"
                         Style="{ThemeResource MegaTitleFontStyle}"
@@ -101,6 +102,7 @@
                         x:Name="LastNameTextBox"
                         Style="{StaticResource MegaTextBoxStyle}"
                         HorizontalAlignment="Stretch"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Text="{Binding UserData.Lastname, Mode=OneWay}"
                         TextChanged="OnUserAttributeChanged" />
                 </RelativePanel>
@@ -129,12 +131,14 @@
                         MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="0,0,4,0"
                         Command="{Binding ChangeEmailCommand}"
-                        Content="{Binding ChangeEmailText, Mode=OneTime}"/>
+                        Content="{Binding ChangeEmailText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"/>
                     <Button
                         MinWidth="{StaticResource ButtonMinWidth}"
                         Margin="4,0,0,0"
                         Command="{Binding ChangePasswordCommand}"
-                        Content="{Binding ChangePasswordText, Mode=OneTime}"/>
+                        Content="{Binding ChangePasswordText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

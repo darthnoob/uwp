@@ -744,6 +744,7 @@
                                     Style="{StaticResource MegaCommandBarStyle}">
                                     <AppBarButton
                                         Command="{Binding DownloadCommand}"
+                                        IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                         Label="{Binding DownloadText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -757,6 +758,7 @@
                                     </AppBarButton>
                                     <AppBarButton
                                         Command="{Binding LeaveShareCommand}"
+                                        IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                         Label="{Binding LeaveShareText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
@@ -909,9 +911,11 @@
                                                     Text="{Binding RemoveContactWarningText, Mode=OneTime}"
                                                     TextWrapping="WrapWholeWords" />
                                             </Grid>
-                                            <Button x:Name="PART_RemoveContactButton" Width="136">
-                                                <TextBlock Text="{Binding RemoveText, Mode=OneTime}" />
-                                            </Button>
+                                            <Button
+                                                x:Name="PART_RemoveContactButton"
+                                                Content="{Binding RemoveText, Mode=OneTime}"
+                                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                                Width="136" />
                                         </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
@@ -952,8 +956,37 @@
                         <!--  SHARED ITEMS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
                         <CommandBar
                             x:Name="BottomCommandBar"
+                            DataContext="{Binding SharedItems}"
                             Grid.Row="2"
                             Style="{StaticResource MegaCommandBarStyle}">
+                            <AppBarButton
+                                Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Label="{Binding DownloadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Label="{Binding LeaveShareText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
                                 Command="{Binding ItemCollection.MultiSelectCommand}"
                                 IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"

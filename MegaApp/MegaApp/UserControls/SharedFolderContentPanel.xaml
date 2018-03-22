@@ -44,6 +44,7 @@
                     extensions:CommandBarExtensions.HideMoreButton="{x:Bind ViewModel.SharedFolder.ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}">
                     <AppBarButton
                         Command="{Binding SharedFolder.AddFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
@@ -57,6 +58,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.UploadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.UploadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.UploadText, Mode=OneTime}"
@@ -70,6 +72,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
@@ -83,6 +86,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.RenameCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RenameText, Mode=OneTime}"
@@ -96,6 +100,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding SharedFolder.RemoveCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
@@ -189,6 +194,7 @@
             <CommandBar Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton
                     Command="{Binding SharedFolder.AddFolderCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.AddFolderText, Mode=OneTime}"
@@ -202,6 +208,7 @@
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.UploadCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.UploadText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.UploadText, Mode=OneTime}"
@@ -215,6 +222,7 @@
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.DownloadCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
@@ -228,6 +236,7 @@
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.RenameCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.RenameText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.RenameText, Mode=OneTime}"
@@ -241,6 +250,7 @@
                 </AppBarButton>
                 <AppBarButton
                     Command="{Binding SharedFolder.RemoveCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.RemoveText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.RemoveText, Mode=OneTime}"

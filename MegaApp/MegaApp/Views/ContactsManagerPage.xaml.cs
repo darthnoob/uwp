@@ -273,18 +273,6 @@ namespace MegaApp.Views
             if (this.ContactsManagerPagePivot.SelectedItem.Equals(this.OutgoingPivot))
                 return this.ListViewOutgoingContactRequests;
             return null;
-        }        
-
-        private void OnSelectAllTapped(object sender, TappedRoutedEventArgs e)
-        {
-            var listView = this.GetSelectedListView();
-            listView?.SelectAll();
-        }
-
-        private void OnDeselectAllTapped(object sender, TappedRoutedEventArgs e)
-        {
-            var listView = this.GetSelectedListView();
-            listView?.SelectedItems.Clear();
         }
 
         private void OnSortClick(object sender, RoutedEventArgs e)

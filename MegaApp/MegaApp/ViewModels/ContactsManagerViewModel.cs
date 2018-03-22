@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Input;
 using MegaApp.Classes;
-using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
 
@@ -56,6 +55,14 @@ namespace MegaApp.ViewModels
         public void ClosePanels()
         {
             this.IsPanelOpen = false;
+        }
+
+        public override void UpdateGUI()
+        {
+            base.UpdateGUI();
+            this.MegaContacts.UpdateGUI();
+            this.IncomingContactRequests.UpdateGUI();
+            this.OutgoingContactRequests.UpdateGUI();
         }
 
         #endregion

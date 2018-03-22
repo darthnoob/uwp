@@ -379,18 +379,22 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding ImportCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding ImportText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -399,14 +403,17 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -538,18 +545,22 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding ImportCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding ImportText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -558,14 +569,17 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -674,14 +688,17 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding ImportCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding ImportText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -690,18 +707,22 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding SharingText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='share', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -816,14 +837,17 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding ImportCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding ImportText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='import', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -832,18 +856,22 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding SharingText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='share', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -936,14 +964,17 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -952,14 +983,17 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -1068,14 +1102,17 @@
                                 Visibility="{Binding NodeBinding, ConverterParameter='information', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding PreviewCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding PreviewText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='preview', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='download', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -1084,14 +1121,17 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='rename', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                         </MenuFlyout.Items>
@@ -1461,16 +1501,20 @@
                         <MenuFlyout.Items>
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
@@ -1575,16 +1619,20 @@
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
@@ -1689,16 +1737,20 @@
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding AllowRename, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
@@ -1785,9 +1837,11 @@
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding DownloadText}" />
                             <MenuFlyoutItem
                                 Command="{Binding GetLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
@@ -1796,17 +1850,21 @@
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding SharingText}"
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
                                 Visibility="{Binding OnlyOneSelectedItem, Converter={StaticResource BoolToVisibilityConverter}}"/>
                             <MenuFlyoutItem
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding CopyOrMoveText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveSharedAccessCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
                                 Text="{Binding RemoveSharedAccessText}" />
                         </MenuFlyout.Items>
@@ -2055,7 +2113,8 @@
                 Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
-                Background="Transparent">
+                Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}">
                 <AppBarButton
                     Command="{Binding CancelTransferCommand}"
                     Label="{Binding CancelText}"
@@ -2239,7 +2298,8 @@
                 Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
-                Background="Transparent">
+                Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}">
                 <AppBarButton
                     Command="{Binding PauseOrResumeTransferCommand}"
                     Label="{Binding PauseText}"
@@ -2344,7 +2404,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
@@ -2433,11 +2493,13 @@
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
+                            IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveContactText}"
                             Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
+                            IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveMultipleContactsText}"
                             Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </MenuFlyout.Items>
@@ -2544,11 +2606,13 @@
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
+                            IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveContactText}"
                             Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
+                            IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveMultipleContactsText}"
                             Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </MenuFlyout.Items>
@@ -2738,7 +2802,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
@@ -2789,6 +2853,7 @@
                 Margin="8,0,0,0"
                 Height="36"
                 Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
@@ -2854,7 +2919,7 @@
             </FlyoutBase.AttachedFlyout>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="RightTapped">
-                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                    <behaviors:OpenFlyoutAction IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
@@ -2905,6 +2970,7 @@
                 Margin="8,0,0,0"
                 Height="36"
                 Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">

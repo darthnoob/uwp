@@ -45,6 +45,7 @@
                 extensions:CommandBarExtensions.HideMoreButton="True">
                 <AppBarButton
                     Style="{StaticResource MegaAppBarButtonStyle}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
                     ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
                     Command="{x:Bind ViewModel.AddContactAndShareCommand}"
@@ -55,6 +56,7 @@
                 </AppBarButton>
                 <AppBarButton
                     Command="{x:Bind ViewModel.ConfirmShareCommand}"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Label="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
@@ -144,6 +146,7 @@
             Grid.Row="2">
             <AppBarButton
                 Style="{StaticResource MegaAppBarButtonStyle}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 Label="{x:Bind ViewModel.AddContactText, Mode=OneTime}" 
                 ToolTipService.ToolTip="{x:Bind ViewModel.AddContactText, Mode=OneTime}"
                 Command="{x:Bind ViewModel.AddContactAndShareCommand}"
@@ -154,6 +157,7 @@
             </AppBarButton>
             <AppBarButton
                 Command="{x:Bind ViewModel.ConfirmShareCommand}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 Label="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"
                 Style="{StaticResource MegaAppBarButtonStyle}"
                 ToolTipService.ToolTip="{x:Bind ViewModel.ConfirmShareText, Mode=OneTime}"

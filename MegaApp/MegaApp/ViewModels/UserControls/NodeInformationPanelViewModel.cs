@@ -7,7 +7,7 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class NodeInformationPanelViewModel : BaseViewModel
+    public class NodeInformationPanelViewModel : BaseUiViewModel
     {
         public NodeInformationPanelViewModel()
         {

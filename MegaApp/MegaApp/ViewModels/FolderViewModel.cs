@@ -912,8 +912,11 @@ namespace MegaApp.ViewModels
             LoadChildNodes();
         }
 
-        public void ProcessFileNode(IMegaNode node)
+        public async void ProcessFileNode(IMegaNode node)
         {
+            // User must be online to perform this operation
+            if (!await IsUserOnlineAsync()) return;
+
             if (node.IsImage)
             {
                 // Navigate to the preview page

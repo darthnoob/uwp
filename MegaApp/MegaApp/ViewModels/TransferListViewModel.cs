@@ -134,6 +134,13 @@ namespace MegaApp.ViewModels
             this.MegaSdk.cancelTransfers((int)this.Type);
         }
 
+        public override void UpdateGUI()
+        {
+            base.UpdateGUI();
+            foreach (var item in this.ItemCollection.Items)
+                item.UpdateGUI();
+        }
+
         #region Commands
 
         public ICommand PauseOrResumeCommand { get; }

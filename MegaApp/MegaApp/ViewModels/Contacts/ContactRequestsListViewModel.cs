@@ -172,6 +172,16 @@ namespace MegaApp.ViewModels.Contacts
         private void OnOrderInverted(object sender, EventArgs args) =>
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
 
+        public override void UpdateGUI()
+        {
+            foreach (var item in this.ItemCollection.Items)
+            {
+                var contactRequest = item as ContactRequestViewModel;
+                if (contactRequest == null) continue;
+                contactRequest.UpdateGUI();
+            }
+        }
+
         #endregion
 
         #region Properties

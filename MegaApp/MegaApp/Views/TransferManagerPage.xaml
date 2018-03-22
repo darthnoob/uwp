@@ -41,6 +41,7 @@
                 <CommandBar
                     x:Name="TopCommandBarStandard"
                     Background="Transparent"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}"
                     Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}"
                     extensions:CommandBarExtensions.HideMoreButton="True">
@@ -175,6 +176,7 @@
             <CommandBar
                 x:Name="BottomCommandBarStandard"
                 Style="{StaticResource MegaCommandBarStyle}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 Visibility="{Binding IsCompletedTransfersList, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Style="{StaticResource MegaAppBarButtonStyle}"

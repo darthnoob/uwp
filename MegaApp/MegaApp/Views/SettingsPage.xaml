@@ -69,13 +69,15 @@
                         Width="136"
                         Margin="0,0,4,0"
                         Command="{x:Bind CopyKeyCommand}"
-                        Content="{x:Bind CopyKeyText, Mode=OneTime}" />
+                        Content="{x:Bind CopyKeyText, Mode=OneTime}"
+                        IsEnabled="{x:Bind IsNetworkAvailable, Mode=OneWay}" />
                     <Button
                         Grid.Column="1"
                         Width="136"
                         Margin="4,0,0,0"
                         Command="{x:Bind SaveKeyCommand}"
-                        Content="{x:Bind SaveKeyText, Mode=OneTime}" />
+                        Content="{x:Bind SaveKeyText, Mode=OneTime}"
+                        IsEnabled="{x:Bind IsNetworkAvailable, Mode=OneWay}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>

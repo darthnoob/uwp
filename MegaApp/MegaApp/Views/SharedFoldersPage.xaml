@@ -84,6 +84,7 @@
                             extensions:CommandBarExtensions.HideMoreButton="{Binding ItemCollection.OnlyOneSelectedItem, Converter={StaticResource InverseBoolConverter}}">
                             <AppBarButton
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding DownloadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -97,6 +98,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding CopyOrMoveText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
@@ -110,6 +112,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding LeaveShareText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
@@ -160,6 +163,7 @@
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     Label="{Binding GetLinkText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding GetLinkText, Mode=OneTime}"
                                     Command="{Binding GetLinkCommand}"
@@ -172,6 +176,7 @@
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
                                     Command="{Binding ShareCommand}"
@@ -184,6 +189,7 @@
                                     </AppBarButton.Icon>
                                 </AppBarButton>
                                 <AppBarButton
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     Label="{Binding RenameText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding RenameText, Mode=OneTime}"
                                     Command="{Binding RenameCommand}"
@@ -197,6 +203,7 @@
                                 </AppBarButton>
                                 <AppBarButton
                                     Command="{Binding RemoveSharedAccessCommand}"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                                     ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"
                                     Visibility="{Binding SharedFolders, ConverterParameter='removeshare', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
@@ -348,9 +355,11 @@
                 Grid.Row="2">
 
                 <!--  BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
-                <CommandBar Style="{StaticResource MegaCommandBarStyle}">
+                <CommandBar
+                    Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{Binding DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -364,6 +373,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding LeaveShareCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding LeaveShareText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
@@ -413,6 +423,7 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{Binding GetLinkText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding GetLinkText, Mode=OneTime}"
                             Command="{Binding GetLinkCommand}"
@@ -425,6 +436,7 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{Binding ManageCollaboratorsText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding ManageCollaboratorsText, Mode=OneTime}"
                             Command="{Binding ShareCommand}"
@@ -437,6 +449,7 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{Binding RenameText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding RenameText, Mode=OneTime}"
                             Command="{Binding RenameCommand}"
@@ -449,6 +462,7 @@
                             </AppBarButton.Icon>
                         </AppBarButton>
                         <AppBarButton
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Command="{Binding RemoveSharedAccessCommand}"
                             Label="{Binding RemoveSharedAccessText, Mode=OneTime}"
                             ToolTipService.ToolTip="{Binding RemoveSharedAccessText, Mode=OneTime}"

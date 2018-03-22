@@ -10,7 +10,7 @@ using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels
 {
-    public class ContactRequestViewModel : BaseViewModel, IMegaContactRequest
+    public class ContactRequestViewModel : BaseUiViewModel, IMegaContactRequest
     {
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);

@@ -330,6 +330,16 @@ namespace MegaApp.ViewModels.Contacts
             this.OnCloseContactProfile();
         }
 
+        public override void UpdateGUI()
+        {
+            foreach (var item in this.ItemCollection.Items)
+            {
+                var contact = item as ContactViewModel;
+                if (contact == null) continue;
+                contact.UpdateGUI();
+            }
+        }
+
         #endregion
 
         #region Properties

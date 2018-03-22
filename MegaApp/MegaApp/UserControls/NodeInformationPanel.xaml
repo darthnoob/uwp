@@ -142,6 +142,7 @@
                         x:Name="MainTopCommandBar"
                         Background="Transparent"
                         extensions:CommandBarExtensions.HideMoreButton="True"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
                             Command="{Binding Node.PreviewCommand}"
@@ -243,6 +244,7 @@
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
                             Command="{x:Bind ViewModel.AddContactToFolderCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -253,6 +255,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
@@ -266,6 +269,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
@@ -321,6 +325,7 @@
                                 <ToggleSwitch
                                     x:Name="SaveForOfflineSwitch"
                                     Margin="0,0,0,24"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.Node.IsSavedForOffline, Mode=TwoWay}"
                                     Toggled="OnSaveForOfflineSwitchToggled"/>
                             </StackPanel>
@@ -434,6 +439,7 @@
                                 <ToggleSwitch
                                     x:Name="EnableLinkSwitch"
                                     Margin="0,12,0,0"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.Node.IsExported, Mode=TwoWay}"
                                     Toggled="OnEnableLinkSwitchToggled"/>
                             </StackPanel>
@@ -557,6 +563,7 @@
                                 <ToggleSwitch
                                     x:Name="EnableSharedFolderSwitch"
                                     Margin="0,12,0,0"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.FolderNode.IsOutShare, Mode=OneWay}"
                                     Toggled="OnEnableSharedFolderSwitchToggled"/>
                             </StackPanel>
@@ -597,6 +604,7 @@
             <Grid x:Name="BottomCommandBar" Grid.Row="2">
                 <CommandBar
                     x:Name="MainBottomCommandBar"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{Binding Node.PreviewCommand}"
@@ -697,6 +705,7 @@
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.AddContactToFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -707,6 +716,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
@@ -720,6 +730,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"

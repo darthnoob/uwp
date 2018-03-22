@@ -11,6 +11,9 @@ namespace MegaApp.ViewModels
     /// </summary>
     public abstract class BaseUiViewModel: BaseViewModel    
     {
+        public virtual void UpdateGUI() => 
+            OnUiThread(() => OnPropertyChanged(nameof(IsNetworkAvailable)));
+
         /// <summary>
         /// Invoke the code/action on the UI Thread. If not on UI thread, dispatch to UI with the Dispatcher
         /// </summary>

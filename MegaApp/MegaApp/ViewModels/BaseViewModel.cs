@@ -47,19 +47,6 @@ namespace MegaApp.ViewModels
 
         #endregion
 
-        #region Methods
-
-        /// <summary>
-        /// Checks the availability of the network connection
-        /// </summary>
-        public async void CheckNetworkAvailability()
-        {
-            await NetworkService.IsNetworkAvailableAsync();
-            UiService.OnUiThread(() => OnPropertyChanged(nameof(this.IsNetworkAvailable)));
-        }
-
-        #endregion
-
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;

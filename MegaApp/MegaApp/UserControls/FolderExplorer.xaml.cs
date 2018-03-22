@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.Networking.Connectivity;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,10 +31,7 @@ namespace MegaApp.UserControls
         {
             this.InitializeComponent();
 
-            NetworkInformation.NetworkStatusChanged += this.OnNetworkStatusChanged;
             SelectedNodesService.SelectedNodesChanged += this.OnSelectedNodesChanged;
-
-            this.ViewModel.CheckNetworkAvailability();
         }
 
         /// <summary>
@@ -431,8 +427,6 @@ namespace MegaApp.UserControls
                     SelectedNodesService.IsSelectedNode(folderNode));
             }
         }
-
-        private void OnNetworkStatusChanged(object sender) => this.ViewModel.CheckNetworkAvailability();
 
         private void OnSelectedNodesChanged(object sender, EventArgs e)
         {

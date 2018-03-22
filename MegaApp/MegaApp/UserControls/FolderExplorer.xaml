@@ -61,6 +61,7 @@
                     FontSize="14"
                     MinWidth="136"
                     Click="OnFolderOptionsButtonClicked"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Visibility="{Binding FolderOptionsButtonVisibility}"/>
             </Grid>
             <Grid Grid.Row="1">

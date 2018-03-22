@@ -10,7 +10,6 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-//using MegaApp.Database;
 
 namespace MegaApp.ViewModels
 {
@@ -419,6 +418,8 @@ namespace MegaApp.ViewModels
         {
             get
             {
+                if (!this.IsNetworkAvailable) return false;
+
                 switch (this.TransferState)
                 {
                     case MTransferState.STATE_COMPLETING:

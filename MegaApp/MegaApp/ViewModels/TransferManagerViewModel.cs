@@ -14,6 +14,14 @@ namespace MegaApp.ViewModels
             this.ActiveViewModel = this.Uploads;
         }
 
+        public override void UpdateGUI()
+        {
+            base.UpdateGUI();
+            this.Downloads.UpdateGUI();
+            this.Uploads.UpdateGUI();
+            this.Completed.UpdateGUI();
+        }
+
         public void Update()
         {
             this.Downloads.UpdateTransfers();

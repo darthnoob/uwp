@@ -69,6 +69,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{Binding ItemCollection.MultiSelectCommand}"
+                                IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                                 Label="{Binding MultiSelectText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}"
@@ -181,6 +182,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding ItemCollection.MultiSelectCommand}"
+                        IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"
                         Label="{Binding MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding MultiSelectText, Mode=OneTime}">

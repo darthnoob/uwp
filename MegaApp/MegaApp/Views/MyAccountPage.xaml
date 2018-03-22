@@ -37,6 +37,7 @@
                 x:Name="TopCommandBar"
                 Grid.Column="1"
                 Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton 
@@ -87,6 +88,7 @@
         <CommandBar
             x:Name="BottomCommandBar"
             Grid.Row="2"
+            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton 
                 Click="OnButtonClick"
