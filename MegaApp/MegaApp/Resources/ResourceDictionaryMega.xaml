@@ -131,6 +131,15 @@
         </userControls:EmptyState>
     </ControlTemplate>
 
+    <DataTemplate x:Key="SeparationPoint">
+        <Ellipse
+            Margin="8,0"
+            Fill="{ThemeResource MegaAppForegroundBrush}"
+            Height="4" Width="4"
+            Opacity="0.4"
+            VerticalAlignment="Center" />
+    </DataTemplate>
+
     <DataTemplate x:Key="MegaPageHeaderLogo">
         <Border
             Width="44"

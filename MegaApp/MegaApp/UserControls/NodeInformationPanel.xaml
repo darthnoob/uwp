@@ -317,17 +317,30 @@
                             <StackPanel
                                 Grid.Row="1"
                                 Margin="24,0"
-                                Orientation="Vertical">
-                                <TextBlock
-                                    FontSize="16"
-                                    Opacity="0.4"
-                                    Text="{x:Bind ViewModel.SaveForOfflineText, Mode=OneTime}" />
+                                Orientation="Horizontal">
                                 <ToggleSwitch
                                     x:Name="SaveForOfflineSwitch"
                                     Margin="0,0,0,24"
                                     IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.Node.IsSavedForOffline, Mode=TwoWay}"
-                                    Toggled="OnSaveForOfflineSwitchToggled"/>
+                                    Toggled="OnSaveForOfflineSwitchToggled">
+                                    <TextBlock
+                                        FontSize="16"
+                                        Opacity="0.4"
+                                        Text="{x:Bind ViewModel.SaveForOfflineText, Mode=OneTime}" />
+                                </ToggleSwitch>
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding Node.OfflineTransfer.TransferSpeed, Converter={StaticResource StringVisibilityConverter}}">
+                                    <ContentPresenter ContentTemplate="{StaticResource SeparationPoint}" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Node.OfflineTransfer.TransferedPercentage, Mode=OneWay}"
+                                        VerticalAlignment="Center"/>
+                                    <ContentPresenter ContentTemplate="{StaticResource SeparationPoint}" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Node.OfflineTransfer.TransferSpeed, Mode=OneWay}"
+                                        VerticalAlignment="Center"/>
+                                </StackPanel>
                             </StackPanel>
                             <RelativePanel Grid.Row="2" Margin="24,0,24,12">
                                 <TextBlock
