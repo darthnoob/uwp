@@ -61,6 +61,7 @@
                         Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <AppBarButton
                             Command="{x:Bind ViewModel.DownloadCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -73,6 +74,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{x:Bind ViewModel.ImportCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}">
@@ -205,6 +207,7 @@
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -217,6 +220,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.ImportCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}">

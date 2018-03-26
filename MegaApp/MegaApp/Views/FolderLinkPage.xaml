@@ -75,6 +75,7 @@
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
@@ -88,6 +89,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
@@ -101,6 +103,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                                IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
@@ -236,6 +239,7 @@
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
@@ -249,6 +253,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
@@ -262,6 +267,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                        IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}">
