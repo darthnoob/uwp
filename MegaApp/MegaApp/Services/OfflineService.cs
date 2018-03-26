@@ -17,7 +17,7 @@ namespace MegaApp.Services
             if (node == null) return null;
 
             var rootNode = SdkService.MegaSdk.getRootNode(node);
-            if (rootNode.isInShare())
+            if (rootNode != null && rootNode.isInShare())
             {
                 return Path.Combine(AppService.GetOfflineDirectoryPath(),
                     SdkService.MegaSdk.getUserFromInShare(rootNode).getHandle().ToString(),
