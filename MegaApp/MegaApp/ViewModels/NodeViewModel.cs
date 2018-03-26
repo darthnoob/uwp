@@ -33,9 +33,6 @@ namespace MegaApp.ViewModels
         {
             this.AccessLevel = new AccessLevelViewModel();
             
-            Update(megaNode);
-            SetDefaultValues();
-
             this.Parent = parent;
             this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
@@ -49,6 +46,9 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+
+            Update(megaNode);
+            SetDefaultValues();
 
             Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
             OfflineTransfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, OfflinePath);
