@@ -146,11 +146,7 @@
                 Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
         </Grid>
 
-        <ContentPresenter
-            x:Name="OfflineBanner"
-            Canvas.ZIndex="1"
-            Grid.Row="1"
-            ContentTemplate="{StaticResource OfflineBanner}" />
+        <ContentPresenter Grid.Row="1" Canvas.ZIndex="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
         
         <Grid x:Name="MainGrid" Grid.Row="2">
             <ListView

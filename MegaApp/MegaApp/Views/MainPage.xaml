@@ -95,7 +95,14 @@
             VisualStateNarrowMinWidth="0"
             VisualStateNormalMinWidth="600"
             VisualStateWideMinWidth="1200">
-            <userControls:FrameEx x:Name="ContentFrame" />
+            <Grid>
+                <userControls:FrameEx x:Name="ContentFrame" />
+                <ContentPresenter
+                    x:Name="OfflineBanner"
+                    Margin="0,48,0,0"
+                    ContentTemplate="{StaticResource OfflineBanner}"
+                    VerticalAlignment="Top" />
+            </Grid>
         </userControls:HamburgerMenuEx>
 
         <Grid

@@ -97,10 +97,7 @@
             </CommandBar>
         </Grid>
 
-        <ContentPresenter
-            x:Name="OfflineBanner"
-            Grid.Row="1"
-            ContentTemplate="{StaticResource OfflineBanner}" />
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
         
         <Grid 
             x:Name="MainGrid"

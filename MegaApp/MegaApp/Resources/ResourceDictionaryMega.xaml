@@ -3256,6 +3256,12 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Name="OfflineBannerSpace">
+        <Grid
+            Height="32"
+            Visibility="{Binding IsNetworkAvailable, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+    </DataTemplate>
+    
     <DataTemplate x:Name="OfflineBanner">
         <Border
             BorderBrush="{ThemeResource MegaRedColorBrush}"
