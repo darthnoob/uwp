@@ -346,7 +346,13 @@ namespace MegaApp.ViewModels
         public ulong TotalBytes
         {
             get { return _totalBytes; }
-            set { SetField(ref _totalBytes, value); }
+            set
+            {
+                SetField(ref _totalBytes, value);
+                OnPropertyChanged(nameof(this.TotalBytesText),
+                    nameof(this.TransferedAndTotalBytes),
+                    nameof(this.TransferedPercentage));
+            }
         }
 
         public string TotalBytesText => this.TotalBytes.ToStringAndSuffix(1);
@@ -358,16 +364,17 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _transferedBytes, value);
-                OnPropertyChanged("TransferedPercentage");
-                OnPropertyChanged("EstimatedTime");
-                OnPropertyChanged("TransferedAndTotalBytes");
+                OnPropertyChanged(nameof(this.EstimatedTime),
+                    nameof(this.TransferedAndTotalBytes),
+                    nameof(this.TransferedPercentage));
             }
         }
 
         public string TransferedAndTotalBytes => string.Format("{0:n2} / {1}",
             this.TransferedBytes.ToEqualSize(this.TotalBytes), this.TotalBytes.ToStringAndSuffix(1));
 
-        public string TransferedPercentage => string.Format("{0}%", TransferedBytes * 100 / TotalBytes);
+        public string TransferedPercentage => TotalBytes > 0 ?
+            string.Format("{0}%", TransferedBytes * 100 / TotalBytes) : string.Empty;
 
         private string _transferSpeed;
         public string TransferSpeed
