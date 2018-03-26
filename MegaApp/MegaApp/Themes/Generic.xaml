@@ -710,6 +710,7 @@
                     <Grid Background="{ThemeResource MegaContactProfileBackgroundBrush}" DataContext="{TemplateBinding Contact}">
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -811,9 +812,14 @@
                             </Grid>
                         </Grid>
 
+                        <ContentPresenter
+                            x:Name="OfflineBanner"
+                            Grid.Row="1"
+                            ContentTemplate="{StaticResource OfflineBanner}" />
+                        
                         <Pivot
                             x:Name="PART_PivotControl"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Margin="12,0,0,0"
                             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
                             <PivotItem x:Name="PART_ContactProfilePivot" Header="{Binding ProfileText}">
@@ -957,7 +963,7 @@
                         <CommandBar
                             x:Name="BottomCommandBar"
                             DataContext="{Binding SharedItems}"
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Style="{StaticResource MegaCommandBarStyle}">
                             <AppBarButton
                                 Command="{Binding DownloadCommand}"

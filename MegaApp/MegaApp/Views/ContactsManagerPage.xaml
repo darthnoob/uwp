@@ -32,6 +32,7 @@
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -278,7 +279,12 @@
                 </Grid>
             </Grid>
 
-            <Grid x:Name="MainGrid" Grid.Row="1">
+            <ContentPresenter
+                x:Name="OfflineBanner"
+                Grid.Row="1"
+                ContentTemplate="{StaticResource OfflineBanner}" />
+            
+            <Grid x:Name="MainGrid" Grid.Row="2">
                 <Pivot
                     x:Name="ContactsManagerPagePivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -417,7 +423,7 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
 
                 <!--  CONTACTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
                 <CommandBar 

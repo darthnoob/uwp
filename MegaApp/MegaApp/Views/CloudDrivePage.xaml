@@ -52,7 +52,8 @@
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid x:Name="TopRowGrid" Grid.Row="0">
@@ -271,7 +272,13 @@
                     </CommandBar>
                 </Grid>
             </Grid>
-            <Grid x:Name="MainGrid" Grid.Row="1">
+
+            <ContentPresenter
+                x:Name="OfflineBanner"
+                Grid.Row="1"
+                ContentTemplate="{StaticResource OfflineBanner}" />
+
+            <Grid x:Name="MainGrid" Grid.Row="2">
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -377,7 +384,7 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
                 <CommandBar Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         DataContext="{Binding ActiveFolderView}"

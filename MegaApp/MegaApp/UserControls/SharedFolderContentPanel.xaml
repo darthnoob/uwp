@@ -18,6 +18,7 @@
     <Grid DataContext="{x:Bind ViewModel}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -167,9 +168,14 @@
             </CommandBar>
         </Grid>
 
+        <ContentPresenter
+            x:Name="OfflineBanner"
+            Grid.Row="1"
+            ContentTemplate="{StaticResource OfflineBanner}" />
+        
         <Grid
             x:Name="MainGrid"
-            Grid.Row="1"
+            Grid.Row="2"
             Background="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -190,7 +196,7 @@
                 Folder="{x:Bind ViewModel.SharedFolder, Mode=OneWay}"/>
         </Grid>
 
-        <Grid x:Name="BottomCommandBar" Grid.Row="2">
+        <Grid x:Name="BottomCommandBar" Grid.Row="3">
             <CommandBar Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton
                     Command="{Binding SharedFolder.AddFolderCommand}"

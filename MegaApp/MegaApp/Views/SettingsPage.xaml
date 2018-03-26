@@ -132,6 +132,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -145,7 +146,13 @@
                 Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
         </Grid>
 
-        <Grid x:Name="MainGrid" Grid.Row="1">
+        <ContentPresenter
+            x:Name="OfflineBanner"
+            Canvas.ZIndex="1"
+            Grid.Row="1"
+            ContentTemplate="{StaticResource OfflineBanner}" />
+        
+        <Grid x:Name="MainGrid" Grid.Row="2">
             <ListView
                 Padding="20"
                 HorizontalAlignment="Stretch"

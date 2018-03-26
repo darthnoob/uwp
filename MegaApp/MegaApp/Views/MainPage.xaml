@@ -95,15 +95,7 @@
             VisualStateNarrowMinWidth="0"
             VisualStateNormalMinWidth="600"
             VisualStateWideMinWidth="1200">
-            <Grid>
-                <userControls:FrameEx x:Name="ContentFrame" />
-                <ContentPresenter
-                    x:Name="OfflineBanner"
-                    Margin="0,144,0,0"
-                    ContentTemplate="{StaticResource OfflineBanner}"
-                    VerticalAlignment="Top"
-                    Visibility="{Binding ShowOfflineBanner, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
-            </Grid>
+            <userControls:FrameEx x:Name="ContentFrame" />
         </userControls:HamburgerMenuEx>
 
         <Grid

@@ -32,6 +32,7 @@
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -104,10 +105,15 @@
                 </Grid>
             </Grid>
 
+            <ContentPresenter
+                x:Name="OfflineBanner"
+                Grid.Row="1"
+                ContentTemplate="{StaticResource OfflineBanner}" />
+
             <Grid 
                 x:Name="MainGrid"
                 DataContext="{x:Bind ViewModel.Node}"
-                Grid.Row="1">
+                Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -192,7 +198,7 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
                 <!--  BOTTOM COMMAND BAR (ONLY DESKTOP)  -->
                 <CommandBar
                     DataContext="{x:Bind ViewModel, Mode=OneWay}"
