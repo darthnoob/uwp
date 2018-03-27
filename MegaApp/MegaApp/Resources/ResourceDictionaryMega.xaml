@@ -3258,24 +3258,8 @@
 
     <DataTemplate x:Name="OfflineBannerSpace">
         <Grid
-            Height="32"
-            Visibility="{Binding IsNetworkAvailable, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-    </DataTemplate>
-    
-    <DataTemplate x:Name="OfflineBanner">
-        <Border
-            BorderBrush="{ThemeResource MegaRedColorBrush}"
-            Background="{ThemeResource MegaRedColorBrush}"
+            Height="{Binding OfflineBannerHeight, Mode=OneWay}"
             MinHeight="32"
-            Visibility="{Binding IsNetworkAvailable, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-            <TextBlock 
-                Margin="12,0"
-                FontSize="14"
-                HorizontalAlignment="Center"
-                Opacity="0.9"
-                Text="{Binding OfflineBannerText, Mode=OneTime}"
-                TextWrapping="WrapWholeWords"
-                VerticalAlignment="Center"/>
-        </Border>
+            Visibility="{Binding IsNetworkAvailable, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
     </DataTemplate>
 </ResourceDictionary>

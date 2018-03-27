@@ -77,6 +77,56 @@
                 </StackPanel>
             </Grid>
         </DataTemplate>
+
+        <DataTemplate x:Name="OfflineBannerTemplate">
+            <Border
+                BorderBrush="{ThemeResource MegaRedColorBrush}"
+                Background="{ThemeResource MegaRedColorBrush}"
+                MinHeight="32"
+                SizeChanged="OnOfflineBannerSizeChanged"
+                Visibility="{Binding IsNetworkAvailable, Mode=OneWay, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="12,8"
+                        FontSize="12"
+                        HorizontalAlignment="Center"
+                        Opacity="0.9"
+                        Text="{Binding OfflineBannerText, Mode=OneTime}"
+                        TextWrapping="WrapWholeWords"
+                        VerticalAlignment="Center"/>
+                    <CommandBar
+                        Background="Transparent"
+                        extensions:CommandBarExtensions.HideMoreButton="True"
+                        Grid.Column="1"
+                        Margin="0,0,12,0"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding ShowOfflineBannerCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <AppBarButton
+                            Height="24" Width="24"
+                            Command="{Binding CloseOfflineBannerCommand}"
+                            HorizontalAlignment="Center"
+                            Label="{Binding CloseText}" 
+                            Style="{StaticResource MegaAppBarButtonStyle}"
+                            ToolTipService.ToolTip="{Binding CloseText}"
+                            VerticalAlignment="Center">
+                            <AppBarButton.Icon>
+                                <PathIcon
+                                    Margin="0,-22,0,0"
+                                    Height="12" Width="12"
+                                    Data="{Binding ClosePathData, Mode=OneTime}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+            </Border>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{StaticResource MegaHamburgerMenuBackgroundBrush}">
@@ -100,8 +150,9 @@
                 <ContentPresenter
                     x:Name="OfflineBanner"
                     Margin="0,48,0,0"
-                    ContentTemplate="{StaticResource OfflineBanner}"
-                    VerticalAlignment="Top" />
+                    ContentTemplate="{StaticResource OfflineBannerTemplate}"
+                    VerticalAlignment="Top"
+                    Visibility="{Binding ShowOfflineBanner, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </Grid>
         </userControls:HamburgerMenuEx>
 

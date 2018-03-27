@@ -11,7 +11,12 @@ namespace MegaApp.ViewModels
     /// </summary>
     public abstract class BaseUiViewModel: BaseViewModel    
     {
-        public virtual void UpdateGUI() => 
+        public double OfflineBannerHeight => UiService.OfflineBannerHeight;
+
+        public void UpdateOfflineBanner() =>
+            OnUiThread(() => OnPropertyChanged(nameof(this.OfflineBannerHeight)));
+
+        public virtual void UpdateGUI() =>
             OnUiThread(() => OnPropertyChanged(nameof(IsNetworkAvailable)));
 
         /// <summary>

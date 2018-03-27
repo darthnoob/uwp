@@ -148,7 +148,10 @@
                 </Grid>
             </Grid>
 
-            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+            <ContentPresenter
+                Grid.Row="1"
+                ContentTemplate="{StaticResource OfflineBannerSpace}"
+                Visibility="{Binding ShowOfflineBanner, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
             <Grid x:Name="MainGrid" Grid.Row="2">
                 <Pivot
