@@ -225,8 +225,8 @@ namespace MegaApp.UserControls
                 this.MainTopCommandBar.Visibility = Visibility.Collapsed;
                 this.MainBottomCommandBar.Visibility = Visibility.Collapsed;
 
-                var sharePivotCommandBarVisibility = this.ViewModel.FolderNode.IsOutShare ?
-                    Visibility.Visible : Visibility.Collapsed;
+                var sharePivotCommandBarVisibility = this.ViewModel.FolderNode == null ? Visibility.Collapsed :
+                    this.ViewModel.FolderNode.IsOutShare ? Visibility.Visible : Visibility.Collapsed;
                 this.SharePivotTopCommandBar.Visibility = sharePivotCommandBarVisibility;
                 this.SharePivotBottomCommandBar.Visibility = sharePivotCommandBarVisibility;
 
