@@ -164,6 +164,10 @@ namespace MegaApp.ViewModels
         {
             if (this.Items == null || !this.Items.Any()) return;
             this.Items.Clear();
+
+            OnPropertyChanged(nameof(this.Items), nameof(this.HasItems));
+
+            this.OnItemsCollectionChanged();
         }
 
         public void ClearSelection()
