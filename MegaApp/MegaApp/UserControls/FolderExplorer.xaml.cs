@@ -299,16 +299,14 @@ namespace MegaApp.UserControls
 
         private void OnAllSelected(object sender, bool value)
         {
-            if (value)
+            if (!value)
             {
-                this.ListView?.SelectAll();
-                this.GridView?.SelectAll();
+                this.ClearSelectedItems();
+                return;
             }
-            else
-            {
-                this.ListView?.SelectedItems.Clear();
-                this.GridView?.SelectedItems.Clear();
-            }
+
+            this.ListView?.SelectAll();
+            this.GridView?.SelectAll();
         }
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
