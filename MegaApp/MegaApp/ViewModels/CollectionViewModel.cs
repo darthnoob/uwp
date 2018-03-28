@@ -155,7 +155,6 @@ namespace MegaApp.ViewModels
 
         public void SelectAll(bool value)
         {
-            Select(value);
             this.OnAllSelected(value);
 
             if (!value) ClearSelection();
@@ -232,19 +231,6 @@ namespace MegaApp.ViewModels
         #endregion
 
         #region Private Methods
-
-        private void Select(bool onOff)
-        {
-            foreach (var item in this.Items)
-            {
-                if (item is IMegaContact)
-                    (item as IMegaContact).IsMultiSelected = onOff;
-                if (item is IMegaContactRequest)
-                    (item as IMegaContactRequest).IsMultiSelected = onOff;
-                if (item is IMegaNode)
-                    (item as IMegaNode).IsMultiSelected = onOff;
-            }
-        }
 
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
