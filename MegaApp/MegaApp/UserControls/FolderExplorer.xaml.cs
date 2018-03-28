@@ -100,11 +100,11 @@ namespace MegaApp.UserControls
 
         private void OnViewChanged(object sender, EventArgs e)
         {
-            // First save the current selected nodes to restore them after change the view
-            var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
-
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
+
+            // First save the current selected nodes to restore them after change the view
+            var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
 
             // Clear the selected items and restore in the new view
             ClearSelectedItems();
