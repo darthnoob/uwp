@@ -26,7 +26,7 @@ namespace MegaApp.ViewModels
             };
             securitySettings.Items.Add(new DescriptionSettingViewModel(null,
                ResourceService.UiResources.GetString("UI_SecuritySettingsDescription")));
-            securitySettings.Items.Add(new RecoveryKeySettingViewModel());
+            securitySettings.Items.Add(SettingsService.RecoveryKeySetting);
 
             // About section
             var aboutSettings = new SettingSectionViewModel

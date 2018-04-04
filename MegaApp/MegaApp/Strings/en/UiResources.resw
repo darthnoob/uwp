@@ -1452,4 +1452,16 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>Backup Recovery key</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Don’t show me again</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

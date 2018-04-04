@@ -138,6 +138,7 @@
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ShouldShowPasswordReminderDialogRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
@@ -211,12 +212,14 @@
     <Compile Include="UserControls\ActivityIndicator.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\BaseContentDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
@@ -346,6 +349,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ShareFolderToDialog.xaml.cs">
       <DependentUpon>ShareFolderToDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PasswordReminderDialog.xaml.cs">
+      <DependentUpon>PasswordReminderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
@@ -581,6 +587,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ShareFolderToDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\PasswordReminderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

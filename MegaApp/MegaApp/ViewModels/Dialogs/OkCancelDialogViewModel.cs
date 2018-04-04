@@ -4,9 +4,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class OkCancelDialogViewModel : BaseViewModel
+    public class OkCancelDialogViewModel : BaseContentDialogViewModel
     {
-        public OkCancelDialogViewModel()
+        public OkCancelDialogViewModel() : base()
         {
             this.PrimaryButtonCommand = new RelayCommand(PrimaryButtonAction);
             this.SecondaryButtonCommand = new RelayCommand(SecondaryButtonAction);

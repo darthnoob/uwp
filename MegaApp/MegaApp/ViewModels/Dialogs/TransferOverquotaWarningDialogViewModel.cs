@@ -6,9 +6,9 @@ using MegaApp.Views;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class TransferOverquotaWarningDialogViewModel : BaseViewModel
+    public class TransferOverquotaWarningDialogViewModel : BaseContentDialogViewModel
     {
-        public TransferOverquotaWarningDialogViewModel()
+        public TransferOverquotaWarningDialogViewModel() : base()
         {
             this.UpgradeButtonCommand = new RelayCommand(Upgrade);
             this.WaitButtonCommand = new RelayCommand(Wait);

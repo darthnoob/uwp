@@ -8,9 +8,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class ShareFolderToDialogViewModel : BaseUiViewModel
+    public class ShareFolderToDialogViewModel : BaseContentDialogViewModel
     {
-        public ShareFolderToDialogViewModel()
+        public ShareFolderToDialogViewModel() : base()
         {
             this.ShareButtonCommand = new RelayCommand(Share);
             this.CancelButtonCommand = new RelayCommand(Cancel);
@@ -75,8 +75,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region Properties
-
-        public bool CanClose { get; set; }
 
         private string _folderName;
         public string FolderName

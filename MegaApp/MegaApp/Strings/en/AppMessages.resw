@@ -1210,4 +1210,28 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
+  <data name="AM_PasswordReminder" xml:space="preserve">
+    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
+    <comment>Message to describe the purpose of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_PasswordReminder_Title" xml:space="preserve">
+    <value>Do you remember your password?</value>
+    <comment>Title of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_TestPassword" xml:space="preserve">
+    <value>Please test your password below to ensure you remember it. If you lost your password, you will lose access to your data.</value>
+    <comment>Message to describe the purpose of the dialog to test the password.</comment>
+  </data>
+  <data name="AM_TestPasswordSuccess" xml:space="preserve">
+    <value>Password accepted, we still recommend you back up your Recovery key.</value>
+    <comment>Message displayed when the password test result is ok.</comment>
+  </data>
+  <data name="AM_TestPasswordWarning" xml:space="preserve">
+    <value>Wrong password!, backup your Recovery Key as soon as possible!</value>
+    <comment>Warning message displayed when the password test fails.</comment>
+  </data>
+  <data name="AM_TestPassword_Title" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Title of the test password dialog.</comment>
+  </data>
 </root>

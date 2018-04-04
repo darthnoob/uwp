@@ -5,15 +5,13 @@ namespace MegaApp.Views.Dialogs
 {
     // Helper class to define the viewmodel of this view
     // XAML cannot use generics in it's declaration.
-    public class BaseShareFolderToDialog : ContentDialogEx<ShareFolderToDialogViewModel> { }
+    public class BasePasswordReminderDialog : ContentDialogEx<PasswordReminderDialogViewModel> { }
 
-    public sealed partial class ShareFolderToDialog : BaseShareFolderToDialog
+    public sealed partial class PasswordReminderDialog : BasePasswordReminderDialog
     {
-        public ShareFolderToDialog(string folderName)
+        public PasswordReminderDialog()
         {
             this.InitializeComponent();
-
-            this.ViewModel.FolderName = folderName;
         }
     }
 }

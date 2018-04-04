@@ -230,6 +230,9 @@ namespace MegaApp.ViewModels.Login
                 return false;
             }
 
+            // If is required show the password reminder dialog on background thread
+            Task.Run(() => AccountService.CheckAndShowPasswordReminderDialog());
+
             return true;
         }
 

@@ -2,8 +2,10 @@
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class AwaitEmailConfirmationDialogViewModel : BaseViewModel
+    public class AwaitEmailConfirmationDialogViewModel : BaseContentDialogViewModel
     {
+        public AwaitEmailConfirmationDialogViewModel() : base() { }
+
         #region Properties
 
         private string _email;

@@ -1,4 +1,7 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extensions="using:MegaApp.Extensions">
 
     <!--  OVERRIDE SYSTEM ACCENT COLOR  -->
     <Color x:Key="SystemAccentColor">#EB4444</Color>
@@ -37,6 +40,11 @@
 
     <Style x:Key="MegaAppBarButtonStyle" TargetType="AppBarButton">
         <Setter Property="Width" Value="48" />
+    </Style>
+
+    <Style x:Key="MegaDialogAppBarButtonStyle" TargetType="AppBarButton">
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="40" />
     </Style>
 
     <Style x:Key="MegaHeaderFontStyle" TargetType="TextBlock">
@@ -1021,11 +1029,30 @@
                                     VerticalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
+                                    <CommandBar
+                                        Grid.Row="0"
+                                        Background="Transparent"
+                                        Margin="0,0,-24,0"
+                                        extensions:CommandBarExtensions.HideMoreButton="True"
+                                        Visibility="{Binding HasCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <AppBarButton
+                                            Click="OnButtonClick"
+                                            Command="{Binding CloseCommand}"
+                                            Label="{Binding CloseText, Mode=OneTime}"
+                                            Style="{StaticResource MegaDialogAppBarButtonStyle}"
+                                            ToolTipService.ToolTip="{Binding CloseText, Mode=OneTime}">
+                                            <Viewbox Margin="0,-8,0,0" Height="12" Width="12">
+                                                <FontIcon Glyph="&#xE711;" />
+                                            </Viewbox>
+                                        </AppBarButton>
+                                    </CommandBar>
                                     <ScrollViewer
                                         x:Name="ContentScrollViewer"
+                                        Grid.Row="1"
                                         Margin="{ThemeResource ContentDialogContentScrollViewerMargin}"
                                         HorizontalScrollBarVisibility="Disabled"
                                         IsTabStop="False"
@@ -1077,7 +1104,7 @@
                                     </ScrollViewer>
                                     <Grid
                                         x:Name="CommandSpace"
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom">
                                         <Grid.ColumnDefinitions>
@@ -1146,11 +1173,30 @@
                                     VerticalAlignment="Stretch">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
+                                    <CommandBar
+                                        Grid.Row="0"
+                                        Background="Transparent"
+                                        Margin="0,0,-24,0"
+                                        extensions:CommandBarExtensions.HideMoreButton="True"
+                                        Visibility="{Binding HasCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <AppBarButton
+                                            Click="OnButtonClick"
+                                            Command="{Binding CloseCommand}"
+                                            Label="{Binding CloseText, Mode=OneTime}"
+                                            Style="{StaticResource MegaDialogAppBarButtonStyle}"
+                                            ToolTipService.ToolTip="{Binding CloseText, Mode=OneTime}">
+                                            <Viewbox Margin="0,-8,0,0" Height="12" Width="12">
+                                                <FontIcon Glyph="&#xE711;" />
+                                            </Viewbox>
+                                        </AppBarButton>
+                                    </CommandBar>
                                     <ScrollViewer
                                         x:Name="ContentScrollViewer"
+                                        Grid.Row="1"
                                         Margin="{ThemeResource ContentDialogContentScrollViewerMargin}"
                                         HorizontalScrollBarVisibility="Disabled"
                                         IsTabStop="False"
@@ -1202,7 +1248,7 @@
                                     </ScrollViewer>
                                     <Grid
                                         x:Name="CommandSpace"
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom">
                                         <Grid.ColumnDefinitions>
