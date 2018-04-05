@@ -16,7 +16,8 @@ namespace MegaApp.MegaApi
             {
                 switch (e.getErrorCode())
                 {
-                    case MErrorType.API_OK: // Successfull get user attribute process
+                    case MErrorType.API_OK:     // Successfull get user attribute process
+                    case MErrorType.API_ENOENT: // Attribute not exists yet but the value still be valid
                         Tcs?.TrySetResult(request.getFlag());
                         break;
                     default: // Default error processing
