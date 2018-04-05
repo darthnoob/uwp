@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -17,17 +18,17 @@ namespace MegaApp.ViewModels.Settings
                 "CameraUploadsSettingsKey")
         {
             this.CopyKeyCommand = new RelayCommand(CopyKey);
-            this.SaveKeyCommand = new RelayCommand(SaveKey);
+            this.SaveKeyCommand = new RelayCommandAsync<bool>(SaveKey);
         }
 
         #region Private Methods
 
-        private async void SaveKey()
+        private async Task<bool> SaveKey()
         {
             var file = await FileService.SaveFile(new KeyValuePair<string, IList<string>>(
                     ResourceService.UiResources.GetString("UI_PlainText"), 
                     new List<string>() { ".txt" }));
-            if (file == null) return;
+            if (file == null) return false;
             try
             {
                 await FileIO.WriteTextAsync(file, this.Value);
@@ -35,6 +36,7 @@ namespace MegaApp.ViewModels.Settings
                 ToastService.ShowTextNotification(
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyExported_Title"),
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyExported"));
+                return true;
             }
             catch (Exception e)
             {
@@ -45,12 +47,13 @@ namespace MegaApp.ViewModels.Settings
                     ToastService.ShowAlertNotification(
                         ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed"));
-                    return;
+                    return false;
                 }
 
                 await DialogService.ShowAlertAsync(
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed_Title"),
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed"));
+                return false;
             }
         }
 

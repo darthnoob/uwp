@@ -102,10 +102,13 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Backup the Recovery key
         /// </summary>
-        private void SaveKey()
+        private async void SaveKey()
         {
-            if (SettingsService.RecoveryKeySetting.SaveKeyCommand.CanExecute(null))
-                SettingsService.RecoveryKeySetting.SaveKeyCommand.Execute(null);
+            var saveKeyCommand = SettingsService.RecoveryKeySetting.SaveKeyCommand as RelayCommandAsync<bool>;
+            if (saveKeyCommand == null) return;
+
+            if (saveKeyCommand.CanExecute(null))
+                await saveKeyCommand.ExecuteAsync(null);
         }
 
         /// <summary>
