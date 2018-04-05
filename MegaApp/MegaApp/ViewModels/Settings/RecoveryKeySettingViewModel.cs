@@ -32,20 +32,25 @@ namespace MegaApp.ViewModels.Settings
             {
                 await FileIO.WriteTextAsync(file, this.Value);
                 SdkService.MegaSdk.masterKeyExported();
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_SavedFile_Title"),
-                    string.Format(
-                        ResourceService.AppMessages.GetString("AM_SavedFile"),
-                        file.Name));
+                ToastService.ShowTextNotification(
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyExported_Title"),
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyExported"));
             }
             catch (Exception e)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+
+                if (DialogService.IsAnyDialogVisible())
+                {
+                    ToastService.ShowAlertNotification(
+                        ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed"));
+                    return;
+                }
+
                 await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_SaveFileFailed_Title"),
-                    string.Format(
-                        ResourceService.AppMessages.GetString("AM_SaveFileFailed"),
-                        file.Name));
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyExportFailed"));
             }
         }
 
@@ -58,16 +63,25 @@ namespace MegaApp.ViewModels.Settings
             {
                 Clipboard.SetContent(data);
                 SdkService.MegaSdk.masterKeyExported();
-                await DialogService.ShowAlertAsync(
+                ToastService.ShowTextNotification(
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyCopied_Title"),
                     ResourceService.AppMessages.GetString("AM_RecoveryKeyCopied"));
             }
             catch (Exception e)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+
+                if (DialogService.IsAnyDialogVisible())
+                {
+                    ToastService.ShowAlertNotification(
+                        ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed_Title"),
+                        ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed"));
+                    return;
+                }
+
                 await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed"),
-                    ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed_Title"));
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_RecoveryKeyCopiedFailed"));
             }
         }
 
