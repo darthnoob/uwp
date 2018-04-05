@@ -22,6 +22,22 @@ namespace MegaApp.Services
     internal static class DialogService
     {
         /// <summary>
+        /// Check if there is any dialog visible
+        /// </summary>
+        /// <returns>TRUE if there is any dialog visible or FALSE in other case</returns>
+        public static bool IsAnyDialogVisible()
+        {
+            var popups = VisualTreeHelper.GetOpenPopups(Window.Current);
+            foreach (var popup in popups)
+            {
+                if (popup.Child is ContentDialog)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
         /// <param name="title">Title of the dialog.</param>
