@@ -231,7 +231,11 @@ namespace MegaApp.ViewModels.Login
             }
 
             // If is required show the password reminder dialog on background thread
-            Task.Run(() => AccountService.CheckAndShowPasswordReminderDialog());
+            Task.Run(async () =>
+            {
+                if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+                    UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(false));
+            });
 
             return true;
         }

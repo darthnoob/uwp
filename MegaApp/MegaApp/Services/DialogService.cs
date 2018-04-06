@@ -219,9 +219,10 @@ namespace MegaApp.Services
         /// <summary>
         /// Show a dialog to check if the user remember the account password
         /// </summary>
-        public static async void ShowPasswordReminderDialog()
+        /// <param name="atLogout">True if the dialog is being displayed just before a logout</param>
+        public static async void ShowPasswordReminderDialog(bool atLogout)
         {
-            var passwordReminderDialog = new PasswordReminderDialog();
+            var passwordReminderDialog = new PasswordReminderDialog(atLogout);
             await passwordReminderDialog.ShowAsyncQueue();
         }
 

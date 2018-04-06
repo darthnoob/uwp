@@ -407,8 +407,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>Logout</value>
-    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Log out</value>
+    <comment>Label for any 'Log out' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
     <value>Upload your photos to your account.</value>

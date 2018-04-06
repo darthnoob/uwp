@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using MegaApp.Classes;
 using MegaApp.Services;
 
@@ -66,8 +67,19 @@ namespace MegaApp.ViewModels.Dialogs
         public bool HasCloseButton
         {
             get { return _hasCloseButton; }
-            set { SetField(ref _hasCloseButton, value); }
+            set
+            {
+                SetField(ref _hasCloseButton, value);
+                OnPropertyChanged(nameof(this.TitleMargin));
+            }
         }
+
+        /// <summary>
+        /// Margin for the title of the dialog.
+        /// Varies depending on if it has a close button at the top-right corner or not
+        /// </summary>
+        public Thickness TitleMargin => this.HasCloseButton ?
+            new Thickness(24, 0, 0, 0) : new Thickness(24, 24, 0, 0);
 
         #endregion
 

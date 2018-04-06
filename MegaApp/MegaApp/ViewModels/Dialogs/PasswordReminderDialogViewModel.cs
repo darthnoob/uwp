@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
@@ -53,17 +54,28 @@ namespace MegaApp.ViewModels.Dialogs
         /// </summary>
         protected override void OnCloseDialog()
         {
-            if (this.passwordChecked)
+            // If user has checked the "Don't show me again" box
+            if (!this.IsTestPasswordSelected && this.DoNotShowAgain)
+            {
+                SdkService.MegaSdk.passwordReminderDialogBlocked();
+                if (this.AtLogout)
+                    SdkService.MegaSdk.logout(new LogOutRequestListener());
+            }
+            // If the user has checked the password successfully
+            else if (this.passwordChecked)
             {
                 SdkService.MegaSdk.passwordReminderDialogSucceeded();
-                base.OnCloseDialog();
-                return;
+                if (this.AtLogout)
+                    SdkService.MegaSdk.logout(new LogOutRequestListener());
             }
-
-            if (this.DoNotShowAgain)
-                SdkService.MegaSdk.passwordReminderDialogBlocked();
             else
+            {
                 SdkService.MegaSdk.passwordReminderDialogSkipped();
+
+                // Only log out if the user has saved the recovery key
+                if (this.AtLogout && this.recoveryKeySaved)
+                    SdkService.MegaSdk.logout(new LogOutRequestListener());
+            }
 
             base.OnCloseDialog();
         }
@@ -91,12 +103,18 @@ namespace MegaApp.ViewModels.Dialogs
                 return;
             }
 
-            this.DialogStyle = (Style)Application.Current.Resources["MegaContentDialogStyle"];
+            if(!this.AtLogout)
+                this.DialogStyle = (Style)Application.Current.Resources["MegaContentDialogStyle"];
+
+            this.HasCloseButton = false;
             this.WarningColor = new SolidColorBrush(UiService.GetColorFromHex("#00C0A5"));
             this.WarningText = ResourceService.AppMessages.GetString("AM_TestPasswordSuccess");
             this.SecondaryButtonCommand = this.CloseCommand;
-            this.SecondaryButtonText = ResourceService.UiResources.GetString("UI_Close");
             this.SecondaryButtonState = true;
+
+            this.SecondaryButtonText = this.AtLogout ? 
+                ResourceService.UiResources.GetString("UI_Logout") :
+                ResourceService.UiResources.GetString("UI_Close");
         }
         
         /// <summary>
@@ -107,8 +125,13 @@ namespace MegaApp.ViewModels.Dialogs
             var saveKeyCommand = SettingsService.RecoveryKeySetting.SaveKeyCommand as RelayCommandAsync<bool>;
             if (saveKeyCommand == null) return;
 
-            if (saveKeyCommand.CanExecute(null))
-                await saveKeyCommand.ExecuteAsync(null);
+            if (!saveKeyCommand.CanExecute(null)) return;
+            this.recoveryKeySaved = await saveKeyCommand.ExecuteAsync(null);
+            if (!this.recoveryKeySaved) return;
+
+            // If the recovery key has been successfully saved close the dialog
+            if (!this.CloseCommand.CanExecute(null)) return;
+            this.CloseCommand.Execute(null);
         }
 
         /// <summary>
@@ -137,7 +160,20 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Properties
 
+        /// <summary>
+        /// Indicates if the dialog is being displayed in a log out scenario
+        /// </summary>
+        public bool AtLogout;
+
+        /// <summary>
+        /// Indicates if the user has checked the password successfully
+        /// </summary>
         private bool passwordChecked = false;
+
+        /// <summary>
+        /// Indicates if the user has saved the recovery key successfully
+        /// </summary>
+        private bool recoveryKeySaved = false;
 
         private string _titleText;
         /// <summary>

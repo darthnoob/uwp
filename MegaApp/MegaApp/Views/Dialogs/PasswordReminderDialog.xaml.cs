@@ -9,9 +9,11 @@ namespace MegaApp.Views.Dialogs
 
     public sealed partial class PasswordReminderDialog : BasePasswordReminderDialog
     {
-        public PasswordReminderDialog()
+        public PasswordReminderDialog(bool atLogout)
         {
             this.InitializeComponent();
+
+            this.ViewModel.AtLogout = atLogout;
         }
     }
 }
