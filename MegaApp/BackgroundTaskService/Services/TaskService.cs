@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Search;
+using mega;
 
 namespace BackgroundTaskService.Services
 {
@@ -23,12 +24,20 @@ namespace BackgroundTaskService.Services
         /// <returns>Available files for upload</returns>
         public static async Task<IList<StorageFile>> GetAvailableUploadAsync(StorageFolder folder, string dateSetting)
         {
-            var lastUploadDate = await SettingsService.LoadSettingFromFileAsync<DateTime>(dateSetting);
-            var files = await folder.GetFilesAsync(CommonFileQuery.OrderByDate);
-            // Reorder because order by date query uses different ordering values and descending
-            files = files.OrderBy(file => file.DateCreated).ToList();
-            // >= to get all files that have the same creation date
-            return files.Where(file => file.DateCreated.DateTime >= lastUploadDate).ToList();
+            try
+            {
+                var lastUploadDate = await SettingsService.LoadSettingFromFileAsync<DateTime>(dateSetting);
+                var files = (await folder.GetFilesAsync(CommonFileQuery.OrderByDate)).ToList();
+                // Reorder because order by date query uses different ordering values and descending
+                files = files.OrderBy(file => file.DateCreated).ToList();
+                // >= to get all files that have the same creation date
+                return files.Where(file => file.DateCreated.DateTime >= lastUploadDate).ToList();
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting the available files for upload", e);
+                return new List<StorageFile>();
+            }
         }
 
         /// <summary>

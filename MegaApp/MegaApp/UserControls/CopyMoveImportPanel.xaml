@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MegaApp.UserControls"
-    xmlns:copyMoveImportPanel="using:MegaApp.ViewModels.UserControls.CopyMoveImportPanel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:extensions="using:MegaApp.Extensions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -59,9 +58,6 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding CopyText, Mode=OneTime}"
                     Visibility="{Binding ActiveFolderView, ConverterParameter='copy', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                    <AppBarButton.CommandParameter>
-                        <copyMoveImportPanel:ActionType>COPY</copyMoveImportPanel:ActionType>
-                    </AppBarButton.CommandParameter>
                     <AppBarButton.Icon>
                         <PathIcon
                             HorizontalAlignment="Center"
@@ -75,9 +71,6 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding MoveText, Mode=OneTime}"
                     Visibility="{Binding ActiveFolderView, ConverterParameter='move', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                    <AppBarButton.CommandParameter>
-                        <copyMoveImportPanel:ActionType>MOVE</copyMoveImportPanel:ActionType>
-                    </AppBarButton.CommandParameter>
                     <Viewbox MaxWidth="14" MaxHeight="14">
                         <SymbolIcon Symbol="MoveToFolder" />
                     </Viewbox>
@@ -88,9 +81,6 @@
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding ImportText, Mode=OneTime}"
                     Visibility="{Binding ActiveFolderView, ConverterParameter='import', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
-                    <AppBarButton.CommandParameter>
-                        <copyMoveImportPanel:ActionType>IMPORT</copyMoveImportPanel:ActionType>
-                    </AppBarButton.CommandParameter>
                     <AppBarButton.Icon>
                         <PathIcon
                             HorizontalAlignment="Center"
