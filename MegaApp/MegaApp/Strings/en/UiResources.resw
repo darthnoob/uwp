@@ -1601,4 +1601,18 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
+  <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
+    <value>Referral status ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by status and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
+    <value>Referral status ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionReferralStatus" xml:space="preserve">
+    <value>Referral status</value>
+    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+  </data>
 </root>

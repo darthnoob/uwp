@@ -1,6 +1,4 @@
-﻿using Windows.UI;
-using Windows.UI.Xaml;
-using MegaApp.Services;
+﻿using MegaApp.Services;
 
 namespace MegaApp.ViewModels.MyAccount
 {

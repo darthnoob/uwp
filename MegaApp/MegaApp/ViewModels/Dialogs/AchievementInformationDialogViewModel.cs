@@ -68,8 +68,8 @@ namespace MegaApp.ViewModels.Dialogs
         #region Properties
         
 
-        private AwardViewModel _award;
-        public AwardViewModel Award
+        private AwardClassViewModel _award;
+        public AwardClassViewModel Award
         {
             get { return _award; }
             set { SetField(ref _award, value); }

@@ -12,7 +12,7 @@
     <DefaultLanguage>en</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -224,8 +224,7 @@
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementsViewModel.cs" />
-    <Compile Include="ViewModels\MyAccount\AwardViewModel.cs" />
-    <Compile Include="ViewModels\MyAccount\ContactAwardViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AwardClassViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementInvitationsViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
@@ -385,8 +384,8 @@
     <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyAccount\AchievementInvitationsView.xaml.cs">
-      <DependentUpon>AchievementInvitationsView.xaml</DependentUpon>
+    <Compile Include="Views\MyAccount\AchievementInvitationsPage.xaml.cs">
+      <DependentUpon>AchievementInvitationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
@@ -645,9 +644,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MyAccount\AchievementInvitationsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\MyAccount\AchievementInvitationsPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>

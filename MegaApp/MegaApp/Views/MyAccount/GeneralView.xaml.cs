@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -37,7 +38,8 @@ namespace MegaApp.Views.MyAccount
                     : Application.Current.Resources["TransferToolTipItemTemplate"] as DataTemplate,
                 SelectionMode = ListViewSelectionMode.None,
                 ItemContainerTransitions = null,
-                ItemsSource = ViewModel.AccountAchievements.Awards
+                ItemsSource = ViewModel.AccountAchievements.AwardedClasses
+                    .Where(a => !a.IsExpired || a.IsBaseAward).ToList()
             };
         }
     }

@@ -30,7 +30,7 @@ namespace MegaApp.Views.MyAccount
         private void GridViewOnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems == null || !e.AddedItems.Any()) return;
-            var award = e.AddedItems[0] as AwardViewModel;
+            var award = e.AddedItems[0] as AwardClassViewModel;
             award?.ActionCommand.Execute(null);
             ((GridView) sender).SelectedItem = null;
         }

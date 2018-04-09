@@ -1,50 +1,27 @@
 ﻿using System;
 using System.Windows.Input;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Extensions;
 using MegaApp.Services;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.Views.MyAccount;
 
 namespace MegaApp.ViewModels.MyAccount
 {
-    public class AwardViewModel: BaseViewModel
+    public class AwardClassViewModel: BaseUiViewModel
     {
-
-        public AwardViewModel(MAchievementClass? achievementClass, bool isBaseAward = false)
+        public AwardClassViewModel(MAchievementClass? achievementClass, bool isBaseAward = false)
         {
             this.AchievementClass = achievementClass;
             this.IsBaseAward = isBaseAward;
+            this.Contacts = new ContactsListViewModel();
             this.ActionCommand = new RelayCommand(DoAction);
         }
 
-        private void DoAction()
-        {
-            if (!AchievementClass.HasValue) return;
-            switch (AchievementClass)
-            {
-                case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
-                case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
-                case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
-                {
-                    ShowDialog();
-                    break;
-                }
-                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        #region Methods
 
-        private void ShowDialog()
-        {
-            DialogService.ShowAchievementInformationDialog(this);
-        }
-
-
-        public string GetAwardTitle()
+        private string GetAwardTitle()
         {
             if (!AchievementClass.HasValue) return null;
             switch (AchievementClass)
@@ -64,32 +41,62 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        private static string GetDaysRemaining(long days)
+        private Uri GetAwardImageUri()
         {
-            if (days < 1) return ResourceService.UiResources.GetString("UI_Expired");
-            return days == 1
-                ? string.Format("1 {0}", ResourceService.UiResources.GetString("UI_RemainingDay"))
-                : string.Format(ResourceService.UiResources.GetString("UI_RemainingDays"), days);
-
+            if (!AchievementClass.HasValue) return null;
+            switch (AchievementClass)
+            {
+                case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
+                    return new Uri("ms-appx:///Assets/Achievements/gettingStarted.png");
+                case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
+                    return new Uri("ms-appx:///Assets/Achievements/desktopApp.png");
+                case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
+                    return new Uri("ms-appx:///Assets/Achievements/mobileApp.png");
+                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
+                    return new Uri("ms-appx:///Assets/Achievements/inviteFriend.png");
+                default:
+                    return null;
+            }
         }
 
-        private static string GetDays(long days)
+        private string GetDays(long days)
         {
             if (days < 1) return "-";
             return days == 1
-                ? string.Format("1 {0}", ResourceService.UiResources.GetString("UI_Day"))
-                : string.Format("{0} {1}", days, ResourceService.UiResources.GetString("UI_Days"));
+                ? String.Format("1 {0}", ResourceService.UiResources.GetString("UI_Day"))
+                : String.Format("{0} {1}", days, ResourceService.UiResources.GetString("UI_Days"));
 
         }
 
-        public string GetAwardDescription()
+        private void DoAction()
+        {
+            if (!AchievementClass.HasValue) return;
+            switch (AchievementClass)
+            {
+                case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
+                case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
+                case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
+                {
+                    DialogService.ShowAchievementInformationDialog(this);
+                    break;
+                }
+                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
+                    AchievementInvitationsViewModel.InvitationAward = this;
+                    NavigateService.Instance.Navigate(typeof(AchievementInvitationsPage));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private string GetAwardDescription()
         {
             if (!AchievementClass.HasValue) return null;
             if (IsGranted)
             {
-                return AchievementClass == MAchievementClass.MEGA_ACHIEVEMENT_INVITE 
-                    ? ResourceService.UiResources.GetString("UI_ViewStatus") 
-                    : GetDaysRemaining(ExpiresIn);
+                return AchievementClass == MAchievementClass.MEGA_ACHIEVEMENT_INVITE
+                    ? ResourceService.UiResources.GetString("UI_ViewStatus")
+                    : AccountService.GetDaysRemaining(ExpiresIn);
             }
 
             switch (AchievementClass)
@@ -104,7 +111,7 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        public string GetAwardInformation()
+        private string GetAwardInformation()
         {
             if (!AchievementClass.HasValue) return null;
             switch (AchievementClass)
@@ -128,33 +135,20 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        public Uri GetAwardImageUri()
-        {
-            if (!AchievementClass.HasValue) return null;
-            switch (AchievementClass)
-            {
-                case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
-                    return new Uri("ms-appx:///Assets/Achievements/gettingStarted.png");
-                case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
-                    return new Uri("ms-appx:///Assets/Achievements/desktopApp.png");
-                case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
-                    return new Uri("ms-appx:///Assets/Achievements/mobileApp.png");
-                case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
-                    return new Uri("ms-appx:///Assets/Achievements/inviteFriend.png");
-                default:
-                    return null;
-            }
-        }
-       
+        #endregion
+
+        #region Commands
 
         public ICommand ActionCommand { get; }
+
+        #endregion
 
         #region Properties
 
         public MAchievementClass? AchievementClass { get; }
 
         public bool IsBaseAward { get; }
-      
+
         public string DisplayNameStorage => IsBaseAward
             ? ResourceService.UiResources.GetString("UI_BaseStorage")
             : GetAwardTitle();
@@ -164,10 +158,6 @@ namespace MegaApp.ViewModels.MyAccount
             : GetAwardTitle();
 
         public string Title => GetAwardTitle();
-
-        public string Description => GetAwardDescription();
-
-        public string Information => GetAwardInformation();
 
         public Uri ImageUri => GetAwardImageUri();
 
@@ -180,16 +170,16 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _isGranted, value); }
         }
 
-        private DateTime _expireDate;
-        public DateTime ExpireDate
+        private DateTime? _expireDate;
+        public DateTime? ExpireDate
         {
             get { return _expireDate; }
             set { SetField(ref _expireDate, value); }
         }
 
-        public int ExpiresIn => ExpireDate.Subtract(DateTime.Today).Days;
+        public bool IsExpired => ExpireDate.HasValue && ExpireDate <= DateTime.Now;
 
-        public string ExpiresInText => GetDays(ExpiresIn);
+        public int ExpiresIn => ExpireDate?.Subtract(DateTime.Today).Days ?? -1;
 
         private DateTime _achievedOnDate;
         public DateTime AchievedOnDate
@@ -221,15 +211,22 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _transferReward, value); }
         }
 
-        public string StorageRewardText => StorageReward > 0 
-            ? ((ulong) StorageReward).ToStringAndSuffix()
+        public string StorageRewardText => StorageReward > 0
+            ? ((ulong)StorageReward).ToStringAndSuffix()
             : "- GB";
 
         public string TransferRewardText => TransferReward > 0
-            ? ((ulong) TransferReward).ToStringAndSuffix(): "- GB";
+            ? ((ulong)TransferReward).ToStringAndSuffix() : "- GB";
 
-      
+        public ContactsListViewModel Contacts { get; }
+
+        public string Description => GetAwardDescription();
+
+        public string Information => GetAwardInformation();
+
         public bool IsTransferAmountVisible { get; set; } = true;
+
+        public string ExpiresInText => GetDays(ExpiresIn);
 
         #endregion
     }

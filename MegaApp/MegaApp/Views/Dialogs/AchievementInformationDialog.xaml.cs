@@ -12,7 +12,7 @@ namespace MegaApp.Views.Dialogs
 
     public sealed partial class AchievementInformationDialog : BaseAchievementInformationDialog
     {
-        public AchievementInformationDialog(AwardViewModel award)
+        public AchievementInformationDialog(AwardClassViewModel award)
         {
             this.InitializeComponent();
             this.ViewModel.Award = award;

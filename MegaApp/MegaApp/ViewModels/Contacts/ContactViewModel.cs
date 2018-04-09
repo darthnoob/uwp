@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -20,7 +23,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             this.MegaUser = contact;
             this.ContactList = contactList;
-
+            
             this.Handle = contact.getHandle();
             this.Email = contact.getEmail();
             this.Timestamp = contact.getTimestamp();
@@ -300,6 +303,96 @@ namespace MegaApp.ViewModels.Contacts
             get { return _isMultiSelected; }
             set { SetField(ref _isMultiSelected, value); }
         }
+
+        #region Achievement properties
+
+        private long _storageAmount;
+        public long StorageAmount
+        {
+            get { return _storageAmount; }
+            set
+            {
+                SetField(ref _storageAmount, value);
+                OnPropertyChanged(nameof(StorageAmountText));
+            }
+        }
+
+        private long _transferAmount;
+        public long TransferAmount
+        {
+            get { return _transferAmount; }
+            set
+            {
+                SetField(ref _transferAmount, value);
+                OnPropertyChanged(nameof(TransferAmountText));
+            }
+        }
+
+        public string StorageAmountText => ((ulong)StorageAmount).ToStringAndSuffix();
+
+        public string TransferAmountText => ((ulong)TransferAmount).ToStringAndSuffix();
+
+        private DateTime? _referralBonusExpireDate;
+        public DateTime? ReferralBonusExpireDate
+        {
+            get { return _referralBonusExpireDate; }
+            set { SetField(ref _referralBonusExpireDate, value); }
+        }
+
+        public bool IsReferralBonusExpired => 
+            ReferralBonusExpireDate.HasValue && ReferralBonusExpireDate <= DateTime.Now;
+
+        public int ReferralBonusExpiresIn => 
+            ReferralBonusExpireDate?.Subtract(DateTime.Today).Days ?? -1;
+
+        public string ReferralBonusDaysRemaining => AccountService.GetDaysRemaining(ReferralBonusExpiresIn);
+
+        private MContactRequestStatusType StatusType => this.MegaSdk.getContactRequestByHandle(this.Handle) != null
+            ? (MContactRequestStatusType) this.MegaSdk.getContactRequestByHandle(this.Handle).getStatus()
+            : MContactRequestStatusType.STATUS_ACCEPTED;
+
+        public string ReferralStatus
+        {
+            get
+            {
+                switch (this.StatusType)
+                {
+                    case MContactRequestStatusType.STATUS_UNRESOLVED:
+                        return "Pending";
+                    case MContactRequestStatusType.STATUS_ACCEPTED:
+                        return this.ReferralBonusDaysRemaining;
+                    case MContactRequestStatusType.STATUS_DENIED:                        
+                    case MContactRequestStatusType.STATUS_IGNORED:
+                    case MContactRequestStatusType.STATUS_DELETED:
+                    case MContactRequestStatusType.STATUS_REMINDED:
+                        return string.Empty;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        public int ReferralStatusOrder => GetReferralStatusOrder();
+
+        private int GetReferralStatusOrder()
+        {
+            switch (this.StatusType)
+            {
+                case MContactRequestStatusType.STATUS_UNRESOLVED:
+                    return 1;
+                case MContactRequestStatusType.STATUS_ACCEPTED:
+                    return IsReferralBonusExpired ? 3 : 0;
+                case MContactRequestStatusType.STATUS_DENIED:
+                case MContactRequestStatusType.STATUS_IGNORED:
+                case MContactRequestStatusType.STATUS_DELETED:
+                case MContactRequestStatusType.STATUS_REMINDED:
+                    return 2;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        #endregion
 
         #endregion
 
