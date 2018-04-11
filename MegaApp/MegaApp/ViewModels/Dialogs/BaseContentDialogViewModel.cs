@@ -79,7 +79,7 @@ namespace MegaApp.ViewModels.Dialogs
         /// Varies depending on if it has a close button at the top-right corner or not
         /// </summary>
         public Thickness TitleMargin => this.HasCloseButton ?
-            new Thickness(24, 0, 0, 0) : new Thickness(24, 24, 0, 0);
+            new Thickness(24, 40, 0, 0) : new Thickness(24, 24, 0, 0);
 
         #endregion
 
