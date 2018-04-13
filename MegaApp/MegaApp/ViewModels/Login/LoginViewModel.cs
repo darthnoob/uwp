@@ -166,7 +166,7 @@ namespace MegaApp.ViewModels.Login
             });
         }
 
-        private void SetState()
+        protected virtual void SetButtonState()
         {
             var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
                           !string.IsNullOrWhiteSpace(this.Password);
@@ -259,7 +259,7 @@ namespace MegaApp.ViewModels.Login
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        protected async Task<FetchNodesResult> FetchNodes()
+        protected virtual async Task<FetchNodesResult> FetchNodes()
         {
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
@@ -305,7 +305,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _email, value);
-                SetState();
+                SetButtonState();
             }
         }
 
@@ -316,7 +316,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _password, value);
-                SetState();
+                SetButtonState();
             }
         }
 

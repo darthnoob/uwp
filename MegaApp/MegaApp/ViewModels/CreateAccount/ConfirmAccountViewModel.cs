@@ -6,13 +6,14 @@ using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Login;
 using MegaApp.Views;
 
 namespace MegaApp.ViewModels.CreateAccount
 {
-    public class ConfirmAccountViewModel : BasePageViewModel
+    public class ConfirmAccountViewModel : LoginViewModel
     {
-        public ConfirmAccountViewModel()
+        public ConfirmAccountViewModel() : base(SdkService.MegaSdk)
         {
             this.ControlState = true;
             this.ConfirmAccountCommand = new RelayCommand<object>(this.ConfirmAccount);
@@ -29,7 +30,6 @@ namespace MegaApp.ViewModels.CreateAccount
             if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
             if (!CheckInputParameters()) return;
-
 
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_ConfirmAccountHeader");
             this.ProgressSubHeaderText = ResourceService.ProgressMessages.GetString("PM_ConfirmAccountSubHeader");
@@ -98,8 +98,11 @@ namespace MegaApp.ViewModels.CreateAccount
                     SettingsService.SaveMegaLoginData(this.Email, SdkService.MegaSdk.dumpSession());
 
                     // Fetch nodes from MEGA
-                    if (!await this.FetchNodes())
+                    var fetchNodesResult = await this.FetchNodes();
+                    if (fetchNodesResult != FetchNodesResult.Success)
                     {
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                        this.ShowFetchNodesFailedAlertDialog();
                         NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true);
                     }
                     else
@@ -142,64 +145,11 @@ namespace MegaApp.ViewModels.CreateAccount
             NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true);
         }
 
-        private async Task<bool> FetchNodes()
+        protected override async Task<FetchNodesResult> FetchNodes()
         {
-            this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
-
-            var fetchNodes = new FetchNodesRequestListenerAsync();
-            fetchNodes.DecryptNodes += OnDecryptNodes;
-            fetchNodes.IsWaiting += OnIsWaiting;
-
-            var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
-            if (fetchNodesResult != FetchNodesResult.Success)
-            {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_FetchNodesFailed"));
-                return false;
-            }
-
-            // Enable the transfer resumption for the main MegaSDK instance
-            SdkService.MegaSdk.enableTransferResumption();
-
-            this.ControlState = true;
+            var result = await base.FetchNodes();
             this.ConfirmAccountButtonState = true;
-            this.IsBusy = false;
-
-            return true;
-        }
-
-        private void OnDecryptNodes(object sender, EventArgs e)
-        {
-            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
-        }
-
-        private void OnIsWaiting(object sender, MRetryReason reason)
-        {
-            string message = string.Empty;
-            switch (reason)
-            {
-                case MRetryReason.RETRY_CONNECTIVITY:
-                    message = ResourceService.ProgressMessages.GetString("PM_ConnectivityIssue");
-                    break;
-
-                case MRetryReason.RETRY_SERVERS_BUSY:
-                    message = ResourceService.ProgressMessages.GetString("PM_ServersBusy");
-                    break;
-
-                case MRetryReason.RETRY_API_LOCK:
-                    message = ResourceService.ProgressMessages.GetString("PM_ApiLocked");
-                    break;
-
-                case MRetryReason.RETRY_RATE_LIMIT:
-                    message = ResourceService.ProgressMessages.GetString("PM_ApiRateLimit");
-                    break;
-
-                default: return;
-            }
-
-            OnUiThread(() => this.ProgressText = message);
+            return result;
         }
 
         private bool CheckInputParameters()
@@ -225,10 +175,12 @@ namespace MegaApp.ViewModels.CreateAccount
             return false;
         }
 
-        private void SetButtonState()
+        protected override void SetButtonState()
         {
-            this.ConfirmAccountButtonState = !string.IsNullOrWhiteSpace(this.Password) &&
-                                             !string.IsNullOrWhiteSpace(this.Email);
+            var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
+                          !string.IsNullOrWhiteSpace(this.Password);
+
+            OnUiThread(() => this.ConfirmAccountButtonState = enabled);
         }
 
         private void SetWarning(bool isVisible, string warningText)
@@ -266,55 +218,13 @@ namespace MegaApp.ViewModels.CreateAccount
             set { SetField(ref _confirmAccountButtonState, value); }
         }
 
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                SetField(ref _password, value);
-                SetButtonState();
-            }
-        }
-     
-        public string Email { get; set; }
-
-        private string _warningText;
-        public string WarningText
-        {
-            get { return _warningText; }
-            set { SetField(ref _warningText, value); }
-        }
-
-        private bool _isWarningVisible;
-        public bool IsWarningVisible
-        {
-            get { return _isWarningVisible; }
-            set { SetField(ref _isWarningVisible, value); }
-        }
-
-        private InputState _passwordInputState;
-        public InputState PasswordInputState
-        {
-            get { return _passwordInputState; }
-            set { SetField(ref _passwordInputState, value); }
-        }
-
-        private InputState _emailInputState;
-        public InputState EmailInputState
-        {
-            get { return _emailInputState; }
-            set { SetField(ref _emailInputState, value); }
-        }
         #endregion
 
         #region UiResources
 
-        public string EmailWatermarkText => ResourceService.UiResources.GetString("UI_EmailWatermark");
         public string ConfirmAccountText => ResourceService.UiResources.GetString("UI_CreateAccount");
         public string ConfirmAccountHeaderText => ResourceService.UiResources.GetString("UI_ConfirmYourAccountTitle");
         public string ConfirmAccountDescriptionText => ResourceService.UiResources.GetString("UI_ConfirmYourAccount");
-        public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
 
         #endregion
 
@@ -326,25 +236,11 @@ namespace MegaApp.ViewModels.CreateAccount
 
         #region ProgressMessages
 
-        private string _progressHeaderText;
-        public string ProgressHeaderText
-        {
-            get { return _progressHeaderText; }
-            set { SetField(ref _progressHeaderText, value); }
-        }
-
         private string _progressSubHeaderText;
         public string ProgressSubHeaderText
         {
             get { return _progressSubHeaderText; }
             set { SetField(ref _progressSubHeaderText, value); }
-        }
-
-        private string _progressText;
-        public string ProgressText
-        {
-            get { return _progressText; }
-            set { SetField(ref _progressText, value); }
         }
 
         #endregion
