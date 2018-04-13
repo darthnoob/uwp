@@ -8,7 +8,7 @@ namespace MegaApp.UserControls
     /// Typed ContentDialog extension that implements a view-model
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ContentDialogEx<T> : ContentDialog
+    public class ContentDialogEx<T> : MegaContentDialog
         where T : BaseContentDialogViewModel, new()
     {
         public ContentDialogEx()

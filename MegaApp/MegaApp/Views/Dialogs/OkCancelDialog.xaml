@@ -11,16 +11,11 @@
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneTime}"
     PrimaryButtonText="{x:Bind ViewModel.PrimaryButtonLabel, Mode=OneTime}"
     SecondaryButtonText="{x:Bind ViewModel.SecondaryButtonLabel, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}">
-    <dialogViews:BaseOkCancelDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
-    </dialogViews:BaseOkCancelDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>

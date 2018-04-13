@@ -150,6 +150,7 @@
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MegaContentDialog.cs" />
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
     </Compile>

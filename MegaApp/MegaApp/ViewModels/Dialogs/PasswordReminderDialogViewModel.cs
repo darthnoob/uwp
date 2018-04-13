@@ -9,8 +9,10 @@ namespace MegaApp.ViewModels.Dialogs
 {
     public class PasswordReminderDialogViewModel : BaseContentDialogViewModel
     {
-        public PasswordReminderDialogViewModel() : base(true)
+        public PasswordReminderDialogViewModel() : base()
         {
+            this.CloseButtonVisibility = Visibility.Visible;
+
             this.TitleText = ResourceService.AppMessages.GetString("AM_PasswordReminder_Title");
             this.DescriptionText = ResourceService.AppMessages.GetString("AM_PasswordReminder");
 
@@ -106,7 +108,7 @@ namespace MegaApp.ViewModels.Dialogs
             if(!this.AtLogout)
                 this.DialogStyle = (Style)Application.Current.Resources["MegaContentDialogStyle"];
 
-            this.HasCloseButton = false;
+            this.CloseButtonVisibility = Visibility.Collapsed;
             this.WarningColor = new SolidColorBrush(UiService.GetColorFromHex("#00C0A5"));
             this.WarningText = ResourceService.AppMessages.GetString("AM_TestPasswordSuccess");
             this.SecondaryButtonCommand = this.CloseCommand;
@@ -174,6 +176,16 @@ namespace MegaApp.ViewModels.Dialogs
         /// Indicates if the user has saved the recovery key successfully
         /// </summary>
         private bool recoveryKeySaved = false;
+
+        private Visibility _closeButtonVisibility;
+        /// <summary>
+        /// Indicates if the dialog will have a close button at the top-right corner
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get { return _closeButtonVisibility; }
+            set { SetField(ref _closeButtonVisibility, value); }
+        }
 
         private string _titleText;
         /// <summary>

@@ -1454,7 +1454,8 @@ Keep the {0} code because is for include the number of selected items in runtime
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
     <value>Backup Recovery key</value>
-    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
   </data>
   <data name="UI_DoNotShowMeAgain" xml:space="preserve">
     <value>Don’t show me again</value>

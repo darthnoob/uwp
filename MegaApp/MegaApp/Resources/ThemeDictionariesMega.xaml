@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:extensions="using:MegaApp.Extensions">
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:userControls="using:MegaApp.UserControls">
 
     <!--  OVERRIDE SYSTEM ACCENT COLOR  -->
     <Color x:Key="SystemAccentColor">#EB4444</Color>
@@ -992,7 +993,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MegaAlertDialogStyle" TargetType="ContentDialog">
+    <Style x:Key="MegaAlertDialogStyle" TargetType="userControls:MegaContentDialog">
         <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}" />
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -1002,9 +1003,10 @@
         <Setter Property="MinHeight" Value="{ThemeResource ContentDialogMinHeight}" />
         <Setter Property="MaxWidth" Value="{ThemeResource ContentDialogMaxWidth}" />
         <Setter Property="MinWidth" Value="{ThemeResource ContentDialogMinWidth}" />
+        <Setter Property="CloseButtonVisibility" Value="Collapsed" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ContentDialog">
+                <ControlTemplate TargetType="userControls:MegaContentDialog">
                     <Border x:Name="Container">
                         <Grid x:Name="LayoutRoot">
                             <Grid.RowDefinitions>
@@ -1037,13 +1039,12 @@
                                         Background="Transparent"
                                         Margin="0,0,-24,0"
                                         extensions:CommandBarExtensions.HideMoreButton="True"
-                                        Visibility="{Binding HasCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{TemplateBinding CloseButtonVisibility}">
                                         <AppBarButton
-                                            Click="OnButtonClick"
-                                            Command="{Binding CloseCommand}"
-                                            Label="{Binding CloseText, Mode=OneTime}"
+                                            Command="{TemplateBinding CloseButtonCommand}"
+                                            Label="{TemplateBinding CloseButtonLabel}"
                                             Style="{StaticResource MegaDialogAppBarButtonStyle}"
-                                            ToolTipService.ToolTip="{Binding CloseText, Mode=OneTime}">
+                                            ToolTipService.ToolTip="{TemplateBinding CloseButtonLabel}">
                                             <Viewbox Margin="0,-8,0,0" Height="12" Width="12">
                                                 <FontIcon Glyph="&#xE711;" />
                                             </Viewbox>
@@ -1064,7 +1065,7 @@
                                             </Grid.RowDefinitions>
                                             <ContentControl
                                                 x:Name="Title"
-                                                Margin="{ThemeResource ContentDialogTitleMargin}"
+                                                Margin="{TemplateBinding TitleMargin}"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Content="{TemplateBinding Title}"
@@ -1134,7 +1135,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MegaContentDialogStyle" TargetType="ContentDialog">
+    <Style x:Key="MegaContentDialogStyle" TargetType="userControls:MegaContentDialog">
         <Setter Property="Foreground" Value="{ThemeResource SystemControlPageTextBaseHighBrush}" />
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -1144,9 +1145,10 @@
         <Setter Property="MinHeight" Value="{ThemeResource ContentDialogMinHeight}" />
         <Setter Property="MaxWidth" Value="{ThemeResource ContentDialogMaxWidth}" />
         <Setter Property="MinWidth" Value="{ThemeResource ContentDialogMinWidth}" />
+        <Setter Property="CloseButtonVisibility" Value="Collapsed" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ContentDialog">
+                <ControlTemplate TargetType="userControls:MegaContentDialog">
                     <Border x:Name="Container">
                         <Grid x:Name="LayoutRoot">
                             <Grid.RowDefinitions>
@@ -1179,13 +1181,12 @@
                                         Background="Transparent"
                                         Margin="0,0,-24,0"
                                         extensions:CommandBarExtensions.HideMoreButton="True"
-                                        Visibility="{Binding HasCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{TemplateBinding CloseButtonVisibility}">
                                         <AppBarButton
-                                            Click="OnButtonClick"
-                                            Command="{Binding CloseCommand}"
-                                            Label="{Binding CloseText, Mode=OneTime}"
+                                            Command="{TemplateBinding CloseButtonCommand}"
+                                            Label="{TemplateBinding CloseButtonLabel}"
                                             Style="{StaticResource MegaDialogAppBarButtonStyle}"
-                                            ToolTipService.ToolTip="{Binding CloseText, Mode=OneTime}">
+                                            ToolTipService.ToolTip="{TemplateBinding CloseButtonLabel}">
                                             <Viewbox Margin="0,-8,0,0" Height="12" Width="12">
                                                 <FontIcon Glyph="&#xE711;" />
                                             </Viewbox>
@@ -1206,7 +1207,7 @@
                                             </Grid.RowDefinitions>
                                             <ContentControl
                                                 x:Name="Title"
-                                                Margin="{ThemeResource ContentDialogTitleMargin}"
+                                                Margin="{TemplateBinding TitleMargin}"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Content="{TemplateBinding Title}"

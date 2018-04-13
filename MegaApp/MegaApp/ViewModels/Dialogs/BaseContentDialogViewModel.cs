@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 using MegaApp.Classes;
-using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
     public class BaseContentDialogViewModel : BaseUiViewModel
     {
-        public BaseContentDialogViewModel(bool hasCloseButton = false)
+        public BaseContentDialogViewModel()
         {
-            this.HasCloseButton = hasCloseButton;
             this.CloseCommand = new RelayCommand(this.Close);
         }
 
@@ -59,33 +56,6 @@ namespace MegaApp.ViewModels.Dialogs
         /// Flag to indicate if the dialog can be closed
         /// </summary>
         public bool CanClose = false;
-
-        private bool _hasCloseButton;
-        /// <summary>
-        /// Flag to indicate if the dialog will have a close button at the top-right corner
-        /// </summary>
-        public bool HasCloseButton
-        {
-            get { return _hasCloseButton; }
-            set
-            {
-                SetField(ref _hasCloseButton, value);
-                OnPropertyChanged(nameof(this.TitleMargin));
-            }
-        }
-
-        /// <summary>
-        /// Margin for the title of the dialog.
-        /// Varies depending on if it has a close button at the top-right corner or not
-        /// </summary>
-        public Thickness TitleMargin => this.HasCloseButton ?
-            new Thickness(24, 40, 0, 0) : new Thickness(24, 24, 0, 0);
-
-        #endregion
-
-        #region UiResources
-
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
 
         #endregion
     }
