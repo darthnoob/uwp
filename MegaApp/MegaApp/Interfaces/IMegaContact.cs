@@ -95,12 +95,6 @@ namespace MegaApp.Interfaces
         ContactSharedItemsViewModel SharedItems { get; set; }
 
         /// <summary>
-        /// Indicates if the contact is currently selected in a multi-select scenario
-        /// Needed as path for the ListView to auto select/deselect
-        /// </summary>
-        bool IsMultiSelected { get; set; }
-
-        /// <summary>
         /// Indicates the current referral status
         /// </summary>
         string ReferralStatus { get; }

@@ -179,7 +179,8 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public bool IsOutShare => this.OriginalMNode.isOutShare();
+        public bool IsOutShare => this.OriginalMNode != null ?
+            this.OriginalMNode.isOutShare() : false;
 
         private string _contents;
         public string Contents

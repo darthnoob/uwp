@@ -290,7 +290,8 @@ namespace MegaApp.ViewModels
         }
 
         public string TransferOverquotaDelayText =>
-            new TimeSpan(0, 0, Convert.ToInt32(TransferOverquotaDelay)).ToString();
+            TimeSpan.FromSeconds(TransferOverquotaDelay).ToString();
+            
 
         public Color TransferQuotaProgressBarColor => IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
             (Color)Application.Current.Resources["UsedTransferQuotaColor"];
