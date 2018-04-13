@@ -76,7 +76,7 @@ namespace MegaApp.ViewModels.CreateAccount
                 SdkService.MegaSdk.logout(new LogOutRequestListener(false));
 
             var login = new LoginRequestListenerAsync();
-            login.ServerBusy += OnServerBusy;
+            login.IsWaiting += OnIsWaiting;
 
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
             this.ProgressSubHeaderText = null;
@@ -148,7 +148,7 @@ namespace MegaApp.ViewModels.CreateAccount
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
             fetchNodes.DecryptNodes += OnDecryptNodes;
-            fetchNodes.ServerBusy += OnServerBusy;
+            fetchNodes.IsWaiting += OnIsWaiting;
 
             var fetchNodesResult = await fetchNodes.ExecuteAsync(() => SdkService.MegaSdk.fetchNodes(fetchNodes));
             if (fetchNodesResult != FetchNodesResult.Success)
@@ -175,9 +175,31 @@ namespace MegaApp.ViewModels.CreateAccount
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
-        private void OnServerBusy(object sender, EventArgs e)
+        private void OnIsWaiting(object sender, MRetryReason reason)
         {
-            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            string message = string.Empty;
+            switch (reason)
+            {
+                case MRetryReason.RETRY_CONNECTIVITY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ConnectivityIssue");
+                    break;
+
+                case MRetryReason.RETRY_SERVERS_BUSY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ServersBusy");
+                    break;
+
+                case MRetryReason.RETRY_API_LOCK:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiLocked");
+                    break;
+
+                case MRetryReason.RETRY_RATE_LIMIT:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiRateLimit");
+                    break;
+
+                default: return;
+            }
+
+            OnUiThread(() => this.ProgressText = message);
         }
 
         private bool CheckInputParameters()

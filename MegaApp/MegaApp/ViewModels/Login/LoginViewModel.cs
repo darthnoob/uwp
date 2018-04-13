@@ -27,9 +27,31 @@ namespace MegaApp.ViewModels.Login
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
-        protected void OnServerBusy(object sender, EventArgs e)
+        protected void OnIsWaiting(object sender, MRetryReason reason)
         {
-            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            string message = string.Empty;
+            switch(reason)
+            {
+                case MRetryReason.RETRY_CONNECTIVITY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ConnectivityIssue");
+                    break;
+
+                case MRetryReason.RETRY_SERVERS_BUSY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ServersBusy");
+                    break;
+
+                case MRetryReason.RETRY_API_LOCK:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiLocked");
+                    break;
+
+                case MRetryReason.RETRY_RATE_LIMIT:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiRateLimit");
+                    break;
+
+                default: return;
+            }
+
+            OnUiThread(() => this.ProgressText = message);
         }
 
         /// <summary>
@@ -46,7 +68,7 @@ namespace MegaApp.ViewModels.Login
             if (!CheckInputParameters()) return;
 
             var login = new LoginRequestListenerAsync();
-            login.ServerBusy += OnServerBusy;
+            login.IsWaiting += OnIsWaiting;
 
             this.ControlState = false;
             this.LoginButtonState = false;
@@ -178,7 +200,7 @@ namespace MegaApp.ViewModels.Login
             AccountService.IsAccountBlocked = false;
 
             var fastLogin = new FastLoginRequestListenerAsync();
-            fastLogin.ServerBusy += OnServerBusy;
+            fastLogin.IsWaiting += OnIsWaiting;
 
             bool fastLoginResult;
             try
@@ -243,7 +265,7 @@ namespace MegaApp.ViewModels.Login
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
             fetchNodes.DecryptNodes += OnDecryptNodes;
-            fetchNodes.ServerBusy += OnServerBusy;
+            fetchNodes.IsWaiting  += OnIsWaiting;
 
             var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
             if (fetchNodesResult == FetchNodesResult.Success)
