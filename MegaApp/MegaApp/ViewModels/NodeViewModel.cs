@@ -80,7 +80,6 @@ namespace MegaApp.ViewModels
 
         private void SetDefaultValues()
         {
-            this.IsMultiSelected = false;
             this.DisplayMode = NodeDisplayMode.Normal;
 
             if (this.Type == MNodeType.TYPE_FOLDER) return;

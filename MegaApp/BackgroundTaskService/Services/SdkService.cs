@@ -59,21 +59,45 @@ namespace BackgroundTaskService.Services
         private static MegaSDK CreateSdk()
         {
             // Create Camera Upload service directory if not already exists
-            var folderCameraUploadService = Path.Combine(ApplicationData.Current.LocalFolder.Path, "CameraUploadService");
-            if (!Directory.Exists(folderCameraUploadService)) Directory.CreateDirectory(folderCameraUploadService);
-
+            CreateCameraUploadServiceFolder();
+            
             // Get an instance of the object that allow recover the local device information.
             var deviceInfo = new EasClientDeviceInformation();
 
             // Initialize a MegaSDK instance
             return new MegaSDK(
                 "Z5dGhQhL",
-                String.Format("{0}/{1}/{2}",
-                    String.Format("MEGA_UWP/UploadService/{0}", GetTaskVersion()),
+                string.Format("{0}/{1}/{2}",
+                    string.Format("MEGA_UWP/UploadService/{0}", GetTaskVersion()),
                     deviceInfo.SystemManufacturer,
                     deviceInfo.SystemProductName),
-                ApplicationData.Current.LocalFolder.Path,
+                CameraUploadsServiceFolder,
                 new MegaRandomNumberProvider());
+        }
+
+        /// <summary>
+        /// Create the Camera Upload service directory if not already exists
+        /// </summary>
+        private static async void CreateCameraUploadServiceFolder()
+        {
+            try
+            {
+                try
+                {
+                    if (Directory.Exists(CameraUploadsServiceFolder)) return;
+                    Directory.CreateDirectory(CameraUploadsServiceFolder);
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error creating the 'Camera Upload' service folder", e);
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Retrying to create the 'Camera Upload' service folder...");
+                    await ApplicationData.Current.LocalFolder.CreateFolderAsync("CameraUploadService", CreationCollisionOption.OpenIfExists);
+                }
+            }
+            catch(Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error creating the 'Camera Upload' service folder", e);
+            }
         }
 
         public static bool IsAlreadyUploaded(StorageFile fileToUpload, Stream fileStream, MNode rootNode, ulong mTime)
@@ -182,5 +206,8 @@ namespace BackgroundTaskService.Services
             string hashedString = CryptographicBuffer.EncodeToHexString(hashed);
             return hashedString;
         }
+
+        private static string CameraUploadsServiceFolder => 
+            Path.Combine(ApplicationData.Current.LocalFolder.Path, "CameraUploadService");
     }
 }
