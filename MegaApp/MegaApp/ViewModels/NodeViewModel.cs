@@ -77,7 +77,6 @@ namespace MegaApp.ViewModels
 
         private void SetDefaultValues()
         {
-            this.IsMultiSelected = false;
             this.DisplayMode = NodeDisplayMode.Normal;
 
             if (this.Type == MNodeType.TYPE_FOLDER) return;
@@ -175,13 +174,6 @@ namespace MegaApp.ViewModels
         {
             get { return _sizeText; }
             set { SetField(ref _sizeText, value); }
-        }
-
-        private bool _isMultiSelected;
-        public bool IsMultiSelected
-        {
-            get { return _isMultiSelected; }
-            set { SetField(ref _isMultiSelected, value); }
         }
 
         public bool IsFolder

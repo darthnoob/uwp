@@ -269,17 +269,6 @@ namespace MegaApp.ViewModels
             set { SetField(ref _contactRequestsList, value); }
         }
 
-        private bool _isMultiSelected;
-        /// <summary>
-        /// Indicates if the contact request is currently selected in a multi-select scenario
-        /// Needed as path for the ListView to auto select/deselect
-        /// </summary>
-        public bool IsMultiSelected
-        {
-            get { return _isMultiSelected; }
-            set { SetField(ref _isMultiSelected, value); }
-        }
-
         #endregion
 
         #region Ui_Resources

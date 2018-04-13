@@ -41,12 +41,6 @@ namespace MegaApp.Interfaces
         ulong Size { get; set; }
 
         /// <summary>
-        /// Indicates if the node is currently selected in a multi-select scenario
-        /// Needed as path for the RadDatabounndListbox to auto select/deselect
-        /// </summary>
-        bool IsMultiSelected { get; set; }
-
-        /// <summary>
         /// Returns if a node is a folder.        
         /// </summary>
         bool IsFolder { get; }
