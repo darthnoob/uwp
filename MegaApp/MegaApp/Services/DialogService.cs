@@ -193,18 +193,6 @@ namespace MegaApp.Services
             await awaitEmailConfirmationDialog.ShowAsyncQueue();
         }
 
-        private static AchievementInformationDialog achievementInformationDialog;
-
-        public static async void ShowAchievementInformationDialog(AwardClassViewModel award)
-        {
-            if (achievementInformationDialog == null)
-                achievementInformationDialog = new AchievementInformationDialog(award);
-            else
-                achievementInformationDialog.ViewModel.Award = award;
-
-            await achievementInformationDialog.ShowAsyncQueue();
-        }
-
         /// <summary>
         /// Close the await email confirmation dialog if exists
         /// </summary>

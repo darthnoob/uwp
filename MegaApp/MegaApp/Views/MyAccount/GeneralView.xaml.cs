@@ -1,9 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
+using MegaApp.Enums;
+using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
@@ -41,6 +42,17 @@ namespace MegaApp.Views.MyAccount
                 ItemsSource = ViewModel.AccountAchievements.AwardedClasses
                     .Where(a => !a.IsExpired || a.IsBaseAward).ToList()
             };
+        }
+
+        private async void ShowToolTipOnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            // Show the tooltip on mobile devices on tap for 3 seconds
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop) return;
+
+            var toolTip = (ToolTip) ToolTipService.GetToolTip(sender as TextBlock);
+            toolTip.IsOpen = true;
+            await Task.Delay(3000);
+            toolTip.IsOpen = false;
         }
     }
 }

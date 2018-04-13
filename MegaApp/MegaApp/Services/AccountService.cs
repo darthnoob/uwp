@@ -159,6 +159,8 @@ namespace MegaApp.Services
                 }
             };
 
+
+            // Get all the user awards
             var awardsCount = accountAchievements.getAwardsCount();
 
             for (uint i = 0; i < awardsCount; i++)
@@ -212,11 +214,10 @@ namespace MegaApp.Services
                         contact.GetContactAvatar();
                     }
 
-                    if (expireDate > DateTime.Now)
-                    {
-                        awardedClass.StorageReward += storageReward;
-                        awardedClass.TransferReward += transferReward;
-                    }
+                    if (expireDate <= DateTime.Now) continue;
+
+                    awardedClass.StorageReward += storageReward;
+                    awardedClass.TransferReward += transferReward;
                 }
                 else
                 {
@@ -244,14 +245,19 @@ namespace MegaApp.Services
                             TransferReward = accountAchievements.getClassTransfer((int)awardClass),
                             DurationInDays = accountAchievements.getClassExpire((int)awardClass),
                         };
+
                         inviteClass.Contacts.ItemCollection.Items =
                             awardedClasses.FirstOrDefault(a => a.AchievementClass == awardClass)?.Contacts.ItemCollection.Items;
                         availableAwards.Add(inviteClass);
+
                         continue;
                     };
                 }
+
                 var available = awards.FirstOrDefault(a => a.AchievementClass == awardClass);
-                if(available != null) continue;
+
+                if (available != null) continue;
+
                 availableAwards.Add(new AwardClassViewModel(awardClass)
                 {
                     StorageReward = accountAchievements.getClassStorage((int)awardClass),
@@ -264,8 +270,10 @@ namespace MegaApp.Services
             {
                 if (accountAchievements.currentStorage() != -1)
                     AccountAchievements.CurrentStorageQuota = (ulong) accountAchievements.currentStorage();
+
                 if (accountAchievements.currentTransfer() != -1)
                     AccountAchievements.CurrentTransferQuota = (ulong) accountAchievements.currentTransfer();
+
                 AccountAchievements.Awards = awards;
                 AccountAchievements.AwardedClasses = awardedClasses;
                 AccountAchievements.AvailableAwards = availableAwards;

@@ -5,6 +5,7 @@ using MegaApp.Classes;
 using MegaApp.Extensions;
 using MegaApp.Services;
 using MegaApp.ViewModels.Contacts;
+using MegaApp.Views.Dialogs;
 using MegaApp.Views.MyAccount;
 
 namespace MegaApp.ViewModels.MyAccount
@@ -68,7 +69,7 @@ namespace MegaApp.ViewModels.MyAccount
 
         }
 
-        private void DoAction()
+        private async void DoAction()
         {
             if (!AchievementClass.HasValue) return;
             switch (AchievementClass)
@@ -77,7 +78,8 @@ namespace MegaApp.ViewModels.MyAccount
                 case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
                 case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
                 {
-                    DialogService.ShowAchievementInformationDialog(this);
+                    var achievementInformationDialog = new AchievementInformationDialog(this);
+                    await achievementInformationDialog.ShowAsync();
                     break;
                 }
                 case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
@@ -145,8 +147,14 @@ namespace MegaApp.ViewModels.MyAccount
 
         #region Properties
 
+        /// <summary>
+        /// Achievement class associated with this award
+        /// </summary>
         public MAchievementClass? AchievementClass { get; }
 
+        /// <summary>
+        /// Gets if this is a MEGA base award for storage or transfer
+        /// </summary>
         public bool IsBaseAward { get; }
 
         public string DisplayNameStorage => IsBaseAward
@@ -164,6 +172,9 @@ namespace MegaApp.ViewModels.MyAccount
         public bool HasImage => ImageUri != null;
 
         private bool _isGranted;
+        /// <summary>
+        /// Gets and sets if this is a granted award for the user
+        /// </summary>
         public bool IsGranted
         {
             get { return _isGranted; }
@@ -171,17 +182,29 @@ namespace MegaApp.ViewModels.MyAccount
         }
 
         private DateTime? _expireDate;
+        /// <summary>
+        /// Gets and sets the end date of the award
+        /// </summary>
         public DateTime? ExpireDate
         {
             get { return _expireDate; }
             set { SetField(ref _expireDate, value); }
         }
 
+        /// <summary>
+        /// Gets if the award is expired or not
+        /// </summary>
         public bool IsExpired => ExpireDate.HasValue && ExpireDate <= DateTime.Now;
 
+        /// <summary>
+        /// Gets the amount of days before the award expires
+        /// </summary>
         public int ExpiresIn => ExpireDate?.Subtract(DateTime.Today).Days ?? -1;
 
         private DateTime _achievedOnDate;
+        /// <summary>
+        /// Gets and sets the date the award was achieved
+        /// </summary>
         public DateTime AchievedOnDate
         {
             get { return _achievedOnDate; }
@@ -191,6 +214,9 @@ namespace MegaApp.ViewModels.MyAccount
         public string AchievedOnText => AchievedOnDate.ToString("dd MMM yyyy");
 
         private long _durationInDays;
+        /// <summary>
+        /// Gets and sets the duration of this award
+        /// </summary>
         public long DurationInDays
         {
             get { return _durationInDays; }
@@ -198,6 +224,9 @@ namespace MegaApp.ViewModels.MyAccount
         }
 
         private long _storageReward;
+        /// <summary>
+        /// Gets and sets amount of bonus storage
+        /// </summary>
         public long StorageReward
         {
             get { return _storageReward; }
@@ -205,6 +234,9 @@ namespace MegaApp.ViewModels.MyAccount
         }
 
         private long _transferReward;
+        /// <summary>
+        /// Gets and sets amount of bonus transfer
+        /// </summary>
         public long TransferReward
         {
             get { return _transferReward; }
@@ -218,6 +250,9 @@ namespace MegaApp.ViewModels.MyAccount
         public string TransferRewardText => TransferReward > 0
             ? ((ulong)TransferReward).ToStringAndSuffix() : "- GB";
 
+        /// <summary>
+        /// The invite contacts that have granted referral bonuses
+        /// </summary>
         public ContactsListViewModel Contacts { get; }
 
         public string Description => GetAwardDescription();

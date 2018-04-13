@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Notifications;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
@@ -307,6 +305,9 @@ namespace MegaApp.ViewModels.Contacts
         #region Achievement properties
 
         private long _storageAmount;
+        /// <summary>
+        /// Amount of MEGA service referral bonus storage for this contact
+        /// </summary>
         public long StorageAmount
         {
             get { return _storageAmount; }
@@ -318,6 +319,9 @@ namespace MegaApp.ViewModels.Contacts
         }
 
         private long _transferAmount;
+        /// <summary>
+        /// Amount of MEGA service referral bonus transfer for this contact
+        /// </summary>
         public long TransferAmount
         {
             get { return _transferAmount; }
@@ -333,24 +337,40 @@ namespace MegaApp.ViewModels.Contacts
         public string TransferAmountText => ((ulong)TransferAmount).ToStringAndSuffix();
 
         private DateTime? _referralBonusExpireDate;
+        /// <summary>
+        /// End date of the referral bonus for this contact
+        /// </summary>
         public DateTime? ReferralBonusExpireDate
         {
             get { return _referralBonusExpireDate; }
             set { SetField(ref _referralBonusExpireDate, value); }
         }
 
+        /// <summary>
+        /// Gets if the referral bonus for this contact is already expired or not
+        /// </summary>
         public bool IsReferralBonusExpired => 
             ReferralBonusExpireDate.HasValue && ReferralBonusExpireDate <= DateTime.Now;
 
+        /// <summary>
+        /// Amount of days before the referral bonus of this contact expires
+        /// </summary>
         public int ReferralBonusExpiresIn => 
             ReferralBonusExpireDate?.Subtract(DateTime.Today).Days ?? -1;
 
+        /// <summary>
+        /// Amount of days before the referral bonus of this contact expires as text
+        /// </summary>
         public string ReferralBonusDaysRemaining => AccountService.GetDaysRemaining(ReferralBonusExpiresIn);
+
 
         private MContactRequestStatusType StatusType => this.MegaSdk.getContactRequestByHandle(this.Handle) != null
             ? (MContactRequestStatusType) this.MegaSdk.getContactRequestByHandle(this.Handle).getStatus()
             : MContactRequestStatusType.STATUS_ACCEPTED;
 
+        /// <summary>
+        /// Current referral status of this contact as text
+        /// </summary>
         public string ReferralStatus
         {
             get
@@ -358,7 +378,7 @@ namespace MegaApp.ViewModels.Contacts
                 switch (this.StatusType)
                 {
                     case MContactRequestStatusType.STATUS_UNRESOLVED:
-                        return "Pending";
+                        return ResourceService.UiResources.GetString("UI_Pending");
                     case MContactRequestStatusType.STATUS_ACCEPTED:
                         return this.ReferralBonusDaysRemaining;
                     case MContactRequestStatusType.STATUS_DENIED:                        
@@ -372,6 +392,9 @@ namespace MegaApp.ViewModels.Contacts
             }
         }
 
+        /// <summary>
+        /// Integer to be able to order the contacts depending on their referral status
+        /// </summary>
         public int ReferralStatusOrder => GetReferralStatusOrder();
 
         private int GetReferralStatusOrder()

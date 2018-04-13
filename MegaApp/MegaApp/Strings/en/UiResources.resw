@@ -1615,4 +1615,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Referral status</value>
     <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
   </data>
+  <data name="UI_Pending" xml:space="preserve">
+    <value>Pending</value>
+    <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

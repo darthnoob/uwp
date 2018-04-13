@@ -173,7 +173,10 @@
                                     Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                     <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                 </Viewbox>
-                                <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding AccountDetails.TotalSpaceText, Mode=OneWay}">
+                                <TextBlock
+                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                    Tapped="ShowToolTipOnTapped"
+                                    Text="{Binding AccountDetails.TotalSpaceText, Mode=OneWay}">
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             Closed="ToolTipOnClosed"
@@ -234,7 +237,10 @@
                                     Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                     <PathIcon Data="{Binding NoteIconPathData, Mode=OneTime}" />
                                 </Viewbox>
-                                <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding AccountDetails.TransferQuotaText, Mode=OneWay}">
+                                <TextBlock
+                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                    Tapped="ShowToolTipOnTapped"
+                                    Text="{Binding AccountDetails.TransferQuotaText, Mode=OneWay}">
                                     <ToolTipService.ToolTip>
                                         <ToolTip
                                             Closed="ToolTipOnClosed"

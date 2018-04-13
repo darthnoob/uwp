@@ -7,6 +7,7 @@
     xmlns:local="using:MegaApp.Views.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     MaxWidth="420"
+    MaxHeight="500"
     Margin="0,0,24,24"
     d:DataContext="{d:DesignInstance dialogViewModels:AchievementInformationDialogViewModel}"
     Background="{ThemeResource MegaAppBackgroundBrush}"

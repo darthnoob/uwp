@@ -2174,7 +2174,7 @@
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="MegaInviteContactItem">
+    <DataTemplate x:Key="MegaInviteContactItemDesktop">
         <Grid Margin="0,6" Background="Transparent">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -2235,6 +2235,70 @@
                 FontSize="13"
                 Opacity="0.5"
                 Text="{Binding Email}" />
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="3"
+                Margin="8,0"
+                VerticalAlignment="Center"
+                FontSize="13"
+                Opacity="0.5"
+                Text="{Binding ReferralStatus}"
+                TextAlignment="Right" />
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MegaInviteContactItemMobile">
+        <Grid Margin="0,6" Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" MinWidth="80" />
+            </Grid.ColumnDefinitions>
+            <Rectangle
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{Binding AvatarColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                Text="{Binding AvatarLetter}" />
+            <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
+                Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
+                <Image.Source>
+                    <BitmapImage
+                        DecodePixelHeight="36"
+                        DecodePixelType="Logical"
+                        DecodePixelWidth="36"
+                        UriSource="{Binding AvatarUri}" />
+                </Image.Source>
+            </Image>
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0"
+                VerticalAlignment="Center"
+                FontSize="14"
+                Opacity="0.9"
+                Text="{Binding FullName}" />
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="3"
