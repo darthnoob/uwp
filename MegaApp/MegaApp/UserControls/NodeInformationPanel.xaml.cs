@@ -217,6 +217,14 @@ namespace MegaApp.UserControls
             toggle.IsOn = this.ViewModel.FolderNode.IsOutShare;
         }
 
+        private void OnSaveForOfflineSwitchToggled(object sender, RoutedEventArgs e)
+        {
+            var toggle = sender as ToggleSwitch;
+            if (toggle == null) return;
+
+            this.ViewModel.SaveForOffline(toggle.IsOn);
+        }
+
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCommandBar();
 
         private void ChangeCommandBar()
@@ -228,6 +236,7 @@ namespace MegaApp.UserControls
 
                 var sharePivotCommandBarVisibility = this.ViewModel.FolderNode == null ? Visibility.Collapsed :
                     this.ViewModel.FolderNode.IsOutShare ? Visibility.Visible : Visibility.Collapsed;
+
                 this.SharePivotTopCommandBar.Visibility = sharePivotCommandBarVisibility;
                 this.SharePivotBottomCommandBar.Visibility = sharePivotCommandBarVisibility;
 

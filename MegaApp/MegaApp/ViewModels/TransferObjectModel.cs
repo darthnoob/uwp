@@ -10,7 +10,6 @@ using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-//using MegaApp.Database;
 
 namespace MegaApp.ViewModels
 {
@@ -225,12 +224,12 @@ namespace MegaApp.ViewModels
 
                 string defaultDownloadLocation = ResourceService.SettingsResources.GetString("SR_DefaultDownloadLocation");
                 this.ExternalDownloadPath = this.ExternalDownloadPath ?? await SettingsService.LoadSettingAsync<string>(defaultDownloadLocation, null);
-                if (this.ExternalDownloadPath == null) return false;
+                if (string.IsNullOrWhiteSpace(this.ExternalDownloadPath)) return false;
                 
                 if (this.Transfer.isFolderTransfer())
-                    await FolderService.MoveFolder(srcPath, this.ExternalDownloadPath, destName);
+                    await FolderService.MoveFolderAsync(srcPath, this.ExternalDownloadPath, destName);
                 else
-                    await FileService.MoveFile(srcPath, this.ExternalDownloadPath, destName);
+                    await FileService.MoveFileAsync(srcPath, this.ExternalDownloadPath, destName);
 
                 return true;
             }
@@ -347,7 +346,13 @@ namespace MegaApp.ViewModels
         public ulong TotalBytes
         {
             get { return _totalBytes; }
-            set { SetField(ref _totalBytes, value); }
+            set
+            {
+                SetField(ref _totalBytes, value);
+                OnPropertyChanged(nameof(this.TotalBytesText),
+                    nameof(this.TransferedAndTotalBytes),
+                    nameof(this.TransferedPercentage));
+            }
         }
 
         public string TotalBytesText => this.TotalBytes.ToStringAndSuffix(1);
@@ -359,16 +364,17 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _transferedBytes, value);
-                OnPropertyChanged("TransferedPercentage");
-                OnPropertyChanged("EstimatedTime");
-                OnPropertyChanged("TransferedAndTotalBytes");
+                OnPropertyChanged(nameof(this.EstimatedTime),
+                    nameof(this.TransferedAndTotalBytes),
+                    nameof(this.TransferedPercentage));
             }
         }
 
         public string TransferedAndTotalBytes => string.Format("{0:n2} / {1}",
             this.TransferedBytes.ToEqualSize(this.TotalBytes), this.TotalBytes.ToStringAndSuffix(1));
 
-        public string TransferedPercentage => string.Format("{0}%", TransferedBytes * 100 / TotalBytes);
+        public string TransferedPercentage => TotalBytes > 0 ?
+            string.Format("{0}%", TransferedBytes * 100 / TotalBytes) : string.Empty;
 
         private string _transferSpeed;
         public string TransferSpeed
@@ -419,6 +425,8 @@ namespace MegaApp.ViewModels
         {
             get
             {
+                if (!this.IsNetworkAvailable) return false;
+
                 switch (this.TransferState)
                 {
                     case MTransferState.STATE_COMPLETING:

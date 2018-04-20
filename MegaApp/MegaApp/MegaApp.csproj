@@ -117,6 +117,8 @@
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
@@ -132,6 +134,8 @@
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
+    <Compile Include="Interfaces\IOfflineNode.cs" />
+    <Compile Include="MegaApi\CancelTransferRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
@@ -139,6 +143,7 @@
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
+    <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
@@ -158,6 +163,8 @@
     <Compile Include="UserControls\ShareToPanel.xaml.cs">
       <DependentUpon>ShareToPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BaseFolderViewModel.cs" />
+    <Compile Include="ViewModels\BaseNodeViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
@@ -219,6 +226,11 @@
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFileNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
+    <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
@@ -465,6 +477,9 @@
     <Compile Include="Views\MyAccountPage.xaml.cs">
       <DependentUpon>MyAccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SavedForOfflinePage.xaml.cs">
+      <DependentUpon>SavedForOfflinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -693,6 +708,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SavedForOfflinePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -731,6 +750,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.22.0">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
     <SDKReference Include="WindowsDesktop, Version=10.0.14393.0">
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>

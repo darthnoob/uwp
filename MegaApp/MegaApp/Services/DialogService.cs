@@ -339,7 +339,7 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="folder">Folder to sort.</param>
         /// <returns>The flyout menu with the sort options.</returns>
-        public static MenuFlyout CreateSortMenu(FolderViewModel folder)
+        public static MenuFlyout CreateSortMenu(BaseFolderViewModel folder)
         {
             var currentSortOrder = UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name);
 

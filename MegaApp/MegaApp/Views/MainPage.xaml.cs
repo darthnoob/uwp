@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +10,6 @@ using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.UserControls;
 using MegaApp.ViewModels;
-using Windows.UI;
 
 namespace MegaApp.Views
 {
@@ -32,6 +32,7 @@ namespace MegaApp.Views
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
             this.ContentFrame.Navigated += ContentFrameOnNavigated;
             
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -41,6 +42,14 @@ namespace MegaApp.Views
 
             // Check if the user has an active and online session, because this is the first page loaded
             if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;
+
+            // Check if the user has an active internet connection
+            if (!await NetworkService.IsNetworkAvailableAsync())
+            {
+                // If not active internet connection, navigate to the offline section
+                NavigateService.Instance.Navigate(typeof(SavedForOfflinePage));
+                return;
+            }
 
             // If user has an active and online session but is not logged in, resume the session
             if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
@@ -135,6 +144,50 @@ namespace MegaApp.Views
                 return;
 
             HamburgerMenuControl.IsPaneOpen = false;
+        }
+
+        /// <summary>
+        /// Method called when a network status changed event is triggered
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        protected override async void OnNetworkStatusChanged(object sender)
+        {
+            base.OnNetworkStatusChanged(sender);
+            this.ViewModel.ContentViewModel.UpdateNetworkStatus();
+
+            // If no network connection, nothing to do
+            if (!await NetworkService.IsNetworkAvailableAsync()) return;
+
+            // Check if the user has an active and online session
+            if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;
+
+            // If user is not already logged in, resume the session
+            if (!Convert.ToBoolean(SdkService.MegaSdk.isLoggedIn()))
+            {
+                UiService.OnUiThread(async () =>
+                {
+                    await this.ViewModel.FastLoginAsync();
+
+                    if (this.ViewModel?.ContentViewModel is CloudDriveViewModel)
+                    {
+                        var contentViewModel = this.ViewModel.ContentViewModel as CloudDriveViewModel;
+                        if (!contentViewModel.ActiveFolderView.IsLoaded)
+                            contentViewModel.LoadFolders();
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Method invoked when the offline banner size is changed
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="e">Provides data related to the size changed event.</param>
+        private void OnOfflineBannerSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UiService.OfflineBannerHeight = e.NewSize.Height;
+            this.ViewModel.UpdateOfflineBanner();
+            this.ViewModel.ContentViewModel.UpdateOfflineBanner();
         }
     }
 }

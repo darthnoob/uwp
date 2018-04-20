@@ -119,6 +119,7 @@
         <Grid DataContext="{x:Bind ViewModel}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -142,6 +143,7 @@
                         x:Name="MainTopCommandBar"
                         Background="Transparent"
                         extensions:CommandBarExtensions.HideMoreButton="True"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
                             Command="{Binding Node.PreviewCommand}"
@@ -243,6 +245,7 @@
                         Style="{StaticResource MegaCommandBarStyle}">
                         <AppBarButton
                             Command="{x:Bind ViewModel.AddContactToFolderCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -253,6 +256,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
@@ -266,6 +270,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
@@ -291,9 +296,11 @@
                 </Grid>
             </Grid>
 
+            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+            
             <Pivot
                 x:Name="PivotControl"
-                Grid.Row="1"
+                Grid.Row="2"
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
                 Margin="12,0"
                 SelectionChanged="OnPivotSelectionChanged">
@@ -302,6 +309,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <ContentControl
@@ -309,7 +317,35 @@
                                 Grid.Row="0"
                                 DataContext="{Binding Node}"
                                 ContentTemplate="{StaticResource NodeInformationPanelHeader}"/>
-                            <RelativePanel Grid.Row="1" Margin="24,0,24,12">
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="24,0"
+                                Orientation="Horizontal">
+                                <ToggleSwitch
+                                    x:Name="SaveForOfflineSwitch"
+                                    Margin="0,0,0,24"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
+                                    IsOn="{x:Bind ViewModel.Node.IsSavedForOffline, Mode=TwoWay}"
+                                    Toggled="OnSaveForOfflineSwitchToggled">
+                                    <TextBlock
+                                        FontSize="16"
+                                        Opacity="0.4"
+                                        Text="{x:Bind ViewModel.SaveForOfflineText, Mode=OneTime}" />
+                                </ToggleSwitch>
+                                <StackPanel
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding Node.OfflineTransfer.TransferSpeed, Converter={StaticResource StringVisibilityConverter}}">
+                                    <ContentPresenter ContentTemplate="{StaticResource SeparationPoint}" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Node.OfflineTransfer.TransferedPercentage, Mode=OneWay}"
+                                        VerticalAlignment="Center"/>
+                                    <ContentPresenter ContentTemplate="{StaticResource SeparationPoint}" />
+                                    <TextBlock
+                                        Text="{x:Bind ViewModel.Node.OfflineTransfer.TransferSpeed, Mode=OneWay}"
+                                        VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <RelativePanel Grid.Row="2" Margin="24,0,24,12">
                                 <TextBlock
                                     x:Name="SizeLabelText"
                                     Opacity="0.4"
@@ -419,6 +455,7 @@
                                 <ToggleSwitch
                                     x:Name="EnableLinkSwitch"
                                     Margin="0,12,0,0"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.Node.IsExported, Mode=TwoWay}"
                                     Toggled="OnEnableLinkSwitchToggled"/>
                             </StackPanel>
@@ -542,6 +579,7 @@
                                 <ToggleSwitch
                                     x:Name="EnableSharedFolderSwitch"
                                     Margin="0,12,0,0"
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     IsOn="{x:Bind ViewModel.FolderNode.IsOutShare, Mode=OneWay}"
                                     Toggled="OnEnableSharedFolderSwitchToggled"/>
                             </StackPanel>
@@ -579,9 +617,10 @@
                 </PivotItem>
             </Pivot>
 
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
                 <CommandBar
                     x:Name="MainBottomCommandBar"
+                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{Binding Node.PreviewCommand}"
@@ -682,6 +721,7 @@
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.AddContactToFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.AddContactToFolderText, Mode=OneTime}"
@@ -692,6 +732,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding FolderNode.ContactsList.SetFolderPermissionCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.SetFolderPermissionText, Mode=OneTime}"
@@ -705,6 +746,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{Binding FolderNode.ContactsList.RemoveContactFromFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.RemoveFromFolderText, Mode=OneTime}"

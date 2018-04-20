@@ -1452,4 +1452,24 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>Saved for offline</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveForOffline" xml:space="preserve">
+    <value>Save for offline</value>
+    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromOffline" xml:space="preserve">
+    <value>Remove from offline</value>
+    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>Offline files</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
+  </data>
 </root>

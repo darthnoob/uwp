@@ -84,13 +84,15 @@
                         Width="136"
                         Margin="0,0,4,0"
                         Command="{x:Bind CopyKeyCommand}"
-                        Content="{x:Bind CopyKeyText, Mode=OneTime}" />
+                        Content="{x:Bind CopyKeyText, Mode=OneTime}"
+                        IsEnabled="{x:Bind IsNetworkAvailable, Mode=OneWay}" />
                     <Button
                         Grid.Column="1"
                         Width="136"
                         Margin="4,0,0,0"
                         Command="{x:Bind SaveKeyCommand}"
-                        Content="{x:Bind SaveKeyText, Mode=OneTime}" />
+                        Content="{x:Bind SaveKeyText, Mode=OneTime}"
+                        IsEnabled="{x:Bind IsNetworkAvailable, Mode=OneWay}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>
@@ -148,6 +150,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -161,7 +164,9 @@
                 Text="{x:Bind ViewModel.SectionNameText, Mode=OneWay}" />
         </Grid>
 
-        <Grid x:Name="MainGrid" Grid.Row="1">
+        <ContentPresenter Grid.Row="1" Canvas.ZIndex="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+        
+        <Grid x:Name="MainGrid" Grid.Row="2">
             <Pivot
                 x:Name="MainPivot"
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">

@@ -54,6 +54,9 @@ namespace MegaApp.ViewModels
 
         public UserDataViewModel UserData => AccountService.UserData;
 
+        private static bool showMyAccountIcon => AccountService.UserData.AvatarUri == null && 
+            string.IsNullOrWhiteSpace(AccountService.UserData.AvatarLetter);
+
         #endregion
 
         #region Public Methods
@@ -73,6 +76,14 @@ namespace MegaApp.ViewModels
                     ToolTip = CloudDriveText,
                     Icon = GetIconFromXamlPath(MenuCloudPathData),
                     TargetViewModel = typeof(CloudDriveViewModel)
+                },
+
+                new MenuItemViewModel()
+                {
+                    Label = SavedForOfflineText,
+                    ToolTip = SavedForOfflineText,
+                    Icon = GetIconFromXamlPath(MenuSaveForOfflinePathData),
+                    TargetViewModel = typeof(SavedForOfflineViewModel)
                 },
 
                 new MenuItemViewModel()
@@ -114,7 +125,7 @@ namespace MegaApp.ViewModels
                     Label = AccountService.UserData.UserName,
                     SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
-                    Icon = new SymbolIcon(Symbol.Contact),
+                    Icon = showMyAccountIcon ? new SymbolIcon(Symbol.Contact) : null,
                     TargetViewModel = typeof(MyAccountViewModel)
                 },
 
@@ -177,7 +188,7 @@ namespace MegaApp.ViewModels
                     Label = AccountService.UserData.UserName,
                     SubLabel = AccountService.UserData.UserEmail,
                     ToolTip = MyAccountText,
-                    Icon = new SymbolIcon(Symbol.Contact),
+                    Icon = showMyAccountIcon ? new SymbolIcon(Symbol.Contact) : null,
                     TargetViewModel = typeof(MyAccountViewModel)
                 }
             };
@@ -217,6 +228,7 @@ namespace MegaApp.ViewModels
         private static string FolderLinkText => ResourceService.UiResources.GetString("UI_FolderLink");
         private static string MyAccountText => ResourceService.UiResources.GetString("UI_MyAccount");
         private static string RubbishBinText => ResourceService.UiResources.GetString("UI_RubbishBinName");
+        private static string SavedForOfflineText => ResourceService.UiResources.GetString("UI_SavedForOffline");
         private static string SettingsText => ResourceService.UiResources.GetString("UI_Settings");
         private static string SharedFoldersText => ResourceService.UiResources.GetString("UI_SharedFolders");
         private static string TransferManagerText => ResourceService.UiResources.GetString("UI_TransferManager");
