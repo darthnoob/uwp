@@ -188,8 +188,7 @@ namespace MegaApp.ViewModels.Offline
                         }
 
                         var childNode = new OfflineFileNodeViewModel(fileInfo, this, this.ItemCollection.Items);
-                        if (childNode == null) continue;
-
+                        
                         OnUiThread(() => this.ItemCollection.Items.Add(childNode));
                     }
 

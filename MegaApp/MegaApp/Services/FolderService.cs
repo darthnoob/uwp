@@ -163,6 +163,7 @@ namespace MegaApp.Services
         /// <param name="srcFolderPath">Path of the source folder</param>
         /// <param name="destFolderPath">Path of the destination folder for the copied folder</param>
         /// <param name="folderNewName">New name for the folder</param>
+        /// <param name="isForMove">Indicate if the copy is part of a move action</param>
         /// <returns>TRUE if the folder was copied or FALSE if something failed</returns>
         public static async Task<bool> CopyFolderAsync(string srcFolderPath, string destFolderPath,
             string folderNewName = null, bool isForMove = false)
@@ -224,7 +225,7 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="srcFolderPath">Path of the source folder</param>
         /// <param name="destFolderPath">Path of the destination folder for the moved folder</param>
-        /// <param name="newFolderName">New name for the folder</param>
+        /// <param name="folderNewName">New name for the folder</param>
         /// <returns>TRUE if the folder was moved or FALSE if something failed</returns>
         public static async Task<bool> MoveFolderAsync(string srcFolderPath, string destFolderPath, string folderNewName = null)
         {
@@ -323,6 +324,6 @@ namespace MegaApp.Services
         /// <param name="path">Path to check</param>
         /// <returns>TRUE if is the root of the offline folder or FALSE in other case</returns>
         public static bool IsOfflineRootFolder(string path) =>
-            string.Compare(AppService.GetOfflineDirectoryPath(), path) == 0;
+            string.CompareOrdinal(AppService.GetOfflineDirectoryPath(), path) == 0;
     }    
 }

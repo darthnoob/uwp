@@ -126,6 +126,7 @@ namespace MegaApp.Services
         /// <param name="srcFilePath">Path of the source file</param>
         /// <param name="destFolderPath">Path of the destination folder</param>
         /// <param name="fileNewName">New name for the destination file</param>
+        /// <param name="isForMove">Indicate if the copy is part of a move action</param>
         /// <returns>TRUE if the file was copied or FALSE if something failed</returns>
         public static async Task<bool> CopyFileAsync(string srcFilePath, string destFolderPath,
             string fileNewName = null, bool isForMove = false)
@@ -224,8 +225,11 @@ namespace MegaApp.Services
                 if (await Launcher.LaunchFileAsync(file)) return true;
 
                 // If not, allow the user select an app
-                var options = new LauncherOptions();
-                options.DisplayApplicationPicker = true;
+                var options = new LauncherOptions
+                {
+                    DisplayApplicationPicker = true
+                };
+
                 return await Launcher.LaunchFileAsync(file, options);
             }
             catch (Exception e)

@@ -99,11 +99,11 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        private bool _IsDefaultImage;
+        private bool _isDefaultImage;
         public bool IsDefaultImage
         {
-            get { return _IsDefaultImage; }
-            set { SetField(ref _IsDefaultImage, value); }
+            get { return _isDefaultImage; }
+            set { SetField(ref _isDefaultImage, value); }
         }
 
         public string SizeText => this.Size.ToStringAndSuffix(1);

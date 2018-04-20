@@ -122,11 +122,11 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public override void UpdateGUI()
+        public override void UpdateNetworkStatus()
         {
-            base.UpdateGUI();
+            base.UpdateNetworkStatus();
             OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
-            this.CameraUploads.UpdateGUI();
+            this.CameraUploads.UpdateNetworkStatus();
         }
 
         #endregion

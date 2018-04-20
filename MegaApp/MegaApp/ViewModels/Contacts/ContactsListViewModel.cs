@@ -330,13 +330,13 @@ namespace MegaApp.ViewModels.Contacts
             this.OnCloseContactProfile();
         }
 
-        public override void UpdateGUI()
+        public override void UpdateNetworkStatus()
         {
             foreach (var item in this.ItemCollection.Items)
             {
                 var contact = item as ContactViewModel;
                 if (contact == null) continue;
-                contact.UpdateGUI();
+                contact.UpdateNetworkStatus();
             }
         }
 

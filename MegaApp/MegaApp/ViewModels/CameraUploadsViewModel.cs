@@ -145,16 +145,16 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public override void UpdateGUI()
+        public override void UpdateNetworkStatus()
         {
-            base.UpdateGUI();
+            base.UpdateNetworkStatus();
             if (this.ItemCollection == null) return;
 
             foreach (var item in this.ItemCollection.Items)
             {
                 var node = item as BaseNodeViewModel;
                 if (node == null) continue;
-                node.UpdateGUI();
+                node.UpdateNetworkStatus();
             }
         }
 

@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
 {
     public abstract class BaseFolderViewModel : BaseSdkViewModel
     {
-        public BaseFolderViewModel(MegaSDK megaSdk, ContainerType containerType, bool isForSelectFolder = false)
+        protected BaseFolderViewModel(MegaSDK megaSdk, ContainerType containerType, bool isForSelectFolder = false)
             : base(megaSdk)
         {
             this.Type = containerType;

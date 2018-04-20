@@ -34,7 +34,7 @@ namespace MegaApp.UserControls
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
 
             await NetworkService.IsNetworkAvailableAsync();
-            this.ViewModel.UpdateGUI();
+            this.ViewModel.UpdateNetworkStatus();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -52,7 +52,7 @@ namespace MegaApp.UserControls
         protected virtual async void OnNetworkStatusChanged(object sender)
         {
             await NetworkService.IsNetworkAvailableAsync();
-            this.ViewModel.UpdateGUI();
+            this.ViewModel.UpdateNetworkStatus();
         }
     }
 

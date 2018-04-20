@@ -57,12 +57,12 @@ namespace MegaApp.ViewModels
             this.IsPanelOpen = false;
         }
 
-        public override void UpdateGUI()
+        public override void UpdateNetworkStatus()
         {
-            base.UpdateGUI();
-            this.MegaContacts.UpdateGUI();
-            this.IncomingContactRequests.UpdateGUI();
-            this.OutgoingContactRequests.UpdateGUI();
+            base.UpdateNetworkStatus();
+            this.MegaContacts.UpdateNetworkStatus();
+            this.IncomingContactRequests.UpdateNetworkStatus();
+            this.OutgoingContactRequests.UpdateNetworkStatus();
         }
 
         #endregion

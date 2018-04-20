@@ -16,7 +16,7 @@ namespace MegaApp.ViewModels
         public void UpdateOfflineBanner() =>
             OnUiThread(() => OnPropertyChanged(nameof(this.OfflineBannerHeight)));
 
-        public virtual void UpdateGUI() =>
+        public virtual void UpdateNetworkStatus() =>
             OnUiThread(() => OnPropertyChanged(nameof(IsNetworkAvailable)));
 
         /// <summary>

@@ -18,10 +18,7 @@ namespace MegaApp.Classes
             var nodeViewModel = item as NodeViewModel;
             if (nodeViewModel == null) return base.SelectTemplate(item, container);
 
-            if (nodeViewModel.IsFolder)
-                return FolderItemTemplate;
-            else
-                return FileItemTemplate;
+            return nodeViewModel.IsFolder ? FolderItemTemplate : FileItemTemplate;
         }
     }
 
@@ -32,10 +29,7 @@ namespace MegaApp.Classes
             var offlineNodeViewModel = item as OfflineNodeViewModel;
             if (offlineNodeViewModel == null) return base.SelectTemplate(item, container);
 
-            if (offlineNodeViewModel.IsFolder)
-                return FolderItemTemplate;
-            else
-                return FileItemTemplate;
+            return offlineNodeViewModel.IsFolder ? FolderItemTemplate : FileItemTemplate;
         }
     }
 }

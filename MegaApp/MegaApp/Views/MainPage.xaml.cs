@@ -153,7 +153,7 @@ namespace MegaApp.Views
         protected override async void OnNetworkStatusChanged(object sender)
         {
             base.OnNetworkStatusChanged(sender);
-            this.ViewModel.ContentViewModel.UpdateGUI();
+            this.ViewModel.ContentViewModel.UpdateNetworkStatus();
 
             // If no network connection, nothing to do
             if (!await NetworkService.IsNetworkAvailableAsync()) return;

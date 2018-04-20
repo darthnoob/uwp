@@ -40,7 +40,7 @@ namespace MegaApp.UserControls
         private async void CheckNetworkAvailability()
         {
             await NetworkService.IsNetworkAvailableAsync();
-            this.ViewModel.UpdateGUI();
+            this.ViewModel.UpdateNetworkStatus();
         }
     }
 }

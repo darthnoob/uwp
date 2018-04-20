@@ -89,23 +89,26 @@ namespace MegaApp.ViewModels.Offline
             // Search if the node has pending transfers for offline and cancel them on this case                
             TransferService.CancelPendingNodeOfflineTransfers(this);
 
-            var parentFolderPath = ((new DirectoryInfo(this.NodePath)).Parent).FullName;
-
-            if (this.IsFolder)
+            var directoryInfo = new DirectoryInfo(this.NodePath).Parent;
+            if (directoryInfo != null)
             {
-                OfflineService.RemoveFolderFromOfflineDB(this.NodePath);
-                FolderService.DeleteFolder(this.NodePath, true);
-            }
-            else
-            {
-                SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
-                FileService.DeleteFile(this.NodePath);
+                var parentFolderPath = directoryInfo.FullName;
+
+                if (this.IsFolder)
+                {
+                    OfflineService.RemoveFolderFromOfflineDB(this.NodePath);
+                    FolderService.DeleteFolder(this.NodePath, true);
+                }
+                else
+                {
+                    SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
+                    FileService.DeleteFile(this.NodePath);
+                }
+
+                OfflineService.CleanOfflineFolderNodePath(parentFolderPath);
             }
 
-            OfflineService.CleanOfflineFolderNodePath(parentFolderPath);
-
-            if (this.Parent?.ItemCollection?.Items != null)
-                this.Parent.ItemCollection.Items.Remove(this);
+            this.Parent?.ItemCollection?.Items?.Remove(this);
         }
 
         public virtual void Open()
@@ -180,11 +183,9 @@ namespace MegaApp.ViewModels.Offline
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Parent.Folder))
-            {
-                OnPropertyChanged(nameof(this.Parent));
-                OnPropertyChanged(nameof(this.NodeBinding));
-            }
+            if (e.PropertyName != nameof(this.Parent.Folder)) return;
+            OnPropertyChanged(nameof(this.Parent));
+            OnPropertyChanged(nameof(this.NodeBinding));
         }
 
         #endregion

@@ -50,7 +50,7 @@ namespace MegaApp.ViewModels
             this.Items.Add(folder.FolderRootNode);
 
             DirectoryInfo parentNode = (new DirectoryInfo(folder.FolderRootNode.NodePath)).Parent;
-            while ((parentNode != null) && !FolderService.IsOfflineRootFolder(parentNode.FullName))
+            while (parentNode != null && !FolderService.IsOfflineRootFolder(parentNode.FullName))
             {
                 this.Items.Insert(0, new OfflineFolderNodeViewModel(parentNode, folder));
                 parentNode = (new DirectoryInfo(parentNode.FullName)).Parent;

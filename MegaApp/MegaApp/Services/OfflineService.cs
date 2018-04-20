@@ -116,7 +116,7 @@ namespace MegaApp.Services
             var parentNode = SdkService.MegaSdk.getParentNode(node);
             if (parentNode == null) return;
 
-            while (string.Compare(offlineParentNodePath, AppService.GetOfflineDirectoryPath()) != 0)
+            while (string.CompareOrdinal(offlineParentNodePath, AppService.GetOfflineDirectoryPath()) != 0)
             {
                 var folderPathToAdd = offlineParentNodePath;
 
@@ -136,12 +136,14 @@ namespace MegaApp.Services
         /// <param name="folderNodePath">Path of the folder node</param>
         public static void CleanOfflineFolderNodePath(string folderNodePath)
         {
-            while (string.Compare(folderNodePath, AppService.GetOfflineDirectoryPath()) != 0)
+            while (string.CompareOrdinal(folderNodePath, AppService.GetOfflineDirectoryPath()) != 0)
             {
                 var folderPathToRemove = folderNodePath;
                 if (!FolderService.IsEmptyFolder(folderPathToRemove)) return;
 
-                folderNodePath = ((new DirectoryInfo(folderNodePath)).Parent).FullName;
+                var directoryInfo = new DirectoryInfo(folderNodePath).Parent;
+                if (directoryInfo == null) return;
+                folderNodePath = directoryInfo.FullName;
 
                 if (FolderService.DeleteFolder(folderPathToRemove))
                     SavedForOfflineDB.DeleteNodeByLocalPath(folderPathToRemove);

@@ -59,10 +59,10 @@ namespace MegaApp.ViewModels
                 settingSection.Initialize();
         }
 
-        public override void UpdateGUI()
+        public override void UpdateNetworkStatus()
         {
-            base.UpdateGUI();
-            this.recoveryKeySetting.UpdateGUI();
+            base.UpdateNetworkStatus();
+            this.recoveryKeySetting.UpdateNetworkStatus();
         }
 
         #region Properties

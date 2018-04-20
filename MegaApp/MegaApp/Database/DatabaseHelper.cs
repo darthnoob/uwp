@@ -18,13 +18,13 @@ namespace MegaApp.Database
         /// <summary>
         /// Path of the database file.
         /// </summary>
-        public static readonly string databasePath =
+        public static readonly string DatabasePath =
             Path.Combine(Path.Combine(ApplicationData.Current.LocalFolder.Path, "MEGA.db"));
 
         /// <summary>
         /// SQLite platform.
         /// </summary>
-        public static readonly SQLitePlatformWinRT sqlitePlatform = new SQLitePlatformWinRT();
+        public static readonly SQLitePlatformWinRT SQLitePlatform = new SQLitePlatformWinRT();
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace MegaApp.Database
         /// Check if the database file exists.
         /// </summary>
         /// <returns>TRUE if the database exists or FALSE in other case.</returns>
-        public static bool ExistsDatabaseFile() => FileService.FileExists(databasePath);
+        public static bool ExistsDatabaseFile() => FileService.FileExists(DatabasePath);
 
         #endregion
     }
@@ -50,7 +50,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     db.CreateTable<T>();
                 }
@@ -82,7 +82,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath, SQLiteOpenFlags.ReadOnly))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath, SQLiteOpenFlags.ReadOnly))
                 {
                     return db.Query<T>(
                         "select * from " + tableName + " where " + fieldName + " = '" + fieldValue + "'")
@@ -107,7 +107,7 @@ namespace MegaApp.Database
         {
             try 
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath, SQLiteOpenFlags.ReadOnly))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath, SQLiteOpenFlags.ReadOnly))
                 {
                     return db.Query<T>(
                         "select * from " + tableName + " where " + fieldName + " = '" + fieldValue + "'")
@@ -129,7 +129,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath, SQLiteOpenFlags.ReadOnly))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath, SQLiteOpenFlags.ReadOnly))
                 {
                     return db.Table<T>().ToList();
                 }
@@ -149,7 +149,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     db.RunInTransaction(() =>
                     {
@@ -172,7 +172,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     db.RunInTransaction(() =>
                     {
@@ -197,7 +197,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     var existingItem = db.Query<T>("select * from " + tableName + " where " + fieldName + " = '" + fieldValue + "'").FirstOrDefault();
                     if (existingItem != null)
@@ -224,7 +224,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     db.RunInTransaction(() =>
                     {
@@ -247,7 +247,7 @@ namespace MegaApp.Database
         {
             try
             {
-                using (var db = new SQLiteConnection(Database.sqlitePlatform, Database.databasePath))
+                using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
                 {
                     db.DropTable<T>();
                     db.CreateTable<T>();
