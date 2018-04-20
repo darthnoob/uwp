@@ -15,10 +15,21 @@
 
     <Page.Resources>
         <CollectionViewSource
-            x:Name="SettingsCollectionSource"
+            x:Name="GeneralSettingsCollectionSource"
             IsSourceGrouped="true"
             ItemsPath="Items"
-            Source="{Binding SettingSections}" />
+            Source="{Binding GeneralSettingSections}" />
+        <CollectionViewSource
+            x:Name="CameraUploadSettingsCollectionSource"
+            IsSourceGrouped="true"
+            ItemsPath="Items"
+            Source="{Binding CameraUploadSettingSections}" />
+        <CollectionViewSource
+            x:Name="SecuritySettingsCollectionSource"
+            IsSourceGrouped="true"
+            ItemsPath="Items"
+            Source="{Binding SecuritySettingSections}" />
+        
         <DataTemplate x:Key="BooleanItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel>
                 <TextBlock
@@ -36,11 +47,12 @@
                     OnContent="{Binding DataContext.OnText, ElementName=SettingsPage}" />
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="DescriptionItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock
                     Margin="0,0,0,16"
-                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
                     Text="{x:Bind Title, Mode=OneTime}"
                     Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
                 <TextBlock
@@ -49,16 +61,19 @@
                     Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="RecoveryKeyItemTemplate" x:DataType="settings:RecoveryKeySettingViewModel">
             <StackPanel>
                 <TextBlock
                     Margin="0,0,0,16"
-                    Style="{ThemeResource MegaTitleFontStyle}"
-                    Text="{x:Bind Title, Mode=OneTime}" />
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}"/>
                 <TextBlock
                     Margin="0,0,0,24"
                     Style="{ThemeResource MegaBodyFontStyle}"
-                    Text="{x:Bind Description, Mode=OneTime}" />
+                    Text="{x:Bind Description, Mode=OneTime}" 
+                    Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
                 <Grid HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -81,12 +96,14 @@
                 </Grid>
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="InformationItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{x:Bind Title, Mode=OneTime}" />
                 <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{x:Bind Value, Mode=OneTime}" />
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="InfoActionItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock 
@@ -99,6 +116,7 @@
                     Foreground="{ThemeResource MegaAppForegroundBrush}" />
             </StackPanel>
         </DataTemplate>
+        
         <DataTemplate x:Key="AcknowledgementsItemTemplate" x:DataType="settings:AcknowledgementsSettingViewModel">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{x:Bind Title, Mode=OneTime}" />
@@ -118,6 +136,7 @@
                 </ListView>
             </StackPanel>
         </DataTemplate>
+        
         <classes:SettingTemplateSelector
             x:Key="SettingTemplateSelector"
             AcknowledgementsItemTemplate="{StaticResource AcknowledgementsItemTemplate}"
@@ -127,7 +146,6 @@
             InformationItemTemplate="{StaticResource InformationItemTemplate}"
             RecoveryKeyItemTemplate="{StaticResource RecoveryKeyItemTemplate}" />
     </Page.Resources>
-
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -149,35 +167,134 @@
         <ContentPresenter Grid.Row="1" Canvas.ZIndex="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
         
         <Grid x:Name="MainGrid" Grid.Row="2">
-            <ListView
-                Padding="20"
-                HorizontalAlignment="Stretch"
-                ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
-                ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
-                ItemsSource="{Binding Source={StaticResource SettingsCollectionSource}}"
-                SelectionMode="None">
-                <ListView.GroupStyle>
-                    <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,16">
-                                    <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel
-                            MaxWidth="{StaticResource ViewAreaMaxWidth}"
-                            HorizontalAlignment="Left"
-                            AreStickyGroupHeadersEnabled="True"
-                            GroupPadding="0, 0, 0, 80"
-                            Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+            <Pivot
+                x:Name="MainPivot"
+                HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
+                <PivotItem
+                    x:Name="GeneralPivot"
+                    CacheMode="{x:Null}"
+                    Header="{x:Bind ViewModel.GeneralHeaderText}">
+                    <ListView
+                        Padding="0,20,0,0"
+                        HorizontalAlignment="Stretch"
+                        ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
+                        ItemsSource="{Binding Source={StaticResource GeneralSettingsCollectionSource}}"
+                        ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
+                        SelectionMode="None">
+                        <ListView.GroupStyle>
+                            <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="0,0,0,16">
+                                            <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                            </GroupStyle>
+                        </ListView.GroupStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel
+                                    MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                                    HorizontalAlignment="Left"
+                                    AreStickyGroupHeadersEnabled="True"
+                                    GroupPadding="0, 0, 0, 80"
+                                    Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </PivotItem>
+                <PivotItem
+                    x:Name="CameraUploadPivot"
+                    CacheMode="{x:Null}"
+                    Header="{x:Bind ViewModel.CameraUploadsHeaderText}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="0,20,0,28"
+                            Style="{ThemeResource MegaBodyFontStyle}"
+                            Text="{x:Bind ViewModel.CameraUploadsDescriptionText, Mode=OneTime}" />
+                        <ListView
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch"
+                            ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
+                            ItemsSource="{Binding Source={StaticResource CameraUploadSettingsCollectionSource}}"
+                            ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
+                            SelectionMode="None">
+                            <ListView.GroupStyle>
+                                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,16">
+                                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel
+                                        MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                                        HorizontalAlignment="Left"
+                                        AreStickyGroupHeadersEnabled="True"
+                                        GroupPadding="0, 0, 0, 80"
+                                        Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </Grid>
+                </PivotItem>
+                <PivotItem
+                    x:Name="SecurityPivot"
+                    CacheMode="{x:Null}"
+                    Header="{x:Bind ViewModel.SecurityHeaderText}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="0,20,0,28"
+                            Style="{ThemeResource MegaBodyFontStyle}"
+                            Text="{x:Bind ViewModel.SecurityDescriptionText, Mode=OneTime}" />
+                        <ListView
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch"
+                            ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
+                            ItemsSource="{Binding Source={StaticResource SecuritySettingsCollectionSource}}"
+                            ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
+                            SelectionMode="None">
+                            <ListView.GroupStyle>
+                                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,16">
+                                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel
+                                        MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                                        HorizontalAlignment="Left"
+                                        AreStickyGroupHeadersEnabled="True"
+                                        GroupPadding="0, 0, 0, 80"
+                                        Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -207,7 +324,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
-                        <Setter Target="MainGrid.Margin" Value="-4,-8,0,0"/>
+                        <Setter Target="MainGrid.Margin" Value="0,0,-12,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Normal">
@@ -216,25 +333,10 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
-                        <Setter Target="MainGrid.Margin" Value="4,-12,12,0"/>
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
 </views:BaseSettingsPage>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

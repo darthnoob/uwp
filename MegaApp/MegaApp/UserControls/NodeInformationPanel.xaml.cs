@@ -118,6 +118,7 @@ namespace MegaApp.UserControls
             }
 
             this.ViewModel.Node = node;
+            this.ShareToPanelControl.ViewModel.Node = node;
 
             this.LinkWithKeyRadioButton.IsChecked = true;
 

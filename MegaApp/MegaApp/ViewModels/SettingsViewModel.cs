@@ -8,49 +8,55 @@ namespace MegaApp.ViewModels
     {
         public SettingsViewModel() : base(SdkService.MegaSdk)
         {
-            this.SettingSections = new List<SettingSectionViewModel>();
-
-            // Camera uploads section
-            var cameraUploadSettings = new SettingSectionViewModel
-            {
-                Header = ResourceService.UiResources.GetString("UI_CameraUploads"),
-            };
-            cameraUploadSettings.Items.Add(new DescriptionSettingViewModel(null,
-                ResourceService.UiResources.GetString("UI_CameraUploadsDescription")));
-            cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
-
-            // Security section
-            var securitySettings = new SettingSectionViewModel
-            {
-                Header = ResourceService.UiResources.GetString("UI_SecuritySettings")
-            };
-            securitySettings.Items.Add(new DescriptionSettingViewModel(null,
-               ResourceService.UiResources.GetString("UI_SecuritySettingsDescription")));
-            this.recoveryKeySetting = new RecoveryKeySettingViewModel();
-            securitySettings.Items.Add(this.recoveryKeySetting);
-
-            // About section
+            // General section
+            this.GeneralSettingSections = new List<SettingSectionViewModel>();
+                        
             var aboutSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_About")
             };
             aboutSettings.Items.Add(new DescriptionSettingViewModel(null,
-               ResourceService.UiResources.GetString("UI_AboutDescription")));
+                ResourceService.UiResources.GetString("UI_AboutDescription")));
             aboutSettings.Items.Add(new AppVersionSettingViewModel());
             aboutSettings.Items.Add(new SdkVersionSettingViewModel());
             aboutSettings.Items.Add(new AcknowledgementsSettingViewModel());
 
-            this.SettingSections.Add(cameraUploadSettings);
-            this.SettingSections.Add(securitySettings);
-            this.SettingSections.Add(aboutSettings);
+            this.GeneralSettingSections.Add(aboutSettings);
+
+            // Camera uploads section
+            this.CameraUploadSettingSections = new List<SettingSectionViewModel>();
+
+            var cameraUploadSettings = new SettingSectionViewModel()
+            {
+                Header = ResourceService.UiResources.GetString("UI_CameraUploads")
+            };
+            cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
+
+            this.CameraUploadSettingSections.Add(cameraUploadSettings);
+
+            // Security section
+            this.SecuritySettingSections = new List<SettingSectionViewModel>();
+
+            var recoveryKeySettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_RecoveryKey")
+            };
+            this.recoveryKeySetting = new RecoveryKeySettingViewModel();
+            recoveryKeySettings.Items.Add(this.recoveryKeySetting);
+
+            this.SecuritySettingSections.Add(recoveryKeySettings);
         }
 
         public void Initialize()
         {
-            foreach (var settingSection in this.SettingSections)
-            {
+            foreach (var settingSection in this.GeneralSettingSections)
                 settingSection.Initialize();
-            }
+
+            foreach (var settingSection in this.CameraUploadSettingSections)
+                settingSection.Initialize();
+
+            foreach (var settingSection in this.SecuritySettingSections)
+                settingSection.Initialize();
         }
 
         public override void UpdateGUI()
@@ -61,7 +67,9 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public IList<SettingSectionViewModel> SettingSections { get; }
+        public List<SettingSectionViewModel> GeneralSettingSections { get; }
+        public List<SettingSectionViewModel> CameraUploadSettingSections { get; }
+        public List<SettingSectionViewModel> SecuritySettingSections { get; }
 
         private RecoveryKeySettingViewModel recoveryKeySetting { get; }
 
@@ -70,6 +78,15 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string SectionNameText => ResourceService.UiResources.GetString("UI_Settings");
+
+        public string GeneralHeaderText => ResourceService.UiResources.GetString("UI_General");
+
+        public string CameraUploadsHeaderText => ResourceService.UiResources.GetString("UI_CameraUploads");
+        public string CameraUploadsDescriptionText => ResourceService.UiResources.GetString("UI_CameraUploadsDescription");
+
+        public string SecurityHeaderText => ResourceService.UiResources.GetString("UI_SecuritySettings");
+        public string SecurityDescriptionText => ResourceService.UiResources.GetString("UI_SecuritySettingsDescription");
+
         public string OnText => ResourceService.UiResources.GetString("UI_On");
         public string OffText => ResourceService.UiResources.GetString("UI_Off");
 

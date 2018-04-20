@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Your Recovery key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <value>Saving the Recovery key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">

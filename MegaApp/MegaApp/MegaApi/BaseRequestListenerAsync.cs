@@ -11,35 +11,35 @@ namespace MegaApp.MegaApi
         protected TaskCompletionSource<T> Tcs;
 
         /// <summary>
-        /// Timer to ignore the received API_EAGAIN (-3) during request.
+        /// Timer to count the time during which the request is waiting/retrying
         /// </summary>
-        private DispatcherTimer TimerApiEagain;
+        private DispatcherTimer apiErrorTimer;
 
         /// <summary>
-        /// Flag to check if is the first API_EAGAIN (-3) received.
+        /// Store the current API instance
         /// </summary>
-        private bool IsFirstApiEagain;
+        private MegaSDK api;
 
         /// <summary>
-        /// Event triggered when servers are busy (receive API_EAGAIN (-3) during more than 10 seconds).
+        /// Event triggered when the request is waiting/retrying during more than 10 seconds
         /// </summary>
-        public EventHandler ServerBusy;
+        public EventHandler<MRetryReason> IsWaiting;
         
         public BaseRequestListenerAsync()
         {
             // Set the timer to trigger the event after 10 seconds
             UiService.OnUiThread(() =>
             {
-                TimerApiEagain = new DispatcherTimer();
-                TimerApiEagain.Tick += TimerApiEagainOnTick;
-                TimerApiEagain.Interval = new TimeSpan(0, 0, 10);
+                apiErrorTimer = new DispatcherTimer();
+                apiErrorTimer.Tick += ApiErrorTimerOnTick;
+                apiErrorTimer.Interval = new TimeSpan(0, 0, 10);
             });
         }
 
-        private void TimerApiEagainOnTick(object sender, object o)
+        private void ApiErrorTimerOnTick(object sender, object o)
         {
-            UiService.OnUiThread(() => TimerApiEagain?.Stop());
-            ServerBusy?.Invoke(this, EventArgs.Empty);
+            UiService.OnUiThread(() => apiErrorTimer?.Stop());
+            IsWaiting?.Invoke(this, (MRetryReason)api.isWaiting());
         }
 
         public async Task<T> ExecuteAsync(Action action)
@@ -53,7 +53,7 @@ namespace MegaApp.MegaApi
 
         public virtual void onRequestStart(MegaSDK api, MRequest request)
         {
-            IsFirstApiEagain = true;
+            this.api = api;
         }
 
         public virtual void onRequestUpdate(MegaSDK api, MRequest request)
@@ -63,17 +63,17 @@ namespace MegaApp.MegaApi
 
         public virtual void onRequestTemporaryError(MegaSDK api, MRequest request, MError e)
         {
-            // Starts the timer when receives the first API_EAGAIN (-3)
-            if (e.getErrorCode() == MErrorType.API_EAGAIN && IsFirstApiEagain)
+            UiService.OnUiThread(() =>
             {
-                IsFirstApiEagain = false;
-                UiService.OnUiThread(() => TimerApiEagain?.Start());
-            }
+                // If is the first error/retry (timer is not running) start the timer
+                if (!apiErrorTimer.IsEnabled)
+                    apiErrorTimer?.Start();
+            });
         }
 
         public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            UiService.OnUiThread(() => TimerApiEagain?.Stop());
+            UiService.OnUiThread(() => apiErrorTimer?.Stop());
 
             switch(e.getErrorCode())
             {
