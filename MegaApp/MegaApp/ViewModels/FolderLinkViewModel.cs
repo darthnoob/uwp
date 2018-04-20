@@ -32,7 +32,7 @@ namespace MegaApp.ViewModels
             if (_loginToFolder == null)
             {
                 _loginToFolder = new LoginToFolderRequestListenerAsync();
-                _loginToFolder.ServerBusy += OnServerBusy;
+                _loginToFolder.IsWaiting += OnIsWaiting;
             }
 
             this.ControlState = false;
