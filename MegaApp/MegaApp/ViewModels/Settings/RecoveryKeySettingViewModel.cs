@@ -12,8 +12,7 @@ namespace MegaApp.ViewModels.Settings
     public class RecoveryKeySettingViewModel : SettingViewModel<string>
     {
         public RecoveryKeySettingViewModel()
-            : base(ResourceService.UiResources.GetString("UI_RecoveryKey"),
-                ResourceService.UiResources.GetString("UI_RecoveryKeyDescription"),
+            : base(null, ResourceService.UiResources.GetString("UI_RecoveryKeyDescription"),
                 "CameraUploadsSettingsKey")
         {
             this.CopyKeyCommand = new RelayCommand(CopyKey);
