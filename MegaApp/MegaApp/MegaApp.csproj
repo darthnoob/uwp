@@ -683,6 +683,34 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Strings\ar\" />
+    <Folder Include="Strings\bg\" />
+    <Folder Include="Strings\cs\" />
+    <Folder Include="Strings\de\" />
+    <Folder Include="Strings\es\" />
+    <Folder Include="Strings\fi\" />
+    <Folder Include="Strings\fr\" />
+    <Folder Include="Strings\he\" />
+    <Folder Include="Strings\id\" />
+    <Folder Include="Strings\it\" />
+    <Folder Include="Strings\ja\" />
+    <Folder Include="Strings\ko\" />
+    <Folder Include="Strings\nl\" />
+    <Folder Include="Strings\pl\" />
+    <Folder Include="Strings\pt-BR\" />
+    <Folder Include="Strings\pt\" />
+    <Folder Include="Strings\ro\" />
+    <Folder Include="Strings\ru\" />
+    <Folder Include="Strings\sk\" />
+    <Folder Include="Strings\sl\" />
+    <Folder Include="Strings\sr\" />
+    <Folder Include="Strings\sv\" />
+    <Folder Include="Strings\th\" />
+    <Folder Include="Strings\tr\" />
+    <Folder Include="Strings\uk\" />
+    <Folder Include="Strings\vi\" />
+    <Folder Include="Strings\zh-Hans\" />
+    <Folder Include="Strings\zh-Hant\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj">
