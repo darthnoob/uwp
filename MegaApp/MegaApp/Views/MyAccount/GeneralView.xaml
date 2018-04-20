@@ -91,7 +91,8 @@
                             Width="136"
                             Margin="0,0,4,0"
                             Command="{Binding UpgradeCommand}"
-                            Content="{Binding UpgradeText, Mode=OneTime}"/>
+                            Content="{Binding UpgradeText, Mode=OneTime}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}" />
                         <!--<Button
                             Width="136"
                             Margin="4,0,0,0"

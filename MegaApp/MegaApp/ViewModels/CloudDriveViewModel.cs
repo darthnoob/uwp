@@ -122,13 +122,20 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
+            this.CameraUploads.UpdateNetworkStatus();
+        }
+
         #endregion
 
         #region Private Methods
 
         private async void CleanRubbishBin()
         {
-            if (this.ActiveFolderView.Type != ContainerType.RubbishBin || this.IsRubbishBinEmpty) return;
+            if (this.ActiveFolderView.Type != ContainerType.RubbishBin || !this.IsCleanRubbishBinEnabled) return;
 
             var dialogResult = await DialogService.ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
@@ -153,13 +160,11 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
         }
 
-        private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e)
-        {
-            OnUiThread(() => OnPropertyChanged("IsRubbishBinEmpty"));
-        }
+        private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e) =>
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
 
         private async void OpenLink()
         {
@@ -211,7 +216,8 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public bool IsRubbishBinEmpty => (this.MegaSdk.getNumChildren(this.MegaSdk.getRubbishNode()) == 0);
+        public bool IsCleanRubbishBinEnabled => this.IsNetworkAvailable && 
+            (this.MegaSdk.getNumChildren(this.MegaSdk.getRubbishNode()) != 0);
 
         private FolderViewModel _cloudDrive;
         public FolderViewModel CloudDrive

@@ -2,8 +2,10 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.Services;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Offline;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Converters
@@ -15,6 +17,9 @@ namespace MegaApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (value is OfflineFolderViewModel)
+                return this.ConvertOfflineFolderViewModel(value, targetType, parameter, language);
+
             var folder = value as FolderViewModel;
             if (folder == null) return Visibility.Collapsed;
 
@@ -111,7 +116,8 @@ namespace MegaApp.Converters
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                    var focusedItem = folder.ItemCollection.FocusedItem as IMegaNode;
+                                    return focusedItem != null && focusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 
@@ -126,7 +132,8 @@ namespace MegaApp.Converters
                             {
                                 if (folder is SharedFoldersListViewModel)
                                 {
-                                    return folder.ItemCollection.FocusedItem != null && folder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                    var focusedItem = folder.ItemCollection.FocusedItem as IMegaNode;
+                                    return focusedItem != null && focusedItem.HasFullAccessPermissions ?
                                         Visibility.Visible : Visibility.Collapsed;
                                 }
 
@@ -205,6 +212,26 @@ namespace MegaApp.Converters
             }
 
             return Visibility.Collapsed;
+        }
+
+        private object ConvertOfflineFolderViewModel(object value, Type targetType, object parameter, string language)
+        {
+            var folder = value as OfflineFolderViewModel;
+            if (folder == null) return Visibility.Collapsed;
+
+            var paramString = parameter as string;
+            if (string.IsNullOrWhiteSpace(paramString))
+                return Visibility.Collapsed;
+
+            switch (paramString)
+            {
+                case "remove":
+                    return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                default:
+                    return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

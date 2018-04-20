@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -72,16 +71,6 @@ namespace MegaApp.Interfaces
         /// <param name="externalUpdate">Indicates if is an update external to the app. For example from an `onNodesUpdate`</param>
         void Update(MNode megaNode, bool externalUpdate = false);
 
-        /// <summary>
-        /// Load node thumbnail if available on disk. If not availble download it with the Mega SDK
-        /// </summary>
-        void SetThumbnailImage();
-
-        /// <summary>
-        /// Open the file that is represented by this node
-        /// </summary>
-        void Open();
-
         #endregion
 
         #region Properties
@@ -91,20 +80,11 @@ namespace MegaApp.Interfaces
         /// </summary>
         ulong Handle { get; set; }
 
-        ObservableCollection<IMegaNode> ParentCollection { get; set; }
-
-        ObservableCollection<IMegaNode> ChildCollection { get; set; }
-
         /// <summary>
         /// Specifies the node type TYPE_UNKNOWN = -1, TYPE_FILE = 0, TYPE_FOLDER = 1, TYPE_ROOT = 2, TYPE_INCOMING = 3, 
         /// TYPE_RUBBISH = 4, TYPE_MAIL = 5
         /// </summary>
         MNodeType Type { get; }
-
-        /// <summary>
-        /// Indicates how the node should be drawn on the screen
-        /// </summary>
-        NodeDisplayMode DisplayMode { get; set; }
 
         /// <summary>
         /// The TransferObjectModel that controls upload and download transfers of this node
@@ -116,6 +96,11 @@ namespace MegaApp.Interfaces
         /// and used in as input/output in different SDK methods and functions
         /// </summary>
         MNode OriginalMNode { get; }
+
+        /// <summary>
+        /// Specifies if the node is saved for offline
+        /// </summary>
+        bool IsSavedForOffline { get; set; }
 
         /// <summary>
         /// Access level to the node

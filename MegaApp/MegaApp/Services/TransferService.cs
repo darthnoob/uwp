@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
 
@@ -335,6 +336,62 @@ namespace MegaApp.Services
                 return await CreateExternalDownloadPathAsync(downloadPath);
 
             return true;
+        }
+
+        /// <summary>
+        /// Cancel all the pending offline transfer of a node and wait until all transfers are canceled.
+        /// </summary>
+        /// <param name="node">Node to check offline transfers</param>
+        public static void CancelPendingNodeOfflineTransfers(IBaseNode node)
+        {
+            var transferList = SearchPendingOfflineTransfers(node);
+            if (transferList == null) return;
+
+            foreach (var transfer in transferList)
+                SdkService.MegaSdk.cancelTransfer(transfer);
+        }
+
+        /// <summary>
+        /// Checks if exists at least one pending offline transfer of a node
+        /// </summary>
+        /// <param name="node">Node to check the offline transfer existence</param>
+        /// <returns>TRUE if exist a transfer or FALSE in other case</returns>
+        public static bool ExistPendingNodeOfflineTransfer(IBaseNode node)
+        {
+            var transferList = SearchPendingOfflineTransfers(node);
+            return transferList != null && transferList.Any();
+        }
+
+        /// <summary>
+        /// Search the offline transfers of a node
+        /// </summary>
+        /// <param name="node">Node to get the offline transfers</param>
+        /// <returns>Offline transfers list</returns>
+        public static List<MTransfer> SearchPendingOfflineTransfers(IBaseNode node)
+        {
+            string offlineNodePath;
+            if (node is IMegaNode)
+                offlineNodePath = OfflineService.GetOfflineNodePath((node as IMegaNode).OriginalMNode);
+            else if (node is IOfflineNode)
+                offlineNodePath = (node as IOfflineNode).NodePath;
+            else
+                return null;
+
+            var transferList = new List<MTransfer>();
+
+            var transferData = SdkService.MegaSdk.getTransferData();
+            var numDownloads = transferData.getNumDownloads();
+
+            for (int i = 0; i < numDownloads; i++)
+            {
+                var transfer = SdkService.MegaSdk.getTransferByTag(transferData.getDownloadTag(i));
+                if (transfer == null) continue;
+
+                if (transfer.getPath().Contains(offlineNodePath))
+                    transferList.Add(transfer);
+            }
+
+            return transferList;
         }
 
         #endregion

@@ -13,26 +13,12 @@ namespace MegaApp.ViewModels
     public class ImageNodeViewModel: FileNodeViewModel
     {
         public ImageNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
-            // Image node downloads to the image path of the full original image
-            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
-
-            DefaultImagePathData = ImageService.GetDefaultFileTypePathData(Name);
-
             // Default false for preview slide
             InViewingRange = false;
         }
-
-        #region Override Methods
-
-        public override async void Open()
-        {
-            await FileService.OpenFile(LocalDownloadPath);
-        }
-
-        #endregion
 
         #region Public Methods
 

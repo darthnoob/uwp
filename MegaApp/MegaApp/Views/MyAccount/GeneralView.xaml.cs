@@ -1,5 +1,4 @@
-﻿using Windows.UI.Xaml.Controls;
-using MegaApp.UserControls;
+﻿using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Views.MyAccount

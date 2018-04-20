@@ -7,7 +7,7 @@ using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.ViewModels.UserControls
 {
-    public class NodeInformationPanelViewModel : BaseViewModel
+    public class NodeInformationPanelViewModel : BaseUiViewModel
     {
         public NodeInformationPanelViewModel()
         {
@@ -116,6 +116,14 @@ namespace MegaApp.ViewModels.UserControls
                 folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
         }
 
+        public void SaveForOffline(bool isOn)
+        {
+            if (isOn && !this.Node.IsSavedForOffline)
+                this.Node.SaveForOffline();
+            else if (!isOn && this.Node.IsSavedForOffline)
+                this.Node.RemoveFromOffline();
+        }
+
         #endregion
 
         #region Properties
@@ -182,6 +190,7 @@ namespace MegaApp.ViewModels.UserControls
         public string FolderLocationLabelText => ResourceService.UiResources.GetString("UI_FolderLocation");        
         public string OwnerLabelText => ResourceService.UiResources.GetString("UI_Owner");
         public string PermissionsLabelText => ResourceService.UiResources.GetString("UI_Permissions");
+        public string SaveForOfflineText => ResourceService.UiResources.GetString("UI_SaveForOffline");
         public string SharedOnLabelText => ResourceService.UiResources.GetString("UI_SharedOn");
         public string SharedToLabelText => ResourceService.UiResources.GetString("UI_SharedTo");
         public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");

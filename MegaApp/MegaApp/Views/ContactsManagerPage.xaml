@@ -32,6 +32,7 @@
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
@@ -64,6 +65,7 @@
                             Visibility="{Binding ContentType, ConverterParameter=Contacts, Converter={StaticResource ContactsContentTypeToVisibilityConverter}}">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AddContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
                                 Command="{Binding AddContactCommand}"
@@ -88,6 +90,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding RemoveContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
                                 Command="{Binding RemoveContactCommand}"
@@ -124,6 +127,7 @@
                             Visibility="{Binding ContentType, ConverterParameter=IncomingRequests, Converter={StaticResource ContactsContentTypeToVisibilityConverter}}">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AcceptContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
                                 Command="{Binding AcceptContactRequestCommand}"
@@ -138,6 +142,7 @@
                             </AppBarButton>
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding DenyContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                                 Command="{Binding DeclineContactRequestCommand}"
@@ -174,6 +179,7 @@
                             Visibility="{Binding ContentType, ConverterParameter=OutgoingRequests, Converter={StaticResource ContactsContentTypeToVisibilityConverter}}">
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AddContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
                                 Command="{Binding AddContactCommand}"
@@ -184,6 +190,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding RemindContactText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
                                 Command="{Binding RemindContactRequestCommand}"
@@ -195,6 +202,7 @@
                             </AppBarButton>
                             <AppBarButton 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding CancelInviteText, Mode=OneTime}" 
                                 ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
                                 Command="{Binding CancelContactRequestCommand}"
@@ -271,7 +279,9 @@
                 </Grid>
             </Grid>
 
-            <Grid x:Name="MainGrid" Grid.Row="1">
+            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+            
+            <Grid x:Name="MainGrid" Grid.Row="2">
                 <Pivot
                     x:Name="ContactsManagerPagePivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -410,7 +420,7 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
 
                 <!--  CONTACTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
                 <CommandBar 
@@ -420,6 +430,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding AddContactCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
@@ -430,6 +441,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding RemoveContactCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding RemoveContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"                    
                         ToolTipService.ToolTip="{Binding RemoveContactText, Mode=OneTime}"
@@ -455,24 +467,6 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton 
-                            Label="{Binding SelectAllText}"
-                            Tapped="OnSelectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="SelectAll" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton 
-                            Label="{Binding DeselectAllText}"
-                            Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="ClearSelection" />
-                            </Viewbox>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
 
                 <!--  INCOMING CONTACT REQUESTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
@@ -483,6 +477,7 @@
                     <AppBarButton 
                         Click="OnButtonClick"
                         Command="{Binding AcceptContactRequestCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AcceptContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AcceptContactText, Mode=OneTime}"
@@ -497,6 +492,7 @@
                     <AppBarButton 
                         Click="OnButtonClick"
                         Command="{Binding DeclineContactRequestCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding DenyContactText, Mode=OneTime}" 
                         ToolTipService.ToolTip="{Binding DenyContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
@@ -522,24 +518,6 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton 
-                            Label="{Binding SelectAllText}"
-                            Tapped="OnSelectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="SelectAll" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton 
-                            Label="{Binding DeselectAllText}"
-                            Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="ClearSelection" />
-                            </Viewbox>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
 
                 <!--  OUTGOING CONTACT REQUESTS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
@@ -550,6 +528,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding AddContactCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
@@ -560,6 +539,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding RemindContactRequestCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding RemindContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
@@ -571,6 +551,7 @@
                     <AppBarButton 
                         Click="OnButtonClick"
                         Command="{Binding CancelContactRequestCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding CancelInviteText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding CancelInviteText, Mode=OneTime}"
@@ -596,24 +577,6 @@
                                 Data="{Binding MultiSelectPathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <CommandBar.SecondaryCommands>
-                        <AppBarButton 
-                            Label="{Binding SelectAllText}"
-                            Tapped="OnSelectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="SelectAll" />
-                            </Viewbox>
-                        </AppBarButton>
-                        <AppBarButton 
-                            Label="{Binding DeselectAllText}"
-                            Tapped="OnDeselectAllTapped"
-                            Visibility="{Binding ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Viewbox MaxWidth="14" MaxHeight="14">
-                                <SymbolIcon Symbol="ClearSelection" />
-                            </Viewbox>
-                        </AppBarButton>
-                    </CommandBar.SecondaryCommands>
                 </CommandBar>
             </Grid>
         </Grid>

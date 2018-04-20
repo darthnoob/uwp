@@ -75,6 +75,7 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -87,9 +88,11 @@
             Text="{Binding SelectedPreview.Name}"
             TextWrapping="Wrap" />
 
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+        
         <FlipView
             x:Name="FlipView"
-            Grid.Row="1"
+            Grid.Row="2"
             Margin="12"
             Background="Transparent"
             ItemsSource="{Binding PreviewItems}"
@@ -144,7 +147,7 @@
 
         <userControls:ActivityIndicator
             x:Name="ActivityIndicator"
-            Grid.Row="1"
+            Grid.Row="2"
             VerticalAlignment="Center"
             HorizontalContentAlignment="Center"
             Foreground="{StaticResource MegaAppForegroundBrush}"
