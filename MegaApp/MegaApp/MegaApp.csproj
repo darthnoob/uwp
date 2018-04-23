@@ -142,6 +142,7 @@
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ShouldShowPasswordReminderDialogRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
     <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MegaContentDialog.cs" />
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
     </Compile>
@@ -218,12 +220,14 @@
     <Compile Include="UserControls\ActivityIndicator.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\BaseContentDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineFileNodeViewModel.cs" />
@@ -358,6 +362,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\ShareFolderToDialog.xaml.cs">
       <DependentUpon>ShareFolderToDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\PasswordReminderDialog.xaml.cs">
+      <DependentUpon>PasswordReminderDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
@@ -503,13 +510,17 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ToastLogo.png" />
+    <Content Include="Assets\ToastWarning.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-400.png" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-125.png" />
     <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-400.png" />
     <Content Include="Assets\Square310x310Logo.scale-100.png" />
     <Content Include="Assets\Square310x310Logo.scale-125.png" />
@@ -519,6 +530,7 @@
     <Content Include="Assets\Square44x44Logo.scale-100.png" />
     <Content Include="Assets\Square44x44Logo.scale-125.png" />
     <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-400.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-16_altform-unplated.png" />
@@ -541,14 +553,11 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Resources\WindowsStoreProxy.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -632,6 +641,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ShareFolderToDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\PasswordReminderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

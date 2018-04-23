@@ -407,8 +407,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>Logout</value>
-    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Log out</value>
+    <comment>Label for any 'Log out' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
     <value>Upload your photos to your account.</value>
@@ -1449,8 +1449,20 @@ Keep the {0} code because is for include the number of selected items in runtime
   </data>
   <data name="UI_FileLink" xml:space="preserve">
     <value>File link</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
-</comment>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>Backup Recovery key</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Don’t show me again</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SavedForOffline" xml:space="preserve">
     <value>Saved for offline</value>

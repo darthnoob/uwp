@@ -13,14 +13,9 @@
     Style="{ThemeResource MegaAlertDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneWay}"
     PrimaryButtonText="{x:Bind ViewModel.ButtonLabel, Mode=OneWay}"
     PrimaryButtonCommand="{x:Bind ViewModel.ButtonCommand}">
-    <dialogViews:BaseAlertDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"/>
-    </dialogViews:BaseAlertDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
         <TextBlock

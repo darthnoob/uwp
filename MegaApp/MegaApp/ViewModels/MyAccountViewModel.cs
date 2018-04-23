@@ -34,6 +34,12 @@ namespace MegaApp.ViewModels
         {
             if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
+            if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+            {
+                UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(true));
+                return;
+            }
+
             this.MegaSdk.logout(new LogOutRequestListener());
         }
 

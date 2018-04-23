@@ -41,8 +41,7 @@ namespace MegaApp.ViewModels
             {
                 Header = ResourceService.UiResources.GetString("UI_RecoveryKey")
             };
-            this.recoveryKeySetting = new RecoveryKeySettingViewModel();
-            recoveryKeySettings.Items.Add(this.recoveryKeySetting);
+            recoveryKeySettings.Items.Add(SettingsService.RecoveryKeySetting);
 
             this.SecuritySettingSections.Add(recoveryKeySettings);
         }
@@ -62,7 +61,7 @@ namespace MegaApp.ViewModels
         public override void UpdateNetworkStatus()
         {
             base.UpdateNetworkStatus();
-            this.recoveryKeySetting.UpdateNetworkStatus();
+            SettingsService.RecoveryKeySetting.UpdateNetworkStatus();
         }
 
         #region Properties
@@ -70,8 +69,6 @@ namespace MegaApp.ViewModels
         public List<SettingSectionViewModel> GeneralSettingSections { get; }
         public List<SettingSectionViewModel> CameraUploadSettingSections { get; }
         public List<SettingSectionViewModel> SecuritySettingSections { get; }
-
-        private RecoveryKeySettingViewModel recoveryKeySetting { get; }
 
         #endregion
 
