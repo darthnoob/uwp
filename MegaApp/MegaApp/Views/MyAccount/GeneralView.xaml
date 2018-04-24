@@ -288,8 +288,9 @@
                 <TextBlock
                     Margin="0,64,0,20"
                     Style="{ThemeResource MegaHeaderFontStyle}"
-                    Text="{Binding UnlockedBonusesTitle, Mode=OneTime}" />
-                <StackPanel>
+                    Text="{Binding UnlockedBonusesTitle, Mode=OneTime}"
+                    Visibility="{Binding AccountAchievements.IsAchievementsEnabled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                <StackPanel Visibility="{Binding AccountAchievements.IsAchievementsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
                     <TextBlock
                         FontSize="14"
                         Opacity="0.7"
@@ -348,10 +349,3 @@
         </ScrollViewer>
     </Grid>
 </myAccountViews:BaseGeneralView>
-
-
-
-
-
-
-

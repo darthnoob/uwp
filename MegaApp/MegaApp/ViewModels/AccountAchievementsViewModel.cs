@@ -8,6 +8,13 @@ namespace MegaApp.ViewModels
     {
         #region Properties
 
+        private bool _isAchievementsEnabled;
+        public bool IsAchievementsEnabled
+        {
+            get { return _isAchievementsEnabled; }
+            set { SetField(ref _isAchievementsEnabled, value); }
+        }
+
         private ulong _currentStorageQuota;
         public ulong CurrentStorageQuota
         {

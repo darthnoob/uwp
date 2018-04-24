@@ -55,7 +55,8 @@
                     <StackPanel
                         Grid.Row="1"
                         Grid.Column="1"
-                        Margin="12,0,0,32">
+                        Margin="12,0,0,32"
+                        Visibility="{Binding AccountAchievements.IsAchievementsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding BonusStorageText, Mode=OneTime}" />
                         <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding AccountAchievements.CurrentStorageQuotaText, Mode=OneWay}" />
                     </StackPanel>
@@ -236,7 +237,8 @@
                     <StackPanel
                         Grid.Row="0"
                         Grid.Column="1"
-                        Margin="12,0,0,0">
+                        Margin="12,0,0,0"
+                        Visibility="{Binding AccountAchievements.IsAchievementsEnabled, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding BonusTransferQuotaText, Mode=OneTime}" />
                         <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding AccountAchievements.CurrentTransferQuotaText, Mode=OneWay}" />
                     </StackPanel>

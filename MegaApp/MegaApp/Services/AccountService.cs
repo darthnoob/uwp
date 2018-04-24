@@ -132,12 +132,17 @@ namespace MegaApp.Services
 
         public static async void GetAccountAchievements()
         {
+            UiService.OnUiThread(() => 
+                AccountAchievements.IsAchievementsEnabled = SdkService.MegaSdk.isAchievementsEnabled());
+
+            if (!SdkService.MegaSdk.isAchievementsEnabled()) return;
+
             var accountAchievementsRequestListener = new GetAccountAchievementsRequestListenerAsync();
             var accountAchievements = await accountAchievementsRequestListener.ExecuteAsync(() =>
             {
                 SdkService.MegaSdk.getAccountAchievements(accountAchievementsRequestListener);
             });
-
+            
             if (accountAchievements == null) return;
             
             var awards = new List<AwardClassViewModel>

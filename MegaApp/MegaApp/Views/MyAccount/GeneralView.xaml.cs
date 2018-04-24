@@ -30,6 +30,13 @@ namespace MegaApp.Views.MyAccount
         {
             var tooltip = sender as ToolTip;
             if (tooltip == null) return;
+
+            if (!this.ViewModel.AccountAchievements.IsAchievementsEnabled)
+            {
+                tooltip.IsOpen = false;
+                return;
+            }
+
             tooltip.Content = new ListView
             {
                 Width = 280,
@@ -46,6 +53,8 @@ namespace MegaApp.Views.MyAccount
 
         private async void ShowToolTipOnTapped(object sender, TappedRoutedEventArgs e)
         {
+            if (!this.ViewModel.AccountAchievements.IsAchievementsEnabled) return;
+           
             // Show the tooltip on mobile devices on tap for 3 seconds
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop) return;
 
