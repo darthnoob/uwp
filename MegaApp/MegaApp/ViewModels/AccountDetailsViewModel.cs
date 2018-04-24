@@ -264,7 +264,9 @@ namespace MegaApp.ViewModels
         }
 
         public ulong AvailableTransferQuota => UsedTransferQuota < TransferQuota ? TransferQuota - UsedTransferQuota : 0;
-        public string AvailableTransferQuotaText => AvailableTransferQuota.ToStringAndSuffix(1);
+
+        public string AvailableTransferQuotaText => IsProAccount ?
+            AvailableTransferQuota.ToStringAndSuffix(1) : ResourceService.UiResources.GetString("UI_NotAvailable");
 
         private bool _isInTransferOverquota;
         public bool IsInTransferOverquota

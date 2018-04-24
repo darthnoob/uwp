@@ -250,7 +250,9 @@
                                 </TextBlock>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Grid.Column="1">
+                        <StackPanel 
+                            Grid.Column="1"
+                            Visibility="{Binding AccountDetails.IsProAccount, Converter={StaticResource BoolToVisibilityConverter}}">
                             <TextBlock
                                 x:Name="UsedTransferQuotaLabelText"
                                 Style="{ThemeResource MegaTitleFontStyle}"
