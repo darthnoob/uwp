@@ -18,13 +18,13 @@ namespace MegaApp.Services
 
         #endregion
 
-        private static List<IMegaNode> _selectedNodes;
-        public static List<IMegaNode> SelectedNodes
+        private static List<IBaseNode> _selectedNodes;
+        public static List<IBaseNode> SelectedNodes
         {
             get
             {
                 if (_selectedNodes != null) return _selectedNodes;
-                _selectedNodes = new List<IMegaNode>();
+                _selectedNodes = new List<IBaseNode>();
                 return _selectedNodes;
             }
 
@@ -100,7 +100,7 @@ namespace MegaApp.Services
         /// <param name="node">Node to check if is in the selected node list</param>
         /// <param name="setDisplayMode">Indicates if is needed to set the display mode of the node</param>
         /// <returns>True if is a selected node or false in other case</returns>
-        public static bool IsSelectedNode(IMegaNode node, bool setDisplayMode = false)
+        public static bool IsSelectedNode(IBaseNode node, bool setDisplayMode = false)
         {
             if (!(SelectedNodes?.Count > 0)) return false;
 
@@ -108,7 +108,7 @@ namespace MegaApp.Services
             for (int index = 0; index < count; index++)
             {
                 var selectedNode = SelectedNodes[index];
-                if (node.OriginalMNode.getBase64Handle() == selectedNode?.OriginalMNode.getBase64Handle())
+                if (node.Base64Handle == selectedNode.Base64Handle)
                 {
                     if (setDisplayMode)
                     {

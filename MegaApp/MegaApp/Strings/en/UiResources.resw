@@ -407,8 +407,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>Logout</value>
-    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Log out</value>
+    <comment>Label for any 'Log out' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
     <value>Upload your photos to your account.</value>
@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Your Recovery key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <value>Saving the Recovery key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">
@@ -1598,8 +1598,40 @@ Keep the {0} code because is for include the number of selected items in runtime
   </data>
   <data name="UI_FileLink" xml:space="preserve">
     <value>File link</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
-</comment>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>Backup Recovery key</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Don’t show me again</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>Saved for offline</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveForOffline" xml:space="preserve">
+    <value>Save for offline</value>
+    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromOffline" xml:space="preserve">
+    <value>Remove from offline</value>
+    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>Offline files</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
     <value>Referral status ({0})</value>

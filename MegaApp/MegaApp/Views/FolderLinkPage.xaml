@@ -42,6 +42,7 @@
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -74,6 +75,7 @@
                             extensions:CommandBarExtensions.HideMoreButton="True">
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
@@ -87,6 +89,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
@@ -100,6 +103,7 @@
                             </AppBarButton>
                             <AppBarButton
                                 Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                                IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
@@ -174,9 +178,11 @@
                 </CommandBar>
             </Grid>
 
+            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+            
             <Grid
                 x:Name="MainGrid"
-                Grid.Row="1"
+                Grid.Row="2"
                 Background="Transparent"
                 Margin="24,8,12,0">
                 <Grid.RowDefinitions>
@@ -199,7 +205,7 @@
             </Grid>
 
             <Grid
-                Grid.Row="1"
+                Grid.Row="2"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 extensions:IsVisibleAnimation.IsVisible="{Binding IsBusy}"
@@ -224,12 +230,13 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
                 <CommandBar 
                     DataContext="{x:Bind ViewModel.FolderLink, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.DownloadText, Mode=OneTime}"
@@ -243,6 +250,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.ImportCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.ImportText, Mode=OneTime}"
@@ -256,6 +264,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.FolderLink.ItemCollection.MultiSelectCommand}"
+                        IsEnabled="{x:Bind ViewModel.FolderLink.ItemCollection.HasItems, Mode=OneWay}"
                         Label="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.FolderLink.MultiSelectText, Mode=OneTime}">

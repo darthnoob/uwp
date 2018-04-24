@@ -8,7 +8,7 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class ChangePasswordDialogViewModel : BaseUiViewModel
+    public class ChangePasswordDialogViewModel : BaseContentDialogViewModel
     {
         public ChangePasswordDialogViewModel()
         {
@@ -231,8 +231,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region Properties
-
-        public bool CanClose = false;
 
         private string _currentPassword;
         public string CurrentPassword

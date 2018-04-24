@@ -4,9 +4,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class AlertDialogViewModel : BaseViewModel
+    public class AlertDialogViewModel : BaseContentDialogViewModel
     {
-        public AlertDialogViewModel()
+        public AlertDialogViewModel() : base()
         {
             this.ButtonCommand = new RelayCommand(ButtonAction);
         }

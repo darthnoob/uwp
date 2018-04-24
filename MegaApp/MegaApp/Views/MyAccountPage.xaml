@@ -12,11 +12,12 @@
     d:DataContext="{d:DesignInstance viewModels:MyAccountViewModel}"
     mc:Ignorable="d">
 
-    <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid x:Name="TopRowGrid" Grid.Row="0">
@@ -38,6 +39,7 @@
                 Grid.Column="1"
                 extensions:CommandBarExtensions.HideMoreButton="True"
                 Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 Style="{StaticResource MegaCommandBarStyle}">
                 <AppBarButton
                     Click="OnButtonClick"
@@ -52,7 +54,9 @@
             </CommandBar>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="12,0">
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+        
+        <Grid x:Name="MainGrid" Grid.Row="2" Margin="12,0">
             <Pivot
                 x:Name="MyAccountPivot"
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -92,7 +96,8 @@
 
         <CommandBar
             x:Name="BottomCommandBar"
-            Grid.Row="2"
+            Grid.Row="3"
+            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
             Style="{StaticResource MegaCommandBarStyle}">
             <AppBarButton
                 Click="OnButtonClick"

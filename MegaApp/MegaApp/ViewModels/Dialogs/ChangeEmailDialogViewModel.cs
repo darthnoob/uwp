@@ -5,9 +5,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class ChangeEmailDialogViewModel : BaseViewModel
+    public class ChangeEmailDialogViewModel : BaseContentDialogViewModel
     {
-        public ChangeEmailDialogViewModel()
+        public ChangeEmailDialogViewModel() : base()
         {
             this.SaveButtonCommand = new RelayCommand(Save);
             this.CancelButtonCommand = new RelayCommand(Cancel);
@@ -87,8 +87,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region Properties
-
-        public bool CanClose { get; set; }
 
         private string _newEmail;
         public string NewEmail

@@ -145,6 +145,19 @@ namespace MegaApp.ViewModels
             }
         }
 
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            if (this.ItemCollection == null) return;
+
+            foreach (var item in this.ItemCollection.Items)
+            {
+                var node = item as BaseNodeViewModel;
+                if (node == null) continue;
+                node.UpdateNetworkStatus();
+            }
+        }
+
         #region Properties
 
         public ObservableCollection<GroupedByDateItemViewModel> Items { get; set; }
@@ -171,11 +184,11 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public string OrderTypeAndNumberOfItems => this.FolderRootNode != null ? 
+        public override string OrderTypeAndNumberOfItems => this.FolderRootNode != null ? 
             string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), 
                 this.MegaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode)) : string.Empty;
 
-        public string OrderTypeAndNumberOfSelectedItems => this.FolderRootNode != null ?
+        public override string OrderTypeAndNumberOfSelectedItems => this.FolderRootNode != null ?
             string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
                 this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count) : string.Empty;
 

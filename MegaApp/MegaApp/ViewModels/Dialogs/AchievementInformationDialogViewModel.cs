@@ -8,7 +8,7 @@ using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class AchievementInformationDialogViewModel: BaseViewModel
+    public class AchievementInformationDialogViewModel: BaseContentDialogViewModel
     {
         public AchievementInformationDialogViewModel()
         {

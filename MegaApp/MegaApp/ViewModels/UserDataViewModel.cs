@@ -139,10 +139,15 @@ namespace MegaApp.ViewModels
             get
             {
                 if (!string.IsNullOrWhiteSpace(UserName))
-                    return UserName.Substring(0, 1).ToUpper();
+                {
+                    return UserName.CompareTo(ResourceService.UiResources.GetString("UI_MyAccount")) == 0 ?
+                        string.Empty : UserName.Substring(0, 1).ToUpper();
+                }
+
                 if (!string.IsNullOrWhiteSpace(UserEmail))
                     return UserEmail.Substring(0, 1).ToUpper();
-                return "M"; // If no data available, return "M" of MEGA
+
+                return string.Empty;
             }
         }
 

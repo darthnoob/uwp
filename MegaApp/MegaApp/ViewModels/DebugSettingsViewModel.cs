@@ -93,7 +93,7 @@ namespace MegaApp.ViewModels
                     var folder = await FolderService.SelectFolder();
                     if (folder != null)
                     {
-                        await Task.Run(async () => await FileService.MoveFile(AppService.GetFileLogPath(), folder.Path));
+                        await Task.Run(async () => await FileService.MoveFileAsync(AppService.GetFileLogPath(), folder.Path));
                         return;
                     }
                 }

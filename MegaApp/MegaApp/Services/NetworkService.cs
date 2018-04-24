@@ -9,6 +9,11 @@ namespace MegaApp.Services
     static class NetworkService
     {
         /// <summary>
+        /// State of the network connection
+        /// </summary>
+        public static bool IsNetworkAvailable;
+
+        /// <summary>
         /// Returns if there is an available network connection.
         /// </summary>        
         /// <param name="showMessageDialog">Boolean parameter to indicate if show a message if no Intenert connection</param>
@@ -19,7 +24,10 @@ namespace MegaApp.Services
             {
                 var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
                 if (connectionProfile?.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
-                    return true;
+                {
+                    IsNetworkAvailable = true;
+                    return IsNetworkAvailable;
+                }
             }
 
             if (showMessageDialog)
@@ -29,7 +37,8 @@ namespace MegaApp.Services
                     ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"));
             }
 
-            return false;
+            IsNetworkAvailable = false;
+            return IsNetworkAvailable;
         }
 
         /// <summary>
