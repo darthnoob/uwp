@@ -1272,4 +1272,12 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Folder failed to open</value>
     <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_PasswordChangeFailed" xml:space="preserve">
+    <value>Failed to change your password. Please try again.</value>
+    <comment>Message of the dialog displayed when the user has failed to change his password</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
+    <value>Error change password</value>
+    <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
+  </data>
 </root>

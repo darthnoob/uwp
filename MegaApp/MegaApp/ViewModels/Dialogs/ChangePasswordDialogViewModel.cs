@@ -81,17 +81,15 @@ namespace MegaApp.ViewModels.Dialogs
 
             var changePassword = new ChangePasswordRequestListenerAsync();
             var result = await changePassword.ExecuteAsync(() =>
-                SdkService.MegaSdk.changePassword(this.CurrentPassword, this.NewPassword, changePassword));
+                SdkService.MegaSdk.changePasswordWithoutOld(this.NewPassword, changePassword));
 
             this.IsBusy = false;
             this.ControlState = true;
             this.SaveButtonState = true;
 
-            // If something went wrong, probably the current password is wrong
             if (!result)
             {
-                SetInputState(currentPassword: InputState.Warning);
-                SetWarning(true, ResourceService.AppMessages.GetString("AM_WrongPassword"));                
+                SetWarning(true, ResourceService.AppMessages.GetString("AM_PasswordChangeFailed"));                
                 return;
             }
 
@@ -109,13 +107,10 @@ namespace MegaApp.ViewModels.Dialogs
         private bool CheckInputParameters()
         {
             // If there are empty fields
-            if (string.IsNullOrWhiteSpace(this.CurrentPassword) || string.IsNullOrWhiteSpace(this.NewPassword) ||
-                string.IsNullOrWhiteSpace(this.ConfirmPassword))
+            if (string.IsNullOrWhiteSpace(this.NewPassword) || string.IsNullOrWhiteSpace(this.ConfirmPassword))
             {
                 this.SetWarning(true, ResourceService.AppMessages.GetString("AM_EmptyRequiredFields"));
                 SetInputState(
-                    currentPassword: string.IsNullOrWhiteSpace(this.CurrentPassword) ?
-                        InputState.Warning : InputState.Normal,
                     newPassword: string.IsNullOrWhiteSpace(this.NewPassword) ?
                         InputState.Warning : InputState.Normal,
                     confirmPassword: string.IsNullOrWhiteSpace(this.ConfirmPassword) ?
@@ -135,15 +130,18 @@ namespace MegaApp.ViewModels.Dialogs
         /// <returns>TRUE if is all right or FALSE in other case.</returns>
         private bool CheckNewPassword()
         {
-            // If the new password and the old password are the same, 
-            // or the new password and the confirmation password don't match
-            if (this.CurrentPassword.Equals(this.NewPassword) || !this.NewPassword.Equals(this.ConfirmPassword))
+            // If the new password and the old password are the same
+            if (SdkService.MegaSdk.checkPassword(this.NewPassword))
             {
-                if (this.CurrentPassword.Equals(this.NewPassword))
-                    this.SetWarning(true, ResourceService.AppMessages.GetString("AM_NewAndOldPasswordMatch"));
-                else if (!this.NewPassword.Equals(this.ConfirmPassword))
-                    this.SetWarning(true, ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"));
+                this.SetWarning(true, ResourceService.AppMessages.GetString("AM_NewAndOldPasswordMatch"));
+                SetInputState(newPassword: InputState.Warning);
+                return false;
+            }
 
+            // If the new password and the confirmation password don't match
+            if (!this.NewPassword.Equals(this.ConfirmPassword))
+            {
+                this.SetWarning(true, ResourceService.AppMessages.GetString("AM_PasswordsDoNotMatch"));
                 SetInputState(newPassword: InputState.Warning, confirmPassword: InputState.Warning);
                 return false;
             }
@@ -179,17 +177,14 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Sets the input fields state.
         /// </summary>
-        /// <param name="currentPassword">State of the current password field.</param>
         /// <param name="newPassword">State of the new password field.</param>
         /// <param name="confirmPassword">State of the confirm password field.</param>
         private void SetInputState(
-            InputState currentPassword = InputState.Normal,
             InputState newPassword = InputState.Normal,
             InputState confirmPassword = InputState.Normal)
         {
             OnUiThread(() =>
             {
-                this.CurrentPasswordInputState = currentPassword;
                 this.NewPasswordInputState = newPassword;
                 this.ConfirmPasswordInputState = confirmPassword;
             });
@@ -200,8 +195,7 @@ namespace MegaApp.ViewModels.Dialogs
         /// </summary>
         private void SetButtonState()
         {
-            var enabled = !string.IsNullOrWhiteSpace(this.CurrentPassword) &&
-                          !string.IsNullOrWhiteSpace(this.NewPassword) &&
+            var enabled = !string.IsNullOrWhiteSpace(this.NewPassword) &&
                           !string.IsNullOrWhiteSpace(this.ConfirmPassword);
 
             OnUiThread(() => this.SaveButtonState = enabled);
@@ -231,17 +225,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region Properties
-
-        private string _currentPassword;
-        public string CurrentPassword
-        {
-            get { return _currentPassword; }
-            set
-            {
-                SetField(ref _currentPassword, value);
-                SetButtonState();
-            }
-        }
 
         private string _newPassword;
         public string NewPassword
@@ -294,13 +277,6 @@ namespace MegaApp.ViewModels.Dialogs
             set { SetField(ref _isWarningVisible, value); }
         }
 
-        private InputState _currentPasswordInputState;
-        public InputState CurrentPasswordInputState
-        {
-            get { return _currentPasswordInputState; }
-            set { SetField(ref _currentPasswordInputState, value); }
-        }
-
         private InputState _newPasswordInputState;
         public InputState NewPasswordInputState
         {
@@ -321,7 +297,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         public string TitleText => ResourceService.UiResources.GetString("UI_ChangePassword");
         public string DescriptionText => ResourceService.UiResources.GetString("UI_ChangePasswordDescription");
-        public string CurrentPasswordText => ResourceService.UiResources.GetString("UI_CurrentPassword");
         public string NewPasswordText => ResourceService.UiResources.GetString("UI_NewPassword");
         public string ReEnterNewPasswordText => ResourceService.UiResources.GetString("UI_ReEnterNewPassword");
         public string SaveText => ResourceService.UiResources.GetString("UI_Save");
