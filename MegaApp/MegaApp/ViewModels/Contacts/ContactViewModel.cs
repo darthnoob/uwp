@@ -7,6 +7,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -20,7 +21,7 @@ namespace MegaApp.ViewModels.Contacts
         {
             this.MegaUser = contact;
             this.ContactList = contactList;
-
+            
             this.Handle = contact.getHandle();
             this.Email = contact.getEmail();
             this.Timestamp = contact.getTimestamp();
@@ -46,10 +47,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public async void GetContactFirstname()
         {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var firstName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                this.MegaSdk.getUserAttribute(this.MegaUser,
-                (int)MUserAttrType.USER_ATTR_FIRSTNAME, contactAttributeRequestListener));
+            var firstName = await ContactsService.GetContactFirstName(this.MegaUser);
             UiService.OnUiThread(() => this.FirstName = firstName);
         }
 
@@ -58,10 +56,7 @@ namespace MegaApp.ViewModels.Contacts
         /// </summary>
         public async void GetContactLastname()
         {
-            var contactAttributeRequestListener = new GetUserAttributeRequestListenerAsync();
-            var lastName = await contactAttributeRequestListener.ExecuteAsync(() =>
-                this.MegaSdk.getUserAttribute(this.MegaUser,
-                (int)MUserAttrType.USER_ATTR_LASTNAME, contactAttributeRequestListener));
+            var lastName = await ContactsService.GetContactLastName(this.MegaUser);
             UiService.OnUiThread(() => this.LastName = lastName);
         }
 
@@ -295,6 +290,121 @@ namespace MegaApp.ViewModels.Contacts
             get { return _contactList; }
             set { SetField(ref _contactList, value); }
         }
+
+        #region Achievement properties
+
+        private long _storageAmount;
+        /// <summary>
+        /// Amount of MEGA service referral bonus storage for this contact
+        /// </summary>
+        public long StorageAmount
+        {
+            get { return _storageAmount; }
+            set
+            {
+                SetField(ref _storageAmount, value);
+                OnPropertyChanged(nameof(StorageAmountText));
+            }
+        }
+
+        private long _transferAmount;
+        /// <summary>
+        /// Amount of MEGA service referral bonus transfer for this contact
+        /// </summary>
+        public long TransferAmount
+        {
+            get { return _transferAmount; }
+            set
+            {
+                SetField(ref _transferAmount, value);
+                OnPropertyChanged(nameof(TransferAmountText));
+            }
+        }
+
+        public string StorageAmountText => ((ulong)StorageAmount).ToStringAndSuffix();
+
+        public string TransferAmountText => ((ulong)TransferAmount).ToStringAndSuffix();
+
+        private DateTime? _referralBonusExpireDate;
+        /// <summary>
+        /// End date of the referral bonus for this contact
+        /// </summary>
+        public DateTime? ReferralBonusExpireDate
+        {
+            get { return _referralBonusExpireDate; }
+            set { SetField(ref _referralBonusExpireDate, value); }
+        }
+
+        /// <summary>
+        /// Gets if the referral bonus for this contact is already expired or not
+        /// </summary>
+        public bool IsReferralBonusExpired => 
+            ReferralBonusExpireDate.HasValue && ReferralBonusExpireDate <= DateTime.Now;
+
+        /// <summary>
+        /// Amount of days before the referral bonus of this contact expires
+        /// </summary>
+        public int ReferralBonusExpiresIn => 
+            ReferralBonusExpireDate?.Subtract(DateTime.Today).Days ?? -1;
+
+        /// <summary>
+        /// Amount of days before the referral bonus of this contact expires as text
+        /// </summary>
+        public string ReferralBonusDaysRemaining => AccountService.GetDaysRemaining(ReferralBonusExpiresIn);
+
+
+        private MContactRequestStatusType StatusType => this.MegaSdk.getContactRequestByHandle(this.Handle) != null
+            ? (MContactRequestStatusType) this.MegaSdk.getContactRequestByHandle(this.Handle).getStatus()
+            : MContactRequestStatusType.STATUS_ACCEPTED;
+
+        /// <summary>
+        /// Current referral status of this contact as text
+        /// </summary>
+        public string ReferralStatus
+        {
+            get
+            {
+                switch (this.StatusType)
+                {
+                    case MContactRequestStatusType.STATUS_UNRESOLVED:
+                        return ResourceService.UiResources.GetString("UI_Pending");
+                    case MContactRequestStatusType.STATUS_ACCEPTED:
+                        return this.ReferralBonusDaysRemaining;
+                    case MContactRequestStatusType.STATUS_DENIED:                        
+                    case MContactRequestStatusType.STATUS_IGNORED:
+                    case MContactRequestStatusType.STATUS_DELETED:
+                    case MContactRequestStatusType.STATUS_REMINDED:
+                        return string.Empty;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Integer to be able to order the contacts depending on their referral status
+        /// </summary>
+        public int ReferralStatusOrder => GetReferralStatusOrder();
+
+        private int GetReferralStatusOrder()
+        {
+            switch (this.StatusType)
+            {
+                case MContactRequestStatusType.STATUS_UNRESOLVED:
+                    return 1;
+                case MContactRequestStatusType.STATUS_ACCEPTED:
+                    return IsReferralBonusExpired ? 3 : 0;
+                case MContactRequestStatusType.STATUS_DENIED:
+                case MContactRequestStatusType.STATUS_IGNORED:
+                case MContactRequestStatusType.STATUS_DELETED:
+                case MContactRequestStatusType.STATUS_REMINDED:
+                    return 2;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        #endregion
 
         #endregion
 

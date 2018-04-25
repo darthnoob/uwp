@@ -103,7 +103,7 @@
                         Background="Transparent"
                         extensions:CommandBarExtensions.HideMoreButton="True"
                         Grid.Column="1"
-                        Margin="0,0,12,0"
+                        Margin="0,-12,12,-12"
                         VerticalAlignment="Center"
                         Visibility="{Binding ShowOfflineBannerCloseButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <AppBarButton

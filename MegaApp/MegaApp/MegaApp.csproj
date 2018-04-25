@@ -136,7 +136,9 @@
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
     <Compile Include="Interfaces\IOfflineNode.cs" />
     <Compile Include="MegaApi\CancelTransferRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetAccountAchievementsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="UserControls\ShareToPanel.xaml.cs">
       <DependentUpon>ShareToPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AccountAchievementsViewModel.cs" />
     <Compile Include="ViewModels\BaseFolderViewModel.cs" />
     <Compile Include="ViewModels\BaseNodeViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Services\DebugService.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
     <Compile Include="ViewModels\ContactsManagerViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AchievementInformationDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AddContactDialogViewModel.cs" />
     <Compile Include="UserControls\SimplePage.cs" />
     <Compile Include="ViewModels\CreateAccount\ConfirmEmailViewModel.cs" />
@@ -230,6 +234,9 @@
     <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AchievementsViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AwardClassViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AchievementInvitationsViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineFileNodeViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
@@ -274,6 +281,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\AwaitEmailConfirmationDialog.xaml.cs">
       <DependentUpon>AwaitEmailConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AchievementInformationDialog.xaml.cs">
+      <DependentUpon>AchievementInformationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ChangeEmailDialog.xaml.cs">
       <DependentUpon>ChangeEmailDialog.xaml</DependentUpon>
@@ -393,11 +403,17 @@
     <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyAccount\AchievementInvitationsPage.xaml.cs">
+      <DependentUpon>AchievementInvitationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\AchievementsView.xaml.cs">
+      <DependentUpon>AchievementsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\StorageAndTransferView.xaml.cs">
       <DependentUpon>StorageAndTransferView.xaml</DependentUpon>
@@ -510,6 +526,10 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Achievements\desktopApp.png" />
+    <Content Include="Assets\Achievements\gettingStarted.png" />
+    <Content Include="Assets\Achievements\inviteFriend.png" />
+    <Content Include="Assets\Achievements\mobileApp.png" />
     <Content Include="Assets\ToastLogo.png" />
     <Content Include="Assets\ToastWarning.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
@@ -610,6 +630,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\AchievementInformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\ChangeEmailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -684,6 +708,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MyAccount\AchievementInvitationsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -691,6 +719,10 @@
     <Page Include="Views\MyAccount\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\AchievementsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MyAccount\StorageAndTransferView.xaml">
       <SubType>Designer</SubType>

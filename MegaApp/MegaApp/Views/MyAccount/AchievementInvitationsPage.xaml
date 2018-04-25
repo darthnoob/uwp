@@ -1,0 +1,192 @@
+﻿<myAccountViews:BaseAchievementInvitationsPage
+    x:Class="MegaApp.Views.MyAccount.AchievementInvitationsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:myAccountViewModels="using:MegaApp.ViewModels.MyAccount"
+    xmlns:myAccountViews="using:MegaApp.Views.MyAccount"
+    xmlns:windowsStateTriggers="using:WindowsStateTriggers"
+    d:DataContext="{d:DesignInstance myAccountViewModels:AchievementInvitationsViewModel}"
+    mc:Ignorable="d">
+
+    <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TopRowGrid" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="SectionNameText"
+                Grid.Row="0"
+                Margin="24,14,0,0"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.SectionNameText, Mode=OneTime}" />
+
+            <!--  PERMANENT TOP COMMAND BAR (ALL DEVICES)  -->
+            <Grid Grid.Row="0" Grid.Column="1">
+                <CommandBar
+                    extensions:CommandBarExtensions.HideMoreButton="True"
+                    Background="Transparent"
+                    DataContext="{Binding AwardClass.Contacts}"
+                    IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}">
+                    <AppBarSeparator
+                        x:Name="PermanentTopCommandBarSeparator"
+                        Margin="-12,0"
+                        VerticalAlignment="Center" />
+                    <AppBarButton
+                        x:Name="BtnSort"
+                        Click="OnSortClick"
+                        Label="{Binding SortByText}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding SortByText}">
+                        <AppBarButton.Icon>
+                            <PathIcon
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Data="{Binding SortByPathData, Mode=OneTime}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+                </CommandBar>
+            </Grid>
+
+        </Grid>
+
+        <Pivot
+            Name="MainPivot"
+            Grid.Row="1"
+            Margin="12,0"
+            HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
+            <PivotItem CacheMode="{x:Null}" Header="{Binding InviteFriendsTitle, Mode=OneTime}">
+                <Grid SizeChanged="OnSizeChanged">
+                    <ScrollViewer Margin="0,0,-12,0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel
+                            x:Name="MainStackPanel"
+                            MaxWidth="{StaticResource ViewAreaMaxWidth}"
+                            Margin="0,0,12,0"
+                            HorizontalAlignment="Left">
+                            <TextBlock
+                                Margin="0,24,0,32"
+                                Style="{ThemeResource MegaBodyFontStyle}"
+                                Text="{Binding InviteFriendsText, Mode=OneTime}" />
+                            <TextBox
+                                Height="{StaticResource InputHeight}"
+                                BorderBrush="{Binding EmailInputState, Converter={StaticResource InputStateToColorConverter}}"
+                                InputScope="EmailNameOrAddress"
+                                IsEnabled="{Binding ControlState}"
+                                KeyDown="OnKeyDown"
+                                PlaceholderText="{Binding EmailWatermarkText, Mode=OneTime}"
+                                Style="{StaticResource MegaTextBoxStyle}"
+                                TabIndex="0"
+                                Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="NoWrap" />
+                            <StackPanel
+                                Margin="0,20,0,0"
+                                Orientation="Horizontal"
+                                Visibility="{Binding IsWarningVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Viewbox
+                                    MaxWidth="16"
+                                    MaxHeight="16"
+                                    Margin="8,4,12,0"
+                                    VerticalAlignment="Top">
+                                    <PathIcon Data="{Binding WarningIconPathData, Mode=OneTime}" Foreground="{StaticResource MegaRedColorBrush}" />
+                                </Viewbox>
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{Binding WarningText}" />
+                            </StackPanel>
+                            <Button
+                                Width="120"
+                                Margin="0,16,4,0"
+                                Command="{Binding InviteCommand}"
+                                Content="{Binding InviteText, Mode=OneTime}"
+                                IsEnabled="{Binding InviteButtonState}" />
+                            <TextBlock
+                                Margin="0,48,0,14"
+                                Style="{ThemeResource MegaHeaderFontStyle}"
+                                Text="{Binding HowItWorksTitle, Mode=OneTime}" />
+                            <TextBlock
+                                Margin="0,0,0,48"
+                                Style="{ThemeResource MegaBodyFontStyle}"
+                                Text="{Binding HowItWorksText, Mode=OneTime}" />
+                            <TextBlock
+                                Margin="0,0,0,14"
+                                Style="{ThemeResource MegaHeaderFontStyle}"
+                                Text="{Binding WhyNotWorkingTitle, Mode=OneTime}" />
+                            <RichTextBlock
+                                Margin="0,0,0,14"
+                                Foreground="{StaticResource MegaAppForegroundBrush}"
+                                Opacity="0.8"
+                                TextWrapping="WrapWholeWords">
+                                <Paragraph FontSize="14">
+                                    <Run Text="{Binding WhyNotWorkingTextPart1, Mode=OneTime}" />
+                                    <Run FontWeight="Bold" Text="{Binding WhyNotWorkingTextPart2, Mode=OneTime}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </StackPanel>
+
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+            <PivotItem CacheMode="{x:Null}" Header="{Binding ReferralBonusTitle, Mode=OneTime}">
+                <Grid DataContext="{Binding AwardClass.Contacts}" Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                        <ContentControl Template="{StaticResource SelectAllCheckBoxWithOrderTypeAndNumberOfItems}" />
+                        <ContentControl Template="{StaticResource OrderTypeAndNumberOfItems}" />
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,-8,-12,0">
+                        <ListView
+                            x:Name="ListViewContacts"
+                            Margin="-12,0,0,0"
+                            Background="{StaticResource MegaAppBackgroundBrush}"
+                            ItemContainerStyle="{StaticResource StretchedListviewItemStyle}"
+                            ItemTemplate="{StaticResource MegaInviteContactItemDesktop}"
+                            ItemsSource="{Binding ItemCollection.Items}"
+                            SelectionMode="None" />
+                    </Grid>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,0,0" />
+                        <Setter Target="ListViewContacts.ItemTemplate" Value="{StaticResource MegaInviteContactItemMobile}" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
+                        <Setter Target="ListViewContacts.ItemTemplate" Value="{StaticResource MegaInviteContactItemDesktop}" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+
+</myAccountViews:BaseAchievementInvitationsPage>
+
+
+

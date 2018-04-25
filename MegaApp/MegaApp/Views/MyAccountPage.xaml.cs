@@ -26,17 +26,22 @@ namespace MegaApp.Views
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
             this.GeneralView.ViewModel.GoToUpgrade += GoToUpgrade;
+            this.GeneralView.ViewModel.GoToAchievements += GoToAchievements;
             this.StorageAndTransferView.ViewModel.GoToUpgrade += GoToUpgrade;
 
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
             if (navActionType == NavigationActionType.Upgrade)
                 this.MyAccountPivot.SelectedItem = this.UpgradePivot;
+
+            if (!AccountService.AccountAchievements.IsAchievementsEnabled)
+                MyAccountPivot.Items?.Remove(AchievementsPivot);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             this.GeneralView.ViewModel.GoToUpgrade -= GoToUpgrade;
+            this.GeneralView.ViewModel.GoToAchievements -= GoToAchievements;
             this.StorageAndTransferView.ViewModel.GoToUpgrade -= GoToUpgrade;
             base.OnNavigatedTo(e);
         }
@@ -49,6 +54,11 @@ namespace MegaApp.Views
         private void GoToUpgrade(object sender, EventArgs e)
         {
             this.MyAccountPivot.SelectedItem = this.UpgradePivot;
+        }
+
+        private void GoToAchievements(object sender, EventArgs e)
+        {
+            this.MyAccountPivot.SelectedItem = this.AchievementsPivot;
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e)

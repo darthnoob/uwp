@@ -10,6 +10,7 @@ using MegaApp.Extensions;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.Dialogs;
+using MegaApp.ViewModels.MyAccount;
 using MegaApp.ViewModels.SharedFolders;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
@@ -501,7 +502,8 @@ namespace MegaApp.Services
         /// Creates a sort menu for contacts.
         /// </summary>
         /// <returns>The flyout menu with the sort options.</returns>
-        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts)
+        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts,
+            bool showReferralStatusSort = false)
         {
             MenuFlyout menuFlyout = new MenuFlyout();
 
@@ -523,6 +525,53 @@ namespace MegaApp.Services
                 Command = new RelayCommand(() =>
                 {
                     contacts.CurrentOrder = ContactsSortOrderType.ORDER_EMAIL;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            if (showReferralStatusSort)
+            {
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionReferralStatus"),
+                    Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_STATUS),
+                    Command = new RelayCommand(() =>
+                    {
+                        contacts.CurrentOrder = ContactsSortOrderType.ORDER_STATUS;
+                        contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                    })
+                });
+            }
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contacts.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateInviteContactsSortMenu(ContactsListViewModel contacts)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items?.Add(new MenuFlyoutItem
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_NAME;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            menuFlyout.Items?.Add(new MenuFlyoutItem
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionReferralStatus"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_STATUS),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_STATUS;
                     contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });

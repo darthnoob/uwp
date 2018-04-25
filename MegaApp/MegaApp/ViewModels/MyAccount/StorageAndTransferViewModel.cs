@@ -72,6 +72,7 @@ namespace MegaApp.ViewModels.MyAccount
         public string TotalStorageText => ResourceService.UiResources.GetString("UI_TotalStorage");
         public string UsedStorageText => ResourceService.UiResources.GetString("UI_UsedStorage");
         public string AvailableStorageText => ResourceService.UiResources.GetString("UI_AvailableStorage");
+        public string BonusStorageText => ResourceService.UiResources.GetString("UI_BonusStorage");
         public string CloudDriveText => ResourceService.UiResources.GetString("UI_CloudDriveName");
         public string IncomingSharesText => ResourceService.UiResources.GetString("UI_IncomingShares");
 
@@ -80,6 +81,7 @@ namespace MegaApp.ViewModels.MyAccount
         public string TotalTransferQuotaText => ResourceService.UiResources.GetString("UI_TotalTransferQuota");
         public string UsedTransferQuotaText => ResourceService.UiResources.GetString("UI_UsedTransferQuota");
         public string AvailableTransferQuotaText => ResourceService.UiResources.GetString("UI_AvailableTransferQuota");
+        public string BonusTransferQuotaText => ResourceService.UiResources.GetString("UI_BonusTransferQuota");
 
         #endregion
     }

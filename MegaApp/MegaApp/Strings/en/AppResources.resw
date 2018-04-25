@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/42c33b1356bdfae7b4109984451e4eb9a5fcb14a</value>
+    <value>https://github.com/meganz/sdk/tree/d6cf405df9e0a8b6dc8d6a59f75f627c4309d984</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>42c33b1</value>
+    <value>d6cf405</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
@@ -264,5 +264,13 @@
   <data name="AR_FolderLinkHeader" xml:space="preserve">
     <value>https://mega.nz/#F!</value>
     <comment>Header of a folder link - (NO-TRANSLATION)</comment>
+  </data>
+  <data name="AR_MegaSyncUrl" xml:space="preserve">
+    <value>https://mega.nz/MEGAsyncSetup.exe</value>
+    <comment>URL to the MEGAsync application- (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_MobileAppsUrl" xml:space="preserve">
+    <value>https://mega.nz/mobile</value>
+    <comment>URL to mobile apps download page - (NO-TRANSLATION).</comment>
   </data>
 </root>
