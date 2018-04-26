@@ -10,17 +10,20 @@ namespace MegaApp.ViewModels.MyAccount
     public class MyAccountBaseViewModel : BaseUiViewModel
     {
         public EventHandler GoToUpgrade;
+        public EventHandler GoToAchievements;
 
         public MyAccountBaseViewModel()
         {
             this.RubbishBinCommand = new RelayCommand(RubbishBin);
             this.UpgradeCommand = new RelayCommand(Upgrade);
+            this.GetMoreBonusesCommand = new RelayCommand(GetMoreBonuses);
         }
 
         #region Commands
 
         public ICommand RubbishBinCommand { get; }
         public ICommand UpgradeCommand { get; }
+        public ICommand GetMoreBonusesCommand { get; }
 
         #endregion
 
@@ -40,11 +43,17 @@ namespace MegaApp.ViewModels.MyAccount
             GoToUpgrade?.Invoke(this, EventArgs.Empty);
         }
 
+        private void GetMoreBonuses()
+        {
+            GoToAchievements?.Invoke(this, EventArgs.Empty);
+        }
+
         #endregion
 
         #region Properties
 
         public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
+        public AccountAchievementsViewModel AccountAchievements => AccountService.AccountAchievements;
         public UserDataViewModel UserData => AccountService.UserData;
 
         #endregion

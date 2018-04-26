@@ -27,7 +27,8 @@
     public enum ContactsSortOrderType
     {
         ORDER_NAME  = 0,
-        ORDER_EMAIL = 1
+        ORDER_EMAIL = 1,
+        ORDER_STATUS = 2,
     }
 
     /// <summary>
