@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
+using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Login;
@@ -16,7 +18,17 @@ namespace MegaApp.ViewModels
             
             AccountService.UserData.UserEmailChanged += UserEmailChanged;
             AccountService.UserData.UserNameChanged += UserNameChanged;
+
+            this.CloseOfflineBannerCommand = new RelayCommand(CloseOfflineBanner);
         }
+
+        #region Commands
+
+        public ICommand CloseOfflineBannerCommand { get; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Initialize the viewmodel
@@ -42,6 +54,15 @@ namespace MegaApp.ViewModels
             if (MyAccountMenuItem == null) return;
             OnUiThread(() => MyAccountMenuItem.SubLabel = AccountService.UserData.UserEmail);
         }
+
+        private void CloseOfflineBanner()
+        {
+            if (!(this.ContentViewModel is SavedForOfflineViewModel)) return;
+            (this.ContentViewModel as SavedForOfflineViewModel).ShowOfflineBanner = false;
+            OnPropertyChanged(nameof(this.ShowOfflineBanner));
+        }
+
+        #endregion
 
         #region Properties
 
@@ -101,7 +122,12 @@ namespace MegaApp.ViewModels
         public BasePageViewModel ContentViewModel
         {
             get { return _contentViewModel; }
-            set { SetField(ref _contentViewModel, value); }
+            set
+            {
+                SetField(ref _contentViewModel, value);
+                OnPropertyChanged(nameof(this.ShowOfflineBanner),
+                    nameof(this.ShowOfflineBannerCloseButton));
+            }
         }
 
         private IList<MenuItemViewModel> _menuItems;
@@ -128,6 +154,24 @@ namespace MegaApp.ViewModels
         /// Navigation action used to arrive to the MainPage
         /// </summary>
         private NavigationActionType NavActionType { get; set; }
+
+        public bool ShowOfflineBanner => this.ContentViewModel is SavedForOfflineViewModel ?
+            (this.ContentViewModel as SavedForOfflineViewModel).ShowOfflineBanner : true;
+
+        public bool ShowOfflineBannerCloseButton =>
+            this.ContentViewModel is SavedForOfflineViewModel;
+
+        #endregion
+
+        #region UiResources
+
+        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
+
+        #endregion
+
+        #region VisualResources
+
+        public string ClosePathData => ResourceService.VisualResources.GetString("VR_ClosePathData");
 
         #endregion
     }

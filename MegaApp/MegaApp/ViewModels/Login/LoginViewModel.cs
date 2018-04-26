@@ -27,9 +27,31 @@ namespace MegaApp.ViewModels.Login
             OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_DecryptNodesSubHeader"));
         }
 
-        protected void OnServerBusy(object sender, EventArgs e)
+        protected void OnIsWaiting(object sender, MRetryReason reason)
         {
-            OnUiThread(() => this.ProgressText = ResourceService.ProgressMessages.GetString("PM_ServersTooBusySubHeader"));
+            string message = string.Empty;
+            switch(reason)
+            {
+                case MRetryReason.RETRY_CONNECTIVITY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ConnectivityIssue");
+                    break;
+
+                case MRetryReason.RETRY_SERVERS_BUSY:
+                    message = ResourceService.ProgressMessages.GetString("PM_ServersBusy");
+                    break;
+
+                case MRetryReason.RETRY_API_LOCK:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiLocked");
+                    break;
+
+                case MRetryReason.RETRY_RATE_LIMIT:
+                    message = ResourceService.ProgressMessages.GetString("PM_ApiRateLimit");
+                    break;
+
+                default: return;
+            }
+
+            OnUiThread(() => this.ProgressText = message);
         }
 
         /// <summary>
@@ -37,6 +59,8 @@ namespace MegaApp.ViewModels.Login
         /// </summary>
         public async void Login()
         {
+            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
+
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;
 
@@ -46,7 +70,7 @@ namespace MegaApp.ViewModels.Login
             if (!CheckInputParameters()) return;
 
             var login = new LoginRequestListenerAsync();
-            login.ServerBusy += OnServerBusy;
+            login.IsWaiting += OnIsWaiting;
 
             this.ControlState = false;
             this.LoginButtonState = false;
@@ -144,7 +168,7 @@ namespace MegaApp.ViewModels.Login
             });
         }
 
-        private void SetState()
+        protected virtual void SetButtonState()
         {
             var enabled = !string.IsNullOrWhiteSpace(this.Email) &&
                           !string.IsNullOrWhiteSpace(this.Password);
@@ -178,7 +202,7 @@ namespace MegaApp.ViewModels.Login
             AccountService.IsAccountBlocked = false;
 
             var fastLogin = new FastLoginRequestListenerAsync();
-            fastLogin.ServerBusy += OnServerBusy;
+            fastLogin.IsWaiting += OnIsWaiting;
 
             bool fastLoginResult;
             try
@@ -230,6 +254,13 @@ namespace MegaApp.ViewModels.Login
                 return false;
             }
 
+            // If is required show the password reminder dialog on background thread
+            Task.Run(async () =>
+            {
+                if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+                    UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(false));
+            });
+
             return true;
         }
 
@@ -237,13 +268,13 @@ namespace MegaApp.ViewModels.Login
         /// Fetch nodes and show an alert if something went wrong.
         /// </summary>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        protected async Task<FetchNodesResult> FetchNodes()
+        protected virtual async Task<FetchNodesResult> FetchNodes()
         {
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
             fetchNodes.DecryptNodes += OnDecryptNodes;
-            fetchNodes.ServerBusy += OnServerBusy;
+            fetchNodes.IsWaiting  += OnIsWaiting;
 
             var fetchNodesResult = await fetchNodes.ExecuteAsync(() => this.MegaSdk.fetchNodes(fetchNodes));
             if (fetchNodesResult == FetchNodesResult.Success)
@@ -283,7 +314,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _email, value);
-                SetState();
+                SetButtonState();
             }
         }
 
@@ -294,7 +325,7 @@ namespace MegaApp.ViewModels.Login
             set
             {
                 SetField(ref _password, value);
-                SetState();
+                SetButtonState();
             }
         }
 

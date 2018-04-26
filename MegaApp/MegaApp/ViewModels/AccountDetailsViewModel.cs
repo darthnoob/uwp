@@ -166,7 +166,7 @@ namespace MegaApp.ViewModels
 
         public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
 
-        public ulong _cloudDriveUsedSpace;
+        private ulong _cloudDriveUsedSpace;
         public ulong CloudDriveUsedSpace
         {
             get { return _cloudDriveUsedSpace; }
@@ -180,7 +180,7 @@ namespace MegaApp.ViewModels
 
         public string CloudDriveUsedSpaceText => CloudDriveUsedSpace.ToStringAndSuffix(1);
 
-        public ulong _incomingSharesUsedSpace;
+        private ulong _incomingSharesUsedSpace;
         public ulong IncomingSharesUsedSpace
         {
             get { return _incomingSharesUsedSpace; }
@@ -194,7 +194,7 @@ namespace MegaApp.ViewModels
 
         public string IncomingSharesUsedSpaceText => IncomingSharesUsedSpace.ToStringAndSuffix(1);
 
-        public ulong _rubbishBinUsedSpace;
+        private ulong _rubbishBinUsedSpace;
         public ulong RubbishBinUsedSpace
         {
             get { return _rubbishBinUsedSpace; }
@@ -208,7 +208,7 @@ namespace MegaApp.ViewModels
 
         public string RubbishBinUsedSpaceText => RubbishBinUsedSpace.ToStringAndSuffix(1);
 
-        public ulong _inSharesUsedSpace;
+        private ulong _inSharesUsedSpace;
         public ulong InSharesUsedSpace
         {
             get { return _inSharesUsedSpace; }
@@ -221,14 +221,8 @@ namespace MegaApp.ViewModels
 
         public string InSharesUsedSpaceText => InSharesUsedSpace.ToStringAndSuffix(1);
 
-        public Color StorageProgressBarColor
-        {
-            get
-            {
-                return IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["UsedStorageQuotaColor"];
-            }
-        }
+        public Color StorageProgressBarColor => IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
+            (Color)Application.Current.Resources["UsedStorageQuotaColor"];
 
         private ulong _transferQuota;
         public ulong TransferQuota
@@ -270,7 +264,9 @@ namespace MegaApp.ViewModels
         }
 
         public ulong AvailableTransferQuota => UsedTransferQuota < TransferQuota ? TransferQuota - UsedTransferQuota : 0;
-        public string AvailableTransferQuotaText => AvailableTransferQuota.ToStringAndSuffix(1);
+
+        public string AvailableTransferQuotaText => IsProAccount ?
+            AvailableTransferQuota.ToStringAndSuffix(1) : ResourceService.UiResources.GetString("UI_NotAvailable");
 
         private bool _isInTransferOverquota;
         public bool IsInTransferOverquota
@@ -299,14 +295,8 @@ namespace MegaApp.ViewModels
             TimeSpan.FromSeconds(TransferOverquotaDelay).ToString();
             
 
-        public Color TransferQuotaProgressBarColor
-        {
-            get
-            {
-                return IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
-                    (Color)Application.Current.Resources["UsedTransferQuotaColor"];
-            }
-        }
+        public Color TransferQuotaProgressBarColor => IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
+            (Color)Application.Current.Resources["UsedTransferQuotaColor"];
 
         public bool IsInOverquota => IsInStorageOverquota || IsInTransferOverquota;
 

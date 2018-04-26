@@ -130,7 +130,8 @@
                             Grid.Row="1"
                             Width="136"
                             Command="{Binding MembershipDurationSelectedCommand}"
-                            Content="{Binding NextText, Mode=OneTime}"/>
+                            Content="{Binding NextText, Mode=OneTime}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}" />
                     </Grid>
                 </StackPanel>
                 <StackPanel

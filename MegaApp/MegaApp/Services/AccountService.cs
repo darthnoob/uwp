@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
 using Windows.UI;
@@ -7,8 +9,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Contacts;
+using MegaApp.ViewModels.MyAccount;
 
 namespace MegaApp.Services
 {
@@ -32,6 +37,20 @@ namespace MegaApp.Services
                 if (_accountDetails != null) return _accountDetails;
                 _accountDetails = new AccountDetailsViewModel();
                 return _accountDetails;
+            }
+        }
+
+        /// <summary>
+        /// Storages all the account achievements info
+        /// </summary>
+        private static AccountAchievementsViewModel _accountAchievements;
+        public static AccountAchievementsViewModel AccountAchievements
+        {
+            get
+            {
+                if (_accountAchievements != null) return _accountAchievements;
+                _accountAchievements = new AccountAchievementsViewModel();
+                return _accountAchievements;
             }
         }
 
@@ -61,6 +80,16 @@ namespace MegaApp.Services
                 _upgradeAccount = new UpgradeAccountViewModel();
                 return _upgradeAccount;
             }
+        }
+
+        /// <summary>
+        /// Check if should show the password reminder dialog and show it in that case
+        /// </summary>
+        public static async Task<bool> ShouldShowPasswordReminderDialogAsync()
+        {
+            var passwordReminderDialogListener = new ShouldShowPasswordReminderDialogRequestListenerAsync();
+            return await passwordReminderDialogListener.ExecuteAsync(() =>
+                SdkService.MegaSdk.shouldShowPasswordReminderDialog(false, passwordReminderDialogListener));
         }
 
         /// <summary>
@@ -111,8 +140,165 @@ namespace MegaApp.Services
             }
         }
 
+        public static async void GetAccountAchievements()
+        {
+            UiService.OnUiThread(() => 
+                AccountAchievements.IsAchievementsEnabled = SdkService.MegaSdk.isAchievementsEnabled());
+
+            if (!SdkService.MegaSdk.isAchievementsEnabled()) return;
+
+            var accountAchievementsRequestListener = new GetAccountAchievementsRequestListenerAsync();
+            var accountAchievements = await accountAchievementsRequestListener.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.getAccountAchievements(accountAchievementsRequestListener);
+            });
+            
+            if (accountAchievements == null) return;
+            
+            var awards = new List<AwardClassViewModel>
+            {
+                // Add Base storage & transfer
+                new AwardClassViewModel(null, true)
+                {
+                    StorageReward = accountAchievements.getBaseStorage(),
+                }
+            };
+
+            var awardedClasses = new List<AwardClassViewModel>
+            {
+                // Add Base storage & transfer
+                new AwardClassViewModel(null, true)
+                {
+                    StorageReward = accountAchievements.getBaseStorage(),
+                    IsTransferAmountVisible = false,
+                }
+            };
+
+
+            // Get all the user awards
+            var awardsCount = accountAchievements.getAwardsCount();
+
+            for (uint i = 0; i < awardsCount; i++)
+            {
+                var awardId = accountAchievements.getAwardId(i);
+                var awardClass = (MAchievementClass) accountAchievements.getAwardClass(i);
+
+                var awardedClass = awardedClasses.FirstOrDefault(a => a.AchievementClass == awardClass);
+                if (awardedClass == null)
+                {
+                    awardedClass = new AwardClassViewModel(awardClass)
+                    {
+                        IsGranted = true
+                    };
+                    awardedClasses.Add(awardedClass);
+                }
+                
+                var storageReward = accountAchievements.getRewardStorageByAwardId(awardId);
+                var transferReward = accountAchievements.getRewardTransferByAwardId(awardId);
+                var expireDate = accountAchievements.getAwardExpirationTs(i).ConvertTimestampToDateTime();
+                var achievedOnDate = accountAchievements.getAwardTimestamp(i).ConvertTimestampToDateTime();
+                var durationInDays = accountAchievements.getClassExpire((int) awardClass);
+                awards.Add(new AwardClassViewModel(awardClass)
+                {
+                    StorageReward = storageReward,
+                    TransferReward = transferReward,
+                    ExpireDate = expireDate,
+                    AchievedOnDate = achievedOnDate,
+                    DurationInDays = durationInDays,
+                    IsGranted = true
+                });
+
+               
+                if (awardClass == MAchievementClass.MEGA_ACHIEVEMENT_INVITE)
+                {
+                    var mails = accountAchievements.getAwardEmails(i);
+                    var mailSize = mails.size();
+                    for (int m = 0; m < mailSize; m++)
+                    {
+                        var contact = new ContactViewModel(
+                            SdkService.MegaSdk.getContact(mails.get(m)), awardedClass.Contacts)
+                        {
+                            StorageAmount = storageReward,
+                            TransferAmount = transferReward,
+                            ReferralBonusExpireDate = expireDate,
+                        };
+                        awardedClass.Contacts.ItemCollection.Items.Add(contact);
+                        contact.GetContactFirstname();
+                        contact.GetContactLastname();
+                        contact.GetContactAvatarColor();
+                        contact.GetContactAvatar();
+                    }
+
+                    if (expireDate <= DateTime.Now) continue;
+
+                    awardedClass.StorageReward += storageReward;
+                    awardedClass.TransferReward += transferReward;
+                }
+                else
+                {
+                    awardedClass.ExpireDate = expireDate;
+                    awardedClass.StorageReward = storageReward;
+                    awardedClass.TransferReward = transferReward;
+                    awardedClass.AchievedOnDate = achievedOnDate;
+                    awardedClass.DurationInDays = durationInDays;
+                }
+            }
+
+            var awardClasses = Enum.GetValues(typeof(MAchievementClass)).OfType<MAchievementClass>();
+            var availableAwards = new List<AwardClassViewModel>();
+            foreach (var awardClass in awardClasses)
+            {
+                switch (awardClass)
+                {
+                    case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
+                        continue;
+                    case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
+                    {
+                        var inviteClass = new AwardClassViewModel(awardClass)
+                        {
+                            StorageReward = accountAchievements.getClassStorage((int)awardClass),
+                            TransferReward = accountAchievements.getClassTransfer((int)awardClass),
+                            DurationInDays = accountAchievements.getClassExpire((int)awardClass),
+                        };
+
+                        inviteClass.Contacts.ItemCollection.Items =
+                            awardedClasses.FirstOrDefault(a => a.AchievementClass == awardClass)?.Contacts.ItemCollection.Items;
+                        availableAwards.Add(inviteClass);
+
+                        continue;
+                    };
+                }
+
+                var available = awards.FirstOrDefault(a => a.AchievementClass == awardClass);
+
+                if (available != null) continue;
+
+                availableAwards.Add(new AwardClassViewModel(awardClass)
+                {
+                    StorageReward = accountAchievements.getClassStorage((int)awardClass),
+                    TransferReward = accountAchievements.getClassTransfer((int)awardClass),
+                    DurationInDays = accountAchievements.getClassExpire((int)awardClass)
+                });
+            }
+
+            UiService.OnUiThread(() =>
+            {
+                if (accountAchievements.currentStorage() != -1)
+                    AccountAchievements.CurrentStorageQuota = (ulong) accountAchievements.currentStorage();
+
+                if (accountAchievements.currentTransfer() != -1)
+                    AccountAchievements.CurrentTransferQuota = (ulong) accountAchievements.currentTransfer();
+
+                AccountAchievements.Awards = awards;
+                AccountAchievements.AwardedClasses = awardedClasses;
+                AccountAchievements.AvailableAwards = availableAwards;
+                AccountAchievements.CompletedAwards = awardedClasses.Where(a => a.IsGranted).ToList();
+            });
+
+        }
+
         /// <summary>
-        /// Gets the specific details related to a transfer overquota
+        /// Gets the specific details related to a transfer over-quota
         /// </summary>
         public static void GetTransferOverquotaDetails()
         {
@@ -549,6 +735,40 @@ namespace MegaApp.Services
                 UserData.Firstname = string.Empty;
                 UserData.Lastname = string.Empty;
             });
+        }
+
+        /// <summary>
+        /// Gets a string that resembles a number of day(s).
+        /// </summary>
+        /// <param name="days">Number of days to convert to string</param>
+        /// <returns>
+        /// A string that resembles a number of days or
+        /// '-' if the number of days is less than 1.
+        /// </returns>
+        public static string GetDays(long days)
+        {
+            if (days < 1) return "-";
+            return days == 1
+                ? string.Format("1 {0}", ResourceService.UiResources.GetString("UI_Day"))
+                : string.Format("{0} {1}", days, ResourceService.UiResources.GetString("UI_Days"));
+
+        }
+
+        /// <summary>
+        /// Gets a string that resembles a number of days remaining
+        /// </summary>
+        /// <param name="days">Number of days to convert to string</param>
+        /// <returns>
+        /// A string that resembles a number of days remaining or 
+        /// 'Expired' if the number of days is less than 1.
+        /// </returns>
+        public static string GetDaysRemaining(long days)
+        {
+            if (days < 1) return ResourceService.UiResources.GetString("UI_Expired");
+            return days == 1
+                ? string.Format("1 {0}", ResourceService.UiResources.GetString("UI_RemainingDay"))
+                : string.Format(ResourceService.UiResources.GetString("UI_RemainingDays"), days);
+
         }
     }
 }

@@ -34,6 +34,12 @@ namespace MegaApp.ViewModels
         {
             if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
 
+            if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+            {
+                UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(true));
+                return;
+            }
+
             this.MegaSdk.logout(new LogOutRequestListener());
         }
 
@@ -46,6 +52,7 @@ namespace MegaApp.ViewModels
         public string GeneralTitle => ResourceService.UiResources.GetString("UI_General");
         public string ProfileTitle => ResourceService.UiResources.GetString("UI_Profile");
         public string StorageAndTransferTitle => ResourceService.UiResources.GetString("UI_StorageAndTransfer");
+        public string AchievementsTitle => ResourceService.UiResources.GetString("UI_Achievements");
         public string UpgradeTitle => ResourceService.UiResources.GetString("UI_Upgrade");
 
         public string LogOutText => ResourceService.UiResources.GetString("UI_Logout");

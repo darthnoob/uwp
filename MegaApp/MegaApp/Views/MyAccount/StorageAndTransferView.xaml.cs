@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.MyAccount;
 
@@ -13,6 +14,16 @@ namespace MegaApp.Views.MyAccount
         public StorageAndTransferView()
         {
             this.InitializeComponent();
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // for nice looking size on desktop
+            var element = sender as FrameworkElement;
+            if (element == null) return;
+            MainStackPanel.Width = element.ActualWidth >= MainStackPanel.MaxWidth 
+                ? MainStackPanel.MaxWidth
+                : element.Width;
         }
     }
 }

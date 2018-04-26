@@ -14,6 +14,14 @@ namespace MegaApp.ViewModels
             this.ActiveViewModel = this.Uploads;
         }
 
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            this.Downloads.UpdateNetworkStatus();
+            this.Uploads.UpdateNetworkStatus();
+            this.Completed.UpdateNetworkStatus();
+        }
+
         public void Update()
         {
             this.Downloads.UpdateTransfers();

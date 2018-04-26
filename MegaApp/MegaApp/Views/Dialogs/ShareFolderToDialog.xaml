@@ -15,18 +15,14 @@
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneTime}"
     PrimaryButtonText="{x:Bind ViewModel.ShareText, Mode=OneTime}"
     SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.ShareButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.CancelButtonCommand}"
     IsPrimaryButtonEnabled="{Binding ShareButtonState}"
     Closing="OnClosing">
-    <dialogViews:BaseShareFolderToDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            FontSize="18"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
-    </dialogViews:BaseShareFolderToDialog.Title>
+    
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>
             <TextBox

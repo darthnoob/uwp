@@ -51,6 +51,7 @@ namespace MegaApp.MegaApi
 
                         AccountService.GetUserData();
                         AccountService.GetAccountDetails();
+                        AccountService.GetAccountAchievements();
                         Tcs?.TrySetResult(FetchNodesResult.Success);
                         break;
 

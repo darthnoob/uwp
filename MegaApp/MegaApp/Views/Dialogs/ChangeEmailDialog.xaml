@@ -13,6 +13,7 @@
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneTime}"
     PrimaryButtonText="{x:Bind ViewModel.SaveText, Mode=OneTime}"
     SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.SaveButtonCommand}"
@@ -20,12 +21,6 @@
     Opened="OnOpened"
     Closing="OnClosing"
     Closed="OnClosed">
-    <dialogViews:BaseChangeEmailDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
-    </dialogViews:BaseChangeEmailDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>

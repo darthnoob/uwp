@@ -106,14 +106,14 @@ namespace MegaApp.Views
             this.ViewModel.ActiveViewModel = this.ViewModel.CreateAccountViewModel;
         }
 
-        private async void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
+        private void OnPasswordKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key != VirtualKey.Enter) return;
 
-            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
-
             // On enter in password box. Start the login process
             this.ViewModel?.LoginViewModel?.Login();
+
+            e.Handled = true;
         }
 
         private void OnMegaHeaderLogoTapped(object sender, TappedRoutedEventArgs e)

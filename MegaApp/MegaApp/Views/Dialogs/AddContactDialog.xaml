@@ -13,6 +13,7 @@
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneTime}"
     PrimaryButtonText="{x:Bind ViewModel.AddText, Mode=OneTime}"
     SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.AddButtonCommand}"
@@ -20,12 +21,6 @@
     Opened="OnOpened"
     Closing="OnClosing"
     Closed="OnClosed">
-    <dialogViews:BaseAddContactDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"/>
-    </dialogViews:BaseAddContactDialog.Title>
 
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>

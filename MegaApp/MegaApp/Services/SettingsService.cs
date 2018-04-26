@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using mega;
+using MegaApp.ViewModels.Settings;
 
 namespace MegaApp.Services
 {
@@ -14,6 +15,18 @@ namespace MegaApp.Services
 
         private static readonly Mutex FileSettingMutex = new Mutex(false, "FileSettingMutex");
         private static readonly Mutex SettingsMutex = new Mutex(false, "SettingsMutex");
+
+        private static RecoveryKeySettingViewModel _recoveryKeySetting;
+        public static RecoveryKeySettingViewModel RecoveryKeySetting
+        {
+            get
+            {
+                if (_recoveryKeySetting != null) return _recoveryKeySetting;
+                _recoveryKeySetting = new RecoveryKeySettingViewModel();
+                _recoveryKeySetting.Initialize();
+                return _recoveryKeySetting;
+            }
+        }
 
         /// <summary>
         /// Save a value to the app local settings container

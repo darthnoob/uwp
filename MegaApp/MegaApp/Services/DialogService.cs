@@ -10,6 +10,7 @@ using MegaApp.Extensions;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.Dialogs;
+using MegaApp.ViewModels.MyAccount;
 using MegaApp.ViewModels.SharedFolders;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
@@ -21,6 +22,22 @@ namespace MegaApp.Services
     /// </summary>
     internal static class DialogService
     {
+        /// <summary>
+        /// Check if there is any dialog visible
+        /// </summary>
+        /// <returns>TRUE if there is any dialog visible or FALSE in other case</returns>
+        public static bool IsAnyDialogVisible()
+        {
+            var popups = VisualTreeHelper.GetOpenPopups(Window.Current);
+            foreach (var popup in popups)
+            {
+                if (popup.Child is ContentDialog)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Show an Alert Dialog that can be dismissed by a button.
         /// </summary>
@@ -201,6 +218,16 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to check if the user remember the account password
+        /// </summary>
+        /// <param name="atLogout">True if the dialog is being displayed just before a logout</param>
+        public static async void ShowPasswordReminderDialog(bool atLogout)
+        {
+            var passwordReminderDialog = new PasswordReminderDialog(atLogout);
+            await passwordReminderDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
         /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
         /// <param name="node">Node to share the link</param>
@@ -339,7 +366,7 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="folder">Folder to sort.</param>
         /// <returns>The flyout menu with the sort options.</returns>
-        public static MenuFlyout CreateSortMenu(FolderViewModel folder)
+        public static MenuFlyout CreateSortMenu(BaseFolderViewModel folder)
         {
             var currentSortOrder = UiService.GetSortOrder(folder?.FolderRootNode?.Base64Handle, folder?.FolderRootNode?.Name);
 
@@ -475,7 +502,8 @@ namespace MegaApp.Services
         /// Creates a sort menu for contacts.
         /// </summary>
         /// <returns>The flyout menu with the sort options.</returns>
-        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts)
+        public static MenuFlyout CreateContactsSortMenu(ContactsListViewModel contacts,
+            bool showReferralStatusSort = false)
         {
             MenuFlyout menuFlyout = new MenuFlyout();
 
@@ -497,6 +525,53 @@ namespace MegaApp.Services
                 Command = new RelayCommand(() =>
                 {
                     contacts.CurrentOrder = ContactsSortOrderType.ORDER_EMAIL;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            if (showReferralStatusSort)
+            {
+                menuFlyout.Items?.Add(new MenuFlyoutItem()
+                {
+                    Text = ResourceService.UiResources.GetString("UI_SortOptionReferralStatus"),
+                    Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_STATUS),
+                    Command = new RelayCommand(() =>
+                    {
+                        contacts.CurrentOrder = ContactsSortOrderType.ORDER_STATUS;
+                        contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                    })
+                });
+            }
+
+            return menuFlyout;
+        }
+
+        /// <summary>
+        /// Creates a sort menu for contacts.
+        /// </summary>
+        /// <returns>The flyout menu with the sort options.</returns>
+        public static MenuFlyout CreateInviteContactsSortMenu(ContactsListViewModel contacts)
+        {
+            MenuFlyout menuFlyout = new MenuFlyout();
+
+            menuFlyout.Items?.Add(new MenuFlyoutItem
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionName"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_NAME),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_NAME;
+                    contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
+                })
+            });
+
+            menuFlyout.Items?.Add(new MenuFlyoutItem
+            {
+                Text = ResourceService.UiResources.GetString("UI_SortOptionReferralStatus"),
+                Foreground = GetSortMenuItemForeground(contacts.CurrentOrder, ContactsSortOrderType.ORDER_STATUS),
+                Command = new RelayCommand(() =>
+                {
+                    contacts.CurrentOrder = ContactsSortOrderType.ORDER_STATUS;
                     contacts.SortBy(contacts.CurrentOrder, contacts.ItemCollection.CurrentOrderDirection);
                 })
             });

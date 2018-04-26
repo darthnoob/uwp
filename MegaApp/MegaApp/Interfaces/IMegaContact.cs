@@ -94,6 +94,21 @@ namespace MegaApp.Interfaces
         /// </summary>
         ContactSharedItemsViewModel SharedItems { get; set; }
 
+        /// <summary>
+        /// Indicates the current referral status
+        /// </summary>
+        string ReferralStatus { get; }
+
+        /// <summary>
+        /// Used to determine the referral status sort order
+        /// </summary>
+        int ReferralStatusOrder { get; }
+
+        /// <summary>
+        /// Indicates the amount of remaining days the bonus is active
+        /// </summary>
+        int ReferralBonusExpiresIn { get; }
+
         #endregion
     }
 }

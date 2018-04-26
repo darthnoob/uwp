@@ -1,5 +1,4 @@
 ﻿using System;
-using Windows.UI.Xaml.Controls;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
@@ -31,12 +30,6 @@ namespace MegaApp.Views.Dialogs
         {
             this.Hide();
         }        
-
-        private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
-        {
-            if (!this.ViewModel.CanClose)
-                args.Cancel = true;
-        }
 
         #endregion        
     }
