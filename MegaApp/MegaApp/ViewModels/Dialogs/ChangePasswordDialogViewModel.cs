@@ -123,21 +123,12 @@ namespace MegaApp.ViewModels.Dialogs
 
         /// <summary>
         /// Checks that the new password is valid. New password requisites:
-        /// 1.- Should be different from the current password.
-        /// 2.- New password and confirm password should be equal.
-        /// 3.- The password strength should have a minimum value.
+        /// 1.- New password and confirm password should be equal.
+        /// 2.- The password strength should have a minimum value.
         /// </summary>
         /// <returns>TRUE if is all right or FALSE in other case.</returns>
         private bool CheckNewPassword()
         {
-            // If the new password and the old password are the same
-            if (SdkService.MegaSdk.checkPassword(this.NewPassword))
-            {
-                this.SetWarning(true, ResourceService.AppMessages.GetString("AM_NewAndOldPasswordMatch"));
-                SetInputState(newPassword: InputState.Warning);
-                return false;
-            }
-
             // If the new password and the confirmation password don't match
             if (!this.NewPassword.Equals(this.ConfirmPassword))
             {
