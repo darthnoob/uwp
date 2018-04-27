@@ -141,9 +141,9 @@
     <value>Z5dGhQhL</value>
     <comment>Each MEGA client application needs a valid key to access the API. Please use a separate key for each of your applications. - (NO-TRANSLATION).</comment>
   </data>
-  <data name="AR_ApplicationTitle" xml:space="preserve">
+  <data name="AR_ApplicationName" xml:space="preserve">
     <value>MEGA Privacy</value>
-    <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
+    <comment>Name of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
     <value>uwp@mega.nz</value>
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/3c582047ab3531abe3a0e4b8452c2cef344c500c</value>
+    <value>https://github.com/meganz/sdk/tree/fa3219b7fcf173fa6541fb864b6cdeb3e970c11b</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>3c58204</value>
+    <value>fa3219b</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">

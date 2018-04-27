@@ -118,103 +118,91 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PM_CleanRubbishBin" xml:space="preserve">
-    <value>Clearing the rubbish bin…</value>
+    <value>Vidage de la corbeille...</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Creating account…</value>
+    <value>Création du compte...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Please wait while we send you a sign-up confirmation link.</value>
+    <value>Veuillez patienter pendant que nous vous envoyons un lien de confirmation d’inscription.                              </value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Creating folder…</value>
+    <value>Création du dossier...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting…</value>
+    <value>Suppression…</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
-    <value>Resuming session…</value>
+    <value>Reprise de la session...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>Requesting account data.</value>
+    <value>Demande des données de compte</value>
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Logging in…</value>
+    <value>Connexion...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>Please wait while we log you into your account.</value>
+    <value>Veuillez patienter pendant que nous vous connectons à votre compte.</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>Logging out…</value>
+    <value>Déconnexion...</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
-    <value>Moving…</value>
+    <value>Déplacement...</value>
     <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
   </data>
   <data name="PM_MoveToRubbishBin" xml:space="preserve">
-    <value>Moving to rubbish bin…</value>
+    <value>Déplacement vers la corbeille...</value>
     <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_Remove" xml:space="preserve">
-    <value>Removing…</value>
+    <value>Suppression...</value>
     <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
   </data>
   <data name="PM_Rename" xml:space="preserve">
-    <value>Renaming…</value>
+    <value>Renommage...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersBusy" xml:space="preserve">
-    <value>Servers are too busy. Please wait…</value>
-    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
+  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
+    <value>Les serveurs sont trop occupés. Veuillez patienter.</value>
+    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
   </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Decrypting nodes.</value>
+    <value>Déchiffrement des noeuds.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
-    <value>Loading preview…</value>
+    <value>Chargement de l'aperçu...</value>
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>Creating your account</value>
+    <value>Création de votre compte</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <value>Votre biclé publique/privée 2048 bits RSA est en cours de création. Cette étape très importante peut prendre quelques secondes. Veuillez être patient.</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_Patient" xml:space="preserve">
-    <value>Please be patient</value>
+    <value>Veuillez patienter</value>
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderHeader" xml:space="preserve">
-    <value>Opening folder link…</value>
+    <value>Ouverture du lien du dossier...</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
-    <value>Please wait while we open the folder link.</value>
+    <value>Veuillez patienter alors que nous ouvrons le lien de dossier</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
-  </data>
-  <data name="PM_ApiLocked" xml:space="preserve">
-    <value>This process is taking longer than expected. Please wait.</value>
-    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
-  </data>
-  <data name="PM_ApiRateLimit" xml:space="preserve">
-    <value>Too many requests. Please wait.</value>
-    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
-  </data>
-  <data name="PM_ConnectivityIssue" xml:space="preserve">
-    <value>Unable to reach MEGA. Please check your connectivity or try again later.</value>
-    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

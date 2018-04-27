@@ -118,471 +118,471 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_AddFolder" xml:space="preserve">
-    <value>Add folder</value>
+    <value>Klasör ekle</value>
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
-    <value>I agree with the Terms of Service.</value>
+    <value>Hizmet koşullarını kabul ediyorum.</value>
     <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
-    <value>Camera uploads</value>
+    <value>Kamera yüklemeleri</value>
     <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>İptal</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CleanRubbishBin" xml:space="preserve">
-    <value>Empty rubbish bin</value>
+    <value>Çöp kutusunu boşalt</value>
     <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Cloud drive</value>
+    <value>Bulut sürücüsü</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
-    <value>Confirm</value>
+    <value>Onayla</value>
     <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmAccount" xml:space="preserve">
-    <value>Confirm account</value>
+    <value>Hesabı onaylayın</value>
     <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
-    <value>Confirm password</value>
+    <value>Parolayı onayla</value>
     <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmYourAccount" xml:space="preserve">
-    <value>Enter your password to finish creating your account.</value>
+    <value>Hesabınızın oluşturulmasını tamamlamak için parolanızı giriniz.</value>
     <comment>Text for the confirmation page with the instructions to follow.</comment>
   </data>
   <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
-    <value>Confirm your account</value>
+    <value>Hesabınızı onaylayın.</value>
     <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
-    <value>Create account</value>
+    <value>Hesap oluştur</value>
     <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateFolder" xml:space="preserve">
-    <value>Create folder</value>
+    <value>Klasör oluştur</value>
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>İndir</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
-    <value>Downloads</value>
+    <value>İndirilenler</value>
     <comment>Label for any 'Downloads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailWatermark" xml:space="preserve">
-    <value>Email</value>
+    <value>Eposta</value>
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>No files in your cloud drive</value>
+    <value>Bulut sürücünüzde dosya yok</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>Empty folder</value>
+    <value>Boş klasör</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
-    <value>No items saved for offline</value>
+    <value>Çevrimdışı için kaydedilen öğe yok</value>
     <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyRubbishBin" xml:space="preserve">
-    <value>Empty rubbish bin</value>
+    <value>Çöp kutusunu boşalt</value>
     <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptySharedFolders" xml:space="preserve">
-    <value>No shared folders</value>
+    <value>Paylaşımlı klasör yok</value>
     <comment>Label for the background of an empty shared folders page - (String as short as possible).</comment>
   </data>
   <data name="UI_FirstNameWatermark" xml:space="preserve">
-    <value>First name</value>
+    <value>Ad</value>
     <comment>Watermark label for the user's first name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportLinkBorderText" xml:space="preserve">
-    <value>Import to {0}</value>
+    <value>{0} dizinine aktar.</value>
     <comment>Label for the dialog shown when a user are trying to import a MEGA link - (String as short as possible).
 Preserve the {0} code because is for include the name of the destination folder in runtime.</comment>
   </data>
   <data name="UI_LastNameWatermark" xml:space="preserve">
-    <value>Last name</value>
+    <value>Soyad</value>
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Oturum Aç</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
-    <value>Files</value>
+    <value>Dosyalar</value>
     <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFolders" xml:space="preserve">
-    <value>Folders</value>
+    <value>Klasörler</value>
     <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultiSelect" xml:space="preserve">
-    <value>Multi select</value>
+    <value>Çoklu seç</value>
     <comment>Label for any 'Multi select' button, link, text, title, etc. for multiple selection - (String as short as possible).</comment>
   </data>
   <data name="UI_MyAccount" xml:space="preserve">
-    <value>My account</value>
+    <value>Hesabım</value>
     <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
-    <value>No</value>
+    <value>Hayır</value>
     <comment>Label for any 'No' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NoInternetConnection" xml:space="preserve">
-    <value>No internet connection</value>
+    <value>İnternet bağlantısı yok</value>
     <comment>Label for the background of an empty state when no internet connection - (String as short as possible).</comment>
   </data>
   <data name="UI_Off" xml:space="preserve">
-    <value>Off</value>
+    <value>Kapalı</value>
     <comment>Label for any 'Off' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>Tamam</value>
     <comment>Label for any 'Ok' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_On" xml:space="preserve">
-    <value>On</value>
+    <value>Açık</value>
     <comment>Label for any 'On' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PasswordWatermark" xml:space="preserve">
-    <value>Password</value>
+    <value>Şifre</value>
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_Remove" xml:space="preserve">
-    <value>Remove</value>
+    <value>Sil</value>
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Rename" xml:space="preserve">
-    <value>Rename</value>
+    <value>Yeniden Adlandır</value>
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
-    <value>Rubbish bin</value>
+    <value>Çöp kutusu</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ayarlar</value>
     <comment>Label for any 'Settings' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFile" xml:space="preserve">
-    <value>File</value>
+    <value>Dosya</value>
     <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFolder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Klasör</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+    <value>Hizmet Koşullarını görüntüle.</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
-    <value>Transfer</value>
+    <value>Aktarma</value>
     <comment>Label for any 'Transfer' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferManager" xml:space="preserve">
-    <value>Transfer manager</value>
+    <value>Aktarım yöneticisi</value>
     <comment>Label for any 'Transfer manager' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfers" xml:space="preserve">
-    <value>Transfers</value>
+    <value>Aktarmalar</value>
     <comment>Label for any 'Transfers' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCanceled" xml:space="preserve">
-    <value>Canceled</value>
+    <value>İptal Edildi</value>
     <comment>Label for the status of a canceled transfer - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloaded" xml:space="preserve">
-    <value>Downloaded</value>
+    <value>İndirilen</value>
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloading" xml:space="preserve">
-    <value>Downloading…</value>
+    <value>İndiriliyor...</value>
     <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusError" xml:space="preserve">
-    <value>Error on transfer</value>
+    <value>Aktarmada hata</value>
     <comment>Label for the status of a failed  transfer - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusNotStarted" xml:space="preserve">
-    <value>Ready</value>
+    <value>Hazır</value>
     <comment>Label for the status of a transfer when is ready but not started for some reason - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPaused" xml:space="preserve">
-    <value>Paused</value>
+    <value>Duraklatıldı</value>
     <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusQueued" xml:space="preserve">
-    <value>Queued</value>
+    <value>Sıraya alındı</value>
     <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploaded" xml:space="preserve">
-    <value>Uploaded</value>
+    <value>Yüklenen</value>
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Uploading…</value>
+    <value>Yükleniyor...</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
-    <value>Folder name:</value>
+    <value>Klasör adı:</value>
     <comment>Text to show when a user wants to create a new folder to type the name for the new folder.</comment>
   </data>
   <data name="UI_TypeNewName" xml:space="preserve">
-    <value>Type a new name:</value>
+    <value>Yeni bir isim girin:</value>
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
   </data>
   <data name="UI_Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>Yükle</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
-    <value>Uploads</value>
+    <value>Yüklemeler</value>
     <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Evet</value>
     <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Pause" xml:space="preserve">
-    <value>Pause</value>
+    <value>Duraklat</value>
     <comment>Label for any 'Pause' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PauseAll" xml:space="preserve">
-    <value>Pause all</value>
+    <value>Tümünü duraklat</value>
     <comment>Label for any 'Pause all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelAll" xml:space="preserve">
-    <value>Cancel all</value>
+    <value>Hepsini iptal et</value>
     <comment>Label for any 'Cancel all' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelDownloads" xml:space="preserve">
-    <value>Cancel downloads</value>
+    <value>İndirmeleri sonlandır</value>
     <comment>Label for any 'Cancel downloads' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelUploads" xml:space="preserve">
-    <value>Cancel uploads</value>
+    <value>Yüklemeleri bitir</value>
     <comment>Label for any 'Cancel uploads' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelDownload" xml:space="preserve">
-    <value>Cancel download</value>
+    <value>İndirmeyi iptal et</value>
     <comment>Label for any 'Cancel download' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelTransfer" xml:space="preserve">
-    <value>Cancel transfer</value>
+    <value>Aktarmayı iptal et</value>
     <comment>Label for any 'Cancel transfer' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelTransfers" xml:space="preserve">
-    <value>Cancel transfers</value>
+    <value>Aktarmaları iptal et</value>
     <comment>Label for any 'Cancel transfers' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelUpload" xml:space="preserve">
-    <value>Cancel upload</value>
+    <value>Yüklemeyi iptal et</value>
     <comment>Label for any 'Cancel upload' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearAll" xml:space="preserve">
-    <value>Clear all</value>
+    <value>Hepsini temizle</value>
     <comment>Label for any 'Clear all' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
   </data>
   <data name="UI_DeselectAll" xml:space="preserve">
-    <value>Deselect all</value>
+    <value>Hiçbirini seçme</value>
     <comment>Label for any 'Deselect all' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SelectAll" xml:space="preserve">
-    <value>Select all</value>
+    <value>Hepsini seç</value>
     <comment>Label for any 'Select all' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NewFolder" xml:space="preserve">
-    <value>New folder</value>
+    <value>Yeni klasör</value>
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>Logout</value>
+    <value>Oturumu kapat</value>
     <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
-    <value>Upload your photos to your account.</value>
+    <value>Fotoğraflarınızı hesabınıza yükleyin.</value>
     <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsTitle" xml:space="preserve">
-    <value>Enable auto camera uploads</value>
+    <value>Otomatik kamera yüklemelerini aktif et</value>
     <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKey" xml:space="preserve">
-    <value>Recovery Key</value>
+    <value>Kurtarma Anahtarı</value>
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Your Recovery Key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <value>Kurtarma Anahtarınız hesabınıza giriş yapmanızı sağlar, parolanızı unuttuğunuzda bile. Güvenli bir konumda saklayın.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">
-    <value>Security</value>
+    <value>Güvenlik</value>
     <comment>Label for any 'Security settings' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettingsDescription" xml:space="preserve">
-    <value>Security settings differ on each of your connected devices.</value>
+    <value>Güvenlik ayarları bağlandığınız her cihazda farklıdır.</value>
     <comment>Label for any 'Security settings description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_About" xml:space="preserve">
-    <value>About</value>
+    <value>Hakkında</value>
     <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AboutDescription" xml:space="preserve">
-    <value>Information about the MEGA application</value>
+    <value>MEGA uygulaması hakkında bilgiler</value>
     <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyKey" xml:space="preserve">
-    <value>Copy key</value>
+    <value>Anahtarı kopyala</value>
     <comment>Label for any 'Copy key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveKey" xml:space="preserve">
-    <value>Save key</value>
+    <value>Anahtarı kaydet</value>
     <comment>Label for any 'Save key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PlainText" xml:space="preserve">
-    <value>Plain text</value>
+    <value>Düz metin</value>
     <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopyala</value>
     <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Move" xml:space="preserve">
-    <value>Move</value>
+    <value>Taşı</value>
     <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionLargest" xml:space="preserve">
-    <value>Largest</value>
+    <value>en büyük</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionNewest" xml:space="preserve">
-    <value>Newest</value>
+    <value>en yeni</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOldest" xml:space="preserve">
-    <value>Oldest</value>
+    <value>en eski</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSmallest" xml:space="preserve">
-    <value>Smallest</value>
+    <value>en ufak</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Preparing…</value>
+    <value>Hazırlanıyor...</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
-    <value>Completed</value>
+    <value>Tamamlandı</value>
     <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ResumeAll" xml:space="preserve">
-    <value>Resume all</value>
+    <value>Hepsini sürdür</value>
     <comment>Label for any 'Resume all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Resume" xml:space="preserve">
-    <value>Resume</value>
+    <value>Devam et</value>
     <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Retry" xml:space="preserve">
-    <value>Retry</value>
+    <value>Yeniden Dene</value>
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Completing…</value>
+    <value>Tamamlanıyor...</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Retrying…</value>
+    <value>Yeniden deneniyor...</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>Get link</value>
+    <value>Bağlantıyı al</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Sonraki</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
-    <value>Previous</value>
+    <value>Önceki</value>
     <comment>Label for any 'Previous' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Share" xml:space="preserve">
-    <value>Share</value>
+    <value>Paylaş</value>
     <comment>Label for any 'Share' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ExportLink" xml:space="preserve">
-    <value>Export link</value>
+    <value>Bağlantıyı dışarı aktar</value>
     <comment>Label for any 'Export link' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Preview" xml:space="preserve">
-    <value>Preview</value>
+    <value>Önizleme</value>
     <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
     <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Added" xml:space="preserve">
-    <value>Added</value>
+    <value>Eklendi</value>
     <comment>Label for any 'Added' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Files" xml:space="preserve">
-    <value>Files</value>
+    <value>Dosyalar</value>
     <comment>Label for any 'Files' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Folders" xml:space="preserve">
-    <value>Folders</value>
+    <value>Klasörler</value>
     <comment>Label for any 'Folders' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Modified" xml:space="preserve">
-    <value>Modified</value>
+    <value>Düzenlendi</value>
     <comment>Label for any 'Modified' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Boyut</value>
     <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Audio" xml:space="preserve">
-    <value>Audio</value>
+    <value>Ses</value>
     <comment>Label for any 'Audio' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_File" xml:space="preserve">
-    <value>File</value>
+    <value>Dosya</value>
     <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Folder" xml:space="preserve">
-    <value>Folder</value>
+    <value>Klasör</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Image" xml:space="preserve">
-    <value>Image</value>
+    <value>Resim</value>
     <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Type" xml:space="preserve">
-    <value>Type</value>
+    <value>Tür</value>
     <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Bilinmeyen</value>
     <comment>Label for any 'Unknown' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Video" xml:space="preserve">
@@ -590,413 +590,413 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable offline view</value>
+    <value>Çevrimdışı görüntülemeyi aktif et</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
-    <value>Enable link</value>
+    <value>Bağlantıyı aktif et</value>
     <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DecryptionKey" xml:space="preserve">
-    <value>Decryption key</value>
+    <value>Şifre çözme anahtarı</value>
     <comment>Label for any 'Decryption key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LinkWithKey" xml:space="preserve">
-    <value>Link with key</value>
+    <value>Anahtarlı bağlantı</value>
     <comment>Label for any 'Link with key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LinkWithoutKey" xml:space="preserve">
-    <value>Link without key</value>
+    <value>Anahtarı olmayan bağlantı</value>
     <comment>Label for any 'Link without key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ProOnly" xml:space="preserve">
-    <value>(PRO ONLY)</value>
+    <value>(SADECE PRO)</value>
     <comment>Label to indicate that a feature is only available for PRO users. Keep between parentheses and capital letters  - (String as short as possible).</comment>
   </data>
   <data name="UI_SetExpirationDate" xml:space="preserve">
-    <value>Set expiry date</value>
+    <value>Son kullanma tarihi belirle</value>
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_GridView" xml:space="preserve">
-    <value>Grid view</value>
+    <value>Izgara görünümü</value>
     <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListView" xml:space="preserve">
-    <value>List view</value>
+    <value>Liste görünümü</value>
     <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortBy" xml:space="preserve">
-    <value>Sort by</value>
+    <value>SIRALA</value>
     <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ResumeSession" xml:space="preserve">
-    <value>Resume session</value>
+    <value>Oturumu sürdür</value>
     <comment>Label for any 'Resume session' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Dynamic" xml:space="preserve">
-    <value>Dynamic</value>
+    <value>Dinamik</value>
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Upgrade</value>
+    <value>Yükselt</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
-    <value>Not available</value>
+    <value>Mevcut değil</value>
     <comment>Label for any 'Not available' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AccountOverview" xml:space="preserve">
-    <value>Account overview</value>
+    <value>Hesap önizlemesi</value>
     <comment>Label for the 'Account overview' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_OverallUsage" xml:space="preserve">
-    <value>Overall usage</value>
+    <value>Toplam kullanım</value>
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>You have exceeded your allocated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
+    <value>Ayrılan depolama alanınızı aştınız. Yer açmadığınız sürece yeni dosyalar yükleyemez veya yeni paylaşımlar alamazsınız. Lütfen bazı dosya ve klasörleri silerek boş alan açın ya da hesabınızı yükseltin.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
-    <value>Transfer quota is used for downloading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
+    <value>Aktarma kotası dosya indirilirken kullanılır. Eğer aktarma kotanızı aşarsanız, kotanız sıfırlanana kadar beklemeniz gerekecektir.</value>
     <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_PaymentMethod" xml:space="preserve">
-    <value>Payment method</value>
+    <value>Ödeme türü</value>
     <comment>Label for any 'Payment method' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PlanType" xml:space="preserve">
-    <value>Plan type</value>
+    <value>Paket türü</value>
     <comment>Label for any 'Plan type' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SubscriptionEnds" xml:space="preserve">
-    <value>Subscription ends</value>
+    <value>Abonelik bitimi</value>
     <comment>Label for any 'Subscription ends' title/text of the My account section - (String as short as possible).</comment>
   </data>
   <data name="UI_SubscriptionRenews" xml:space="preserve">
-    <value>Subscription renews</value>
+    <value>Abonelik yenilenmesi</value>
     <comment>Label for any 'Subscription renews' title/text of the My account section - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalStorage" xml:space="preserve">
-    <value>Total storage</value>
+    <value>Toplam depolama</value>
     <comment>Label for any 'Total storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalTransferQuota" xml:space="preserve">
-    <value>Total transfer quota</value>
+    <value>Toplam aktarma kotası</value>
     <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedStorage" xml:space="preserve">
-    <value>Used storage</value>
+    <value>Kullanılan depolama</value>
     <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedTransferQuota" xml:space="preserve">
-    <value>Used transfer quota</value>
+    <value>Kullanılan aktarma kotası</value>
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>You have exceeded your allocated transfer quota. You will not be able to download until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
+    <value>İzin verilen aktarma kotanızı aştınız. Aktarma kotanız sıfırlanana kadar indirme yapamazsınız. Lütfen hesabınız yükseltin ya da aktarma kotanız sıfırlanana kadar bekleyin.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
-    <value>Payment information</value>
+    <value>Ödeme bilgileri</value>
     <comment>Label for the 'Payment information' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_Annual" xml:space="preserve">
-    <value>Annual</value>
+    <value>Yıllık</value>
     <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AnnualRecurring" xml:space="preserve">
-    <value>Annual recurring</value>
+    <value>Yıllık tekrarlar</value>
     <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_General" xml:space="preserve">
-    <value>General</value>
+    <value>Genel</value>
     <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_Monthly" xml:space="preserve">
-    <value>Monthly</value>
+    <value>Aylık</value>
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
-    <value>Monthly recurring</value>
+    <value>Aylık tekrarlar</value>
     <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_Profile" xml:space="preserve">
-    <value>Profile</value>
+    <value>Profil</value>
     <comment>Title of the 'Profile' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
-    <value>Storage &amp; Transfer</value>
+    <value>Depolama ve Aktarma</value>
     <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
-    <value>Available storage</value>
+    <value>Mevcut depolama</value>
     <comment>Label for any 'Available storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableTransferQuota" xml:space="preserve">
-    <value>Available transfer quota</value>
+    <value>Mevcut aktarma kotası</value>
     <comment>Label for any 'Available transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferQuota" xml:space="preserve">
-    <value>Transfer quota</value>
+    <value>Aktarma kotası</value>
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Incoming shares</value>
+    <value>Gelen paylaşımlar</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
-    <value>Please wait</value>
+    <value>Lütfen bekleyin</value>
     <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
   </data>
   <data name="UI_CreditCard" xml:space="preserve">
-    <value>Credit card</value>
+    <value>Kredi kartı</value>
     <comment>Label for any 'Credit card' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Free" xml:space="preserve">
-    <value>Free</value>
+    <value>Ücretsiz</value>
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
-    <value>In app purchase (Microsoft Store)</value>
+    <value>Uygulama içi satın alma (Microsoft Mağazası)                                </value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Keep 'Microsoft Store' in English because it is a trademark.</comment>
   </data>
   <data name="UI_Month" xml:space="preserve">
-    <value>Month</value>
+    <value>Ay</value>
     <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Storage" xml:space="preserve">
-    <value>Storage</value>
+    <value>Saklama alanı</value>
     <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UpgradeStep1" xml:space="preserve">
-    <value>Step 1. Select a PRO plan</value>
+    <value>1. Adım: Bir PRO paketi seçin</value>
     <comment>Text to describe the step 1 of the upgrade account process.</comment>
   </data>
   <data name="UI_UpgradeStep2" xml:space="preserve">
-    <value>Step 2. Select membership duration</value>
+    <value>2. Adım: Üyelik süresini seçin</value>
     <comment>Text to describe the step 2 of the upgrade account process.</comment>
   </data>
   <data name="UI_UpgradeStep3" xml:space="preserve">
-    <value>Step 3. Select payment method</value>
+    <value>3. Adım: Ödeme yöntemini seçin</value>
     <comment>Text to describe the step 3 of the upgrade account process.</comment>
   </data>
   <data name="UI_Year" xml:space="preserve">
-    <value>Year</value>
+    <value>Yıl</value>
     <comment>Label for any 'Year' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MembershipDuration" xml:space="preserve">
-    <value>Membership duration</value>
+    <value>Üyelik süresi</value>
     <comment>Label for any 'Membership duration' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Purchase" xml:space="preserve">
-    <value>Purchase</value>
+    <value>Satın al</value>
     <comment>Label for any 'Purchase' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveMoney" xml:space="preserve">
-    <value>Save {0}</value>
+    <value>{0} tasarruf edin</value>
     <comment>Label to indicate the saved money if the user purchase an annual subscription instead of a monthly subscription.
 Preserve the {0} code because is for include the saved money and the currency.</comment>
   </data>
   <data name="UI_UpgradeStepCounter" xml:space="preserve">
-    <value>Step {0}/{1}</value>
+    <value>Adım {0}/{1}</value>
     <comment>Text to count the steps of the upgrade account process.
 Preserve the {0} and {1} codes because is for include current step number and total steps number.</comment>
   </data>
   <data name="UI_Price" xml:space="preserve">
-    <value>Price</value>
+    <value>Fiyat</value>
     <comment>Label for any 'Price' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CentiliPaymentMethod" xml:space="preserve">
-    <value>Centili (Mobile billing)</value>
+    <value>Centili (Mobil ödeme)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Centili' because is the payment method name.</comment>
   </data>
   <data name="UI_FortumoPaymentMethod" xml:space="preserve">
-    <value>Fortumo (Mobile billing)</value>
+    <value>Fortumo (Mobil ödeme)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Fortumo' because is the payment method name.</comment>
   </data>
   <data name="UI_EmailAndPassword" xml:space="preserve">
-    <value>Email &amp; Password</value>
+    <value>E-posta ve Şifre</value>
     <comment>Label for the 'Email &amp; Password' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_FirstName" xml:space="preserve">
-    <value>First name</value>
+    <value>Ad</value>
     <comment>Label for any 'First name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LastName" xml:space="preserve">
-    <value>Last name</value>
+    <value>Soyad</value>
     <comment>Label for any 'Last name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PersonalInformation" xml:space="preserve">
-    <value>Personal information</value>
+    <value>Kişisel bilgiler</value>
     <comment>Label for the 'Personal information' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_PriceAnnual" xml:space="preserve">
-    <value>Price (annual)</value>
+    <value>Ücret (yıllık)</value>
     <comment>Label for any 'Price (annual)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PriceMonthly" xml:space="preserve">
-    <value>Price (monthly)</value>
+    <value>Ücret (aylık)</value>
     <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Kaydet</value>
     <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmail" xml:space="preserve">
-    <value>Change email</value>
+    <value>Epostayı değiştir</value>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Change password</value>
+    <value>Şifre değiştir</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
-    <value>Enter and confirm your new password and click save.</value>
+    <value>Yeni parolanızı girin ve kaydet tuşuna basın.</value>
     <comment>Text to describe the change password process.</comment>
   </data>
   <data name="UI_CurrentPassword" xml:space="preserve">
-    <value>Current password</value>
+    <value>Mevcut parola</value>
     <comment>Placeholder text to insert the current password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_NewPassword" xml:space="preserve">
-    <value>New password</value>
+    <value>Yeni parola</value>
     <comment>Placeholder text to insert the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_ReEnterNewPassword" xml:space="preserve">
-    <value>Re-enter new password</value>
+    <value>Parolayı tekrarla</value>
     <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicy" xml:space="preserve">
-    <value>Refund policy</value>
+    <value>İade politikası</value>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
-    <value>Click here for more details on recurring payments, our refund policy, or how to cancel your subscription.</value>
+    <value>Yinelenen ödemeler, iade ilkemiz, veya aboneliğinizin iptaline dair detaylar için buraya tıklayın.</value>
     <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
   </data>
   <data name="UI_SeeMoreInfo" xml:space="preserve">
-    <value>See more info</value>
+    <value>Daha fazlası</value>
     <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmailDescription" xml:space="preserve">
-    <value>Enter your new email address in the text field above and click Save. Following that, please go to your email inbox and confirm this email change.</value>
+    <value>Yeni eposta adresinizi yukarıdaki boş alana girin ve kaydet tuşuna basın. Sonrasında, lütfen epostanızın gelen kutusuna gidin ve bu değişimi onayla.</value>
     <comment>Text to describe the change email process.</comment>
   </data>
   <data name="UI_NewEmail" xml:space="preserve">
-    <value>New email</value>
+    <value>Yeni eposta</value>
     <comment>Label for any 'New email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnterNewEmail" xml:space="preserve">
-    <value>Enter new email address</value>
+    <value>Yeni eposta adresini gir</value>
     <comment>Placeholder text to insert the new email during the process to change the email - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmEmail" xml:space="preserve">
-    <value>Confirm email</value>
+    <value>E-postayı doğrula</value>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is</value>
+    <value>Tebrikler, bu MEGA hesabı için kullanacağınız yeni eposta adresi </value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">
-    <value>Verify your email address</value>
+    <value>Eposta adresinizi doğrulayın</value>
     <comment>Header of the text displayed to verify an email address. - String as short as possible).</comment>
   </data>
   <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
-    <value>Please enter your password to verify your email address</value>
+    <value>E-posta adresinizi doğrulamak için şifrenizi girin</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
   <data name="UI_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Ekle</value>
     <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContact" xml:space="preserve">
-    <value>Add contact</value>
+    <value>Kişi ekle</value>
     <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Kişiler</value>
     <comment>Label for any 'Contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Incoming" xml:space="preserve">
-    <value>Incoming</value>
+    <value>Gelen</value>
     <comment>Label for any 'Incoming' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Outgoing" xml:space="preserve">
-    <value>Outgoing</value>
+    <value>Giden</value>
     <comment>Label for any 'Outgoing' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContactEmailDefaultText" xml:space="preserve">
-    <value>Hello, join me on MEGA and get access to encrypted storage and communication. Get 50 GB free!</value>
+    <value>Merhaba, bana MEGA'da katıl ve şifreli haberleşme ve depolamaya sahip ol. 50 GB depolama ücretsiz!</value>
     <comment>Default text to attach in the email to invite a contact.</comment>
   </data>
   <data name="UI_Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Eposta</value>
     <comment>Label for any 'Email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AcceptContact" xml:space="preserve">
-    <value>Accept contact</value>
+    <value>Kişiyi kabul et</value>
     <comment>Label for any 'Accept contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DenyContact" xml:space="preserve">
-    <value>Deny contact</value>
+    <value>Kişiyi reddet</value>
     <comment>Label for any 'Deny contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemindContact" xml:space="preserve">
-    <value>Remind contact</value>
+    <value>Kişiyi hatırlat</value>
     <comment>Label for any 'Remind contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveContact" xml:space="preserve">
-    <value>Remove contact</value>
+    <value>Kişi sil</value>
     <comment>Label for any 'Remove contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelInvite" xml:space="preserve">
-    <value>Cancel invite</value>
+    <value>Davetiyeyi iptal et</value>
     <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveMultipleContacts" xml:space="preserve">
-    <value>Remove contacts</value>
+    <value>Kişileri sil</value>
     <comment>Label for any 'Remove contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedFolder" xml:space="preserve">
-    <value>Shared folder</value>
+    <value>Paylaşılan klasör</value>
     <comment>Label for any 'Shared folder' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_SharedFolders" xml:space="preserve">
-    <value>Shared folders</value>
+    <value>Paylaşılan klasörler</value>
     <comment>Label for any 'Shared folders' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_ListSortedByName" xml:space="preserve">
-    <value>Name ({0})</value>
+    <value>İsim ({0})</value>
     <comment>Label to indicate that a list of items is sorted by name and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByNameMultiSelect" xml:space="preserve">
-    <value>Name ({0} of {1})</value>
+    <value>İsim ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by name and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>İsim</value>
     <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewProfile" xml:space="preserve">
-    <value>View profile</value>
+    <value>Profili görüntüle</value>
     <comment>Label for any 'View profile' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedItems" xml:space="preserve">
-    <value>Shared items</value>
+    <value>Paylaşılan öğeler</value>
     <comment>Label for any 'Shared items' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_Details" xml:space="preserve">
-    <value>Details</value>
+    <value>Detaylar</value>
     <comment>Label for any 'Details' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Link" xml:space="preserve">
@@ -1004,651 +1004,452 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
-    <value>Full access</value>
+    <value>Tam erişim</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Read &amp; write</value>
+    <value>Okuma ve yazma</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
-    <value>Read only</value>
+    <value>Salt okunur</value>
     <comment>Label for the 'Read only' permission for shared items.</comment>
   </data>
   <data name="UI_LeaveShare" xml:space="preserve">
-    <value>Leave share</value>
+    <value>Paylaşılandan ayrıl</value>
     <comment>Label for any 'Leave share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IgnoreContact" xml:space="preserve">
-    <value>Ignore contact</value>
+    <value>Kişiyi yoksay</value>
     <comment>Label for any 'Ignore contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Leave" xml:space="preserve">
-    <value>Leave</value>
+    <value>Ayrıl</value>
     <comment>Label for any 'Leave' button, link, text, title, etc. for leave a shared item - (String as short as possible).</comment>
   </data>
   <data name="UI_ListSortedByAccessLevel" xml:space="preserve">
-    <value>Access ({0})</value>
+    <value>Erişim ({0})</value>
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
-    <value>Access ({0} of {1})</value>
+    <value>Erişim ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByOwner" xml:space="preserve">
-    <value>Owner ({0})</value>
+    <value>Sahip ({0})</value>
     <comment>Label to indicate that a list of items is sorted by owner and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByOwnerMultiSelect" xml:space="preserve">
-    <value>Owner ({0} of {1})</value>
+    <value>Sahip ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_NumberOfContacts" xml:space="preserve">
-    <value>{0} Contacts</value>
+    <value>({0}) Kişi</value>
     <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
 Keep the {0} code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="UI_NumberSharedFolders" xml:space="preserve">
-    <value>{0} Shared folders</value>
+    <value>{0} Paylaşılan klasör</value>
     <comment>Label to indicate that there are multiple shared folders - (String as short as possible).
 Keep the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="UI_OneSharedFolder" xml:space="preserve">
-    <value>1 Shared folder</value>
+    <value>1 Paylaşılan klasör</value>
     <comment>Label to indicate that there is only 1 shared folder - (String as short as possible).
 </comment>
   </data>
   <data name="UI_OutgoingShares" xml:space="preserve">
-    <value>Outgoing shares</value>
+    <value>Giden paylaşımlar</value>
     <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionAccessLevel" xml:space="preserve">
-    <value>Access</value>
+    <value>Erişim</value>
     <comment>Label for the menu option to sort a list of items by access level - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionDateModified" xml:space="preserve">
-    <value>Date Modified</value>
+    <value>Son Düzenlenme</value>
     <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionName" xml:space="preserve">
-    <value>Name</value>
+    <value>İsim</value>
     <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOwner" xml:space="preserve">
-    <value>Owner</value>
+    <value>Sahip</value>
     <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveSharedAccess" xml:space="preserve">
-    <value>Remove shared access</value>
+    <value>Paylaşım iznini kaldır</value>
     <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClosePanel" xml:space="preserve">
-    <value>Close panel</value>
+    <value>Kapat</value>
     <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Bilgi</value>
     <comment>Label for any 'Information' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contents" xml:space="preserve">
-    <value>Contents</value>
+    <value>İçerik</value>
     <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Created" xml:space="preserve">
-    <value>Created</value>
+    <value>Yaratıldı</value>
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Değiştirme tarihi</value>
     <comment>Label for any 'Date modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderLocation" xml:space="preserve">
-    <value>Folder location</value>
+    <value>Klasör dizini</value>
     <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderModified" xml:space="preserve">
-    <value>Folder modified</value>
+    <value>Klasör değiştirildi</value>
     <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Owner" xml:space="preserve">
-    <value>Owner</value>
+    <value>Sahip</value>
     <comment>Label for any 'Owner' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Permissions" xml:space="preserve">
-    <value>Permissions</value>
+    <value>İzinler</value>
     <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedOn" xml:space="preserve">
-    <value>Shared on</value>
+    <value>Paylaşıldı</value>
     <comment>Label for any 'Shared on' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedTo" xml:space="preserve">
-    <value>Shared to</value>
+    <value>Şu kişiyle paylaşıldı</value>
     <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Oluşturma tarihi</value>
     <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableSharedFolder" xml:space="preserve">
-    <value>Enable shared folder</value>
+    <value>Paylaşılan klasörü aktif et</value>
     <comment>Label for any 'Enable shared folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContactToFolder" xml:space="preserve">
-    <value>Add contact to folder</value>
+    <value>Klasöre kişi ekle</value>
     <comment>Label for an 'Add contact to folder' button to add a contact to an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveFromFolder" xml:space="preserve">
-    <value>Remove from folder</value>
+    <value>Klasörden kaldır</value>
     <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareFolderTo" xml:space="preserve">
-    <value>Share "{0}" to</value>
+    <value>"{0}" şu kişiyle paylaşıldı</value>
     <comment>Text placed as title of the dialog used to share a folder with a contact.
 Preserve the {0} code because is for include the folder name in runtime.</comment>
   </data>
   <data name="UI_FolderPermission" xml:space="preserve">
-    <value>Folder permission</value>
+    <value>Klasör izni</value>
     <comment>Label for any 'Folder permission' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SetFolderPermission" xml:space="preserve">
-    <value>Set folder permission</value>
+    <value>Klasör izinlerini ayarla</value>
     <comment>Label for any 'Set folder permission' button, link, text, title, etc. - ç(String as short as possible).</comment>
   </data>
   <data name="UI_SetFolderPermissionLevel" xml:space="preserve">
-    <value>Set folder permission level</value>
+    <value>Klasör izin seviyesini ayarla</value>
     <comment>Label for any 'Set folder permission level' button, link, text, title, etc. - ç(String as short as possible).</comment>
   </data>
   <data name="UI_LoginWithSpace" xml:space="preserve">
-    <value>Log in</value>
+    <value>Giriş yap</value>
     <comment>Label for any 'Log in' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPassword" xml:space="preserve">
-    <value>Forgot my password</value>
+    <value>Parolamı unuttum</value>
     <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ContactSupport" xml:space="preserve">
-    <value>Contact support</value>
+    <value>Destek ile iletişime geç</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
-    <value>If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.</value>
+    <value>Kurtarma Anahtarınızın yedeği var ise, EVET'i seçip parolanızı sıfırlayabilirsiniz. Veri kaybı yaşanmayacaktır.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
   </data>
   <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
-    <value>Do you have a copy of your Recovery Key?</value>
+    <value>Kurtarma Anahtarınızın yedeği var mı?</value>
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same email address.</value>
+    <value>Uçtan uca şifreleme kipimizden dolayı, şifreniz veya Kurtarma Anahtarınızın yedeği olmadan verilerinize erişemeyeceksiniz. Var olan hesabınızı park edip aynı eposta üzerine yeni bir hesap açabilirsiniz.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
-    <value>I don’t have my Recovery Key</value>
+    <value>Kurtarma Anahtarım yok</value>
     <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccount" xml:space="preserve">
-    <value>Park account</value>
+    <value>Hesabı park et</value>
     <comment>Label for any 'Park account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryDescription" xml:space="preserve">
-    <value>Please enter your e-mail address below. You will receive a recovery link that will allow you to submit your Recovery Key and reset your password.</value>
+    <value>Lütfen e-posta adresinizi aşağıya girin. Kurtarma Anahtarınızı girip şifrenizi sıfırlayabileceğiniz bir kurtarma bağlantısı göndereceğiz.</value>
     <comment>Text displayed in the 'Recovery' section when the user does have a recovery key.</comment>
   </data>
   <data name="UI_RecoveryKeyHeader" xml:space="preserve">
-    <value>I have my Recovery Key</value>
+    <value>Kurtarma Anahtarım var</value>
     <comment>Label for any 'I have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Send" xml:space="preserve">
-    <value>Send</value>
+    <value>Gönder</value>
     <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoverDescription" xml:space="preserve">
-    <value>Please provide your previously exported Recovery Key. You can still export it from any MEGA session that you may have open in another browser or on another computer.</value>
+    <value>Lütfen önceden dışarı aktardığınız Kurtarma Anahtarı yedeğini temin edin. Başka bilgisayarda veya tarayıcıda açık olan MEGA oturumunuzdan da dışarı aktarabilirsiniz.</value>
     <comment>Text displayed in recover section on password reset</comment>
   </data>
   <data name="UI_RecoverHeader" xml:space="preserve">
-    <value>Password reset</value>
+    <value>Şifre sıfırlama</value>
     <comment>Header of the text displayed to reset password on recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_UploadKey" xml:space="preserve">
-    <value>Upload key</value>
+    <value>Anahtarı yükle</value>
     <comment>Label for any 'Upload key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Verify" xml:space="preserve">
-    <value>Verify</value>
+    <value>Doğrula</value>
     <comment>Label for any 'Verify' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ValidatePassword" xml:space="preserve">
-    <value>Validate password</value>
+    <value>Şifreyi doğrula</value>
     <comment>Label for any 'Validate password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ValidatePasswordDescription" xml:space="preserve">
-    <value>You have successfully regained access to your account. Please choose a new password below:</value>
+    <value>Başarıyla hesabınıza tekrar erişim sağladınız. Lütfen aşağıda yeni bir şifre seçin:</value>
     <comment>Text displayed to validate password on account recovery.</comment>
   </data>
   <data name="UI_ValidatePasswordHeader" xml:space="preserve">
-    <value>Great!</value>
+    <value>Harika!</value>
     <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccountDescription" xml:space="preserve">
-    <value>This is the last step to park your account, please enter your new password. Your data will be retained for at least 60 days. In case you do recall your parked account’s password, please contact support@mega.nz.</value>
+    <value>Bu hesabınızı park etmeniz için son adımdır, lütfen yeni parolanızı giriniz. Hesabınız en az 60 gün boyunca tutulacaktır. Park edilen hesabınızın şifresini hatırladığınız takdirde, lütfen support@mega.nz ile iletişime geçin.</value>
     <comment>Text displayed to validate password on parking account.</comment>
   </data>
   <data name="UI_ConfirmEmailDescription" xml:space="preserve">
-    <value>Please check your email and follow the link to confirm your account.</value>
+    <value>Lütfen epostanızı kontrol edin ve hesabınızı doğrulamak için gönderilen bağlantıyı takip edin.</value>
     <comment>Text displayed when user can resend his email address on create account.</comment>
   </data>
   <data name="UI_ConfirmEmailInfo" xml:space="preserve">
-    <value>If you have misspelled your email address, correct it and click ‘resend’.</value>
+    <value>Eğer epostanızı yanlış yazdıysanız, düzeltin ve 'tekrar gönder' tuşuna basın.</value>
     <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
   </data>
   <data name="UI_Resend" xml:space="preserve">
-    <value>Resend</value>
+    <value>Tekrar gönder</value>
     <comment>Label for any 'Resend' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Wait" xml:space="preserve">
-    <value>Wait</value>
+    <value>Bekle</value>
     <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
-    <value>You can still export your Recovery Key if you have an active MEGA session in any other browser on this or any other computer.</value>
+    <value>Eğer başka bir bilgisayarda veya tarayıcıda aktif MEGA oturumunuz var ise Kurtarma Anahtarını dışarı aktarabilirsiniz.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
-    <value>If you don’t, you can no longer decrypt your existing account, but you can start a new one under the same email address by selecting NO.</value>
+    <value>Eğer yoksa, hesabınızın şimdiki verilerini deşifreleyemezsiniz, fakat 'HAYIR' seçeneği ile aynı eposta altında yenisini açabilirsiniz.                                </value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>Park edilen hesabınızın şifresini hatırlamanız durumunda, lütfen hesap kurtarma yardımı için support@mega.nz ile iletişime geçin. Verileriniz en az 60 gün boyunca saklanacaktır.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
-    <value>Email ({0})</value>
+    <value>Eposta ({0})</value>
     <comment>Label to indicate that a list of items is sorted by email and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
-    <value>Email ({0} of {1})</value>
+    <value>Eposta ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionEmail" xml:space="preserve">
-    <value>Email</value>
+    <value>Eposta</value>
     <comment>Label for the menu option to sort a list of items by email - (String as short as possible).</comment>
   </data>
   <data name="UI_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>Aç</value>
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders, {1} files)</value>
+    <value>Oluşturma Tarihi ({0} klasör, {1} dosya)</value>
     <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders, {1} files)</value>
+    <value>Değiştirme Tarihi ({0} klasör, {1} dosya)</value>
     <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders, {1} files)</value>
+    <value>Tür ({0} klasör, {1} dosya)</value>
     <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders, {1} files)</value>
+    <value>İsim ({0} klasör, {1} dosya)</value>
     <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders, {1} files)</value>
+    <value>Boyut ({0} klasör, {1} dosya)</value>
     <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
-    <value>Date Created ({0} of {1})</value>
+    <value>Oluşturma Tarihi ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
-    <value>Date Modified ({0} of {1})</value>
+    <value>Değiştirme Tarihi</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
-    <value>Type ({0} of {1})</value>
+    <value>Tür ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
-    <value>Size ({0} of {1})</value>
+    <value>Boyut ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>Klasör seçenekleri</value>
     <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0})</value>
+    <value>Oluşturma Tarihi ({0})</value>
     <comment>Label to indicate that a list of items is sorted by creation date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0})</value>
+    <value>Değiştirme Tarihi</value>
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByType" xml:space="preserve">
-    <value>Type ({0})</value>
+    <value>Tür ({0})</value>
     <comment>Label to indicate that a list of items is sorted by type and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySize" xml:space="preserve">
-    <value>Size ({0})</value>
+    <value>Boyut ({0})</value>
     <comment>Label to indicate that a list of items is sorted by size and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_SelectOrDeselectAll" xml:space="preserve">
-    <value>Select/deselect all</value>
+    <value>Tümünü seç/bırak</value>
     <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionType" xml:space="preserve">
-    <value>Type</value>
+    <value>Tür</value>
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Boyut</value>
     <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
-    <value>Copy/Move 1 item to</value>
+    <value>1 öğeyi şu konuma Kopyala/Taşı</value>
     <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
-    <value>Copy/Move {0} items to</value>
+    <value>{0} öğeyi şu konuma Kopyala/Taşı</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders)</value>
+    <value>Oluşturma Tarihi ({0} klasör)</value>
     <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders)</value>
+    <value>Oluşturma Tarihi ({0} klasör)</value>
     <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders)</value>
+    <value>İsim ({0} klasör)</value>
     <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders)</value>
+    <value>Boyut ({0} klasör)</value>
     <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders)</value>
+    <value>Tür ({0} klasör)</value>
     <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_Sharing" xml:space="preserve">
-    <value>Sharing</value>
+    <value>Paylaşım</value>
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AllContacts" xml:space="preserve">
-    <value>All contacts</value>
+    <value>Tüm kişiler</value>
     <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmShare" xml:space="preserve">
-    <value>Confirm share</value>
+    <value>Paylaşımı onayla</value>
     <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ManageCollaborators" xml:space="preserve">
-    <value>Manage collaborators</value>
+    <value>Katılımcıları yönet</value>
     <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareTo" xml:space="preserve">
-    <value>Share to</value>
+    <value>Paylaş</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_StorageQuota" xml:space="preserve">
-    <value>Storage quota</value>
-    <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_UnlockedBonuses" xml:space="preserve">
-    <value>Unlocked bonuses</value>
-    <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
-  </data>
-  <data name="UI_UnlockedBonusesText" xml:space="preserve">
-    <value>You can unlock more free storage and transfer quota by using our products. Simple. Easy.</value>
-    <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
-  </data>
-  <data name="UI_GetMoreBonuses" xml:space="preserve">
-    <value>Get more bonuses</value>
-    <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_BaseStorage" xml:space="preserve">
-    <value>Base storage</value>
-    <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_BaseTransferQuota" xml:space="preserve">
-    <value>Base transfer quota</value>
-    <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_InstallDesktopApp" xml:space="preserve">
-    <value>Install desktop app</value>
-    <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_InstallMobileApp" xml:space="preserve">
-    <value>Install mobile app</value>
-    <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_ReferralBonus" xml:space="preserve">
-    <value>Referral bonuses</value>
-    <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_RegistrationBonus" xml:space="preserve">
-    <value>Registration bonus</value>
-    <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_BonusStorage" xml:space="preserve">
-    <value>Bonus storage</value>
-    <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bonus transfer quota</value>
-    <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Achievements" xml:space="preserve">
-    <value>Achievements</value>
-    <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_AchievementsText" xml:space="preserve">
-    <value>Your easy route to more storage and transfer quota on MEGA. You can maintain a generous free storage and transfer allowance by completing any of the actions outlined below.</value>
-    <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
-  </data>
-  <data name="UI_Available" xml:space="preserve">
-    <value>Available</value>
-    <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_UnlockedRewards" xml:space="preserve">
-    <value>Unlocked rewards</value>
-    <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Expired" xml:space="preserve">
-    <value>Expired</value>
-    <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_InviteFriends" xml:space="preserve">
-    <value>Invite friends</value>
-    <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_RemainingDay" xml:space="preserve">
-    <value>day remaining</value>
-    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_RemainingDays" xml:space="preserve">
-    <value>{0} days remaining</value>
-    <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
-Keep the {0} code because is for include the number of days in runtime.</comment>
-  </data>
-  <data name="UI_SendInvites" xml:space="preserve">
-    <value>Send invites</value>
-    <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_ViewStatus" xml:space="preserve">
-    <value>View status</value>
-    <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Install" xml:space="preserve">
-    <value>Install</value>
-    <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_AccountRegistrationInformation" xml:space="preserve">
-    <value>Create your free account and get {0} of complimentary storage spance, valid for {1} days.</value>
-    <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
-  </data>
-  <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
-    <value>When you install MEGAsync you get {0} of complimentary storage space plus {1} of transfer quota, both valid for {2} days. MEGAsync is available for Windows, macOS and most Linux distros.</value>
-    <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
-  </data>
-  <data name="UI_InstallMobileAppInformation" xml:space="preserve">
-    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quoto, both valid for {2} days. We provice mobile apps for iOS, Android &amp; Windows Phone</value>
-    <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
-  </data>
-  <data name="UI_AchievedOn" xml:space="preserve">
-    <value>Achieved on</value>
-    <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_ExpiresIn" xml:space="preserve">
-    <value>Expires in</value>
-    <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Day" xml:space="preserve">
-    <value>Day</value>
-    <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Days" xml:space="preserve">
-    <value>Days</value>
-    <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_HowItWorks" xml:space="preserve">
-    <value>How it works</value>
-    <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you receive bonus storage and transfer quota.</value>
-    <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
-  </data>
-  <data name="UI_Invite" xml:space="preserve">
-    <value>Invite</value>
-    <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
-    <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
-  </data>
-  <data name="UI_WhyNotWorking" xml:space="preserve">
-    <value>Why it is not working</value>
-    <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
-    <value>You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.</value>
-    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
-  </data>
-  <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>Invited contacts must install MEGA mobile app or MEGA app on their devices.</value>
-    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
-  </data>
   <data name="UI_FolderLink" xml:space="preserve">
-    <value>Folder link</value>
+    <value>Klasör bağlantısı</value>
     <comment>Label for any 'Folder link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_OpenLink" xml:space="preserve">
-    <value>Open link</value>
+    <value>Bağlantıyı aç</value>
     <comment>Label for any 'Open link' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
   <data name="UI_TypeOrPasteLink" xml:space="preserve">
-    <value>Type or paste link:</value>
+    <value>Bağlantıyı girin ya da yapıştırın:</value>
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Import</value>
+    <value>Aktar</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
-    <value>Import 1 item to</value>
+    <value>1 öğeyi şuraya aktar</value>
     <comment>Label to indicate that one item has been selected for import - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportMultipleItemsTo" xml:space="preserve">
-    <value>Import {0} items to</value>
+    <value>{0} öğeyi şuraya aktar</value>
     <comment>Label to indicate how many items have been selected for import - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
   <data name="UI_FileLink" xml:space="preserve">
-    <value>File link</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>Backup Recovery key</value>
-    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
-NOTE: Max. length 20 characters.</comment>
-  </data>
-  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
-    <value>Don’t show me again</value>
-    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
-  </data>
-  <data name="UI_TestPassword" xml:space="preserve">
-    <value>Test Password</value>
-    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SavedForOffline" xml:space="preserve">
-    <value>Saved for offline</value>
-    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_SaveForOffline" xml:space="preserve">
-    <value>Save for offline</value>
-    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_RemoveFromOffline" xml:space="preserve">
-    <value>Remove from offline</value>
-    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
-  </data>
-  <data name="UI_OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
-    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
-  </data>
-  <data name="UI_OfflineBanner" xml:space="preserve">
-    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
-    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
-  </data>
-  <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
-    <value>Referral status ({0})</value>
-    <comment>Label to indicate that a list of items is sorted by status and the total number of items.
-Keep the {0} code because is for include the total number of items in runtime.</comment>
-  </data>
-  <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
-    <value>Referral status ({0} of {1})</value>
-    <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
-Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
-  </data>
-  <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Referral status</value>
-    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
-  </data>
-  <data name="UI_Pending" xml:space="preserve">
-    <value>Pending</value>
-    <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Dosya bağlantısı</value>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
+</comment>
   </data>
 </root>

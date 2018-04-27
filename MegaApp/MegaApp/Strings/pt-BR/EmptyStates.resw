@@ -118,15 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Empty Cloud drive</value>
+    <value>Nuvem de arquivos vazia</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Para fazer o upload de arquivos, clique no ícone de upload na barra de ações.</value>
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>Enable Camera Uploads</value>
+    <value>Ativar uploads da câmera</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
-    <value>No completed transfers</value>
+    <value>Sem transferências concluídas</value>
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>Empty folder</value>
+    <value>Pasta vazia</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
@@ -158,11 +158,11 @@
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Para fazer o upload de arquivos, clique no ícone de upload na barra de ações.</value>
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Empty Rubbish Bin</value>
+    <value>Limpar lixeira</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
@@ -200,13 +200,5 @@
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
     <value>Manage your outgoing shares on this panel.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
-  </data>
-  <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>No offline files</value>
-    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
-  </data>
-  <data name="ES_OfflineSubHeader" xml:space="preserve">
-    <value>Save files for offline viewing</value>
-    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>

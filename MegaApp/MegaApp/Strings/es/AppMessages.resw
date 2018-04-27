@@ -118,102 +118,102 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AM_AccountNotConfirmed" xml:space="preserve">
-    <value>Your account has not been confirmed yet.</value>
+    <value>Tu cuenta no ha sido confirmada aún.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Please confirm you agree with the Terms of Service.</value>
+    <value>Confirma que estás de acuerdo con los Términos de servicio.</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>Failed to clean the rubbish bin. Please try again.</value>
+    <value>No se ha podido limpiar la papelera. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to permanently delete all files from the rubbish bin?</value>
+    <value>¿Estás seguro de que quieres eliminar permanentemente todos los archivos de la papelera?</value>
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>The rubbish bin has been cleaned successfully.</value>
+    <value>La papelera se ha vaciado. </value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
-    <value>Empty rubbish bin</value>
+    <value>Vaciar papelera</value>
     <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
   </data>
   <data name="AM_ConfirmEmail" xml:space="preserve">
-    <value>We have sent you a confirmation link to your selected email address: {0}.</value>
+    <value>Hemos enviado un enlace de confirmación a tu dirección de correo electrónico: {0}.</value>
     <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ConfirmEmail_Title" xml:space="preserve">
-    <value>Confirm your email</value>
+    <value>Confirma tu correo</value>
     <comment>Title of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileFailed" xml:space="preserve">
-    <value>Failed to copy the selected file: [{0}]</value>
+    <value>No se pudo copiar el archivo seleccionado: [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed by a non specific cause.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_CopyFileFailed_Title" xml:space="preserve">
-    <value>Error copying file</value>
+    <value>Fallo al copiar el archivo</value>
     <comment>Title of the dialog displayed when the process/request to copy a file failed by a non specific cause - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
-    <value>You do not have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?
-Please try to save/copy the file to your device’s internal memory instead.</value>
+    <value>No tienes permisos para copiar este tipo de archivo en la carpeta de destino. ¿Está intentando guardar/copiar un archivo no soportado en una tarjeta SD?
+Intenta guardar/copiar el archivo en la memoria interna de tu dispositivo.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
-    <value>Unauthorized access</value>
+    <value>Acceso no autorizado</value>
     <comment>Title of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type) - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateAccountFailed" xml:space="preserve">
-    <value>MEGA Cloud Drive account creation failed. Please try again. [{0}]</value>
+    <value>Error de creación de la cuenta de MEGA. Por favor, vuelve a intentarlo. [{0}]</value>
     <comment>Message of the dialog displayed when the creation of a MEGA account failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_CreateAccountFailed_Title" xml:space="preserve">
-    <value>Account creation failed</value>
+    <value>Error al crear cuenta</value>
     <comment>Title of the dialog displayed when the creation of a MEGA account failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderFailed" xml:space="preserve">
-    <value>Failed to create folder</value>
+    <value>No se pudo crear la carpeta</value>
     <comment>Message of the dialog displayed when the creation of a folder failed.</comment>
   </data>
   <data name="AM_CreateFolderFailed_Title" xml:space="preserve">
-    <value>Folder creation failed</value>
+    <value>Error al crear la carpeta</value>
     <comment>Title of the dialog displayed when the creation of a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderSuccess" xml:space="preserve">
-    <value>Folder '{0}' created successfully</value>
+    <value>La carpeta '{0}' ha sido creada</value>
     <comment>Message of the dialog displayed when create a folder successfully.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_CreateFolderSuccess_Title" xml:space="preserve">
-    <value>Folder created</value>
+    <value>Carpeta creada</value>
     <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_DeleteNodeFailed" xml:space="preserve">
-    <value>Failed to delete item. Please try again [{0}]</value>
+    <value>No se pudo eliminar el elemento. Por favor, vuelve a intentarlo [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to delete a node failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DeleteNodeFailed_Title" xml:space="preserve">
-    <value>Deletion failed</value>
+    <value>Error al eliminar</value>
     <comment>Title of the dialog displayed when the process/request to delete a node failed - (String as short as possible).</comment>
   </data>
   <data name="AM_DeleteSettingsFailed" xml:space="preserve">
-    <value>Failed to delete settings. Please try again. [{0}]</value>
+    <value>Falló el borrado de configuración. Por favor, inténtelo de nuevo. [{0}]</value>
     <comment>Message of the dialog displayed when the process to delete settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DeleteSettingsFailed_Title" xml:space="preserve">
-    <value>Error deleting settings</value>
+    <value>Error eliminando la configuración</value>
     <comment>Title of the dialog displayed when the process to delete settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_EmailAlreadyRegistered" xml:space="preserve">
-    <value>This email address has already registered an account with MEGA.</value>
+    <value>Esta dirección de correo electrónico ya ha sido utilizada para el registro de una cuenta con MEGA</value>
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
@@ -225,134 +225,134 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed - (String as short as possible).</comment>
   </data>
   <data name="AM_FileNotFound" xml:space="preserve">
-    <value>Could not find the selected file</value>
+    <value>No se pudo encontrar el archivo seleccionado.</value>
     <comment>Message of the dialog displayed when a user try to open a file that can't be found and the process failed.</comment>
   </data>
   <data name="AM_FileNotFound_Title" xml:space="preserve">
-    <value>File not found</value>
+    <value>No se encuentra el archivo</value>
     <comment>Title of the dialog displayed when a user try to open a file that can't be found and the process failed - (String as short as possible).</comment>
   </data>
   <data name="AM_GetThumbnailFailed" xml:space="preserve">
-    <value>Failed to retrieve thumbnail [{0}]</value>
+    <value>No se pudo recuperar la miniatura [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to get a image thumbnail failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_GetThumbnailFailed_Title" xml:space="preserve">
-    <value>Getting thumbnail failed</value>
+    <value>Error obteniendo miniatura</value>
     <comment>Title of the dialog displayed when the process/request to get a image thumbnail failed - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidLink" xml:space="preserve">
-    <value>Invalid link</value>
+    <value>Enlace no válido</value>
     <comment>Message of the dialog displayed when the user is trying to open an invliad link.</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
-    <value>Could not load files and folders from MEGA. Please try again.</value>
+    <value>No se han podido cargar los archivos y las carpetas de MEGA. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service.</comment>
   </data>
   <data name="AM_LoadNodesFailed_Title" xml:space="preserve">
-    <value>Failed to load</value>
+    <value>Error al cargar</value>
     <comment>Title of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service - (String as short as possible).</comment>
   </data>
   <data name="AM_LoadSettingsFailed" xml:space="preserve">
-    <value>Failed to load settings. Please try again. [{0}]</value>
+    <value>Falló la carga de configuración. Por favor, inténtelo de nuevo. [{0}]</value>
     <comment>Message of the dialog displayed when the process to load settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_LoadSettingsFailed_Title" xml:space="preserve">
-    <value>Error loading settings</value>
+    <value>Error cargando la configuración</value>
     <comment>Title of the dialog displayed when the process to load settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoggedOut" xml:space="preserve">
-    <value>You have successfully logged out</value>
+    <value>Se ha cerrado la sesión correctamente.</value>
     <comment>Message of the dialog displayed when a user logged out successfully.</comment>
   </data>
   <data name="AM_LoggedOut_Title" xml:space="preserve">
-    <value>Logged out</value>
+    <value>Sesión cerrada</value>
     <comment>Title of the dialog displayed when a user logged out successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginFailed" xml:space="preserve">
-    <value>MEGA Cloud Drive login failed. Please try again.</value>
+    <value>El inicio de sesión en MEGA ha fallado. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails.</comment>
   </data>
   <data name="AM_LoginFailed_Title" xml:space="preserve">
-    <value>Login failed</value>
+    <value>Error al iniciar sesión</value>
     <comment>Title of the dialog displayed when the login to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LogoutFailed" xml:space="preserve">
-    <value>Failed to logout. Please try again. [{0}]</value>
+    <value>No se pudo cerrar la sesión. Vuelve a intentarlo. [{0}]</value>
     <comment>Message of the dialog displayed when the logout to the MEGA cloud service api fails. 
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_LogoutFailed_Title" xml:space="preserve">
-    <value>Logout failed</value>
+    <value>Error al cerrar la sesión</value>
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_IncorrectEmailFormat" xml:space="preserve">
-    <value>Invalid email format. Please try again.</value>
+    <value>Formato de correo no válido. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
-    <value>Not enough free memory space to complete this operation. The app will shut down now</value>
+    <value>No hay sufiente espacio libre en la memoria para completar esta operación. La aplicación se cerrará ahora.</value>
     <comment>Message of the dialog displayed when the app exceeds the memory limit quota of the device.</comment>
   </data>
   <data name="AM_MemoryLimitError_Title" xml:space="preserve">
-    <value>Memory Limit</value>
+    <value>Límite de memoria</value>
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
-    <value>Failed to move '{0}' to rubbish bin. Please try again.</value>
+    <value>No se ha podido mover '{0}' a la papelera. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed_Title" xml:space="preserve">
-    <value>Move to rubbish bin failed</value>
+    <value>Error al mover a la Papelera</value>
     <comment>Title of the dialog displayed when the process/request to move nodes to the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to move '{0}' to the rubbish bin?</value>
+    <value>¿Estás seguro de que quieres mover '{0}' a la papelera?</value>
     <comment>Message of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the name of the node to be moved in runtime.</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion_Title" xml:space="preserve">
-    <value>Move to rubbish bin?</value>
+    <value>¿Mover elemento a la Papelera?</value>
     <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
-    <value>Item '{0}' successfully moved to the rubbish bin.</value>
+    <value>El elemento '{0}' se ha movido a la papelera.</value>
     <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess_Title" xml:space="preserve">
-    <value>Item moved</value>
+    <value>Elemento movido</value>
     <comment>Title of the dialog displayed when move successfully one single node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_NewSignUpInvalidLink" xml:space="preserve">
-    <value>The link you are using for a new signup is not valid.</value>
+    <value>El enlace de alta nueva que estás usando no es válido.</value>
     <comment>Message of the warning dialog shown when the user tries to make a new sign up using an invalid link (#newsignup).</comment>
   </data>
   <data name="AM_NoInternetConnectionMessage" xml:space="preserve">
-    <value>You cannot perform this action. Please connect to the Internet and try again.</value>
+    <value>No se puede realizar esta acción. Por favor, comprueba tu conexión a Internet y vuelve a intentarlo.</value>
     <comment>Message of the dialog displayed when the user is trying to perform any online action without an active Internet connection.</comment>
   </data>
   <data name="AM_OpenFileFailed" xml:space="preserve">
-    <value>Failed to open the selected file</value>
+    <value>No se pudo abrir el archivo seleccionado.</value>
     <comment>Message of the dialog displayed when the process to open a file failed.</comment>
   </data>
   <data name="AM_OpenFileFailed_Title" xml:space="preserve">
-    <value>File failed to open</value>
+    <value>Error al abrir el archivo</value>
     <comment>Title of the dialog displayed when the process to open a file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
-    <value>Passwords do not match. Please try again.</value>
+    <value>Las contraseñas no coinciden. Por favor, vuelve a escribirlas y asegúrate de que son iguales.</value>
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}'?</value>
+    <value>¿Estás seguro de que quieres eliminar '{0}'?</value>
     <comment>Message of the dialog displayed when a user want to remove definitely an itemfrom the rubbish bin, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveItemQuestion_Title" xml:space="preserve">
-    <value>Remove?</value>
+    <value>¿Eliminar?</value>
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
@@ -361,35 +361,35 @@ Preserve the {0} code because is for include the name of the item to be removed 
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">
-    <value>Remove failed</value>
+    <value>Error al eliminar</value>
     <comment>Title of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeSuccess" xml:space="preserve">
-    <value>Item successfully removed</value>
+    <value>Elemento eliminado correctamente.</value>
     <comment>Message of the dialog displayed when remove successfully a node definitely from the rubbish bin.</comment>
   </data>
   <data name="AM_RemoveNodeSuccess_Title" xml:space="preserve">
-    <value>Item removed</value>
+    <value>Elemento eliminado</value>
     <comment>Title of the dialog displayed when remove successfully a node definitely from the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_RenameNodeFailed" xml:space="preserve">
-    <value>Renaming item failed</value>
+    <value>No se pudo renombrar el elemento</value>
     <comment>Message of the dialog displayed when the process/request to rename a node failed.</comment>
   </data>
   <data name="AM_RenameNodeFailed_Title" xml:space="preserve">
-    <value>Rename failed</value>
+    <value>Error al renombrar</value>
     <comment>Title of the dialog displayed when the process/request to remove definitely an item node from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RequiredFieldsCreateAccount" xml:space="preserve">
-    <value>Please fill in your name, e-mail address and password</value>
+    <value>Por favor, introduce tu nombre, e-mail y contraseña.</value>
     <comment>Message of the dialog displayed when required fields for create account are not filled in.</comment>
   </data>
   <data name="AM_RequiredFieldsLogin" xml:space="preserve">
-    <value>Please fill in your e-mail address and your MEGA password.</value>
+    <value>Introduce tu e-mail y tu contraseña de MEGA.</value>
     <comment>Message of the dialog displayed when required fields for login are not filled in.</comment>
   </data>
   <data name="AM_RequiredFields_Title" xml:space="preserve">
-    <value>Fill in required fields</value>
+    <value>Rellena los campos obligatorios</value>
     <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
   </data>
   <data name="AM_EmptyRequiredFields" xml:space="preserve">
@@ -397,198 +397,198 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
-    <value>Failed to save settings. Please, try again [{0}]</value>
+    <value>No se pudo guardar la configuración. Por favor, inténtalo de nuevo [{0}]</value>
     <comment>Message of the dialog displayed when the process to save settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_SaveSettingsFailed_Title" xml:space="preserve">
-    <value>Error saving settings</value>
+    <value>Error guardando configuración</value>
     <comment>Title of the dialog displayed when the process to save settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFileFailed" xml:space="preserve">
-    <value>Failed to select file(s). Please, try again [{0}]</value>
+    <value>Error al seleccionar fichero(s). Por favor, inténtalo de nuevo [{0}]</value>
     <comment>Message of the dialog displayed when the process to select files failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_SelectFileFailed_Title" xml:space="preserve">
-    <value>File selection failed</value>
+    <value>Error al seleccionar fichero(s)</value>
     <comment>Title of the dialog displayed when the process to select files failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TooManyFailedLoginAttempts" xml:space="preserve">
-    <value>You have attempted to log in too many times. Please wait until {0} and try again.</value>
+    <value>Has intentado acceder demasiadas veces.Por favor, espera hasta las {0} e inténtalo de nuevo.</value>
     <comment>Message of the dialog shown when the user is trying to login and has made several failed attempts.
 Preserve the {0} code because is for include the exact time until the user has to wait.</comment>
   </data>
   <data name="AM_UserNotOnline" xml:space="preserve">
-    <value>You are not logged into MEGA. Please re-login.</value>
+    <value>No estás conectado a MEGA para realizar esta acción. Por favor, vuelve a iniciar sesión.</value>
     <comment>Message of the dialog displayed when the user is not online and is trying to do any operation that requires connection.</comment>
   </data>
   <data name="AM_UserNotOnline_Title" xml:space="preserve">
-    <value>Not online</value>
+    <value>Sin conexión</value>
     <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
-    <value>Incorrect email and/or password. Please try again.</value>
+    <value>Correo y/o contraseña incorrectos. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>The account is already confirmed. You can now login.</value>
+    <value>La cuenta ya está confirmada. Ahora puedes iniciar sesión.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
-    <value>Failed to confirm account. Please try again.</value>
+    <value>Error al confirmar la cuenta. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.</comment>
   </data>
   <data name="AM_ConfirmAccountSucces" xml:space="preserve">
-    <value>Your account has been created, confirmed and activated. You will be logged in automatically.</value>
+    <value>Tu cuenta ha sido creada, confirmada y activada. Se iniciará sesión automáticamente.</value>
     <comment>Message of the dialog displayed when confirm a MEGA account succesfully.</comment>
   </data>
   <data name="AM_IncompleteConfirmationLink" xml:space="preserve">
-    <value>The account confirmation link that you are using is incomplete. Please check the link length and be sure that you have copied the entire link then try again.</value>
+    <value>El enlace de confirmación de cuenta que estás usando está incompleto. Por favor, comprueba la longitud del enlace y asegúrate de haberlo copiado completo antes de intentarlo de nuevo.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account but the confirm link is incomplete because it has less characters than it should (probably because the user hasn't copied and pasted the entire link).</comment>
   </data>
   <data name="AM_WrongPassword" xml:space="preserve">
-    <value>Incorrect password. Please try again.</value>
+    <value>Contraseña incorrecta. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
-    <value>If you agree, the current account will be logged out and all Offline data will be erased. Do you want to continue?</value>
+    <value>Si aceptas, se cerrará la sesión actual y los datos en Sin conexión serán eliminados. ¿Quieres continuar?</value>
     <comment>Message of the warning dialog shown when you try to confirm an account but you are logged in with another one.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
-    <value>You are logged in with another account</value>
+    <value>Hay iniciada una sesión con otra cuenta</value>
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
-    <value>Failed to download the file '{0}'. Please try again.</value>
+    <value>No se ha podido descargar el archivo '{0}'. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to download a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_DownloadFailed_Title" xml:space="preserve">
-    <value>Download failed</value>
+    <value>Descarga fallida</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
   <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Operation not allowed, you will exceed the storage limit of your account. Do you want to upgrade your account?</value>
+    <value>Operación no permitida, se superará el límite de almacenamiento disponible. ¿Quieres ampliar tu cuenta?</value>
     <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>Overquota Alert!</value>
+    <value>¡Has superado la cuota de almacenamiento disponible!</value>
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file '{0}' for upload. Please try again.</value>
+    <value>No se ha podido preparar el archivo '{0}' para la subida. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed_Title" xml:space="preserve">
-    <value>Error preparing file</value>
+    <value>Error preparando el archivo</value>
     <comment>Title of the dialog displayed when the process to prepare a file for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFilesForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file(s) for upload. Please try again.</value>
+    <value>Fallo preparando archivo(s) para la subida. Por favor, inténtelo de nuevo.</value>
     <comment>Message of the dialog displayed when the process to prepare a file(s) for upload failed.</comment>
   </data>
   <data name="AM_PrepareFilesForUploadFailed_Title" xml:space="preserve">
-    <value>Error preparing file(s)</value>
+    <value>Error preparando archivo(s)</value>
     <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_UploadFileFailed" xml:space="preserve">
-    <value>Failed to upload the file '{0}'. Please try again.</value>
+    <value>No se ha podido subir el archivo '{0}'. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to upload a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_UploadFailed_Title" xml:space="preserve">
-    <value>Upload failed</value>
+    <value>Subida fallida</value>
     <comment>Title of the dialog displayed when the process/request to upload a node failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFolderFailed" xml:space="preserve">
-    <value>Failed to select folder. Please, try again or select another folder: [{0}]</value>
+    <value>No se ha podido seleccionar la carpeta. Inténtalo de nuevo o selecciona otra carpeta: [{0}]</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_SelectFolderFailed_Title" xml:space="preserve">
-    <value>Select folder failed</value>
+    <value>Error al seleccionar carpeta</value>
     <comment>Title of the dialog displayed when the process to select a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess" xml:space="preserve">
-    <value>You don't have access to the selected download path. Please select a different download path and try again.</value>
+    <value>No tienes acceso a la ruta de descarga seleccionada. Por favor, selecciona otra y prueba de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder.</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess_Title" xml:space="preserve">
-    <value>Unauthorized access</value>
+    <value>Acceso no autorizado</value>
     <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
   </data>
   <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
-    <value>You don't have access to the path '{0}'. Please select another one and try again.</value>
+    <value>No tienes acceso a la ruta '{0}'. Por favor selecciona otra e inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
   <data name="AM_InvalidFileName" xml:space="preserve">
-    <value>The name of the file '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <value>El nombre del archivo '{0}' no es válido o tiene caracteres incorrectos. Por favor cámbialo e inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that a file name is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_InvalidFolderNameOrPath" xml:space="preserve">
-    <value>The name or path of the folder '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <value>El nombre o la ruta de la carpeta '{0}' no son válidos o tienen caracteres incorrectos. Por favor, cámbialo e inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that a folder name or path is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PathTooLong" xml:space="preserve">
-    <value>The path of the file/folder '{0}' is too long. Please change it and try again.</value>
+    <value>La ruta del archivo o carpeta '{0}' es demasiado larga. Por favor cámbiela e inténtelo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that the file/folder path is too long.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_SelectFolderFailedNoErrorCode" xml:space="preserve">
-    <value>Failed to select the folder. Please try again or select another folder.</value>
+    <value>No se pudo seleccionar la carpeta. Por favor inténtelo de nuevo o seleccione otra carpeta.</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
   <data name="AM_CancelDownloadsQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel all the pending downloads?</value>
+    <value>¿Seguro que quieres cancelar todas las descargas pendientes?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending downloads.</comment>
   </data>
   <data name="AM_CancelSingleDownloadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected download?</value>
+    <value>¿Seguro que quieres cancelar la descarga seleccionada?</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected download.</comment>
   </data>
   <data name="AM_CancelSingleUploadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected upload?</value>
+    <value>¿Seguro que quieres cancelar la subida seleccionada?</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected upload.</comment>
   </data>
   <data name="AM_CancelUploadsQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel all the pending uploads?</value>
+    <value>¿Seguro que quieres cancelar todas las subidas pendientes?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending uploads.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to move {0} items to the rubbish bin?</value>
+    <value>¿Estás seguro de que quieres mover {0} elementos a la papelera?</value>
     <comment>Message of the dialog displayed when a user want to move multiple nodes to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinSucces" xml:space="preserve">
-    <value>{0} items moved to the rubbish bin</value>
+    <value>{0} elementos movidos a la papelera.</value>
     <comment>Message of the dialog displayed when move successfully multiple nodes to the rubbish bin.
 Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinSucces_Title" xml:space="preserve">
-    <value>Items moved</value>
+    <value>Elementos movidos</value>
     <comment>Title of the dialog displayed when move successfully multiple nodes to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_MultiRemoveSucces" xml:space="preserve">
-    <value>{0} items removed</value>
+    <value>{0} elementos eliminados.</value>
     <comment>Message of the dialog displayed when remove successfully multiple nodes definitely from the rubbish bin.
 Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
   </data>
   <data name="AM_MultiRemoveSucces_Title" xml:space="preserve">
-    <value>Items removed</value>
+    <value>Elementos eliminados</value>
     <comment>Title of the dialog displayed when remove successfully multiple nodes definitely from the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_MultiSelectRemoveQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} items?</value>
+    <value>¿Estás seguro de que quieres eliminar {0} elementos?</value>
     <comment>Message of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_MultiSelectRemoveQuestion_Title" xml:space="preserve">
-    <value>Remove items?</value>
+    <value>¿Eliminar elementos?</value>
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
@@ -612,7 +612,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when the process/request to copy node(s) failed.</comment>
   </data>
   <data name="AM_CopyFailed_Title" xml:space="preserve">
-    <value>Copy failed</value>
+    <value>Copia fallida</value>
     <comment>Title of the dialog displayed when the process/request to copy node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveFailed" xml:space="preserve">
@@ -620,35 +620,35 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when the process/request to move node(s) failed.</comment>
   </data>
   <data name="AM_MoveFailed_Title" xml:space="preserve">
-    <value>Move failed</value>
+    <value>Error al mover</value>
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
+    <value>Hemos cerrado tu cuenta debido a un incumplimiento de los Términos de Servicio de MEGA, como el abuso de los derechos de terceros, la compartición y/o importación de datos ilegales; o el abuso del sistema.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
-    <value>Suspended account</value>
+    <value>Cuenta suspendida</value>
     <comment>Title of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_SessionIDError" xml:space="preserve">
-    <value>You have been logged out on this device from another location</value>
+    <value>Se ha cerrado la sesión de este dispositivo desde otra ubicación.</value>
     <comment>Message of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error).</comment>
   </data>
   <data name="AM_SessionIDError_Title" xml:space="preserve">
-    <value>Logged out</value>
+    <value>Sesión cerrada</value>
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>Our SSL/TLS certificate can't be verified. You could be affected by a man-in-the-middle attack.</value>
+    <value>Nuestro certificado SSL/TLS no se ha podido verificar. Es posible que estén tratando de interceptar tus comunicaciones.</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>Logged out</value>
+    <value>Sesión cerrada</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
-    <value>Remove failed</value>
+    <value>Error al eliminar</value>
     <comment>Title of the dialog displayed when the process/request to remove node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFailed" xml:space="preserve">
@@ -674,7 +674,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>Failed to copy the Recovery Key to your clipboard. Please try again.</value>
+    <value>No se ha podido copiar la Clave de recuperación al portapapeles. Por favor, inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
@@ -682,7 +682,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>Recovery Key copied</value>
+    <value>Clave de recuperación copiada</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -710,11 +710,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process to initialize the previews of image files failed.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed" xml:space="preserve">
-    <value>Failed to copy the MEGA link to your clipboard.</value>
+    <value>Se ha producido un error al copiar el enlace MEGA a tu portapapeles.</value>
     <comment>Message of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed_Title" xml:space="preserve">
-    <value>Error copying link</value>
+    <value>Error al copiar el enlace</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard - (String as short as possible).</comment>
   </data>
   <data name="AM_GetLinkFailed" xml:space="preserve">
@@ -726,11 +726,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
-    <value>The MEGA link was copied to your clipboard</value>
+    <value>El enlace MEGA se copió en el portapapeles</value>
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
-    <value>Copied to clipboard</value>
+    <value>Copiado al portapapeles</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process to share a link from MEGA with other app fails.</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed_Title" xml:space="preserve">
-    <value>Error sharing link</value>
+    <value>Error al compartir el enlace</value>
     <comment>Title of the dialog displayed when the process to share a link from MEGA with other app fails - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega_Title" xml:space="preserve">
@@ -766,11 +766,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
-    <value>Your queued transfer exceeds the current transfer quota available for your account and may therefore be interrupted.</value>
+    <value>Tus transferencias en cola exceden la cuota de transferencia actual disponible para tu cuenta y, por lo tanto, podrían interrumpirse.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning_Title" xml:space="preserve">
-    <value>Depleted transfer quota</value>
+    <value>Cuota de transferencia agotada</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
@@ -785,28 +785,32 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Failed to resume your session. Please, close the app and try again later.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
+  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
+    <value>La nueva contraseña no puede coincidir con la antigua.</value>
+    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
+  </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
     <value>We have sent you an email confirming your password change.</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_PasswordChanged_Title" xml:space="preserve">
-    <value>Password changed</value>
+    <value>Contraseña modificada</value>
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>Your account has been updated. Do you want to check the new account details?</value>
+    <value>Tu cuenta se ha actualizado. ¿Quieres comprobar el nuevo estado?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
-    <value>Updated account</value>
+    <value>Cuenta actualizada</value>
     <comment>Title of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AlreadyPurchased" xml:space="preserve">
-    <value>Your purchase of a MEGA subscription has failed because you have already purchased this item.</value>
+    <value>La compra de tu suscripción MEGA ha fallado porque ya habías comprado este producto.</value>
     <comment>Message of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_AlreadyPurchased_Title" xml:space="preserve">
-    <value>Already purchased</value>
+    <value>Ya comprado</value>
     <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_ProductUnAvailable" xml:space="preserve">
@@ -818,19 +822,19 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_PurchaseFailed" xml:space="preserve">
-    <value>Your purchase of a MEGA subscription has failed or has been cancelled. Please try again or contact Windows Store support.</value>
+    <value>La compra de tu suscripción MEGA ha fallado o ha sido cancelada. Por favor, inténtalo de nuevo o contacta con el soporte de Windows Store.</value>
     <comment>Message of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
   </data>
   <data name="AM_PurchaseFailed_Title" xml:space="preserve">
-    <value>Purchase failed or cancelled</value>
+    <value>Compra fallida o cancelada</value>
     <comment>Title of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
   </data>
   <data name="AM_PurchaseSucceeded" xml:space="preserve">
-    <value>Your MEGA subscription purchase has succeeded.</value>
+    <value>La compra de tu suscripción MEGA se ha realizado con éxito.</value>
     <comment>Message of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_PurchaseSucceeded_Title" xml:space="preserve">
-    <value>Purchase succeeded</value>
+    <value>Compra con éxito</value>
     <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_UpdateProfileFailed" xml:space="preserve">
@@ -846,7 +850,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
-    <value>Awaiting email confirmation</value>
+    <value>Confirma tu cuenta</value>
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
@@ -854,7 +858,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
-    <value>You have already requested a confirmation link for that email address.</value>
+    <value>Ya has solicitado un enlace de confirmación para esa dirección de correo electrónico.</value>
     <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
   </data>
   <data name="AM_ChangeEmailGenericError" xml:space="preserve">
@@ -875,20 +879,20 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
-    <value>You already have a contact with that email address</value>
+    <value>Ya tienes un contacto con ese email</value>
     <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
   </data>
   <data name="AM_InviteContactFailed" xml:space="preserve">
-    <value>The contact invitation could not be sent. Please try again.</value>
+    <value>No se pudo enviar la invitación de contacto. Por favor, vuelve a intentarlo.</value>
     <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
   </data>
   <data name="AM_InviteContactSuccessfully" xml:space="preserve">
-    <value>User {0} has been invited and will appear on your contact list once they have accepted the invitation.</value>
+    <value>Se ha invitado a {0}. Aparecerá en tu lista de contactos en cuanto acepte tu invitación.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
 Preserve the [{0}] code because is for include the contact email in runtime.</comment>
   </data>
   <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
-    <value>You are trying to add your own email as a contact.</value>
+    <value>No se puede añadir la cuenta propia como contacto.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
@@ -951,7 +955,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_DisableDebugMode_Title" xml:space="preserve">
-    <value>Disable DEBUG mode</value>
+    <value>Desactivar el modo depuración</value>
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
@@ -960,23 +964,23 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_EnableDebugMode_Title" xml:space="preserve">
-    <value>Enable DEBUG mode</value>
+    <value>Activar el modo depuración</value>
     <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
   </data>
   <data name="AM_SaveLogFile" xml:space="preserve">
-    <value>Do you want to save the log file in an external location to use it later?</value>
+    <value>¿Deseas guardar los logs en una ubicación externa para usarlos más tarde?</value>
     <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
   </data>
   <data name="AM_SaveLogFile_Title" xml:space="preserve">
-    <value>Save the log file</value>
+    <value>Guardar logs</value>
     <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
   </data>
   <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
-    <value>Debug mode is enabled. Do you want to disable it?</value>
+    <value>El modo depuración está activo. ¿Quieres desactivarlo?</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable. This alert is to try to avoid that the user forget disable the DEBUG mode and the log file size grows a lot in the offline section.</comment>
   </data>
   <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
-    <value>Debug mode</value>
+    <value>Modo depuración</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
@@ -1043,7 +1047,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
-    <value>Invalid key file</value>
+    <value>Archivo de clave no válido</value>
     <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_CheckEmail" xml:space="preserve">
@@ -1059,7 +1063,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
-    <value>Invalid email address</value>
+    <value>Correo electrónico no valido</value>
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
@@ -1071,7 +1075,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
-    <value>Your password has been reset successfully. Please log into your account now.</value>
+    <value>Tu contraseña ha sido restablecida con éxito. Por favor accede a tu cuenta.</value>
     <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
   </data>
   <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
@@ -1079,7 +1083,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
-    <value>This recovery link has expired, please try again.</value>
+    <value>Este enlace de recuperación ha caducado, por favor inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
@@ -1087,7 +1091,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
-    <value>Invalid link, please try again.</value>
+    <value>Este enlace no es válido, por favor inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink_Title" xml:space="preserve">
@@ -1095,19 +1099,19 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountParked" xml:space="preserve">
-    <value>Your old account has been parked successfully. You can now log into your new account.</value>
+    <value>Tu antigua cuenta se ha aparcado con éxito. Ahora puedes acceder a tu nueva cuenta.</value>
     <comment>Message of the dialog displayed when the user has succesful parked account.</comment>
   </data>
   <data name="AM_AccountParked_Title" xml:space="preserve">
-    <value>Account parked</value>
+    <value>Cuenta aparcada</value>
     <comment>Title of the dialog displayed when the user has succesful parked account - (String as short as possible).</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount_Title" xml:space="preserve">
-    <value>Account already confirmed</value>
+    <value>Cuenta ya confirmada</value>
     <comment>Title of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_InvalidSignUpLink" xml:space="preserve">
-    <value>Invalid link, please try again.</value>
+    <value>Este enlace no es válido, por favor inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
@@ -1123,7 +1127,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
-    <value>Please strengthen your password.</value>
+    <value>Por favor, elige una contraseña más segura.</value>
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
@@ -1137,15 +1141,15 @@ Preserve the {0} code because is for include the price in runtime.</comment>
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
   <data name="AM_DecryptionKeyAlertMessage" xml:space="preserve">
-    <value>To access this folder/file, you will need its Decryption key. If you do not have the key, contact the creator of the link.</value>
+    <value>Para acceder a esta carpeta/archivo, necesitas la clave de cifrado. Si no la tienes, contacta con el creador del enlace.</value>
     <comment>Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents.</comment>
   </data>
   <data name="AM_DecryptionKeyAlertTitle" xml:space="preserve">
-    <value>Enter decryption key</value>
+    <value>Introducir la clave de cifrado</value>
     <comment>Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents - (String as short as possible).</comment>
   </data>
   <data name="AM_DecryptionKeyNotValid" xml:space="preserve">
-    <value>Invalid decryption key</value>
+    <value>La clave de cifrado no es válida</value>
     <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
@@ -1153,7 +1157,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
-    <value>Open link failed</value>
+    <value>Falló la apertura de enlace</value>
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
@@ -1161,7 +1165,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
   </data>
   <data name="AM_ImportFailed_Title" xml:space="preserve">
-    <value>Import failed</value>
+    <value>Importación fallida</value>
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
@@ -1173,21 +1177,21 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
-    <value>The account that created this link has been terminated due to multiple violations of our Terms of Service.</value>
+    <value>La cuenta que creó este enlace ha sido cerrada debido a múltiples infracciones de nuestros Términos de Servicio.</value>
     <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
   </data>
   <data name="AM_FileLinkUnavailable" xml:space="preserve">
-    <value>This could be due to the following reasons:
-- The file has been removed because of a ToS/AUP violation.
-- Invalid URL – the link you are trying to access does not exist.
-- The file has been deleted by the user.</value>
+    <value>Esto podría deberse a los siguientes motivos:
+- El archivo ha sido eliminado debido a una violación de nuestros Términos de servicio.
+- La URL no es válida – el enlace al que intentas acceder no existe.
+- El archivo ha sido eliminado por el usuario.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
-    <value>This could be due to the following reasons:
-- The folder link has been removed because of a ToS/AUP violation.
-- Invalid URL – the link you are trying to access does not exist.
-- The folder link has been deleted by the user.</value>
+    <value>Esto podría deberse a los siguientes motivos:
+- El enlace de la carpeta ha sido eliminado debido a una violación de nuestros Términos de servicio.
+- La URL no es válida – el enlace al que intentas acceder no existe.
+- El enlace de la carpeta ha sido eliminado por el usuario.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1199,81 +1203,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkUnavailableTitle" xml:space="preserve">
-    <value>Unavailable link</value>
+    <value>Enlace no disponible</value>
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
     <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
-  </data>
-  <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
-    <comment>Message to describe the purpose of the password reminder dialog.</comment>
-  </data>
-  <data name="AM_PasswordReminder_Title" xml:space="preserve">
-    <value>Do you remember your password?</value>
-    <comment>Title of the password reminder dialog.</comment>
-  </data>
-  <data name="AM_TestPassword" xml:space="preserve">
-    <value>Please test your password below to ensure you remember it. If you lost your password, you will lose access to your data.</value>
-    <comment>Message to describe the purpose of the dialog to test the password.</comment>
-  </data>
-  <data name="AM_TestPasswordSuccess" xml:space="preserve">
-    <value>Password accepted, we still recommend you back up your Recovery key.</value>
-    <comment>Message displayed when the password test result is ok.</comment>
-  </data>
-  <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>Wrong password!, backup your Recovery Key as soon as possible!</value>
-    <comment>Warning message displayed when the password test fails.</comment>
-  </data>
-  <data name="AM_TestPassword_Title" xml:space="preserve">
-    <value>Test Password</value>
-    <comment>Title of the test password dialog.</comment>
-  </data>
-  <data name="AM_RecoveryKeyExported" xml:space="preserve">
-    <value>The Recovery key has been exported.</value>
-    <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
-  </data>
-  <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
-    <value>Recovery key exported</value>
-    <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
-  </data>
-  <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
-    <value>Failed to export the Recovery key. Please try again.</value>
-    <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
-  </data>
-  <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
-    <value>Recovery key export failed</value>
-    <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
-  </data>
-  <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} items from offline?</value>
-    <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
-Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
-  </data>
-  <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}' from offline?</value>
-    <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
-Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
-  </data>
-  <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>Remove from offline?</value>
-    <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
-  </data>
-  <data name="AM_OpenFolderFailed" xml:space="preserve">
-    <value>Failed to open the selected folder</value>
-    <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
-  </data>
-  <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
-    <value>Folder failed to open</value>
-    <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
-  </data>
-  <data name="AM_PasswordChangeFailed" xml:space="preserve">
-    <value>Failed to change your password. Please try again.</value>
-    <comment>Message of the dialog displayed when the user has failed to change his password</comment>
-  </data>
-  <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
-    <value>Error change password</value>
-    <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
 </root>

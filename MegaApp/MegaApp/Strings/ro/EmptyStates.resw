@@ -126,7 +126,7 @@
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>Enable Camera Uploads</value>
+    <value>Activează încărcări cameră</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
-    <value>No completed transfers</value>
+    <value>Niciun transfer încheiat</value>
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>Empty folder</value>
+    <value>Folder gol</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Empty Rubbish Bin</value>
+    <value>Coş de gunoi gol</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
@@ -200,13 +200,5 @@
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
     <value>Manage your outgoing shares on this panel.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
-  </data>
-  <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>No offline files</value>
-    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
-  </data>
-  <data name="ES_OfflineSubHeader" xml:space="preserve">
-    <value>Save files for offline viewing</value>
-    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>
