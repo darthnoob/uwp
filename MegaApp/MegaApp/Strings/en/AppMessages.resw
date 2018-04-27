@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -122,7 +122,7 @@
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Please confirm you agree with the terms of service.</value>
+    <value>Please confirm you agree with the Terms of Service.</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
@@ -160,8 +160,8 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to copy a file failed by a non specific cause - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
-    <value>You don't have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?
-Please try to save/copy the file to the your device's internal memory instead.</value>
+    <value>You do not have permission to copy this file type to the destination folder. Are you trying to save/copy a file of an unsupported type to an SD card?
+Please try to save/copy the file to your device’s internal memory instead.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
@@ -288,7 +288,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_IncorrectEmailFormat" xml:space="preserve">
-    <value>Incorrect email format. Please try again.</value>
+    <value>Invalid email format. Please try again.</value>
     <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
@@ -300,7 +300,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
-    <value>Failed to move '{0}' to rubbish bin. Please try again</value>
+    <value>Failed to move '{0}' to rubbish bin. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -318,7 +318,7 @@ Preserve the {0} code because is for include the name of the node to be moved in
     <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
-    <value>Item '{0}' successfully moved to the rubbish bin</value>
+    <value>Item '{0}' successfully moved to the rubbish bin.</value>
     <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -592,13 +592,13 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>Download path doesn't exist and any error occurred trying create it. 
-Please try again and if continues failing contact support@mega.nz. [{0}]</value>
+    <value>The download path doesn't exist and an error occurred trying to create it. 
+Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>Unknown error in the download path. Please try again and if continues failing contact support@mega.nz. [{0}]</value>
+    <value>Unknown error in the download path. Please try again and if the problem persists contact support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -624,7 +624,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account was terminated due to breach of Mega's Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
+    <value>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -670,19 +670,19 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>The Recovery key has been copied to your clipboard.</value>
+    <value>The Recovery Key has been copied to your clipboard.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>Failed to copy the Recovery key to your clipboard. Please try again.</value>
+    <value>Failed to copy the Recovery Key to your clipboard. Please try again.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>Recovery key copy failed</value>
+    <value>Recovery Key copy failed</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>Recovery key copied</value>
+    <value>Recovery Key copied</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -842,7 +842,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>One download has failed. Please review your downloads list and try again..</value>
+    <value>One download has failed. Please review your download list and try again.</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
@@ -862,12 +862,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Congratulations, your new e-mail address for this MEGA account is: {0}</value>
+    <value>Congratulations, your new email address for this MEGA account is: {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>The link you are using for change the email is not valid.</value>
+    <value>The link you are using for changing the email is not valid.</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
@@ -897,16 +897,16 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} from your contact-list?</value>
+    <value>Are you sure you want to remove {0} from your contact list?</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Access to any folders shared with you by selected contacts will be lost.</value>
+    <value>Access to any folders shared with you by the selected contacts will be lost.</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} users from your contact-list?</value>
+    <value>Are you sure you want to remove {0} users from your contact list?</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
@@ -989,7 +989,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Remove shared folders access</value>
+    <value>Remove access to shared folders</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
@@ -1067,7 +1067,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Error password reset</value>
+    <value>Error on password reset</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1132,7 +1132,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Wait {0} for your transfer quota to renew.</value>
+    <value>Wait {0} for your transfer quota to reset.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
@@ -1165,7 +1165,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Failed opening the folder link. Please try again.</value>
+    <value>Failed to open the folder link. Please try again.</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
@@ -1191,7 +1191,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Failed opening the file link. Please try again.</value>
+    <value>Failed to open the file link. Please try again.</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
@@ -1203,7 +1203,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.</value>
+    <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">

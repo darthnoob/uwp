@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -307,7 +307,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloading" xml:space="preserve">
-    <value>Downloading...</value>
+    <value>Downloading…</value>
     <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusError" xml:space="preserve">
@@ -331,7 +331,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Uploading...</value>
+    <value>Uploading…</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
@@ -407,8 +407,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>Log out</value>
-    <comment>Label for any 'Log out' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Logout</value>
+    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
     <value>Upload your photos to your account.</value>
@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Saving the Recovery key and keeping it in a secure location enables you to recover your account in the case of a lost password without data loss.</value>
+    <value>Your Recovery Key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">
@@ -479,7 +479,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Preparing...</value>
+    <value>Preparing…</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
@@ -499,11 +499,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Completing...</value>
+    <value>Completing…</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Retrying...</value>
+    <value>Retrying…</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -758,7 +758,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
-    <value>In app purchase (Microsoft store)</value>
+    <value>In app purchase (Microsoft Store)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Keep 'Microsoft Store' in English because it is a trademark.</comment>
   </data>
@@ -899,7 +899,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Congratulation, your new email address for this MEGA account is</value>
+    <value>Congratulations, your new email address for this MEGA account is</value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">
@@ -1264,7 +1264,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
