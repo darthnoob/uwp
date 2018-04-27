@@ -247,7 +247,7 @@ namespace MegaApp.Services
         /// <returns>App name</returns>
         public static string GetAppName()
         {
-            return ResourceService.AppResources.GetString("AR_ApplicationTitle");
+            return ResourceService.AppResources.GetString("AR_ApplicationName");
         }
 
         /// <summary>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PM_CleanRubbishBin" xml:space="preserve">
+    <value>Vaciando la papelera...</value>
+    <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="PM_CreateAccountHeader" xml:space="preserve">
+    <value>Creando cuenta...</value>
+    <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_CreateAccountSubHeader" xml:space="preserve">
+    <value>Please wait while we send you a sign-up confirmation link.</value>
+    <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_CreateFolder" xml:space="preserve">
+    <value>Creando carpeta...</value>
+    <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Delete" xml:space="preserve">
+    <value>Deleting…</value>
+    <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
+  </data>
+  <data name="PM_FastLoginHeader" xml:space="preserve">
+    <value>Reanudando sesión...</value>
+    <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
+  </data>
+  <data name="PM_FetchNodesSubHeader" xml:space="preserve">
+    <value>Requesting account data.</value>
+    <comment>Progress indicator message when fetching nodes.</comment>
+  </data>
+  <data name="PM_LoginHeader" xml:space="preserve">
+    <value>Iniciando sesión...</value>
+    <comment>Progress indicator message when logging in - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoginSubHeader" xml:space="preserve">
+    <value>Please wait while we log you into your account.</value>
+    <comment>Progress indicator message when logging in - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Logout" xml:space="preserve">
+    <value>Cerrando sesión...</value>
+    <comment>Progress indicator message when logging out - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Move" xml:space="preserve">
+    <value>Moviendo...</value>
+    <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
+  </data>
+  <data name="PM_MoveToRubbishBin" xml:space="preserve">
+    <value>Moviendo a la papelera...</value>
+    <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Remove" xml:space="preserve">
+    <value>Eliminando...</value>
+    <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Rename" xml:space="preserve">
+    <value>Renombrando...</value>
+    <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
+    <value>Servidores ocupados. Por favor, espera.</value>
+    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
+  </data>
+  <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
+    <value>Decrypting nodes.</value>
+    <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoadingPreview" xml:space="preserve">
+    <value>Cargando vista previa...</value>
+    <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConfirmAccountHeader" xml:space="preserve">
+    <value>Creating your account</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
+    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Patient" xml:space="preserve">
+    <value>Please be patient</value>
+    <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoginToFolderHeader" xml:space="preserve">
+    <value>Abriendo el enlace de carpeta...</value>
+    <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
+    <value>Please wait while we open the folder link.</value>
+    <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+</root>
