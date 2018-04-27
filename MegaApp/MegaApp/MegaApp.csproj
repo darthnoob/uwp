@@ -102,7 +102,9 @@
     </PRIResource>
     <PRIResource Include="Strings\en\SettingsResources.resw" />
     <PRIResource Include="Strings\en\ProgressMessages.resw" />
-    <PRIResource Include="Strings\en\AppResources.resw" />
+    <PRIResource Include="Strings\en\AppResources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <PRIResource Include="Strings\en\AppMessages.resw">
       <SubType>Designer</SubType>
     </PRIResource>
