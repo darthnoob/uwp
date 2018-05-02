@@ -126,7 +126,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Please wait while we send you a sign-up confirmation link.</value>
+    <value>Aguarde enquanto lhe enviamos o link de confirmação da conta.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting…</value>
+    <value>Deletando…</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>Requesting account data.</value>
+    <value>Solicitando os dados da conta.</value>
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>Please wait while we log you into your account.</value>
+    <value>Aguarde enquanto fazemos o login na sua conta.</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
@@ -173,12 +173,8 @@
     <value>Renomeando...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
-    <value>Servidores ocupados. Por favor, aguarde.</value>
-    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
-  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Decrypting nodes.</value>
+    <value>Decodificando dados.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
@@ -186,15 +182,15 @@
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>Creating your account</value>
+    <value>Criando a sua conta</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <value>As suas chaves RSA pública e privada de 2048 bits estão sendo criadas agora. Este é um passo muito importante e pode demorar alguns segundos. Por favor, seja paciente.</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_Patient" xml:space="preserve">
-    <value>Please be patient</value>
+    <value>Por favor, seja paciente.</value>
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderHeader" xml:space="preserve">
@@ -202,7 +198,7 @@
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
-    <value>Please wait while we open the folder link.</value>
+    <value>Aguarde enquanto abrimos o link da pasta.</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
 </root>

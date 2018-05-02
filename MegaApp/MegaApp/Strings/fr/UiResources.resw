@@ -899,7 +899,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is</value>
+    <value>Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est</value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">

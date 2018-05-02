@@ -130,7 +130,7 @@
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Click the toggle button below to automatically sync your photos and videos to MEGA.</value>
+    <value>Clique no botão abaixo para fazer o upload automático das suas fotos e vídeos para o MEGA.</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -138,15 +138,15 @@
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
-    <value>Manage your completed transfers on this panel.</value>
+    <value>Gerencie as suas transferências concluídas neste painel.</value>
     <comment>Sub header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsHeader" xml:space="preserve">
-    <value>No active downloads</value>
+    <value>Não há downloads ativos</value>
     <comment>Header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsSubHeader" xml:space="preserve">
-    <value>Manage your downloads on this panel.</value>
+    <value>Gerencie os seus downloads neste painel.</value>
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>This folder doesn't contain any files or folders.</value>
+    <value>Esta pasta não contém arquivos ou pastas.</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
@@ -166,39 +166,39 @@
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>You haven't sent any file or folder to the rubbish bin.</value>
+    <value>Você não enviou nenhum arquivo ou pasta para a lixeira.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
-    <value>No active uploads</value>
+    <value>Não há uploads ativos</value>
     <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsSubHeader" xml:space="preserve">
-    <value>Manage your uploads on this panel.</value>
+    <value>Gerencie os seus uploads neste painel.</value>
     <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsHeader" xml:space="preserve">
-    <value>Welcome to your Contacts manager</value>
+    <value>Bem-vindo ao seu gestor de contatos</value>
     <comment>Header text for the empty state of the contacts list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsSubHeader" xml:space="preserve">
-    <value>You can add and manage your contacts on this panel.</value>
+    <value>Você pode adicionar e gerenciar os seus contatos neste painel.</value>
     <comment>Sub header text for the empty state of the contacts list.</comment>
   </data>
   <data name="ES_IncomingSharesHeader" xml:space="preserve">
-    <value>No incoming shares</value>
+    <value>Não há pastas compartilhadas com você</value>
     <comment>Header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_IncomingSharesSubHeader" xml:space="preserve">
-    <value>Manage your incoming shares on this panel.</value>
+    <value>Gerencie as pastas compartilhadas com você neste painel.</value>
     <comment>Sub header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesHeader" xml:space="preserve">
-    <value>No outgoing shares</value>
+    <value>Não há pastas compartilhadas por você</value>
     <comment>Header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
-    <value>Manage your outgoing shares on this panel.</value>
+    <value>Gerencie as pastas compartilhadas por você neste painel.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
 </root>

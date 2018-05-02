@@ -134,7 +134,7 @@
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting…</value>
+    <value>جاري الحذف...</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
@@ -142,7 +142,7 @@
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>Requesting account data.</value>
+    <value>جاري طلب معلومات حسابك</value>
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>Please wait while we log you into your account.</value>
+    <value>يرجى الانتظار ريثما يتم تسجيل الدخول الى حسابك</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
@@ -173,12 +173,8 @@
     <value>إعادة التسمية...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
-    <value>الخوادم مشغولة جدا. الرجاء الانتظار.</value>
-    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
-  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Decrypting nodes.</value>
+    <value>جاري فك تشفير بياناتك</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
@@ -186,7 +182,7 @@
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>Creating your account</value>
+    <value>جاري انشاء حسابك</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
@@ -194,7 +190,7 @@
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_Patient" xml:space="preserve">
-    <value>Please be patient</value>
+    <value>يرجى الانتظار</value>
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderHeader" xml:space="preserve">
@@ -202,7 +198,7 @@
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
-    <value>Please wait while we open the folder link.</value>
+    <value>يرجى الانتظار ريثما يتم فتح رابط المجلد</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
 </root>

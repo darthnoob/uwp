@@ -785,10 +785,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Oturumunuz devam ettirilemedi. Lütfen uygulamayı kapatın ve tekrar deneyin.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
-  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
-    <value>Yeni ve eski şifre aynı  olamaz.</value>
-    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
-  </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
     <value>Parola değişiminizin onayı için size eposta gönderdik.</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
