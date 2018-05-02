@@ -168,6 +168,17 @@ namespace MegaApp.ViewModels.Contacts
             return false;
         }
 
+        /// <summary>
+        /// Copy achievement data from another contact object to this contact
+        /// </summary>
+        /// <param name="contact">Contact to copy achievement data</param>
+        public void CopyAchievementDetails(ContactViewModel contact)
+        {
+            this.StorageAmount = contact.StorageAmount;
+            this.TransferAmount = contact.TransferAmount;
+            this.ReferralBonusExpireDate = contact.ReferralBonusExpireDate;
+        }
+
         #endregion
 
         #region Properties
@@ -293,6 +304,11 @@ namespace MegaApp.ViewModels.Contacts
 
         #region Achievement properties
 
+        /// <summary>
+        /// Indicates if this contact has granted the user a referral bonus
+        /// </summary>
+        public bool HasReferralBonus => this.StorageAmount > 0 && this.TransferAmount > 0;
+
         private long _storageAmount;
         /// <summary>
         /// Amount of MEGA service referral bonus storage for this contact
@@ -348,9 +364,16 @@ namespace MegaApp.ViewModels.Contacts
             ReferralBonusExpireDate?.Subtract(DateTime.Today).Days ?? -1;
 
         /// <summary>
+        /// Amount of days remaining before the referral bonus of this contact expires as text
+        /// </summary>
+        public string ReferralBonusDaysRemaining => AccountService.GetDaysRemaining(this.ReferralBonusExpiresIn);
+
+        /// <summary>
         /// Amount of days before the referral bonus of this contact expires as text
         /// </summary>
-        public string ReferralBonusDaysRemaining => AccountService.GetDaysRemaining(ReferralBonusExpiresIn);
+        public string ReferralBonusExpiresInText => this.IsReferralBonusExpired 
+            ? ResourceService.UiResources.GetString("UI_Expired")
+            : AccountService.GetDays(this.ReferralBonusExpiresIn);
 
 
         private MContactRequestStatusType StatusType => this.MegaSdk.getContactRequestByHandle(this.Handle) != null
@@ -419,6 +442,10 @@ namespace MegaApp.ViewModels.Contacts
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
         public string SharedItemsText => ResourceService.UiResources.GetString("UI_SharedItems");
         public string ViewProfileText => ResourceService.UiResources.GetString("UI_ViewProfile");
+        public string EarnedReferralBonusText => ResourceService.UiResources.GetString("UI_EarnedReferralBonus");
+        public string StorageText => ResourceService.UiResources.GetString("UI_Storage");
+        public string TransferText => ResourceService.UiResources.GetString("UI_Transfer");
+        public string ExpiresInText => ResourceService.UiResources.GetString("UI_ExpiresIn");
 
         #endregion
 

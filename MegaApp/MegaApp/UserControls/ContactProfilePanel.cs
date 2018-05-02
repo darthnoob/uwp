@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using mega;
 using Microsoft.Xaml.Interactivity;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -52,7 +53,7 @@ namespace MegaApp.UserControls
         private Pivot _pivotControl;
         private PivotItem _sharedItemsPivot;
         private Grid _sharedItemsTopCommandBarArea;
-
+     
         public ContactProfilePanel()
         {
             this.DefaultStyleKey = typeof(ContactProfilePanel);
@@ -85,11 +86,29 @@ namespace MegaApp.UserControls
 
             if (this._pivotControl != null)
                 this._pivotControl.SelectionChanged += OnPivotSelectionChanged;
-
         }
 
         protected void OnContactChanged(ContactViewModel oldContact, ContactViewModel newContact)
         {
+            // If achievements is enabled, retrieve achievement data for the new contact
+            if (AccountService.AccountAchievements.IsAchievementsEnabled)
+            {
+                // Only need data from the MAchievementClass.MEGA_ACHIEVEMENT_INVITE type
+                var referralAward = AccountService.AccountAchievements.AwardedClasses.FirstOrDefault(
+                    model => model.AchievementClass.HasValue &&
+                             model.AchievementClass.Value == MAchievementClass.MEGA_ACHIEVEMENT_INVITE);
+
+                // Find the achievements invite for current contact
+                var referralContact = (ContactViewModel) referralAward?.Contacts.ItemCollection.Items.FirstOrDefault(contact =>
+                    contact.Handle == newContact.Handle);
+
+                if (referralContact != null)
+                {
+                    // Copy achievement information to the new contact
+                    newContact.CopyAchievementDetails(referralContact);
+                }
+            }
+            
             if(oldContact?.SharedItems?.ItemCollection != null)
             {
                 oldContact.SharedItems.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
