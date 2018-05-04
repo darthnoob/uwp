@@ -47,8 +47,9 @@ namespace BackgroundTaskService
                         return;
                     }
 
-                    var fileToUpload = await TaskService.GetAvailableUploadAsync(KnownFolders.PicturesLibrary,
-                        TaskService.ImageDateSetting);
+                    // Get the IMAGE and VIDEO files to upload to MEGA
+                    var fileToUpload = await TaskService.GetAvailableUploadAsync(TaskService.ImageDateSetting,
+                        KnownFolders.PicturesLibrary, KnownFolders.VideosLibrary);
                     foreach (var storageFile in fileToUpload)
                     {
                         // Skip the current file if it has failed more than the max error count
