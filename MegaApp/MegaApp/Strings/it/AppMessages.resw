@@ -785,10 +785,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Recupero della sessione fallita. Per favore, chiudi l'applicazione e riprova più tardi.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
-  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
-    <value>La nuova e la vecchia password non possono corrispondere.</value>
-    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
-  </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
     <value>Ti abbiamo inviato un email di conferma per il cambio della tua password.</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>

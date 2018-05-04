@@ -592,13 +592,13 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>The download path doesn't exist and an error occurred trying to create it. 
-Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
+    <value>下载路径不存在且尝试创建它时发生错误。 
+请再试一次，如果还发生错误，请通过support@mega.nz与我们联系。[{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>Unknown error in the download path. Please try again and if the problem persists contact support@mega.nz. [{0}]</value>
+    <value>未知的下载路径错误。请再试一次，如果问题仍然存在，请联系support@mega.nz。[{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -624,7 +624,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
+    <value>您的帐户因违反Mega的服务条款而被终止，如滥用他人权利;共享和/或导入非法数据;或系统滥用等原因。</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -726,7 +726,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
-    <value>MEGA连接已复制到剪贴板</value>
+    <value>MEGA链接已复制到剪贴板</value>
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
@@ -785,10 +785,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>无法恢复会话。请关闭该应用，稍后再试。</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
-  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
-    <value>新的密码不能与您现在的密码相同。</value>
-    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
-  </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
     <value>我们已向您发送确认更改密码的电子邮件。</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
@@ -814,11 +810,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_ProductUnAvailable" xml:space="preserve">
-    <value>The selected MEGA subscription is temporarily unavailable. Please try again or contact Microsoft Store support.</value>
+    <value>所选的MEGA计划暂时不可用。请重试或联系微软商店客服。</value>
     <comment>Message of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_ProductUnAvailable_Title" xml:space="preserve">
-    <value>Product unavailable</value>
+    <value>产品不可用</value>
     <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_PurchaseFailed" xml:space="preserve">
@@ -838,15 +834,15 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_UpdateProfileFailed" xml:space="preserve">
-    <value>Failed to update your profile. Please try again.</value>
+    <value>无法更新您的个人资料。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_UpdateProfileFailed_Title" xml:space="preserve">
-    <value>Update profile failed</value>
+    <value>更新个人资料失败</value>
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>One download has failed. Please review your download list and try again.</value>
+    <value>有一个下载失败的文件。请检查您的下载列表并重试。</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
@@ -854,7 +850,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
-    <value>Please go to your inbox and click the link to confirm your new email address.</value>
+    <value>请打开您的收件箱，然后点击链接以确认您的新电子邮件地址。</value>
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
@@ -862,20 +858,20 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
   </data>
   <data name="AM_ChangeEmailGenericError" xml:space="preserve">
-    <value>Failed to change your email. Please try again later.</value>
+    <value>无法更改您的电子邮件。请稍后再试。</value>
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is: {0}</value>
+    <value>恭喜，您MEGA帐户的新电子邮件地址是：{0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>The link you are using for changing the email is not valid.</value>
+    <value>您用于更改电子邮件的链接无效。</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
-    <value>Incorrect account. Please login into the right account and try again.</value>
+    <value>帐户不正确。请登录到正确的帐户，然后重试。</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
@@ -896,61 +892,61 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
-    <value>Failed to remove the contact {0}. Please try again.</value>
+    <value>无法删除联系人{0}。请再试一次。</value>
     <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} from your contact list?</value>
+    <value>您确定要从联系人列表中删除{0}吗？</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Access to any folders shared with you by the selected contacts will be lost.</value>
+    <value>所选联系人与您共享的任何文件夹都将丢失。</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} users from your contact list?</value>
+    <value>您确定要从联系人列表中删除{0}个用户吗？</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
-    <value>Failed removing contacts. Please try again.</value>
+    <value>删除联系人失败。请再试一次。</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave {0} shared folders?</value>
+    <value>您确定要离开{0}个共享文件夹吗？</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Leave shared folders</value>
+    <value>离开共享文件夹</value>
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <value>未能离开共享文件夹“{0}”。请再试一次</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave “{0}”?</value>
+    <value>是否离开“{0}”？</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderWarning" xml:space="preserve">
-    <value>Access to shared folder content will be lost.</value>
+    <value>共享文件夹的内容将会丢失。</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one or multiple shared folders.</comment>
   </data>
   <data name="AM_LeaveSharedFolder_Title" xml:space="preserve">
-    <value>Leave shared folder</value>
+    <value>离开共享文件夹</value>
     <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <value>无法离开多个共享文件夹。请再试一次</value>
     <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
   </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
-    <value>The log ({0}) will be deleted.</value>
+    <value>日志 ({0}) 将被删除。</value>
     <comment>Alert message shown when the DEBUG mode is disabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -959,7 +955,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
-    <value>A log will be created ({0}).</value>
+    <value>日志将被创建({0}) 。</value>
     <comment>Alert message shown when the DEBUG mode is enabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -984,66 +980,66 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to {0} shared folders?</value>
+    <value>您确定要删除对{0}共享文件夹的访问权吗？</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access these folders.</value>
+    <value>联系人将不再能够访问这些文件夹。</value>
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Remove access to shared folders</value>
+    <value>删除对共享文件夹的访问权限</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder "{0}". Please try again.</value>
+    <value>无法删除对共享文件夹“{0}”的访问权限。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to “{0}”?</value>
+    <value>是否删除“{0}”的访问权限？</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access this folder.</value>
+    <value>联系人将不再能够访问此文件夹。</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one shared folder.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolder_Title" xml:space="preserve">
-    <value>Remove shared folder access</value>
+    <value>删除共享文件夹访问权限</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to remove access to multiple shared folders. Please try again.</value>
+    <value>法删除对多个共享文件夹的访问权限。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
-    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <value>应用程序遇到问题。您正在处理的信息可能会丢失。对此造成的不便，我们表示歉意。</value>
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
-    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <value>是否通知应用程序开发人员并发送准备好的错误报告？这该报告有助于更快解决问题。</value>
     <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationError_Title" xml:space="preserve">
-    <value>Application Error</value>
+    <value>应用程序错误</value>
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareFolderFailed" xml:space="preserve">
-    <value>Failed to share the folder. Please try again.</value>
+    <value>无法共享文件夹。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_ShareFolderFailedOwnEmail" xml:space="preserve">
-    <value>You are trying to share the folder to yourself.</value>
+    <value>您正尝试将文件夹分享给自己。</value>
     <comment>Message of the dialog displayed when the process/request to share a folder failed because the user is trying to share the folder to his/her own e-mail.</comment>
   </data>
   <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
-    <value>Error sharing folder</value>
+    <value>共享文件夹出错</value>
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_InvalidKeyFile" xml:space="preserve">
-    <value>The file you selected is too large/small. Please make sure you select the file containing your 22-character Recovery Key.</value>
+    <value>您选择的文件太大/太小。请确保您选择包含22位字符恢复金匙的文件。</value>
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
@@ -1051,15 +1047,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_CheckEmail" xml:space="preserve">
-    <value>If you can’t access your email account, you will need to contact support@mega.nz.</value>
+    <value>如果您无法查看您的电子邮件，则需要联系support@mega.nz。</value>
     <comment>Message of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_CheckEmail_Title" xml:space="preserve">
-    <value>Please check your email</value>
+    <value>请查看您的邮箱</value>
     <comment>Title of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_InvalidEmail" xml:space="preserve">
-    <value>Please check the email address and try again.</value>
+    <value>请检查电子邮件地址，然后重试。</value>
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
@@ -1067,11 +1063,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
-    <value>Your password has not been reset. Please try again or contact support.</value>
+    <value>您的密码尚未重置。请重试或联系客服。</value>
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Error on password reset</value>
+    <value>密码重置错误</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1079,7 +1075,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
   </data>
   <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
-    <value>Successful password reset</value>
+    <value>成功的密码重置</value>
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
@@ -1087,7 +1083,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
-    <value>Recovery link expired</value>
+    <value>恢复链接过期</value>
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
@@ -1095,7 +1091,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink_Title" xml:space="preserve">
-    <value>Invalid recovery link</value>
+    <value>无效的恢复链接</value>
     <comment>Title of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountParked" xml:space="preserve">
@@ -1115,15 +1111,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
-    <value>Invalid sign-up link</value>
+    <value>注册链接无效</value>
     <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_SignUpLinkExpired" xml:space="preserve">
-    <value>This sign-up link has expired, please try again.</value>
+    <value>此注册链接已过期，请重试。</value>
     <comment>Message of the dialog displayed when the sign-up is expired.</comment>
   </data>
   <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
-    <value>Sign-up link expired</value>
+    <value>注册链接已过期</value>
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
@@ -1131,12 +1127,12 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <value>只升级到PRO帐户{0}才能继续下载</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Wait {0} for your transfer quota to reset.</value>
+    <value>等待流量配额的{0}重置。</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
@@ -1153,7 +1149,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
-    <value>Failed to open link. No valid format.</value>
+    <value>无法打开链接。没有有效的格式。</value>
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
@@ -1161,7 +1157,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
-    <value>Failed importing nodes. Please try again.</value>
+    <value>导入节点失败。请再试一次。</value>
     <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
   </data>
   <data name="AM_ImportFailed_Title" xml:space="preserve">
@@ -1169,11 +1165,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Failed to open the folder link. Please try again.</value>
+    <value>无法打开文件夹链接。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
-    <value>Open folder link failed</value>
+    <value>打开文件夹链接失败</value>
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
@@ -1195,11 +1191,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Failed to open the file link. Please try again.</value>
+    <value>无法打开链接。请再试一次。</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
-    <value>Open file link failed</value>
+    <value>打开链接失败</value>
     <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkUnavailableTitle" xml:space="preserve">
@@ -1207,7 +1203,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
+    <value>由于多次违反Mega的服务条款，您的帐户已被暂停。请查看您的电子邮件收件箱。</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
 </root>

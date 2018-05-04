@@ -173,10 +173,6 @@
     <value>이름 변경중...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
-  <data name="PM_ServersTooBusySubHeader" xml:space="preserve">
-    <value>서버가 너무 바쁩니다. 잠시 기다리세요.</value>
-    <comment>Progress indicator message when servers are too busy - (String as short as possible).</comment>
-  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>Decrypting nodes.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>

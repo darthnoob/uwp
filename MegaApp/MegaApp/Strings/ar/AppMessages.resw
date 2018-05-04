@@ -785,10 +785,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>فشل عملية استعادة الجلسة الخاصة بك. يرجى اغلاق التطبيق ثم إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
-  <data name="AM_NewAndOldPasswordMatch" xml:space="preserve">
-    <value>كلمة السر الجديدة يجب ألا تطابق القديمة.</value>
-    <comment>Message of the dialog displayed when a user are trying to change his/her MEGA account password and the new password is equal to the old password.</comment>
-  </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
     <value>تم ارسال بريد الكتروني اليك لتأكيد عملية تغيير كلمة المرور.</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
@@ -854,7 +850,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
-    <value>Please go to your inbox and click the link to confirm your new email address.</value>
+    <value>يرجى الذهاب الى صندوق الوارد في بريدك الالكتروني والضغط على الرابط المرسل اليك لتأكيد بريدك الالكتروني.</value>
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
@@ -875,7 +871,7 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
-    <value>Incorrect account. Please login into the right account and try again.</value>
+    <value>حساب خاطئ. يرجى تسجيل الدخول الى الحساب الصحيح ثم إعادة المحاولة.</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
@@ -906,7 +902,7 @@ Keep the {0} code because is for include the contact email or name in runtime.</
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Access to any folders shared with you by the selected contacts will be lost.</value>
+    <value>لن تبقى صلاحية الولوج الى أية مجلد متشارك معك من جهات الاتصال المحددة</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
@@ -915,7 +911,7 @@ Keep the '{0}' code because is for include the contact email or name in runtime.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
-    <value>Failed removing contacts. Please try again.</value>
+    <value>فشل عملية حذف جهات الاتصال. يرجى إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
@@ -946,7 +942,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <value>فشل عملية ترك المجلدات المتشاركة. يرجى إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
   </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
@@ -1011,7 +1007,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Warning message of the dialog displayed when the user is trying to leave one shared folder.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolder_Title" xml:space="preserve">
-    <value>Remove shared folder access</value>
+    <value>حذف صلاحية الولوج للمجلد المتشارك</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
@@ -1019,7 +1015,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
-    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <value>حدث خطأ بالتطبيق، يرجى تقبل اعتذارنا. اذا كنت تقوم بعملية ما فانه من الممكن ان تكون العملية فشلت.</value>
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
@@ -1031,11 +1027,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareFolderFailed" xml:space="preserve">
-    <value>Failed to share the folder. Please try again.</value>
+    <value>فشل عملية مشاركة المجلد. يرجى اعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_ShareFolderFailedOwnEmail" xml:space="preserve">
-    <value>You are trying to share the folder to yourself.</value>
+    <value>إنك تحاول مشاركة المجلد مع نفسك.</value>
     <comment>Message of the dialog displayed when the process/request to share a folder failed because the user is trying to share the folder to his/her own e-mail.</comment>
   </data>
   <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
@@ -1055,11 +1051,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_CheckEmail_Title" xml:space="preserve">
-    <value>Please check your email</value>
+    <value>يرجى الذهاب الى بريدك الالكتروني</value>
     <comment>Title of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_InvalidEmail" xml:space="preserve">
-    <value>Please check the email address and try again.</value>
+    <value>يرجى التحقق من عنوان بريدك الالكتروني ثم إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
@@ -1067,11 +1063,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
-    <value>Your password has not been reset. Please try again or contact support.</value>
+    <value>لم تنجح عملية إعادة تعيين كلمة المرور. يرجى إعادة المحاولة او الاتصال بفريق الدعم.</value>
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Error on password reset</value>
+    <value>حدث خطأ اثناء عملية إعادة تعيين كلمة المرور</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1087,7 +1083,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
-    <value>Recovery link expired</value>
+    <value>انتهت صلاحية رابط الاسترجاع</value>
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
@@ -1115,15 +1111,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
-    <value>Invalid sign-up link</value>
+    <value>رابط التسجيل غير صالح</value>
     <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_SignUpLinkExpired" xml:space="preserve">
-    <value>This sign-up link has expired, please try again.</value>
+    <value>انتهت صلاحية رابط التسجيل. يرجى إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the sign-up is expired.</comment>
   </data>
   <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
-    <value>Sign-up link expired</value>
+    <value>انتهت صلاحية رابط التسجيل</value>
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
@@ -1153,7 +1149,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
-    <value>Failed to open link. No valid format.</value>
+    <value>فشل فتح الرابط. التنسيق غير صالح.</value>
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
@@ -1161,7 +1157,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
-    <value>Failed importing nodes. Please try again.</value>
+    <value>فشل الاستيراد. يرجى إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
   </data>
   <data name="AM_ImportFailed_Title" xml:space="preserve">
@@ -1169,11 +1165,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Failed to open the folder link. Please try again.</value>
+    <value>فشل فتح رابط المجلد. يرجى اعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
-    <value>Open folder link failed</value>
+    <value>فشل فتح رابط المجلد</value>
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
@@ -1195,11 +1191,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Failed to open the file link. Please try again.</value>
+    <value>فشل فتح رابط المجلد. يرجى إعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
-    <value>Open file link failed</value>
+    <value>فشل فتح رابط الملف</value>
     <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkUnavailableTitle" xml:space="preserve">
