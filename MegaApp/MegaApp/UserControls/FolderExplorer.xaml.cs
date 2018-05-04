@@ -38,9 +38,9 @@ namespace MegaApp.UserControls
         /// <summary>
         /// Gets or sets the Folder.
         /// </summary>
-        public FolderViewModel Folder
+        public BaseFolderViewModel Folder
         {
-            get { return (FolderViewModel)GetValue(FolderProperty); }
+            get { return (BaseFolderViewModel)GetValue(FolderProperty); }
             set { SetValue(FolderProperty, value); }
         }
 
@@ -50,7 +50,7 @@ namespace MegaApp.UserControls
         public static readonly DependencyProperty FolderProperty =
             DependencyProperty.Register(
                 nameof(Folder),
-                typeof(FolderViewModel),
+                typeof(BaseFolderViewModel),
                 typeof(FolderExplorer),
                 new PropertyMetadata(null, FolderChangedCallback));
 
@@ -61,11 +61,11 @@ namespace MegaApp.UserControls
             if (control == null) return;
             if (dpc.NewValue != null)
             {
-                control.OnFolderChanged((FolderViewModel)dpc.NewValue);
+                control.OnFolderChanged((BaseFolderViewModel)dpc.NewValue);
             }
         }
 
-        private void OnFolderChanged(FolderViewModel folder)
+        private void OnFolderChanged(BaseFolderViewModel folder)
         {
             if (this.ViewModel == null) return;
 
@@ -100,11 +100,11 @@ namespace MegaApp.UserControls
 
         private void OnViewChanged(object sender, EventArgs e)
         {
-            // First save the current selected nodes to restore them after change the view
-            var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
-
             // Needed to avoid strange behaviors during the view update
             DisableViewsBehaviors();
+
+            // First save the current selected nodes to restore them after change the view
+            var selectedNodes = this.ViewModel.Folder.ItemCollection.SelectedItems.ToList();
 
             // Clear the selected items and restore in the new view
             ClearSelectedItems();
@@ -198,7 +198,7 @@ namespace MegaApp.UserControls
             DisableViewsBehaviors();
 
             // If there is only one selected item save it to restore it after disable the multi select mode
-            IMegaNode selectedItem = null;
+            IBaseNode selectedItem = null;
             if (this.ViewModel.Folder.ItemCollection.OnlyOneSelectedItem)
                 selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First();
 
@@ -230,7 +230,7 @@ namespace MegaApp.UserControls
             DisableViewsBehaviors();
 
             // First save the current selected item to restore it after enable/disable the single select mode
-            IMegaNode selectedItem = null;
+            IBaseNode selectedItem = null;
             if (this.ViewModel.Folder.ItemCollection.OnlyOneSelectedItem)
                 selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First();
 
@@ -275,7 +275,7 @@ namespace MegaApp.UserControls
         /// Update the selected nodes of the active view
         /// </summary>
         /// <param name="selectedNodes">Listo of selected nodes</param>
-        private void UpdateSelectedItems(List<IMegaNode> selectedNodes)
+        private void UpdateSelectedItems(List<IBaseNode> selectedNodes)
         {
             ListViewBase list = null;
             switch (this.Folder.ViewMode)
@@ -299,21 +299,19 @@ namespace MegaApp.UserControls
 
         private void OnAllSelected(object sender, bool value)
         {
-            if (value)
+            if (!value)
             {
-                this.ListView?.SelectAll();
-                this.GridView?.SelectAll();
+                this.ClearSelectedItems();
+                return;
             }
-            else
-            {
-                this.ListView?.SelectedItems.Clear();
-                this.GridView?.SelectedItems.Clear();
-            }
+
+            this.ListView?.SelectAll();
+            this.GridView?.SelectAll();
         }
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)
         {
-            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
             if (itemTapped == null) return;
 
             if (DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop && !this.isMultiSelectDisabling)
@@ -335,7 +333,7 @@ namespace MegaApp.UserControls
             if (this.ViewModel.Folder.IsPanelOpen)
                 return;
 
-            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
             if (itemTapped == null) return;
 
             this.ViewModel.Folder.OnChildNodeTapped(itemTapped);
@@ -343,7 +341,11 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            IMegaNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IMegaNode;
+            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+                return;
+
+            IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;
+
             if (itemTapped == null) return;
 
             this.ViewModel.Folder.FocusedNode = itemTapped;

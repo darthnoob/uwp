@@ -2,7 +2,9 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
+using MegaApp.Interfaces;
 using MegaApp.ViewModels;
+using MegaApp.ViewModels.Offline;
 using MegaApp.ViewModels.SharedFolders;
 
 namespace MegaApp.Converters
@@ -14,6 +16,9 @@ namespace MegaApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            if (value is OfflineNodeViewModel)
+                return this.ConvertOfflineNode(value, targetType, parameter, language);
+
             var node = value as NodeViewModel;
             var parentFolder = node?.Parent;
             if (parentFolder == null) return Visibility.Collapsed;
@@ -97,7 +102,8 @@ namespace MegaApp.Converters
 
                             if (parentFolder is SharedFoldersListViewModel)
                             {
-                                return parentFolder.ItemCollection.FocusedItem != null && parentFolder.ItemCollection.FocusedItem.HasFullAccessPermissions ?
+                                var focusedItem = parentFolder.ItemCollection.FocusedItem as IMegaNode;
+                                return focusedItem != null && focusedItem.HasFullAccessPermissions ?
                                     Visibility.Visible : Visibility.Collapsed;
                             }
 
@@ -149,6 +155,24 @@ namespace MegaApp.Converters
             }
 
             return Visibility.Collapsed;
+        }
+
+        private object ConvertOfflineNode(object value, Type targetType, object parameter, string language)
+        {
+            var node = value as OfflineNodeViewModel;
+            var parentFolder = node?.Parent;
+            if (parentFolder == null) return Visibility.Collapsed;
+
+            var command = parameter as string;
+            switch (command)
+            {
+                case "remove":
+                    return parentFolder.ItemCollection != null && parentFolder.ItemCollection.HasSelectedItems ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                default:
+                    return Visibility.Collapsed;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -17,9 +17,9 @@ namespace MegaApp.ViewModels
     /// </summary>
     /// <typeparam name="T">
     /// Type of the collection items. Supported types:
+    /// - IBaseNode
     /// - IMegaContact
     /// - IMegaContactRequest
-    /// - IMegaNode
     /// </typeparam>
     public class CollectionViewModel<T> : BaseSdkViewModel
     {
@@ -155,7 +155,6 @@ namespace MegaApp.ViewModels
 
         public void SelectAll(bool value)
         {
-            Select(value);
             this.OnAllSelected(value);
 
             if (!value) ClearSelection();
@@ -165,6 +164,10 @@ namespace MegaApp.ViewModels
         {
             if (this.Items == null || !this.Items.Any()) return;
             this.Items.Clear();
+
+            OnPropertyChanged(nameof(this.Items), nameof(this.HasItems));
+
+            this.OnItemsCollectionChanged();
         }
 
         public void ClearSelection()
@@ -233,19 +236,6 @@ namespace MegaApp.ViewModels
 
         #region Private Methods
 
-        private void Select(bool onOff)
-        {
-            foreach (var item in this.Items)
-            {
-                if (item is IMegaContact)
-                    (item as IMegaContact).IsMultiSelected = onOff;
-                if (item is IMegaContactRequest)
-                    (item as IMegaContactRequest).IsMultiSelected = onOff;
-                if (item is IMegaNode)
-                    (item as IMegaNode).IsMultiSelected = onOff;
-            }
-        }
-
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null)
@@ -255,8 +245,8 @@ namespace MegaApp.ViewModels
                 {
                     foreach (var item in e.NewItems)
                     {
-                        if (item is IMegaNode)
-                            (item as IMegaNode)?.SetThumbnailImage();
+                        if (item is IBaseNode)
+                            (item as IBaseNode)?.SetThumbnailImage();
                     }
                 });
             }

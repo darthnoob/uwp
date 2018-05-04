@@ -213,7 +213,7 @@ namespace MegaApp.ViewModels.Contacts
 
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
         }
-
+      
         /// <summary>
         /// Cancel any running load process of contacts
         /// </summary>
@@ -304,6 +304,16 @@ namespace MegaApp.ViewModels.Contacts
                             this.ItemCollection.Items.OrderByDescending(item => item.Email));
                     });
                     break;
+                case ContactsSortOrderType.ORDER_STATUS:
+                    OnUiThread(() =>
+                    {
+                        this.ItemCollection.Items = new ObservableCollection<IMegaContact>(this.ItemCollection.IsCurrentOrderAscending ?
+                            this.ItemCollection.Items.OrderBy(item => item.ReferralStatusOrder)
+                                .ThenBy(item => item.ReferralBonusExpiresIn) :
+                            this.ItemCollection.Items.OrderByDescending(item => item.ReferralStatusOrder)
+                                .ThenByDescending(item => item.ReferralBonusExpiresIn));
+                    });
+                    break;
             }
 
             OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
@@ -330,6 +340,16 @@ namespace MegaApp.ViewModels.Contacts
             this.OnCloseContactProfile();
         }
 
+        public override void UpdateNetworkStatus()
+        {
+            foreach (var item in this.ItemCollection.Items)
+            {
+                var contact = item as ContactViewModel;
+                if (contact == null) continue;
+                contact.UpdateNetworkStatus();
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -351,6 +371,10 @@ namespace MegaApp.ViewModels.Contacts
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmail"),
                             this.ItemCollection.Items.Count);
 
+                    case ContactsSortOrderType.ORDER_STATUS:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByReferralStatus"),
+                            this.ItemCollection.Items.Count);
+
                     default:
                         return string.Empty;
                 }
@@ -369,6 +393,10 @@ namespace MegaApp.ViewModels.Contacts
 
                     case ContactsSortOrderType.ORDER_EMAIL:
                         return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByEmailMultiSelect"),
+                            this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
+
+                    case ContactsSortOrderType.ORDER_STATUS:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByReferralStatusMultiSelect"),
                             this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count);
 
                     default:

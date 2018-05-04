@@ -95,6 +95,86 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="MegaApp_StoreKey.pfx" />
     <None Include="project.json" />
+    <PRIResource Include="Strings\zh-Hant\UiResources.resw" />
+    <PRIResource Include="Strings\zh-Hant\ProgressMessages.resw" />
+    <PRIResource Include="Strings\zh-Hant\EmptyStates.resw" />
+    <PRIResource Include="Strings\zh-Hant\AppMessages.resw" />
+    <PRIResource Include="Strings\zh-Hans\UiResources.resw" />
+    <PRIResource Include="Strings\zh-Hans\ProgressMessages.resw" />
+    <PRIResource Include="Strings\zh-Hans\EmptyStates.resw" />
+    <PRIResource Include="Strings\zh-Hans\AppMessages.resw" />
+    <PRIResource Include="Strings\vi\UiResources.resw" />
+    <PRIResource Include="Strings\vi\ProgressMessages.resw" />
+    <PRIResource Include="Strings\vi\EmptyStates.resw" />
+    <PRIResource Include="Strings\vi\AppMessages.resw" />
+    <PRIResource Include="Strings\uk\UiResources.resw" />
+    <PRIResource Include="Strings\uk\ProgressMessages.resw" />
+    <PRIResource Include="Strings\uk\EmptyStates.resw" />
+    <PRIResource Include="Strings\uk\AppMessages.resw" />
+    <PRIResource Include="Strings\tr\UiResources.resw" />
+    <PRIResource Include="Strings\tr\ProgressMessages.resw" />
+    <PRIResource Include="Strings\tr\EmptyStates.resw" />
+    <PRIResource Include="Strings\tr\AppMessages.resw" />
+    <PRIResource Include="Strings\th\UiResources.resw" />
+    <PRIResource Include="Strings\th\ProgressMessages.resw" />
+    <PRIResource Include="Strings\th\EmptyStates.resw" />
+    <PRIResource Include="Strings\th\AppMessages.resw" />
+    <PRIResource Include="Strings\ru\UiResources.resw" />
+    <PRIResource Include="Strings\ru\ProgressMessages.resw" />
+    <PRIResource Include="Strings\ru\EmptyStates.resw" />
+    <PRIResource Include="Strings\ru\AppMessages.resw" />
+    <PRIResource Include="Strings\ro\UiResources.resw" />
+    <PRIResource Include="Strings\ro\ProgressMessages.resw" />
+    <PRIResource Include="Strings\ro\EmptyStates.resw" />
+    <PRIResource Include="Strings\ro\AppMessages.resw" />
+    <PRIResource Include="Strings\pt-BR\UiResources.resw" />
+    <PRIResource Include="Strings\pt-BR\ProgressMessages.resw" />
+    <PRIResource Include="Strings\pt-BR\EmptyStates.resw" />
+    <PRIResource Include="Strings\pt-BR\AppMessages.resw" />
+    <PRIResource Include="Strings\pl\UiResources.resw" />
+    <PRIResource Include="Strings\pl\ProgressMessages.resw" />
+    <PRIResource Include="Strings\pl\EmptyStates.resw" />
+    <PRIResource Include="Strings\pl\AppMessages.resw" />
+    <PRIResource Include="Strings\nl\UiResources.resw" />
+    <PRIResource Include="Strings\nl\ProgressMessages.resw" />
+    <PRIResource Include="Strings\nl\EmptyStates.resw" />
+    <PRIResource Include="Strings\nl\AppMessages.resw" />
+    <PRIResource Include="Strings\ko\UiResources.resw" />
+    <PRIResource Include="Strings\ko\ProgressMessages.resw" />
+    <PRIResource Include="Strings\ko\EmptyStates.resw" />
+    <PRIResource Include="Strings\ko\AppMessages.resw" />
+    <PRIResource Include="Strings\ja\UiResources.resw" />
+    <PRIResource Include="Strings\ja\ProgressMessages.resw" />
+    <PRIResource Include="Strings\ja\EmptyStates.resw" />
+    <PRIResource Include="Strings\ja\AppMessages.resw" />
+    <PRIResource Include="Strings\it\UiResources.resw" />
+    <PRIResource Include="Strings\it\ProgressMessages.resw" />
+    <PRIResource Include="Strings\it\EmptyStates.resw" />
+    <PRIResource Include="Strings\it\AppMessages.resw" />
+    <PRIResource Include="Strings\id\UiResources.resw" />
+    <PRIResource Include="Strings\id\ProgressMessages.resw" />
+    <PRIResource Include="Strings\id\EmptyStates.resw" />
+    <PRIResource Include="Strings\id\AppMessages.resw" />
+    <PRIResource Include="Strings\he\UiResources.resw" />
+    <PRIResource Include="Strings\he\ProgressMessages.resw" />
+    <PRIResource Include="Strings\he\EmptyStates.resw" />
+    <PRIResource Include="Strings\he\AppMessages.resw" />
+    <PRIResource Include="Strings\fr\UiResources.resw" />
+    <PRIResource Include="Strings\fr\ProgressMessages.resw" />
+    <PRIResource Include="Strings\fr\EmptyStates.resw" />
+    <PRIResource Include="Strings\fr\AppMessages.resw" />
+    <PRIResource Include="Strings\es\UiResources.resw" />
+    <PRIResource Include="Strings\es\ProgressMessages.resw" />
+    <PRIResource Include="Strings\es\EmptyStates.resw" />
+    <PRIResource Include="Strings\es\AppMessages.resw" />
+    <PRIResource Include="Strings\de\UiResources.resw" />
+    <PRIResource Include="Strings\de\ProgressMessages.resw" />
+    <PRIResource Include="Strings\de\EmptyStates.resw" />
+    <PRIResource Include="Strings\de\AppMessages.resw" />
+    <PRIResource Include="Strings\ar\UiResources.resw" />
+    <PRIResource Include="Strings\ar\ProgressMessages.resw" />
+    <PRIResource Include="Strings\ar\EmptyStates.resw" />
+    <PRIResource Include="Strings\ar\AppMessages.resw" />
     <PRIResource Include="Strings\en\EmptyStates.resw" />
     <PRIResource Include="Strings\en\VisualResources.resw" />
     <PRIResource Include="Strings\en\UiResources.resw">
@@ -102,7 +182,9 @@
     </PRIResource>
     <PRIResource Include="Strings\en\SettingsResources.resw" />
     <PRIResource Include="Strings\en\ProgressMessages.resw" />
-    <PRIResource Include="Strings\en\AppResources.resw" />
+    <PRIResource Include="Strings\en\AppResources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <PRIResource Include="Strings\en\AppMessages.resw">
       <SubType>Designer</SubType>
     </PRIResource>
@@ -117,6 +199,8 @@
     <Compile Include="Converters\ContactsContentTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FolderViewStateToVisibilityConverter.cs" />
     <Compile Include="Converters\PanelTypeToVisibilityConverter.cs" />
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
@@ -132,13 +216,19 @@
     <Compile Include="Interfaces\IMegaIncomingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaOutgoingSharedFolderNode.cs" />
     <Compile Include="Interfaces\IMegaSharedFolderNode.cs" />
+    <Compile Include="Interfaces\IOfflineNode.cs" />
+    <Compile Include="MegaApi\CancelTransferRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetAccountAchievementsRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\GetUserRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\ShouldShowPasswordReminderDialogRequestListenerAsync.cs" />
     <Compile Include="Services\ContactsService.cs" />
+    <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
@@ -149,6 +239,7 @@
     <Compile Include="UserControls\FolderExplorer.xaml.cs">
       <DependentUpon>FolderExplorer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MegaContentDialog.cs" />
     <Compile Include="UserControls\SharedFolderContentPanel.xaml.cs">
       <DependentUpon>SharedFolderContentPanel.xaml</DependentUpon>
     </Compile>
@@ -158,6 +249,9 @@
     <Compile Include="UserControls\ShareToPanel.xaml.cs">
       <DependentUpon>ShareToPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AccountAchievementsViewModel.cs" />
+    <Compile Include="ViewModels\BaseFolderViewModel.cs" />
+    <Compile Include="ViewModels\BaseNodeViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactRequestsListViewModel.cs" />
     <Compile Include="ViewModels\Contacts\ContactsBaseViewModel.cs" />
@@ -203,6 +297,7 @@
     <Compile Include="Services\DebugService.cs" />
     <Compile Include="UserControls\ContentDialogEx.cs" />
     <Compile Include="ViewModels\ContactsManagerViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\AchievementInformationDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AddContactDialogViewModel.cs" />
     <Compile Include="UserControls\SimplePage.cs" />
     <Compile Include="ViewModels\CreateAccount\ConfirmEmailViewModel.cs" />
@@ -211,14 +306,24 @@
     <Compile Include="UserControls\ActivityIndicator.cs" />
     <Compile Include="ViewModels\Dialogs\AlertDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\AwaitEmailConfirmationDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\BaseContentDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AchievementsViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AwardClassViewModel.cs" />
+    <Compile Include="ViewModels\MyAccount\AchievementInvitationsViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFileNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderNodeViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
+    <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
+    <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
@@ -258,6 +363,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\AwaitEmailConfirmationDialog.xaml.cs">
       <DependentUpon>AwaitEmailConfirmationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AchievementInformationDialog.xaml.cs">
+      <DependentUpon>AchievementInformationDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\ChangeEmailDialog.xaml.cs">
       <DependentUpon>ChangeEmailDialog.xaml</DependentUpon>
@@ -347,6 +455,9 @@
     <Compile Include="Views\Dialogs\ShareFolderToDialog.xaml.cs">
       <DependentUpon>ShareFolderToDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\PasswordReminderDialog.xaml.cs">
+      <DependentUpon>PasswordReminderDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\TransferOverquotaWarningDialog.xaml.cs">
       <DependentUpon>TransferOverquotaWarningDialog.xaml</DependentUpon>
     </Compile>
@@ -374,11 +485,17 @@
     <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyAccount\AchievementInvitationsPage.xaml.cs">
+      <DependentUpon>AchievementInvitationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyAccount\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\ProfileView.xaml.cs">
       <DependentUpon>ProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyAccount\AchievementsView.xaml.cs">
+      <DependentUpon>AchievementsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\StorageAndTransferView.xaml.cs">
       <DependentUpon>StorageAndTransferView.xaml</DependentUpon>
@@ -465,6 +582,9 @@
     <Compile Include="Views\MyAccountPage.xaml.cs">
       <DependentUpon>MyAccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SavedForOfflinePage.xaml.cs">
+      <DependentUpon>SavedForOfflinePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -488,16 +608,58 @@
     <None Include="MegaApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Achievements\desktopApp.png" />
+    <Content Include="Assets\Achievements\gettingStarted.png" />
+    <Content Include="Assets\Achievements\inviteFriend.png" />
+    <Content Include="Assets\Achievements\mobileApp.png" />
+    <Content Include="Assets\ToastLogo.png" />
+    <Content Include="Assets\ToastWarning.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square310x310Logo.scale-100.png" />
+    <Content Include="Assets\Square310x310Logo.scale-125.png" />
+    <Content Include="Assets\Square310x310Logo.scale-150.png" />
+    <Content Include="Assets\Square310x310Logo.scale-200.png" />
+    <Content Include="Assets\Square310x310Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256_altform-unplated.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48_altform-unplated.png" />
+    <Content Include="Assets\Square71x71Logo.scale-100.png" />
+    <Content Include="Assets\Square71x71Logo.scale-125.png" />
+    <Content Include="Assets\Square71x71Logo.scale-150.png" />
+    <Content Include="Assets\Square71x71Logo.scale-200.png" />
+    <Content Include="Assets\Square71x71Logo.scale-400.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Resources\WindowsStoreProxy.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -550,6 +712,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\AchievementInformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Dialogs\ChangeEmailDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -581,6 +747,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ShareFolderToDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\PasswordReminderDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -620,6 +790,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\MyAccount\AchievementInvitationsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyAccount\GeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -627,6 +801,10 @@
     <Page Include="Views\MyAccount\ProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyAccount\AchievementsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MyAccount\StorageAndTransferView.xaml">
       <SubType>Designer</SubType>
@@ -654,6 +832,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\MyAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SavedForOfflinePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -695,6 +877,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.22.0">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
     <SDKReference Include="WindowsDesktop, Version=10.0.14393.0">
       <Name>Windows Desktop Extensions for the UWP</Name>
     </SDKReference>

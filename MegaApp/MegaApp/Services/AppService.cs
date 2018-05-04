@@ -11,6 +11,7 @@ using Windows.Storage;
 using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Views;
@@ -246,7 +247,7 @@ namespace MegaApp.Services
         /// <returns>App name</returns>
         public static string GetAppName()
         {
-            return ResourceService.AppResources.GetString("AR_ApplicationTitle");
+            return ResourceService.AppResources.GetString("AR_ApplicationName");
         }
 
         /// <summary>
@@ -326,6 +327,14 @@ namespace MegaApp.Services
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting the app language code", e);
                 return string.Empty;
             }
+        }
+
+        /// <summary>
+        /// Initialize the DB (create tables if no exist).
+        /// </summary>
+        public static void InitializeDatabase()
+        {
+            SavedForOfflineDB.CreateTable();
         }
 
         /// <summary>
@@ -431,13 +440,16 @@ namespace MegaApp.Services
             ClearDownloadCache();
             ClearUploadCache();
 
-            //ClearAppDatabase();
+            ClearAppDatabase();
         }
 
-        //public static void ClearAppDatabase()
-        //{
-        //    SavedForOffline.DeleteAllNodes();
-        //}
+        /// <summary>
+        /// Clear the database cache
+        /// </summary>
+        public static void ClearAppDatabase()
+        {
+            SavedForOfflineDB.DeleteAllNodes();
+        }
 
         /// <summary>
         /// Clear the thumbnails cache

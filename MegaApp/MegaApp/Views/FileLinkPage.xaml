@@ -32,6 +32,7 @@
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
@@ -60,6 +61,7 @@
                         Visibility="{Binding IsPanelOpen, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <AppBarButton
                             Command="{x:Bind ViewModel.DownloadCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -72,6 +74,7 @@
                         </AppBarButton>
                         <AppBarButton
                             Command="{x:Bind ViewModel.ImportCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                             Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
                             Style="{StaticResource MegaAppBarButtonStyle}"
                             ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}">
@@ -104,10 +107,12 @@
                 </Grid>
             </Grid>
 
+            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+
             <Grid 
                 x:Name="MainGrid"
                 DataContext="{x:Bind ViewModel.Node}"
-                Grid.Row="1">
+                Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -192,13 +197,14 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
                 <!--  BOTTOM COMMAND BAR (ONLY DESKTOP)  -->
                 <CommandBar
                     DataContext="{x:Bind ViewModel, Mode=OneWay}"
                     Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         Command="{x:Bind ViewModel.DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.DownloadText, Mode=OneTime}">
@@ -211,6 +217,7 @@
                     </AppBarButton>
                     <AppBarButton
                         Command="{x:Bind ViewModel.ImportCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{x:Bind ViewModel.ImportText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{x:Bind ViewModel.ImportText, Mode=OneTime}">

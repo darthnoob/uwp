@@ -63,12 +63,6 @@ namespace MegaApp.Views.Dialogs
             this.ViewModel.EmailError += OnEmailError;
         }
 
-        private void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
-        {
-            if (!this.ViewModel.CanClose)
-                args.Cancel = true;
-        }
-
         private void OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             this.ViewModel.ContactInvited -= OnContactInvited;

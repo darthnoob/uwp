@@ -14,13 +14,11 @@ namespace MegaApp.ViewModels
     public class FolderNodeViewModel: NodeViewModel, IMegaFolderNode
     {
         public FolderNodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk, appInformation, megaNode, parent, parentCollection, childCollection)
         {
             this.ShareCommand = new RelayCommand(Share);
             this.RemoveSharedAccessCommand = new RelayCommand(RemoveSharedAccess);
-
-            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
 
             this.Update(megaNode);
         }
@@ -179,7 +177,8 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public bool IsOutShare => this.OriginalMNode.isOutShare();
+        public bool IsOutShare => this.OriginalMNode != null ?
+            this.OriginalMNode.isOutShare() : false;
 
         private string _contents;
         public string Contents

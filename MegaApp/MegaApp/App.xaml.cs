@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -295,6 +296,9 @@ namespace MegaApp
 
             // Initialize Folders
             AppService.InitializeAppFolders();
+
+            // Initialize the DB
+            AppService.InitializeDatabase();
 
             // Ensure we don't initialize again
             ApplicationInitialized = true;

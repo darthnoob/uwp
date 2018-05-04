@@ -134,6 +134,13 @@ namespace MegaApp.ViewModels
             this.MegaSdk.cancelTransfers((int)this.Type);
         }
 
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            foreach (var item in this.ItemCollection.Items)
+                item.UpdateNetworkStatus();
+        }
+
         #region Commands
 
         public ICommand PauseOrResumeCommand { get; }

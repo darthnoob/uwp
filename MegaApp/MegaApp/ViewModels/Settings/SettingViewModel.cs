@@ -7,7 +7,7 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
 {
-    public abstract class SettingViewModel<T> : BaseViewModel, ISetting<T>
+    public abstract class SettingViewModel<T> : BaseUiViewModel, ISetting<T>
     {
         public event EventHandler ValueChanged;
 

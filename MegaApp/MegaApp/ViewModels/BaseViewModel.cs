@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels
 {
@@ -39,6 +40,11 @@ namespace MegaApp.ViewModels
             set { SetField(ref _isBusy, value); }
         }
 
+        /// <summary>
+        /// State of the network connection
+        /// </summary>
+        public bool IsNetworkAvailable => NetworkService.IsNetworkAvailable;
+
         #endregion
 
         #region INotifyPropertyChanged
@@ -70,6 +76,12 @@ namespace MegaApp.ViewModels
             OnPropertyChanged(property);
             return true;
         }
+
+        #endregion
+
+        #region UiResources
+
+        public string OfflineBannerText => ResourceService.UiResources.GetString("UI_OfflineBanner");
 
         #endregion
     }

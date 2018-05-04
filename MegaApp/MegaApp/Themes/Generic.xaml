@@ -696,7 +696,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="userControls:ContactProfilePanel">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Background" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
@@ -710,6 +710,7 @@
                     <Grid Background="{ThemeResource MegaContactProfileBackgroundBrush}" DataContext="{TemplateBinding Contact}">
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
@@ -726,7 +727,7 @@
                                 FontSize="12"
                                 Foreground="{StaticResource MegaRedColorBrush}"
                                 Text="{Binding FullName, Mode=OneWay}" />
-                            
+
                             <!--  SHARED ITEMS TOP COMMAND BAR AREA (DESKTOP ONLY)  -->
                             <Grid
                                 x:Name="PART_SharedItemsTopCommandBarArea"
@@ -744,6 +745,7 @@
                                     Style="{StaticResource MegaCommandBarStyle}">
                                     <AppBarButton
                                         Command="{Binding DownloadCommand}"
+                                        IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                         Label="{Binding DownloadText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -757,6 +759,7 @@
                                     </AppBarButton>
                                     <AppBarButton
                                         Command="{Binding LeaveShareCommand}"
+                                        IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                         Label="{Binding LeaveShareText, Mode=OneTime}"
                                         Style="{StaticResource MegaAppBarButtonStyle}"
                                         ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
@@ -809,9 +812,11 @@
                             </Grid>
                         </Grid>
 
+                        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+
                         <Pivot
                             x:Name="PART_PivotControl"
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Margin="12,0,0,0"
                             HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}">
                             <PivotItem x:Name="PART_ContactProfilePivot" Header="{Binding ProfileText}">
@@ -881,6 +886,69 @@
                                                     TextWrapping="WrapWholeWords" />
                                             </StackPanel>
                                         </Grid>
+                                        <Grid
+                                            x:Name="PART_ReferralBonusGrid"
+                                            Margin="0,36,0,0"
+                                            Visibility="{Binding HasReferralBonus, Converter={StaticResource BoolToVisibilityConverter}}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MaxWidth="250" />
+                                                <ColumnDefinition MaxWidth="250" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                FontSize="20"
+                                                FontWeight="SemiLight"
+                                                Text="{Binding EarnedReferralBonusText, Mode=OneTime}"
+                                                TextWrapping="WrapWholeWords" />
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Margin="0,20,12,24">
+                                                <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding StorageText, Mode=OneTime}" />
+                                                <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding StorageAmountText, Mode=OneWay}">
+                                                    <TextBlock.Foreground>
+                                                        <SolidColorBrush Color="{ThemeResource UsedStorageQuotaColor}" />
+                                                    </TextBlock.Foreground>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="12,20,0,24">
+                                                <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding TransferText, Mode=OneTime}" />
+                                                <TextBlock Style="{ThemeResource MegaBodyFontStyle}" Text="{Binding TransferAmountText, Mode=OneWay}">
+                                                    <TextBlock.Foreground>
+                                                        <SolidColorBrush Color="{ThemeResource UsedTransferQuotaColor}" />
+                                                    </TextBlock.Foreground>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <StackPanel
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Margin="0,0,12,0">
+                                                <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{Binding ExpiresInText, Mode=OneTime}" />
+                                                <TextBlock
+                                                    x:Name="ExpiresInText"
+                                                    Style="{ThemeResource MegaBodyFontStyle}"
+                                                    Text="{Binding ReferralBonusExpiresInText, Mode=OneWay}">
+                                                    <interactivity:Interaction.Behaviors>
+                                                        <core:DataTriggerBehavior Binding="{Binding IsReferralBonusExpired}" Value="True">
+                                                            <core:ChangePropertyAction
+                                                                PropertyName="Foreground"
+                                                                TargetObject="{Binding ElementName=ExpiresInText}"
+                                                                Value="{StaticResource MegaRedColorBrush}" />
+                                                        </core:DataTriggerBehavior>
+                                                    </interactivity:Interaction.Behaviors>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </Grid>
                                         <StackPanel Margin="0,36,0,0">
                                             <TextBlock
                                                 x:Name="PART_RemoveContactText"
@@ -909,17 +977,17 @@
                                                     Text="{Binding RemoveContactWarningText, Mode=OneTime}"
                                                     TextWrapping="WrapWholeWords" />
                                             </Grid>
-                                            <Button x:Name="PART_RemoveContactButton" Width="136">
-                                                <TextBlock Text="{Binding RemoveText, Mode=OneTime}" />
-                                            </Button>
+                                            <Button
+                                                x:Name="PART_RemoveContactButton"
+                                                Width="136"
+                                                Content="{Binding RemoveText, Mode=OneTime}"
+                                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}" />
                                         </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
                             </PivotItem>
                             <PivotItem x:Name="PART_SharedItemsPivot" Header="{Binding SharedItemsText}">
-                                <Grid
-                                    DataContext="{Binding SharedItems}"
-                                    Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
+                                <Grid DataContext="{Binding SharedItems}" Visibility="{Binding ItemCollection.Items, Converter={StaticResource CollectionVisibilityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
@@ -952,8 +1020,37 @@
                         <!--  SHARED ITEMS BOTTOM COMMAND BAR (MOBILE DEVICES)  -->
                         <CommandBar
                             x:Name="BottomCommandBar"
-                            Grid.Row="2"
+                            Grid.Row="3"
+                            DataContext="{Binding SharedItems}"
                             Style="{StaticResource MegaCommandBarStyle}">
+                            <AppBarButton
+                                Command="{Binding DownloadCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Label="{Binding DownloadText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding DownloadPathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
+                            <AppBarButton
+                                Command="{Binding LeaveShareCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Label="{Binding LeaveShareText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding LeaveShareText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <AppBarButton.Icon>
+                                    <PathIcon
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="{Binding LeaveSharePathData, Mode=OneTime}" />
+                                </AppBarButton.Icon>
+                            </AppBarButton>
                             <AppBarButton
                                 Command="{Binding ItemCollection.MultiSelectCommand}"
                                 IsEnabled="{Binding ItemCollection.Items, Converter={StaticResource CollectionToBoolConverter}, Mode=OneWay}"

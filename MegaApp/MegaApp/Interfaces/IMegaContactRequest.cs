@@ -86,12 +86,6 @@ namespace MegaApp.Interfaces
         /// </summary>
         long ModificationTime { get; }
 
-        /// <summary>
-        /// Indicates if the contact request is currently selected in a multi-select scenario
-        /// Needed as path for the ListView to auto select/deselect
-        /// </summary>
-        bool IsMultiSelected { get; set; }
-
         #endregion
     }
 }

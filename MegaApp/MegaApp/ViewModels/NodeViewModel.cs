@@ -8,8 +8,8 @@ using System.Windows.Input;
 using Windows.Storage;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Database;
 using MegaApp.Enums;
-using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -22,20 +22,17 @@ namespace MegaApp.ViewModels
     /// <summary>
     /// ViewModel of the main MEGA datatype (MNode)
     /// </summary>
-    public abstract class NodeViewModel : BaseSdkViewModel, IMegaNode
+    public abstract class NodeViewModel : BaseNodeViewModel, IMegaNode
     {
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
         protected NodeViewModel(MegaSDK megaSdk, AppInformation appInformation, MNode megaNode, FolderViewModel parent,
-            ObservableCollection<IMegaNode> parentCollection = null, ObservableCollection<IMegaNode> childCollection = null)
+            ObservableCollection<IBaseNode> parentCollection = null, ObservableCollection<IBaseNode> childCollection = null)
             : base(megaSdk)
         {
             this.AccessLevel = new AccessLevelViewModel();
-
-            Update(megaNode);
-            SetDefaultValues();
-
+            
             this.Parent = parent;
             this.ParentContainerType = parent != null ? Parent.Type : ContainerType.FileLink;
             this.ParentCollection = parentCollection;
@@ -49,6 +46,12 @@ namespace MegaApp.ViewModels
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
+
+            Update(megaNode);
+            SetDefaultValues();
+
+            Transfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, LocalDownloadPath);
+            OfflineTransfer = new TransferObjectModel(megaSdk, this, MTransferType.TYPE_DOWNLOAD, OfflinePath);
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -77,7 +80,6 @@ namespace MegaApp.ViewModels
 
         private void SetDefaultValues()
         {
-            this.IsMultiSelected = false;
             this.DisplayMode = NodeDisplayMode.Normal;
 
             if (this.Type == MNodeType.TYPE_FOLDER) return;
@@ -125,32 +127,11 @@ namespace MegaApp.ViewModels
 
         #region IBaseNode Interface
 
+        public override bool IsFolder => this.Type == MNodeType.TYPE_FOLDER;
+
+        #endregion
+
         public NodeViewModel NodeBinding => this;
-
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                SetField(ref _name, value);
-                if(!this.IsFolder)
-                    this.DefaultImagePathData = ImageService.GetDefaultFileTypePathData(this.Name);
-            }
-        }
-
-        public string CreationTime { get; private set; }
-
-        public string ModificationTime { get; private set; }
-
-        public string ThumbnailPath
-        {
-            get
-            {
-                return Path.Combine(ApplicationData.Current.LocalFolder.Path,
-                    ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"), this.OriginalMNode.getBase64Handle());
-            }
-        }
 
         private int _childFiles;
         public int ChildFiles
@@ -166,38 +147,6 @@ namespace MegaApp.ViewModels
             set { SetField(ref _childFolders, value); }
         }
 
-        public string Base64Handle { get; set; }
-
-        public ulong Size { get; set; }
-
-        private string _sizeText;
-        public string SizeText
-        {
-            get { return _sizeText; }
-            set { SetField(ref _sizeText, value); }
-        }
-
-        private bool _isMultiSelected;
-        public bool IsMultiSelected
-        {
-            get { return _isMultiSelected; }
-            set { SetField(ref _isMultiSelected, value); }
-        }
-
-        public bool IsFolder
-        {
-            get { return this.Type == MNodeType.TYPE_FOLDER ? true : false; }
-        }
-
-        public bool IsImage => ImageService.IsImage(this.Name);
-
-        private Uri _thumbnailImageUri;
-        public Uri ThumbnailImageUri
-        {
-            get { return _thumbnailImageUri; }
-            set { SetField(ref _thumbnailImageUri, value); }
-        }
-
         public virtual Uri PreviewImageUri
         {
             get
@@ -211,16 +160,7 @@ namespace MegaApp.ViewModels
                 if((this is ImageNodeViewModel) && (this as ImageNodeViewModel != null))
                     (this as ImageNodeViewModel).PreviewImageUri = value;
             }
-        }
-
-        private string _defaultImagePathData;
-        public string DefaultImagePathData
-        {
-            get { return _defaultImagePathData; }
-            set { SetField(ref _defaultImagePathData, value); }
-        }
-
-        #endregion
+        }        
 
         #region IMegaNode Interface
 
@@ -607,7 +547,6 @@ namespace MegaApp.ViewModels
             this.Type = megaNode.getType();
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
-            this.SizeText = this.Size.ToStringAndSuffix(1);
             this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
@@ -625,12 +564,84 @@ namespace MegaApp.ViewModels
             else
                 this.ModificationTime = this.CreationTime;
 
-            //if (!App.MegaSdk.isInShare(megaNode) && ParentContainerType != ContainerType.PublicLink &&
-            //    ParentContainerType != ContainerType.InShares && ParentContainerType != ContainerType.ContactInShares &&
-            //    ParentContainerType != ContainerType.FolderLink)
-            //    CheckAndUpdateSFO(megaNode);
-            this.IsAvailableOffline = false;
-            this.IsSelectedForOffline = false;
+            if (ParentContainerType != ContainerType.FileLink && ParentContainerType != ContainerType.FolderLink)
+                CheckAndUpdateOffline(megaNode);
+        }
+
+        private void CheckAndUpdateOffline(MNode megaNode)
+        {
+            var offlineNodePath = OfflineService.GetOfflineNodePath(megaNode);
+
+            if ((megaNode.getType() == MNodeType.TYPE_FILE && FileService.FileExists(offlineNodePath)) ||
+                (megaNode.getType() == MNodeType.TYPE_FOLDER && FolderService.FolderExists(offlineNodePath)) ||
+                TransferService.ExistPendingNodeOfflineTransfer(this))
+            {
+                if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
+                    SavedForOfflineDB.UpdateNode(megaNode);
+                else
+                    SavedForOfflineDB.InsertNode(megaNode);
+
+                this.IsSavedForOffline = true;
+                return;
+            }
+
+            if (SavedForOfflineDB.ExistsNodeByLocalPath(offlineNodePath))
+                SavedForOfflineDB.DeleteNodeByLocalPath(offlineNodePath);
+
+            this.IsSavedForOffline = false;
+        }
+
+        public async void SaveForOffline()
+        {
+            // User must be online to perform this operation
+            if (!await IsUserOnlineAsync()) return;
+
+            var offlineParentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
+            
+            if (!FolderService.FolderExists(offlineParentNodePath))
+                FolderService.CreateFolder(offlineParentNodePath);
+
+            var existingNode = SavedForOfflineDB.SelectNodeByFingerprint(MegaSdk.getNodeFingerprint(this.OriginalMNode));
+            if (existingNode != null)
+            {
+                bool result = this.IsFolder ?
+                    await FolderService.CopyFolderAsync(existingNode.LocalPath, offlineParentNodePath) :
+                    await FileService.CopyFileAsync(existingNode.LocalPath, offlineParentNodePath);
+
+                if (result) SavedForOfflineDB.InsertNode(this.OriginalMNode);
+            }
+            else
+            {
+                TransferService.MegaTransfers.Add(this.OfflineTransfer);
+                this.OfflineTransfer.StartTransfer(true);
+            }
+
+            this.IsSavedForOffline = true;
+
+            OfflineService.CheckOfflineNodePath(this.OriginalMNode);
+        }
+
+        public void RemoveFromOffline()
+        {
+            var nodePath = OfflineService.GetOfflineNodePath(this.OriginalMNode);
+            var parentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
+
+            // Search if the file has a pending transfer for offline and cancel it on this case                
+            TransferService.CancelPendingNodeOfflineTransfers(this);
+
+            if (this.IsFolder)
+            {
+                OfflineService.RemoveFolderFromOfflineDB(nodePath);
+                FolderService.DeleteFolder(nodePath, true);
+            }
+            else
+            {
+                SavedForOfflineDB.DeleteNodeByLocalPath(nodePath);
+                FileService.DeleteFile(nodePath);
+            }
+
+            this.IsSavedForOffline = false;
+            OfflineService.CleanOfflineFolderNodePath(parentNodePath);
         }
 
         private string GetTypeText()
@@ -666,7 +677,7 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public void SetThumbnailImage()
+        public override void SetThumbnailImage()
         {
             if (this.Type == MNodeType.TYPE_FOLDER) return;
 
@@ -676,11 +687,6 @@ namespace MegaApp.ViewModels
             {
                 GetThumbnail();
             }
-        }
-
-        public virtual void Open()
-        {
-            throw new NotImplementedException();
         }
 
         public ulong Handle { get; set; }
@@ -701,10 +707,6 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public ObservableCollection<IMegaNode> ParentCollection { get; set; }
-
-        public ObservableCollection<IMegaNode> ChildCollection { get; set; }
-
         public MNodeType Type { get; private set; }
 
         private string _typeText;
@@ -716,47 +718,33 @@ namespace MegaApp.ViewModels
 
         public ContainerType ParentContainerType { get; private set; }
 
-        private NodeDisplayMode _displayMode;
-        public NodeDisplayMode DisplayMode
+        private bool _isSavedForOffline;
+        public bool IsSavedForOffline
         {
-            get { return _displayMode; }
-            set { SetField(ref _displayMode, value); }
-        }
-
-        private bool _isSelectedForOffline;
-        public bool IsSelectedForOffline
-        {
-            get { return _isSelectedForOffline; }
+            get { return _isSavedForOffline; }
             set
             {
-                SetField(ref _isSelectedForOffline, value);
-                this.IsSelectedForOfflineText = _isSelectedForOffline ? 
-                    ResourceService.UiResources.GetString("UI_On") : ResourceService.UiResources.GetString("UI_Off");
+                SetField(ref _isSavedForOffline, value);
+                OnPropertyChanged(nameof(this.IsExportedOrSavedForOffline));
             }
-        }
-
-        private string _isSelectedForOfflineText;
-        public string IsSelectedForOfflineText
-        {
-            get { return _isSelectedForOfflineText; }
-            set { SetField(ref _isSelectedForOfflineText, value); }
-        }
-
-        private bool _isAvailableOffline;
-        public bool IsAvailableOffline
-        {
-            get { return _isAvailableOffline; }
-            set { SetField(ref _isAvailableOffline, value); }
         }
 
         private bool _isExported;
         public bool IsExported
         {
             get { return _isExported; }
-            set { SetField(ref _isExported, value); }
+            set
+            {
+                SetField(ref _isExported, value);
+                OnPropertyChanged(nameof(this.IsExportedOrSavedForOffline));
+            }
         }
 
+        public bool IsExportedOrSavedForOffline => this.IsExported || this.IsSavedForOffline;
+
         public TransferObjectModel Transfer { get; set; }
+
+        public TransferObjectModel OfflineTransfer { get; set; }
 
         public MNode OriginalMNode { get; private set; }
 
@@ -837,6 +825,8 @@ namespace MegaApp.ViewModels
 
         public string LocalDownloadPath => Path.Combine(ApplicationData.Current.LocalFolder.Path,
             ResourceService.AppResources.GetString("AR_DownloadsDirectory"), this.Name);
+
+        public string OfflinePath => OfflineService.GetOfflineNodePath(this.OriginalMNode);
 
         #endregion
 

@@ -14,6 +14,8 @@ namespace MegaApp.Services
 {
     static class UiService
     {
+        public static double OfflineBannerHeight;
+
         private static Dictionary<string, MSortOrderType> _folderSorting;
         private static Dictionary<string, int> _folderViewMode;
 

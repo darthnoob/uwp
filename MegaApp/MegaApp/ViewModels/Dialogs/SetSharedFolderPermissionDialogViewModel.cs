@@ -5,9 +5,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class SetSharedFolderPermissionDialogViewModel : BaseViewModel
+    public class SetSharedFolderPermissionDialogViewModel : BaseContentDialogViewModel
     {
-        public SetSharedFolderPermissionDialogViewModel()
+        public SetSharedFolderPermissionDialogViewModel() : base()
         {
             this.SetFolderPermissionCommand = new RelayCommand<MShareType>(SetFolderPermission);
         }

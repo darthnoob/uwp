@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using MegaApp.Enums;
 
 namespace MegaApp.Interfaces
 {
@@ -41,15 +43,9 @@ namespace MegaApp.Interfaces
         ulong Size { get; set; }
 
         /// <summary>
-        /// Indicates if the node is currently selected in a multi-select scenario
-        /// Needed as path for the RadDatabounndListbox to auto select/deselect
-        /// </summary>
-        bool IsMultiSelected { get; set; }
-
-        /// <summary>
         /// Returns if a node is a folder.        
         /// </summary>
-        bool IsFolder { get; }
+        bool IsFolder { get; set; }
 
         /// <summary>
         /// Returns if a node is an image. Based on its file extension.
@@ -67,6 +63,24 @@ namespace MegaApp.Interfaces
         /// Vector data that represents the default image for a specific filetype / folder
         /// </summary>
         string DefaultImagePathData { get; set; }
+
+        /// <summary>
+        /// Indicates how the node should be drawn on the screen
+        /// </summary>
+        NodeDisplayMode DisplayMode { get; set; }
+
+        ObservableCollection<IBaseNode> ParentCollection { get; set; }
+
+        ObservableCollection<IBaseNode> ChildCollection { get; set; }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Load node thumbnail if available on disk
+        /// </summary>
+        void SetThumbnailImage();
 
         #endregion
     }

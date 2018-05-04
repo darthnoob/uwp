@@ -1,5 +1,8 @@
 ﻿using System;
+using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
+using MegaApp.Services;
 using MegaApp.ViewModels;
 
 namespace MegaApp.UserControls
@@ -22,6 +25,35 @@ namespace MegaApp.UserControls
         /// Current view-model binded to the datacontext
         /// </summary>
         public T ViewModel { get; }
+
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            // Register for network connection changed events
+            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+
+            await NetworkService.IsNetworkAvailableAsync();
+            this.ViewModel.UpdateNetworkStatus();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            // Unregister for network connection changed events
+            NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
+
+            base.OnNavigatedFrom(e);
+        }
+
+        /// <summary>
+        /// Method called when a network status changed event is triggered
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        protected virtual async void OnNetworkStatusChanged(object sender)
+        {
+            await NetworkService.IsNetworkAvailableAsync();
+            this.ViewModel.UpdateNetworkStatus();
+        }
     }
 
     /// <summary>

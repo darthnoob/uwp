@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View Terms of Service here.</value>
+    <value>View the Terms of Service here.</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -307,7 +307,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloading" xml:space="preserve">
-    <value>Downloading...</value>
+    <value>Downloading…</value>
     <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusError" xml:space="preserve">
@@ -331,7 +331,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Uploading...</value>
+    <value>Uploading…</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
@@ -419,11 +419,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKey" xml:space="preserve">
-    <value>Recovery key</value>
+    <value>Recovery Key</value>
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Your Recovery key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <value>Your Recovery Key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">
@@ -479,7 +479,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Preparing...</value>
+    <value>Preparing…</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
@@ -499,11 +499,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Completing...</value>
+    <value>Completing…</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Retrying...</value>
+    <value>Retrying…</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -590,7 +590,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable Offline view</value>
+    <value>Enable offline view</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
@@ -658,7 +658,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
-    <value>Transfer quota is used for downloading and uploading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
+    <value>Transfer quota is used for downloading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
     <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_PaymentMethod" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>You have exceeded your allocated transfer quota. You will not be able to download anymore files until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
+    <value>You have exceeded your allocated transfer quota. You will not be able to download until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
@@ -758,9 +758,9 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
-    <value>In app purchase (Microsoft store)</value>
+    <value>In app purchase (Microsoft Store)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
-Maybe do not translate 'Microsoft store' because it is a trademark.</comment>
+Keep 'Microsoft Store' in English because it is a trademark.</comment>
   </data>
   <data name="UI_Month" xml:space="preserve">
     <value>Month</value>
@@ -809,12 +809,12 @@ Preserve the {0} and {1} codes because is for include current step number and to
     <comment>Label for any 'Price' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CentiliPaymentMethod" xml:space="preserve">
-    <value>Centili (Phone bill)</value>
+    <value>Centili (Mobile billing)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Centili' because is the payment method name.</comment>
   </data>
   <data name="UI_FortumoPaymentMethod" xml:space="preserve">
-    <value>Fortumo (Phone bill)</value>
+    <value>Fortumo (Mobile billing)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Fortumo' because is the payment method name.</comment>
   </data>
@@ -859,7 +859,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Text to describe the change password process.</comment>
   </data>
   <data name="UI_CurrentPassword" xml:space="preserve">
-    <value>Current  password</value>
+    <value>Current password</value>
     <comment>Placeholder text to insert the current password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_NewPassword" xml:space="preserve">
@@ -899,7 +899,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Congratulation, your new email address for this MEGA account is</value>
+    <value>Congratulations, your new email address for this MEGA account is</value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">
@@ -1176,19 +1176,19 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
-    <value>If you have a backup of your Recovery key, you can reset your password by selecting YES. No data will be lost.</value>
+    <value>If you have a backup of your Recovery Key, you can reset your password by selecting YES. No data will be lost.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
   </data>
   <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
-    <value>Do you have a copy of your Recovery key?</value>
+    <value>Do you have a copy of your Recovery Key?</value>
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same e-mail address.</value>
+    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same email address.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
-    <value>I don’t have my Recovery key</value>
+    <value>I don’t have my Recovery Key</value>
     <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccount" xml:space="preserve">
@@ -1200,7 +1200,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Recovery' section when the user does have a recovery key.</comment>
   </data>
   <data name="UI_RecoveryKeyHeader" xml:space="preserve">
-    <value>I have my Recovery key</value>
+    <value>I have my Recovery Key</value>
     <comment>Label for any 'I have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Send" xml:space="preserve">
@@ -1236,7 +1236,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccountDescription" xml:space="preserve">
-    <value>This is the last step to park your account, please enter your new password. Your data will be retained for at least 60 days. In case that you recall your parked account’s password, please contact support@mega.nz.</value>
+    <value>This is the last step to park your account, please enter your new password. Your data will be retained for at least 60 days. In case you do recall your parked account’s password, please contact support@mega.nz.</value>
     <comment>Text displayed to validate password on parking account.</comment>
   </data>
   <data name="UI_ConfirmEmailDescription" xml:space="preserve">
@@ -1256,15 +1256,15 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
-    <value>You can still export your Recovery Key now if you have an active MEGA session in any other browser on this or any other computer.</value>
+    <value>You can still export your Recovery Key if you have an active MEGA session in any other browser on this or any other computer.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
-    <value>If you don't, you can no longer decrypt your existing account, but you can start a new one under the same e-mail address by selecting NO.</value>
+    <value>If you don’t, you can no longer decrypt your existing account, but you can start a new one under the same email address by selecting NO.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
@@ -1420,6 +1420,155 @@ Keep the {0} code because are for include the total number of folders in runtime
     <value>Share to</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_StorageQuota" xml:space="preserve">
+    <value>Storage quota</value>
+    <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonuses" xml:space="preserve">
+    <value>Unlocked bonuses</value>
+    <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonusesText" xml:space="preserve">
+    <value>You can unlock more free storage and transfer quota by using our products. Simple. Easy.</value>
+    <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_GetMoreBonuses" xml:space="preserve">
+    <value>Get more bonuses</value>
+    <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseStorage" xml:space="preserve">
+    <value>Base storage</value>
+    <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseTransferQuota" xml:space="preserve">
+    <value>Base transfer quota</value>
+    <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallDesktopApp" xml:space="preserve">
+    <value>Install desktop app</value>
+    <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallMobileApp" xml:space="preserve">
+    <value>Install mobile app</value>
+    <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReferralBonus" xml:space="preserve">
+    <value>Referral bonuses</value>
+    <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RegistrationBonus" xml:space="preserve">
+    <value>Registration bonus</value>
+    <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusStorage" xml:space="preserve">
+    <value>Bonus storage</value>
+    <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusTransferQuota" xml:space="preserve">
+    <value>Bonus transfer quota</value>
+    <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Achievements" xml:space="preserve">
+    <value>Achievements</value>
+    <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AchievementsText" xml:space="preserve">
+    <value>Your easy route to more storage and transfer quota on MEGA. You can maintain a generous free storage and transfer allowance by completing any of the actions outlined below.</value>
+    <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_Available" xml:space="preserve">
+    <value>Available</value>
+    <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedRewards" xml:space="preserve">
+    <value>Unlocked rewards</value>
+    <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Expired" xml:space="preserve">
+    <value>Expired</value>
+    <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriends" xml:space="preserve">
+    <value>Invite friends</value>
+    <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDay" xml:space="preserve">
+    <value>day remaining</value>
+    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDays" xml:space="preserve">
+    <value>{0} days remaining</value>
+    <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
+Keep the {0} code because is for include the number of days in runtime.</comment>
+  </data>
+  <data name="UI_SendInvites" xml:space="preserve">
+    <value>Send invites</value>
+    <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewStatus" xml:space="preserve">
+    <value>View status</value>
+    <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Install" xml:space="preserve">
+    <value>Install</value>
+    <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AccountRegistrationInformation" xml:space="preserve">
+    <value>Create your free account and get {0} of complimentary storage spance, valid for {1} days.</value>
+    <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
+  </data>
+  <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
+    <value>When you install MEGAsync you get {0} of complimentary storage space plus {1} of transfer quota, both valid for {2} days. MEGAsync is available for Windows, macOS and most Linux distros.</value>
+    <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_InstallMobileAppInformation" xml:space="preserve">
+    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quoto, both valid for {2} days. We provice mobile apps for iOS, Android &amp; Windows Phone</value>
+    <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_AchievedOn" xml:space="preserve">
+    <value>Achieved on</value>
+    <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExpiresIn" xml:space="preserve">
+    <value>Expires in</value>
+    <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Days" xml:space="preserve">
+    <value>Days</value>
+    <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorks" xml:space="preserve">
+    <value>How it works</value>
+    <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorksText" xml:space="preserve">
+    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you receive bonus storage and transfer quota.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
+  </data>
+  <data name="UI_Invite" xml:space="preserve">
+    <value>Invite</value>
+    <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriendsText" xml:space="preserve">
+    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
+  </data>
+  <data name="UI_WhyNotWorking" xml:space="preserve">
+    <value>Why it is not working</value>
+    <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
+    <value>You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
+    <value>Invited contacts must install MEGA mobile app or MEGA app on their devices.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
+  </data>
   <data name="UI_FolderLink" xml:space="preserve">
     <value>Folder link</value>
     <comment>Label for any 'Folder link' button, link, text, title, etc. - (String as short as possible).
@@ -1449,7 +1598,61 @@ Keep the {0} code because is for include the number of selected items in runtime
   </data>
   <data name="UI_FileLink" xml:space="preserve">
     <value>File link</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
-</comment>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>Backup Recovery key</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Don’t show me again</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>Saved for offline</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveForOffline" xml:space="preserve">
+    <value>Save for offline</value>
+    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromOffline" xml:space="preserve">
+    <value>Remove from offline</value>
+    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>Offline files</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
+    <value>Referral status ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by status and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
+    <value>Referral status ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionReferralStatus" xml:space="preserve">
+    <value>Referral status</value>
+    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Pending" xml:space="preserve">
+    <value>Pending</value>
+    <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EarnedReferralBonus" xml:space="preserve">
+    <value>Earned referral bonus</value>
+    <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
 </root>

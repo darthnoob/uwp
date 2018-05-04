@@ -12,16 +12,11 @@
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
+    Title="{x:Bind ViewModel.TitleText, Mode=OneWay}"
     PrimaryButtonText="{x:Bind ViewModel.UpgradeText, Mode=OneTime}"
     SecondaryButtonText="{x:Bind ViewModel.WaitText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.UpgradeButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.WaitButtonCommand}">
-    <dialogViews:BaseTransferOverquotaWarningDialog.Title>
-        <TextBlock
-            Margin="24, 24, 0, 0"
-            Style="{StaticResource MegaDialogTitleFontStyle}"
-            Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"/>
-    </dialogViews:BaseTransferOverquotaWarningDialog.Title>
 
     <Grid Margin="24, 0, 0, 24">
         <StackPanel>

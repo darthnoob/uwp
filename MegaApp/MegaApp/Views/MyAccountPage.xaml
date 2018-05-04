@@ -3,18 +3,19 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:extensions="using:MegaApp.Extensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:myAccountViews="using:MegaApp.Views.MyAccount"
     xmlns:triggers="using:WindowsStateTriggers"
     xmlns:viewModels="using:MegaApp.ViewModels"
     xmlns:views="using:MegaApp.Views"
     d:DataContext="{d:DesignInstance viewModels:MyAccountViewModel}"
     mc:Ignorable="d">
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -36,90 +37,100 @@
             <CommandBar
                 x:Name="TopCommandBar"
                 Grid.Column="1"
-                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                 extensions:CommandBarExtensions.HideMoreButton="True"
+                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                 Style="{StaticResource MegaCommandBarStyle}">
-                <AppBarButton 
-                    Style="{StaticResource MegaAppBarButtonStyle}"
-                    Label="{Binding LogOutText, Mode=OneTime}" 
-                    ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
+                <AppBarButton
+                    Click="OnButtonClick"
                     Command="{Binding LogOutCommand}"
-                    Click="OnButtonClick">
+                    Label="{Binding LogOutText, Mode=OneTime}"
+                    Style="{StaticResource MegaAppBarButtonStyle}"
+                    ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}">
                     <Viewbox MaxWidth="14" MaxHeight="14">
-                        <FontIcon Glyph="&#xE7E8;"/>
+                        <FontIcon Glyph="&#xE7E8;" />
                     </Viewbox>
                 </AppBarButton>
             </CommandBar>
         </Grid>
 
-        <Grid x:Name="MainGrid" Grid.Row="1" Margin="12,0">
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+        
+        <Grid x:Name="MainGrid" Grid.Row="2" Margin="12,0">
             <Pivot
                 x:Name="MyAccountPivot"
                 HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
                 SelectionChanged="OnPivotSelectionChanged">
                 <PivotItem
                     x:Name="GeneralPivot"
-                    Header="{Binding GeneralTitle, Mode=OneTime}"
-                    CacheMode="{x:Null}">
+                    CacheMode="{x:Null}"
+                    Header="{Binding GeneralTitle, Mode=OneTime}">
                     <myAccountViews:GeneralView x:Name="GeneralView" />
                 </PivotItem>
                 <PivotItem
                     x:Name="ProfilePivot"
-                    Header="{Binding ProfileTitle, Mode=OneTime}"
-                    CacheMode="{x:Null}">
+                    CacheMode="{x:Null}"
+                    Header="{Binding ProfileTitle, Mode=OneTime}">
                     <myAccountViews:ProfileView x:Name="ProfileView" />
                 </PivotItem>
                 <PivotItem
                     x:Name="StorageAndTransferPivot"
-                    Header="{Binding StorageAndTransferTitle, Mode=OneTime}"
-                    CacheMode="{x:Null}">
+                    CacheMode="{x:Null}"
+                    Header="{Binding StorageAndTransferTitle, Mode=OneTime}">
                     <myAccountViews:StorageAndTransferView x:Name="StorageAndTransferView" />
                 </PivotItem>
                 <PivotItem
+                    x:Name="AchievementsPivot"
+                    CacheMode="{x:Null}"
+                    Header="{Binding AchievementsTitle, Mode=OneTime}">
+                    <myAccountViews:AchievementsView x:Name="AchievementsView" />
+                </PivotItem>
+                <PivotItem
                     x:Name="UpgradePivot"
-                    Header="{Binding UpgradeTitle, Mode=OneTime}"
-                    CacheMode="{x:Null}">
+                    CacheMode="{x:Null}"
+                    Header="{Binding UpgradeTitle, Mode=OneTime}">
                     <myAccountViews:UpgradeView x:Name="UpgradeView" />
                 </PivotItem>
             </Pivot>
         </Grid>
-        
+
         <CommandBar
             x:Name="BottomCommandBar"
-            Grid.Row="2"
+            Grid.Row="3"
+            IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
             Style="{StaticResource MegaCommandBarStyle}">
-            <AppBarButton 
+            <AppBarButton
                 Click="OnButtonClick"
                 Command="{Binding LogOutCommand}"
-                Label="{Binding LogOutText, Mode=OneTime}" 
-                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}"
-                Style="{StaticResource MegaAppBarButtonStyle}">
+                Label="{Binding LogOutText, Mode=OneTime}"
+                Style="{StaticResource MegaAppBarButtonStyle}"
+                ToolTipService.ToolTip="{Binding LogOutText, Mode=OneTime}">
                 <Viewbox MaxWidth="14" MaxHeight="14">
-                    <FontIcon Glyph="&#xE7E8;"/>
+                    <FontIcon Glyph="&#xE7E8;" />
                 </Viewbox>
             </AppBarButton>
         </CommandBar>
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Mobile">
                     <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile"/>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Mobile" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="TopRowGrid.Background" Value="{ThemeResource MegaAppBarBackgroundBrush}" />
-                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Visible"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Collapsed" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Visible" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Desktop">
                     <VisualState.StateTriggers>
-                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop"/>
+                        <triggers:DeviceFamilyStateTrigger DeviceFamily="Desktop" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="TopRowGrid.Background" Value="Transparent" />
-                        <Setter Target="TopCommandBar.Visibility" Value="Visible"/>
-                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed"/>
+                        <Setter Target="TopCommandBar.Visibility" Value="Visible" />
+                        <Setter Target="BottomCommandBar.Visibility" Value="Collapsed" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

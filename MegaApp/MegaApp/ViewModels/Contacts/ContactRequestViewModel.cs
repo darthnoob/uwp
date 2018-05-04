@@ -10,7 +10,7 @@ using MegaApp.ViewModels.Contacts;
 
 namespace MegaApp.ViewModels
 {
-    public class ContactRequestViewModel : BaseViewModel, IMegaContactRequest
+    public class ContactRequestViewModel : BaseUiViewModel, IMegaContactRequest
     {
         // Offset DateTime value to calculate the correct creation and modification time
         private static readonly DateTime OriginalDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
@@ -267,17 +267,6 @@ namespace MegaApp.ViewModels
         {
             get { return _contactRequestsList; }
             set { SetField(ref _contactRequestsList, value); }
-        }
-
-        private bool _isMultiSelected;
-        /// <summary>
-        /// Indicates if the contact request is currently selected in a multi-select scenario
-        /// Needed as path for the ListView to auto select/deselect
-        /// </summary>
-        public bool IsMultiSelected
-        {
-            get { return _isMultiSelected; }
-            set { SetField(ref _isMultiSelected, value); }
         }
 
         #endregion

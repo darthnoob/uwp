@@ -52,7 +52,8 @@
         <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid x:Name="TopRowGrid" Grid.Row="0">
@@ -84,6 +85,7 @@
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
                                 Command="{Binding AddFolderCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AddFolderText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
@@ -99,6 +101,7 @@
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
                                 Command="{Binding UploadCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding UploadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}"
@@ -113,6 +116,7 @@
                             <AppBarButton
                                 Click="OnButtonClick"
                                 Command="{Binding OpenLinkCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding OpenLinkText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
@@ -128,6 +132,7 @@
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
                                 Command="{Binding DownloadCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding DownloadText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -143,6 +148,7 @@
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
                                 Command="{Binding CopyOrMoveCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding CopyOrMoveText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
@@ -158,6 +164,7 @@
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
                                 Command="{Binding RemoveCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding RemoveText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}"
@@ -172,7 +179,7 @@
                             <AppBarButton
                                 Click="OnButtonClick"
                                 Command="{Binding CleanRubbishBinCommand}"
-                                IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsCleanRubbishBinEnabled, Mode=OneWay}"
                                 Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
@@ -265,7 +272,10 @@
                     </CommandBar>
                 </Grid>
             </Grid>
-            <Grid x:Name="MainGrid" Grid.Row="1">
+            
+            <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+            
+            <Grid x:Name="MainGrid" Grid.Row="2">
                 <Pivot
                     x:Name="MainPivot"
                     HeaderTemplate="{StaticResource MegaPivoHeaderTemplate}"
@@ -286,6 +296,7 @@
                         Header="{Binding CameraUploadsNameText}">
                         <Grid
                             x:Name="CameraUploadsRoot"
+                            Grid.Row="1"
                             Margin="{StaticResource RootGridMargin}"
                             Background="Transparent"
                             DataContext="{Binding CameraUploads}">
@@ -361,6 +372,7 @@
                         Header="{Binding RubbishBinNameText}">
                         <userControls:FolderExplorer
                             x:Name="RubbishBinExplorer"
+                            Grid.Row="1"
                             Background="{StaticResource MegaAppBackgroundBrush}"
                             Foreground="{StaticResource MegaAppForegroundBrush}"
                             Folder="{x:Bind ViewModel.RubbishBin, Mode=OneWay}"/>
@@ -369,13 +381,13 @@
             </Grid>
 
             <!--  BOTTOM COMMAND BAR AREA (MOBILE DEVICES)  -->
-            <Grid x:Name="BottomCommandBar" Grid.Row="2">
-                <CommandBar 
-                    Style="{StaticResource MegaCommandBarStyle}">
+            <Grid x:Name="BottomCommandBar" Grid.Row="3">
+                <CommandBar Style="{StaticResource MegaCommandBarStyle}">
                     <AppBarButton
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding AddFolderCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AddFolderText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding AddFolderText, Mode=OneTime}"
@@ -391,6 +403,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding UploadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding UploadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding UploadText, Mode=OneTime}"
@@ -405,6 +418,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding OpenLinkCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding OpenLinkText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding OpenLinkText, Mode=OneTime}"
@@ -420,6 +434,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding DownloadCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding DownloadText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding DownloadText, Mode=OneTime}"
@@ -435,6 +450,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding CopyOrMoveCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding CopyOrMoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding CopyOrMoveText, Mode=OneTime}"
@@ -450,6 +466,7 @@
                         DataContext="{Binding ActiveFolderView}"
                         Click="OnButtonClick"
                         Command="{Binding RemoveCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding RemoveText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemoveText, Mode=OneTime}"
@@ -464,7 +481,7 @@
                     <AppBarButton
                         Click="OnButtonClick"
                         Command="{Binding CleanRubbishBinCommand}"
-                        IsEnabled="{Binding IsRubbishBinEmpty, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsCleanRubbishBinEnabled, Mode=OneWay}"
                         Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"

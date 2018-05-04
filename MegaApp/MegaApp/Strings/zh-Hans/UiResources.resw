@@ -1,0 +1,1455 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UI_AddFolder" xml:space="preserve">
+    <value>新增文件夹</value>
+    <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AgreeCreateAccount" xml:space="preserve">
+    <value>我同意服务条款。</value>
+    <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
+  </data>
+  <data name="UI_CameraUploads" xml:space="preserve">
+    <value>相机上传</value>
+    <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Cancel" xml:space="preserve">
+    <value>取消</value>
+    <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CleanRubbishBin" xml:space="preserve">
+    <value>清空垃圾桶</value>
+    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CloudDriveName" xml:space="preserve">
+    <value>云盘</value>
+    <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Confirm" xml:space="preserve">
+    <value>确认</value>
+    <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmAccount" xml:space="preserve">
+    <value>确认帐户</value>
+    <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
+    <value>确认密码</value>
+    <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmYourAccount" xml:space="preserve">
+    <value>输入您的密码完成创建帐户。</value>
+    <comment>Text for the confirmation page with the instructions to follow.</comment>
+  </data>
+  <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
+    <value>确认您的帐号</value>
+    <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CreateAccount" xml:space="preserve">
+    <value>创建帐号</value>
+    <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CreateFolder" xml:space="preserve">
+    <value>创建文件夹</value>
+    <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Download" xml:space="preserve">
+    <value>下载</value>
+    <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Downloads" xml:space="preserve">
+    <value>下载</value>
+    <comment>Label for any 'Downloads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmailWatermark" xml:space="preserve">
+    <value>邮箱地址</value>
+    <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyCloudDrive" xml:space="preserve">
+    <value>您的云盘中没有文件</value>
+    <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyFolder" xml:space="preserve">
+    <value>清空文件夹</value>
+    <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyOffline" xml:space="preserve">
+    <value>无保存的离线文件</value>
+    <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptyRubbishBin" xml:space="preserve">
+    <value>清空垃圾桶</value>
+    <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmptySharedFolders" xml:space="preserve">
+    <value>没有共享的文件夹</value>
+    <comment>Label for the background of an empty shared folders page - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FirstNameWatermark" xml:space="preserve">
+    <value>名</value>
+    <comment>Watermark label for the user's first name field when create account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ImportLinkBorderText" xml:space="preserve">
+    <value>导入至{0}</value>
+    <comment>Label for the dialog shown when a user are trying to import a MEGA link - (String as short as possible).
+Preserve the {0} code because is for include the name of the destination folder in runtime.</comment>
+  </data>
+  <data name="UI_LastNameWatermark" xml:space="preserve">
+    <value>姓</value>
+    <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Login" xml:space="preserve">
+    <value>登录</value>
+    <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MultipleFiles" xml:space="preserve">
+    <value>文件</value>
+    <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MultipleFolders" xml:space="preserve">
+    <value>文件夹</value>
+    <comment>Label for any 'Folders' (multiple folders) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MultiSelect" xml:space="preserve">
+    <value>选择多个项目</value>
+    <comment>Label for any 'Multi select' button, link, text, title, etc. for multiple selection - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MyAccount" xml:space="preserve">
+    <value>我的帐户</value>
+    <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_No" xml:space="preserve">
+    <value>否</value>
+    <comment>Label for any 'No' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NoInternetConnection" xml:space="preserve">
+    <value>无网络连接</value>
+    <comment>Label for the background of an empty state when no internet connection - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Off" xml:space="preserve">
+    <value>关闭</value>
+    <comment>Label for any 'Off' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Ok" xml:space="preserve">
+    <value>Ok</value>
+    <comment>Label for any 'Ok' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_On" xml:space="preserve">
+    <value>开启</value>
+    <comment>Label for any 'On' (On/Off) button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PasswordWatermark" xml:space="preserve">
+    <value>密码</value>
+    <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Remove" xml:space="preserve">
+    <value>删除</value>
+    <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Rename" xml:space="preserve">
+    <value>重新命名</value>
+    <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RubbishBinName" xml:space="preserve">
+    <value>垃圾桶</value>
+    <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Settings" xml:space="preserve">
+    <value>设定</value>
+    <comment>Label for any 'Settings' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SingleFile" xml:space="preserve">
+    <value>文件</value>
+    <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SingleFolder" xml:space="preserve">
+    <value>文件夹</value>
+    <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TermsOfService" xml:space="preserve">
+    <value>在这里查看服务条款。</value>
+    <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Transfer" xml:space="preserve">
+    <value>传输</value>
+    <comment>Label for any 'Transfer' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferManager" xml:space="preserve">
+    <value>传输管理器</value>
+    <comment>Label for any 'Transfer manager' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Transfers" xml:space="preserve">
+    <value>传输</value>
+    <comment>Label for any 'Transfers' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCanceled" xml:space="preserve">
+    <value>已取消</value>
+    <comment>Label for the status of a canceled transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusDownloaded" xml:space="preserve">
+    <value>已下载</value>
+    <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusDownloading" xml:space="preserve">
+    <value>正在下载...</value>
+    <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusError" xml:space="preserve">
+    <value>传输出错</value>
+    <comment>Label for the status of a failed  transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusNotStarted" xml:space="preserve">
+    <value>准备就绪</value>
+    <comment>Label for the status of a transfer when is ready but not started for some reason - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPaused" xml:space="preserve">
+    <value>暂停</value>
+    <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusQueued" xml:space="preserve">
+    <value>已入进程</value>
+    <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusUploaded" xml:space="preserve">
+    <value>已上传</value>
+    <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusUploading" xml:space="preserve">
+    <value>正在上传...</value>
+    <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TypeFolderName" xml:space="preserve">
+    <value>文件夹名称：</value>
+    <comment>Text to show when a user wants to create a new folder to type the name for the new folder.</comment>
+  </data>
+  <data name="UI_TypeNewName" xml:space="preserve">
+    <value>输入新的名称</value>
+    <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
+  </data>
+  <data name="UI_Upload" xml:space="preserve">
+    <value>上传</value>
+    <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Uploads" xml:space="preserve">
+    <value>上传</value>
+    <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Yes" xml:space="preserve">
+    <value>是</value>
+    <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Pause" xml:space="preserve">
+    <value>暂停</value>
+    <comment>Label for any 'Pause' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PauseAll" xml:space="preserve">
+    <value>全部暂停</value>
+    <comment>Label for any 'Pause all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelAll" xml:space="preserve">
+    <value>全部取消</value>
+    <comment>Label for any 'Cancel all' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelDownloads" xml:space="preserve">
+    <value>取消下载</value>
+    <comment>Label for any 'Cancel downloads' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelUploads" xml:space="preserve">
+    <value>取消上传</value>
+    <comment>Label for any 'Cancel uploads' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelDownload" xml:space="preserve">
+    <value>取消下载</value>
+    <comment>Label for any 'Cancel download' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelTransfer" xml:space="preserve">
+    <value>取消传输</value>
+    <comment>Label for any 'Cancel transfer' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelTransfers" xml:space="preserve">
+    <value>取消传输</value>
+    <comment>Label for any 'Cancel transfers' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelUpload" xml:space="preserve">
+    <value>取消上传</value>
+    <comment>Label for any 'Cancel upload' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearAll" xml:space="preserve">
+    <value>全部清除</value>
+    <comment>Label for any 'Clear all' button, link, text, title, etc. - (String as short as possible, MAX 15 characters).</comment>
+  </data>
+  <data name="UI_DeselectAll" xml:space="preserve">
+    <value>取消全选</value>
+    <comment>Label for any 'Deselect all' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SelectAll" xml:space="preserve">
+    <value>全选</value>
+    <comment>Label for any 'Select all' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NewFolder" xml:space="preserve">
+    <value>新文件夹</value>
+    <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Logout" xml:space="preserve">
+    <value>登出</value>
+    <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CameraUploadsDescription" xml:space="preserve">
+    <value>将您的照片上传到您的帐户。</value>
+    <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CameraUploadsTitle" xml:space="preserve">
+    <value>启用自动摄像头上传</value>
+    <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryKey" xml:space="preserve">
+    <value>还原金钥</value>
+    <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryKeyDescription" xml:space="preserve">
+    <value>即使您忘记密码，您的恢复金匙也可以让您登录到您的账户。将其存放在安全的地方。</value>
+    <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SecuritySettings" xml:space="preserve">
+    <value>安全性</value>
+    <comment>Label for any 'Security settings' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SecuritySettingsDescription" xml:space="preserve">
+    <value>每个连接的设备的安全设置都不相同。</value>
+    <comment>Label for any 'Security settings description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_About" xml:space="preserve">
+    <value>关于</value>
+    <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AboutDescription" xml:space="preserve">
+    <value>有关MEGA应用程序的信息</value>
+    <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyKey" xml:space="preserve">
+    <value>复制密钥</value>
+    <comment>Label for any 'Copy key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveKey" xml:space="preserve">
+    <value>保存金匙</value>
+    <comment>Label for any 'Save key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PlainText" xml:space="preserve">
+    <value>纯文本</value>
+    <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copy" xml:space="preserve">
+    <value>复制</value>
+    <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Move" xml:space="preserve">
+    <value>移动</value>
+    <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionLargest" xml:space="preserve">
+    <value>从大到小</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionNewest" xml:space="preserve">
+    <value>由新到旧</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionOldest" xml:space="preserve">
+    <value>由旧至新</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionSmallest" xml:space="preserve">
+    <value>由小至大</value>
+    <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusPreparing" xml:space="preserve">
+    <value>准备中...</value>
+    <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Completed" xml:space="preserve">
+    <value>完成</value>
+    <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ResumeAll" xml:space="preserve">
+    <value>恢复全部</value>
+    <comment>Label for any 'Resume all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Resume" xml:space="preserve">
+    <value>恢复</value>
+    <comment>Label for any 'Resume' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Retry" xml:space="preserve">
+    <value>重试</value>
+    <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusCompleting" xml:space="preserve">
+    <value>即将完成...</value>
+    <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferStatusRetrying" xml:space="preserve">
+    <value>重试中...</value>
+    <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
+  </data>
+  <data name="UI_GetLink" xml:space="preserve">
+    <value>取得链接</value>
+    <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Next" xml:space="preserve">
+    <value>下一步</value>
+    <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Previous" xml:space="preserve">
+    <value>上一个</value>
+    <comment>Label for any 'Previous' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Share" xml:space="preserve">
+    <value>共享</value>
+    <comment>Label for any 'Share' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportLink" xml:space="preserve">
+    <value>导出链接</value>
+    <comment>Label for any 'Export link' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Preview" xml:space="preserve">
+    <value>预览</value>
+    <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Close" xml:space="preserve">
+    <value>关闭</value>
+    <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Added" xml:space="preserve">
+    <value>上传时间</value>
+    <comment>Label for any 'Added' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Files" xml:space="preserve">
+    <value>文件</value>
+    <comment>Label for any 'Files' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folders" xml:space="preserve">
+    <value>文件夹</value>
+    <comment>Label for any 'Folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Modified" xml:space="preserve">
+    <value>最后修改</value>
+    <comment>Label for any 'Modified' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Size" xml:space="preserve">
+    <value>大小</value>
+    <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Audio" xml:space="preserve">
+    <value>音频</value>
+    <comment>Label for any 'Audio' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_File" xml:space="preserve">
+    <value>文件</value>
+    <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Folder" xml:space="preserve">
+    <value>文件夹</value>
+    <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Image" xml:space="preserve">
+    <value>图像</value>
+    <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Type" xml:space="preserve">
+    <value>类型</value>
+    <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Unknown" xml:space="preserve">
+    <value>未知</value>
+    <comment>Label for any 'Unknown' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Video" xml:space="preserve">
+    <value>影片</value>
+    <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableOfflineView" xml:space="preserve">
+    <value>启用离线预览</value>
+    <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableLink" xml:space="preserve">
+    <value>启用链接</value>
+    <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DecryptionKey" xml:space="preserve">
+    <value>解密密钥</value>
+    <comment>Label for any 'Decryption key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithKey" xml:space="preserve">
+    <value>链接包含密钥</value>
+    <comment>Label for any 'Link with key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LinkWithoutKey" xml:space="preserve">
+    <value>使用无密钥方式进入(公开文件)</value>
+    <comment>Label for any 'Link without key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ProOnly" xml:space="preserve">
+    <value>(PRO专业版限定)</value>
+    <comment>Label to indicate that a feature is only available for PRO users. Keep between parentheses and capital letters  - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SetExpirationDate" xml:space="preserve">
+    <value>设定到期日</value>
+    <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_GridView" xml:space="preserve">
+    <value>网格预览</value>
+    <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListView" xml:space="preserve">
+    <value>显示列表</value>
+    <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortBy" xml:space="preserve">
+    <value>排序</value>
+    <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ResumeSession" xml:space="preserve">
+    <value>恢复会话</value>
+    <comment>Label for any 'Resume session' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Dynamic" xml:space="preserve">
+    <value>动态</value>
+    <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Upgrade" xml:space="preserve">
+    <value>付费升级</value>
+    <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NotAvailable" xml:space="preserve">
+    <value>无法使用</value>
+    <comment>Label for any 'Not available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AccountOverview" xml:space="preserve">
+    <value>账户信息</value>
+    <comment>Label for the 'Account overview' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OverallUsage" xml:space="preserve">
+    <value>使用情况总览</value>
+    <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
+    <value>您已经超出了您的存储空间。除非有更多空间，否则您将无法上传或接收更多的共享。请升级您的帐户或删除一些文件/文件夹以释放空间。</value>
+    <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
+  </data>
+  <data name="UI_OverallUsageText" xml:space="preserve">
+    <value>流量配额用于下载文件。如果您超过您的流量配额，您必须等到配额重置。</value>
+    <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_PaymentMethod" xml:space="preserve">
+    <value>付款方式</value>
+    <comment>Label for any 'Payment method' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PlanType" xml:space="preserve">
+    <value>计划类型</value>
+    <comment>Label for any 'Plan type' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SubscriptionEnds" xml:space="preserve">
+    <value>订阅结束</value>
+    <comment>Label for any 'Subscription ends' title/text of the My account section - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SubscriptionRenews" xml:space="preserve">
+    <value>续订</value>
+    <comment>Label for any 'Subscription renews' title/text of the My account section - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TotalStorage" xml:space="preserve">
+    <value>总容量</value>
+    <comment>Label for any 'Total storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TotalTransferQuota" xml:space="preserve">
+    <value>总流量</value>
+    <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedStorage" xml:space="preserve">
+    <value>已用容量</value>
+    <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedTransferQuota" xml:space="preserve">
+    <value>已用流量</value>
+    <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
+    <value>您已超出您的流量配额。在您的流量重置之前，您将无法下载。请升级您的帐户或等到您的流量配额重置。</value>
+    <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
+  </data>
+  <data name="UI_PaymentInformation" xml:space="preserve">
+    <value>支付信息</value>
+    <comment>Label for the 'Payment information' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Annual" xml:space="preserve">
+    <value>年度</value>
+    <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AnnualRecurring" xml:space="preserve">
+    <value>每年续订</value>
+    <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
+  </data>
+  <data name="UI_General" xml:space="preserve">
+    <value>概述</value>
+    <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Monthly" xml:space="preserve">
+    <value>每月</value>
+    <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MonthlyRecurring" xml:space="preserve">
+    <value>每月续订</value>
+    <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Profile" xml:space="preserve">
+    <value>文件</value>
+    <comment>Title of the 'Profile' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageAndTransfer" xml:space="preserve">
+    <value>容量和传输</value>
+    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AvailableStorage" xml:space="preserve">
+    <value>可用容量</value>
+    <comment>Label for any 'Available storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AvailableTransferQuota" xml:space="preserve">
+    <value>可用流量</value>
+    <comment>Label for any 'Available transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TransferQuota" xml:space="preserve">
+    <value>传输配额(频宽)</value>
+    <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_IncomingShares" xml:space="preserve">
+    <value>分享给我的文件夹</value>
+    <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PleaseWait" xml:space="preserve">
+    <value>请稍候</value>
+    <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CreditCard" xml:space="preserve">
+    <value>信用卡</value>
+    <comment>Label for any 'Credit card' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Free" xml:space="preserve">
+    <value>免费</value>
+    <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
+    <value>应用中购买（微软商店）</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Keep 'Microsoft Store' in English because it is a trademark.</comment>
+  </data>
+  <data name="UI_Month" xml:space="preserve">
+    <value>月</value>
+    <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Storage" xml:space="preserve">
+    <value>储存空间</value>
+    <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UpgradeStep1" xml:space="preserve">
+    <value>第1步. 选择一个PRO计划</value>
+    <comment>Text to describe the step 1 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_UpgradeStep2" xml:space="preserve">
+    <value>第2步. 选择会员期限</value>
+    <comment>Text to describe the step 2 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_UpgradeStep3" xml:space="preserve">
+    <value>第3步. 选择付款方式</value>
+    <comment>Text to describe the step 3 of the upgrade account process.</comment>
+  </data>
+  <data name="UI_Year" xml:space="preserve">
+    <value>年</value>
+    <comment>Label for any 'Year' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MembershipDuration" xml:space="preserve">
+    <value>会员期限</value>
+    <comment>Label for any 'Membership duration' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Purchase" xml:space="preserve">
+    <value>购买</value>
+    <comment>Label for any 'Purchase' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveMoney" xml:space="preserve">
+    <value>保存{0}</value>
+    <comment>Label to indicate the saved money if the user purchase an annual subscription instead of a monthly subscription.
+Preserve the {0} code because is for include the saved money and the currency.</comment>
+  </data>
+  <data name="UI_UpgradeStepCounter" xml:space="preserve">
+    <value>步骤 {0}/{1}</value>
+    <comment>Text to count the steps of the upgrade account process.
+Preserve the {0} and {1} codes because is for include current step number and total steps number.</comment>
+  </data>
+  <data name="UI_Price" xml:space="preserve">
+    <value>价格</value>
+    <comment>Label for any 'Price' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CentiliPaymentMethod" xml:space="preserve">
+    <value>Centili（手机付款）</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Don't translate 'Centili' because is the payment method name.</comment>
+  </data>
+  <data name="UI_FortumoPaymentMethod" xml:space="preserve">
+    <value>Fortumo（手机付款）</value>
+    <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
+Don't translate 'Fortumo' because is the payment method name.</comment>
+  </data>
+  <data name="UI_EmailAndPassword" xml:space="preserve">
+    <value>电子邮件&amp;密码</value>
+    <comment>Label for the 'Email &amp; Password' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FirstName" xml:space="preserve">
+    <value>名</value>
+    <comment>Label for any 'First name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LastName" xml:space="preserve">
+    <value>姓</value>
+    <comment>Label for any 'Last name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PersonalInformation" xml:space="preserve">
+    <value>个人信息</value>
+    <comment>Label for the 'Personal information' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PriceAnnual" xml:space="preserve">
+    <value>价格（每年）</value>
+    <comment>Label for any 'Price (annual)' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PriceMonthly" xml:space="preserve">
+    <value>价格（每月）</value>
+    <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Save" xml:space="preserve">
+    <value>保存</value>
+    <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangeEmail" xml:space="preserve">
+    <value>更改电子信箱</value>
+    <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangePassword" xml:space="preserve">
+    <value>变更密码</value>
+    <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangePasswordDescription" xml:space="preserve">
+    <value>输入并确认您的新密码，然后点击保存。</value>
+    <comment>Text to describe the change password process.</comment>
+  </data>
+  <data name="UI_CurrentPassword" xml:space="preserve">
+    <value>现有密码</value>
+    <comment>Placeholder text to insert the current password during the process to change the password - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NewPassword" xml:space="preserve">
+    <value>新密码</value>
+    <comment>Placeholder text to insert the new password during the process to change the password - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReEnterNewPassword" xml:space="preserve">
+    <value>重新输入新的密码</value>
+    <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RefundPolicy" xml:space="preserve">
+    <value>退款条款</value>
+    <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RefundPolicyDescription" xml:space="preserve">
+    <value>点击此处了解关于自动定期付款、退款政策或如何取消订阅之详情。</value>
+    <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
+  </data>
+  <data name="UI_SeeMoreInfo" xml:space="preserve">
+    <value>查看更多信息</value>
+    <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ChangeEmailDescription" xml:space="preserve">
+    <value>在上方的输入区域更新电子邮件地址，然后点击保存。接下来，请查看您的电子邮件收件箱，并确认此电子邮件更改。</value>
+    <comment>Text to describe the change email process.</comment>
+  </data>
+  <data name="UI_NewEmail" xml:space="preserve">
+    <value>新邮件</value>
+    <comment>Label for any 'New email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnterNewEmail" xml:space="preserve">
+    <value>输入新的电邮地址</value>
+    <comment>Placeholder text to insert the new email during the process to change the email - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmEmail" xml:space="preserve">
+    <value>确认电子邮件地址</value>
+    <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EmailChangedSuccessful" xml:space="preserve">
+    <value>恭喜，您的MEGA帐户的新电子邮件地址是</value>
+    <comment>Text displayed to inform that the email was successfully changed.</comment>
+  </data>
+  <data name="UI_VerifyEmailHeader" xml:space="preserve">
+    <value>验证您的电子邮件地址</value>
+    <comment>Header of the text displayed to verify an email address. - String as short as possible).</comment>
+  </data>
+  <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
+    <value>请输入您的密码以验证您的电子邮件地址</value>
+    <comment>Subheader of the text displayed to verify an email address.</comment>
+  </data>
+  <data name="UI_Add" xml:space="preserve">
+    <value>新增</value>
+    <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContact" xml:space="preserve">
+    <value>新增联系人</value>
+    <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Contacts" xml:space="preserve">
+    <value>联系人</value>
+    <comment>Label for any 'Contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Incoming" xml:space="preserve">
+    <value>传入</value>
+    <comment>Label for any 'Incoming' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Outgoing" xml:space="preserve">
+    <value>传出</value>
+    <comment>Label for any 'Outgoing' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContactEmailDefaultText" xml:space="preserve">
+    <value>你好！和我一起加入MEGA即可免费获得50GB的加密云存储和加密会话！</value>
+    <comment>Default text to attach in the email to invite a contact.</comment>
+  </data>
+  <data name="UI_Email" xml:space="preserve">
+    <value>邮箱地址</value>
+    <comment>Label for any 'Email' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AcceptContact" xml:space="preserve">
+    <value>接受联系人</value>
+    <comment>Label for any 'Accept contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DenyContact" xml:space="preserve">
+    <value>拒绝联系人</value>
+    <comment>Label for any 'Deny contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemindContact" xml:space="preserve">
+    <value>提醒联系人</value>
+    <comment>Label for any 'Remind contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveContact" xml:space="preserve">
+    <value>删除联系人</value>
+    <comment>Label for any 'Remove contact' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CancelInvite" xml:space="preserve">
+    <value>取消邀请</value>
+    <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveMultipleContacts" xml:space="preserve">
+    <value>删除联系人</value>
+    <comment>Label for any 'Remove contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedFolder" xml:space="preserve">
+    <value>共享文件夹</value>
+    <comment>Label for any 'Shared folder' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_SharedFolders" xml:space="preserve">
+    <value>已分享的文件夹</value>
+    <comment>Label for any 'Shared folders' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_ListSortedByName" xml:space="preserve">
+    <value>名称 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by name and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByNameMultiSelect" xml:space="preserve">
+    <value>名称（{1}的{0}）</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by name and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_Name" xml:space="preserve">
+    <value>名称</value>
+    <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewProfile" xml:space="preserve">
+    <value>查看资料</value>
+    <comment>Label for any 'View profile' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedItems" xml:space="preserve">
+    <value>共享文件</value>
+    <comment>Label for any 'Shared items' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_Details" xml:space="preserve">
+    <value>内容</value>
+    <comment>Label for any 'Details' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Link" xml:space="preserve">
+    <value>链接</value>
+    <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PermissionFullAccess" xml:space="preserve">
+    <value>全权使用</value>
+    <comment>Label for the 'Full access' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadAndWrite" xml:space="preserve">
+    <value>可读&amp; 可编辑</value>
+    <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
+  </data>
+  <data name="UI_PermissionReadOnly" xml:space="preserve">
+    <value>仅能阅读</value>
+    <comment>Label for the 'Read only' permission for shared items.</comment>
+  </data>
+  <data name="UI_LeaveShare" xml:space="preserve">
+    <value>离开共享</value>
+    <comment>Label for any 'Leave share' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_IgnoreContact" xml:space="preserve">
+    <value>忽略联系人</value>
+    <comment>Label for any 'Ignore contact' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Leave" xml:space="preserve">
+    <value>离开</value>
+    <comment>Label for any 'Leave' button, link, text, title, etc. for leave a shared item - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByAccessLevel" xml:space="preserve">
+    <value>访问权限 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+    <value>访问权限({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwner" xml:space="preserve">
+    <value>所有者({0})</value>
+    <comment>Label to indicate that a list of items is sorted by owner and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByOwnerMultiSelect" xml:space="preserve">
+    <value>所有者({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_NumberOfContacts" xml:space="preserve">
+    <value>{0}联系人</value>
+    <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
+Keep the {0} code because is for include the number of contacts in runtime.</comment>
+  </data>
+  <data name="UI_NumberSharedFolders" xml:space="preserve">
+    <value>{0}共享文件夹</value>
+    <comment>Label to indicate that there are multiple shared folders - (String as short as possible).
+Keep the {0} code because is for include the number of shared folders in runtime.</comment>
+  </data>
+  <data name="UI_OneSharedFolder" xml:space="preserve">
+    <value>1个共享文件夹</value>
+    <comment>Label to indicate that there is only 1 shared folder - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_OutgoingShares" xml:space="preserve">
+    <value>传出共享</value>
+    <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionAccessLevel" xml:space="preserve">
+    <value>访问</value>
+    <comment>Label for the menu option to sort a list of items by access level - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionDateModified" xml:space="preserve">
+    <value>修改日期</value>
+    <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionName" xml:space="preserve">
+    <value>名称</value>
+    <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionOwner" xml:space="preserve">
+    <value>所有者</value>
+    <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveSharedAccess" xml:space="preserve">
+    <value>删除共享访问权限</value>
+    <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClosePanel" xml:space="preserve">
+    <value>关闭面板</value>
+    <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Information" xml:space="preserve">
+    <value>信息</value>
+    <comment>Label for any 'Information' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Contents" xml:space="preserve">
+    <value>内容</value>
+    <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Created" xml:space="preserve">
+    <value>建立</value>
+    <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DateModified" xml:space="preserve">
+    <value>修改日期</value>
+    <comment>Label for any 'Date modified' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FolderLocation" xml:space="preserve">
+    <value>文件夹位置</value>
+    <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FolderModified" xml:space="preserve">
+    <value>修改文件夹</value>
+    <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Owner" xml:space="preserve">
+    <value>所有者</value>
+    <comment>Label for any 'Owner' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Permissions" xml:space="preserve">
+    <value>允许</value>
+    <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedOn" xml:space="preserve">
+    <value>共享于</value>
+    <comment>Label for any 'Shared on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SharedTo" xml:space="preserve">
+    <value>共享给</value>
+    <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DateCreated" xml:space="preserve">
+    <value>创建日期</value>
+    <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableSharedFolder" xml:space="preserve">
+    <value>启用共享文件夹</value>
+    <comment>Label for any 'Enable shared folder' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AddContactToFolder" xml:space="preserve">
+    <value>添加联系人到文件夹</value>
+    <comment>Label for an 'Add contact to folder' button to add a contact to an outgoing shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromFolder" xml:space="preserve">
+    <value>从文件夹中移除</value>
+    <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ShareFolderTo" xml:space="preserve">
+    <value>分享“{0}”到</value>
+    <comment>Text placed as title of the dialog used to share a folder with a contact.
+Preserve the {0} code because is for include the folder name in runtime.</comment>
+  </data>
+  <data name="UI_FolderPermission" xml:space="preserve">
+    <value>文件夹权限</value>
+    <comment>Label for any 'Folder permission' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SetFolderPermission" xml:space="preserve">
+    <value>设置文件夹权限</value>
+    <comment>Label for any 'Set folder permission' button, link, text, title, etc. - ç(String as short as possible).</comment>
+  </data>
+  <data name="UI_SetFolderPermissionLevel" xml:space="preserve">
+    <value>设置文件夹权限级别</value>
+    <comment>Label for any 'Set folder permission level' button, link, text, title, etc. - ç(String as short as possible).</comment>
+  </data>
+  <data name="UI_LoginWithSpace" xml:space="preserve">
+    <value>登入</value>
+    <comment>Label for any 'Log in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPassword" xml:space="preserve">
+    <value>忘了我的密码</value>
+    <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ContactSupport" xml:space="preserve">
+    <value>联系客服</value>
+    <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
+    <value>如果您备份了还原金钥，则可以通过选择是重置密码。没有数据将丢失。</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
+  </data>
+  <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
+    <value>您有恢复金匙的副本吗？</value>
+    <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
+    <value>由于我们的端到端加密模式，如果没有密码或备份恢复金匙，您将无法访问数据。您可以停用现有帐户，并在同一电子邮件地址下重新启动一个新帐户。</value>
+    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
+    <value>我没有我的恢复金匙</value>
+    <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ParkAccount" xml:space="preserve">
+    <value>封存帐号</value>
+    <comment>Label for any 'Park account' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoveryDescription" xml:space="preserve">
+    <value>请于下方输入您的电子邮件地址。您将收到一个还原链接，让您可以提交您的还原金钥并重置密码。</value>
+    <comment>Text displayed in the 'Recovery' section when the user does have a recovery key.</comment>
+  </data>
+  <data name="UI_RecoveryKeyHeader" xml:space="preserve">
+    <value>我有恢复金匙</value>
+    <comment>Label for any 'I have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Send" xml:space="preserve">
+    <value>送出</value>
+    <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RecoverDescription" xml:space="preserve">
+    <value>请提供您以前汇出备份之还原金钥。若您现在于此电脑的其他浏览器中或其他电脑中，仍开有已登入MEGA的页面，您还有机会可以汇出还原金钥。</value>
+    <comment>Text displayed in recover section on password reset</comment>
+  </data>
+  <data name="UI_RecoverHeader" xml:space="preserve">
+    <value>密码重设</value>
+    <comment>Header of the text displayed to reset password on recovery. - String as short as possible).</comment>
+  </data>
+  <data name="UI_UploadKey" xml:space="preserve">
+    <value>上传金匙</value>
+    <comment>Label for any 'Upload key' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Verify" xml:space="preserve">
+    <value>确认</value>
+    <comment>Label for any 'Verify' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ValidatePassword" xml:space="preserve">
+    <value>验证密码</value>
+    <comment>Label for any 'Validate password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ValidatePasswordDescription" xml:space="preserve">
+    <value>您已成功重拾帐号。请选择新密码:</value>
+    <comment>Text displayed to validate password on account recovery.</comment>
+  </data>
+  <data name="UI_ValidatePasswordHeader" xml:space="preserve">
+    <value>很好!</value>
+    <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
+  </data>
+  <data name="UI_ParkAccountDescription" xml:space="preserve">
+    <value>这是停用您帐户的最后一步，请输入您的新密码。您的数据将保留至少60天。如果您确实记得您的账户密码，请联系support@mega.nz。</value>
+    <comment>Text displayed to validate password on parking account.</comment>
+  </data>
+  <data name="UI_ConfirmEmailDescription" xml:space="preserve">
+    <value>请检查您的电子邮件并按照链接确认您的帐户。</value>
+    <comment>Text displayed when user can resend his email address on create account.</comment>
+  </data>
+  <data name="UI_ConfirmEmailInfo" xml:space="preserve">
+    <value>如果您拼写错了电子邮件地址，请纠正后单击“重新发送”。</value>
+    <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
+  </data>
+  <data name="UI_Resend" xml:space="preserve">
+    <value>重新发送</value>
+    <comment>Label for any 'Resend' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Wait" xml:space="preserve">
+    <value>稍候</value>
+    <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
+    <value>如果您在此计算机或任何其他计算机上的任何其他浏览器中有活动的MEGA会话，您仍然可以导出恢复金匙。</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
+  </data>
+  <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
+    <value>如果您不这样操作，则不能再解密现有帐户，但可以通过选择“否”在同一电子邮件地址下开始一个新帐户。</value>
+    <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
+  </data>
+  <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
+    <value>如果您记得您的账户密码，请联系support@mega.nz获取恢复协助。您的数据将保留至少60天。</value>
+    <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
+  </data>
+  <data name="UI_ListSortedByEmail" xml:space="preserve">
+    <value>电子邮件({0})</value>
+    <comment>Label to indicate that a list of items is sorted by email and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
+    <value>电子邮件({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionEmail" xml:space="preserve">
+    <value>邮箱地址</value>
+    <comment>Label for the menu option to sort a list of items by email - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Open" xml:space="preserve">
+    <value>打开</value>
+    <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
+    <value>创建日期({0}个文件夹，{1}个文件)</value>
+    <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
+Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
+  </data>
+  <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
+    <value>修改日期({0}个文件夹，{1}个文件)</value>
+    <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
+Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
+  </data>
+  <data name="UI_NodeListSortedByType" xml:space="preserve">
+    <value>类型({0}个文件夹，{1}个文件)</value>
+    <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
+Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
+  </data>
+  <data name="UI_NodeListSortedByName" xml:space="preserve">
+    <value>名称({0}个文件夹，{1}个文件)</value>
+    <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
+Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
+  </data>
+  <data name="UI_NodeListSortedBySize" xml:space="preserve">
+    <value>大小({0}个文件夹，{1}个文件)</value>
+    <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
+Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
+    <value>创建日期({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
+    <value>修改日期({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
+    <value>类型({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
+    <value>大小({1}的{0})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_FolderOptions" xml:space="preserve">
+    <value>文件夹选项</value>
+    <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ListSortedByDateCreated" xml:space="preserve">
+    <value>创建日期 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by creation date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByDateModified" xml:space="preserve">
+    <value>修改日期 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByType" xml:space="preserve">
+    <value>类型 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by type and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedBySize" xml:space="preserve">
+    <value>大小 ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by size and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SelectOrDeselectAll" xml:space="preserve">
+    <value>选择/取消 全部</value>
+    <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionType" xml:space="preserve">
+    <value>类型</value>
+    <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SortOptionSize" xml:space="preserve">
+    <value>大小</value>
+    <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
+    <value>复制/移动1个文件至</value>
+    <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
+    <value>复制/移动{0}文件</value>
+    <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
+Keep the {0} code because is for include the number of selected items in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
+    <value>创建日期 ({0}文件夹)</value>
+    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
+    <value>修改日期 ({0}文件夹)</value>
+    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByName" xml:space="preserve">
+    <value> 名称 ({0}文件夹)</value>
+    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedBySize" xml:space="preserve">
+    <value>大小 ({0}文件夹)</value>
+    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_FolderListSortedByType" xml:space="preserve">
+    <value>类型 ({0}文件夹)</value>
+    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
+Keep the {0} code because are for include the total number of folders in runtime.</comment>
+  </data>
+  <data name="UI_Sharing" xml:space="preserve">
+    <value>分享</value>
+    <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AllContacts" xml:space="preserve">
+    <value>所有联系人</value>
+    <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ConfirmShare" xml:space="preserve">
+    <value>确认共享</value>
+    <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageCollaborators" xml:space="preserve">
+    <value>管理合作者</value>
+    <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ShareTo" xml:space="preserve">
+    <value>分享给</value>
+    <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_FolderLink" xml:space="preserve">
+    <value>文件夹链接</value>
+    <comment>Label for any 'Folder link' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_OpenLink" xml:space="preserve">
+    <value>打开链接</value>
+    <comment>Label for any 'Open link' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+  <data name="UI_TypeOrPasteLink" xml:space="preserve">
+    <value>输入或粘贴链接：</value>
+    <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
+  </data>
+  <data name="UI_Import" xml:space="preserve">
+    <value>导入</value>
+    <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ImportItemTo" xml:space="preserve">
+    <value>将1个文件导入至</value>
+    <comment>Label to indicate that one item has been selected for import - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ImportMultipleItemsTo" xml:space="preserve">
+    <value>导入 ({0}个文件至</value>
+    <comment>Label to indicate how many items have been selected for import - (String as short as possible).
+Keep the {0} code because is for include the number of selected items in runtime.</comment>
+  </data>
+  <data name="UI_FileLink" xml:space="preserve">
+    <value>文件链接</value>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
+</comment>
+  </data>
+</root>

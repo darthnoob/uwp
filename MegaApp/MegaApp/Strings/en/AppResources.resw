@@ -141,9 +141,9 @@
     <value>Z5dGhQhL</value>
     <comment>Each MEGA client application needs a valid key to access the API. Please use a separate key for each of your applications. - (NO-TRANSLATION).</comment>
   </data>
-  <data name="AR_ApplicationTitle" xml:space="preserve">
+  <data name="AR_ApplicationName" xml:space="preserve">
     <value>MEGA Privacy</value>
-    <comment>Title of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
+    <comment>Name of the application. Try to preserve uppercase. - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_DiagnosticsEmailAddress" xml:space="preserve">
     <value>uwp@mega.nz</value>
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/25acaeb6eb34d7b4eed5f5b50d417318a2ac80c6</value>
+    <value>https://github.com/meganz/sdk/tree/a6a7e37a22d78f4679f554c29c98beaf3a047985</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>25acaeb</value>
+    <value>a6a7e37</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
@@ -250,7 +250,7 @@
     <comment>URL for the Fortumo payment method. Need to add the 'cuid' at the end of this string - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_OfflineDirectory" xml:space="preserve">
-    <value>offline\</value>
+    <value>offline</value>
     <comment>Path of the 'offline' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SupportEmailAddress" xml:space="preserve">
@@ -264,5 +264,13 @@
   <data name="AR_FolderLinkHeader" xml:space="preserve">
     <value>https://mega.nz/#F!</value>
     <comment>Header of a folder link - (NO-TRANSLATION)</comment>
+  </data>
+  <data name="AR_MegaSyncUrl" xml:space="preserve">
+    <value>https://mega.nz/MEGAsyncSetup.exe</value>
+    <comment>URL to the MEGAsync application- (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_MobileAppsUrl" xml:space="preserve">
+    <value>https://mega.nz/mobile</value>
+    <comment>URL to mobile apps download page - (NO-TRANSLATION).</comment>
   </data>
 </root>
