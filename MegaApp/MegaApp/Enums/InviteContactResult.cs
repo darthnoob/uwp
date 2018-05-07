@@ -4,6 +4,7 @@
     {
         Success,
         AlreadyExists,
+        RemindNotAllowed,
         Unknown
     }
 }
