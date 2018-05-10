@@ -20,6 +20,9 @@ namespace MegaApp.MegaApi
                     case MErrorType.API_OK: // Successfull invite contact process
                         Tcs?.TrySetResult(InviteContactResult.Success);
                         break;
+                    case MErrorType.API_EACCESS: // Remind not allowed (two week period since started or last reminder)
+                        Tcs?.TrySetResult(InviteContactResult.RemindNotAllowed);
+                        break;
                     case MErrorType.API_EEXIST: // Contact already exists
                         Tcs?.TrySetResult(InviteContactResult.AlreadyExists);
                         break;

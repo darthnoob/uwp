@@ -71,7 +71,8 @@
                                 IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AddContactText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
+                                ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                 <Viewbox MaxWidth="16" MaxHeight="16">
                                     <FontIcon Glyph="&#xE8FA;" />
                                 </Viewbox>
@@ -185,19 +186,21 @@
                                 IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding AddContactText, Mode=OneTime}" 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
+                                ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
+                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                 <Viewbox MaxWidth="16" MaxHeight="16">
                                     <FontIcon Glyph="&#xE8FA;" />
                                 </Viewbox>
                             </AppBarButton>
                             <AppBarButton
+                                DataContext="{x:Bind ViewModel.OutgoingContactRequests}"
                                 Click="OnButtonClick"
                                 Command="{Binding RemindContactRequestCommand}"
                                 IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding RemindContactText, Mode=OneTime}" 
                                 Style="{StaticResource MegaAppBarButtonStyle}"
                                 ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
-                                Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                                Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Viewbox MaxWidth="16" MaxHeight="16">
                                     <FontIcon Glyph="&#xE1F2;" />
                                 </Viewbox>
@@ -437,7 +440,8 @@
                         IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Viewbox MaxWidth="16" MaxHeight="16">
                             <FontIcon Glyph="&#xE8FA;" />
                         </Viewbox>
@@ -535,19 +539,21 @@
                         IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding AddContactText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}">
+                        ToolTipService.ToolTip="{Binding AddContactText, Mode=OneTime}"
+                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Viewbox MaxWidth="16" MaxHeight="16">
                             <FontIcon Glyph="&#xE8FA;" />
                         </Viewbox>
                     </AppBarButton>
                     <AppBarButton
+                        DataContext="{x:Bind ViewModel.OutgoingContactRequests}"
                         Click="OnButtonClick"
                         Command="{Binding RemindContactRequestCommand}"
                         IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                         Label="{Binding RemindContactText, Mode=OneTime}" 
                         Style="{StaticResource MegaAppBarButtonStyle}"
                         ToolTipService.ToolTip="{Binding RemindContactText, Mode=OneTime}"
-                        Visibility="{Binding ItemCollection.HasSelectedItems, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Viewbox MaxWidth="12" MaxHeight="12">
                             <FontIcon Glyph="&#xE1F2;" />
                         </Viewbox>
