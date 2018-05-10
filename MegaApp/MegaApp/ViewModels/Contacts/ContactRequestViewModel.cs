@@ -282,7 +282,7 @@ namespace MegaApp.ViewModels
             {
                 if (!this.IsOutgoing) return false;
                 var period = DateTime.Now.Subtract(OriginalDateTime.AddSeconds(this.ModificationTime));
-                return period.TotalDays < 15 ? false : true;
+                return !(period.TotalDays < 15);
             }
         }
 

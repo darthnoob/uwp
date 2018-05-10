@@ -245,9 +245,11 @@ namespace MegaApp.ViewModels.Contacts
             get
             {
                 if (!this._isOutgoing || !this.ItemCollection.HasSelectedItems) return false;
-                foreach (var request in this.ItemCollection.SelectedItems)
+                foreach (var contactRequest in this.ItemCollection.SelectedItems)
                 {
-                    if (!(request as ContactRequestViewModel).IsRemindAllowed)
+                    var request = contactRequest as ContactRequestViewModel;
+                    if (request == null) continue;
+                    if (!request.IsRemindAllowed)
                         return false;
                 }
                 return true;
