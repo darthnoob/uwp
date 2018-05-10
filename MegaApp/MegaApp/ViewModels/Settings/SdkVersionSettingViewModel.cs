@@ -7,7 +7,7 @@ namespace MegaApp.ViewModels.Settings
     public class SdkVersionSettingViewModel : SettingViewModel<string>
     {
         public SdkVersionSettingViewModel()
-            : base("MEGA SDK version", null, null)
+            : base(ResourceService.UiResources.GetString("UI_MEGA_SDK_Version"), null, null)
         {}
 
         protected override async void DoAction()

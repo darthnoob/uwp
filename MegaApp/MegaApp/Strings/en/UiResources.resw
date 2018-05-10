@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+    <value>Terms of Service</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -1654,5 +1654,41 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_EarnedReferralBonus" xml:space="preserve">
     <value>Earned referral bonus</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DataProtectionRegulation" xml:space="preserve">
+    <value>Data Protection Regulation</value>
+    <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MEGA_SDK_Version" xml:space="preserve">
+    <value>MEGA SDK version</value>
+    <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+    <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
+    <value>View the Terms of Service here.</value>
+    <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Acknowledgements" xml:space="preserve">
+    <value>Acknowledgements</value>
+    <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+    <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LegalAndPolicies" xml:space="preserve">
+    <value>Legal and Policies</value>
+    <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TakedownGuidance" xml:space="preserve">
+    <value>Takedown Guidance</value>
+    <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

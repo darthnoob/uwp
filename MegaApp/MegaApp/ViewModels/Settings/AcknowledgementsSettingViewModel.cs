@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
 {
     public class AcknowledgementsSettingViewModel : SettingViewModel<Dictionary<string, Uri>>
     {
         public AcknowledgementsSettingViewModel()
-            : base("Acknowledgements", null, null)
+            : base(ResourceService.UiResources.GetString("UI_Acknowledgements"), null, null)
         {
             
         }

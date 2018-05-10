@@ -4,7 +4,7 @@ using MegaApp.ViewModels.Settings;
 
 namespace MegaApp.ViewModels
 {
-    public class SettingsViewModel: BaseSdkViewModel
+    public class SettingsViewModel : BaseSdkViewModel
     {
         public SettingsViewModel() : base(SdkService.MegaSdk)
         {
@@ -22,6 +22,15 @@ namespace MegaApp.ViewModels
             aboutSettings.Items.Add(new AcknowledgementsSettingViewModel());
 
             this.GeneralSettingSections.Add(aboutSettings);
+
+            var legalSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_LegalAndPolicies")
+            };
+            this.LegalAndPoliciesSetting = new LegalAndPoliciesSettingViewModel();
+            legalSettings.Items.Add(this.LegalAndPoliciesSetting);
+
+            this.GeneralSettingSections.Add(legalSettings);
 
             // Camera uploads section
             this.CameraUploadSettingSections = new List<SettingSectionViewModel>();
@@ -69,6 +78,8 @@ namespace MegaApp.ViewModels
         public List<SettingSectionViewModel> GeneralSettingSections { get; }
         public List<SettingSectionViewModel> CameraUploadSettingSections { get; }
         public List<SettingSectionViewModel> SecuritySettingSections { get; }
+
+        public LegalAndPoliciesSettingViewModel LegalAndPoliciesSetting { get; }
 
         #endregion
 
