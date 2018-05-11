@@ -1,8 +1,5 @@
-﻿using System;
-using System.Windows.Input;
-using Windows.System;
+﻿using System.Collections.Generic;
 using Windows.UI.Xaml;
-using MegaApp.Classes;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
@@ -12,26 +9,52 @@ namespace MegaApp.ViewModels.Settings
         public LegalAndPoliciesSettingViewModel()
             : base(null, null, null)
         {
-            this.CopyrightCommand = new RelayCommand(NavigateToCopyright);
-            this.DataProtectionRegulationCommand = new RelayCommand(NavigateToDataProtectionRegulation);
-            this.GeneralCommand = new RelayCommand(NavigateToGeneral);
-            this.PrivacyPolicyCommand = new RelayCommand(NavigateToPrivacyPolicy);
-            this.TakedownGuidanceCommand = new RelayCommand(NavigateToTakedownGuidance);
-            this.TermsOfServiceCommand = new RelayCommand(NavigateToTermsOfService);
+            this.Items = new List<LinkSettingViewModel>();
+
+            this.TermsOfServiceSetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_TermsOfService"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_TermsOfServiceUri"));
+            this.Items.Add(this.TermsOfServiceSetting);
+
+            this.PrivacyPolicySetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_PrivacyPolicy"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_PrivacyPolicyUri"));
+            this.Items.Add(this.PrivacyPolicySetting);
+
+            this.PrivacyPolicySetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_Copyright"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_CopyrightUri"));
+            this.Items.Add(this.PrivacyPolicySetting);
+
+            this.PrivacyPolicySetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_TakedownGuidance"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_TakedownGuidanceUri"));
+            this.Items.Add(this.PrivacyPolicySetting);
+
+            this.PrivacyPolicySetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_General"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_GeneralLegalUri"));
+            this.Items.Add(this.PrivacyPolicySetting);
+
+            this.PrivacyPolicySetting = new LinkSettingViewModel(
+                ResourceService.UiResources.GetString("UI_DataProtectionRegulation"),
+                ResourceService.UiResources.GetString("UI_LearnMore"),
+                ResourceService.AppResources.GetString("AR_DataProtectionRegulationUri"));
+            this.Items.Add(this.PrivacyPolicySetting);
         }
 
-        #region Commands
-
-        public ICommand CopyrightCommand { get; private set; }
-        public ICommand DataProtectionRegulationCommand { get; private set; }
-        public ICommand GeneralCommand { get; private set; }
-        public ICommand PrivacyPolicyCommand { get; private set; }
-        public ICommand TakedownGuidanceCommand { get; private set; }
-        public ICommand TermsOfServiceCommand { get; private set; }
-
-        #endregion
-
         #region Methods
+
+        public override void Initialize()
+        {
+            foreach (var setting in this.Items)
+                setting.Initialize();
+        }
 
         public override object GetValue(object defaultValue)
         {
@@ -43,52 +66,19 @@ namespace MegaApp.ViewModels.Settings
             this.ViewAreaWidth = actualWidth >= this.viewAreaMaxWidth ?
                 this.viewAreaMaxWidth : actualWidth;
         }
-
-        private async void NavigateToCopyright()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_CopyrightUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
-        private async void NavigateToDataProtectionRegulation()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_DataProtectionRegulationUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
-        private async void NavigateToGeneral()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_GeneralLegalUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
-        private async void NavigateToPrivacyPolicy()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_PrivacyPolicyUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
-        private async void NavigateToTakedownGuidance()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_TakedownGuidanceUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
-        private async void NavigateToTermsOfService()
-        {
-            await Launcher.LaunchUriAsync(new Uri(
-                ResourceService.AppResources.GetString("AR_TermsOfServiceUri"),
-                UriKind.RelativeOrAbsolute));
-        }
-
+        
         #endregion
 
         #region Properties
+
+        public IList<LinkSettingViewModel> Items { get; }
+        
+        public LinkSettingViewModel CopyrightSetting { get; }
+        public LinkSettingViewModel DataProtectionRegulationSetting { get; }
+        public LinkSettingViewModel GeneralLegalSetting { get; }
+        public LinkSettingViewModel PrivacyPolicySetting { get; }
+        public LinkSettingViewModel TakedownGuidanceSetting { get; }
+        public LinkSettingViewModel TermsOfServiceSetting { get; }
 
         private double viewAreaMaxWidth => 
             (double)Application.Current.Resources["ViewAreaMaxWidth"];
@@ -104,19 +94,7 @@ namespace MegaApp.ViewModels.Settings
             }
         }
 
-        public GridLength ColumnWidth => new GridLength(ViewAreaWidth/2);
-
-        #endregion
-
-        #region UiResources
-
-        public string CopyrightText => ResourceService.UiResources.GetString("UI_Copyright");
-        public string DataProtectionRegulationText => ResourceService.UiResources.GetString("UI_DataProtectionRegulation");
-        public string LearnMoreText => ResourceService.UiResources.GetString("UI_LearnMore");
-        public string GeneralText => ResourceService.UiResources.GetString("UI_General");
-        public string PrivacyPolicyText => ResourceService.UiResources.GetString("UI_PrivacyPolicy");
-        public string TakedownGuidanceText => ResourceService.UiResources.GetString("UI_TakedownGuidance");
-        public string TermsOfServiceText => ResourceService.UiResources.GetString("UI_TermsOfService");
+        public double ColumnWidth => (ViewAreaWidth/2) - 8;
 
         #endregion
     }

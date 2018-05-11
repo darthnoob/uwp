@@ -166,76 +166,33 @@
         </ControlTemplate>
 
         <DataTemplate x:Key="LegalAndPoliciesItemTemplate" x:DataType="settings:LegalAndPoliciesSettingViewModel">
-            <Grid Margin="0,0,0,28" Width="{Binding ViewAreaWidth}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{Binding ColumnWidth}"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding TermsOfServiceText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding TermsOfServiceCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="1" Margin="12,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding PrivacyPolicyText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding PrivacyPolicyCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding CopyrightText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding CopyrightCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1" Margin="12,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding TakedownGuidanceText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding TakedownGuidanceCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding GeneralText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding GeneralCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
-                <StackPanel Grid.Row="2" Grid.Column="1" Margin="12,0,0,24">
-                    <TextBlock
-                        Style="{ThemeResource MegaTitleFontStyle}" 
-                        Text="{Binding DataProtectionRegulationText}"
-                        TextWrapping="Wrap" />
-                    <HyperlinkButton
-                        Margin="0,-4,0,0"
-                        Command="{Binding DataProtectionRegulationCommand}"
-                        Template="{StaticResource LearnMoreLink}" />
-                </StackPanel>
+            <Grid x:Name="LegalAndPoliciesGrid" Margin="0,0,0,28" Width="{Binding ViewAreaWidth}">
+                <GridView
+                    ItemsSource="{x:Bind Items}"
+                    SelectionMode="None">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="settings:LinkSettingViewModel">
+                            <StackPanel
+                                Padding="0,0,0,24"
+                                Width="{Binding ElementName=LegalAndPoliciesGrid, Path=DataContext.ColumnWidth}">
+                                <TextBlock
+                                    Style="{ThemeResource MegaTitleFontStyle}"
+                                    Text="{x:Bind Title, Mode=OneTime}"
+                                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
+                                <HyperlinkButton
+                                    Margin="0,-4,0,0"
+                                    Command="{x:Bind ActionCommand}"
+                                    Content="{x:Bind Value, Mode=OneTime}"
+                                    Foreground="{StaticResource MegaRedColorBrush}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </Grid>
         </DataTemplate>
 
