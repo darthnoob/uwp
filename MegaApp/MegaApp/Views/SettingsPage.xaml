@@ -104,22 +104,41 @@
             </StackPanel>
         </DataTemplate>
         
+        <DataTemplate x:Key="SdkInfoActionItemTemplate" x:DataType="interfaces:ISetting">
+            <StackPanel Margin="0,0,0,28">
+                <TextBlock 
+                    Style="{ThemeResource MegaTitleFontStyle}" 
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Tapped="OnSdkVersionTapped"
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
+                <HyperlinkButton
+                    Margin="0,-4,0,0"
+                    Command="{x:Bind ActionCommand}"
+                    Content="{x:Bind Value, Mode=OneTime}"
+                    Foreground="{StaticResource MegaRedColorBrush}" />
+            </StackPanel>
+        </DataTemplate>
+
         <DataTemplate x:Key="InfoActionItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock 
                     Style="{ThemeResource MegaTitleFontStyle}" 
                     Text="{x:Bind Title, Mode=OneTime}"
-                    Tapped="OnSdkVersionTapped"/>
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
                 <HyperlinkButton
+                    Margin="0,-4,0,0"
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind Value, Mode=OneTime}"
-                    Foreground="{ThemeResource MegaAppForegroundBrush}" />
+                    Foreground="{StaticResource MegaRedColorBrush}" />
             </StackPanel>
         </DataTemplate>
-        
+
         <DataTemplate x:Key="AcknowledgementsItemTemplate" x:DataType="settings:AcknowledgementsSettingViewModel">
             <StackPanel Margin="0,0,0,28">
-                <TextBlock Style="{ThemeResource MegaTitleFontStyle}" Text="{x:Bind Title, Mode=OneTime}" />
+                <TextBlock 
+                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
                 <ListView
                     Margin="0,-8,0,0"
                     ItemContainerStyle="{StaticResource MegaCleanListViewItemStyle}"
@@ -128,26 +147,70 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <HyperlinkButton
+                                Margin="0,-4,0,0"
                                 Content="{Binding Key, Mode=OneTime}"
-                                Foreground="{ThemeResource MegaAppForegroundBrush}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
                                 NavigateUri="{Binding Value}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
         </DataTemplate>
-        
+
+        <ControlTemplate x:Name="LearnMoreLink" TargetType="HyperlinkButton">
+            <HyperlinkButton
+                Command="{TemplateBinding Command}"
+                Content="{Binding LearnMoreText}"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                HorizontalAlignment="Left" />
+        </ControlTemplate>
+
+        <DataTemplate x:Key="LegalAndPoliciesItemTemplate" x:DataType="settings:LegalAndPoliciesSettingViewModel">
+            <Grid x:Name="LegalAndPoliciesGrid" Margin="0,0,0,28" Width="{Binding ViewAreaWidth}">
+                <GridView
+                    ItemsSource="{x:Bind Items}"
+                    SelectionMode="None">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="settings:LinkSettingViewModel">
+                            <StackPanel
+                                Padding="0,0,0,24"
+                                Width="{Binding ElementName=LegalAndPoliciesGrid, Path=DataContext.ColumnWidth}">
+                                <TextBlock
+                                    Style="{ThemeResource MegaTitleFontStyle}"
+                                    Text="{x:Bind Title, Mode=OneTime}"
+                                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
+                                <HyperlinkButton
+                                    Margin="0,-4,0,0"
+                                    Command="{x:Bind ActionCommand}"
+                                    Content="{x:Bind Value, Mode=OneTime}"
+                                    Foreground="{StaticResource MegaRedColorBrush}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+        </DataTemplate>
+
         <classes:SettingTemplateSelector
             x:Key="SettingTemplateSelector"
             AcknowledgementsItemTemplate="{StaticResource AcknowledgementsItemTemplate}"
             BooleanItemTemplate="{StaticResource BooleanItemTemplate}"
             DescriptionItemTemplate="{StaticResource DescriptionItemTemplate}"
+            SdkInfoActionItemTemplate="{StaticResource SdkInfoActionItemTemplate}"
             InfoActionItemTemplate="{StaticResource InfoActionItemTemplate}"
             InformationItemTemplate="{StaticResource InformationItemTemplate}"
+            LegalAndPoliciesItemTemplate="{StaticResource LegalAndPoliciesItemTemplate}"
             RecoveryKeyItemTemplate="{StaticResource RecoveryKeyItemTemplate}" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid 
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        SizeChanged="OnSizeChanged">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}"/>
             <RowDefinition Height="Auto"/>
@@ -198,7 +261,7 @@
                                     MaxWidth="{StaticResource ViewAreaMaxWidth}"
                                     HorizontalAlignment="Left"
                                     AreStickyGroupHeadersEnabled="True"
-                                    GroupPadding="0, 0, 0, 80"
+                                    GroupPadding="0, 0, 0, 40"
                                     Orientation="Vertical" />
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
@@ -242,7 +305,7 @@
                                         MaxWidth="{StaticResource ViewAreaMaxWidth}"
                                         HorizontalAlignment="Left"
                                         AreStickyGroupHeadersEnabled="True"
-                                        GroupPadding="0, 0, 0, 80"
+                                        GroupPadding="0, 0, 0, 40"
                                         Orientation="Vertical" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
@@ -287,7 +350,7 @@
                                         MaxWidth="{StaticResource ViewAreaMaxWidth}"
                                         HorizontalAlignment="Left"
                                         AreStickyGroupHeadersEnabled="True"
-                                        GroupPadding="0, 0, 0, 80"
+                                        GroupPadding="0, 0, 0, 40"
                                         Orientation="Vertical" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>

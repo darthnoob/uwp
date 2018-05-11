@@ -196,7 +196,7 @@
                                         <Run Text="{Binding CreateAccountViewModel.AgreeCreateAccountText, Mode=OneTime}" />
                                         <LineBreak />
                                         <Hyperlink NavigateUri="{Binding CreateAccountViewModel.TermsOfServiceUri, Mode=OneTime}">
-                                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding CreateAccountViewModel.TermsOfServiceText, Mode=OneTime}" />
+                                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding CreateAccountViewModel.ViewTermsOfServiceText, Mode=OneTime}" />
                                         </Hyperlink>
                                     </Paragraph>
                                 </RichTextBlock>
