@@ -150,6 +150,24 @@ namespace MegaApp.Services
             return result ? dialog.ViewModel.InputText : null;
         }
 
+        /// <summary>
+        /// Display an alert dialog indicating that the MEGA SSL key 
+        /// can't be verified (API_ESSL Error) and giving the user several options.
+        /// </summary>
+        public static async Task<ContentDialogResult> ShowSSLCertificateAlert()
+        {
+            var dialog = new TwoButtonsDialog(
+                ResourceService.AppMessages.GetString("AM_SSLKeyError_Title"),
+                ResourceService.AppMessages.GetString("AM_SSLKeyError"), null,
+                TwoButtonsDialogType.Custom,
+                ResourceService.UiResources.GetString("UI_Retry"),
+                ResourceService.UiResources.GetString("UI_OpenBrowser"),
+                true, ResourceService.UiResources.GetString("UI_Ignore"),
+                MegaDialogStyle.AlertDialog);
+
+            return await dialog.ShowAsyncQueue();
+        }
+
         public static async void ShowOverquotaAlert()
         {
             var result = await ShowOkCancelAsync(

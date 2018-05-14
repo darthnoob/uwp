@@ -4,6 +4,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -307,29 +308,59 @@ namespace MegaApp
 
         #region MRequestListenerInterface
 
+        // Avoid show multiple SSL certificate alerts
+        private bool SSLCertificateAlertDisplayed = false;
+
         public virtual void onRequestFinish(MegaSDK api, MRequest request, MError e)
         {
-            if (e.getErrorCode() == MErrorType.API_ESID || e.getErrorCode() == MErrorType.API_ESSL)
+            switch(e.getErrorCode())
             {
-                AppService.LogoutActions();
+                case MErrorType.API_EINCOMPLETE:
+                    if(request.getType() == MRequestType.TYPE_LOGOUT &&
+                        request.getParamType() == (int)MErrorType.API_ESSL)
+                    {
+                        if (SSLCertificateAlertDisplayed) break;
 
-                // Show the login page with the corresponding navigation parameter
-                if (e.getErrorCode() == MErrorType.API_ESID)
-                {
+                        SSLCertificateAlertDisplayed = true;
+                        UiService.OnUiThread(async() =>
+                        {
+                            var result = await DialogService.ShowSSLCertificateAlert();
+                            SSLCertificateAlertDisplayed = false;
+                            switch (result)
+                            {
+                                // "Retry" button
+                                case ContentDialogResult.Primary:
+                                    SdkService.MegaSdk.reconnect();
+                                    break;
+
+                                // "Open browser" button
+                                case ContentDialogResult.Secondary:
+                                    await Launcher.LaunchUriAsync(
+                                        new Uri(ResourceService.AppResources.GetString("AR_MegaUrl"),
+                                        UriKind.RelativeOrAbsolute));
+                                    break;
+
+                                // "Ignore" or "Close" button
+                                case ContentDialogResult.None:
+                                default:
+                                    SdkService.MegaSdk.setPublicKeyPinning(false);
+                                    SdkService.MegaSdk.reconnect();
+                                    break;
+                            }
+                        });
+                    }
+                    break;
+
+                case MErrorType.API_ESID:
+                    AppService.LogoutActions();
+
+                    // Show the login page with the corresponding navigation parameter
                     UiService.OnUiThread(() =>
                     {
                         NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
                             NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESID));
                     });
-                }
-                else if (e.getErrorCode() == MErrorType.API_ESSL)
-                {
-                    UiService.OnUiThread(() =>
-                    {
-                        NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
-                            NavigationObject.Create(typeof(MainViewModel), NavigationActionType.API_ESSL));
-                    });
-                }
+                    break;
             }
         }
 

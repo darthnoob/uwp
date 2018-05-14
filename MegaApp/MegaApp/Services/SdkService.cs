@@ -17,6 +17,7 @@ namespace MegaApp.Services
             {
                 if (_megaSdk != null) return _megaSdk;
                 _megaSdk = CreateSdk();
+                _megaSdk.retrySSLerrors(true);
                 return _megaSdk;
             }
         }
