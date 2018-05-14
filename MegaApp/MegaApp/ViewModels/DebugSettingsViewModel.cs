@@ -85,7 +85,7 @@ namespace MegaApp.ViewModels
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_SaveLogFile_Title"),
                     ResourceService.AppMessages.GetString("AM_SaveLogFile"),
-                    OkCancelDialogButtons.YesNo);
+                    TwoButtonsDialogType.YesNo);
 
                 if (result)
                 {

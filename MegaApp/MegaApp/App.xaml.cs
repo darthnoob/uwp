@@ -9,7 +9,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Database;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -231,7 +230,7 @@ namespace MegaApp
 
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                    OkCancelDialogButtons.YesNo);
+                    TwoButtonsDialogType.YesNo);
 
                 if (result)
                     await DebugService.ComposeErrorReportEmailAsync(exception);

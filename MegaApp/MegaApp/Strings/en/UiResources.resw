@@ -1655,4 +1655,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Earned referral bonus</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
+  <data name="UI_Ignore" xml:space="preserve">
+    <value>Ignore</value>
+    <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>

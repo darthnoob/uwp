@@ -79,7 +79,7 @@ namespace MegaApp.Services
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert_Title"),
                     ResourceService.AppMessages.GetString("AM_AlreadyLoggedInAlert"),
-                    OkCancelDialogButtons.YesNo);
+                    TwoButtonsDialogType.YesNo);
 
                 if (!result) return false;
 
