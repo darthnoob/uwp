@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PM_CleanRubbishBin" xml:space="preserve">
-    <value>Clearing the rubbish bin…</value>
+    <value>Clearing the rubbish bin...</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Creating account…</value>
+    <value>Creating account...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
@@ -130,15 +130,15 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Creating folder…</value>
+    <value>Creating folder...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting…</value>
+    <value>Deleting...</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
-    <value>Resuming session…</value>
+    <value>Resuming session...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Logging in…</value>
+    <value>Logging in...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -154,23 +154,23 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>Logging out…</value>
+    <value>Logging out...</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
-    <value>Moving…</value>
+    <value>Moving...</value>
     <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
   </data>
   <data name="PM_MoveToRubbishBin" xml:space="preserve">
-    <value>Moving to rubbish bin…</value>
+    <value>Moving to rubbish bin...</value>
     <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_Remove" xml:space="preserve">
-    <value>Removing…</value>
+    <value>Removing...</value>
     <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
   </data>
   <data name="PM_Rename" xml:space="preserve">
-    <value>Renaming…</value>
+    <value>Renaming...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
   <data name="PM_ServersBusy" xml:space="preserve">
@@ -182,7 +182,7 @@
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
-    <value>Loading preview…</value>
+    <value>Loading preview...</value>
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
@@ -198,7 +198,7 @@
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderHeader" xml:space="preserve">
-    <value>Opening folder link…</value>
+    <value>Opening folder link...</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">

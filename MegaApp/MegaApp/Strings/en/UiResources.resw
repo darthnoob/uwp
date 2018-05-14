@@ -1514,7 +1514,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AccountRegistrationInformation" xml:space="preserve">
-    <value>Create your free account and get {0} of complimentary storage spance, valid for {1} days.</value>
+    <value>Create your free account and get {0} of complimentary storage space, valid for {1} days.</value>
     <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
   </data>
   <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
@@ -1522,7 +1522,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_InstallMobileAppInformation" xml:space="preserve">
-    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quoto, both valid for {2} days. We provice mobile apps for iOS, Android &amp; Windows Phone</value>
+    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quota, both valid for {2} days. We provide mobile apps for iOS, Android &amp; Windows Phone</value>
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
@@ -1546,7 +1546,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you receive bonus storage and transfer quota.</value>
+    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you will receive bonus storage and transfer quota.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
   </data>
   <data name="UI_Invite" xml:space="preserve">
@@ -1566,7 +1566,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>Invited contacts must install MEGA mobile app or MEGA app on their devices.</value>
+    <value>Invited contacts must install the MEGA mobile app or MEGA desktop app on their devices.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
@@ -1601,7 +1601,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>Backup Recovery key</value>
+    <value>Backup Recovery Key</value>
     <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
 NOTE: Max. length 20 characters.</comment>
   </data>
