@@ -282,7 +282,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>Dossier</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_TermsOfService" xml:space="preserve">
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
     <value>Visualiser les conditions générales d’utilisation ici.</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>

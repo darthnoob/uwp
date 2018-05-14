@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml.Input;
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.UserControls;
 using MegaApp.Services;
@@ -26,6 +27,15 @@ namespace MegaApp.Views
         private void OnSdkVersionTapped(object sender, TappedRoutedEventArgs e)
         {
             DebugService.ChangeStatusAction();
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // For nice looking size on desktop
+            var element = sender as FrameworkElement;
+            if (element == null) return;
+
+            this.ViewModel.LegalAndPoliciesSetting.UpdateWidthOfGUI(element.ActualWidth);
         }
     }
 }

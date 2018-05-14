@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+    <value>Terms of Service</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -307,7 +307,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloading" xml:space="preserve">
-    <value>Downloading…</value>
+    <value>Downloading...</value>
     <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusError" xml:space="preserve">
@@ -331,7 +331,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Uploading…</value>
+    <value>Uploading...</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
@@ -479,7 +479,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Preparing…</value>
+    <value>Preparing...</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
@@ -499,11 +499,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Completing…</value>
+    <value>Completing...</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Retrying…</value>
+    <value>Retrying...</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -590,7 +590,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable offline view</value>
+    <value>Enable Offline view</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
@@ -1172,7 +1172,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ContactSupport" xml:space="preserve">
-    <value>Contact support</value>
+    <value>Contact Support</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
@@ -1264,7 +1264,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
@@ -1662,5 +1662,41 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_Ignore" xml:space="preserve">
     <value>Ignore</value>
     <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DataProtectionRegulation" xml:space="preserve">
+    <value>Data Protection Regulation</value>
+    <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MEGA_SDK_Version" xml:space="preserve">
+    <value>MEGA SDK version</value>
+    <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+    <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
+    <value>View the Terms of Service here.</value>
+    <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Acknowledgements" xml:space="preserve">
+    <value>Acknowledgements</value>
+    <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+    <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LegalAndPolicies" xml:space="preserve">
+    <value>Legal and Policies</value>
+    <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TakedownGuidance" xml:space="preserve">
+    <value>Takedown Guidance</value>
+    <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>
