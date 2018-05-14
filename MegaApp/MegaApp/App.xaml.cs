@@ -330,7 +330,7 @@ namespace MegaApp
                             {
                                 // "Retry" button
                                 case ContentDialogResult.Primary:
-                                    SdkService.MegaSdk.reconnect();
+                                    api.reconnect();
                                     break;
 
                                 // "Open browser" button
@@ -343,8 +343,8 @@ namespace MegaApp
                                 // "Ignore" or "Close" button
                                 case ContentDialogResult.None:
                                 default:
-                                    SdkService.MegaSdk.setPublicKeyPinning(false);
-                                    SdkService.MegaSdk.reconnect();
+                                    api.setPublicKeyPinning(false);
+                                    api.reconnect();
                                     break;
                             }
                         });
