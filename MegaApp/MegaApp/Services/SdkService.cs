@@ -74,16 +74,16 @@ namespace MegaApp.Services
         private static MegaSDK CreateSdk()
         {
             // Initialize a MegaSDK instance
-            var _newMegaSDK = new MegaSDK(
+            var newMegaSDK = new MegaSDK(
                 "Z5dGhQhL",
                 AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
 
             // Enable retrying when public key pinning fails
-            _newMegaSDK.retrySSLerrors(true);
+            newMegaSDK.retrySSLerrors(true);
 
-            return _newMegaSDK;
+            return newMegaSDK;
         }
 
         /// <summary>
