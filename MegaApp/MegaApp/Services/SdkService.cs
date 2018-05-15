@@ -17,7 +17,6 @@ namespace MegaApp.Services
             {
                 if (_megaSdk != null) return _megaSdk;
                 _megaSdk = CreateSdk();
-                _megaSdk.retrySSLerrors(true);
                 return _megaSdk;
             }
         }
@@ -75,11 +74,16 @@ namespace MegaApp.Services
         private static MegaSDK CreateSdk()
         {
             // Initialize a MegaSDK instance
-            return new MegaSDK(
+            var _newMegaSDK = new MegaSDK(
                 "Z5dGhQhL",
                 AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
+
+            // Enable retrying when public key pinning fails
+            _newMegaSDK.retrySSLerrors(true);
+
+            return _newMegaSDK;
         }
 
         /// <summary>
