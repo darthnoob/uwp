@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
@@ -138,6 +139,25 @@ namespace MegaApp.Views
 
                 scrollViewer.ChangeView(hOffset, vOffset, scrollViewer.ZoomFactor);
             }
+        }
+
+        private void OnImageTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                this.TopCommandBar.Visibility =
+                    this.TopAppBar.Visibility == Visibility.Visible ?
+                    Visibility.Collapsed : Visibility.Visible;
+                return;
+            }
+
+            this.ImageName.Visibility =
+                this.ImageName.Visibility == Visibility.Visible ?
+                Visibility.Collapsed : Visibility.Visible;
+
+            this.BottomCommandBar.Visibility =
+                this.BottomAppBar.Visibility == Visibility.Visible ?
+                Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

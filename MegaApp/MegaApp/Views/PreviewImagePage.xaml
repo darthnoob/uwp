@@ -114,6 +114,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             DoubleTapped="OnImageDoubleTapped"
+                            Tapped="OnImageTapped"
                             Stretch="Uniform">
                             <Image.Source>
                                 <BitmapImage UriSource="{Binding PreviewImageUri}" />
