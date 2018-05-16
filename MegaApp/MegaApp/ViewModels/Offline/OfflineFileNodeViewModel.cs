@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using mega;
 using MegaApp.Database;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
@@ -48,8 +49,8 @@ namespace MegaApp.ViewModels.Offline
                 this.NodePath = fileInfo.FullName;
                 this.Size = Convert.ToUInt64(fileInfo.Length);
                 this.IsFolder = false;
-                this.CreationTime = fileInfo.CreationTime.ToString("dd MMM yyyy");
-                this.ModificationTime = fileInfo.LastWriteTime.ToString("dd MMM yyyy");
+                this.CreationTime = fileInfo.CreationTime.DateToString();
+                this.ModificationTime = fileInfo.LastWriteTime.DateToString();
 
                 SetDefaultValues();
             }

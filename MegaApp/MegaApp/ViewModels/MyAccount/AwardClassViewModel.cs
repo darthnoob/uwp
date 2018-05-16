@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
@@ -211,7 +212,7 @@ namespace MegaApp.ViewModels.MyAccount
             set { SetField(ref _achievedOnDate, value); }
         }
 
-        public string AchievedOnText => AchievedOnDate.ToString("dd MMM yyyy");
+        public string AchievedOnText => AchievedOnDate.DateToString();
 
         private long _durationInDays;
         /// <summary>
