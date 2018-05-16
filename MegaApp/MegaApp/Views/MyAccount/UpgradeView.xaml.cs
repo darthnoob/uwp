@@ -20,7 +20,7 @@ namespace MegaApp.Views.MyAccount
             this.InitializeComponent();
         }
 
-        private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
+        public void GoBack()
         {
             switch (this.ViewModel.CurrentStep)
             {
@@ -34,6 +34,11 @@ namespace MegaApp.Views.MyAccount
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void OnUpgradeBackButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.GoBack();
         }
 
         private void OnProPlanSelected(object sender, TappedRoutedEventArgs e)
