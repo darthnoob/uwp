@@ -185,9 +185,11 @@ namespace MegaApp.Views
         /// <param name="e">Provides data related to the size changed event.</param>
         private void OnOfflineBannerSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (e?.NewSize == null) return;
+
             UiService.OfflineBannerHeight = e.NewSize.Height;
-            this.ViewModel.UpdateOfflineBanner();
-            this.ViewModel.ContentViewModel.UpdateOfflineBanner();
+            this.ViewModel?.UpdateOfflineBanner();
+            this.ViewModel?.ContentViewModel?.UpdateOfflineBanner();
         }
     }
 }
