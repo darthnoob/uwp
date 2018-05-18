@@ -82,7 +82,6 @@ namespace MegaApp.ViewModels.Dialogs
         public string StorageText => ResourceService.UiResources.GetString("UI_Storage");
         public string TransferText => ResourceService.UiResources.GetString("UI_Transfer");
         public string InstallText => ResourceService.UiResources.GetString("UI_Install");
-        public string CloseText => ResourceService.UiResources.GetString("UI_Close");
         public string AchievedOnText => ResourceService.UiResources.GetString("UI_AchievedOn");
         public string ExpiresInText => ResourceService.UiResources.GetString("UI_ExpiresIn");
 

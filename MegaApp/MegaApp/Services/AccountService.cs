@@ -764,7 +764,7 @@ namespace MegaApp.Services
         {
             if (days < 1) return ResourceService.UiResources.GetString("UI_Expired");
             return days == 1
-                ? string.Format("1 {0}", ResourceService.UiResources.GetString("UI_RemainingDay"))
+                ? ResourceService.UiResources.GetString("UI_RemainingDay")
                 : string.Format(ResourceService.UiResources.GetString("UI_RemainingDays"), days);
 
         }

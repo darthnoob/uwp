@@ -196,16 +196,6 @@ namespace MegaApp.ViewModels.Dialogs
         /// </summary>
         private bool recoveryKeySaved = false;
 
-        private Visibility _closeButtonVisibility;
-        /// <summary>
-        /// Indicates if the dialog will have a close button at the top-right corner
-        /// </summary>
-        public Visibility CloseButtonVisibility
-        {
-            get { return _closeButtonVisibility; }
-            set { SetField(ref _closeButtonVisibility, value); }
-        }
-
         private string _titleText;
         /// <summary>
         /// Title of the dialog
@@ -224,16 +214,6 @@ namespace MegaApp.ViewModels.Dialogs
         {
             get { return _descriptionText; }
             set { SetField(ref _descriptionText, value); }
-        }
-
-        private Style _dialogStyle;
-        /// <summary>
-        /// Style of the dialog
-        /// </summary>
-        public Style DialogStyle
-        {
-            get { return _dialogStyle; }
-            set { SetField(ref _dialogStyle, value); }
         }
 
         private bool _doNotShowAgain;
