@@ -1,5 +1,6 @@
 ﻿using System;
 using mega;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 
 namespace MegaApp.ViewModels
@@ -17,7 +18,7 @@ namespace MegaApp.ViewModels
 
         public CollectionViewModel<IMegaNode> ItemCollection { get; }
 
-        public string DateAsString => Date.Date == DateTime.Today ? "Today" : Date.ToString("dd MMM yyyy");
+        public string DateAsString => Date.Date == DateTime.Today ? "Today" : Date.DateToString();
 
         #endregion
     }

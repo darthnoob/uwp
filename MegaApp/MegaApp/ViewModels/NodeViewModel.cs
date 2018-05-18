@@ -10,6 +10,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Database;
 using MegaApp.Enums;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
 using MegaApp.Services;
@@ -547,7 +548,7 @@ namespace MegaApp.ViewModels
             this.Type = megaNode.getType();
             this.Name = megaNode.getName();
             this.Size = this.MegaSdk.getSize(megaNode);
-            this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).ToString("dd MMM yyyy");
+            this.CreationTime = ConvertDateToString(megaNode.getCreationTime()).DateToString();
             this.TypeText = this.GetTypeText();
             this.LinkExpirationTime = megaNode.getExpirationTime();
             this.AccessLevel.AccessType = (MShareType)this.MegaSdk.getAccess(megaNode);
@@ -560,7 +561,7 @@ namespace MegaApp.ViewModels
             }
 
             if (this.Type == MNodeType.TYPE_FILE)
-                this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).ToString("dd MMM yyyy");
+                this.ModificationTime = ConvertDateToString(megaNode.getModificationTime()).DateToString();
             else
                 this.ModificationTime = this.CreationTime;
 

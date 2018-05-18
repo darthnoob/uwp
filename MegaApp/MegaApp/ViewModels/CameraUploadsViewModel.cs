@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
 using Windows.ApplicationModel.Background;
 using mega;
@@ -35,7 +36,7 @@ namespace MegaApp.ViewModels
                         var node = newItem as IMegaNode;
                         if(node == null) continue;
                         if(!node.IsImage) continue;
-                        var date = Convert.ToDateTime(node.ModificationTime);
+                        var date = Convert.ToDateTime(node.ModificationTime, CultureInfo.CurrentCulture);
                         var group = Items.FirstOrDefault(i => i.Date.Date == date.Date);
 
                         if (group != null)

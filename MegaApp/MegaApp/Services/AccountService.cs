@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
 using Windows.UI;
@@ -19,8 +19,6 @@ namespace MegaApp.Services
 {
     public static class AccountService
     {
-        private const string DateFormat = "dd MMM yyyy";
-
         /// <summary>
         /// Flag to store if the account has been blocked
         /// </summary>
@@ -325,7 +323,7 @@ namespace MegaApp.Services
             try
             {
                 date = start.AddSeconds(Convert.ToDouble(accountDetails.getSubscriptionRenewTime()));
-                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.ToString(DateFormat));
+                UiService.OnUiThread(() => AccountDetails.SubscriptionRenewDate = date.DateToString());
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -359,7 +357,7 @@ namespace MegaApp.Services
             try
             {
                 date = start.AddSeconds(Convert.ToDouble(accountDetails.getProExpiration()));
-                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.ToString(DateFormat));
+                UiService.OnUiThread(() => AccountDetails.ProExpirationDate = date.DateToString());
             }
             catch (ArgumentOutOfRangeException)
             {
