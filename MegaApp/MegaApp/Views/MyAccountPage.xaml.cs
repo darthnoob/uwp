@@ -21,6 +21,24 @@ namespace MegaApp.Views
             this.InitializeComponent();
         }
 
+        public override bool CanGoBack
+        {
+            get
+            {
+                bool canGoBack = false;
+                if (this.MyAccountPivot.SelectedItem.Equals(this.UpgradePivot))
+                    canGoBack = this.UpgradeView.ViewModel.CurrentStep > 1;
+                
+                return canGoBack;
+            }
+        }
+
+        public override void GoBack()
+        {
+            if (this.MyAccountPivot.SelectedItem.Equals(this.UpgradePivot))
+                this.UpgradeView.GoBack();
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
