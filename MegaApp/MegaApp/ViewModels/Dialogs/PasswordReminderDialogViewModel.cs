@@ -9,6 +9,11 @@ namespace MegaApp.ViewModels.Dialogs
 {
     public class PasswordReminderDialogViewModel : BaseContentDialogViewModel
     {
+        /// <summary>
+        /// Maximum number of attempts to check the password 
+        /// </summary>
+        private const int MaxAttempts = 3;
+
         public PasswordReminderDialogViewModel() : base()
         {
             this.CloseButtonVisibility = Visibility.Visible;
@@ -102,6 +107,15 @@ namespace MegaApp.ViewModels.Dialogs
                 this.ControlState = true;
                 this.WarningColor = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
                 this.WarningText = ResourceService.AppMessages.GetString("AM_TestPasswordWarning");
+
+                this.failedAttempts++;
+                if (this.failedAttempts < MaxAttempts) return;
+
+                // I user has exceeded the number of attempts, close 
+                // this dialog and show the "Change password" dialog
+                if (!this.CloseCommand.CanExecute(null))
+                    this.CloseCommand.Execute(null);
+                DialogService.ShowChangePasswordDialog();
                 return;
             }
 
@@ -166,6 +180,11 @@ namespace MegaApp.ViewModels.Dialogs
         /// Indicates if the dialog is being displayed in a log out scenario
         /// </summary>
         public bool AtLogout;
+
+        /// <summary>
+        /// Number of failed attempts to check the password
+        /// </summary>
+        private int failedAttempts = 0;
 
         /// <summary>
         /// Indicates if the user has checked the password successfully

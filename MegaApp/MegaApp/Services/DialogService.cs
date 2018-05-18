@@ -228,6 +228,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to change the account password
+        /// </summary>
+        public static async void ShowChangePasswordDialog()
+        {
+            var changePasswordDialog = new ChangePasswordDialog();
+            await changePasswordDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
         /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
         /// <param name="node">Node to share the link</param>
