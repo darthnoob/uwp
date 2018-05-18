@@ -1,4 +1,5 @@
-﻿using Windows.UI.Core;
+﻿using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -18,6 +19,11 @@ namespace MegaApp.Views
     public sealed partial class PreviewImagePage : BasePreviewImagePage
     {
         private FolderViewModel _parentFolder;
+
+        /// <summary>
+        /// Flag to filter single and double tap events
+        /// </summary>
+        private bool singleTap;
 
         public PreviewImagePage()
         {
@@ -110,6 +116,8 @@ namespace MegaApp.Views
 
         private void OnImageDoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
+            this.singleTap = false;
+
             var image = sender as Image;
             if(image != null)
             {
@@ -121,7 +129,9 @@ namespace MegaApp.Views
                 var scrollViewer = image.FindAscendant<ScrollViewer>();
                 if(scrollViewer != null)
                 {
-                    if (scrollViewer.ZoomFactor > 1)
+                    // We use this value because after full screen mode 
+                    // the ZoomFactor is always a bit higher than 1
+                    if (scrollViewer.ZoomFactor > 1.1)
                         scrollViewer.ChangeView(hOffset, vOffset, 1);
                     else
                         scrollViewer.ChangeView(hOffset, vOffset, 4);
@@ -141,9 +151,13 @@ namespace MegaApp.Views
             }
         }
 
-        private void OnImageTapped(object sender, TappedRoutedEventArgs e)
+        private async void OnImageTapped(object sender, TappedRoutedEventArgs e)
         {
-            if(DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            this.singleTap = true;
+            await Task.Delay(200);
+            if (!this.singleTap) return;
+
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
             {
                 this.TopCommandBar.Visibility =
                     this.TopAppBar.Visibility == Visibility.Visible ?
