@@ -130,7 +130,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Создание папки…</value>
+    <value>Creating folder…</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
@@ -173,6 +173,10 @@
     <value>Переименование...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
+  <data name="PM_ServersBusy" xml:space="preserve">
+    <value>Серверы очень заняты. Пожалуйста, подождите.</value>
+    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
+  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>Дешифрирование узлов.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
@@ -200,5 +204,17 @@
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
     <value>Открываем ссылку на папку.</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiLocked" xml:space="preserve">
+    <value>Процесс длится дольше ожидаемого. Пожалуйста, подождите.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiRateLimit" xml:space="preserve">
+    <value>Слишком много запросов. Пожалуйста, подождите.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConnectivityIssue" xml:space="preserve">
+    <value>Не удаётся подключиться к MEGA. Пожалуйста, проверьте соединение или попробуйте позже.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

@@ -130,7 +130,7 @@
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Fotoğraf ve videolarınızı otomatik olarak eşitlemek için aşağıdaki butona tıklayın.                                </value>
+    <value>Fotoğraf ve videolarınızı otomatik olarak eşitlemek için aşağıdaki butona tıklayın.</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>Bu klasör hiçbir dosya veya klasör içermemekte.                                </value>
+    <value>Bu klasör hiçbir dosya veya klasör içermemekte.</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
@@ -162,11 +162,11 @@
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Çöp Kutusunu boşalt                                </value>
+    <value>Çöp Kutusunu boşalt</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>Çöp kutusuna hiçbir dosya veya klasör göndermediniz.                                </value>
+    <value>Çöp kutusuna hiçbir dosya veya klasör göndermediniz.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
@@ -200,5 +200,13 @@
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
     <value>Giden paylaşımlarınızı buradan yönetebilirsiniz</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineHeader" xml:space="preserve">
+    <value>Çevrimdışı dosya yok</value>
+    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineSubHeader" xml:space="preserve">
+    <value>Dosyaları çevrimdışı görüntüleme için kaydet</value>
+    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>
