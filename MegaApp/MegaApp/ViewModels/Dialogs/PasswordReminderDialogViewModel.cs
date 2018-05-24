@@ -59,32 +59,47 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected override void OnCloseDialog()
+        protected override async void OnCloseDialog()
         {
+            base.OnCloseDialog();
+
+            if (this.AtLogout)
+            {
+                var passwordReminderDialogListener = new SetPasswordReminderDialogResultListenerAsync();
+
+                // If user has checked the "Don't show me again" box
+                if (!this.IsTestPasswordSelected && this.DoNotShowAgain)
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogBlocked(passwordReminderDialogListener));
+                }
+                // If the user has checked the password successfully
+                else if (this.passwordChecked)
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogSucceeded(passwordReminderDialogListener));
+                }
+                else
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogSkipped(passwordReminderDialogListener));
+
+                    // Only log out if the user has saved the recovery key
+                    if (!this.recoveryKeySaved) return;
+                }
+
+                SdkService.MegaSdk.logout(new LogOutRequestListener());
+                return;
+            }
+
             // If user has checked the "Don't show me again" box
             if (!this.IsTestPasswordSelected && this.DoNotShowAgain)
-            {
                 SdkService.MegaSdk.passwordReminderDialogBlocked();
-                if (this.AtLogout)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
             // If the user has checked the password successfully
             else if (this.passwordChecked)
-            {
                 SdkService.MegaSdk.passwordReminderDialogSucceeded();
-                if (this.AtLogout)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
             else
-            {
                 SdkService.MegaSdk.passwordReminderDialogSkipped();
-
-                // Only log out if the user has saved the recovery key
-                if (this.AtLogout && this.recoveryKeySaved)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
-
-            base.OnCloseDialog();
         }
         
         #endregion
