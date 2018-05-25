@@ -28,4 +28,6 @@ namespace MegaApp.MegaApi
 
         #endregion
     }
+
+    internal class SetPasswordReminderDialogResultListenerAsync : SetUserAttributeRequestListenerAsync { }
 }
