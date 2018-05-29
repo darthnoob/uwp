@@ -391,7 +391,7 @@ namespace MegaApp.Services
         /// <param name="email">User account email</param>
         /// <param name="value">Credential value</param>
         /// <returns>TRUE if all went well or FALSE in other case</returns>
-        public static bool SaveCredentialToLocker(string resourceName, string email, string session)
+        private static bool SaveCredentialToLocker(string resourceName, string email, string session)
         {
             try
             {
