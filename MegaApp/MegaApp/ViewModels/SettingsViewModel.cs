@@ -35,12 +35,9 @@ namespace MegaApp.ViewModels
             // Camera uploads section
             this.CameraUploadSettingSections = new List<SettingSectionViewModel>();
 
-            var cameraUploadSettings = new SettingSectionViewModel()
-            {
-                Header = ResourceService.UiResources.GetString("UI_CameraUploads")
-            };
+            var cameraUploadSettings = new SettingSectionViewModel();
             cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
-
+            
             this.CameraUploadSettingSections.Add(cameraUploadSettings);
 
             // Security section
@@ -53,6 +50,15 @@ namespace MegaApp.ViewModels
             recoveryKeySettings.Items.Add(SettingsService.RecoveryKeySetting);
 
             this.SecuritySettingSections.Add(recoveryKeySettings);
+
+            var twoFactorAuthenticationSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_TwoFactorAuthentication"),
+                Description = ResourceService.UiResources.GetString("UI_TwoFactorAuthenticationSettingsDescription")
+            };
+            twoFactorAuthenticationSettings.Items.Add(new TwoFactorAuthenticationSettingViewModel());
+
+            this.SecuritySettingSections.Add(twoFactorAuthenticationSettings);
         }
 
         public void Initialize()

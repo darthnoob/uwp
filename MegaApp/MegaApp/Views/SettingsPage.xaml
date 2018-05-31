@@ -29,15 +29,30 @@
             IsSourceGrouped="true"
             ItemsPath="Items"
             Source="{Binding SecuritySettingSections}" />
-        
-        <DataTemplate x:Key="BooleanItemTemplate" x:DataType="interfaces:ISetting">
+
+        <DataTemplate x:Key="GroupListHeaderTemplate" x:DataType="settings:SettingSectionViewModel">
             <StackPanel>
+                <TextBlock 
+                    Margin="0,0,0,16"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{x:Bind Header}"
+                    Visibility="{x:Bind Header, Converter={StaticResource StringVisibilityConverter}}" />
                 <TextBlock
                     Margin="0,0,0,16"
-                    Style="{ThemeResource MegaTitleFontStyle}"
-                    Text="{x:Bind Title, Mode=OneTime}" />
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind Description, Mode=OneTime}"
+                    Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="BooleanItemTemplate" x:DataType="interfaces:ISetting">
+            <StackPanel Margin="0,0,0,28">
                 <TextBlock
-                    Margin="0,0,0,24"
+                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
+                <TextBlock
+                    Margin="0,16,0,0"
                     Style="{ThemeResource MegaBodyFontStyle}"
                     Text="{x:Bind Description, Mode=OneTime}"
                     Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
@@ -63,7 +78,7 @@
         </DataTemplate>
         
         <DataTemplate x:Key="RecoveryKeyItemTemplate" x:DataType="settings:RecoveryKeySettingViewModel">
-            <StackPanel>
+            <StackPanel Margin="0,0,0,28">
                 <TextBlock
                     Margin="0,0,0,16"
                     Style="{ThemeResource MegaHeaderFontStyle}"
@@ -130,6 +145,25 @@
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind Value, Mode=OneTime}"
                     Foreground="{StaticResource MegaRedColorBrush}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="InfoButtonItemTemplate" x:DataType="interfaces:ISetting">
+            <StackPanel Margin="0,0,0,28">
+                <TextBlock
+                    Margin="0,0,0,16"
+                    Style="{ThemeResource MegaTitleFontStyle}"
+                    Text="{x:Bind Title, Mode=OneTime}"
+                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}"/>
+                <TextBlock
+                    Margin="0,0,0,24"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind Description, Mode=OneTime}" 
+                    Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
+                <Button
+                    MinWidth="136"
+                    Command="{x:Bind ActionCommand}"
+                    Content="{x:Bind Value, Mode=OneTime}" />
             </StackPanel>
         </DataTemplate>
 
@@ -203,6 +237,7 @@
             DescriptionItemTemplate="{StaticResource DescriptionItemTemplate}"
             SdkInfoActionItemTemplate="{StaticResource SdkInfoActionItemTemplate}"
             InfoActionItemTemplate="{StaticResource InfoActionItemTemplate}"
+            InfoButtonItemTemplate="{StaticResource InfoButtonItemTemplate}"
             InformationItemTemplate="{StaticResource InformationItemTemplate}"
             LegalAndPoliciesItemTemplate="{StaticResource LegalAndPoliciesItemTemplate}"
             RecoveryKeyItemTemplate="{StaticResource RecoveryKeyItemTemplate}" />
@@ -245,14 +280,9 @@
                         ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
                         SelectionMode="None">
                         <ListView.GroupStyle>
-                            <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                                <GroupStyle.HeaderTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Margin="0,0,0,16">
-                                            <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GroupStyle.HeaderTemplate>
+                            <GroupStyle
+                                HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}"
+                                HeaderTemplate="{StaticResource GroupListHeaderTemplate}">
                             </GroupStyle>
                         </ListView.GroupStyle>
                         <ListView.ItemsPanel>
@@ -288,17 +318,6 @@
                             ItemsSource="{Binding Source={StaticResource CameraUploadSettingsCollectionSource}}"
                             ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
                             SelectionMode="None">
-                            <ListView.GroupStyle>
-                                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                                    <GroupStyle.HeaderTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="0,0,0,16">
-                                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GroupStyle.HeaderTemplate>
-                                </GroupStyle>
-                            </ListView.GroupStyle>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel
@@ -334,14 +353,9 @@
                             ItemTemplateSelector="{StaticResource SettingTemplateSelector}"
                             SelectionMode="None">
                             <ListView.GroupStyle>
-                                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                                    <GroupStyle.HeaderTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="0,0,0,16">
-                                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GroupStyle.HeaderTemplate>
+                                <GroupStyle 
+                                    HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}"
+                                    HeaderTemplate="{StaticResource GroupListHeaderTemplate}">
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemsPanel>

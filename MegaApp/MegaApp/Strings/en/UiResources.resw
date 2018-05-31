@@ -1699,4 +1699,16 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Takedown Guidance</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_EnableTwoFactorAuthentication" xml:space="preserve">
+    <value>Enable Two-Factor Authentication</value>
+    <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthentication" xml:space="preserve">
+    <value>Two-Factor Authentication</value>
+    <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthenticationSettingsDescription" xml:space="preserve">
+    <value>Two-Factor Authentication helps to keep your account more secure.</value>
+    <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
+  </data>
 </root>
