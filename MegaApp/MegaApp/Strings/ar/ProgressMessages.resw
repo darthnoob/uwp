@@ -122,15 +122,15 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>إنشاء حساب...</value>
+    <value>إنشاء الحساب...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Please wait while we send you a sign-up confirmation link.</value>
+    <value>يرجى الانتظار حتى ارسال رابط تأكيد الاشتراك الى بريدك</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>إنشاء مجلد...</value>
+    <value>انشاء المجلد...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>تسجيل الدخول</value>
+    <value>تسجيل الدخول...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -173,6 +173,10 @@
     <value>إعادة التسمية...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
+  <data name="PM_ServersBusy" xml:space="preserve">
+    <value>الخوادم مشغولة جدا. الرجاء الانتظار.</value>
+    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
+  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>جاري فك تشفير بياناتك</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
@@ -186,7 +190,7 @@
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <value>يتم الان انشاء مفتاح التشفير الثنائي (المفتاح الشخصي والمفتاح العمومي) الخاص بك باستخدام خوارزمية التشفير RSA مع 2048 بت. هذه مرحلة هامة وقد تستغرق بضع ثواني. يرجى الانتظار</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_Patient" xml:space="preserve">
@@ -200,5 +204,17 @@
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
     <value>يرجى الانتظار ريثما يتم فتح رابط المجلد</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiLocked" xml:space="preserve">
+    <value>هذه العملية تستغرق وقتا أطول من المتوقع. أرجو الإنتظار.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiRateLimit" xml:space="preserve">
+    <value>تجاوز الحد الاعظمي للطلبات. من فضلك انتظر.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConnectivityIssue" xml:space="preserve">
+    <value>لم ينجح الاتصال مع MEGA. يرجى التأكد من الاتصال الشبكي أو إعادة المحاولة بعد قليل.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

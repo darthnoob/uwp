@@ -122,11 +122,11 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Hesap oluşturuluyor...</value>
+    <value>Hesap oluşturuluyor...                                </value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Kaydolma onay bağlantısı gönderilirken lütfen bekleyiniz.                                </value>
+    <value>Kaydolma onay bağlantısı gönderilirken lütfen bekleyiniz.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -146,7 +146,7 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Giriş yapılıyor ...</value>
+    <value>Giriş yapılıyor...                                </value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>Oturum kapatılıyor...</value>
+    <value>Oturum kapatılıyor...                                </value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
@@ -172,6 +172,10 @@
   <data name="PM_Rename" xml:space="preserve">
     <value>Yeniden adlandırılıyor...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ServersBusy" xml:space="preserve">
+    <value>Sunucular meşgul. Lütfen bekleyin.</value>
+    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
   </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>Düğümler deşifreleniyor.</value>
@@ -200,5 +204,17 @@
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
     <value>Klasör bağlantısını açılırken lütfen bekleyin.</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiLocked" xml:space="preserve">
+    <value>Bu işlem beklenenden uzun sürüyor. Lütfen bekleyin.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiRateLimit" xml:space="preserve">
+    <value>Çok fazla istek. Lütfen bekleyin.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConnectivityIssue" xml:space="preserve">
+    <value>MEGA'ya erişim başarısız. Lütfen bağlantınızı kontrol edin veya tekrar deneyin.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>
