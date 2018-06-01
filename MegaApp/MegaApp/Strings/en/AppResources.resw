@@ -165,8 +165,8 @@
     <value>previews\</value>
     <comment>Path of the 'previews' folder of the application - (NO-TRANSLATION).</comment>
   </data>
-  <data name="AR_PrivacyPolicyUrl" xml:space="preserve">
-    <value>https://mega.nz/mobile_privacy.html</value>
+  <data name="AR_PrivacyPolicyUri" xml:space="preserve">
+    <value>https://mega.nz/privacy</value>
     <comment>URL to the 'Privacy Policy' information web page - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_Pro1Month" xml:space="preserve">
@@ -210,7 +210,7 @@
     <comment>Controls the Language and ensures that the font for all elements in the RootFrame aligns with the app's language. Set to the language code of this resource file's language - (NO-TRANSLATION)</comment>
   </data>
   <data name="AR_TermsOfServiceUri" xml:space="preserve">
-    <value>https://mega.nz/mobile_terms.html</value>
+    <value>https://mega.nz/terms</value>
     <comment>URL to the 'Terms of Service' information web page - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_ThumbnailHeight" xml:space="preserve">
@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/a6a7e37a22d78f4679f554c29c98beaf3a047985</value>
+    <value>https://github.com/meganz/sdk/tree/0cdef20b9e25beefdb0475b2d8bcd2436058791e</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>a6a7e37</value>
+    <value>0cdef20</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
@@ -272,5 +272,29 @@
   <data name="AR_MobileAppsUrl" xml:space="preserve">
     <value>https://mega.nz/mobile</value>
     <comment>URL to mobile apps download page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_MegaUrl" xml:space="preserve">
+    <value>https://mega.nz</value>
+    <comment>URL to MEGA webclient - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_DataProtectionRegulationUri" xml:space="preserve">
+    <value>https://mega.nz/gdpr</value>
+    <comment>URL to the 'Data Protection Regulation' information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_CopyrightUri" xml:space="preserve">
+    <value>https://mega.nz/copyright</value>
+    <comment>URL to the 'Copyright' information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_GeneralLegalUri" xml:space="preserve">
+    <value>https://mega.nz/general</value>
+    <comment>URL to the 'General' legal information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_TakedownGuidanceUri" xml:space="preserve">
+    <value>https://mega.nz/takedown</value>
+    <comment>URL to the 'Copyright' information web page - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

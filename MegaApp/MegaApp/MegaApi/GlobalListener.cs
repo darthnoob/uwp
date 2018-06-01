@@ -85,7 +85,7 @@ namespace MegaApp.MegaApi
                 var result = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_AccountUpdated_Title"),
                     ResourceService.AppMessages.GetString("AM_AccountUpdate"),
-                    OkCancelDialogButtons.YesNo);
+                    TwoButtonsDialogType.YesNo);
 
                 if (!result) return;
 

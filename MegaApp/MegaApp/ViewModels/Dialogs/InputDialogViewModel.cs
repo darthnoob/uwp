@@ -1,6 +1,6 @@
 ﻿namespace MegaApp.ViewModels.Dialogs
 {
-    public class InputDialogViewModel : OkCancelDialogViewModel
+    public class InputDialogViewModel : TwoButtonsDialogViewModel
     {
         #region Properties
 

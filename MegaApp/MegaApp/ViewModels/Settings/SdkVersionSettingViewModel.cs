@@ -1,25 +1,14 @@
-﻿using System;
-using Windows.System;
-using MegaApp.Services;
+﻿using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
 {
-    public class SdkVersionSettingViewModel : SettingViewModel<string>
+    public class SdkVersionSettingViewModel : LinkSettingViewModel
     {
         public SdkVersionSettingViewModel()
-            : base("MEGA SDK version", null, null)
-        {}
-
-        protected override async void DoAction()
+            : base(ResourceService.UiResources.GetString("UI_MEGA_SDK_Version"),
+                  $"SDK {AppService.GetMegaSDK_Version()}", AppService.GetMegaSDK_Link())
         {
-            await Launcher.LaunchUriAsync(new Uri(
-                AppService.GetMegaSDK_Link(), 
-                UriKind.RelativeOrAbsolute));
-        }
 
-        public override string GetValue(string defaultValue)
-        {
-            return $"SDK {AppService.GetMegaSDK_Version()}";
         }
     }
 }

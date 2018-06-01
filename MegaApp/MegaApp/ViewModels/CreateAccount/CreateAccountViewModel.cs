@@ -349,7 +349,7 @@ namespace MegaApp.ViewModels.CreateAccount
         public string FirstNameWatermarkText => ResourceService.UiResources.GetString("UI_FirstNameWatermark");
         public string LastNameWatermarkText => ResourceService.UiResources.GetString("UI_LastNameWatermark");
         public string PasswordWatermarkText => ResourceService.UiResources.GetString("UI_PasswordWatermark");
-        public string TermsOfServiceText => ResourceService.UiResources.GetString("UI_TermsOfService");
+        public string ViewTermsOfServiceText => ResourceService.UiResources.GetString("UI_ViewTermsOfService");
 
         #endregion
 

@@ -36,6 +36,7 @@ namespace MegaApp.ViewModels.Contacts
         public void Initialize()
         {
             this.ItemCollection.OrderInverted += OnOrderInverted;
+            this.ItemCollection.SelectedItemsCollectionChanged += OnSelectedItemsCollectionChanged;
 
             if (App.GlobalListener == null) return;
             if (_isOutgoing)
@@ -47,6 +48,7 @@ namespace MegaApp.ViewModels.Contacts
         public void Deinitialize()
         {
             this.ItemCollection.OrderInverted -= OnOrderInverted;
+            this.ItemCollection.SelectedItemsCollectionChanged -= OnSelectedItemsCollectionChanged;
 
             if (App.GlobalListener == null) return;
             if (_isOutgoing)
@@ -167,7 +169,8 @@ namespace MegaApp.ViewModels.Contacts
             OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems), nameof(this.OrderTypeAndNumberOfSelectedItems));
 
         private void OnSelectedItemsCollectionChanged(object sender, EventArgs args) =>
-            OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems));
+            OnPropertyChanged(nameof(this.OrderTypeAndNumberOfSelectedItems),
+                nameof(this.IsRemindAllowed));
 
         private void OnOrderInverted(object sender, EventArgs args) =>
             this.SortBy(this.CurrentOrder, this.ItemCollection.CurrentOrderDirection);
@@ -230,6 +233,26 @@ namespace MegaApp.ViewModels.Contacts
 
                 OnPropertyChanged(nameof(this.OrderTypeAndNumberOfItems),
                     nameof(this.OrderTypeAndNumberOfSelectedItems));
+            }
+        }
+
+        /// <summary>
+        /// Indicate if the selected outgoing contact requests can be reminded
+        /// (two week period since started or last reminder)
+        /// </summary>
+        public bool IsRemindAllowed
+        {
+            get
+            {
+                if (!this._isOutgoing || !this.ItemCollection.HasSelectedItems) return false;
+                foreach (var contactRequest in this.ItemCollection.SelectedItems)
+                {
+                    var request = contactRequest as ContactRequestViewModel;
+                    if (request == null) continue;
+                    if (!request.IsRemindAllowed)
+                        return false;
+                }
+                return true;
             }
         }
 

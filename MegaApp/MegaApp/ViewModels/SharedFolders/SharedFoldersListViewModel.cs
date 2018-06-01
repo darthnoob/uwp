@@ -103,7 +103,7 @@ namespace MegaApp.ViewModels.SharedFolders
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
-                    OkCancelDialogButtons.Custom, this.LeaveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.LeaveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -125,7 +125,7 @@ namespace MegaApp.ViewModels.SharedFolders
                     ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_LeaveMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_LeaveSharedFolderWarning"),
-                    OkCancelDialogButtons.Custom, this.LeaveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.LeaveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -172,7 +172,7 @@ namespace MegaApp.ViewModels.SharedFolders
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), node.Name),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 
@@ -194,7 +194,7 @@ namespace MegaApp.ViewModels.SharedFolders
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFolders_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveAccessMultipleSharedFoldersWarning"),
-                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 

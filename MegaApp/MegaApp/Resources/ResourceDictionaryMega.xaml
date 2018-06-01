@@ -2512,19 +2512,19 @@
                         <MenuFlyoutItem
                             Command="{Binding ViewProfileCommand}"
                             Text="{Binding ViewProfileText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveContactText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding RemoveContactCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
                             IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                             Text="{Binding RemoveMultipleContactsText}"
-                            Visibility="{Binding ContactList.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{Binding ContactList.ItemCollection.IsMultiSelectActive, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </FlyoutBase.AttachedFlyout>
@@ -2958,7 +2958,7 @@
                         <MenuFlyoutItem
                             Command="{Binding RemindContactRequestCommand}"
                             Text="{Binding RemindContactText}"
-                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding CancelContactRequestCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
@@ -3052,7 +3052,7 @@
                     Label="{Binding RemindContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding RemindContactText}"
-                    Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Viewbox MaxWidth="16" MaxHeight="16">
                         <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;" />
                     </Viewbox>
@@ -3082,7 +3082,7 @@
                         <MenuFlyoutItem
                             Command="{Binding RemindContactRequestCommand}"
                             Text="{Binding RemindContactText}"
-                            Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <MenuFlyoutItem
                             Command="{Binding CancelContactRequestCommand}"
                             Foreground="{StaticResource MegaRedColorBrush}"
@@ -3192,7 +3192,7 @@
                     Label="{Binding RemindContactText}"
                     Style="{StaticResource MegaAppBarButtonStyle}"
                     ToolTipService.ToolTip="{Binding RemindContactText}"
-                    Visibility="{Binding IsOutgoing, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Visibility="{Binding IsRemindAllowed, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Viewbox MaxWidth="16" MaxHeight="16">
                         <FontIcon Margin="0,-14,0,0" Glyph="&#xE1F2;" />
                     </Viewbox>

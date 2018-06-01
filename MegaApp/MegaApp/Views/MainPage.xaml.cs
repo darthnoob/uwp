@@ -153,7 +153,7 @@ namespace MegaApp.Views
         protected override async void OnNetworkStatusChanged(object sender)
         {
             base.OnNetworkStatusChanged(sender);
-            this.ViewModel.ContentViewModel.UpdateNetworkStatus();
+            this.ViewModel?.ContentViewModel?.UpdateNetworkStatus();
 
             // If no network connection, nothing to do
             if (!await NetworkService.IsNetworkAvailableAsync()) return;
@@ -166,7 +166,7 @@ namespace MegaApp.Views
             {
                 UiService.OnUiThread(async () =>
                 {
-                    await this.ViewModel.FastLoginAsync();
+                    if (!await this.ViewModel?.FastLoginAsync()) return;
 
                     if (this.ViewModel?.ContentViewModel is CloudDriveViewModel)
                     {
@@ -185,9 +185,11 @@ namespace MegaApp.Views
         /// <param name="e">Provides data related to the size changed event.</param>
         private void OnOfflineBannerSizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if (e?.NewSize == null) return;
+
             UiService.OfflineBannerHeight = e.NewSize.Height;
-            this.ViewModel.UpdateOfflineBanner();
-            this.ViewModel.ContentViewModel.UpdateOfflineBanner();
+            this.ViewModel?.UpdateOfflineBanner();
+            this.ViewModel?.ContentViewModel?.UpdateOfflineBanner();
         }
     }
 }

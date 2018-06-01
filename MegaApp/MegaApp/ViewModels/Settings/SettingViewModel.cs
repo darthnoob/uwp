@@ -25,7 +25,7 @@ namespace MegaApp.ViewModels.Settings
             StoreValue(this.Key, this.Value);
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             this._value = this.GetValue(this.DefaultValue);
         }

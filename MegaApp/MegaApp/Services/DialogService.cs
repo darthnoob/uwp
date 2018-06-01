@@ -10,7 +10,6 @@ using MegaApp.Extensions;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.Dialogs;
-using MegaApp.ViewModels.MyAccount;
 using MegaApp.ViewModels.SharedFolders;
 using MegaApp.Views;
 using MegaApp.Views.Dialogs;
@@ -69,7 +68,7 @@ namespace MegaApp.Services
         /// <returns>True if the "Ok" button is pressed, else False.</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message)
         {
-            var dialog = new OkCancelDialog(title, message);
+            var dialog = new TwoButtonsDialog(title, message);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -78,15 +77,15 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="title">Title of the dialog.</param>
         /// <param name="message">Message of the dialog.</param>
-        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
+        /// <param name="dialogType">A <see cref="TwoButtonsDialogType"/> value that indicates the buttons to display.</param>
         /// <param name="primaryButton">Label for the primary button.</param>
         /// <param name="secondaryButton">Label for the secondary button.</param>
         /// <returns>True if the primary button is pressed, else False.</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message,
-            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
+            TwoButtonsDialogType dialogType, string primaryButton = null, string secondaryButton = null)
         {
-            var dialog = new OkCancelDialog(title, message, null, 
-                dialogButtons, primaryButton, secondaryButton);
+            var dialog = new TwoButtonsDialog(title, message, null,
+                dialogType, primaryButton, secondaryButton);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -99,7 +98,7 @@ namespace MegaApp.Services
         /// <returns>True if the "Ok" button is pressed, else False.</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning)
         {
-            var dialog = new OkCancelDialog(title, message, warning);
+            var dialog = new TwoButtonsDialog(title, message, warning);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -109,15 +108,15 @@ namespace MegaApp.Services
         /// <param name="title">Title of the dialog</param>
         /// <param name="message">Message of the dialog</param>
         /// <param name="warning">Warning of the dialog</param>
-        /// <param name="dialogButtons">A <see cref="OkCancelDialogButtons"/> value that indicates the buttons to display.</param>
+        /// <param name="dialogType">A <see cref="TwoButtonsDialogType"/> value that indicates the buttons to display.</param>
         /// <param name="primaryButton">Label for the primary button.</param>
         /// <param name="secondaryButton">Label for the secondary button.</param>
         /// <returns>True if the primary button is pressed, else False.</returns>
         public static async Task<bool> ShowOkCancelAsync(string title, string message, string warning,
-            OkCancelDialogButtons dialogButtons, string primaryButton = null, string secondaryButton = null)
+            TwoButtonsDialogType dialogType, string primaryButton = null, string secondaryButton = null)
         {
-            var dialog = new OkCancelDialog(title, message, warning,
-                dialogButtons, primaryButton, secondaryButton);
+            var dialog = new TwoButtonsDialog(title, message, warning,
+                dialogType, primaryButton, secondaryButton);
             return await dialog.ShowAsyncQueueBool();
         }
 
@@ -151,12 +150,30 @@ namespace MegaApp.Services
             return result ? dialog.ViewModel.InputText : null;
         }
 
+        /// <summary>
+        /// Display an alert dialog indicating that the MEGA SSL key 
+        /// can't be verified (API_ESSL Error) and giving the user several options.
+        /// </summary>
+        public static async Task<ContentDialogResult> ShowSSLCertificateAlert()
+        {
+            var dialog = new TwoButtonsDialog(
+                ResourceService.AppMessages.GetString("AM_SSLKeyError_Title"),
+                ResourceService.AppMessages.GetString("AM_SSLKeyError"), null,
+                TwoButtonsDialogType.Custom,
+                ResourceService.UiResources.GetString("UI_Retry"),
+                ResourceService.UiResources.GetString("UI_OpenBrowser"),
+                true, ResourceService.UiResources.GetString("UI_Ignore"),
+                MegaDialogStyle.AlertDialog);
+
+            return await dialog.ShowAsyncQueue();
+        }
+
         public static async void ShowOverquotaAlert()
         {
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                OkCancelDialogButtons.YesNo);
+                TwoButtonsDialogType.YesNo);
 
             if (!result) return;
 
@@ -182,7 +199,7 @@ namespace MegaApp.Services
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Title"),
                 ResourceService.AppMessages.GetString("AM_DebugModeEnabled_Message"),
-                OkCancelDialogButtons.YesNo);
+                TwoButtonsDialogType.YesNo);
 
             if (result)
                 DebugService.DebugSettings.DisableDebugMode();
@@ -225,6 +242,15 @@ namespace MegaApp.Services
         {
             var passwordReminderDialog = new PasswordReminderDialog(atLogout);
             await passwordReminderDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
+        /// Show a dialog to change the account password
+        /// </summary>
+        public static async void ShowChangePasswordDialog()
+        {
+            var changePasswordDialog = new ChangePasswordDialog();
+            await changePasswordDialog.ShowAsyncQueue();
         }
 
         /// <summary>

@@ -146,7 +146,7 @@ namespace MegaApp.ViewModels.Contacts
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveContactQuestion"), this.Email),
                     this.RemoveContactWarningText,
-                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return true;
             }

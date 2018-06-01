@@ -133,7 +133,7 @@ namespace MegaApp.ViewModels.Contacts
                     this.RemoveContactText,
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleContactsQuestion"), count),
                     ResourceService.AppMessages.GetString("AM_RemoveContactWarning"),
-                    OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
+                    TwoButtonsDialogType.Custom, this.RemoveText, this.CancelText);
 
                 if (!dialogResult) return;
 

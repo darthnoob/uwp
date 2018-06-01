@@ -126,11 +126,11 @@
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>Activer le téléversement de la caméra</value>
+    <value>Activer les téléversements de la caméra</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Cliquez sur le bouton d’activation/désactivation ci-dessus pour synchroniser automatiquement vos photos et vidéos vers MEGA.                              </value>
+    <value>Cliquez sur le bouton d’activation/désactivation ci-dessus pour synchroniser automatiquement vos photos et vidéos vers MEGA.</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>Si dossier ne contient aucun fichier ni dossier                                </value>
+    <value>Si dossier ne contient aucun fichier ni dossier</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
@@ -162,11 +162,11 @@
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Vider la corbeille                                </value>
+    <value>Vider la corbeille</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>Vous n’avez envoyé aucun fichier ni dossier dans la corbeille.                                </value>
+    <value>Vous n’avez envoyé aucun fichier ni dossier dans la corbeille.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
@@ -200,5 +200,13 @@
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
     <value>Gérez vos partages sortants dans ce panneau.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineHeader" xml:space="preserve">
+    <value>Aucun fichier Hors ligne                           </value>
+    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineSubHeader" xml:space="preserve">
+    <value>Enregistrer des fichiers Hors ligne</value>
+    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>
