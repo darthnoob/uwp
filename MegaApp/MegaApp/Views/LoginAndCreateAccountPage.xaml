@@ -180,26 +180,26 @@
                             Style="{StaticResource MegaPasswordBoxStyle}"
                             TabIndex="4" />
                         <CheckBox
-                            Height="{StaticResource InputHeight}"
+                            Height="44"
                             BorderBrush="{Binding CreateAccountViewModel.TermsOfServiceInputState, Converter={StaticResource InputStateToColorConverter}}"
                             IsChecked="{Binding CreateAccountViewModel.TermOfService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="{Binding CreateAccountViewModel.ControlState}"
                             Style="{StaticResource MegaCheckBoxStyle}"
                             TabIndex="5">
                             <CheckBox.Content>
-                                <RichTextBlock
-                                    Height="40"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    TextWrapping="Wrap">
-                                    <Paragraph FontSize="14">
-                                        <Run Text="{Binding CreateAccountViewModel.AgreeCreateAccountText, Mode=OneTime}" />
-                                        <LineBreak />
-                                        <Hyperlink NavigateUri="{Binding CreateAccountViewModel.TermsOfServiceUri, Mode=OneTime}">
-                                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding CreateAccountViewModel.ViewTermsOfServiceText, Mode=OneTime}" />
-                                        </Hyperlink>
-                                    </Paragraph>
-                                </RichTextBlock>
+                                <StackPanel>
+                                    <TextBlock 
+                                        FontSize="14"
+                                        Text="{x:Bind ViewModel.CreateAccountViewModel.AgreeCreateAccountText, Mode=OneTime}"
+                                        TextWrapping="Wrap" />
+                                    <HyperlinkButton
+                                        Margin="0,-4,0,0"
+                                        Content="{x:Bind ViewModel.CreateAccountViewModel.ViewTermsOfServiceText, Mode=OneTime}"
+                                        FontSize="14"
+                                        Foreground="{StaticResource MegaRedColorBrush}"
+                                        NavigateUri="{x:Bind ViewModel.CreateAccountViewModel.TermsOfServiceUri, Mode=OneTime}"
+                                        Style="{StaticResource MegaLinkStyle}" />
+                                </StackPanel>
                             </CheckBox.Content>
                         </CheckBox>
                         <StackPanel
