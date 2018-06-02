@@ -79,13 +79,6 @@ namespace MegaApp.Views
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_AccountBlocked_Title"), message);
                         break;
-
-                    case NavigationActionType.API_ESSL:
-                        // Show a message notifying the error
-                        await DialogService.ShowAlertAsync(
-                            ResourceService.AppMessages.GetString("AM_SSLKeyError_Title"),
-                            ResourceService.AppMessages.GetString("AM_SSLKeyError"));
-                        break;
                 }
 
                 isAlertAlreadyDisplayed = false;

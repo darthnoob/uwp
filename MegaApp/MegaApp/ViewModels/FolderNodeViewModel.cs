@@ -137,7 +137,7 @@ namespace MegaApp.ViewModels
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolder_Title"),
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderQuestion"), this.Name),
                 ResourceService.AppMessages.GetString("AM_RemoveAccessSharedFolderWarning"),
-                OkCancelDialogButtons.Custom, this.RemoveText, this.CancelText);
+                TwoButtonsDialogType.Custom, this.RemoveText, this.CancelText);
 
             if (!dialogResult) return;
 

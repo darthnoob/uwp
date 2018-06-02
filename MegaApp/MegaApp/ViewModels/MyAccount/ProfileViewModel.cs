@@ -93,11 +93,7 @@ namespace MegaApp.ViewModels.MyAccount
             }
         }
 
-        private async void ChangePassword()
-        {
-            var changePasswordDialog = new ChangePasswordDialog();
-            await changePasswordDialog.ShowAsyncQueue();
-        }
+        private void ChangePassword() => DialogService.ShowChangePasswordDialog();
 
         #endregion
 

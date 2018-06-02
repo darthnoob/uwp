@@ -252,15 +252,39 @@ namespace MegaApp.ViewModels
         /// </summary>
         public long CreationTime { get; private set; }
 
+        private long _modificationTime;
         /// <summary>
         /// The last update time of the contact request
         /// </summary>
-        public long ModificationTime { get; private set; }
+        public long ModificationTime
+        {
+            get { return _modificationTime; }
+            private set
+            {
+                SetField(ref _modificationTime, value);
+                OnPropertyChanged(nameof(this.Date),
+                    nameof(this.IsRemindAllowed));
+            }
+        }
 
         /// <summary>
         /// Formatted date of the las update time of the contact request
         /// </summary>
         public string Date => OriginalDateTime.AddSeconds(this.ModificationTime).ToString("dd/MM/yy");
+
+        /// <summary>
+        /// Indicate if an outgoing contact request can be reminded
+        /// (two week period since started or last reminder)
+        /// </summary>
+        public bool IsRemindAllowed
+        {
+            get
+            {
+                if (!this.IsOutgoing) return false;
+                var period = DateTime.Now.Subtract(OriginalDateTime.AddSeconds(this.ModificationTime));
+                return !(period.TotalDays < 15);
+            }
+        }
 
         private ContactRequestsListViewModel _contactRequestsList;
         public ContactRequestsListViewModel ContactRequestsList

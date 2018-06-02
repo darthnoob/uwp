@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using MegaApp.Database;
+using MegaApp.Extensions;
 using MegaApp.Interfaces;
 using MegaApp.Services;
 
@@ -44,8 +45,8 @@ namespace MegaApp.ViewModels.Offline
             this.NodePath = folderInfo.FullName;
             this.Size = 0;
             this.IsFolder = true;
-            this.CreationTime = folderInfo.CreationTime.ToString("dd MMM yyyy");
-            this.ModificationTime = folderInfo.LastWriteTime.ToString("dd MMM yyyy");
+            this.CreationTime = folderInfo.CreationTime.DateToString();
+            this.ModificationTime = folderInfo.LastWriteTime.DateToString();
 
             SetDefaultValues();
         }

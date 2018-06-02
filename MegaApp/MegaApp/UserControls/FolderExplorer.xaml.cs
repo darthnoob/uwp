@@ -277,6 +277,9 @@ namespace MegaApp.UserControls
         /// <param name="selectedNodes">Listo of selected nodes</param>
         private void UpdateSelectedItems(List<IBaseNode> selectedNodes)
         {
+            if (selectedNodes == null || !selectedNodes.Any() || this.Folder == null)
+                return;
+
             ListViewBase list = null;
             switch (this.Folder.ViewMode)
             {
@@ -292,8 +295,18 @@ namespace MegaApp.UserControls
 
             foreach (var node in selectedNodes)
             {
-                if (list.SelectedItems.Contains(node)) continue;
-                list.SelectedItems.Add(node);
+                if (node == null) continue;
+
+                try
+                {
+                    if (list.SelectedItems.Contains(node)) continue;
+                    list.SelectedItems.Add(node);
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, 
+                        string.Format("Error updating the selected item '{0}'", node.Name), e);
+                }
             }
         }
 

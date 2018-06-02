@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+    <value>Terms of Service</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -307,7 +307,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a download transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusDownloading" xml:space="preserve">
-    <value>Downloading…</value>
+    <value>Downloading...</value>
     <comment>Label for the status of a transfer when is being downloading - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusError" xml:space="preserve">
@@ -331,7 +331,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Uploading…</value>
+    <value>Uploading...</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
@@ -479,7 +479,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Preparing…</value>
+    <value>Preparing...</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
@@ -499,11 +499,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Completing…</value>
+    <value>Completing...</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Retrying…</value>
+    <value>Retrying...</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -590,7 +590,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable offline view</value>
+    <value>Enable Offline view</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
@@ -1172,7 +1172,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ContactSupport" xml:space="preserve">
-    <value>Contact support</value>
+    <value>Contact Support</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
@@ -1264,7 +1264,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
@@ -1493,8 +1493,8 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
-    <value>day remaining</value>
-    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>1 day remaining</value>
+    <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
     <value>{0} days remaining</value>
@@ -1514,7 +1514,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AccountRegistrationInformation" xml:space="preserve">
-    <value>Create your free account and get {0} of complimentary storage spance, valid for {1} days.</value>
+    <value>Create your free account and get {0} of complimentary storage space, valid for {1} days.</value>
     <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
   </data>
   <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
@@ -1522,7 +1522,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_InstallMobileAppInformation" xml:space="preserve">
-    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quoto, both valid for {2} days. We provice mobile apps for iOS, Android &amp; Windows Phone</value>
+    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quota, both valid for {2} days. We provide mobile apps for iOS, Android &amp; Windows Phone</value>
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
@@ -1546,7 +1546,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you receive bonus storage and transfer quota.</value>
+    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you will receive bonus storage and transfer quota.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
   </data>
   <data name="UI_Invite" xml:space="preserve">
@@ -1566,7 +1566,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>Invited contacts must install MEGA mobile app or MEGA app on their devices.</value>
+    <value>Invited contacts must install the MEGA mobile app or MEGA desktop app on their devices.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
@@ -1601,8 +1601,8 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>Backup Recovery key</value>
-    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+    <value>Backup Recovery Key</value>
+    <comment>Label for any 'Backup Recovery Key' button, link, text, title, etc. - (String as short as possible).
 NOTE: Max. length 20 characters.</comment>
   </data>
   <data name="UI_DoNotShowMeAgain" xml:space="preserve">
@@ -1644,8 +1644,8 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Referral status</value>
-    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+    <value>Referral bonus status</value>
+    <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
     <value>Pending</value>
@@ -1654,5 +1654,49 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_EarnedReferralBonus" xml:space="preserve">
     <value>Earned referral bonus</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenBrowser" xml:space="preserve">
+    <value>Open browser</value>
+    <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Ignore" xml:space="preserve">
+    <value>Ignore</value>
+    <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DataProtectionRegulation" xml:space="preserve">
+    <value>Data Protection Regulation</value>
+    <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MEGA_SDK_Version" xml:space="preserve">
+    <value>MEGA SDK version</value>
+    <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PrivacyPolicy" xml:space="preserve">
+    <value>Privacy policy</value>
+    <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
+    <value>View the Terms of Service here.</value>
+    <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Acknowledgements" xml:space="preserve">
+    <value>Acknowledgements</value>
+    <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+    <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>Learn more</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LegalAndPolicies" xml:space="preserve">
+    <value>Legal and Policies</value>
+    <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TakedownGuidance" xml:space="preserve">
+    <value>Takedown Guidance</value>
+    <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

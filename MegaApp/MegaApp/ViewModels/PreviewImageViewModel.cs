@@ -98,15 +98,13 @@ namespace MegaApp.ViewModels
                 switch (GalleryDirection)
                 {
                     case GalleryDirection.Next:
+                    default:
                         PreviewItems[highIndex].InViewingRange = true;
                         break;
 
                     case GalleryDirection.Previous:
                         PreviewItems[lowIndex].InViewingRange = true;
                         break;
-
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
@@ -126,6 +124,7 @@ namespace MegaApp.ViewModels
             switch (GalleryDirection)
             {
                 case GalleryDirection.Next:
+                default:
                     if ((currentIndex - cleanRange) >= 0)
                     {
                         int cleanIndex = currentIndex - cleanRange;
@@ -146,9 +145,6 @@ namespace MegaApp.ViewModels
                         PreviewItems[cleanIndex].PreviewImageUri = null;
                     }
                     break;
-
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
         }
 

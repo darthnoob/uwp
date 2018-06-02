@@ -9,6 +9,11 @@ namespace MegaApp.ViewModels.Dialogs
 {
     public class PasswordReminderDialogViewModel : BaseContentDialogViewModel
     {
+        /// <summary>
+        /// Maximum number of attempts to check the password 
+        /// </summary>
+        private const int MaxAttempts = 3;
+
         public PasswordReminderDialogViewModel() : base()
         {
             this.CloseButtonVisibility = Visibility.Visible;
@@ -54,32 +59,47 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected override void OnCloseDialog()
+        protected override async void OnCloseDialog()
         {
+            base.OnCloseDialog();
+
+            if (this.AtLogout)
+            {
+                var passwordReminderDialogListener = new SetPasswordReminderDialogResultListenerAsync();
+
+                // If user has checked the "Don't show me again" box
+                if (!this.IsTestPasswordSelected && this.DoNotShowAgain)
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogBlocked(passwordReminderDialogListener));
+                }
+                // If the user has checked the password successfully
+                else if (this.passwordChecked)
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogSucceeded(passwordReminderDialogListener));
+                }
+                else
+                {
+                    await passwordReminderDialogListener.ExecuteAsync(() =>
+                        SdkService.MegaSdk.passwordReminderDialogSkipped(passwordReminderDialogListener));
+
+                    // Only log out if the user has saved the recovery key
+                    if (!this.recoveryKeySaved) return;
+                }
+
+                SdkService.MegaSdk.logout(new LogOutRequestListener());
+                return;
+            }
+
             // If user has checked the "Don't show me again" box
             if (!this.IsTestPasswordSelected && this.DoNotShowAgain)
-            {
                 SdkService.MegaSdk.passwordReminderDialogBlocked();
-                if (this.AtLogout)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
             // If the user has checked the password successfully
             else if (this.passwordChecked)
-            {
                 SdkService.MegaSdk.passwordReminderDialogSucceeded();
-                if (this.AtLogout)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
             else
-            {
                 SdkService.MegaSdk.passwordReminderDialogSkipped();
-
-                // Only log out if the user has saved the recovery key
-                if (this.AtLogout && this.recoveryKeySaved)
-                    SdkService.MegaSdk.logout(new LogOutRequestListener());
-            }
-
-            base.OnCloseDialog();
         }
         
         #endregion
@@ -102,6 +122,15 @@ namespace MegaApp.ViewModels.Dialogs
                 this.ControlState = true;
                 this.WarningColor = (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
                 this.WarningText = ResourceService.AppMessages.GetString("AM_TestPasswordWarning");
+
+                this.failedAttempts++;
+                if (this.failedAttempts < MaxAttempts) return;
+
+                // I user has exceeded the number of attempts, close 
+                // this dialog and show the "Change password" dialog
+                if (!this.CloseCommand.CanExecute(null))
+                    this.CloseCommand.Execute(null);
+                DialogService.ShowChangePasswordDialog();
                 return;
             }
 
@@ -168,6 +197,11 @@ namespace MegaApp.ViewModels.Dialogs
         public bool AtLogout;
 
         /// <summary>
+        /// Number of failed attempts to check the password
+        /// </summary>
+        private int failedAttempts = 0;
+
+        /// <summary>
         /// Indicates if the user has checked the password successfully
         /// </summary>
         private bool passwordChecked = false;
@@ -176,16 +210,6 @@ namespace MegaApp.ViewModels.Dialogs
         /// Indicates if the user has saved the recovery key successfully
         /// </summary>
         private bool recoveryKeySaved = false;
-
-        private Visibility _closeButtonVisibility;
-        /// <summary>
-        /// Indicates if the dialog will have a close button at the top-right corner
-        /// </summary>
-        public Visibility CloseButtonVisibility
-        {
-            get { return _closeButtonVisibility; }
-            set { SetField(ref _closeButtonVisibility, value); }
-        }
 
         private string _titleText;
         /// <summary>
@@ -205,16 +229,6 @@ namespace MegaApp.ViewModels.Dialogs
         {
             get { return _descriptionText; }
             set { SetField(ref _descriptionText, value); }
-        }
-
-        private Style _dialogStyle;
-        /// <summary>
-        /// Style of the dialog
-        /// </summary>
-        public Style DialogStyle
-        {
-            get { return _dialogStyle; }
-            set { SetField(ref _dialogStyle, value); }
         }
 
         private bool _doNotShowAgain;
