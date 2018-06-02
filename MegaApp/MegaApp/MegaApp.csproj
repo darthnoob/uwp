@@ -202,6 +202,7 @@
     <Compile Include="Database\DatabaseHelper.cs" />
     <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
+    <Compile Include="Enums\CameraUploadsFileType.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
@@ -325,8 +326,10 @@
     <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
     <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
+    <Compile Include="ViewModels\Settings\CameraUploadsSelectionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\LegalAndPoliciesViewModel.cs" />
     <Compile Include="ViewModels\Settings\LinkSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SelectionSettingViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />

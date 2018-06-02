@@ -1,6 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel.Channels;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Settings;
+using Microsoft.Toolkit.Uwp.UI.Converters;
+using Binding = Windows.UI.Xaml.Data.Binding;
 
 namespace MegaApp.ViewModels
 {
@@ -39,7 +46,59 @@ namespace MegaApp.ViewModels
             {
                 Header = ResourceService.UiResources.GetString("UI_CameraUploads")
             };
-            cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
+
+            var cameraUploads = new CameraUploadsSettingViewModel();
+            cameraUploads.Initialize();
+            cameraUploadSettings.Items.Add(cameraUploads);
+
+            var howCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                    "How to upload", null, "CameraUploadsSettingsHowKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_WifiOnly"),
+                                    Value = (int) CameraUploadsConnectionType.WifiOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_WifiAndMobile"),
+                                    Value = (int) CameraUploadsConnectionType.WifiAndDataPlan
+                            }
+                    }) {IsVisible = cameraUploads.Value};
+            cameraUploadSettings.Items.Add(howCameraUploads);
+
+            var fileCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                    "File to upload", null, "CameraUploadsSettingsFileKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoAndVideo"),
+                                    Value = (int) CameraUploadsFileType.PhotoAndVideo
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoOnly"),
+                                    Value = (int) CameraUploadsFileType.PhotoOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_VideoOnly"),
+                                    Value = (int) CameraUploadsFileType.VideoOnly
+                            }
+                    })
+                    { IsVisible = cameraUploads.Value };
+
+            cameraUploadSettings.Items.Add(fileCameraUploads);
+
+            cameraUploads.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName != "Value") return;
+
+                howCameraUploads.IsVisible = cameraUploads.Value;
+                fileCameraUploads.IsVisible = cameraUploads.Value;
+            };
 
             this.CameraUploadSettingSections.Add(cameraUploadSettings);
 

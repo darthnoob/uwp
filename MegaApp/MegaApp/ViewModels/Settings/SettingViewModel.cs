@@ -57,6 +57,13 @@ namespace MegaApp.ViewModels.Settings
         public string Description { get; set; }
         public string Key { get; set; }
 
+        private bool _isVisbible = true;
+        public bool IsVisible
+        {
+            get { return _isVisbible; }
+            set { SetField(ref _isVisbible, value); }
+        }
+
         private T _value;
         public T Value
         {

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
+using BackgroundTaskService.Enums;
 using mega;
 using BackgroundTaskService.MegaApi;
+using BackgroundTaskService.Network;
 using BackgroundTaskService.Services;
 
 namespace BackgroundTaskService
@@ -20,6 +23,24 @@ namespace BackgroundTaskService
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();
+
+            // Load the connection upload settings
+            CameraUploadsConnectionType cameraUploadsConnectionType = CameraUploadsConnectionType.WifiOnly;
+            try
+            {
+                cameraUploadsConnectionType = (CameraUploadsConnectionType) await SettingsService.LoadSettingFromFileAsync<int>("CameraUploadsSettingsHowKey");
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Could not load settings", e);
+            }
+            
+
+            if (!CheckNetWork(cameraUploadsConnectionType))
+            {
+                _deferral.Complete();
+                return;
+            }
 
             SdkService.InitializeSdkParams();
 
@@ -47,9 +68,35 @@ namespace BackgroundTaskService
                         return;
                     }
 
-                    // Get the IMAGE and VIDEO files to upload to MEGA
-                    var fileToUpload = await TaskService.GetAvailableUploadAsync(TaskService.ImageDateSetting,
-                        KnownFolders.PicturesLibrary, KnownFolders.VideosLibrary);
+                    // Load the file upload settings
+                    CameraUploadsFileType cameraUploadsFileType = CameraUploadsFileType.PhotoAndVideo;
+                    try
+                    {
+                        cameraUploadsFileType = (CameraUploadsFileType)await SettingsService.LoadSettingFromFileAsync<int>("CameraUploadsSettingsFileKey");
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Could not load settings", e);
+                    }
+
+                    var uploadFolders = new List<StorageFolder>();
+                    switch (cameraUploadsFileType)
+                    {
+                        case CameraUploadsFileType.PhotoAndVideo:
+                            uploadFolders.Add(KnownFolders.PicturesLibrary);
+                            uploadFolders.Add(KnownFolders.VideosLibrary);
+                            break;
+                        case CameraUploadsFileType.PhotoOnly:
+                            uploadFolders.Add(KnownFolders.PicturesLibrary);
+                            break;
+                        case CameraUploadsFileType.VideoOnly:
+                            uploadFolders.Add(KnownFolders.VideosLibrary);
+                            break;
+                    }
+
+                    // Get the IMAGE and/or VIDEO files to upload to MEGA
+                    var fileToUpload = await TaskService.GetAvailableUploadAsync(
+                            TaskService.ImageDateSetting, uploadFolders.ToArray());
                     foreach (var storageFile in fileToUpload)
                     {
                         // Skip the current file if it has failed more than the max error count
@@ -57,6 +104,11 @@ namespace BackgroundTaskService
                             storageFile.Name,
                             ErrorHandlingService.ImageErrorFileSetting, 
                             ErrorHandlingService.ImageErrorCountSetting)) continue;
+
+                        if (!CheckNetWork(cameraUploadsConnectionType))
+                        {
+                            break;
+                        }
 
                         // Calculate time for fingerprint check and upload
                         ulong mtime = TaskService.CalculateMtime(storageFile.DateCreated.DateTime);
@@ -136,6 +188,18 @@ namespace BackgroundTaskService
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error logging in", e);
                 return false;
+            }
+        }
+
+        private bool CheckNetWork(CameraUploadsConnectionType cameraUploadsConnectionType)
+        {
+            switch (cameraUploadsConnectionType)
+            {
+                case CameraUploadsConnectionType.WifiOnly:
+                    return NetworkHelper.Instance.ConnectionInformation.ConnectionType != ConnectionType.Data;
+                case CameraUploadsConnectionType.WifiAndDataPlan:
+                    return true;
+                default: return false;
             }
         }
     }
