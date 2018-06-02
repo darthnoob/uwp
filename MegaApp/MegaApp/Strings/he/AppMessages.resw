@@ -130,7 +130,7 @@
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
-    <value>האם אתה בטוח שברצונך למחוק לצמיתות את כל הקבצים בפח האשפה? </value>
+    <value>האם אתה בטוח שברצונך למחוק לצמיתות את כל הקבצים בפח האשפה?</value>
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
@@ -330,7 +330,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the warning dialog shown when the user tries to make a new sign up using an invalid link (#newsignup).</comment>
   </data>
   <data name="AM_NoInternetConnectionMessage" xml:space="preserve">
-    <value>אינך יכול לבצע פעולה זו. אנא התחבר לאינטרנט ונסה שוב. </value>
+    <value>אינך יכול לבצע פעולה זו. אנא התחבר לאינטרנט ונסה שוב.</value>
     <comment>Message of the dialog displayed when the user is trying to perform any online action without an active Internet connection.</comment>
   </data>
   <data name="AM_OpenFileFailed" xml:space="preserve">
@@ -639,11 +639,11 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>לא הצלחנו לאמת את תעודת ה-SSL/TLS שלנו. ייתכן כי הינך מושפע מהתקפת איש-באמצע. </value>
+    <value>מפתח ה-SSL של השרת לא אומת. ייתכן ואתה קורבן של התקפת איש-באמצע.</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>נותק בהצלחה</value>
+    <value>SSL certificate error</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -757,11 +757,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
-    <value>Failed setting the link expiration time. Please try again.</value>
+    <value>Failed setting the link expiry date. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
-    <value>Set expiry time failed</value>
+    <value>Set expiry date failed</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
@@ -773,11 +773,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>Invalid URI detected during app activation.</value>
+    <value>Invalid link detected during app activation.</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
-    <value>Invalid URI</value>
+    <value>קישור לא תקין</value>
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
@@ -793,7 +793,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>החשבון שלך עודכן. האם אתה רוצה לראות את הפרטים החדשים של חשבונך? </value>
+    <value>החשבון שלך עודכן. האם אתה רוצה לראות את הפרטים החדשים של חשבונך?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
@@ -878,16 +878,16 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
   </data>
   <data name="AM_InviteContactFailed" xml:space="preserve">
-    <value>הזמנת איש הקשר לא נשלחה. אנא נסה שוב. </value>
+    <value>הזמנת איש הקשר לא נשלחה. אנא נסה שוב.</value>
     <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
   </data>
   <data name="AM_InviteContactSuccessfully" xml:space="preserve">
-    <value>איש הקשר {0} הוזמן והופיע ברשימת אנשי הקשר שלך לאחר שההזמנה תאושר. </value>
+    <value>איש הקשר {0} הוזמן והופיע ברשימת אנשי הקשר שלך לאחר שההזמנה תאושר.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
 Preserve the [{0}] code because is for include the contact email in runtime.</comment>
   </data>
   <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
-    <value>אתה מנסה להוסיף את המייל של עצמך כאיש קשר. </value>
+    <value>אתה מנסה להוסיף את המייל של עצמך כאיש קשר.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
@@ -1204,5 +1204,75 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
     <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
+  </data>
+  <data name="AM_PasswordReminder" xml:space="preserve">
+    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
+    <comment>Message to describe the purpose of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_PasswordReminder_Title" xml:space="preserve">
+    <value>האם אתה זוכר את הסיסמא שלך?</value>
+    <comment>Title of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_TestPassword" xml:space="preserve">
+    <value>Please test your password below to ensure you remember it. If you lose your password, you will lose access to your data.</value>
+    <comment>Message to describe the purpose of the dialog to test the password.</comment>
+  </data>
+  <data name="AM_TestPasswordSuccess" xml:space="preserve">
+    <value>Password accepted, we still recommend you back up your Recovery Key.</value>
+    <comment>Message displayed when the password test result is ok.</comment>
+  </data>
+  <data name="AM_TestPasswordWarning" xml:space="preserve">
+    <value>Wrong password! Backup your Recovery Key as soon as possible!</value>
+    <comment>Warning message displayed when the password test fails.</comment>
+  </data>
+  <data name="AM_TestPassword_Title" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Title of the test password dialog.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported" xml:space="preserve">
+    <value>The Recovery Key has been exported.</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
+    <value>מפתח לשחזור יוצא</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
+    <value>Failed to export the Recovery Key. Please try again.</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
+    <value>Recovery Key export failed</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove {0} items from offline?</value>
+    <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove '{0}' from offline?</value>
+    <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
+    <value>Remove from offline?</value>
+    <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
+  </data>
+  <data name="AM_OpenFolderFailed" xml:space="preserve">
+    <value>Failed to open the selected folder</value>
+    <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
+  </data>
+  <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
+    <value>Folder failed to open</value>
+    <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed" xml:space="preserve">
+    <value>Failed to change your password. Please try again.</value>
+    <comment>Message of the dialog displayed when the user has failed to change his password</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
+    <value>Error changing password</value>
+    <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
 </root>

@@ -122,7 +122,7 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>建立帐号...</value>
+    <value>建立账号...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>正在创建文件夹...</value>
+    <value>创建文件夹...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
@@ -142,15 +142,15 @@
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>正在请求帐户数据。</value>
+    <value>正在请求账户数据。</value>
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>登入中</value>
+    <value>登入中...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>请稍等，我们将您登录到您的帐户。</value>
+    <value>请稍等，我们将您登录到您的账户。</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
@@ -173,6 +173,10 @@
     <value>正在重命名...</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
+  <data name="PM_ServersBusy" xml:space="preserve">
+    <value>服务器忙碌中。请稍候...</value>
+    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
+  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>正在解密节点。</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
@@ -182,7 +186,7 @@
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>创建您的帐户</value>
+    <value>创建您的账户</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
@@ -200,5 +204,17 @@
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
     <value>请稍候，我们将打开文件夹链接。</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiLocked" xml:space="preserve">
+    <value>处理花费的时间比预期的要长。请稍候。</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiRateLimit" xml:space="preserve">
+    <value>请求太多。请稍候。</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConnectivityIssue" xml:space="preserve">
+    <value>无法连接MEGA。请检查您的连接或稍后再试。</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

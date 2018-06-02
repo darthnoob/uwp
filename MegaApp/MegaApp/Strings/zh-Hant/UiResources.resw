@@ -282,8 +282,8 @@ Preserve the {0} code because is for include the name of the destination folder 
     <value>資料夾</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_ViewTermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+  <data name="UI_TermsOfService" xml:space="preserve">
+    <value>服務條款</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -590,7 +590,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable offline view</value>
+    <value>Enable Offline view</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
@@ -1172,7 +1172,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ContactSupport" xml:space="preserve">
-    <value>Contact support</value>
+    <value>聯絡客服</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
@@ -1264,7 +1264,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
@@ -1420,6 +1420,155 @@ Keep the {0} code because are for include the total number of folders in runtime
     <value>Share to</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_StorageQuota" xml:space="preserve">
+    <value>Storage quota</value>
+    <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonuses" xml:space="preserve">
+    <value>解鎖獎勵</value>
+    <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonusesText" xml:space="preserve">
+    <value>您可以完成任務以獲得更多的免費儲存空間和傳輸配額。輕鬆簡單。</value>
+    <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_GetMoreBonuses" xml:space="preserve">
+    <value>獲得更多空間</value>
+    <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseStorage" xml:space="preserve">
+    <value>Base storage</value>
+    <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseTransferQuota" xml:space="preserve">
+    <value>Base transfer quota</value>
+    <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallDesktopApp" xml:space="preserve">
+    <value>Install desktop app</value>
+    <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallMobileApp" xml:space="preserve">
+    <value>Install mobile app</value>
+    <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReferralBonus" xml:space="preserve">
+    <value>推薦獎勵</value>
+    <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RegistrationBonus" xml:space="preserve">
+    <value>註冊獎勵</value>
+    <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusStorage" xml:space="preserve">
+    <value>Bonus storage</value>
+    <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusTransferQuota" xml:space="preserve">
+    <value>Bonus transfer quota</value>
+    <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Achievements" xml:space="preserve">
+    <value>成果</value>
+    <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AchievementsText" xml:space="preserve">
+    <value>Your easy route to more storage and transfer quota on MEGA. You can maintain a generous free storage and transfer allowance by completing any of the actions outlined below.</value>
+    <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_Available" xml:space="preserve">
+    <value>可使用的</value>
+    <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedRewards" xml:space="preserve">
+    <value>已解鎖的獎勵</value>
+    <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Expired" xml:space="preserve">
+    <value>過期</value>
+    <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriends" xml:space="preserve">
+    <value>邀請朋友</value>
+    <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDay" xml:space="preserve">
+    <value>1 day remaining</value>
+    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDays" xml:space="preserve">
+    <value>{0} days remaining</value>
+    <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
+Keep the {0} code because is for include the number of days in runtime.</comment>
+  </data>
+  <data name="UI_SendInvites" xml:space="preserve">
+    <value>Send invites</value>
+    <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewStatus" xml:space="preserve">
+    <value>View status</value>
+    <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Install" xml:space="preserve">
+    <value>安裝</value>
+    <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AccountRegistrationInformation" xml:space="preserve">
+    <value>Create your free account and get {0} of complimentary storage space, valid for {1} days.</value>
+    <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
+  </data>
+  <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
+    <value>When you install MEGAsync you get {0} of complimentary storage space plus {1} of transfer quota, both valid for {2} days. MEGAsync is available for Windows, macOS and most Linux distros.</value>
+    <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_InstallMobileAppInformation" xml:space="preserve">
+    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quota, both valid for {2} days. We provide mobile apps for iOS, Android &amp; Windows Phone</value>
+    <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_AchievedOn" xml:space="preserve">
+    <value>Achieved on</value>
+    <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExpiresIn" xml:space="preserve">
+    <value>Expires in</value>
+    <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Day</value>
+    <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Days" xml:space="preserve">
+    <value>Days</value>
+    <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorks" xml:space="preserve">
+    <value>如何使用</value>
+    <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorksText" xml:space="preserve">
+    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you will receive bonus storage and transfer quota.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
+  </data>
+  <data name="UI_Invite" xml:space="preserve">
+    <value>邀請</value>
+    <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriendsText" xml:space="preserve">
+    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
+  </data>
+  <data name="UI_WhyNotWorking" xml:space="preserve">
+    <value>Why it is not working</value>
+    <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
+    <value>若您邀請的是曾使用過MEGA的用戶，則無法得到獎勵，且您將不會收到相關通知。</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
+    <value>Invited contacts must install the MEGA mobile app or MEGA desktop app on their devices.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
+  </data>
   <data name="UI_FolderLink" xml:space="preserve">
     <value>資料夾連結</value>
     <comment>Label for any 'Folder link' button, link, text, title, etc. - (String as short as possible).
@@ -1449,7 +1598,105 @@ Keep the {0} code because is for include the number of selected items in runtime
   </data>
   <data name="UI_FileLink" xml:space="preserve">
     <value>檔案連結</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
-</comment>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>備份還原金鑰</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Don’t show me again</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Test Password</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>離線儲存</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveForOffline" xml:space="preserve">
+    <value>離線儲存</value>
+    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromOffline" xml:space="preserve">
+    <value>Remove from offline</value>
+    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>離線文件</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
+    <value>Referral status ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by status and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
+    <value>Referral status ({0} of {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionReferralStatus" xml:space="preserve">
+    <value>Referral status</value>
+    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Pending" xml:space="preserve">
+    <value>處理中</value>
+    <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EarnedReferralBonus" xml:space="preserve">
+    <value>Earned referral bonus</value>
+    <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenBrowser" xml:space="preserve">
+    <value>Open browser</value>
+    <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Ignore" xml:space="preserve">
+    <value>忽略</value>
+    <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DataProtectionRegulation" xml:space="preserve">
+    <value>Data Protection Regulation</value>
+    <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MEGA_SDK_Version" xml:space="preserve">
+    <value>MEGA SDK軟體開發包版本</value>
+    <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PrivacyPolicy" xml:space="preserve">
+    <value>隱私政策</value>
+    <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
+    <value>View the Terms of Service here.</value>
+    <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Acknowledgements" xml:space="preserve">
+    <value>感謝</value>
+    <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copyright" xml:space="preserve">
+    <value>智慧財產權</value>
+    <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>瞭解更多</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LegalAndPolicies" xml:space="preserve">
+    <value>法律和政策</value>
+    <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TakedownGuidance" xml:space="preserve">
+    <value>侵權撤除守則</value>
+    <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

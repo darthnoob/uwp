@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Empty Cloud drive</value>
+    <value>Nube vacía</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Para subir archivos, hazclic en el icono de subida en la barra de acciones.</value>
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>Activar Subidas de la cámara </value>
+    <value>Activar Subidas de la cámara</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Click the toggle button below to automatically sync your photos and videos to MEGA.</value>
+    <value>Haz clic en el botón de abajo para subir automáticamente tus fotos y videos a MEGA.</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -138,15 +138,15 @@
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
-    <value>Manage your completed transfers on this panel.</value>
+    <value>Gestiona tus transferencias completadas en este panel.</value>
     <comment>Sub header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsHeader" xml:space="preserve">
-    <value>No active downloads</value>
+    <value>No hay descargas activas</value>
     <comment>Header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsSubHeader" xml:space="preserve">
-    <value>Manage your downloads on this panel.</value>
+    <value>Gestiona tus descargas en este panel.</value>
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
@@ -154,11 +154,11 @@
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>This folder doesn't contain any files or folders.</value>
+    <value>Esta carpeta no contiene ni archivos ni carpetas.</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Para subir archivos, hazclic en el icono de subida en la barra de acciones.</value>
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
@@ -166,39 +166,47 @@
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>You haven't sent any file or folder to the rubbish bin.</value>
+    <value>No has enviado ningún archivo o carpeta a la papelera.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
-    <value>No active uploads</value>
+    <value>No hay subidas activas</value>
     <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsSubHeader" xml:space="preserve">
-    <value>Manage your uploads on this panel.</value>
+    <value>Gestiona tus subidas en este panel.</value>
     <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsHeader" xml:space="preserve">
-    <value>Welcome to your Contacts manager</value>
+    <value>Bienvenido a tu Gestor de contactos</value>
     <comment>Header text for the empty state of the contacts list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsSubHeader" xml:space="preserve">
-    <value>You can add and manage your contacts on this panel.</value>
+    <value>Puedes añadir y gestionar tus contactos en este panel.</value>
     <comment>Sub header text for the empty state of the contacts list.</comment>
   </data>
   <data name="ES_IncomingSharesHeader" xml:space="preserve">
-    <value>No incoming shares</value>
+    <value>No hay carpetas compartidas entrantes</value>
     <comment>Header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_IncomingSharesSubHeader" xml:space="preserve">
-    <value>Manage your incoming shares on this panel.</value>
+    <value>Gestiona tus carpetas compartidas entrantes en este panel.</value>
     <comment>Sub header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesHeader" xml:space="preserve">
-    <value>No outgoing shares</value>
+    <value>No hay carpetas compartidas salientes</value>
     <comment>Header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
-    <value>Manage your outgoing shares on this panel.</value>
+    <value>Gestiona tus carpetas compartidas salientes en este panel.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineHeader" xml:space="preserve">
+    <value>No hay archivos sin conexión</value>
+    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineSubHeader" xml:space="preserve">
+    <value>Guardar archivos para verlos sin conexión</value>
+    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>

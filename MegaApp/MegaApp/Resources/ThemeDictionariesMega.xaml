@@ -116,6 +116,16 @@
         <Setter Property="Foreground" Value="{ThemeResource MegaRedColorBrush}" />
     </Style>
 
+    <Style x:Key="MegaLinkStyle" TargetType="HyperlinkButton">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="WrapWholeWords" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="Button">
         <!--<Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>-->
         <Setter Property="Background" Value="{ThemeResource SystemAccentColor}" />

@@ -130,11 +130,11 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Створення теки…</value>
+    <value>Creating folder…</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting…</value>
+    <value>Deleting...</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
@@ -173,6 +173,10 @@
     <value>Перейменування…</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
+  <data name="PM_ServersBusy" xml:space="preserve">
+    <value>Сервери занадто зайняті. Будь ласка, зачекайте.</value>
+    <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
+  </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
     <value>Decrypting nodes.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
@@ -200,5 +204,17 @@
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
     <value>Please wait while we open the folder link.</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiLocked" xml:space="preserve">
+    <value>This process is taking longer than expected. Please wait.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ApiRateLimit" xml:space="preserve">
+    <value>Too many requests. Please wait.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
+  </data>
+  <data name="PM_ConnectivityIssue" xml:space="preserve">
+    <value>Unable to reach MEGA. Please check your connectivity or try again later.</value>
+    <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

@@ -151,7 +151,8 @@
                     Margin="0,-4,0,0"
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind Value, Mode=OneTime}"
-                    Foreground="{StaticResource MegaRedColorBrush}" />
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Style="{StaticResource MegaLinkStyle}" />
             </StackPanel>
         </DataTemplate>
 
@@ -165,7 +166,8 @@
                     Margin="0,-4,0,0"
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind Value, Mode=OneTime}"
-                    Foreground="{StaticResource MegaRedColorBrush}" />
+                    Foreground="{StaticResource MegaRedColorBrush}"
+                    Style="{StaticResource MegaLinkStyle}" />
             </StackPanel>
         </DataTemplate>
 
@@ -186,7 +188,8 @@
                                 Margin="0,-4,0,0"
                                 Content="{Binding Key, Mode=OneTime}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
-                                NavigateUri="{Binding Value}" />
+                                NavigateUri="{Binding Value}"
+                                Style="{StaticResource MegaLinkStyle}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -198,7 +201,8 @@
                 HorizontalAlignment="Left"
                 Command="{TemplateBinding Command}"
                 Content="{Binding LearnMoreText}"
-                Foreground="{StaticResource MegaRedColorBrush}" />
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Style="{StaticResource MegaLinkStyle}" />
         </ControlTemplate>
 
         <DataTemplate x:Key="LegalAndPoliciesItemTemplate" x:DataType="settings:LegalAndPoliciesSettingViewModel">
@@ -223,7 +227,8 @@
                                     Margin="0,-4,0,0"
                                     Command="{x:Bind ActionCommand}"
                                     Content="{x:Bind Value, Mode=OneTime}"
-                                    Foreground="{StaticResource MegaRedColorBrush}" />
+                                    Foreground="{StaticResource MegaRedColorBrush}"
+                                    Style="{StaticResource MegaLinkStyle}" />
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

@@ -201,4 +201,12 @@
     <value>Управляйте исходящими общими папками здесь.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
+  <data name="ES_OfflineHeader" xml:space="preserve">
+    <value>Нет локальных файлов                                </value>
+    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineSubHeader" xml:space="preserve">
+    <value>Сохранить локально                                </value>
+    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
 </root>
