@@ -95,7 +95,7 @@ namespace MegaApp.ViewModels.CreateAccount
             switch (loginResult)
             {
                 case LoginResult.Success:
-                    SettingsService.SaveMegaLoginData(this.Email, SdkService.MegaSdk.dumpSession());
+                    SettingsService.SaveSessionToLocker(this.Email, SdkService.MegaSdk.dumpSession());
 
                     // Fetch nodes from MEGA
                     var fetchNodesResult = await this.FetchNodes();
