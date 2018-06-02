@@ -45,6 +45,7 @@
                     Text="{x:Bind Description, Mode=OneTime}"
                     Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
                 <ToggleSwitch
+                    Margin="0,0,0,16"
                     IsOn="{Binding Value, Mode=TwoWay}"
                     OffContent="{Binding DataContext.OffText, ElementName=SettingsPage}"
                     OnContent="{Binding DataContext.OnText, ElementName=SettingsPage}" />
