@@ -1493,8 +1493,8 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
-    <value>1 day remaining</value>
-    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+    <value>Остался 1 день</value>
+    <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
     <value>Осталось дней: {0}</value>
@@ -1526,11 +1526,11 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
-    <value>Achieved on</value>
+    <value>Достигнуто</value>
     <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ExpiresIn" xml:space="preserve">
-    <value>Expires in</value>
+    <value>Истекает через</value>
     <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Day" xml:space="preserve">
@@ -1558,7 +1558,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
-    <value>Why it is not working</value>
+    <value>Почему это не работает</value>
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
@@ -1644,8 +1644,8 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Реферральный статус </value>
-    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+    <value>Реферральный статус</value>
+    <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
     <value>В ожидании</value>

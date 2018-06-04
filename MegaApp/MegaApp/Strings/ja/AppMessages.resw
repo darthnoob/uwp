@@ -122,11 +122,11 @@
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Please confirm you agree with the Terms of Service.</value>
+    <value>ご利用規約に同意したことをご確認ください。</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>Failed to clean the rubbish bin. Please try again.</value>
+    <value>ごみ箱をきれいにすることができませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>The rubbish bin has been cleaned successfully.</value>
+    <value>ごみ箱は正常にきれいになりました。</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
@@ -142,12 +142,12 @@
     <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
   </data>
   <data name="AM_ConfirmEmail" xml:space="preserve">
-    <value>We have sent you a confirmation link to your selected email address: {0}.</value>
+    <value>ご選択されたメールアドレスに確認リンクを送信いたしました：{0}</value>
     <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ConfirmEmail_Title" xml:space="preserve">
-    <value>Confirm your email</value>
+    <value>メールをご確認ください</value>
     <comment>Title of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileFailed" xml:space="preserve">
@@ -186,7 +186,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the creation of a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderSuccess" xml:space="preserve">
-    <value>Folder '{0}' created successfully</value>
+    <value>フォルダ '{0}'が正常に作成されました</value>
     <comment>Message of the dialog displayed when create a folder successfully.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
@@ -213,15 +213,15 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process to delete settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_EmailAlreadyRegistered" xml:space="preserve">
-    <value>This email address has already registered an account with MEGA.</value>
+    <value>このメールアドレスはすでにMEGAのアカウントに登録されています。</value>
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
-    <value>Could not retrieve the account data from MEGA. Please, close the app and try again later.</value>
+    <value>MEGAからアカウントデータを取得できませんでした。アプリを終了してから、もう一度お試しください。</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
   </data>
   <data name="AM_FetchNodesFailed_Title" xml:space="preserve">
-    <value>Requesting account data failed</value>
+    <value>アカウントデータの要求に失敗しました</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed - (String as short as possible).</comment>
   </data>
   <data name="AM_FileNotFound" xml:space="preserve">
@@ -246,7 +246,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog displayed when the user is trying to open an invliad link.</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
-    <value>Could not load files and folders from MEGA. Please try again.</value>
+    <value>MEGAからファイルやフォルダを読み込めませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service.</comment>
   </data>
   <data name="AM_LoadNodesFailed_Title" xml:space="preserve">
@@ -271,7 +271,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when a user logged out successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginFailed" xml:space="preserve">
-    <value>MEGA Cloud Drive login failed. Please try again.</value>
+    <value>MEGAクラウドドライブのログインに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails.</comment>
   </data>
   <data name="AM_LoginFailed_Title" xml:space="preserve">
@@ -288,7 +288,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_IncorrectEmailFormat" xml:space="preserve">
-    <value>Invalid email format. Please try again.</value>
+    <value>メールアドレスの形式が無効です。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
@@ -300,7 +300,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
-    <value>Failed to move '{0}' to rubbish bin. Please try again.</value>
+    <value>'{0}'をごみ箱に移動できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -309,7 +309,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when the process/request to move nodes to the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to move '{0}' to the rubbish bin?</value>
+    <value>'{0}'をごみ箱に移動してもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the name of the node to be moved in runtime.</comment>
   </data>
@@ -318,7 +318,7 @@ Preserve the {0} code because is for include the name of the node to be moved in
     <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
-    <value>Item '{0}' successfully moved to the rubbish bin.</value>
+    <value>項目 '{0}'はごみ箱に正常に移動しました。</value>
     <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -347,7 +347,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}'?</value>
+    <value>'{0}'を削除してもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user want to remove definitely an itemfrom the rubbish bin, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
@@ -356,7 +356,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
-    <value>Failed removing '{0}'. Please try again.</value>
+    <value>'{0}'を削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
@@ -393,7 +393,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
   </data>
   <data name="AM_EmptyRequiredFields" xml:space="preserve">
-    <value>Fill the required fields and try again.</value>
+    <value>必須フィールドに入力し、もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
@@ -428,7 +428,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
-    <value>Incorrect email and/or password. Please try again.</value>
+    <value>メールアドレス/パスワードが間違っています。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
@@ -436,7 +436,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
-    <value>Failed to confirm account. Please try again.</value>
+    <value>アカウントの確認に失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.</comment>
   </data>
   <data name="AM_ConfirmAccountSucces" xml:space="preserve">
@@ -448,7 +448,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account but the confirm link is incomplete because it has less characters than it should (probably because the user hasn't copied and pasted the entire link).</comment>
   </data>
   <data name="AM_WrongPassword" xml:space="preserve">
-    <value>Incorrect password. Please try again.</value>
+    <value>パスワードが間違っています。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
@@ -460,7 +460,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
-    <value>Failed to download the file '{0}'. Please try again.</value>
+    <value>ファイル '{0}'のダウンロードに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to download a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -477,7 +477,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file '{0}' for upload. Please try again.</value>
+    <value>アップロードするファイル '{0}'の準備に失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -494,7 +494,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_UploadFileFailed" xml:space="preserve">
-    <value>Failed to upload the file '{0}'. Please try again.</value>
+    <value>ファイル '{0}'のアップロードに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to upload a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -503,7 +503,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when the process/request to upload a node failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFolderFailed" xml:space="preserve">
-    <value>Failed to select folder. Please, try again or select another folder: [{0}]</value>
+    <value>フォルダを選択できませんでした。もう一度やり直すか、別のフォルダを選択してください：[{0}]</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -520,7 +520,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
   </data>
   <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
-    <value>You don't have access to the path '{0}'. Please select another one and try again.</value>
+    <value>あなたはパス '{0}'にアクセスできません。別のものを選択してもう一度お試しください。</value>
     <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
@@ -548,11 +548,11 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when a user wants to cancel all the pending downloads.</comment>
   </data>
   <data name="AM_CancelSingleDownloadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected download?</value>
+    <value>選択したダウンロードをキャンセルしてもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected download.</comment>
   </data>
   <data name="AM_CancelSingleUploadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected upload?</value>
+    <value>選択したアップロードをキャンセルしてもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected upload.</comment>
   </data>
   <data name="AM_CancelUploadsQuestion" xml:space="preserve">
@@ -592,23 +592,23 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>The download path doesn't exist and an error occurred trying to create it. 
-Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
+    <value>ダウンロードパスが存在せず、それを作成しようとしてエラーが発生しました。
+もう一度お試しください。エラーが続く場合はsupport@mega.nzまでお問い合わせください。[{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>Unknown error in the download path. Please try again and if the problem persists contact support@mega.nz. [{0}]</value>
+    <value>ダウンロードパスに不明なエラーがあります。もう一度お試しください。問題が解決しない場合は、support@mega.nzまでご連絡ください。[{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_RenameNodeSuccess" xml:space="preserve">
-    <value>Item '{0}' renamed to '{1}'</value>
+    <value>項目 '{0}'の名前が '{1}'に変更されました</value>
     <comment>Message displayed when user has renamed a node with success.
 Preserve the '{0}' and '{1}'codes because are for include the old and new name in runtime.</comment>
   </data>
   <data name="AM_CopyFailed" xml:space="preserve">
-    <value>Failed copying nodes. Please try again.</value>
+    <value>ノードのコピーに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to copy node(s) failed.</comment>
   </data>
   <data name="AM_CopyFailed_Title" xml:space="preserve">
@@ -616,7 +616,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to copy node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveFailed" xml:space="preserve">
-    <value>Failed moving nodes. Please try again.</value>
+    <value>ノードの移動に失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to move node(s) failed.</comment>
   </data>
   <data name="AM_MoveFailed_Title" xml:space="preserve">
@@ -624,7 +624,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
+    <value>あなたのアカウントは、他人の権利の乱用、違法データの共有やインポート、システムの乱用など、MEGAのご利用規約に違反したために終了しました。</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -640,7 +640,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>サーバーのSSL鍵が照合できません。中間者攻撃かも知れません。</value>
+    <value>MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
@@ -652,25 +652,25 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to remove node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFailed" xml:space="preserve">
-    <value>Failed removing files or folders. Please try again.</value>
+    <value>ファイルかフォルダの削除に失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple nodes failed.</comment>
   </data>
   <data name="AM_MoveToRubbishBinMultipleNodesFailed" xml:space="preserve">
-    <value>Failed moving files or folders to the rubbish bin. Please try again.</value>
+    <value>ファイルかフォルダをごみ箱に移動できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to move multiple nodes to the rubbish bin failed.</comment>
   </data>
   <data name="AM_DownloadFolderFailed" xml:space="preserve">
-    <value>Failed to download the folder '{0}'. Please try again.</value>
+    <value>フォルダ '{0}'のダウンロードに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to download a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_UploadFolderFailed" xml:space="preserve">
-    <value>Failed to upload the folder '{0}'. Please try again.</value>
+    <value>フォルダ '{0}'のアップロードに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to upload a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>The Recovery Key has been copied to your clipboard.</value>
+    <value>回復キーがクリップボードにコピーされました。</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -678,7 +678,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>Recovery Key copy failed</value>
+    <value>回復キーのコピーに失敗しました</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
@@ -686,27 +686,27 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
-    <value>File '{0}' has been saved.</value>
+    <value>ファイル '{0}'が保存されました。</value>
     <comment>Message of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SavedFile_Title" xml:space="preserve">
-    <value>File saved</value>
+    <value>ファイルが保存されました</value>
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>Failed to save file '{0}'.</value>
+    <value>ファイル '{0}'の保存に失敗しました。</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">
-    <value>Save file failed</value>
+    <value>ファイルを保存できませんでした</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_PreviewImageFailed_Title" xml:space="preserve">
-    <value>Image preview failed</value>
+    <value>画像プレビューに失敗しました</value>
     <comment>Title of the dialog displayed when the process to show a preview of an image file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PreviewImageInitFailed" xml:space="preserve">
-    <value>Failed to initialize the previews of image files. Please try again.</value>
+    <value>画像ファイルのプレビューを初期化できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to initialize the previews of image files failed.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed" xml:space="preserve">
@@ -718,11 +718,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard - (String as short as possible).</comment>
   </data>
   <data name="AM_GetLinkFailed" xml:space="preserve">
-    <value>Failed getting the link. Please try again.</value>
+    <value>リンクを取得できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) failed.</comment>
   </data>
   <data name="AM_GetLinkFailed_Title" xml:space="preserve">
-    <value>Get link failed</value>
+    <value>リンクを取得できませんでした</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
@@ -734,11 +734,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
-    <value>Link shared by the UWP MEGA app.</value>
+    <value>UWP MEGAアプリで共有されるリンク。</value>
     <comment>Message or description for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed" xml:space="preserve">
-    <value>Failed to share link from MEGA. Please try again.</value>
+    <value>MEGAからのリンクを共有できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to share a link from MEGA with other app fails.</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed_Title" xml:space="preserve">
@@ -746,23 +746,23 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process to share a link from MEGA with other app fails - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega_Title" xml:space="preserve">
-    <value>Link shared from MEGA</value>
+    <value>MEGAから共有されるリンク</value>
     <comment>Title for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveLinkFailed" xml:space="preserve">
-    <value>Failed removing the link. Please try again.</value>
+    <value>リンクを削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to disable export node (remove link) failed.</comment>
   </data>
   <data name="AM_RemoveLinkFailed_Title" xml:space="preserve">
-    <value>Remove link failed</value>
+    <value>リンクを削除できませんでした</value>
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
-    <value>Failed setting the link expiry date. Please try again.</value>
+    <value>リンクの有効期限を設定できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
-    <value>Set expiry date failed</value>
+    <value>有効期限の設定に失敗しました</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
@@ -774,7 +774,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>Invalid link detected during app activation.</value>
+    <value>アプリのアクティベーション中に無効なリンクが検出されました。</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
@@ -782,15 +782,15 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
-    <value>Failed to resume your session. Please, close the app and try again later.</value>
+    <value>セッションを再開できませんでした。アプリを終了してから、もう一度お試しください。</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
-    <value>We have sent you an email confirming your password change.</value>
+    <value>パスワードの変更を確認するメールを送信いたしました。</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_PasswordChanged_Title" xml:space="preserve">
-    <value>Password changed</value>
+    <value>パスワードが変更されました</value>
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
@@ -810,11 +810,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_ProductUnAvailable" xml:space="preserve">
-    <value>The selected MEGA subscription is temporarily unavailable. Please try again or contact Microsoft Store support.</value>
+    <value>選択されたMEGAサブスクリプションは一時的にご利用いただけません。もう一度お試しいただくか、Microsoftストアのサポートにお問い合わせください。</value>
     <comment>Message of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_ProductUnAvailable_Title" xml:space="preserve">
-    <value>Product unavailable</value>
+    <value>製品がご利用いただけません</value>
     <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_PurchaseFailed" xml:space="preserve">
@@ -834,15 +834,15 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_UpdateProfileFailed" xml:space="preserve">
-    <value>Failed to update your profile. Please try again.</value>
+    <value>プロファイルを更新できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_UpdateProfileFailed_Title" xml:space="preserve">
-    <value>Update profile failed</value>
+    <value>プロファイルの更新に失敗しました</value>
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>One download has failed. Please review your download list and try again.</value>
+    <value>あるダウンロードに失敗しました。ダウンロードリストを確認して、もう一度お試しください。</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
@@ -850,7 +850,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
-    <value>Please go to your inbox and click the link to confirm your new email address.</value>
+    <value>受信トレイに移動し、新しいメールアドレスを確認するためのリンクをクリックしてください。</value>
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
@@ -858,20 +858,20 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
   </data>
   <data name="AM_ChangeEmailGenericError" xml:space="preserve">
-    <value>Failed to change your email. Please try again later.</value>
+    <value>メールアドレスを変更できませんでした。後でもう一度お試しください。</value>
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is: {0}</value>
+    <value>おめでとうございます。このMEGAアカウント用のあなたの新しいメールアドレスは次のとおりです：{0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>The link you are using for changing the email is not valid.</value>
+    <value>メールアドレスの変更用に使用しているリンクは無効です。</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
-    <value>Incorrect account. Please login into the right account and try again.</value>
+    <value>アカウントが正しくありません。正しいアカウントにログインしてもう一度お試しください。</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
@@ -892,61 +892,61 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
-    <value>Failed to remove the contact {0}. Please try again.</value>
+    <value>連絡先{0}を削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} from your contact list?</value>
+    <value>連絡先リストから{0}を削除してもよろしいですか？　</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Access to any folders shared with you by the selected contacts will be lost.</value>
+    <value>選択された連絡先があなたと共有するフォルダへのアクセスは失われます。</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} users from your contact list?</value>
+    <value>連絡先リストから{0}人のユーザーを削除してもよろしいですか？　</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
-    <value>Failed removing contacts. Please try again.</value>
+    <value>連絡先を削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave {0} shared folders?</value>
+    <value>{0}個の共有フォルダを残してもよろしいですか？　</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Leave shared folders</value>
+    <value>共有フォルダを残す</value>
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <value>共有フォルダ "{0}"を残すことができませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave “{0}”?</value>
+    <value>"{0}"を残しておいてよろしいですか？　</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderWarning" xml:space="preserve">
-    <value>Access to shared folder content will be lost.</value>
+    <value>共有フォルダのコンテンツへのアクセスは失われます。</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one or multiple shared folders.</comment>
   </data>
   <data name="AM_LeaveSharedFolder_Title" xml:space="preserve">
-    <value>Leave shared folder</value>
+    <value>共有フォルダを残す</value>
     <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <value>複数の共有フォルダを残すことができませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
   </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
-    <value>The log ({0}) will be deleted.</value>
+    <value>ログ（{0}）は削除されます。</value>
     <comment>Alert message shown when the DEBUG mode is disabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -955,7 +955,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
-    <value>A log will be created ({0}).</value>
+    <value>ログが作成されます（{0}）。</value>
     <comment>Alert message shown when the DEBUG mode is enabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -980,66 +980,66 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to {0} shared folders?</value>
+    <value>{0}個の共有フォルダへのアクセスを削除してもよろしいですか？　</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access these folders.</value>
+    <value>連絡先はこれらのフォルダにアクセスできなくなります。</value>
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Remove access to shared folders</value>
+    <value>共有フォルダへのアクセスを削除する</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder "{0}". Please try again.</value>
+    <value>共有フォルダ "{0}"へのアクセスを削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to “{0}”?</value>
+    <value>"{0}"へのアクセスを削除してもよろしいですか？　</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access this folder.</value>
+    <value>連絡先はこのフォルダにアクセスできなくなります。</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one shared folder.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolder_Title" xml:space="preserve">
-    <value>Remove shared folder access</value>
+    <value>共有フォルダへのアクセスを削除する</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to remove access to multiple shared folders. Please try again.</value>
+    <value>複数の共有フォルダへのアクセスを削除できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
-    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <value>アプリケーションで問題が発生しました。ご不便をおかけし、申し訳ございません。何かにお取り組み中の場合、取り組んでいる情報は失われるかもしれません。</value>
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
-    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <value>アプリケーション開発者に通知し、準備されたエラーレポートを送信しますか？　これは問題をより迅速に解決するのに役立ちます。</value>
     <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationError_Title" xml:space="preserve">
-    <value>Application Error</value>
+    <value>アプリケーションエラー</value>
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareFolderFailed" xml:space="preserve">
-    <value>Failed to share the folder. Please try again.</value>
+    <value>フォルダを共有できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_ShareFolderFailedOwnEmail" xml:space="preserve">
-    <value>You are trying to share the folder to yourself.</value>
+    <value>自分自身とフォルダを共有しようとしています。</value>
     <comment>Message of the dialog displayed when the process/request to share a folder failed because the user is trying to share the folder to his/her own e-mail.</comment>
   </data>
   <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
-    <value>Error sharing folder</value>
+    <value>フォルダを共有する際にエラーが発生しました</value>
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_InvalidKeyFile" xml:space="preserve">
-    <value>The file you selected is too large/small. Please make sure you select the file containing your 22-character Recovery Key.</value>
+    <value>選択されたファイルが大きすぎ/小さすぎます。22文字の回復キーを含むファイルを選択してください。</value>
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
@@ -1047,15 +1047,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_CheckEmail" xml:space="preserve">
-    <value>If you can’t access your email account, you will need to contact support@mega.nz.</value>
+    <value>メールアカウントにアクセスできない場合、support@mega.nzまでご連絡ください。</value>
     <comment>Message of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_CheckEmail_Title" xml:space="preserve">
-    <value>Please check your email</value>
+    <value>メールを確認してください。</value>
     <comment>Title of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_InvalidEmail" xml:space="preserve">
-    <value>Please check the email address and try again.</value>
+    <value>メールアドレスを確認して、もう一度お試しください。</value>
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
@@ -1063,11 +1063,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
-    <value>Your password has not been reset. Please try again or contact support.</value>
+    <value>あなたのパスワードはリセットされていません。もう一度お試しいただくか、サポートにお問い合わせください。</value>
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Error on password reset</value>
+    <value>パスワードリセット時のエラー</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1075,7 +1075,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
   </data>
   <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
-    <value>Successful password reset</value>
+    <value>パスワードのリセットに成功しました</value>
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
@@ -1083,7 +1083,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
-    <value>Recovery link expired</value>
+    <value>回復リンクの期限切れ</value>
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
@@ -1091,7 +1091,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink_Title" xml:space="preserve">
-    <value>Invalid recovery link</value>
+    <value>回復リンクが無効です</value>
     <comment>Title of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountParked" xml:space="preserve">
@@ -1111,15 +1111,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
-    <value>Invalid sign-up link</value>
+    <value>サインアップリンクが無効です</value>
     <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_SignUpLinkExpired" xml:space="preserve">
-    <value>This sign-up link has expired, please try again.</value>
+    <value>このサインアップリンクの有効期限が切れました。もう一度お試しください。</value>
     <comment>Message of the dialog displayed when the sign-up is expired.</comment>
   </data>
   <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
-    <value>Sign-up link expired</value>
+    <value>サインアップリンクの有効期限切れ</value>
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
@@ -1127,12 +1127,12 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <value>たった{0}でPROアカウントにアップグレードしてダウンロードを続行できます。</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Wait {0} for your transfer quota to reset.</value>
+    <value>転送容量がリセットされるまで{0}お待ちください。</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
@@ -1149,7 +1149,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
-    <value>Failed to open link. No valid format.</value>
+    <value>リンクを開けませんでした。有効な形式がありません。</value>
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
@@ -1157,7 +1157,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
-    <value>Failed importing nodes. Please try again.</value>
+    <value>ノードのインポートに失敗しました。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
   </data>
   <data name="AM_ImportFailed_Title" xml:space="preserve">
@@ -1165,11 +1165,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Failed to open the folder link. Please try again.</value>
+    <value>フォルダリンクを開けませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
-    <value>Open folder link failed</value>
+    <value>フォルダリンクを開けませんでした</value>
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
@@ -1191,11 +1191,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Failed to open the file link. Please try again.</value>
+    <value>ファイルリンクを開けませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
-    <value>Open file link failed</value>
+    <value>ファイルリンクを開けませんでした</value>
     <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkUnavailableTitle" xml:space="preserve">
@@ -1203,11 +1203,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
+    <value>あなたのアカウントは、MEGAのご利用規約に複数違反したため、凍結されました。メールの受信トレイを確認してください。</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
+    <value>MEGAの暗号化技術により、データを失うことなくパスワードをリセットすることはできません。パスワードは確実に覚えておいてください。</value>
     <comment>Message to describe the purpose of the password reminder dialog.</comment>
   </data>
   <data name="AM_PasswordReminder_Title" xml:space="preserve">
@@ -1215,23 +1215,23 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the password reminder dialog.</comment>
   </data>
   <data name="AM_TestPassword" xml:space="preserve">
-    <value>Please test your password below to ensure you remember it. If you lose your password, you will lose access to your data.</value>
+    <value>以下にパスワードを入力し、パスワードを覚えていることを確認してください。パスワードを失った場合、データにアクセスできなくなります。</value>
     <comment>Message to describe the purpose of the dialog to test the password.</comment>
   </data>
   <data name="AM_TestPasswordSuccess" xml:space="preserve">
-    <value>Password accepted, we still recommend you back up your Recovery Key.</value>
+    <value>パスワードは受け入れられましたが、回復キーのバックアップをお勧めいたします。</value>
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>Wrong password! Backup your Recovery Key as soon as possible!</value>
+    <value>パスワードが間違っています！　できるだけ早く回復キーをバックアップしてください！　　</value>
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
-    <value>Test Password</value>
+    <value>パスワードのテスト</value>
     <comment>Title of the test password dialog.</comment>
   </data>
   <data name="AM_RecoveryKeyExported" xml:space="preserve">
-    <value>The Recovery Key has been exported.</value>
+    <value>回復キーはエクスポートされました。</value>
     <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
@@ -1239,41 +1239,41 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
-    <value>Failed to export the Recovery Key. Please try again.</value>
+    <value>回復キーをエクスポートできませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
-    <value>Recovery Key export failed</value>
+    <value>回復キーのエクスポートに失敗しました</value>
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} items from offline?</value>
+    <value>{0}個の項目をオフラインから削除してもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}' from offline?</value>
+    <value>{0}をオフラインから削除してもよろしいですか？　</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>Remove from offline?</value>
+    <value>オフラインから削除しますか？　</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">
-    <value>Failed to open the selected folder</value>
+    <value>選択したフォルダを開くことができませんでした</value>
     <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
   </data>
   <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
-    <value>Folder failed to open</value>
+    <value>フォルダを開けませんでした</value>
     <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordChangeFailed" xml:space="preserve">
-    <value>Failed to change your password. Please try again.</value>
+    <value>パスワードを変更できませんでした。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the user has failed to change his password</comment>
   </data>
   <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
-    <value>Error changing password</value>
+    <value>パスワード変更時にエラー</value>
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
 </root>
