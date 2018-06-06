@@ -257,9 +257,9 @@ namespace MegaApp.Services
         /// Show a dialog to setup the Multi-Factor Authentication for the account
         /// </summary>
         /// <returns>TRUE if the user continues with the setup process or FALSE in other case</returns>
-        public static async Task<bool> ShowMultiFactorAuthenticationSetupDialog()
+        public static async Task<bool> ShowMultiFactorAuthSetupDialogAsync()
         {
-            var mfaSetupDialog = new MultiFactorAuthenticationSetupDialog();
+            var mfaSetupDialog = new MultiFactorAuthSetupDialog();
             await mfaSetupDialog.ShowAsyncQueue();
             return mfaSetupDialog.ViewModel.DialogResult;
         }

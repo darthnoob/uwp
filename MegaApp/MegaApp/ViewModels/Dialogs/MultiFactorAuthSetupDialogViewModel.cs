@@ -6,9 +6,9 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
 {
-    public class MultiFactorAuthenticationSetupDialogViewModel : BaseContentDialogViewModel
+    public class MultiFactorAuthSetupDialogViewModel : BaseContentDialogViewModel
     {
-        public MultiFactorAuthenticationSetupDialogViewModel() : base()
+        public MultiFactorAuthSetupDialogViewModel() : base()
         {
             this.CloseButtonVisibility = Visibility.Visible;
 
