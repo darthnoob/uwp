@@ -329,7 +329,7 @@
     <Compile Include="ViewModels\Settings\ButtonSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\LegalAndPoliciesViewModel.cs" />
     <Compile Include="ViewModels\Settings\LinkSettingViewModel.cs" />
-    <Compile Include="ViewModels\Settings\TwoFactorAuthenticationSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\MultiFactorAuthenticationSettingViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />

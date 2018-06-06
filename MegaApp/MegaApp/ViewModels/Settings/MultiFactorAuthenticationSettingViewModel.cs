@@ -3,15 +3,18 @@ using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
 {
-    public class TwoFactorAuthenticationSettingViewModel : SettingViewModel<bool>
+    public class MultiFactorAuthenticationSettingViewModel : SettingViewModel<bool>
     {
-        public TwoFactorAuthenticationSettingViewModel()
+        public MultiFactorAuthenticationSettingViewModel()
             : base(ResourceService.UiResources.GetString("UI_EnableTwoFactorAuthentication"), 
-                  null, "TwoFactorAuthenticationSettingsKey")
+                  null, "MultiFactorAuthenticationSettingsKey")
         {
             this.ValueChanged += async (sender, args) =>
             {
                 await StoreValue(this.Key, this.Value);
+
+                if(this.Value)
+                    DialogService.ShowMultiFactorAuthenticationSetupDialog();
             };
         }
 
