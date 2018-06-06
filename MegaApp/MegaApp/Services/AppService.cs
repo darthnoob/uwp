@@ -530,7 +530,7 @@ namespace MegaApp.Services
 
             // Clear settings, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
-            SettingsService.ClearMegaLoginData();
+            SettingsService.RemoveSessionFromLocker();
             ClearAppCache(false);
 
             // Clear all the account and user data info

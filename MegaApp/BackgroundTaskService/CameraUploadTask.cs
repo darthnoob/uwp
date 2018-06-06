@@ -121,9 +121,8 @@ namespace BackgroundTaskService
         {
             try
             {
-                // Try to load shared session token file
-                var sessionToken = await SettingsService.LoadSettingFromFileAsync<string>(
-                    ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+                // Try to load shared session token
+                var sessionToken = await SettingsService.LoadSessionFromLockerAsync();
 
                 if (string.IsNullOrEmpty(sessionToken) || string.IsNullOrWhiteSpace(sessionToken))
                     throw new Exception("Session token is empty.");

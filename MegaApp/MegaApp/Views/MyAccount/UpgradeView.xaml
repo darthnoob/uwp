@@ -214,13 +214,12 @@
                         FontSize="14"
                         Text="{Binding RefundPolicyDescriptionText, Mode=OneTime}"
                         TextWrapping="WrapWholeWords" />
-                    <TextBlock 
+                    <HyperlinkButton
+                        Content="{x:Bind ViewModel.SeeMoreInfoText, Mode=OneTime}"
                         FontSize="14"
-                        TextWrapping="WrapWholeWords">
-                        <Hyperlink NavigateUri="{Binding RefundPolicyUri, Mode=OneTime}">
-                            <Run Foreground="{StaticResource MegaRedColorBrush}" Text="{Binding SeeMoreInfoText, Mode=OneTime}" />
-                        </Hyperlink>
-                    </TextBlock>
+                        Foreground="{StaticResource MegaRedColorBrush}"
+                        NavigateUri="{x:Bind ViewModel.RefundPolicyUri, Mode=OneTime}"
+                        Style="{StaticResource MegaLinkStyle}" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

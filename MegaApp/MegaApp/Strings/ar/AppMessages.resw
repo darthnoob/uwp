@@ -592,8 +592,8 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>The download path doesn't exist and an error occurred trying to create it. 
-Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
+    <value>المسار المحدد للتنزيل غير موجود وحدثت مشكلة اثناء محاولة انشائه. 
+يرجى إعادة المحاولة وفي حال استمرار المشكلة يرجى الاتصال مع فريق الدعم support@mega.nz [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -640,11 +640,11 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>شهادتنا SSL/TLS لايمكن توثيقها، ربما تتأثر بهجوم رجل في الوسط.</value>
+    <value>لم ينجح تطبيق MEGA بالاتصال الآمن ببروتوكول الاتصال الآمن SSL. قد تكون متصلا بشبكة لاسلكية WiFi عمومية بمتطلبات خاصة إضافية.</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>تم تسجيل الخروج</value>
+    <value>خطأ بشهادة SSL</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -674,7 +674,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>فشل في نسخ مفتاح الإستعادة إلى الحافظة. الرجاء المحاولة ثانية. </value>
+    <value>فشل في نسخ مفتاح الإستعادة إلى الحافظة. الرجاء المحاولة ثانية.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
@@ -682,7 +682,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>تم نسخ مفتاح الإستعادة </value>
+    <value>تم نسخ مفتاح الإستعادة</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -710,7 +710,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process to initialize the previews of image files failed.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed" xml:space="preserve">
-    <value>فشتل في نسخ رابط MEGA لحافظتك </value>
+    <value>فشتل في نسخ رابط MEGA لحافظتك</value>
     <comment>Message of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed_Title" xml:space="preserve">
@@ -758,7 +758,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
-    <value>فشل عملية اعداد تاريخ انتهاء صلاحية الرابط. يرجى إعادة المحاولة.</value>
+    <value>فشل عملية اعداد تاريخ انتهاء صلاحية الرابط. يرجى إعادة المحاولة</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
@@ -774,11 +774,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>الرابط الكتروني غير صالح لعملية تفعيل التطبيق.</value>
+    <value>الرابط غير صالح لعملية تفعيل التطبيق</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
-    <value>رابط غير صالح</value>
+    <value>رابط غير موجود</value>
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
@@ -806,7 +806,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_AlreadyPurchased_Title" xml:space="preserve">
-    <value>تم شراءه مسبقا </value>
+    <value>تم شراءه مسبقا</value>
     <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_ProductUnAvailable" xml:space="preserve">
@@ -826,7 +826,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
   </data>
   <data name="AM_PurchaseSucceeded" xml:space="preserve">
-    <value>تم بنجاح شراء الاشتراك في MEGA </value>
+    <value>تم بنجاح شراء الاشتراك في MEGA</value>
     <comment>Message of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_PurchaseSucceeded_Title" xml:space="preserve">
@@ -862,7 +862,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is: {0}</value>
+    <value>تهانينا، عنوان بريدك الالكتروني الجديد لحسابك على MEGA هو {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
@@ -875,7 +875,7 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
-    <value>لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني </value>
+    <value>لديك بالفعل جهة اتصال مرتبطة بهذا البريد الإلكتروني</value>
     <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
   </data>
   <data name="AM_InviteContactFailed" xml:space="preserve">
@@ -883,7 +883,7 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
   </data>
   <data name="AM_InviteContactSuccessfully" xml:space="preserve">
-    <value>المستخدم {0} قد تم دعوته وسيظر على لائحة جهات اتصالك حالما يقبل الدعوة </value>
+    <value>المستخدم {0} قد تم دعوته وسيظر على لائحة جهات اتصالك حالما يقبل الدعوة</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
 Preserve the [{0}] code because is for include the contact email in runtime.</comment>
   </data>
@@ -892,12 +892,12 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
-    <value>Failed to remove the contact {0}. Please try again.</value>
+    <value>فشل عملية حذف جهة الاتصال {0}. يرجى إعادة المحاولة</value>
     <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} from your contact list?</value>
+    <value>هل تريد حذف {0} من قائمة جهات الاتصال الخاصة بك؟</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
@@ -906,7 +906,7 @@ Keep the '{0}' code because is for include the contact email or name in runtime.
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} users from your contact list?</value>
+    <value>هل تريد حذف {0} مستخدم من قائمة جهات الاتصال الخاصة بك؟</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
@@ -915,7 +915,7 @@ Keep the '{0}' code because is for include the number of contacts in runtime.</c
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave {0} shared folders?</value>
+    <value>هل تريد مغادرة {0} مجلد متشارك؟</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
@@ -924,12 +924,12 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <value>فشل مغادرة المجلد المتشارك “{0}”. يرجى إعادة المحاولة</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave “{0}”?</value>
+    <value>هل تريد مغادرة “{0}”؟</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -946,7 +946,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
   </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
-    <value>The log ({0}) will be deleted.</value>
+    <value>سيتم حذف سجل الأخطاء ({0})</value>
     <comment>Alert message shown when the DEBUG mode is disabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -955,7 +955,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
-    <value>A log will be created ({0}).</value>
+    <value>سيتم انشاء سجل أخطاء ({0})</value>
     <comment>Alert message shown when the DEBUG mode is enabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -968,7 +968,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
   </data>
   <data name="AM_SaveLogFile_Title" xml:space="preserve">
-    <value>احفظ ملف السجل </value>
+    <value>احفظ ملف السجل</value>
     <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
   </data>
   <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
@@ -980,7 +980,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to {0} shared folders?</value>
+    <value>هل تريد حذف صلاحية الولوج الى {0} مجلد متشارك؟</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
@@ -993,12 +993,12 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder "{0}". Please try again.</value>
+    <value>فشل عملية حذف صلاحية الولوج الى المجلد “{0}”. يرجى إعادة المحاولة</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to “{0}”?</value>
+    <value>هل تريد حذف صلاحية الولوج الى “{0}”؟</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1011,7 +1011,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to remove access to multiple shared folders. Please try again.</value>
+    <value>فشل عملية حذف صلاحية الولوج الى المجلدات المتشاركة. يرجى إعادة المحاولة</value>
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
@@ -1019,7 +1019,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
-    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <value>هل تريد اخطار مطوري التطبيق وارسال تقرير الأخطاء إليهم؟ ذلك سيساعد بحل المشكلة سريعا</value>
     <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationError_Title" xml:space="preserve">
@@ -1039,7 +1039,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_InvalidKeyFile" xml:space="preserve">
-    <value>The file you selected is too large/small. Please make sure you select the file containing your 22-character Recovery Key.</value>
+    <value>الملف المختار ذو حجم غير صحيح. يرجى التأكد من اختيار ملف يحوي مفتاح الاسترجاع الخاص بك المؤلف من 22 محرف</value>
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
@@ -1047,7 +1047,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_CheckEmail" xml:space="preserve">
-    <value>If you can’t access your email account, you will need to contact support@mega.nz.</value>
+    <value>اذا كنت غير قادر على الولوج الى بريدك الالكتروني، يرجى الاتصال مع فريق الدعم على support@mega.nz</value>
     <comment>Message of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_CheckEmail_Title" xml:space="preserve">
@@ -1127,12 +1127,12 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <value>يمكنك ترقية اشتراكك الى احترافي PRO فقط بـ {0} لمتابعة التنزيل</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Wait {0} for your transfer quota to reset.</value>
+    <value>يرجى الانتظار {0} حتى يتم إعادة تصفير حجم التراسل المتاح</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
@@ -1153,7 +1153,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
-    <value>فشل في فتح الرابط </value>
+    <value>فشل في فتح الرابط</value>
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
@@ -1203,7 +1203,77 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
+    <value>تم إيقاف حسابك لدى MEGA بسبب عدة خروقات لشروط استخدام الخدمة. يرجى قراءة البريد المرسل اليك</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
+  </data>
+  <data name="AM_PasswordReminder" xml:space="preserve">
+    <value>ان إعادة تعيين كلمة المرور الخاصة بك بسبب ضياعها سيؤدي الى فقدان المعطيات المخزنة كونها محمية بتقنية MEGA للتشفير. لذلك تأكد من حفظ وتذكر كلمة المرور.</value>
+    <comment>Message to describe the purpose of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_PasswordReminder_Title" xml:space="preserve">
+    <value>هل تتذكر كلمة مرورك؟</value>
+    <comment>Title of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_TestPassword" xml:space="preserve">
+    <value>تحقق من كلمة المرور خاصتك ادناه للتأكد من تذكرك لها. ضياع كلمة المرور سيؤدي الى فقدان الولوج للبيانات الخاصة بك</value>
+    <comment>Message to describe the purpose of the dialog to test the password.</comment>
+  </data>
+  <data name="AM_TestPasswordSuccess" xml:space="preserve">
+    <value>تم قبول كلمة المرور، نحن ننصح بالاحتفاظ الاحتياطي لمفتاح الاسترجاع خاصتك</value>
+    <comment>Message displayed when the password test result is ok.</comment>
+  </data>
+  <data name="AM_TestPasswordWarning" xml:space="preserve">
+    <value>كلمة المرور خاطئة، قم باستخراج والاحتفاظ بفتاح الاسترجاع خاصتك بأسرع ما يمكن</value>
+    <comment>Warning message displayed when the password test fails.</comment>
+  </data>
+  <data name="AM_TestPassword_Title" xml:space="preserve">
+    <value>اختبار كلمة المرور</value>
+    <comment>Title of the test password dialog.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported" xml:space="preserve">
+    <value>تم تصدير مفتاح الاسترجاع</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
+    <value>تم تصدير مفتاح الاستعادة</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
+    <value>فشل تصدير مفتاح الاسترجاع. يرجى إعادة المحاولة</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
+    <value>فشل عملية تصدير مفتاح الاسترجاع</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
+    <value>هل تريد حذف {0} عنصر من التوافر دون اتصال؟</value>
+    <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
+    <value>هل تريد حذف ‘{0}’ عنصر من التوافر دون اتصال؟</value>
+    <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
+    <value>حذف من التوافر دون اتصال؟</value>
+    <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
+  </data>
+  <data name="AM_OpenFolderFailed" xml:space="preserve">
+    <value>فشل عملية فتح المجلد المحدد</value>
+    <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
+  </data>
+  <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
+    <value>فشل عملية فتح المجلد</value>
+    <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed" xml:space="preserve">
+    <value>فشل عملية تغيير كلمة المرور، يرجى إعادة المحاولة</value>
+    <comment>Message of the dialog displayed when the user has failed to change his password</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
+    <value>حدث خطأ اثناء تغيير كلمة المرور</value>
+    <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
 </root>

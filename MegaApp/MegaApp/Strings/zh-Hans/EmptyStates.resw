@@ -170,7 +170,7 @@
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
-    <value> 当前无上传活动</value>
+    <value>当前无上传活动</value>
     <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsSubHeader" xml:space="preserve">
@@ -200,5 +200,13 @@
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
     <value>在面板上管理您的传出共享。</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineHeader" xml:space="preserve">
+    <value>无离线文件</value>
+    <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
+  </data>
+  <data name="ES_OfflineSubHeader" xml:space="preserve">
+    <value>保存供离线查看</value>
+    <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>

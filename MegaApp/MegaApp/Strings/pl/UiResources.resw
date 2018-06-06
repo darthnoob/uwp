@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_AddFolder" xml:space="preserve">
-    <value>Add folder</value>
+    <value>Dodaj folder</value>
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
-    <value>I agree with the Terms of Service.</value>
+    <value>Zgadzam się z Warunkami świadczenia usług.</value>
     <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Cloud drive</value>
+    <value>Dysk w chmurze</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Watermark label for the confirmation password field into 'create account' page or when changing the password  - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmYourAccount" xml:space="preserve">
-    <value>Enter your password to finish creating your account.</value>
+    <value>Wpisz swoje hasło, aby zakończyć tworzenie konta.</value>
     <comment>Text for the confirmation page with the instructions to follow.</comment>
   </data>
   <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
@@ -166,7 +166,7 @@
     <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateFolder" xml:space="preserve">
-    <value>Create folder</value>
+    <value>Utwórz folder</value>
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
@@ -231,7 +231,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Multi select' button, link, text, title, etc. for multiple selection - (String as short as possible).</comment>
   </data>
   <data name="UI_MyAccount" xml:space="preserve">
-    <value>My account</value>
+    <value>Moje konto</value>
     <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
@@ -275,19 +275,19 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Settings' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFile" xml:space="preserve">
-    <value>File</value>
+    <value>Plik</value>
     <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SingleFolder" xml:space="preserve">
     <value>Katalog</value>
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_ViewTermsOfService" xml:space="preserve">
-    <value>View the Terms of Service here.</value>
+  <data name="UI_TermsOfService" xml:space="preserve">
+    <value>Warunki korzystania z Serwisu</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
-    <value>Transfer</value>
+    <value>Przesyłanie</value>
     <comment>Label for any 'Transfer' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferManager" xml:space="preserve">
@@ -379,7 +379,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Cancel download' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelTransfer" xml:space="preserve">
-    <value>Cancel transfer</value>
+    <value>Anulowanie przesyłania</value>
     <comment>Label for any 'Cancel transfer' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelTransfers" xml:space="preserve">
@@ -411,11 +411,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
-    <value>Upload your photos to your account.</value>
+    <value>Wgraj swoje zdjęcia na swoje konto.</value>
     <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsTitle" xml:space="preserve">
-    <value>Enable auto camera uploads</value>
+    <value>Włącz przesyłanie plików z aparatu fotograficznego</value>
     <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKey" xml:space="preserve">
@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
-    <value>Your Recovery Key allows you to login to your account even if you forget your password. Store it somewhere safe.</value>
+    <value>Klucz zapasowy umożliwia zalogowanie się na swoje konto, nawet jeśli zapomnisz hasła. Przechowuj go w bezpiecznym miejscu.</value>
     <comment>Label for any 'Recovery key description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettings" xml:space="preserve">
@@ -431,7 +431,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Security settings' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SecuritySettingsDescription" xml:space="preserve">
-    <value>Security settings differ on each of your connected devices.</value>
+    <value>Ustawienia zabezpieczeń różnią się dla każdego z podłączonych urządzeń.</value>
     <comment>Label for any 'Security settings description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_About" xml:space="preserve">
@@ -439,7 +439,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AboutDescription" xml:space="preserve">
-    <value>Information about the MEGA application</value>
+    <value>Informacje o aplikacji MEGA</value>
     <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyKey" xml:space="preserve">
@@ -447,11 +447,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Copy key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveKey" xml:space="preserve">
-    <value>Save key</value>
+    <value>Zapisz klucz</value>
     <comment>Label for any 'Save key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PlainText" xml:space="preserve">
-    <value>Plain text</value>
+    <value>Zwykły tekst</value>
     <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copy" xml:space="preserve">
@@ -487,7 +487,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Completed' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ResumeAll" xml:space="preserve">
-    <value>Resume all</value>
+    <value>Wznów wszystko</value>
     <comment>Label for any 'Resume all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Resume" xml:space="preserve">
@@ -515,7 +515,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
-    <value>Previous</value>
+    <value>Poprzedni</value>
     <comment>Label for any 'Previous' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Share" xml:space="preserve">
@@ -523,7 +523,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Share' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ExportLink" xml:space="preserve">
-    <value>Export link</value>
+    <value>Eksportuj link</value>
     <comment>Label for any 'Export link' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Preview" xml:space="preserve">
@@ -564,7 +564,7 @@ Preserve the {0} code because is for include the name of the destination folder 
 </comment>
   </data>
   <data name="UI_File" xml:space="preserve">
-    <value>File</value>
+    <value>Plik</value>
     <comment>Label for any 'File' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -590,11 +590,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
-    <value>Enable offline view</value>
+    <value>Włącz widok offline</value>
     <comment>Label for any 'Enable Offline view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableLink" xml:space="preserve">
-    <value>Enable link</value>
+    <value>Włącz link</value>
     <comment>Label for any 'Enable link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DecryptionKey" xml:space="preserve">
@@ -618,7 +618,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_GridView" xml:space="preserve">
-    <value>Grid view</value>
+    <value>Widok siatki</value>
     <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListView" xml:space="preserve">
@@ -630,11 +630,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ResumeSession" xml:space="preserve">
-    <value>Resume session</value>
+    <value>Wznów sesję</value>
     <comment>Label for any 'Resume session' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Dynamic" xml:space="preserve">
-    <value>Dynamic</value>
+    <value>Dynamiczny</value>
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
@@ -646,19 +646,19 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Not available' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AccountOverview" xml:space="preserve">
-    <value>Account overview</value>
+    <value>Przegląd konta</value>
     <comment>Label for the 'Account overview' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_OverallUsage" xml:space="preserve">
-    <value>Overall usage</value>
+    <value>Ogólne wykorzystanie</value>
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>You have exceeded your allocated storage space. You will not be able to upload or receive any more shares until you have more space. Please either upgrade your account or delete some files/folders to free up space.</value>
+    <value>Przekroczono przydzieloną przestrzeń dyskową. Nie będziesz mógł przesyłać ani otrzymywać kolejnych udziałów, dopóki nie będziesz mieć więcej miejsca. Zaktualizuj konto lub usuń niektóre pliki / foldery, aby zwolnić miejsce.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
-    <value>Transfer quota is used for downloading files. If you exceed your transfer quota, you will have to wait until your quota resets.</value>
+    <value>Limit transferu służy do pobierania plików. Jeśli przekroczysz limit transferu, będziesz musiał zaczekać, aż kwota zostanie zresetowana.</value>
     <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_PaymentMethod" xml:space="preserve">
@@ -666,23 +666,23 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Payment method' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PlanType" xml:space="preserve">
-    <value>Plan type</value>
+    <value>Rodzaj planu</value>
     <comment>Label for any 'Plan type' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SubscriptionEnds" xml:space="preserve">
-    <value>Subscription ends</value>
+    <value>Subskrypcja się kończy</value>
     <comment>Label for any 'Subscription ends' title/text of the My account section - (String as short as possible).</comment>
   </data>
   <data name="UI_SubscriptionRenews" xml:space="preserve">
-    <value>Subscription renews</value>
+    <value>Subskrypcja odnawia się</value>
     <comment>Label for any 'Subscription renews' title/text of the My account section - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalStorage" xml:space="preserve">
-    <value>Total storage</value>
+    <value>Całkowita pamięć</value>
     <comment>Label for any 'Total storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalTransferQuota" xml:space="preserve">
-    <value>Total transfer quota</value>
+    <value>Całkowity limit transferu</value>
     <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedStorage" xml:space="preserve">
@@ -690,15 +690,15 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedTransferQuota" xml:space="preserve">
-    <value>Used transfer quota</value>
+    <value>Użyty limit transferu</value>
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>You have exceeded your allocated transfer quota. You will not be able to download until your transfer quota has reset. Please either upgrade your account or wait until your transfer quota has reset.</value>
+    <value>Przekroczono przyznany limit transferu. Nie będzie można pobrać, dopóki limit transferu nie zostanie zresetowany. Uaktualnij swoje konto lub poczekaj, aż limit transferu się zresetuje.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
-    <value>Payment information</value>
+    <value>Informacje o płatności</value>
     <comment>Label for the 'Payment information' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_Annual" xml:space="preserve">
@@ -706,7 +706,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AnnualRecurring" xml:space="preserve">
-    <value>Annual recurring</value>
+    <value>Coroczne powtarzanie</value>
     <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_General" xml:space="preserve">
@@ -718,7 +718,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
-    <value>Monthly recurring</value>
+    <value>Miesięczny cykl</value>
     <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_Profile" xml:space="preserve">
@@ -726,15 +726,15 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Title of the 'Profile' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
-    <value>Storage &amp; Transfer</value>
+    <value>Przechowywanie i przesyłanie</value>
     <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
-    <value>Available storage</value>
+    <value>Dostępna pamięć</value>
     <comment>Label for any 'Available storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableTransferQuota" xml:space="preserve">
-    <value>Available transfer quota</value>
+    <value>Dostępny limit transferu</value>
     <comment>Label for any 'Available transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferQuota" xml:space="preserve">
@@ -746,7 +746,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
-    <value>Please wait</value>
+    <value>Proszę czekać</value>
     <comment>Label to indicate the time that the user should wait in transfer overquota - (String as short as possible).</comment>
   </data>
   <data name="UI_CreditCard" xml:space="preserve">
@@ -758,7 +758,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
-    <value>In app purchase (Microsoft Store)</value>
+    <value>Zakupy przez aplikację (Microsoft Store)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Keep 'Microsoft Store' in English because it is a trademark.</comment>
   </data>
@@ -771,15 +771,15 @@ Keep 'Microsoft Store' in English because it is a trademark.</comment>
     <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UpgradeStep1" xml:space="preserve">
-    <value>Step 1. Select a PRO plan</value>
+    <value>Krok 1. Wybierz plan PRO</value>
     <comment>Text to describe the step 1 of the upgrade account process.</comment>
   </data>
   <data name="UI_UpgradeStep2" xml:space="preserve">
-    <value>Step 2. Select membership duration</value>
+    <value>Krok 2. Wybierz czas członkostwa</value>
     <comment>Text to describe the step 2 of the upgrade account process.</comment>
   </data>
   <data name="UI_UpgradeStep3" xml:space="preserve">
-    <value>Step 3. Select payment method</value>
+    <value>Krok 3. Wybierz metodę płatności</value>
     <comment>Text to describe the step 3 of the upgrade account process.</comment>
   </data>
   <data name="UI_Year" xml:space="preserve">
@@ -787,20 +787,20 @@ Keep 'Microsoft Store' in English because it is a trademark.</comment>
     <comment>Label for any 'Year' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MembershipDuration" xml:space="preserve">
-    <value>Membership duration</value>
+    <value>Okres członkostwa</value>
     <comment>Label for any 'Membership duration' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Purchase" xml:space="preserve">
-    <value>Purchase</value>
+    <value>Zakup</value>
     <comment>Label for any 'Purchase' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveMoney" xml:space="preserve">
-    <value>Save {0}</value>
+    <value>Zapisz {0}</value>
     <comment>Label to indicate the saved money if the user purchase an annual subscription instead of a monthly subscription.
 Preserve the {0} code because is for include the saved money and the currency.</comment>
   </data>
   <data name="UI_UpgradeStepCounter" xml:space="preserve">
-    <value>Step {0}/{1}</value>
+    <value>Krok {0}/{1}</value>
     <comment>Text to count the steps of the upgrade account process.
 Preserve the {0} and {1} codes because is for include current step number and total steps number.</comment>
   </data>
@@ -809,12 +809,12 @@ Preserve the {0} and {1} codes because is for include current step number and to
     <comment>Label for any 'Price' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CentiliPaymentMethod" xml:space="preserve">
-    <value>Centili (Mobile billing)</value>
+    <value>Centili (płatności mobilne)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Centili' because is the payment method name.</comment>
   </data>
   <data name="UI_FortumoPaymentMethod" xml:space="preserve">
-    <value>Fortumo (Mobile billing)</value>
+    <value>Fortumo (płatności mobilne)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Don't translate 'Fortumo' because is the payment method name.</comment>
   </data>
@@ -831,15 +831,15 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Last name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PersonalInformation" xml:space="preserve">
-    <value>Personal information</value>
+    <value>Informacje osobiste</value>
     <comment>Label for the 'Personal information' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_PriceAnnual" xml:space="preserve">
-    <value>Price (annual)</value>
+    <value>Cena (roczna)</value>
     <comment>Label for any 'Price (annual)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PriceMonthly" xml:space="preserve">
-    <value>Price (monthly)</value>
+    <value>Cena (miesięcznie)</value>
     <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Save" xml:space="preserve">
@@ -855,7 +855,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
-    <value>Enter and confirm your new password and click save.</value>
+    <value>Wprowadź i potwierdź nowe hasło i kliknij przycisk Zapisz.</value>
     <comment>Text to describe the change password process.</comment>
   </data>
   <data name="UI_CurrentPassword" xml:space="preserve">
@@ -867,11 +867,11 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Placeholder text to insert the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_ReEnterNewPassword" xml:space="preserve">
-    <value>Re-enter new password</value>
+    <value>Wprowadź ponownie nowe hasło</value>
     <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicy" xml:space="preserve">
-    <value>Refund policy</value>
+    <value>Polityka zwrotów</value>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
@@ -879,11 +879,11 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
   </data>
   <data name="UI_SeeMoreInfo" xml:space="preserve">
-    <value>See more info</value>
+    <value>Zobacz więcej informacji</value>
     <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmailDescription" xml:space="preserve">
-    <value>Enter your new email address in the text field above and click Save. Following that, please go to your email inbox and confirm this email change.</value>
+    <value>Wpisz swój nowy adres e-mail w polu tekstowym powyżej i kliknij Zapisz. Następnie przejdź do skrzynki odbiorczej poczty e-mail i potwierdź zmianę adresu e-mail.</value>
     <comment>Text to describe the change email process.</comment>
   </data>
   <data name="UI_NewEmail" xml:space="preserve">
@@ -891,7 +891,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'New email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnterNewEmail" xml:space="preserve">
-    <value>Enter new email address</value>
+    <value>Wprowadź nowy adres e-mail</value>
     <comment>Placeholder text to insert the new email during the process to change the email - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmEmail" xml:space="preserve">
@@ -899,7 +899,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is</value>
+    <value>Gratulacje, twój nowy adres e-mail dla tego konta MEGA jest</value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">
@@ -939,15 +939,15 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AcceptContact" xml:space="preserve">
-    <value>Accept contact</value>
+    <value>Zaakceptuj kontakt</value>
     <comment>Label for any 'Accept contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DenyContact" xml:space="preserve">
-    <value>Deny contact</value>
+    <value>Odmów kontaktu</value>
     <comment>Label for any 'Deny contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemindContact" xml:space="preserve">
-    <value>Remind contact</value>
+    <value>Przypomnij kontakt</value>
     <comment>Label for any 'Remind contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveContact" xml:space="preserve">
@@ -955,15 +955,15 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Remove contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CancelInvite" xml:space="preserve">
-    <value>Cancel invite</value>
+    <value>Anuluj zaproszenie</value>
     <comment>Label for any 'Cancel invite' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveMultipleContacts" xml:space="preserve">
-    <value>Remove contacts</value>
+    <value>Usuń kontakty</value>
     <comment>Label for any 'Remove contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedFolder" xml:space="preserve">
-    <value>Shared folder</value>
+    <value>Udostępniony folder</value>
     <comment>Label for any 'Shared folder' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -973,12 +973,12 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
 </comment>
   </data>
   <data name="UI_ListSortedByName" xml:space="preserve">
-    <value>Name ({0})</value>
+    <value>Nazwa ({0})</value>
     <comment>Label to indicate that a list of items is sorted by name and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByNameMultiSelect" xml:space="preserve">
-    <value>Name ({0} of {1})</value>
+    <value>Nazwa ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by name and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1020,7 +1020,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Leave share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IgnoreContact" xml:space="preserve">
-    <value>Ignore contact</value>
+    <value>Zignoruj kontakt</value>
     <comment>Label for any 'Ignore contact' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Leave" xml:space="preserve">
@@ -1028,42 +1028,42 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Leave' button, link, text, title, etc. for leave a shared item - (String as short as possible).</comment>
   </data>
   <data name="UI_ListSortedByAccessLevel" xml:space="preserve">
-    <value>Access ({0})</value>
+    <value>Dostęp ({0})</value>
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
-    <value>Access ({0} of {1})</value>
+    <value>Dostęp ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByOwner" xml:space="preserve">
-    <value>Owner ({0})</value>
+    <value>Właściciel ({0})</value>
     <comment>Label to indicate that a list of items is sorted by owner and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByOwnerMultiSelect" xml:space="preserve">
-    <value>Owner ({0} of {1})</value>
+    <value>Właściciel ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by owner and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_NumberOfContacts" xml:space="preserve">
-    <value>{0} Contacts</value>
+    <value>{0} kontaktów</value>
     <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
 Keep the {0} code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="UI_NumberSharedFolders" xml:space="preserve">
-    <value>{0} Shared folders</value>
+    <value>{0} foldery udostępnionych</value>
     <comment>Label to indicate that there are multiple shared folders - (String as short as possible).
 Keep the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="UI_OneSharedFolder" xml:space="preserve">
-    <value>1 Shared folder</value>
+    <value>1 folder udostępniony</value>
     <comment>Label to indicate that there is only 1 shared folder - (String as short as possible).
 </comment>
   </data>
   <data name="UI_OutgoingShares" xml:space="preserve">
-    <value>Outgoing shares</value>
+    <value>Wychodzące udostępnienia</value>
     <comment>Label for any 'Outgoing shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionAccessLevel" xml:space="preserve">
@@ -1083,19 +1083,19 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for the menu option to sort a list of items by owner - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveSharedAccess" xml:space="preserve">
-    <value>Remove shared access</value>
+    <value>Usuń dostęp współdzielony</value>
     <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClosePanel" xml:space="preserve">
-    <value>Close panel</value>
+    <value>Zamknij panel</value>
     <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informacja</value>
     <comment>Label for any 'Information' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contents" xml:space="preserve">
-    <value>Contents</value>
+    <value>Zawartość</value>
     <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Created" xml:space="preserve">
@@ -1103,15 +1103,15 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
-    <value>Date modified</value>
+    <value>Data modyfikacji</value>
     <comment>Label for any 'Date modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderLocation" xml:space="preserve">
-    <value>Folder location</value>
+    <value>Lokalizacja folderu</value>
     <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderModified" xml:space="preserve">
-    <value>Folder modified</value>
+    <value>Zmodyfikowany folder</value>
     <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Owner" xml:space="preserve">
@@ -1123,44 +1123,44 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedOn" xml:space="preserve">
-    <value>Shared on</value>
+    <value>Udostępnione na</value>
     <comment>Label for any 'Shared on' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedTo" xml:space="preserve">
-    <value>Shared to</value>
+    <value>Udostępnione dla</value>
     <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateCreated" xml:space="preserve">
-    <value>Date created</value>
+    <value>Data utworzenia</value>
     <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableSharedFolder" xml:space="preserve">
-    <value>Enable shared folder</value>
+    <value>Włącz udostępniony folder</value>
     <comment>Label for any 'Enable shared folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContactToFolder" xml:space="preserve">
-    <value>Add contact to folder</value>
+    <value>Dodaj kontakt do folderu</value>
     <comment>Label for an 'Add contact to folder' button to add a contact to an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveFromFolder" xml:space="preserve">
-    <value>Remove from folder</value>
+    <value>Usuń z folderu</value>
     <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareFolderTo" xml:space="preserve">
-    <value>Share "{0}" to</value>
+    <value>Udostępnij "{0}" dla</value>
     <comment>Text placed as title of the dialog used to share a folder with a contact.
 Preserve the {0} code because is for include the folder name in runtime.</comment>
   </data>
   <data name="UI_FolderPermission" xml:space="preserve">
-    <value>Folder permission</value>
+    <value>Uprawnienia folderu</value>
     <comment>Label for any 'Folder permission' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SetFolderPermission" xml:space="preserve">
-    <value>Set folder permission</value>
+    <value>Ustaw uprawnienia folderu</value>
     <comment>Label for any 'Set folder permission' button, link, text, title, etc. - ç(String as short as possible).</comment>
   </data>
   <data name="UI_SetFolderPermissionLevel" xml:space="preserve">
-    <value>Set folder permission level</value>
+    <value>Ustaw poziom uprawnień do folderu</value>
     <comment>Label for any 'Set folder permission level' button, link, text, title, etc. - ç(String as short as possible).</comment>
   </data>
   <data name="UI_LoginWithSpace" xml:space="preserve">
@@ -1168,11 +1168,11 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Log in' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPassword" xml:space="preserve">
-    <value>Forgot my password</value>
+    <value>Zapomniałem hasła</value>
     <comment>Label for any 'Forgot my password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ContactSupport" xml:space="preserve">
-    <value>Contact support</value>
+    <value>Kontakt do obsługi klienta</value>
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
@@ -1180,15 +1180,15 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
   </data>
   <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
-    <value>Do you have a copy of your Recovery Key?</value>
+    <value>Czy masz kopię klucza zapasowego?</value>
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same email address.</value>
+    <value>Ze względu na nasz kompleksowy paradygmat szyfrowania nie będziesz mieć dostępu do swoich danych bez hasła ani kopii zapasowej klucza odzyskiwania. Możesz zaparkować istniejące konto i założyć nowe konto pod tym samym adresem e-mail.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
-    <value>I don’t have my Recovery Key</value>
+    <value>Nie mam mojego klucza zapasowego</value>
     <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccount" xml:space="preserve">
@@ -1216,7 +1216,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Header of the text displayed to reset password on recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_UploadKey" xml:space="preserve">
-    <value>Upload key</value>
+    <value>Prześlij klucz</value>
     <comment>Label for any 'Upload key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Verify" xml:space="preserve">
@@ -1236,15 +1236,15 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccountDescription" xml:space="preserve">
-    <value>This is the last step to park your account, please enter your new password. Your data will be retained for at least 60 days. In case you do recall your parked account’s password, please contact support@mega.nz.</value>
+    <value>To jest ostatni krok do zaparkowania konta, podaj nowe hasło. Twoje dane będą przechowywane przez co najmniej 60 dni. Jeśli pamiętasz hasło swojego zaparkowanego konta, skontaktuj się z support@mega.nz.</value>
     <comment>Text displayed to validate password on parking account.</comment>
   </data>
   <data name="UI_ConfirmEmailDescription" xml:space="preserve">
-    <value>Please check your email and follow the link to confirm your account.</value>
+    <value>Sprawdź pocztę i kliknij link, by potwierdzić swoje konto.</value>
     <comment>Text displayed when user can resend his email address on create account.</comment>
   </data>
   <data name="UI_ConfirmEmailInfo" xml:space="preserve">
-    <value>If you have misspelled your email address, correct it and click ‘resend’.</value>
+    <value>Jeśli masz błędnie wpisany adres e-mail, popraw go i kliknij "Wyślij ponownie".</value>
     <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
   </data>
   <data name="UI_Resend" xml:space="preserve">
@@ -1256,15 +1256,15 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
-    <value>You can still export your Recovery Key if you have an active MEGA session in any other browser on this or any other computer.</value>
+    <value>Nadal możesz wyeksportować swój klucz zapasowy, jeśli masz aktywną sesję MEGA w dowolnej innej przeglądarce na tym lub jakimkolwiek innym komputerze.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
-    <value>If you don’t, you can no longer decrypt your existing account, but you can start a new one under the same email address by selecting NO.</value>
+    <value>Jeśli nie, nie można już odszyfrować istniejącego konta, ale można rozpocząć nowe pod tym samym adresem e-mail, wybierając opcję NIE.</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account’s password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>Jeśli pamiętasz hasło swojego zaparkowanego konta, skontaktuj się z support@mega.nz w celu uzyskania pomocy. Twoje dane będą przechowywane przez co najmniej 60 dni.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
@@ -1273,7 +1273,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
-    <value>Email ({0} of {1})</value>
+    <value>Email ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1286,76 +1286,76 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders, {1} files)</value>
+    <value>Data utworzenia (foldery {0}, pliki {1})</value>
     <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders, {1} files)</value>
+    <value>Data modyfikacji ({0} folderów, {1} plików)</value>
     <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders, {1} files)</value>
+    <value>Rodzaj (foldery {0}, pliki {1})</value>
     <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders, {1} files)</value>
+    <value>Nazwa (foldery {0}, pliki {1})</value>
     <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders, {1} files)</value>
+    <value>Rozmiar (foldery {0}, pliki {1})</value>
     <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
-    <value>Date Created ({0} of {1})</value>
+    <value>Data utworzenia ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
-    <value>Date Modified ({0} of {1})</value>
+    <value>Data modyfikacji ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
-    <value>Type ({0} of {1})</value>
+    <value>Rodzaj ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
-    <value>Size ({0} of {1})</value>
+    <value>Rozmiar ({0} z {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>Opcje folderu</value>
     <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0})</value>
+    <value>Data utworzenia ({0})</value>
     <comment>Label to indicate that a list of items is sorted by creation date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0})</value>
+    <value>Data modyfikacji ({0})</value>
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByType" xml:space="preserve">
-    <value>Type ({0})</value>
+    <value>Rodzaj ({0})</value>
     <comment>Label to indicate that a list of items is sorted by type and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySize" xml:space="preserve">
-    <value>Size ({0})</value>
+    <value>Rozmiar ({0})</value>
     <comment>Label to indicate that a list of items is sorted by size and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_SelectOrDeselectAll" xml:space="preserve">
-    <value>Select/deselect all</value>
+    <value>Wybierz/odznacz wszystko</value>
     <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionType" xml:space="preserve">
@@ -1367,36 +1367,36 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
-    <value>Copy/Move 1 item to</value>
+    <value>Skopiuj/Przenieś 1 element do</value>
     <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
-    <value>Copy/Move {0} items to</value>
+    <value>Kopiuj/Przenieś {0} elementów do</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders)</value>
+    <value>Data utworzenia (foldery {0})</value>
     <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders)</value>
+    <value>Data modyfikacji (foldery {0})</value>
     <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders)</value>
+    <value>Nazwa (foldery {0})</value>
     <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders)</value>
+    <value>Rozmiar (foldery {0})</value>
     <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders)</value>
+    <value>Rodzaj (foldery {0})</value>
     <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
@@ -1405,20 +1405,169 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AllContacts" xml:space="preserve">
-    <value>All contacts</value>
+    <value>Wszystkie kontakty</value>
     <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmShare" xml:space="preserve">
-    <value>Confirm share</value>
+    <value>Potwierdź udostępnienie</value>
     <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ManageCollaborators" xml:space="preserve">
-    <value>Manage collaborators</value>
+    <value>Zarządzaj współpracownikami</value>
     <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareTo" xml:space="preserve">
-    <value>Share to</value>
+    <value>Udostępnij dla</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageQuota" xml:space="preserve">
+    <value>Limit miejsca</value>
+    <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonuses" xml:space="preserve">
+    <value>Odbierz bonusy</value>
+    <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedBonusesText" xml:space="preserve">
+    <value>Możesz zwiększyć wielkość dysku i transferu poprzez używanie naszych produktów. Proste.</value>
+    <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_GetMoreBonuses" xml:space="preserve">
+    <value>Zobacz więcej bonusów</value>
+    <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseStorage" xml:space="preserve">
+    <value>Podstawowy limit</value>
+    <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BaseTransferQuota" xml:space="preserve">
+    <value>Podstawowy limit transferu</value>
+    <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallDesktopApp" xml:space="preserve">
+    <value>Zainstaluj aplikację na komputer</value>
+    <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InstallMobileApp" xml:space="preserve">
+    <value>Zainstaluj aplikację mobilną</value>
+    <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReferralBonus" xml:space="preserve">
+    <value>Bonus za polecenia</value>
+    <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RegistrationBonus" xml:space="preserve">
+    <value>Zarejestruj bonus</value>
+    <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusStorage" xml:space="preserve">
+    <value>Dodatkowa pamięć</value>
+    <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BonusTransferQuota" xml:space="preserve">
+    <value>Dodatkowy limit</value>
+    <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Achievements" xml:space="preserve">
+    <value>Osiągnięcia</value>
+    <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AchievementsText" xml:space="preserve">
+    <value>Twoja prosta droga do większej ilości miejsca na dysku i transferu w MEGA. Możesz utrzymać wysoki limit darmowej przestrzeni dyskowej i transferu, wykonując dowolne z działań opisanych poniżej.</value>
+    <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
+  </data>
+  <data name="UI_Available" xml:space="preserve">
+    <value>Dostępne</value>
+    <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UnlockedRewards" xml:space="preserve">
+    <value>Nagrody</value>
+    <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Expired" xml:space="preserve">
+    <value>Wygasło</value>
+    <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriends" xml:space="preserve">
+    <value>Zaproś znajomych</value>
+    <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDay" xml:space="preserve">
+    <value>Pozostał 1 dzień</value>
+    <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemainingDays" xml:space="preserve">
+    <value>Pozostało {0} dni</value>
+    <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
+Keep the {0} code because is for include the number of days in runtime.</comment>
+  </data>
+  <data name="UI_SendInvites" xml:space="preserve">
+    <value>Wyślij zaproszenia</value>
+    <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewStatus" xml:space="preserve">
+    <value>Wyświetl status</value>
+    <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Install" xml:space="preserve">
+    <value>Zainstaluj</value>
+    <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_AccountRegistrationInformation" xml:space="preserve">
+    <value>Utwórz bezpłatne konto i uzyskaj {0} bezpłatnego miejsca na dane, ważne przez {1} dni.</value>
+    <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
+  </data>
+  <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
+    <value>Podczas instalacji MEGAsync uzyskuje się {0} wolnego miejsca na dysku plus {1} limitu transferu, oba ważne przez {2} dni. MEGAsync jest dostępny dla systemów Windows, macOS i większości dystrybucji Linuksa.</value>
+    <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_InstallMobileAppInformation" xml:space="preserve">
+    <value>Po zainstalowaniu naszej aplikacji mobilnej uzyskujesz {0} wolnego miejsca na dysku i dodatkowy limit transferu {1}, które są ważne przez {2} dni. Zapewniamy aplikacje mobilne na iOS, Android i Windows Phone</value>
+    <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
+  </data>
+  <data name="UI_AchievedOn" xml:space="preserve">
+    <value>Osiągnięty dnia</value>
+    <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExpiresIn" xml:space="preserve">
+    <value>Wygasa z</value>
+    <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Day" xml:space="preserve">
+    <value>Dzień</value>
+    <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Days" xml:space="preserve">
+    <value>Dni</value>
+    <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorks" xml:space="preserve">
+    <value>Jak to działa</value>
+    <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_HowItWorksText" xml:space="preserve">
+    <value>Zaproś swoich znajomych, aby utworzyć bezpłatne konto MEGA i zainstalować nasze aplikacje mobilne. Za każdą udaną rejestrację i instalację aplikacji otrzymasz premię do przechowywania i transferu.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
+  </data>
+  <data name="UI_Invite" xml:space="preserve">
+    <value>Zaproszenie</value>
+    <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_InviteFriendsText" xml:space="preserve">
+    <value>Uzyskaj {0} wolnej pamięci i {1} limitu transferów dla każdego znajomego, który instaluje aplikację MEGA.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
+  </data>
+  <data name="UI_WhyNotWorking" xml:space="preserve">
+    <value>Dlaczego to nie działa</value>
+    <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
+    <value>Promocja darmowych limitów nie obejmuje sytuacji kiedy zapraszasz osoby, które już wcześniej posiadały konto na MEGA.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
+  </data>
+  <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
+    <value>Zaproszeni znajomi muszą zainstalować aplikację mobilną MEGA lub aplikację komputerową MEGA na swoich urządzeniach.</value>
+    <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
     <value>Link do katalogu</value>
@@ -1431,7 +1580,7 @@ Keep the {0} code because are for include the total number of folders in runtime
 </comment>
   </data>
   <data name="UI_TypeOrPasteLink" xml:space="preserve">
-    <value>Type or paste link:</value>
+    <value>Wpisz lub wklej link:</value>
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
@@ -1439,17 +1588,115 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
-    <value>Import 1 item to</value>
+    <value>Zaimportuj 1 element do</value>
     <comment>Label to indicate that one item has been selected for import - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportMultipleItemsTo" xml:space="preserve">
-    <value>Import {0} items to</value>
+    <value>Zaimportuj elementy {0} do</value>
     <comment>Label to indicate how many items have been selected for import - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
   <data name="UI_FileLink" xml:space="preserve">
     <value>Link do pliku</value>
-    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).
-</comment>
+    <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_BackupRecoveryKey" xml:space="preserve">
+    <value>Kopia klucza</value>
+    <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
+NOTE: Max. length 20 characters.</comment>
+  </data>
+  <data name="UI_DoNotShowMeAgain" xml:space="preserve">
+    <value>Nie pokazuj ponownie</value>
+    <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
+  </data>
+  <data name="UI_TestPassword" xml:space="preserve">
+    <value>Hasło testowe</value>
+    <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SavedForOffline" xml:space="preserve">
+    <value>Zapisz offline</value>
+    <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SaveForOffline" xml:space="preserve">
+    <value>Zapisz lokalnie</value>
+    <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveFromOffline" xml:space="preserve">
+    <value>Usuń z trybu offline</value>
+    <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineFiles" xml:space="preserve">
+    <value>Pliki offline</value>
+    <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OfflineBanner" xml:space="preserve">
+    <value>Twoje urządzenie wydaje się być offline. Spróbuj ponownie połączyć się lub odwiedź sekcję Zapisane w trybie offline.</value>
+    <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
+    <value>Status polecenia ({0})</value>
+    <comment>Label to indicate that a list of items is sorted by status and the total number of items.
+Keep the {0} code because is for include the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
+    <value>Status polecenia ({0} z {1})</value>
+    <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
+Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
+  </data>
+  <data name="UI_SortOptionReferralStatus" xml:space="preserve">
+    <value>Status polecenia</value>
+    <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Pending" xml:space="preserve">
+    <value>Oczekujące</value>
+    <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EarnedReferralBonus" xml:space="preserve">
+    <value>Zdobyta premia za polecenie</value>
+    <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenBrowser" xml:space="preserve">
+    <value>Otwórz przeglądarkę</value>
+    <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Ignore" xml:space="preserve">
+    <value>Zignorowane</value>
+    <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_DataProtectionRegulation" xml:space="preserve">
+    <value>Data Protection Regulation</value>
+    <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MEGA_SDK_Version" xml:space="preserve">
+    <value>MEGA SDK wersja</value>
+    <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PrivacyPolicy" xml:space="preserve">
+    <value>Polityka prywatności</value>
+    <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ViewTermsOfService" xml:space="preserve">
+    <value>Zobacz Warunki korzystania z usługi tutaj.</value>
+    <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Acknowledgements" xml:space="preserve">
+    <value>Podziękowania</value>
+    <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Copyright" xml:space="preserve">
+    <value>Prawa autorskie</value>
+    <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LearnMore" xml:space="preserve">
+    <value>Dowiedz się więcej</value>
+    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LegalAndPolicies" xml:space="preserve">
+    <value>Polityka prywatności</value>
+    <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_TakedownGuidance" xml:space="preserve">
+    <value>Wytyczne dotyczące naruszeń</value>
+    <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
 </root>

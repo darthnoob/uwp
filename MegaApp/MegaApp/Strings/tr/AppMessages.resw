@@ -122,7 +122,7 @@
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Lütfen Hizmet Koşullarımızı kabul ettiğinizi onaylayın.                                </value>
+    <value>Lütfen Hizmet Koşullarımızı kabul ettiğinizi onaylayın.</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
@@ -161,7 +161,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
     <value>Bu dosya türünü seçilen konuma aktarma iznine sahip değilsiniz. Desteklenmeyen bir dosya türünü SD kartınıza mı aktarmak istiyorsunuz?
-Lütfen cihazınızın dahili hafızasına kaydetmeyi/kopyalamayı deneyin.                                </value>
+Lütfen cihazınızın dahili hafızasına kaydetmeyi/kopyalamayı deneyin.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
@@ -288,7 +288,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_IncorrectEmailFormat" xml:space="preserve">
-    <value>Geçersiz eposta biçimi. Lütfen tekrar deneyin.                                </value>
+    <value>Geçersiz eposta biçimi. Lütfen tekrar deneyin.</value>
     <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when the process to open a file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
-    <value>Şifreler eşleşmiyor. Lütfen tekrar deneyin.</value>
+    <value>Parolalar eşleşmiyor. Lütfen tekrar deneyin.</value>
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
@@ -381,11 +381,11 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when the process/request to remove definitely an item node from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RequiredFieldsCreateAccount" xml:space="preserve">
-    <value>Adınızı, e-posta adresinizi ve şifrenizi girin</value>
+    <value>Adınızı, e-posta adresinizi ve parolanızı girin</value>
     <comment>Message of the dialog displayed when required fields for create account are not filled in.</comment>
   </data>
   <data name="AM_RequiredFieldsLogin" xml:space="preserve">
-    <value>Lütfen e-posta adresinizi ve MEGA şifrenizi girin.</value>
+    <value>Lütfen e-posta adresinizi ve MEGA parolanızı girin.</value>
     <comment>Message of the dialog displayed when required fields for login are not filled in.</comment>
   </data>
   <data name="AM_RequiredFields_Title" xml:space="preserve">
@@ -593,12 +593,12 @@ Preserve the {0} code because is for include the number of nodes to be removed i
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
     <value>İndirme dizini mevcut değil ve yaratılırken hata oluştu.  
-Lütfen tekrar deneyiniz eğer sorun devam eder ise support@mega.nz ile iletişime geçin. [{0}]                                                                </value>
+Lütfen tekrar deneyiniz eğer sorun devam eder ise support@mega.nz ile iletişime geçin. [{0}]                                </value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>İndirme dizininde bilinmeyen hata oluştu. Lütfen tekrar deneyin ve eğer sorun devam ederse support@mega.nz  ile iletişime geçin. [{0}]                                </value>
+    <value>İndirme dizininde bilinmeyen hata oluştu. Lütfen tekrar deneyin ve eğer sorun devam ederse support@mega.nz  ile iletişime geçin. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -640,11 +640,11 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>SSL/TLS sertifikamız doğrulanamıyor. İki bağlantı noktası arasındaki bağlantıyı izinsiz izleme saldırısından etkilenmiş olabilirsiniz.</value>
+    <value>MEGA, SSL aracılığıyla güvenli bir şekilde bağlantı kuramıyor. Ek gereksinimleri olan ortak WiFi'de olabilirsiniz.</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>Çıkış yapıldı</value>
+    <value>SSL sertifika hatası</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -670,19 +670,19 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>Kurtarma Anahtarı panoya kopyalandı.                                </value>
+    <value>Kurtarma Anahtarı panoya kopyalandı.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>Kurtarma Anahtarı panoya kopyalanamadı. Lütfen tekrar deneyin.                                </value>
+    <value>Kurtarma Anahtarı panoya kopyalanamadı. Lütfen tekrar deneyin.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>Kurtarma anahtarı kopyalanamadı                                </value>
+    <value>Kurtarma anahtarı kopyalanamadı</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>Kurtarma Anahtarı kopyalandı                                </value>
+    <value>Kurtarma Anahtarı kopyalandı</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -726,7 +726,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
-    <value>MEGA link panoya kopyalanır</value>
+    <value>MEGA linki panonuza kopyalandı</value>
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
@@ -774,11 +774,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>Uygulama aktif edilirken geçersiz URI tespit edildi.</value>
+    <value>Uygulama aktif edilirken geçersiz bağlantı tespit edildi.</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
-    <value>Geçersiz URI</value>
+    <value>Geçersiz bağlantı</value>
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
@@ -842,7 +842,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>Bir indirme başarısız oldu. Lütfen indirme listenizi kontrol edin ve tekrar deneyin.                                                                </value>
+    <value>Bir indirme başarısız oldu. Lütfen indirme listenizi kontrol edin ve tekrar deneyin.                                </value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
@@ -862,12 +862,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Tebrikler, bu MEGA hesabı için kullanacağınız yeni eposta adresi: {0}                                </value>
+    <value>Tebrikler, bu MEGA hesabı için kullanacağınız yeni eposta adresi: {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>Epostayı değiştirmek için kullandığınız bağlantı geçersizdir.                                </value>
+    <value>Epostayı değiştirmek için kullandığınız bağlantı geçersizdir.</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
@@ -897,16 +897,16 @@ Preserve the [{0}] code because is for include the contact email in runtime.</co
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>{0} kişisini listenizden silmek istediğinize emin misiniz?                                </value>
+    <value>{0} kişisini listenizden silmek istediğinize emin misiniz?</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Seçilen kişi tarafından paylaşılan klasörlere erişiminiz kesilecektir.                                </value>
+    <value>Seçilen kişi tarafından paylaşılan klasörlere erişiminiz kesilecektir.</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>{0} kullanıcıyı kişi listenizden silmek istediğinize emin misiniz?                                </value>
+    <value>{0} kullanıcıyı kişi listenizden silmek istediğinize emin misiniz?</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
@@ -989,7 +989,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Paylaşılan klasörlere erişimi kaldır                                </value>
+    <value>Paylaşılan klasörlere erişimi kaldır</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
@@ -1067,11 +1067,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Parola sıfırlanırken hata oluştu                                </value>
+    <value>Parola sıfırlanırken hata oluştu</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
-    <value>Şifreniz başarıyla sıfırlandı. Şimdi hesabınıza giriş yapın.</value>
+    <value>Parolanız başarıyla sıfırlandı. Şimdi hesabınıza giriş yapın.</value>
     <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
   </data>
   <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
@@ -1123,7 +1123,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
-    <value>Lütfen şifrenizi güçlendirin.</value>
+    <value>Lütfen parolanızı güçlendirin.</value>
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
@@ -1132,7 +1132,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Aktarma kotanızın sıfırlanması için {0} bekleyin.                                </value>
+    <value>Aktarma kotanızın sıfırlanması için {0} bekleyin.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
@@ -1165,7 +1165,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Klasör bağlantısı açılamadı. Lütfen tekrar deneyin.                                </value>
+    <value>Klasör bağlantısı açılamadı. Lütfen tekrar deneyin.</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
@@ -1179,19 +1179,19 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
   <data name="AM_FileLinkUnavailable" xml:space="preserve">
     <value>Bunun nedeni aşağıdakilerden biri olabilir:
 - Dosya Hizmet Koşullarını ihlal ettiği için kaldırıldı.
-- Geçersiz URL – erişmeye çalıştığınız link mevcut değil.
-- Dosya kullanıcı tarafından kaldırıldı.                                </value>
+- Geçersiz URL – erişmeye çalıştığınız bağlantısı mevcut değil.
+- Dosya kullanıcı tarafından kaldırıldı.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>Bunun nedeni aşağıdakilerden biri olabilir:
 - Klasör Hizmet Koşullarını ihlal ettiği için kaldırıldı.
 - Geçersiz URL – erişmeye çalıştığınız bağlantı mevcut değil.
-- Klasör bağlantısı kullanıcı tarafından kaldırıldı.                                </value>
+- Klasör bağlantısı kullanıcı tarafından kaldırıldı.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Dosya bağlantısı açılamadı. Lütfen tekrar deneyin.                                </value>
+    <value>Dosya bağlantısı açılamadı. Lütfen tekrar deneyin.</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
@@ -1205,5 +1205,75 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
     <value>Hesabınız Mega'nın Hizmet Koşullarının tekrarlı ihlalinden dolayı askıya alındı. Lütfen epostanızı kontrol edin.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
+  </data>
+  <data name="AM_PasswordReminder" xml:space="preserve">
+    <value>MEGA'nın şifreleme teknolojisi veri kaybına uğramadan parola kurtarmayı imkansız kılar. Lütfen parolanızı hatırladığınıza emin olun.</value>
+    <comment>Message to describe the purpose of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_PasswordReminder_Title" xml:space="preserve">
+    <value>Parolanızı hatırlıyor musunuz?</value>
+    <comment>Title of the password reminder dialog.</comment>
+  </data>
+  <data name="AM_TestPassword" xml:space="preserve">
+    <value>Hatırladığınızdan emin olmak için lütfen aşağıdaki şifrenizi test edin. Şifrenizi kaybederseniz, verilerinize erişimi kaybedersiniz.</value>
+    <comment>Message to describe the purpose of the dialog to test the password.</comment>
+  </data>
+  <data name="AM_TestPasswordSuccess" xml:space="preserve">
+    <value>Şifre kabul edildi, hala Kurtarma Anahtarınızı yedeklemenizi öneririz.</value>
+    <comment>Message displayed when the password test result is ok.</comment>
+  </data>
+  <data name="AM_TestPasswordWarning" xml:space="preserve">
+    <value>Yanlış şifre! Kurtarma Anahtarınızı mümkün olan en kısa sürede yedekleyin!</value>
+    <comment>Warning message displayed when the password test fails.</comment>
+  </data>
+  <data name="AM_TestPassword_Title" xml:space="preserve">
+    <value>Parolayı Dene</value>
+    <comment>Title of the test password dialog.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported" xml:space="preserve">
+    <value>Kurtarma anahtarı dışarı aktarıldı.</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
+    <value>Kurtarma Anahtarı dışarı aktarıldı</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
+    <value>Kurtarma anahtarı dışarı aktarılırken hata oluştu. Lütfen tekrar deneyin.</value>
+    <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
+    <value>Kurtarma Anahtarı dışarı aktarılamadı</value>
+    <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
+  </data>
+  <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
+    <value>{0} öğeyi çevrimdışı olarak kaldırmak istediğinizden emin misiniz?</value>
+    <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
+    <value>'{0}' öğesini çevrimdışından kaldırmak istediğinizden emin misiniz?</value>
+    <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
+Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
+    <value>Çevrimdışından kaldırılsın mı?</value>
+    <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
+  </data>
+  <data name="AM_OpenFolderFailed" xml:space="preserve">
+    <value>Seçilen klasör açılamadı</value>
+    <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
+  </data>
+  <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
+    <value>Klasör açılamadı</value>
+    <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed" xml:space="preserve">
+    <value>Şifreniz değiştirilemedi. Lütfen tekrar deneyin.</value>
+    <comment>Message of the dialog displayed when the user has failed to change his password</comment>
+  </data>
+  <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
+    <value>Şifre değiştirilirken hata oluştu</value>
+    <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
 </root>
