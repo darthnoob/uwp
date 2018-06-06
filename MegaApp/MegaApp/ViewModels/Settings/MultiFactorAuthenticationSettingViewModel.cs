@@ -14,11 +14,16 @@ namespace MegaApp.ViewModels.Settings
                 await StoreValue(this.Key, this.Value);
 
                 if(this.Value)
-                    DialogService.ShowMultiFactorAuthenticationSetupDialog();
+                    this.Value = await DialogService.ShowMultiFactorAuthenticationSetupDialog();
             };
         }
 
-        public override async void Initialize()
+        public override void Initialize()
+        {
+            this.CheckMultiFactorAuthStatus();
+        }
+
+        private async void CheckMultiFactorAuthStatus()
         {
             var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
             var result = await multiFactorAuthCheck.ExecuteAsync(() =>

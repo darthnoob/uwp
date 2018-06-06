@@ -254,6 +254,17 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to setup the Multi-Factor Authentication for the account
+        /// </summary>
+        /// <returns>TRUE if the user continues with the setup process or FALSE in other case</returns>
+        public static async Task<bool> ShowMultiFactorAuthenticationSetupDialog()
+        {
+            var mfaSetupDialog = new MultiFactorAuthenticationSetupDialog();
+            await mfaSetupDialog.ShowAsyncQueue();
+            return mfaSetupDialog.ViewModel.DialogResult;
+        }
+
+        /// <summary>
         /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
         /// <param name="node">Node to share the link</param>

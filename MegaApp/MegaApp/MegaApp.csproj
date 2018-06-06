@@ -313,6 +313,7 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthenticationSetupDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
@@ -451,6 +452,9 @@
     <Compile Include="ViewModels\MyAccount\ProfileViewModel.cs" />
     <Compile Include="Views\Dialogs\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthenticationSetupDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthenticationSetupDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TwoButtonsDialog.xaml.cs">
       <DependentUpon>TwoButtonsDialog.xaml</DependentUpon>
@@ -744,6 +748,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthenticationSetupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\TwoButtonsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -870,6 +878,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\MultiFactorAuth\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
