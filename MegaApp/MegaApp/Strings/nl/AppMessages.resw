@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>De prullenbak was succesvol geleegd. </value>
+    <value>De prullenbak was succesvol geleegd.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
@@ -428,7 +428,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
-    <value>Onjuiste email en/of wachtwoord. Probeer nogmaals. </value>
+    <value>Onjuiste email en/of wachtwoord. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
@@ -460,7 +460,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
-    <value>Mislukt om bestand '{0}' te downloaden. Probeer nogmaals. </value>
+    <value>Mislukt om bestand '{0}' te downloaden. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process/request to download a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -477,7 +477,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Mislukt om bestand '{0}' voor te bereiden voor uploaden.  Probeer nogmaals. </value>
+    <value>Mislukt om bestand '{0}' voor te bereiden voor uploaden.  Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -494,7 +494,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_UploadFileFailed" xml:space="preserve">
-    <value>Mislukt om het bestand '{0}' te uploaden. Probeer nogmaals. </value>
+    <value>Mislukt om het bestand '{0}' te uploaden. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process/request to upload a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -520,7 +520,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
   </data>
   <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
-    <value>U heeft geen toegang tot het pad naar '{0}'. Selecteer een andere en probeer nogmaals. </value>
+    <value>U heeft geen toegang tot het pad naar '{0}'. Selecteer een andere en probeer nogmaals.</value>
     <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
@@ -616,7 +616,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to copy node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveFailed" xml:space="preserve">
-    <value>Mislukt om nodes te verplaatsen. Probeer nogmaals. </value>
+    <value>Mislukt om nodes te verplaatsen. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process/request to move node(s) failed.</comment>
   </data>
   <data name="AM_MoveFailed_Title" xml:space="preserve">
@@ -624,7 +624,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Uw account werd beëindigd door het verbreken van Mega's Algemene Voorwaarden, zoals misbruik van rechten van andere; delen en/of importeren van illegale gegevens; systeem misbruik. </value>
+    <value>Uw account werd beëindigd door het verbreken van Mega's Algemene Voorwaarden, zoals misbruik van rechten van andere; delen en/of importeren van illegale gegevens; systeem misbruik.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -686,7 +686,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
-    <value>Bestand '{0}' werd opgeslagen. </value>
+    <value>Bestand '{0}' werd opgeslagen.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SavedFile_Title" xml:space="preserve">
@@ -718,7 +718,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard - (String as short as possible).</comment>
   </data>
   <data name="AM_GetLinkFailed" xml:space="preserve">
-    <value>Mislukt om de koppeling te krijgen. Probeer nogmaals. </value>
+    <value>Mislukt om de koppeling te krijgen. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) failed.</comment>
   </data>
   <data name="AM_GetLinkFailed_Title" xml:space="preserve">
@@ -955,7 +955,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
-    <value>Een log wordt gecreëerd ({0}).  </value>
+    <value>Een log wordt gecreëerd ({0}).</value>
     <comment>Alert message shown when the DEBUG mode is enabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -1015,7 +1015,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
-    <value>De applicatie heeft een probleem ondervonden. We verontschuldigen ons voor het ongemak. Als u midden in iets zat, kan de informatie waaraan u werkte verloren zijn. </value>
+    <value>De applicatie heeft een probleem ondervonden. We verontschuldigen ons voor het ongemak. Als u midden in iets zat, kan de informatie waaraan u werkte verloren zijn.</value>
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
@@ -1039,7 +1039,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_InvalidKeyFile" xml:space="preserve">
-    <value>Het bestand dat u geselecteerd heeft is te groot/klein. Zorg ervoor dat u het bestand selecteert de 22-letterige Herstelsleutel bevat. </value>
+    <value>Het bestand dat u geselecteerd heeft is te groot/klein. Zorg ervoor dat u het bestand selecteert de 22-letterige Herstelsleutel bevat.</value>
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
@@ -1067,7 +1067,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Fout op wachtwoord resetten. </value>
+    <value>Fout op wachtwoord resetten.</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1203,11 +1203,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Uw account is geschorst vanwege meerdere overtredingen van MEGA's Algemene Voorwaarden. Controleer uw email inbox. </value>
+    <value>Uw account is geschorst vanwege meerdere overtredingen van MEGA's Algemene Voorwaarden. Controleer uw email inbox.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud. </value>
+    <value>Door MEGA's coderings-technologie bent u niet in staat uw wachtwoord te resetten zonder gegevens verlies. Zorg ervoor dat u uw wachtwoord onthoud.</value>
     <comment>Message to describe the purpose of the password reminder dialog.</comment>
   </data>
   <data name="AM_PasswordReminder_Title" xml:space="preserve">

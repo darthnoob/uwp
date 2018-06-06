@@ -86,7 +86,7 @@ namespace MegaApp.ViewModels.Login
             switch (result)
             {
                 case LoginResult.Success:
-                    SettingsService.SaveMegaLoginData(this.Email, this.MegaSdk.dumpSession());
+                    SettingsService.SaveSessionToLocker(this.Email, this.MegaSdk.dumpSession());
 
                     // Validate product subscription license on background thread
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
@@ -214,11 +214,7 @@ namespace MegaApp.ViewModels.Login
                 this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 fastLoginResult = await fastLogin.ExecuteAsync(async () =>
-                {
-                    this.MegaSdk.fastLogin(await SettingsService.LoadSettingAsync<string>(
-                        ResourceService.SettingsResources.GetString("SR_UserMegaSession")),
-                        fastLogin);
-                });
+                    this.MegaSdk.fastLogin(await SettingsService.LoadSessionFromLockerAsync(), fastLogin));
             }
             // Do nothing, app is already logging out
             catch (BadSessionIdException)

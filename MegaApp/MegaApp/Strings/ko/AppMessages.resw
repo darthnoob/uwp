@@ -1247,17 +1247,17 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>오프라인에서 {0}개의 항목을 삭제할까요?                                </value>
+    <value>오프라인에서 {0}개의 항목을 삭제할까요?</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>오프라인에서 {0}을/를 삭제할까요?                                </value>
+    <value>오프라인에서 {0}을/를 삭제할까요?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>오프라인에서 삭제할까요?                                </value>
+    <value>오프라인에서 삭제할까요?</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">

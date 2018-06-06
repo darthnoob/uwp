@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 using Windows.Storage;
+using mega;
 
 namespace BackgroundTaskService.Services
 {
@@ -59,5 +62,58 @@ namespace BackgroundTaskService.Services
             }
         }
 
+        /// <summary>
+        /// Load the user session ID from the Credential Locker
+        /// </summary>
+        /// <returns>User session ID</returns>
+        public static async Task<string> LoadSessionFromLockerAsync()
+        {
+            var session = LoadCredentialFromLocker(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+            if (session != null) return session;
+
+            // Backward compatibility
+            return await LoadSettingFromFileAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+        }
+
+        /// <summary>
+        /// Get a credential from the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential</param>
+        /// <returns>The credential if exists. NULL if not exists or something fails</returns>
+        private static PasswordCredential GetCredentialFromLocker(string resourceName)
+        {
+            try
+            {
+                var vault = new PasswordVault();
+                return vault.RetrieveAll().Count > 0 ?
+                    vault.FindAllByResource(resourceName).First() : null;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get the value of a credential from the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential</param>
+        /// <returns>The credential value if exists. NULL if not exists or something fails</returns>
+        private static string LoadCredentialFromLocker(string resourceName)
+        {
+            try
+            {
+                var credential = GetCredentialFromLocker(resourceName);
+                if (credential == null) return null;
+                credential.RetrievePassword();
+                return credential.Password;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return null;
+            }
+        }
     }
 }

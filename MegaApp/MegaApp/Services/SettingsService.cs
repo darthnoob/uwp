@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Security.Credentials;
 using Windows.Storage;
 using mega;
 using MegaApp.ViewModels.Settings;
@@ -308,35 +310,60 @@ namespace MegaApp.Services
         {
             try
             {
-                var hasValidSession = await LoadSettingAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
-                return hasValidSession != null ? true : false;
+                var hasValidSession = GetCredentialFromLocker(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+                if (hasValidSession != null) return true;
+
+                // Backward compatibility
+                var hasValidSessionFile = await LoadSettingAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+                return hasValidSessionFile != null ? true : false;
             }
             catch (ArgumentNullException) { return false; }
         }
 
         /// <summary>
-        /// Save all the login data settings
+        /// Save the user session ID in the Credential Locker
         /// </summary>
         /// <param name="email">User account email</param>
         /// <param name="session">User session ID</param>
-        public static void SaveMegaLoginData(string email, string session)
+        public static void SaveSessionToLocker(string email, string session)
         {
-            Save(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"), email);
-            Save(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
+            SaveCredentialToLocker(
+                ResourceService.SettingsResources.GetString("SR_UserMegaSession"),
+                email, session);
 
-            // Save session for automatic camera upload agent
-            SaveSettingToFile(ResourceService.SettingsResources.GetString("SR_UserMegaSession"), session);
+            DeleteOldMegaLogingDataSettings();
         }
 
         /// <summary>
-        /// Clear all the login data settings
+        /// Load the user session ID from the Credential Locker
         /// </summary>
-        public static void ClearMegaLoginData()
+        /// <returns>User session ID</returns>
+        public static async Task<string> LoadSessionFromLockerAsync()
         {
-            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"));
-            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+            var session = LoadCredentialFromLocker(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+            if (session != null)
+            {
+                DeleteOldMegaLogingDataSettings();
+                return session;
+            }
 
-            DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+            // Backward compatibility
+            var email = await LoadSettingAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"));
+            var sessionID = await LoadSettingAsync<string>(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+
+            if (email != null && sessionID != null)
+                SaveSessionToLocker(email, sessionID);
+
+            return sessionID;
+        }
+
+        /// <summary>
+        /// Remove the user session ID from the Credential Locker
+        /// </summary>
+        public static void RemoveSessionFromLocker()
+        {
+            DeleteOldMegaLogingDataSettings();
+            RemoveCredentialFromLocker(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
         }
 
         /// <summary>
@@ -355,6 +382,102 @@ namespace MegaApp.Services
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserPinLock"));
 
             DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_LastUploadDate"));
+        }
+
+        /// <summary>
+        /// Save a credential in the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential</param>
+        /// <param name="email">User account email</param>
+        /// <param name="value">Credential value</param>
+        /// <returns>TRUE if all went well or FALSE in other case</returns>
+        private static bool SaveCredentialToLocker(string resourceName, string email, string session)
+        {
+            try
+            {
+                var vault = new PasswordVault();
+                var credential = new PasswordCredential(resourceName, email, session);
+                vault.Add(credential);
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Get a credential from the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential</param>
+        /// <returns>The credential if exists. NULL if not exists or something fails</returns>
+        private static PasswordCredential GetCredentialFromLocker(string resourceName)
+        {
+            try
+            {
+                var vault = new PasswordVault();
+                return vault.RetrieveAll().Count > 0 ?
+                    vault.FindAllByResource(resourceName).First() : null;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get the value of a credential from the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential</param>
+        /// <returns>The credential value if exists. NULL if not exists or something fails</returns>
+        private static string LoadCredentialFromLocker(string resourceName)
+        {
+            try
+            {
+                var credential = GetCredentialFromLocker(resourceName);
+                if (credential == null) return null;
+                credential.RetrievePassword();
+                return credential.Password;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Remove a credential from the Credential Locker
+        /// </summary>
+        /// <param name="resourceName">Resource name of the credential to remove</param>
+        /// <returns>TRUE if all went well or FALSE in other case</returns>
+        private static bool RemoveCredentialFromLocker(string resourceName)
+        {
+            try
+            {
+                var vault = new PasswordVault();
+                var credential = GetCredentialFromLocker(resourceName);
+                if (credential != null)
+                    vault.Remove(credential);
+                
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, e.Message, e);
+                return false;
+            }
+        }
+
+        // Backward compatibility
+        private static void DeleteOldMegaLogingDataSettings()
+        {
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaEmailAddress"));
+            DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
+
+            DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
         }
     }
 }
