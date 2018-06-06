@@ -202,11 +202,11 @@
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>오프라인 파일 없음                                </value>
+    <value>오프라인 파일 없음</value>
     <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineSubHeader" xml:space="preserve">
-    <value>오프라인 보기를 위해 파일 저장                                </value>
+    <value>오프라인 보기를 위해 파일 저장</value>
     <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>

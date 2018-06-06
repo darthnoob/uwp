@@ -1465,7 +1465,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>bono de cuota de transferencia </value>
+    <value>Bono de cuota de transferencia</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1494,7 +1494,7 @@ Keep the {0} code because are for include the total number of folders in runtime
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
     <value>1 day remaining</value>
-    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+    <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
     <value>{0} días restantes</value>
@@ -1645,7 +1645,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
     <value>Estado de la invitación</value>
-    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+    <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
     <value>Pendiente</value>

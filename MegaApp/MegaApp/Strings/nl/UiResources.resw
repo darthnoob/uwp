@@ -706,7 +706,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AnnualRecurring" xml:space="preserve">
-    <value>Jaarlijks </value>
+    <value>Jaarlijks</value>
     <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_General" xml:space="preserve">
@@ -871,7 +871,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicy" xml:space="preserve">
-    <value>Terugbetalingsbeleid </value>
+    <value>Terugbetalingsbeleid</value>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
@@ -1048,7 +1048,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_NumberOfContacts" xml:space="preserve">
-    <value>{0} Contacten </value>
+    <value>{0} Contacten</value>
     <comment>Label to indicate the number of contacts in a list, number of contacts with an item is shared, etc. - (String as short as possible).
 Keep the {0} code because is for include the number of contacts in runtime.</comment>
   </data>
@@ -1103,15 +1103,15 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
-    <value>Datum gewijzigd </value>
+    <value>Datum gewijzigd</value>
     <comment>Label for any 'Date modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderLocation" xml:space="preserve">
-    <value>Map locatie </value>
+    <value>Map locatie</value>
     <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderModified" xml:space="preserve">
-    <value>Map gewijzigd </value>
+    <value>Map gewijzigd</value>
     <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Owner" xml:space="preserve">
@@ -1131,7 +1131,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Shared to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateCreated" xml:space="preserve">
-    <value>Datum gecreëerd </value>
+    <value>Datum gecreëerd</value>
     <comment>Label for any 'Date created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableSharedFolder" xml:space="preserve">
@@ -1184,7 +1184,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Door onze eind-tot-eind codering paradigma, heeft u geen toegang tot u gegevens zonder uw wachtwoord of een reservekopie van uw Herstelsleutel. U kunt uw bestaande account parkeren en een nieuwe opstarten onder hetzelfde e-mailadres. </value>
+    <value>Door onze eind-tot-eind codering paradigma, heeft u geen toegang tot u gegevens zonder uw wachtwoord of een reservekopie van uw Herstelsleutel. U kunt uw bestaande account parkeren en een nieuwe opstarten onder hetzelfde e-mailadres.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
@@ -1311,7 +1311,7 @@ Keep the {0} and {1} codes because are for include the total number of folders a
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
-    <value>Datum Gecreëerd ({0} van {1}) </value>
+    <value>Datum Gecreëerd ({0} van {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1371,7 +1371,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
-    <value>Kopieer/Verplaats {0} items naar </value>
+    <value>Kopieer/Verplaats {0} items naar</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
@@ -1494,7 +1494,7 @@ Keep the {0} code because are for include the total number of folders in runtime
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
     <value>1 day remaining</value>
-    <comment>Label for any 'day remaining' button, link, text, title, etc. - (String as short as possible).</comment>
+    <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
     <value>{0} dagen te gaan</value>
@@ -1554,7 +1554,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>Krijg {0} gratis opslag en {1} aan overdracht tegoed voor elke vriend die een MEGA app installeert. </value>
+    <value>Krijg {0} gratis opslag en {1} aan overdracht tegoed voor elke vriend die een MEGA app installeert.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
@@ -1645,7 +1645,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
     <value>Doorverwijzing status</value>
-    <comment>Label for the menu option to sort a list of items by referral statis - (String as short as possible).</comment>
+    <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
     <value>In afwachting van</value>

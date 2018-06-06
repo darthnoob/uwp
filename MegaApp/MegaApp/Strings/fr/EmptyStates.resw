@@ -202,7 +202,7 @@
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>Aucun fichier Hors ligne                           </value>
+    <value>Aucun fichier Hors ligne</value>
     <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineSubHeader" xml:space="preserve">
