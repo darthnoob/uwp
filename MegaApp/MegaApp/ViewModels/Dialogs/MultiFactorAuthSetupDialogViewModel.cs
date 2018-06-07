@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Windows.UI.Xaml;
 using MegaApp.Classes;
 using MegaApp.Services;
+using MegaApp.Views.MultiFactorAuth;
 
 namespace MegaApp.ViewModels.Dialogs
 {
@@ -45,6 +46,8 @@ namespace MegaApp.ViewModels.Dialogs
 
             if (!this.CloseCommand.CanExecute(null)) return;
             this.CloseCommand.Execute(null);
+
+            NavigateService.Instance.Navigate(typeof(MultiFactorAuthAppSetupPage));
         }
 
         #endregion

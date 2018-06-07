@@ -1284,4 +1284,20 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Protect your account with Two-Factor Authentication</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
+  <data name="AM_MFA_SeedCopied" xml:space="preserve">
+    <value>The seed has been copied to your clipboard.</value>
+    <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
+    <value>Failed to copy the seed to your clipboard. Please try again.</value>
+    <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
+    <value>Seed copy failed</value>
+    <comment>Title of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopied_Title" xml:space="preserve">
+    <value>Seed copied</value>
+    <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
+  </data>
 </root>

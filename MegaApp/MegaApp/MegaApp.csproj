@@ -225,6 +225,7 @@
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthCheckRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MultiFactorAuthGetCodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\MultiFactorAuth\MultiFactorAuthAppSetupViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementsViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AwardClassViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementInvitationsViewModel.cs" />
@@ -494,6 +496,9 @@
     </Compile>
     <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MultiFactorAuth\MultiFactorAuthAppSetupPage.xaml.cs">
+      <DependentUpon>MultiFactorAuthAppSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\AchievementInvitationsPage.xaml.cs">
       <DependentUpon>AchievementInvitationsPage.xaml</DependentUpon>
@@ -803,6 +808,10 @@
     <Page Include="Views\Login\ForgotPasswordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MultiFactorAuth\MultiFactorAuthAppSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MyAccount\AchievementInvitationsPage.xaml">
       <SubType>Designer</SubType>

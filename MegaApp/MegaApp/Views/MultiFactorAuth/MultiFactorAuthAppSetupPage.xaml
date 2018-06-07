@@ -1,0 +1,126 @@
+﻿<multiFactorAuthViews:BaseMultiFactorAuthAppSetupPage
+    x:Class="MegaApp.Views.MultiFactorAuth.MultiFactorAuthAppSetupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.MultiFactorAuth"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:multiFactorAuthViews="using:MegaApp.Views.MultiFactorAuth"
+    mc:Ignorable="d">
+
+    <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TopRowGrid" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="SectionNameText"
+                Margin="24,14,0,0"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.SectionNameText, Mode=OneTime}" />
+        </Grid>
+
+        <ContentPresenter
+            Grid.Row="1"
+            ContentTemplate="{StaticResource OfflineBannerSpace}"
+            Visibility="{Binding ShowOfflineBanner, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+        <Grid Grid.Row="2" Margin="24,12,0,0">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock
+                    Margin="0,0,0,28"
+                    Style="{ThemeResource MegaHeaderFontStyle}"
+                    Text="{x:Bind ViewModel.TwoFactorAuthText, Mode=OneTime}" />
+                <TextBlock
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind ViewModel.ManuallySetupStep1Text, Mode=OneTime}"/>
+                <StackPanel
+                    Margin="0,24,0,48"
+                    Width="320"
+                    Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
+                    HorizontalAlignment="Left">
+                    <CommandBar>
+                        <CommandBar.SecondaryCommands>
+                            <AppBarButton
+                                Command="{x:Bind ViewModel.CopySeedCommand}"
+                                Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"/>
+                        </CommandBar.SecondaryCommands>
+                    </CommandBar>
+                    <Image
+                        Margin="0,0,0,20"
+                        Height="148"
+                        Width="148"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontSize="13"
+                        Opacity="0.6"
+                        Text="Or enter this code into your authentication app"/>
+                    <TextBlock
+                        Margin="20,24"
+                        FontSize="16"
+                        HorizontalAlignment="Center"
+                        Text="{x:Bind ViewModel.MultiFactorAuthCode, Mode=OneWay}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+                <TextBlock
+                    Margin="0,0,0,12"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind ViewModel.ManuallySetupStep2Text, Mode=OneTime}"/>
+                <TextBlock
+                    Margin="0,0,0,24"
+                    FontSize="13"
+                    Text="{x:Bind ViewModel.ManuallySetupStep2DescriptionText, Mode=OneTime}"/>
+                <TextBox
+                    Margin="0,0,0,16"
+                    Width="320"
+                    FontSize="13"
+                    HorizontalAlignment="Left"
+                    InputScope="NumericPin"
+                    MaxLength="6"
+                    PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
+                    Style="{StaticResource MegaTextBoxStyle}"/>
+                <Button
+                    MinWidth="130"
+                    Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
+                    Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"/>
+            </StackPanel>
+            
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</multiFactorAuthViews:BaseMultiFactorAuthAppSetupPage>

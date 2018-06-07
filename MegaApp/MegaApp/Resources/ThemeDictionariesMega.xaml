@@ -1390,6 +1390,7 @@
             <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#191919" />
             <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#666666" />
             <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444" />
+            <SolidColorBrush x:Key="MegaMultiFactorAuthBackgroundBrush" Color="#222222" />
         </ResourceDictionary>
 
         <!--  COLOR PALETTE FOR THE LIGHT THEME  -->
@@ -1419,6 +1420,7 @@
             <SolidColorBrush x:Key="MegaProductBackgroundBrush" Color="#FFFFFF" />
             <SolidColorBrush x:Key="MegaDialogBorderBrush" Color="#DDDDDD" />
             <SolidColorBrush x:Key="MegaDialogSecondaryButtonBackgroundBrush" Color="#444444" />
+            <SolidColorBrush x:Key="MegaMultiFactorAuthBackgroundBrush" Color="#E6E6E6" />
         </ResourceDictionary>
     </ResourceDictionary.ThemeDictionaries>
 </ResourceDictionary>
