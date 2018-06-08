@@ -91,7 +91,8 @@
                     InputScope="NumericPin"
                     MaxLength="6"
                     PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
-                    Style="{StaticResource MegaTextBoxStyle}"/>
+                    Style="{StaticResource MegaTextBoxStyle}"
+                    Text="{x:Bind ViewModel.VerifyCode, Mode=TwoWay}"/>
                 <Button
                     MinWidth="130"
                     Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"

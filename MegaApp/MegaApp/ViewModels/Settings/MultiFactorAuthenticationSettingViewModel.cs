@@ -1,4 +1,6 @@
-﻿using MegaApp.MegaApi;
+﻿using System;
+using System.Threading.Tasks;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
@@ -9,21 +11,26 @@ namespace MegaApp.ViewModels.Settings
             : base(ResourceService.UiResources.GetString("UI_EnableTwoFactorAuth"), 
                   null, "MultiFactorAuthSettingsKey")
         {
-            this.ValueChanged += async (sender, args) =>
-            {
-                await StoreValue(this.Key, this.Value);
-
-                if(this.Value)
-                    this.Value = await DialogService.ShowMultiFactorAuthSetupDialogAsync();
-            };
+            this.ValueChanged += this.OnValueChanged;
         }
 
-        public override void Initialize()
+        public override async void Initialize()
         {
-            this.CheckMultiFactorAuthStatus();
+            var result = await this.CheckMultiFactorAuthStatusAsync();
+
+            this.ValueChanged -= this.OnValueChanged;
+
+            if (result.HasValue)
+                this.Value = result.Value;
+
+            this.ValueChanged += this.OnValueChanged;
         }
 
-        private async void CheckMultiFactorAuthStatus()
+        /// <summary>
+        /// Check the status of the Multi-Factor Authentication
+        /// </summary>
+        /// <returns>The current status of the or NULL if something failed</returns>
+        private async Task<bool?> CheckMultiFactorAuthStatusAsync()
         {
             var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
             var result = await multiFactorAuthCheck.ExecuteAsync(() =>
@@ -32,8 +39,48 @@ namespace MegaApp.ViewModels.Settings
                     SdkService.MegaSdk.getMyEmail(), multiFactorAuthCheck);
             });
 
-            if (result.HasValue)
-                this.Value = result.Value;
+            return result;            
+        }
+
+        /// <summary>
+        /// Enable the Multi-Factor Authentication
+        /// </summary>
+        /// <returns>TRUE if all is OK or FALSE if something failed</returns>
+        private async Task<bool> EnableMultiFactorAuthAsync() =>
+            await DialogService.ShowMultiFactorAuthSetupDialogAsync();
+
+        /// <summary>
+        /// Disable the Multi-Factor Authentication
+        /// </summary>
+        /// <returns>TRUE if all is OK or FALSE if something failed</returns>
+        private async Task<bool> DisableMultiFactorAuthAsync()
+        {
+            var code = await DialogService.ShowInputDialogAsync(
+                ResourceService.AppMessages.GetString("AM_2FA_DisableDialogTitle"),
+                ResourceService.AppMessages.GetString("AM_2FA_DisableDialogMessage"),
+                ResourceService.UiResources.GetString("UI_Disable"),
+                ResourceService.UiResources.GetString("UI_Close"));
+
+            if (string.IsNullOrWhiteSpace(code)) return false;
+
+            var disableMultiFactorAuth = new MultiFactorAuthDisableRequestListenerAsync();
+            var result = await disableMultiFactorAuth.ExecuteAsync(() =>
+                SdkService.MegaSdk.multiFactorAuthDisable(code, disableMultiFactorAuth));
+
+            return result;
+        }
+
+        private async void OnValueChanged(object sender, EventArgs args)
+        {
+            this.ValueChanged -= this.OnValueChanged;
+
+            this.Value = this.Value ?
+                await this.EnableMultiFactorAuthAsync() :
+                !await this.DisableMultiFactorAuthAsync();
+
+            this.ValueChanged += this.OnValueChanged;
+
+            await StoreValue(this.Key, this.Value);
         }
     }
 }

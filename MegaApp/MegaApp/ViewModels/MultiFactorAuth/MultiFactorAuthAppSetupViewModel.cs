@@ -29,9 +29,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         {
             var multiFactorAuthGetCode = new MultiFactorAuthGetCodeRequestListenerAsync();
             this.MultiFactorAuthCode = await multiFactorAuthGetCode.ExecuteAsync(() =>
-            {
-                SdkService.MegaSdk.multiFactorAuthGetCode(multiFactorAuthGetCode);
-            });
+                SdkService.MegaSdk.multiFactorAuthGetCode(multiFactorAuthGetCode));
         }
 
         private async void CopySeed()
@@ -56,18 +54,35 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             }
         }
 
-        private void Verify()
+        private async void Verify()
         {
+            if (string.IsNullOrWhiteSpace(this.VerifyCode)) return;
 
+            var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
+            var result = await enableMultiFactorAuth.ExecuteAsync(() =>
+                SdkService.MegaSdk.multiFactorAuthEnable(this.VerifyCode, enableMultiFactorAuth));
         }
 
         #region Properties
 
         private string _multiFactorAuthCode;
+        /// <summary>
+        /// Code or seed needed to enable the Multi-Factor Authentication
+        /// </summary>
         public string MultiFactorAuthCode
         {
             get { return _multiFactorAuthCode; }
             set { SetField(ref _multiFactorAuthCode, value); }
+        }
+
+        private string _verifyCode;
+        /// <summary>
+        /// Code typed by the user to verify that the Multi-Factor Authentication is working
+        /// </summary>
+        public string VerifyCode
+        {
+            get { return _verifyCode; }
+            set { SetField(ref _verifyCode, value); }
         }
 
         #endregion

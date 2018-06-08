@@ -1723,6 +1723,10 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Copy seed</value>
     <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
   </data>
+  <data name="UI_Disable" xml:space="preserve">
+    <value>Disable</value>
+    <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
+  </data>
   <data name="UI_MFA_ManuallySetupStep1" xml:space="preserve">
     <value>1. Scan or copy the seed directly into your authenticator app</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>

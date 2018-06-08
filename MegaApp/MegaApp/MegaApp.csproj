@@ -226,6 +226,7 @@
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthCheckRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthGetCodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MultiFactorAuthSetRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
