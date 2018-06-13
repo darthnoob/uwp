@@ -1292,6 +1292,14 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Disable Two-Factor Authentication</value>
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
+  <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
+    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your authentification app.</value>
+    <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
+  </data>
+  <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
+    <value>Great! Two-Factor Authentication Enabled</value>
+    <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
+  </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
     <value>The seed has been copied to your clipboard.</value>
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>

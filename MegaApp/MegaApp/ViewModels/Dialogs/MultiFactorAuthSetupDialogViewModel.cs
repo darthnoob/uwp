@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Input;
-using Windows.UI.Xaml;
 using MegaApp.Classes;
 using MegaApp.Services;
 using MegaApp.Views.MultiFactorAuth;
@@ -11,8 +10,6 @@ namespace MegaApp.ViewModels.Dialogs
     {
         public MultiFactorAuthSetupDialogViewModel() : base()
         {
-            this.CloseButtonVisibility = Visibility.Visible;
-
             this.SetupTwoFactorAuthCommand = new RelayCommand(SetupTwoFactorAuth);
         }
 

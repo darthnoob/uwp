@@ -1,22 +1,21 @@
-﻿<local:BaseMultiFactorAuthSetupDialog
-    x:Class="MegaApp.Views.Dialogs.MultiFactorAuthSetupDialog"
+﻿<local:BaseMultiFactorAuthEnabledDialog
+    x:Class="MegaApp.Views.Dialogs.MultiFactorAuthEnabledDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MegaApp.Views.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
-    d:DataContext="{d:DesignInstance dialogViewModels:MultiFactorAuthSetupDialogViewModel}"
+    d:DataContext="{d:DesignInstance dialogViewModels:MultiFactorAuthEnabledDialogViewModel}"
     mc:Ignorable="d"
-    Margin="0, 0, 24, 8"
-    Style="{ThemeResource MegaAlertDialogStyle}"
+    Margin="0, 0, 24, 24"
+    Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
-    CloseButtonCommand="{x:Bind ViewModel.CloseCommand}"
-    CloseButtonVisibility="Visible"
+    CloseButtonVisibility="Collapsed"
     Closing="OnClosing"
-    MaxHeight="420"
-    MaxWidth="420">
+    SecondaryButtonCommand="{x:Bind ViewModel.CloseCommand}"
+    SecondaryButtonText="{x:Bind ViewModel.CloseText, Mode=OneTime}">
 
     <Grid Margin="24,0,0,0">
         <StackPanel Margin="24,24,24,0">
@@ -37,17 +36,6 @@
                 Style="{StaticResource MegaDialogContentFontStyle}"
                 Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"
                 TextAlignment="Center"/>
-            <Button
-                Margin="0,20,0,24"
-                Command="{x:Bind ViewModel.SetupTwoFactorAuthCommand, Mode=OneTime}"
-                Content="{x:Bind ViewModel.SetupTwoFactorAuthText, Mode=OneTime}"
-                FontSize="13"
-                HorizontalAlignment="Stretch"/>
-            <HyperlinkButton
-                Content="{x:Bind ViewModel.HowDoesItWorkText, Mode=OneTime}"
-                FontSize="13"
-                HorizontalAlignment="Center"
-                Style="{StaticResource MegaLinkStyle}"/>
         </StackPanel>
     </Grid>
-</local:BaseMultiFactorAuthSetupDialog>
+</local:BaseMultiFactorAuthEnabledDialog>

@@ -1,4 +1,7 @@
-﻿using MegaApp.UserControls;
+﻿using System.Linq;
+using Windows.UI.Xaml.Navigation;
+using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels.MultiFactorAuth;
 
 namespace MegaApp.Views.MultiFactorAuth
@@ -12,6 +15,15 @@ namespace MegaApp.Views.MultiFactorAuth
         public MultiFactorAuthAppSetupPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            // Remove this page from the BackStack
+            if (NavigateService.MainFrame.BackStack.Any())
+                NavigateService.MainFrame.BackStack.Remove(NavigateService.MainFrame.BackStack.Last());
+
+            base.OnNavigatedFrom(e);
         }
     }
 }

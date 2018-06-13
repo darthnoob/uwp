@@ -1,10 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using Windows.ApplicationModel.DataTransfer;
+using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using Windows.ApplicationModel.DataTransfer;
-using System;
-using mega;
+using MegaApp.Views;
 
 namespace MegaApp.ViewModels.MultiFactorAuth
 {
@@ -61,6 +63,14 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
             var result = await enableMultiFactorAuth.ExecuteAsync(() =>
                 SdkService.MegaSdk.multiFactorAuthEnable(this.VerifyCode, enableMultiFactorAuth));
+
+            if (!result) return;
+
+            DialogService.ShowMultiFactorAuthEnabledDialog();
+
+            NavigateService.Instance.Navigate(typeof(SettingsPage), false,
+                NavigationObject.Create(typeof(MultiFactorAuthAppSetupViewModel),
+                NavigationActionType.SecuritySettings));
         }
 
         #region Properties

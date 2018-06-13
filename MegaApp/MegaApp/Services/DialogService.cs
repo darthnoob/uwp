@@ -265,6 +265,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to indicate that the user has successfully enabled the Multi-Factor Authentication
+        /// </summary>
+        public static async void ShowMultiFactorAuthEnabledDialog()
+        {
+            var mfaEnabledDialog = new MultiFactorAuthEnabledDialog();
+            await mfaEnabledDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
         /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
         /// <param name="node">Node to share the link</param>
