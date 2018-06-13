@@ -33,6 +33,7 @@
                 Height="{StaticResource InputHeight}"
                 Margin="{StaticResource StackedInputMargin}"
                 IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
+                PlaceholderText="{x:Bind ViewModel.Settings.PlaceholderText, Mode=OneTime}"
                 Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{StaticResource MegaTextBoxStyle}"
                 TabIndex="0"/>

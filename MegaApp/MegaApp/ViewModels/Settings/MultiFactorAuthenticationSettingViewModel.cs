@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.Settings
 {
@@ -59,7 +60,11 @@ namespace MegaApp.ViewModels.Settings
                 ResourceService.AppMessages.GetString("AM_2FA_DisableDialogTitle"),
                 ResourceService.AppMessages.GetString("AM_2FA_DisableDialogMessage"),
                 ResourceService.UiResources.GetString("UI_Disable"),
-                ResourceService.UiResources.GetString("UI_Close"));
+                ResourceService.UiResources.GetString("UI_Close"),
+                new InputDialogSettings
+                {
+                    PlaceholderText = ResourceService.UiResources.GetString("UI_SixDigitCode")
+                });
 
             if (string.IsNullOrWhiteSpace(code)) return false;
 

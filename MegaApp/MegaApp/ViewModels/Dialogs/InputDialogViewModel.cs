@@ -44,5 +44,10 @@
         /// Ignore extensions when the text is default selected.
         /// </summary>
         public bool IgnoreExtensionInSelection { get; set; }
+
+        /// <summary>
+        /// Placeholder text for the input dialog
+        /// </summary>
+        public string PlaceholderText { get; set; } = string.Empty;
     }
 }
