@@ -27,6 +27,12 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         #endregion
 
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            this.SetVerifyButtonState();
+        }
+
         private async void Initialize()
         {
             var multiFactorAuthGetCode = new MultiFactorAuthGetCodeRequestListenerAsync();
@@ -60,11 +66,22 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         {
             if (string.IsNullOrWhiteSpace(this.VerifyCode)) return;
 
+            this.ControlState = false;
+            this.SetVerifyButtonState();
+
             var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
             var result = await enableMultiFactorAuth.ExecuteAsync(() =>
                 SdkService.MegaSdk.multiFactorAuthEnable(this.VerifyCode, enableMultiFactorAuth));
 
-            if (!result) return;
+            this.ControlState = true;
+            this.SetVerifyButtonState();
+
+            if (!result)
+            {
+                this.SetInputState(InputState.Warning);
+                this.WarningText = ResourceService.AppMessages.GetString("AM_InvalidCode");
+                return;
+            }
 
             DialogService.ShowMultiFactorAuthEnabledDialog();
 
@@ -72,6 +89,18 @@ namespace MegaApp.ViewModels.MultiFactorAuth
                 NavigationObject.Create(typeof(MultiFactorAuthAppSetupViewModel),
                 NavigationActionType.SecuritySettings));
         }
+
+        private void SetVerifyButtonState()
+        {
+            var enabled = this.IsNetworkAvailable && this.ControlState && 
+                !string.IsNullOrWhiteSpace(this.VerifyCode) &&
+                this.VerifyCode.Length == 6;
+
+            OnUiThread(() => this.VerifyButtonState = enabled);
+        }
+
+        private void SetInputState(InputState verifyCode = InputState.Normal) =>
+            OnUiThread(() => this.VerifyCodeInputState = verifyCode);
 
         #region Properties
 
@@ -92,7 +121,40 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public string VerifyCode
         {
             get { return _verifyCode; }
-            set { SetField(ref _verifyCode, value); }
+            set
+            {
+                SetField(ref _verifyCode, value);
+                SetVerifyButtonState();
+                SetInputState();
+                this.WarningText = string.Empty;
+            }
+        }
+
+        private string _warningText;
+        /// <summary>
+        /// Warning message (verification failed)
+        /// </summary>
+        public string WarningText
+        {
+            get { return _warningText; }
+            set { SetField(ref _warningText, value); }
+        }
+
+        private bool _verifyButtonState;
+        /// <summary>
+        /// State (enabled/disabled) of the verify button
+        /// </summary>
+        public bool VerifyButtonState
+        {
+            get { return _verifyButtonState; }
+            set { SetField(ref _verifyButtonState, value); }
+        }
+
+        private InputState _verifyCodeInputState;
+        public InputState VerifyCodeInputState
+        {
+            get { return _verifyCodeInputState; }
+            set { SetField(ref _verifyCodeInputState, value); }
         }
 
         #endregion
@@ -107,6 +169,12 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public string SixDigitCodeText => ResourceService.UiResources.GetString("UI_SixDigitCode");
         public string TwoFactorAuthText => ResourceService.UiResources.GetString("UI_TwoFactorAuth");
         public string VerifyText => ResourceService.UiResources.GetString("UI_Verify");
+
+        #endregion
+
+        #region VisualResources
+
+        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }

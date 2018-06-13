@@ -1300,6 +1300,10 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Great! Two-Factor Authentication Enabled</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
+  <data name="AM_InvalidCode" xml:space="preserve">
+    <value>This code isnt right, please try again.</value>
+    <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
+  </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
     <value>The seed has been copied to your clipboard.</value>
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>

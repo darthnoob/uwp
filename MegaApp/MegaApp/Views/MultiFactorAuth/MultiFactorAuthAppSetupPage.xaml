@@ -88,20 +88,42 @@
                         Text="{x:Bind ViewModel.ManuallySetupStep2DescriptionText, Mode=OneTime}"
                         TextWrapping="WrapWholeWords"/>
                     <TextBox
-                        Margin="0,0,0,16"
                         Width="320"
+                        BorderBrush="{Binding VerifyCodeInputState, Converter={StaticResource InputStateToColorConverter}}"
                         FontSize="13"
                         HorizontalAlignment="Left"
                         InputScope="NumericPin"
+                        IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                         KeyDown="OnVerifyTextBoxKeyDown"
                         MaxLength="6"
                         PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
                         Style="{StaticResource MegaTextBoxStyle}"
-                        Text="{x:Bind ViewModel.VerifyCode, Mode=TwoWay}"/>
+                        Text="{Binding VerifyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid Margin="0,4,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox
+                            Grid.Column="0"
+                            Margin="0,0,12,0"
+                            MaxWidth="16" MaxHeight="16"
+                            VerticalAlignment="Top"
+                            Visibility="{Binding WarningText, Converter={StaticResource StringVisibilityConverter}}">
+                            <PathIcon 
+                                Data="{x:Bind ViewModel.WarningIconPathData, Mode=OneTime}"
+                                Foreground="{StaticResource MegaRedColorBrush}" />
+                        </Viewbox>
+                        <TextBlock
+                            Grid.Column="1"
+                            Style="{StaticResource MegaDialogErrorFontStyle}"
+                            Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
+                    </Grid>
                     <Button
                         MinWidth="130"
                         Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
-                        Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"/>
+                        Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"
+                        IsEnabled="{x:Bind ViewModel.VerifyButtonState, Mode=OneWay}"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>
