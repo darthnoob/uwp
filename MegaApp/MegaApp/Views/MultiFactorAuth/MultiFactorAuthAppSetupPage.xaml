@@ -29,10 +29,7 @@
                 Text="{x:Bind ViewModel.SectionNameText, Mode=OneTime}" />
         </Grid>
 
-        <ContentPresenter
-            Grid.Row="1"
-            ContentTemplate="{StaticResource OfflineBannerSpace}"
-            Visibility="{Binding ShowOfflineBanner, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
 
         <Grid Grid.Row="2" Margin="24,12,0,0">
             <StackPanel HorizontalAlignment="Left">
