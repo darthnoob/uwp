@@ -31,71 +31,79 @@
 
         <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
 
-        <Grid Grid.Row="2" Margin="24,12,0,0">
-            <StackPanel HorizontalAlignment="Left">
-                <TextBlock
-                    Margin="0,0,0,28"
-                    Style="{ThemeResource MegaHeaderFontStyle}"
-                    Text="{x:Bind ViewModel.TwoFactorAuthText, Mode=OneTime}" />
-                <TextBlock
-                    Style="{ThemeResource MegaBodyFontStyle}"
-                    Text="{x:Bind ViewModel.ManuallySetupStep1Text, Mode=OneTime}"/>
-                <StackPanel
-                    Margin="0,24,0,48"
-                    Width="320"
-                    Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
-                    HorizontalAlignment="Left">
-                    <CommandBar>
-                        <CommandBar.SecondaryCommands>
-                            <AppBarButton
-                                Command="{x:Bind ViewModel.CopySeedCommand}"
-                                Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"
-                                ToolTipService.ToolTip="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"/>
-                        </CommandBar.SecondaryCommands>
-                    </CommandBar>
-                    <Image
-                        Margin="0,0,0,20"
-                        Height="148"
-                        Width="148"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"/>
+        <Grid x:Name="ContentGrid" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,28"
+                Style="{ThemeResource MegaHeaderFontStyle}"
+                Text="{x:Bind ViewModel.TwoFactorAuthText, Mode=OneTime}" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,0,20" HorizontalAlignment="Left">
                     <TextBlock
-                        HorizontalAlignment="Center"
+                        Style="{ThemeResource MegaBodyFontStyle}"
+                        Text="{x:Bind ViewModel.ManuallySetupStep1Text, Mode=OneTime}"/>
+                    <StackPanel
+                        Margin="0,24,0,48"
+                        Width="320"
+                        Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
+                        HorizontalAlignment="Left">
+                        <CommandBar>
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton
+                                    Command="{x:Bind ViewModel.CopySeedCommand}"
+                                    Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"/>
+                            </CommandBar.SecondaryCommands>
+                        </CommandBar>
+                        <Image
+                            Margin="0,0,0,20"
+                            Height="148"
+                            Width="148"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            FontSize="13"
+                            Opacity="0.6"
+                            Text="Or enter this code into your authentication app"/>
+                        <TextBlock
+                            Margin="20,24"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            Text="{x:Bind ViewModel.MultiFactorAuthCode, Mode=OneWay}"
+                            TextAlignment="Center"
+                            TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <TextBlock
+                        Margin="0,0,0,12"
+                        Style="{ThemeResource MegaBodyFontStyle}"
+                        Text="{x:Bind ViewModel.ManuallySetupStep2Text, Mode=OneTime}"/>
+                    <TextBlock
+                        Margin="0,0,0,24"
                         FontSize="13"
-                        Opacity="0.6"
-                        Text="Or enter this code into your authentication app"/>
-                    <TextBlock
-                        Margin="20,24"
-                        FontSize="16"
-                        HorizontalAlignment="Center"
-                        Text="{x:Bind ViewModel.MultiFactorAuthCode, Mode=OneWay}"
-                        TextAlignment="Center"
-                        TextWrapping="Wrap"/>
+                        Text="{x:Bind ViewModel.ManuallySetupStep2DescriptionText, Mode=OneTime}"
+                        TextWrapping="WrapWholeWords"/>
+                    <TextBox
+                        Margin="0,0,0,16"
+                        Width="320"
+                        FontSize="13"
+                        HorizontalAlignment="Left"
+                        InputScope="NumericPin"
+                        KeyDown="OnVerifyTextBoxKeyDown"
+                        MaxLength="6"
+                        PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
+                        Style="{StaticResource MegaTextBoxStyle}"
+                        Text="{x:Bind ViewModel.VerifyCode, Mode=TwoWay}"/>
+                    <Button
+                        MinWidth="130"
+                        Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
+                        Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"/>
                 </StackPanel>
-                <TextBlock
-                    Margin="0,0,0,12"
-                    Style="{ThemeResource MegaBodyFontStyle}"
-                    Text="{x:Bind ViewModel.ManuallySetupStep2Text, Mode=OneTime}"/>
-                <TextBlock
-                    Margin="0,0,0,24"
-                    FontSize="13"
-                    Text="{x:Bind ViewModel.ManuallySetupStep2DescriptionText, Mode=OneTime}"/>
-                <TextBox
-                    Margin="0,0,0,16"
-                    Width="320"
-                    FontSize="13"
-                    HorizontalAlignment="Left"
-                    InputScope="NumericPin"
-                    MaxLength="6"
-                    PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
-                    Style="{StaticResource MegaTextBoxStyle}"
-                    Text="{x:Bind ViewModel.VerifyCode, Mode=TwoWay}"/>
-                <Button
-                    MinWidth="130"
-                    Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
-                    Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"/>
-            </StackPanel>
-            
+            </ScrollViewer>
         </Grid>
 
         <VisualStateManager.VisualStateGroups>
@@ -107,6 +115,7 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="0,0,0,0" />
+                        <Setter Target="ContentGrid.Margin" Value="12,12,0,0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Normal">
@@ -116,6 +125,7 @@
                     <VisualState.Setters>
                         <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
                         <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
+                        <Setter Target="ContentGrid.Margin" Value="24,12,0,0" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

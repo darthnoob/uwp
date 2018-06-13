@@ -1,4 +1,7 @@
-﻿using MegaApp.UserControls;
+﻿using Windows.UI.Xaml;
+using MegaApp.Enums;
+using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Views.Dialogs
@@ -12,6 +15,12 @@ namespace MegaApp.Views.Dialogs
         public MultiFactorAuthSetupDialog()
         {
             this.InitializeComponent();
+
+            if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
+            {
+                this.MaxWidth = 420;
+                this.MainStackPanel.Margin = new Thickness(24, 0, 24, 0);
+            }
         }
     }
 }

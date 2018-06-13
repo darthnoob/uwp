@@ -14,12 +14,10 @@
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
     CloseButtonCommand="{x:Bind ViewModel.CloseCommand}"
     CloseButtonVisibility="Visible"
-    Closing="OnClosing"
-    MaxHeight="420"
-    MaxWidth="420">
+    Closing="OnClosing">
 
-    <Grid Margin="24,0,0,0">
-        <StackPanel Margin="24,24,24,0">
+    <Grid Margin="24,24,0,0">
+        <StackPanel x:Name="MainStackPanel">
             <Image
                 Height="120"
                 Width="120"
