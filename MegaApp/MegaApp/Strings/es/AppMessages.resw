@@ -678,7 +678,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>No se ha podido copiar la Clave de recuperación </value>
+    <value>No se ha podido copiar la Clave de recuperación</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>No se ha podido guardar el archivo '{0}'. </value>
+    <value>No se ha podido guardar el archivo '{0}'.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">

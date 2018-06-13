@@ -1215,7 +1215,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the password reminder dialog.</comment>
   </data>
   <data name="AM_TestPassword" xml:space="preserve">
-    <value>Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA. </value>
+    <value>Por favor, verifique a sua senha abaixo, para garantir que você se lembra dela. Se você perder a sua senha, perderá o acesso aos seus dados no MEGA.</value>
     <comment>Message to describe the purpose of the dialog to test the password.</comment>
   </data>
   <data name="AM_TestPasswordSuccess" xml:space="preserve">

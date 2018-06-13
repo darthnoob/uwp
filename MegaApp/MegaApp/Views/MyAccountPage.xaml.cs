@@ -26,17 +26,17 @@ namespace MegaApp.Views
             get
             {
                 bool canGoBack = false;
-                if (this.MyAccountPivot.SelectedItem.Equals(this.UpgradePivot))
-                    canGoBack = this.UpgradeView.ViewModel.CurrentStep > 1;
-                
+                if (this.MyAccountPivot?.SelectedItem?.Equals(this.UpgradePivot) == true)
+                    canGoBack = this.UpgradeView?.ViewModel?.CurrentStep > 1;
+
                 return canGoBack;
             }
         }
 
         public override void GoBack()
         {
-            if (this.MyAccountPivot.SelectedItem.Equals(this.UpgradePivot))
-                this.UpgradeView.GoBack();
+            if (this.MyAccountPivot?.SelectedItem?.Equals(this.UpgradePivot) == true)
+                this.UpgradeView?.GoBack();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
