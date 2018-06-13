@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ServiceModel.Channels;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
+﻿using System.Collections.Generic;
 using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Settings;
-using Microsoft.Toolkit.Uwp.UI.Converters;
-using Binding = Windows.UI.Xaml.Data.Binding;
 
 namespace MegaApp.ViewModels
 {
@@ -52,7 +46,7 @@ namespace MegaApp.ViewModels
             cameraUploadSettings.Items.Add(cameraUploads);
 
             var howCameraUploads = new CameraUploadsSelectionSettingViewModel(
-                    "How to upload", null, "CameraUploadsSettingsHowKey",
+                ResourceService.UiResources.GetString("UI_HowToUpload"), null, "CameraUploadsSettingsHowKey",
                     new[]
                     {
                             new SelectionSettingViewModel.SelectionOption
@@ -69,7 +63,7 @@ namespace MegaApp.ViewModels
             cameraUploadSettings.Items.Add(howCameraUploads);
 
             var fileCameraUploads = new CameraUploadsSelectionSettingViewModel(
-                    "File to upload", null, "CameraUploadsSettingsFileKey",
+                ResourceService.UiResources.GetString("UI_FileToUpload"), null, "CameraUploadsSettingsFileKey",
                     new[]
                     {
                             new SelectionSettingViewModel.SelectionOption
