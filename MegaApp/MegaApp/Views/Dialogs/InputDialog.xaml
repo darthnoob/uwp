@@ -32,6 +32,7 @@
                 x:Name="InputTextBox"
                 Height="{StaticResource InputHeight}"
                 Margin="{StaticResource StackedInputMargin}"
+                InputScope="{x:Bind ViewModel.InputScope, Mode=OneTime}"
                 IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                 PlaceholderText="{x:Bind ViewModel.Settings.PlaceholderText, Mode=OneTime}"
                 Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

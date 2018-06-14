@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
 using MegaApp.MegaApi;
 using MegaApp.Services;
 using MegaApp.ViewModels.Dialogs;
@@ -63,6 +64,7 @@ namespace MegaApp.ViewModels.Settings
                 ResourceService.UiResources.GetString("UI_Close"),
                 new InputDialogSettings
                 {
+                    InputScopeValue = InputScopeNameValue.NumericPin,
                     PlaceholderText = ResourceService.UiResources.GetString("UI_SixDigitCode")
                 });
 

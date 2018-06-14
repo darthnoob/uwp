@@ -68,6 +68,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
             this.ControlState = false;
             this.SetVerifyButtonState();
+            this.IsBusy = true;
 
             var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
             var result = await enableMultiFactorAuth.ExecuteAsync(() =>
@@ -75,6 +76,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
             this.ControlState = true;
             this.SetVerifyButtonState();
+            this.IsBusy = false;
 
             if (!result)
             {
