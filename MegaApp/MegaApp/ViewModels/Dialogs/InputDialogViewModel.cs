@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml.Input;
+﻿using System;
+using System.Threading.Tasks;
+using Windows.UI.Xaml.Input;
+using MegaApp.Enums;
 
 namespace MegaApp.ViewModels.Dialogs
 {
@@ -6,6 +9,19 @@ namespace MegaApp.ViewModels.Dialogs
     {
         #region Properties
 
+        /// <summary>
+        /// The action to execute by the primary button.
+        /// </summary>
+        public Func<string, bool> DialogAction;
+
+        /// <summary>
+        /// The async action to execute by the primary button.
+        /// </summary>
+        public Func<string, Task<bool>> DialogActionAsync;
+
+        /// <summary>
+        /// The settings of the dialog.
+        /// </summary>
         public InputDialogSettings Settings;
 
         private string _inputText;
@@ -19,13 +35,16 @@ namespace MegaApp.ViewModels.Dialogs
             {
                 SetField(ref _inputText, value);
                 OnPropertyChanged(nameof(this.PrimaryButtonState));
+                this.InputState = InputState.Normal;
+                this.WarningText = string.Empty;
             }
         }
 
         /// <summary>
         /// State of the primary button of the input dialog
         /// </summary>
-        public bool PrimaryButtonState => !string.IsNullOrWhiteSpace(this.InputText);
+        public bool PrimaryButtonState => this.ControlState &&
+            !string.IsNullOrWhiteSpace(this.InputText);
 
         /// <summary>
         /// Input scope of the dialog
@@ -40,9 +59,47 @@ namespace MegaApp.ViewModels.Dialogs
             }
         }
 
+        private InputState _inputState;
+        /// <summary>
+        /// State of the input field of the dialog.
+        /// </summary>
+        public InputState InputState
+        {
+            get { return _inputState; }
+            set { SetField(ref _inputState, value); }
+        }
+
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Action to do by the primary button of the dialog
+        /// </summary>
+        protected override async void PrimaryButtonAction()
+        {
+            if (this.DialogAction != null || this.DialogActionAsync != null)
+            {
+                this.ControlState = false;
+                OnPropertyChanged(nameof(this.PrimaryButtonState));
+                this.IsBusy = true;
+
+                bool result = false;
+                if (this.DialogAction != null)
+                    result = this.DialogAction.Invoke(this.InputText);
+
+                if (this.DialogActionAsync != null)
+                    result = await this.DialogActionAsync.Invoke(this.InputText);
+
+                this.ControlState = true;
+                OnPropertyChanged(nameof(this.PrimaryButtonState));
+                this.IsBusy = false;
+
+                if (!result) return;
+            }
+
+            base.PrimaryButtonAction();
+        }
 
         /// <summary>
         /// Set the input scope of the dialog

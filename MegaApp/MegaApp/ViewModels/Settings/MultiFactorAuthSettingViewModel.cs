@@ -52,27 +52,41 @@ namespace MegaApp.ViewModels.Settings
             await DialogService.ShowMultiFactorAuthSetupDialogAsync();
 
         /// <summary>
-        /// Disable the Multi-Factor Authentication
+        /// Show the dialog to disable the Multi-Factor Authentication
         /// </summary>
         /// <returns>TRUE if all is OK or FALSE if something failed</returns>
-        private async Task<bool> DisableMultiFactorAuthAsync()
+        private async Task<bool> ShowDisableMultiFactorAuthDialogAsync()
         {
-            var code = await DialogService.ShowInputDialogAsync(
+            var result = await DialogService.ShowInputAsyncActionDialogAsync(
                 ResourceService.AppMessages.GetString("AM_2FA_DisableDialogTitle"),
                 ResourceService.AppMessages.GetString("AM_2FA_DisableDialogMessage"),
                 ResourceService.UiResources.GetString("UI_Disable"),
                 ResourceService.UiResources.GetString("UI_Close"),
+                this.DisableMultiFactorAuthAsync,
                 new InputDialogSettings
                 {
                     InputScopeValue = InputScopeNameValue.NumericPin,
                     PlaceholderText = ResourceService.UiResources.GetString("UI_SixDigitCode")
                 });
 
-            if (string.IsNullOrWhiteSpace(code)) return false;
+            return result;
+        }
 
+        /// <summary>
+        /// Disable the Multi-Factor Authentication
+        /// </summary>
+        /// <returns>TRUE if all is OK or FALSE if something failed</returns>
+        private async Task<bool> DisableMultiFactorAuthAsync(string code)
+        {
             var disableMultiFactorAuth = new MultiFactorAuthDisableRequestListenerAsync();
             var result = await disableMultiFactorAuth.ExecuteAsync(() =>
                 SdkService.MegaSdk.multiFactorAuthDisable(code, disableMultiFactorAuth));
+
+            if(!result)
+            {
+                DialogService.SetInputDialogWarningMessage(
+                    ResourceService.AppMessages.GetString("AM_InvalidCode"));
+            }
 
             return result;
         }
@@ -83,7 +97,7 @@ namespace MegaApp.ViewModels.Settings
 
             this.Value = this.Value ?
                 await this.EnableMultiFactorAuthAsync() :
-                !await this.DisableMultiFactorAuthAsync();
+                !await this.ShowDisableMultiFactorAuthDialogAsync();
 
             this.ValueChanged += this.OnValueChanged;
 

@@ -24,8 +24,6 @@ namespace MegaApp.Views.Dialogs
 
         private Brush defaultBoxBorderBrush;
 
-        public bool DialogResult;
-
         public string NewEmail => ViewModel.NewEmail;
 
         #endregion

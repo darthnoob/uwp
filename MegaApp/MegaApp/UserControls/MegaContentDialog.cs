@@ -16,6 +16,11 @@ namespace MegaApp.UserControls
         }
 
         /// <summary>
+        /// The result of the dialog as <see cref="bool"/> value.
+        /// </summary>
+        public bool DialogResult;
+
+        /// <summary>
         /// Get or set the close button command
         /// </summary>
         public ICommand CloseButtonCommand

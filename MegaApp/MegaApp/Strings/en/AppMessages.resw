@@ -1301,7 +1301,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
-    <value>This code isnt right, please try again.</value>
+    <value>This code isn't right, please try again.</value>
     <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
   </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">

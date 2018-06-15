@@ -24,8 +24,6 @@ namespace MegaApp.Views.Dialogs
 
         private Brush defaultBoxBorderBrush;
 
-        public bool DialogResult;
-
         public string ContactEmail => ViewModel.ContactEmail;
         public string EmailContent => ViewModel.EmailContent;
 

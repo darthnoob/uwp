@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Services;
 
@@ -14,8 +15,47 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Commands
 
+        /// <summary>
+        /// Command invoked when the user tap the primary button.
+        /// </summary>
         public virtual ICommand PrimaryButtonCommand { get; }
+
+        /// <summary>
+        /// Command invoked when the user tap the secondary button.
+        /// </summary>
         public virtual ICommand SecondaryButtonCommand { get; }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Event triggered when the user taps the primary button.
+        /// </summary>
+        public event EventHandler PrimaryButtonTapped;
+
+        /// <summary>
+        /// Event invocator method called when the user taps the primary button.
+        /// </summary>
+        protected virtual void OnPrimaryButtonTapped()
+        {
+            this.CanClose = true;
+            this.PrimaryButtonTapped?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered when the user taps the secondary button.
+        /// </summary>
+        public event EventHandler SecondaryButtonTapped;
+
+        /// <summary>
+        /// Event invocator method called when the user taps the secondary button.
+        /// </summary>
+        protected virtual void OnSecondaryButtonTapped()
+        {
+            this.CanClose = true;
+            this.SecondaryButtonTapped?.Invoke(this, EventArgs.Empty);
+        }
 
         #endregion
 
@@ -24,18 +64,12 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Action to do by the primary button of the dialog
         /// </summary>
-        protected virtual void PrimaryButtonAction()
-        {
-            
-        }
+        protected virtual void PrimaryButtonAction() => OnPrimaryButtonTapped();
 
         /// <summary>
         /// Action to do by the secondary button of the dialog
         /// </summary>
-        protected virtual void SecondaryButtonAction()
-        {
-            
-        }
+        protected virtual void SecondaryButtonAction() => OnSecondaryButtonTapped();
 
         #endregion
 

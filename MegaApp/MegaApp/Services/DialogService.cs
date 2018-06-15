@@ -7,6 +7,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.Dialogs;
@@ -21,6 +22,17 @@ namespace MegaApp.Services
     /// </summary>
     internal static class DialogService
     {
+        #region Properties
+
+        /// <summary>
+        /// Instance of the input dialog displayed
+        /// </summary>
+        private static InputDialog InputDialogInstance;
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Check if there is any dialog visible
         /// </summary>
@@ -129,7 +141,8 @@ namespace MegaApp.Services
         public static async Task<string> ShowInputDialogAsync(string title, string message,
             InputDialogSettings settings = null)
         {
-            var dialog = new InputDialog(title, message, null, null, settings);
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, null, null, settings);
             var result = await dialog.ShowAsyncQueueBool();
             return result ? dialog.ViewModel.InputText : null;
         }
@@ -145,9 +158,91 @@ namespace MegaApp.Services
         public static async Task<string> ShowInputDialogAsync(string title, string message,
             string primaryButton, string secondaryButton, InputDialogSettings settings = null)
         {
-            var dialog = new InputDialog(title, message, primaryButton, secondaryButton, settings);
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, primaryButton, secondaryButton, settings);
             var result = await dialog.ShowAsyncQueueBool();
             return result ? dialog.ViewModel.InputText : null;
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputActionDialogAsync(string title, string message,
+            Func<string, bool> dialogAction, InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogAction, null, null, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputActionDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, Func<string, bool> dialogAction,
+            InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogAction, primaryButton, secondaryButton, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an async action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputAsyncActionDialogAsync(string title, string message,
+            Func<string, Task<bool>> dialogActionAsync, InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogActionAsync, null, null, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an async action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputAsyncActionDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, Func<string, Task<bool>> dialogActionAsync,
+            InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance =
+                new InputDialog(title, message, dialogActionAsync, primaryButton, secondaryButton, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Set the warning message of the input dialog displayed
+        /// </summary>
+        /// <param name="warningMessage">Text of the warning message</param>
+        public static void SetInputDialogWarningMessage(string warningMessage)
+        {
+            if (InputDialogInstance?.ViewModel == null) return;
+            InputDialogInstance.ViewModel.WarningText = warningMessage;
+            InputDialogInstance.ViewModel.InputState= InputState.Warning;
         }
 
         /// <summary>
@@ -279,7 +374,7 @@ namespace MegaApp.Services
         /// <param name="node">Node to share the link</param>
         public static async void ShowShareLink(NodeViewModel node)
         {
-            var dialog = new ContentDialog
+            var dialog = new MegaContentDialog
             {
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = true,
@@ -728,5 +823,7 @@ namespace MegaApp.Services
 
             return menuFlyout;
         }
+
+        #endregion
     }
 }
