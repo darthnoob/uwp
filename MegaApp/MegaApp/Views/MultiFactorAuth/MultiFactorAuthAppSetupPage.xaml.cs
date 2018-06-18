@@ -48,6 +48,12 @@ namespace MegaApp.Views.MultiFactorAuth
                 return;
             }
 
+            if (this.VerifyButton.IsEnabled && e.Key == VirtualKey.Enter)
+            {
+                if (this.ViewModel?.VerifyCommand?.CanExecute(null) == true)
+                    this.ViewModel.VerifyCommand.Execute(null);
+            }
+
             e.Handled = true;
         }
     }

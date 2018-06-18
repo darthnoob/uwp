@@ -44,7 +44,8 @@ namespace MegaApp.ViewModels.Dialogs
         /// State of the primary button of the input dialog
         /// </summary>
         public bool PrimaryButtonState => this.ControlState &&
-            !string.IsNullOrWhiteSpace(this.InputText);
+            !string.IsNullOrWhiteSpace(this.InputText) &&
+            this.InputText.Length >= this.Settings?.MinLength;
 
         /// <summary>
         /// Input scope of the dialog
@@ -135,6 +136,16 @@ namespace MegaApp.ViewModels.Dialogs
         /// Input scope value for the dialog
         /// </summary>
         public InputScopeNameValue InputScopeValue { get; set; } = InputScopeNameValue.Text;
+
+        /// <summary>
+        /// Max length for the <see cref="InputText"/>
+        /// </summary>
+        public int MaxLength { get; set; } = int.MaxValue;
+
+        /// <summary>
+        /// Min length for the <see cref="InputText"/>
+        /// </summary>
+        public int MinLength { get; set; } = -1;
 
         /// <summary>
         /// Placeholder text for the input dialog

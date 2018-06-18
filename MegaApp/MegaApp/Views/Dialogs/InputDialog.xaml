@@ -38,6 +38,8 @@
                 Margin="{StaticResource StackedInputMargin}"
                 InputScope="{x:Bind ViewModel.InputScope, Mode=OneTime}"
                 IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
+                KeyDown="OnInputTextBoxKeyDown"
+                MaxLength="{x:Bind ViewModel.Settings.MaxLength, Mode=OneTime}"
                 PlaceholderText="{x:Bind ViewModel.Settings.PlaceholderText, Mode=OneTime}"
                 Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{StaticResource MegaTextBoxStyle}"

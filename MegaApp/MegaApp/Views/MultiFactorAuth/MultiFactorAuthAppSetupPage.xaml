@@ -120,6 +120,7 @@
                             Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
                     </Grid>
                     <Button
+                        x:Name="VerifyButton"
                         MinWidth="130"
                         Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
                         Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"

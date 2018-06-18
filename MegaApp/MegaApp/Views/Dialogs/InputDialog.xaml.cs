@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
@@ -125,6 +127,27 @@ namespace MegaApp.Views.Dialogs
         {
             this.ViewModel.PrimaryButtonTapped -= OnPrimaryButtonTapped;
             this.ViewModel.SecondaryButtonTapped -= OnSecondaryButtonTapped;
+        }
+
+        private void OnInputTextBoxKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (this.ViewModel.Settings.InputScopeValue == InputScopeNameValue.NumericPin)
+            {
+                if ((e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9) ||
+                (e.Key >= VirtualKey.NumberPad0 && e.Key <= VirtualKey.NumberPad9))
+                {
+                    e.Handled = false;
+                    return;
+                }
+
+                e.Handled = true;
+            }
+
+            if (this.IsPrimaryButtonEnabled && e.Key == VirtualKey.Enter)
+            {
+                if (this.ViewModel?.PrimaryButtonCommand?.CanExecute(null) == true)
+                    this.ViewModel.PrimaryButtonCommand.Execute(null);
+            }
         }
 
         #endregion

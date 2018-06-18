@@ -66,6 +66,7 @@ namespace MegaApp.ViewModels.Settings
                 new InputDialogSettings
                 {
                     InputScopeValue = InputScopeNameValue.NumericPin,
+                    MaxLength = 6, MinLength = 6,
                     PlaceholderText = ResourceService.UiResources.GetString("UI_SixDigitCode")
                 });
 
