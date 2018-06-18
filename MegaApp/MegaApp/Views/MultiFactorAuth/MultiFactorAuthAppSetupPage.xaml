@@ -63,6 +63,7 @@
                             Margin="0,0,0,20"
                             Height="148"
                             Width="148"
+                            Source="{Binding QRImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
                         <TextBlock

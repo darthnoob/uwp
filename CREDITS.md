@@ -1,4 +1,4 @@
-## CREDITS
+﻿## CREDITS
 Here is the list of the external libraries used by the Universal Windows Platform (UWP) client. We thank them all for their contributions:
 
 ### UWP Community Toolkit
@@ -62,6 +62,17 @@ Open source, minimal library to allow .NET and Mono applications to store data i
 MIT License\
 https://github.com/oysteinkrog/SQLite.Net-PCL/blob/master/LICENSE.txt
 <hr>
+
+### ZXing.Net ("Zebra Crossing")
+https://github.com/micjahn/ZXing.Net \
+Copyright (c) Michael Jahn
+
+**Description**\
+A library which supports decoding and generating of barcodes within images.
+
+**License**\
+Apache License 2.0\
+https://github.com/micjahn/ZXing.Net/blob/master/COPYING
 
 ### MEGA C++ SDK
 https://github.com/meganz/sdk \

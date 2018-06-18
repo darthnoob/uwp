@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.Xaml.Media.Imaging;
+using ZXing;
+using ZXing.QrCode;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -38,6 +41,8 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             var multiFactorAuthGetCode = new MultiFactorAuthGetCodeRequestListenerAsync();
             this.MultiFactorAuthCode = await multiFactorAuthGetCode.ExecuteAsync(() =>
                 SdkService.MegaSdk.multiFactorAuthGetCode(multiFactorAuthGetCode));
+
+            this.SetQR();
         }
 
         private async void CopySeed()
@@ -62,6 +67,30 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             }
         }
 
+        /// <summary>
+        /// Set the QR code image to set up the Multi-Factor Authentication
+        /// </summary>
+        private void SetQR()
+        {
+            var options = new QrCodeEncodingOptions()
+            {
+                DisableECI = true,
+                CharacterSet = "UTF-8",
+                Width = 148,
+                Height = 148
+            };
+
+            BarcodeWriter writer = new BarcodeWriter();
+            writer.Format = BarcodeFormat.QR_CODE;
+            writer.Options = options;
+            QRImage = writer.Write(
+                string.Format("otpauth://totp/MEGA:{0}?secret={1}&issuer=MEGA",
+                SdkService.MegaSdk.getMyEmail(), this.MultiFactorAuthCode));
+        }
+
+        /// <summary>
+        /// Verify the 6-digit code typed by the user to set up the Multi-Factor Authentication
+        /// </summary>
         private async void Verify()
         {
             if (string.IsNullOrWhiteSpace(this.VerifyCode)) return;
@@ -105,6 +134,16 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             OnUiThread(() => this.VerifyCodeInputState = verifyCode);
 
         #region Properties
+
+        private WriteableBitmap _qrImage;
+        /// <summary>
+        /// Image of the QR code to set up the Multi-Factor Authentication
+        /// </summary>
+        public WriteableBitmap QRImage
+        {
+            get { return _qrImage; }
+            set { SetField(ref _qrImage, value); }
+        }
 
         private string _multiFactorAuthCode;
         /// <summary>
