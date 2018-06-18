@@ -73,6 +73,7 @@ A library which supports decoding and generating of barcodes within images.
 **License**\
 Apache License 2.0\
 https://github.com/micjahn/ZXing.Net/blob/master/COPYING
+<hr>
 
 ### MEGA C++ SDK
 https://github.com/meganz/sdk \
