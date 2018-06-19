@@ -70,6 +70,12 @@ namespace MegaApp.ViewModels.Settings
                     PlaceholderText = ResourceService.UiResources.GetString("UI_SixDigitCode")
                 });
 
+            if (result)
+            {
+                ToastService.ShowTextNotification(
+                    ResourceService.AppMessages.GetString("AM_2FA_DisabledDialogTitle"));
+            }
+
             return result;
         }
 

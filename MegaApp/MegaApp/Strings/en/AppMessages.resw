@@ -1320,4 +1320,8 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Seed copied</value>
     <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
+  <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
+    <value>Two-Factor Authentication Disabled</value>
+    <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
+  </data>
 </root>
