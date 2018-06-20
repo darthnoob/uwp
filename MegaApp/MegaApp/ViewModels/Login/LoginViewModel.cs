@@ -79,7 +79,40 @@ namespace MegaApp.ViewModels.Login
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
-            LoginResult result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
+            LoginResult result = LoginResult.Unknown;
+
+            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
+            var isEnabledMFA = await multiFactorAuthCheck.ExecuteAsync(() =>
+                SdkService.MegaSdk.multiFactorAuthCheck(this.Email, multiFactorAuthCheck));
+
+            if (isEnabledMFA.HasValue && isEnabledMFA.Value)
+            {
+                var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
+                    ResourceService.UiResources.GetString("UI_TwoFactorAuth"),
+                    ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage"),
+                    async (string code) =>
+                    {
+                        result = await login.ExecuteAsync(() =>
+                            this.MegaSdk.multiFactorAuthLogin(this.Email, this.Password, code, login));
+
+                        if (result == LoginResult.MultiFactorAuth)
+                        {
+                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
+                                ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                if (!mfaResult)
+                    result = LoginResult.MultiFactorAuth;
+            }
+            else
+            {
+                result = await login.ExecuteAsync(() =>
+                    this.MegaSdk.login(this.Email, this.Password, login));
+            }
 
             // Set default error content
             var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
@@ -120,6 +153,7 @@ namespace MegaApp.ViewModels.Login
                     errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
                     break;
 
+                case LoginResult.MultiFactorAuth:
                 case LoginResult.Unknown:
                     break;
 

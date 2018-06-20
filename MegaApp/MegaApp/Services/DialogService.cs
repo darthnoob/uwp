@@ -29,6 +29,11 @@ namespace MegaApp.Services
         /// </summary>
         private static InputDialog InputDialogInstance;
 
+        /// <summary>
+        /// Instance of the MFA code input dialog displayed
+        /// </summary>
+        private static MultiFactorAuthCodeInputDialog MultiFactorAuthCodeInputDialogInstance;
+
         #endregion
 
         #region Methods
@@ -366,6 +371,49 @@ namespace MegaApp.Services
         {
             var mfaEnabledDialog = new MultiFactorAuthEnabledDialog();
             await mfaEnabledDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
+        /// Show an input dialog to type the MFA code and execute an action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowMultiFactorAuthCodeInputDialogAsync(string title, string message,
+            Func<string, bool> dialogAction)
+        {
+            var dialog = MultiFactorAuthCodeInputDialogInstance =
+                new MultiFactorAuthCodeInputDialog(title, message, dialogAction);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog to type the MFA code and execute an async action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowAsyncMultiFactorAuthCodeInputDialogAsync(string title, string message,
+            Func<string, Task<bool>> dialogActionAsync)
+        {
+            var dialog = MultiFactorAuthCodeInputDialogInstance =
+                new MultiFactorAuthCodeInputDialog(title, message, dialogActionAsync);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Set the warning message of the MFA code input dialog displayed
+        /// </summary>
+        /// <param name="warningMessage">Text of the warning message</param>
+        public static void SetMultiFactorAuthCodeInputDialogWarningMessage(string warningMessage)
+        {
+            if (MultiFactorAuthCodeInputDialogInstance?.ViewModel == null) return;
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.WarningText = warningMessage;
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.InputState = InputState.Warning;
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.DigitColor =
+                (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
         }
 
         /// <summary>

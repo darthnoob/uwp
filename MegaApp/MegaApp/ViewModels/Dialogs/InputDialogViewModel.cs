@@ -19,10 +19,20 @@ namespace MegaApp.ViewModels.Dialogs
         /// </summary>
         public Func<string, Task<bool>> DialogActionAsync;
 
+        private InputDialogSettings _settings;
         /// <summary>
         /// The settings of the dialog.
         /// </summary>
-        public InputDialogSettings Settings;
+        public InputDialogSettings Settings
+        {
+            get
+            {
+                if (_settings != null) return _settings;
+                _settings = new InputDialogSettings();
+                return _settings;
+            }
+            set { SetField(ref _settings, value); }
+        }
 
         private string _inputText;
         /// <summary>
