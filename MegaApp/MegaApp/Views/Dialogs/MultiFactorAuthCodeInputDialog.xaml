@@ -36,7 +36,7 @@
                     x:Name="TextBoxDigit1"
                     TabIndex="0"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit1, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />
@@ -44,7 +44,7 @@
                     x:Name="TextBoxDigit2"
                     TabIndex="1"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit2, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />
@@ -52,15 +52,16 @@
                     x:Name="TextBoxDigit3"
                     TabIndex="2"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit3, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />
                 <TextBox 
                     x:Name="TextBoxDigit4"
                     TabIndex="3"
+                    Margin="16,0,0,0"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit4, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />
@@ -68,7 +69,7 @@
                     x:Name="TextBoxDigit5"
                     TabIndex="4"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit5, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />
@@ -76,7 +77,7 @@
                     x:Name="TextBoxDigit6"
                     TabIndex="5"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
-                    IsReadOnly="{x:Bind ViewModel.ControlState, Mode=OneWay, Converter={StaticResource InverseBoolConverter}}"
+                    IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit6, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
                     KeyDown="OnInputTextBoxKeyDown" />

@@ -922,7 +922,7 @@
     <Style x:Key="MegaMFA_DigitStyle" TargetType="TextBox">
         <Setter Property="Height" Value="64" />
         <Setter Property="Width" Value="36" />
-        <!--<Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}" />-->
+        <Setter Property="MinWidth" Value="36" />
         <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}" />
         <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
         <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAltHighBrush}" />
@@ -937,8 +937,8 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
-        <Setter Property="Padding" Value="-8,0"/>
-        <Setter Property="Margin" Value="-8,0" />
+        <Setter Property="Padding" Value="0,0"/>
+        <Setter Property="Margin" Value="0,0" />
         <Setter Property="MaxLength" Value="1" />
         <Setter Property="PlaceholderText" Value="0" />
         <Setter Property="TextAlignment" Value="Center" />
