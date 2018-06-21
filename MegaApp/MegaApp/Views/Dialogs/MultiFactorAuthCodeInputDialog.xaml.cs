@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using mega;
 using MegaApp.UserControls;
+using MegaApp.Services;
 using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Views.Dialogs
@@ -98,6 +101,67 @@ namespace MegaApp.Views.Dialogs
             }
 
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Put each digit of the MFA code from the clipboard to the corresponding place
+        /// </summary>
+        /// <param name="sender"><see cref="TextBox"/> that sent the paste event</param>
+        /// <param name="e">Event arguments</param>
+        private async void OnInputTextBoxPaste(object sender, TextControlPasteEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            if (tb == null) return;
+
+            // Mark the event as handled first. Otherwise, the
+            // default paste action will happen, then the custom paste
+            // action, and the user will see the text box content change.
+            e.Handled = true;
+
+            try
+            {
+                // Get content from the clipboard.
+                var dataPackageView = Clipboard.GetContent();
+                if (!dataPackageView.Contains(StandardDataFormats.Text))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Format is not correct");
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
+                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    return;
+                }
+
+                // Check if the code format is correct
+                var text = await dataPackageView.GetTextAsync();
+                if (string.IsNullOrWhiteSpace(text) || !ValidationService.IsDigitsOnly(text))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Format is not correct");
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
+                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    return;
+                }                    
+
+                // Check if the code length is correct
+                if (text.Length != this.ViewModel.Settings.MinLength)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Length is not correct");
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
+                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    return;
+                }
+
+                this.ViewModel.Digit1 = text[0].ToString();
+                this.ViewModel.Digit2 = text[1].ToString();
+                this.ViewModel.Digit3 = text[2].ToString();
+                this.ViewModel.Digit4 = text[3].ToString();
+                this.ViewModel.Digit5 = text[4].ToString();
+                this.ViewModel.Digit6 = text[5].ToString();
+            }
+            catch (Exception ex)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error pasting MFA code", ex);
+                DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
+                    ResourceService.AppMessages.GetString("AM_InvalidCode"));
+            }
         }
 
         #endregion
