@@ -195,8 +195,9 @@ namespace BackgroundTaskService
             switch (cameraUploadsConnectionType)
             {
                 case CameraUploadsConnectionType.EthernetWifiOnly:
-                    return NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.Ethernet ||
-                           NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.WiFi;
+                    return (NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.Ethernet ||
+                           NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.WiFi) &&
+                           !NetworkHelper.Instance.ConnectionInformation.IsInternetOnMeteredConnection;
                 case CameraUploadsConnectionType.Any:
                     return true;
                 default: return false;
