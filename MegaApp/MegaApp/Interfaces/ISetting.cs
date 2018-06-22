@@ -17,6 +17,8 @@ namespace MegaApp.Interfaces
 
         object Value { get; set; }
 
+        bool IsVisible { get; set; }
+
         ICommand ActionCommand { get; }
 
         void Initialize();

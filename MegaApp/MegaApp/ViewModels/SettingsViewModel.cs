@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MegaApp.Enums;
 using MegaApp.Services;
 using MegaApp.ViewModels.Settings;
 
@@ -39,7 +40,59 @@ namespace MegaApp.ViewModels
             {
                 Header = ResourceService.UiResources.GetString("UI_CameraUploads")
             };
-            cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
+
+            var cameraUploads = new CameraUploadsSettingViewModel();
+            cameraUploads.Initialize();
+            cameraUploadSettings.Items.Add(cameraUploads);
+
+            var howCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                ResourceService.UiResources.GetString("UI_HowToUpload"), null, "CameraUploadsSettingsHowKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_EthernetWifiOnly"),
+                                    Value = (int) CameraUploadsConnectionType.EthernetWifiOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_AnyConnectionType"),
+                                    Value = (int) CameraUploadsConnectionType.Any
+                            }
+                    }) {IsVisible = cameraUploads.Value};
+            cameraUploadSettings.Items.Add(howCameraUploads);
+
+            var fileCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                ResourceService.UiResources.GetString("UI_FileToUpload"), null, "CameraUploadsSettingsFileKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoAndVideo"),
+                                    Value = (int) CameraUploadsFileType.PhotoAndVideo
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoOnly"),
+                                    Value = (int) CameraUploadsFileType.PhotoOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_VideoOnly"),
+                                    Value = (int) CameraUploadsFileType.VideoOnly
+                            }
+                    })
+                    { IsVisible = cameraUploads.Value };
+
+            cameraUploadSettings.Items.Add(fileCameraUploads);
+
+            cameraUploads.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName != "Value") return;
+
+                howCameraUploads.IsVisible = cameraUploads.Value;
+                fileCameraUploads.IsVisible = cameraUploads.Value;
+            };
 
             this.CameraUploadSettingSections.Add(cameraUploadSettings);
 
