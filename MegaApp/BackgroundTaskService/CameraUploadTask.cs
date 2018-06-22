@@ -25,7 +25,7 @@ namespace BackgroundTaskService
             _deferral = taskInstance.GetDeferral();
 
             // Load the connection upload settings
-            CameraUploadsConnectionType cameraUploadsConnectionType = CameraUploadsConnectionType.WifiOnly;
+            CameraUploadsConnectionType cameraUploadsConnectionType = CameraUploadsConnectionType.EthernetWifiOnly;
             try
             {
                 cameraUploadsConnectionType = (CameraUploadsConnectionType) await SettingsService.LoadSettingFromFileAsync<int>("CameraUploadsSettingsHowKey");
@@ -194,9 +194,10 @@ namespace BackgroundTaskService
         {
             switch (cameraUploadsConnectionType)
             {
-                case CameraUploadsConnectionType.WifiOnly:
-                    return NetworkHelper.Instance.ConnectionInformation.ConnectionType != ConnectionType.Data;
-                case CameraUploadsConnectionType.WifiAndDataPlan:
+                case CameraUploadsConnectionType.EthernetWifiOnly:
+                    return NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.Ethernet ||
+                           NetworkHelper.Instance.ConnectionInformation.ConnectionType == ConnectionType.WiFi;
+                case CameraUploadsConnectionType.Any:
                     return true;
                 default: return false;
             }

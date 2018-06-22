@@ -51,13 +51,13 @@ namespace MegaApp.ViewModels
                     {
                             new SelectionSettingViewModel.SelectionOption
                             {
-                                    Description = ResourceService.UiResources.GetString("UI_WifiOnly"),
-                                    Value = (int) CameraUploadsConnectionType.WifiOnly
+                                    Description = ResourceService.UiResources.GetString("UI_EthernetWifiOnly"),
+                                    Value = (int) CameraUploadsConnectionType.EthernetWifiOnly
                             },
                             new SelectionSettingViewModel.SelectionOption
                             {
-                                    Description = ResourceService.UiResources.GetString("UI_WifiAndMobile"),
-                                    Value = (int) CameraUploadsConnectionType.WifiAndDataPlan
+                                    Description = ResourceService.UiResources.GetString("UI_AnyConnectionType"),
+                                    Value = (int) CameraUploadsConnectionType.Any
                             }
                     }) {IsVisible = cameraUploads.Value};
             cameraUploadSettings.Items.Add(howCameraUploads);

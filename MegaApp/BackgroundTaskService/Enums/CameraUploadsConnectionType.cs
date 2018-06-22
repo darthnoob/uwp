@@ -2,7 +2,7 @@
 {
     public enum CameraUploadsConnectionType
     {
-        WifiOnly        = 0,
-        WifiAndDataPlan = 1
+        EthernetWifiOnly = 0,
+        Any = 1
     }
 }

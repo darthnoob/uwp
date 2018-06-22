@@ -72,7 +72,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <RadioButton
-                                Width="240"
+                                Width="232"
+                                Margin="0,0,8,0"
                                 Content="{Binding Description}"
                                 GroupName="{Binding Path=DataContext.Title, ElementName=SelectionStack}"
                                 IsChecked="{Binding IsSelected, Mode=TwoWay}">

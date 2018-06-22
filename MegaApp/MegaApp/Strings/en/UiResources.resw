@@ -1711,13 +1711,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Only video</value>
     <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
-  <data name="UI_WifiAndMobile" xml:space="preserve">
-    <value>Wi-Fi and mobile data</value>
-    <comment>Label for any 'Wi-Fi and mobile data' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  <data name="UI_AnyConnectionType" xml:space="preserve">
+    <value>Any connection type</value>
+    <comment>Label for any 'Any connection type' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
   </data>
-  <data name="UI_WifiOnly" xml:space="preserve">
-    <value>Wi-Fi only</value>
-    <comment>Label for any 'Wi-Fi only' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  <data name="UI_EthernetWifiOnly" xml:space="preserve">
+    <value>Ethernet/WiFi only (Unmetered)</value>
+    <comment>Label for any 'Ethernet/WiFi only (Unmetered)' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
   </data>
   <data name="UI_FileToUpload" xml:space="preserve">
     <value>File to upload</value>
