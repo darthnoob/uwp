@@ -29,16 +29,16 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event triggered when the user closes the dialog using the close
         /// button of the top-right corner of the dialog.
         /// </summary>
-        public event EventHandler CloseDialog;
+        public event EventHandler CloseButtonTapped;
 
         /// <summary>
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected virtual void OnCloseDialog()
+        protected virtual void OnCloseButtonTapped()
         {
             this.CanClose = true;
-            this.CloseDialog?.Invoke(this, EventArgs.Empty);
+            this.CloseButtonTapped?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
@@ -48,7 +48,7 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Close the dialog
         /// </summary>
-        private void Close() => this.OnCloseDialog();
+        private void Close() => this.OnCloseButtonTapped();
 
         #endregion
 

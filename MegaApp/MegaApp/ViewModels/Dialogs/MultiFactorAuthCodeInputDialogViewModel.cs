@@ -131,6 +131,7 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
+        public string LostAuthDeviceQuestionText => ResourceService.UiResources.GetString("UI_LostAuthDeviceQuestion");
         public string VerifyText => ResourceService.UiResources.GetString("UI_Verify");
 
         #endregion

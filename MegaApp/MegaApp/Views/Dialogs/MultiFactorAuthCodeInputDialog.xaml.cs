@@ -49,13 +49,13 @@ namespace MegaApp.Views.Dialogs
 
         #region Methods
 
-        private void OnPrimaryButtonTapped(object sender, EventArgs e)
+        private void OnVerifyButtonTapped(object sender, EventArgs e)
         {
             this.DialogResult = true;
             this.Hide();
         }
 
-        private void OnSecondaryButtonTapped(object sender, EventArgs e)
+        private void OnCloseButtonTapped(object sender, EventArgs e)
         {
             this.DialogResult = false;
             this.Hide();
@@ -63,14 +63,14 @@ namespace MegaApp.Views.Dialogs
 
         private void OnOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            this.ViewModel.PrimaryButtonTapped += OnPrimaryButtonTapped;
-            this.ViewModel.SecondaryButtonTapped += OnSecondaryButtonTapped;
+            this.ViewModel.PrimaryButtonTapped += OnVerifyButtonTapped;
+            this.ViewModel.CloseButtonTapped += OnCloseButtonTapped;
         }
 
         private void OnClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            this.ViewModel.PrimaryButtonTapped -= OnPrimaryButtonTapped;
-            this.ViewModel.SecondaryButtonTapped -= OnSecondaryButtonTapped;
+            this.ViewModel.PrimaryButtonTapped -= OnVerifyButtonTapped;
+            this.ViewModel.CloseButtonTapped -= OnCloseButtonTapped;
         }
 
         private void OnInputTextBoxKeyDown(object sender, KeyRoutedEventArgs e)

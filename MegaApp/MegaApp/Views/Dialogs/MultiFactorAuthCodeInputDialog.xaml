@@ -9,17 +9,13 @@
     xmlns:dialogViewModels="using:MegaApp.ViewModels.Dialogs"
     d:DataContext="{d:DesignInstance dialogViewModels:MultiFactorAuthCodeInputDialogViewModel}"
     mc:Ignorable="d"
-    Margin="0, 0, 24, 24"
+    Margin="0, 0, 24, 8"
     Style="{ThemeResource MegaContentDialogStyle}"
     Background="{ThemeResource MegaAppBackgroundBrush}"
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
     Title="{x:Bind ViewModel.TitleText, Mode=OneTime}"
-    CloseButtonVisibility="Collapsed"
-    PrimaryButtonText="{x:Bind ViewModel.VerifyText, Mode=OneTime}"
-    SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
-    PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
-    SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}"
-    IsPrimaryButtonEnabled="{Binding PrimaryButtonState}"
+    CloseButtonVisibility="Visible"
+    CloseButtonCommand="{x:Bind ViewModel.CloseCommand}"
     Opened="OnOpened"
     Closing="OnClosing"
     Closed="OnClosed">
@@ -108,6 +104,18 @@
                     Style="{StaticResource MegaDialogErrorFontStyle}"
                     Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
             </Grid>
+            <Button
+                Margin="0,20,0,36"
+                Command="{x:Bind ViewModel.PrimaryButtonCommand}"
+                Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"
+                HorizontalAlignment="Stretch"
+                IsEnabled="{Binding PrimaryButtonState}"
+                MaxWidth="320"/>
+            <HyperlinkButton
+                Content="{x:Bind ViewModel.LostAuthDeviceQuestionText, Mode=OneTime}"
+                FontSize="13"
+                HorizontalAlignment="Center"
+                Style="{StaticResource MegaLinkStyle}"/>
         </StackPanel>
     </Grid>
 </dialogViews:BaseMultiFactorAuthCodeInputDialog>

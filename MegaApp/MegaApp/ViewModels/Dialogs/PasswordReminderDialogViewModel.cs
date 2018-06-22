@@ -59,9 +59,9 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected override async void OnCloseDialog()
+        protected override async void OnCloseButtonTapped()
         {
-            base.OnCloseDialog();
+            base.OnCloseButtonTapped();
 
             if (this.AtLogout)
             {

@@ -17,7 +17,7 @@ namespace MegaApp.UserControls
             this.ViewModel = (T)Activator.CreateInstance(typeof(T));
             this.DataContext = this.ViewModel;
 
-            this.ViewModel.CloseDialog += OnCloseDialog;
+            this.ViewModel.CloseButtonTapped += OnCloseButtonTapped;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace MegaApp.UserControls
 
         #region Methods
 
-        private void OnCloseDialog(object sender, EventArgs e) => this.Hide();
+        private void OnCloseButtonTapped(object sender, EventArgs e) => this.Hide();
 
         protected void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
