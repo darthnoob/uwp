@@ -1,13 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
-using MegaApp.Enums;
-using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.Views.Dialogs;
 
 namespace MegaApp.ViewModels.MyAccount
 {
@@ -58,40 +54,7 @@ namespace MegaApp.ViewModels.MyAccount
 
         #region Private Methods
 
-        private async void ChangeEmail()
-        {
-            var changeEmailDialog = new ChangeEmailDialog();
-            await changeEmailDialog.ShowAsyncQueue();
-
-            if(changeEmailDialog.DialogResult)
-            {
-                var changeEmail = new ChangeEmailRequestListenerAsync();
-                var result = await changeEmail.ExecuteAsync(() =>
-                    SdkService.MegaSdk.changeEmail(changeEmailDialog.NewEmail, changeEmail));
-
-                switch (result)
-                {
-                    case ChangeEmailResult.Success:
-                        DialogService.ShowAwaitEmailConfirmationDialog(changeEmailDialog.NewEmail);
-                        break;
-
-                    case ChangeEmailResult.AlreadyRequested:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_ChangeEmailAlreadyRequested"));
-                        break;
-
-                    case ChangeEmailResult.UserNotLoggedIn:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_UserNotOnline"));
-                        break;
-
-                    case ChangeEmailResult.Unknown:
-                        await DialogService.ShowAlertAsync(ResourceService.UiResources.GetString("UI_ChangeEmail"),
-                            ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError"));
-                        break;
-                }
-            }
-        }
+        private void ChangeEmail() => DialogService.ShowChangeEmailDialog();
 
         private void ChangePassword() => DialogService.ShowChangePasswordDialog();
 

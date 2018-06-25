@@ -25,6 +25,11 @@ namespace MegaApp.Services
         #region Properties
 
         /// <summary>
+        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// </summary>
+        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+
+        /// <summary>
         /// Instance of the input dialog displayed
         /// </summary>
         private static InputDialog InputDialogInstance;
@@ -308,9 +313,13 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// Show a dialog to change the account email
         /// </summary>
-        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+        public static async void ShowChangeEmailDialog()
+        {
+            var changeEmailDialog = new ChangeEmailDialog();
+            await changeEmailDialog.ShowAsyncQueue();
+        }
 
         /// <summary>
         /// Show a dialog indicating that is waiting for an email confirmation
