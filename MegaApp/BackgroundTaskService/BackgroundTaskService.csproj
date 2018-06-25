@@ -110,12 +110,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CameraUploadTask.cs" />
+    <Compile Include="Enums\CameraUploadsConnectionType.cs" />
+    <Compile Include="Enums\CameraUploadsFileType.cs" />
+    <Compile Include="Enums\ConnectionType.cs" />
     <Compile Include="MegaApi\MegaGlobalListener.cs" />
     <Compile Include="MegaApi\MegaInputStream.cs" />
     <Compile Include="MegaApi\MegaLogger.cs" />
     <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\MegaRequestListener.cs" />
     <Compile Include="MegaApi\MegaTransferListener.cs" />
+    <Compile Include="Network\ConnectionInformation.cs" />
+    <Compile Include="Network\NetworkHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorHandlingService.cs" />
     <Compile Include="Services\LogService.cs" />

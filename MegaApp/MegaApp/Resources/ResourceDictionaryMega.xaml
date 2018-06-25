@@ -133,11 +133,12 @@
 
     <DataTemplate x:Key="SeparationPoint">
         <Ellipse
+            Width="4"
+            Height="4"
             Margin="8,0"
+            VerticalAlignment="Center"
             Fill="{ThemeResource MegaAppForegroundBrush}"
-            Height="4" Width="4"
-            Opacity="0.4"
-            VerticalAlignment="Center" />
+            Opacity="0.4" />
     </DataTemplate>
 
     <DataTemplate x:Key="MegaPageHeaderLogo">
@@ -503,8 +504,8 @@
 
                 <Viewbox
                     Grid.Column="2"
-                    Height="10"
                     Width="10"
+                    Height="10"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -514,8 +515,8 @@
 
                 <Path
                     Grid.Column="3"
-                    Height="6"
                     Width="10"
+                    Height="6"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -653,23 +654,25 @@
                         Orientation="Horizontal"
                         Visibility="{Binding IsExportedOrSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
+                            Width="4"
+                            Height="4"
                             Margin="8,0,0,0"
-                            Fill="{ThemeResource MegaAppForegroundBrush}"
-                            Height="4" Width="4"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Fill="{ThemeResource MegaAppForegroundBrush}" />
                         <Viewbox
+                            Width="10"
+                            Height="10"
                             Margin="8,0,0,0"
-                            Height="10" Width="10"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                             <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
                         </Viewbox>
                         <Path
-                            Margin="8,0,0,0"
-                            Height="6"
                             Width="10"
+                            Height="6"
+                            Margin="8,0,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
@@ -795,19 +798,19 @@
 
                 <Viewbox
                     Grid.Column="2"
-                    Height="10"
                     Width="10"
+                    Height="10"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                     <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
                 </Viewbox>
-                
+
                 <Path
                     Grid.Column="3"
-                    Height="6"
                     Width="10"
+                    Height="6"
                     Margin="12,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -929,23 +932,25 @@
                         Orientation="Horizontal"
                         Visibility="{Binding IsExportedOrSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Ellipse
+                            Width="4"
+                            Height="4"
                             Margin="8,0,0,0"
-                            Fill="{ThemeResource MegaAppForegroundBrush}"
-                            Height="4" Width="4"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            Fill="{ThemeResource MegaAppForegroundBrush}" />
                         <Viewbox
+                            Width="10"
+                            Height="10"
                             Margin="8,0,0,0"
-                            Height="10" Width="10"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
                             <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
                         </Viewbox>
                         <Path
-                            Margin="8,0,0,0"
-                            Height="6"
                             Width="10"
+                            Height="6"
+                            Margin="8,0,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{Binding LinkPathData}"
@@ -1351,7 +1356,8 @@
                     </Image.Source>
                 </Image>
                 <TextBlock
-                    Grid.Column="0" Grid.Row="1"
+                    Grid.Row="1"
+                    Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
                     FontSize="12"
@@ -1490,7 +1496,8 @@
                     </Path.Fill>
                 </Path>
                 <TextBlock
-                    Grid.Column="0" Grid.Row="1" 
+                    Grid.Row="1"
+                    Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
                     FontSize="12"
@@ -1527,8 +1534,8 @@
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
-                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1647,8 +1654,8 @@
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
-                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1767,8 +1774,8 @@
                                 Text="{Binding CopyText}" />
                             <MenuFlyoutItem
                                 Command="{Binding LeaveShareCommand}"
-                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding LeaveShareText}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -1883,8 +1890,8 @@
                                 Text="{Binding CopyOrMoveText}" />
                             <MenuFlyoutItem
                                 Command="{Binding RemoveSharedAccessCommand}"
-                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Foreground="{StaticResource MegaRedColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveSharedAccessText}" />
                         </MenuFlyout.Items>
                     </MenuFlyout>
@@ -2534,85 +2541,94 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
             <StackPanel
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
+                Grid.Column="2"
                 Orientation="Horizontal">
                 <Path
-                    Width="15" Height="15"
+                    Width="15"
+                    Height="15"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding ShareIconPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9">
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Margin="8,0,0,0"
-                    FontSize="13"
-                    Text="{Binding SharedItems.NumberOfSharedItems}"
-                    Opacity="0.9"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Opacity="0.9"
+                    Text="{Binding SharedItems.NumberOfSharedItems}" />
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -2647,85 +2663,94 @@
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto" MinWidth="116"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" MinWidth="116" />
             </Grid.ColumnDefinitions>
-            <Rectangle 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Height="36" Width="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
+            <Rectangle
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Stretch="UniformToFill">
                 <Rectangle.Fill>
                     <SolidColorBrush Color="{Binding AvatarColor}" />
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 FontSize="16"
                 Foreground="{ThemeResource MegaAppForegroundBrush}"
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center"
                 Text="{Binding AvatarLetter}" />
-            <Image 
-                Grid.Row="0" Grid.Column="0" 
-                Grid.RowSpan="2" 
-                Width="36" Height="36" 
-                HorizontalAlignment="Center" 
-                VerticalAlignment="Center" 
-                Stretch="UniformToFill" 
+            <Image
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Width="36"
+                Height="36"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Stretch="UniformToFill"
                 Visibility="{Binding AvatarUri, Converter={StaticResource StringVisibilityConverter}, Mode=OneWay}">
                 <Image.Source>
                     <BitmapImage
                         DecodePixelHeight="36"
-                        DecodePixelWidth="36"
                         DecodePixelType="Logical"
+                        DecodePixelWidth="36"
                         UriSource="{Binding AvatarUri}" />
                 </Image.Source>
             </Image>
-            <TextBlock 
-                Grid.Row="0" Grid.Column="1" 
-                Margin="8,0,0,0" 
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="14"
-                Text="{Binding FullName}"
                 Opacity="0.9"
-                VerticalAlignment="Center"/>
-            <TextBlock 
-                Grid.Row="1" Grid.Column="1" 
-                Margin="8,0,0,0" 
+                Text="{Binding FullName}" />
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="8,0,0,0"
+                VerticalAlignment="Center"
                 FontSize="13"
                 Opacity="0.5"
-                Text="{Binding Email}"
-                VerticalAlignment="Center"/>
+                Text="{Binding Email}" />
             <StackPanel
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
+                Grid.Column="2"
                 Orientation="Horizontal">
                 <Path
-                    Width="15" Height="15"
+                    Width="15"
+                    Height="15"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Data="{Binding ShareIconPathData}"
-                    Stretch="Uniform"
-                    Opacity="0.9">
+                    Opacity="0.9"
+                    Stretch="Uniform">
                     <Path.Fill>
                         <SolidColorBrush Color="{ThemeResource MegaAppForeground}" />
                     </Path.Fill>
                 </Path>
                 <TextBlock
                     Margin="8,0,0,0"
-                    FontSize="13"
-                    Text="{Binding SharedItems.NumberOfSharedItemsText}"
-                    Opacity="0.9"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center" />
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Opacity="0.9"
+                    Text="{Binding SharedItems.NumberOfSharedItemsText}" />
             </StackPanel>
         </Grid>
     </DataTemplate>
@@ -2866,7 +2891,7 @@
                 TextAlignment="Right" />
         </Grid>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="MegaContactShareToPanelItem">
         <Grid Margin="0,6" Background="Transparent">
             <Grid.RowDefinitions>
@@ -3020,14 +3045,15 @@
                 Opacity="0.5"
                 Text="{Binding Date}" />
             <CommandBar
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
-                Margin="8,0,0,0"
+                Grid.Column="2"
                 Height="36"
-                Background="Transparent"
-                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
+                Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Width="36"
@@ -3144,14 +3170,15 @@
                 Opacity="0.5"
                 Text="{Binding Date}" />
             <CommandBar
-                Grid.Row="0" Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
-                Margin="8,0,0,0"
+                Grid.Column="2"
                 Height="36"
-                Background="Transparent"
-                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                Margin="8,0,0,0"
                 VerticalAlignment="Center"
                 extensions:CommandBarExtensions.HideMoreButton="True"
+                Background="Transparent"
+                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                 Visibility="{Binding ContactRequestsList.ItemCollection.IsMultiSelectActive, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <AppBarButton
                     Width="36"

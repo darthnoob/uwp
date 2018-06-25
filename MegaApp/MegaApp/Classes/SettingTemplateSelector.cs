@@ -17,6 +17,7 @@ namespace MegaApp.Classes
         public DataTemplate InfoActionItemTemplate { get; set; }
         public DataTemplate InfoButtonItemTemplate { get; set; }
         public DataTemplate LegalAndPoliciesItemTemplate { get; set; }
+        public DataTemplate SelectionItemTemplate { get; set; }
 
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
@@ -28,6 +29,7 @@ namespace MegaApp.Classes
             if (item is LinkSettingViewModel) return this.InfoActionItemTemplate;
             if (item is ButtonSettingViewModel) return this.InfoButtonItemTemplate;
             if (item is LegalAndPoliciesSettingViewModel) return this.LegalAndPoliciesItemTemplate;
+            if (item is SelectionSettingViewModel) return this.SelectionItemTemplate;
 
             var setting = item as ISetting;
 

@@ -19,19 +19,28 @@ namespace BackgroundTaskService.Services
         /// <summary>
         /// Get available files for upload depending on the Last Upload Date setting
         /// </summary>
-        /// <param name="folder">StorageFolder to check for available files</param>
+        /// <param name="folders">StorageFolders to check for available files</param>
         /// <param name="dateSetting">Name of the date setting to load from settings</param>
         /// <returns>Available files for upload</returns>
-        public static async Task<IList<StorageFile>> GetAvailableUploadAsync(StorageFolder folder, string dateSetting)
+        public static async Task<IList<StorageFile>> GetAvailableUploadAsync(string dateSetting, params StorageFolder[] folders)
         {
             try
             {
                 var lastUploadDate = await SettingsService.LoadSettingFromFileAsync<DateTime>(dateSetting);
-                var files = (await folder.GetFilesAsync(CommonFileQuery.OrderByDate)).ToList();
-                // Reorder because order by date query uses different ordering values and descending
-                files = files.OrderBy(file => file.DateCreated).ToList();
-                // >= to get all files that have the same creation date
-                return files.Where(file => file.DateCreated.DateTime >= lastUploadDate).ToList();
+
+                var upload = new List<StorageFile>();
+                foreach (var folder in folders)
+                {
+                    var files = (await folder.GetFilesAsync(CommonFileQuery.OrderByDate)).ToList();
+                    
+                    // Reorder because order by date query uses different ordering values and descending
+                    files = files.OrderBy(file => file.DateCreated).ToList();
+                    
+                    // >= to get all files that have the same creation date
+                    upload.AddRange(files.Where(file => file.DateCreated.DateTime >= lastUploadDate));
+                }
+
+                return upload;
             }
             catch (Exception e)
             {

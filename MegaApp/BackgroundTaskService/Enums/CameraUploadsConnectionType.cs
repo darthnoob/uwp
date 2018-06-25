@@ -1,4 +1,4 @@
-﻿namespace MegaApp.Enums
+﻿namespace BackgroundTaskService.Enums
 {
     public enum CameraUploadsConnectionType
     {
