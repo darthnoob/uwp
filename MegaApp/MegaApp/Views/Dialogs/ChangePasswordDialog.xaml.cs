@@ -1,5 +1,4 @@
-﻿using System;
-using MegaApp.UserControls;
+﻿using MegaApp.UserControls;
 using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.Views.Dialogs
@@ -13,24 +12,6 @@ namespace MegaApp.Views.Dialogs
         public ChangePasswordDialog()
         {
             this.InitializeComponent();
-
-            this.ViewModel.PasswordChanged += OnPasswordChanged;
-            this.ViewModel.Canceled += OnCanceled;
         }
-
-        
-        #region Private Methods
-
-        private void OnPasswordChanged(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-
-        private void OnCanceled(object sender, EventArgs e)
-        {
-            this.Hide();
-        }        
-
-        #endregion        
     }
 }

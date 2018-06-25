@@ -88,8 +88,6 @@ namespace MegaApp.ViewModels.Login
             if (isEnabledMFA.HasValue && isEnabledMFA.Value)
             {
                 var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
-                    ResourceService.UiResources.GetString("UI_TwoFactorAuth"),
-                    ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage"),
                     async (string code) =>
                     {
                         result = await login.ExecuteAsync(() =>
@@ -97,8 +95,7 @@ namespace MegaApp.ViewModels.Login
 
                         if (result == LoginResult.MultiFactorAuth)
                         {
-                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
-                                ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
                             return false;
                         }
 

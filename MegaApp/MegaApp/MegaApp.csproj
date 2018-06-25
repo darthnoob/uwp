@@ -202,6 +202,7 @@
     <Compile Include="Database\DatabaseHelper.cs" />
     <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
+    <Compile Include="Enums\ChangePasswordResult.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />

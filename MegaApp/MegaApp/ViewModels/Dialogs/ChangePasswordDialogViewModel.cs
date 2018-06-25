@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -23,47 +22,12 @@ namespace MegaApp.ViewModels.Dialogs
 
         #endregion
 
-        #region Events
-
-        /// <summary>
-        /// Event triggered when the user changes the password successfully.
-        /// </summary>
-        public event EventHandler PasswordChanged;
-
-        /// <summary>
-        /// Event invocator method called when the user changes the password successfully.
-        /// </summary>
-        protected virtual void OnPasswordChanged()
-        {
-            this.CanClose = true;
-            this.PasswordChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Event triggered when the user cancels the password change.
-        /// </summary>
-        public event EventHandler Canceled;
-
-        /// <summary>
-        /// Event invocator method called when the user cancels the password change.
-        /// </summary>
-        protected virtual void OnCanceled()
-        {
-            this.CanClose = true;
-            this.Canceled?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
         #region Private Methods
 
         /// <summary>
         /// Cancels the change password process
         /// </summary>
-        private void Cancel()
-        {
-            OnCanceled();
-        }
+        private void Cancel() => this.OnHideDialog();
 
         /// <summary>
         /// Changes the password
@@ -79,21 +43,55 @@ namespace MegaApp.ViewModels.Dialogs
             this.ControlState = false;
             this.SaveButtonState = false;
 
+            ChangePasswordResult result = ChangePasswordResult.Unknown;
             var changePassword = new ChangePasswordRequestListenerAsync();
-            var result = await changePassword.ExecuteAsync(() =>
+
+            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
+            var isEnabledMFA = await multiFactorAuthCheck.ExecuteAsync(() =>
+                SdkService.MegaSdk.multiFactorAuthCheck(SdkService.MegaSdk.getMyEmail(), multiFactorAuthCheck));
+            if (isEnabledMFA.HasValue && isEnabledMFA.Value)
+            {
+                this.OnHideDialog();
+                var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
+                    async (string code) =>
+                    {
+                        result = await changePassword.ExecuteAsync(() =>
+                        {
+                            SdkService.MegaSdk.multiFactorAuthChangePasswordWithoutOld(
+                                this.NewPassword, code, changePassword);
+                        });
+
+                        if (result == ChangePasswordResult.MultiFactorAuth)
+                        {
+                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                            return false;
+                        }
+
+                        return true;
+                    });
+
+                this.OnShowDialog();
+
+                if (!mfaResult)
+                    result = ChangePasswordResult.MultiFactorAuth;
+            }
+            else
+            {
+                result = await changePassword.ExecuteAsync(() =>
                 SdkService.MegaSdk.changePasswordWithoutOld(this.NewPassword, changePassword));
+            }
 
             this.IsBusy = false;
             this.ControlState = true;
             this.SaveButtonState = true;
 
-            if (!result)
+            if (result != ChangePasswordResult.Success)
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_PasswordChangeFailed"));                
                 return;
             }
 
-            OnPasswordChanged();
+            OnHideDialog();
 
             await DialogService.ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_PasswordChanged_Title"),

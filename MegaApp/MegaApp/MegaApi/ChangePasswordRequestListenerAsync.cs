@@ -1,8 +1,9 @@
 ﻿using mega;
+using MegaApp.Enums;
 
 namespace MegaApp.MegaApi
 {
-    internal class ChangePasswordRequestListenerAsync : BaseRequestListenerAsync<bool>
+    internal class ChangePasswordRequestListenerAsync : BaseRequestListenerAsync<ChangePasswordResult>
     {
         #region MRequestListenerInterface
 
@@ -17,10 +18,14 @@ namespace MegaApp.MegaApi
                 switch (e.getErrorCode())
                 {
                     case MErrorType.API_OK: // Successfull change password process
-                        Tcs?.TrySetResult(true);
+                        Tcs?.TrySetResult(ChangePasswordResult.Success);
                         break;
+                    case MErrorType.API_EFAILED: // Wrong MFA pin.
+                    case MErrorType.API_EEXPIRED: // MFA pin is being re-used and is being denied to prevent a replay attack
+                        Tcs?.TrySetResult(ChangePasswordResult.MultiFactorAuth);
+                        return;
                     default: // Default error processing
-                        Tcs?.TrySetResult(false);
+                        Tcs?.TrySetResult(ChangePasswordResult.Unknown);
                         break;
                 }
             }

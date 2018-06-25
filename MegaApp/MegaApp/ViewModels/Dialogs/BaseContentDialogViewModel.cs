@@ -41,6 +41,31 @@ namespace MegaApp.ViewModels.Dialogs
             this.CloseButtonTapped?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Event triggered to hide the dialog.
+        /// </summary>
+        public event EventHandler HideDialog;
+
+        /// <summary>
+        /// Event invocator method called to hide the dialog.
+        /// </summary>
+        protected virtual void OnHideDialog()
+        {
+            this.CanClose = true;
+            this.HideDialog?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered to show the dialog.
+        /// </summary>
+        public event EventHandler ShowDialog;
+
+        /// <summary>
+        /// Event invocator method called to show the dialog.
+        /// </summary>
+        protected virtual void OnShowDialog() =>
+            this.ShowDialog?.Invoke(this, EventArgs.Empty);
+
         #endregion
 
         #region Methods

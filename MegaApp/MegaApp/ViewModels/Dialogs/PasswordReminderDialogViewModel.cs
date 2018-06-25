@@ -128,8 +128,7 @@ namespace MegaApp.ViewModels.Dialogs
 
                 // I user has exceeded the number of attempts, close 
                 // this dialog and show the "Change password" dialog
-                if (!this.CloseCommand.CanExecute(null))
-                    this.CloseCommand.Execute(null);
+                this.OnHideDialog();
                 DialogService.ShowChangePasswordDialog();
                 return;
             }
@@ -161,8 +160,7 @@ namespace MegaApp.ViewModels.Dialogs
             if (!this.recoveryKeySaved) return;
 
             // If the recovery key has been successfully saved close the dialog
-            if (!this.CloseCommand.CanExecute(null)) return;
-            this.CloseCommand.Execute(null);
+            this.OnHideDialog();
         }
 
         /// <summary>

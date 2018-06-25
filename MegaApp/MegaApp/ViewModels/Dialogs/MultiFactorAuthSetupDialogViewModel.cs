@@ -40,10 +40,7 @@ namespace MegaApp.ViewModels.Dialogs
         private void SetupTwoFactorAuth()
         {
             this.DialogResult = true;
-
-            if (!this.CloseCommand.CanExecute(null)) return;
-            this.CloseCommand.Execute(null);
-
+            this.OnHideDialog();
             NavigateService.Instance.Navigate(typeof(MultiFactorAuthAppSetupPage));
         }
 

@@ -20,31 +20,33 @@ namespace MegaApp.Views.Dialogs
         /// <summary>
         /// Creates an input dialog to type the MFA 6-digit code and also executes an action.
         /// </summary>
+        /// <param name="dialogAction">Action to execute by the primary button.</param>
         /// <param name="title">Title of the input dialog.</param>
         /// <param name="message">Message of the input dialog.</param>
-        /// <param name="dialogAction">Action to execute by the primary button.</param>
-        public MultiFactorAuthCodeInputDialog(string title, string message, Func<string, bool> dialogAction)
+        public MultiFactorAuthCodeInputDialog(Func<string, bool> dialogAction,
+            string title = null, string message = null)
         {
             this.InitializeComponent();
 
-            this.ViewModel.TitleText = title;
-            this.ViewModel.MessageText = message;
             this.ViewModel.DialogAction = dialogAction;
+            this.ViewModel.TitleText = title ?? ResourceService.UiResources.GetString("UI_TwoFactorAuth");
+            this.ViewModel.MessageText = message ?? ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage");
         }
 
         /// <summary>
         /// Creates an input dialog to type the MFA 6-digit code and also executes an action.
         /// </summary>
+        /// <param name="dialogActionAsync">Async action to execute by the primary button.</param>
         /// <param name="title">Title of the input dialog.</param>
         /// <param name="message">Message of the input dialog.</param>
-        /// <param name="dialogAction">Async action to execute by the primary button.</param>
-        public MultiFactorAuthCodeInputDialog(string title, string message, Func<string, Task<bool>> dialogActionAsync)
+        public MultiFactorAuthCodeInputDialog(Func<string, Task<bool>> dialogActionAsync,
+            string title = null, string message = null)
         {
             this.InitializeComponent();
 
-            this.ViewModel.TitleText = title;
-            this.ViewModel.MessageText = message;
             this.ViewModel.DialogActionAsync = dialogActionAsync;
+            this.ViewModel.TitleText = title ?? ResourceService.UiResources.GetString("UI_TwoFactorAuth");
+            this.ViewModel.MessageText = message ?? ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage");
         }
 
         #region Methods
@@ -125,8 +127,7 @@ namespace MegaApp.Views.Dialogs
                 if (!dataPackageView.Contains(StandardDataFormats.Text))
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Format is not correct");
-                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
-                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
                     return;
                 }
 
@@ -135,8 +136,7 @@ namespace MegaApp.Views.Dialogs
                 if (string.IsNullOrWhiteSpace(text) || !ValidationService.IsDigitsOnly(text))
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Format is not correct");
-                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
-                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
                     return;
                 }                    
 
@@ -144,8 +144,7 @@ namespace MegaApp.Views.Dialogs
                 if (text.Length != this.ViewModel.Settings.MinLength)
                 {
                     LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Invalid MFA code. Length is not correct");
-                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
-                        ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                    DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
                     return;
                 }
 
@@ -159,8 +158,7 @@ namespace MegaApp.Views.Dialogs
             catch (Exception ex)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error pasting MFA code", ex);
-                DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage(
-                    ResourceService.AppMessages.GetString("AM_InvalidCode"));
+                DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
             }
         }
 

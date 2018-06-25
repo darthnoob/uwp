@@ -18,6 +18,8 @@ namespace MegaApp.UserControls
             this.DataContext = this.ViewModel;
 
             this.ViewModel.CloseButtonTapped += OnCloseButtonTapped;
+            this.ViewModel.HideDialog += OnHideDialog;
+            this.ViewModel.ShowDialog+= OnShowDialog;
         }
 
         /// <summary>
@@ -28,6 +30,10 @@ namespace MegaApp.UserControls
         #region Methods
 
         private void OnCloseButtonTapped(object sender, EventArgs e) => this.Hide();
+
+        private void OnHideDialog(object sender, EventArgs e) => this.Hide();
+
+        private void OnShowDialog(object sender, EventArgs e) => this.ShowAsync();
 
         protected void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {
