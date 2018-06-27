@@ -224,6 +224,7 @@
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetUserRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\KillSessionRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
@@ -330,6 +331,7 @@
     <Compile Include="ViewModels\Settings\LegalAndPoliciesViewModel.cs" />
     <Compile Include="ViewModels\Settings\LinkSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SelectionSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ButtonSettingViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
