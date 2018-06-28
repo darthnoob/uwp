@@ -194,15 +194,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>フォルダ作成できました。</value>
     <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
   </data>
-  <data name="AM_DeleteNodeFailed" xml:space="preserve">
-    <value>削除できず。再度トライして下さい。[{0}]</value>
-    <comment>Message of the dialog displayed when the process/request to delete a node failed.
-Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
-  </data>
-  <data name="AM_DeleteNodeFailed_Title" xml:space="preserve">
-    <value>削除できませんでした。</value>
-    <comment>Title of the dialog displayed when the process/request to delete a node failed - (String as short as possible).</comment>
-  </data>
   <data name="AM_DeleteSettingsFailed" xml:space="preserve">
     <value>設定を削除失敗。もう一度やり直してください。[{0}]</value>
     <comment>Message of the dialog displayed when the process to delete settings failed.

@@ -130,30 +130,44 @@ namespace MegaApp.Services
         /// Empties a folder
         /// </summary>
         /// <param name="path">Path of the folder</param>
-        public static void Clear(string path)
+        public static bool Clear(string path)
         {
             try
             {
+                if (HasIllegalChars(path))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error cleaning folder '{0}'.", path));
+                    return false;
+                }
+
+                bool result = true;
                 IEnumerable<string> foldersToDelete = Directory.GetDirectories(path);
                 if (foldersToDelete != null)
                 {
                     foreach (var folder in foldersToDelete)
                     {
                         if (folder != null)
+                        {
+                            if (HasIllegalChars(folder))
+                            {
+                                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error deleting folder '{0}'.", path));
+                                result = false;
+                                continue;
+                            }
+
                             Directory.Delete(folder, true);
+                        }
                     }
                 }
 
-                FileService.ClearFiles(Directory.GetFiles(path));
+                result = result & FileService.ClearFiles(Directory.GetFiles(path));
+
+                return result;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
-                UiService.OnUiThread(async() =>
-                {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message));
-                });
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error cleaning folder.", e);
+                return false;
             }
         }
 

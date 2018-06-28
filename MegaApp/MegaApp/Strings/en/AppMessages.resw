@@ -194,15 +194,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Folder created</value>
     <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
   </data>
-  <data name="AM_DeleteNodeFailed" xml:space="preserve">
-    <value>Failed to delete item. Please try again [{0}]</value>
-    <comment>Message of the dialog displayed when the process/request to delete a node failed.
-Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
-  </data>
-  <data name="AM_DeleteNodeFailed_Title" xml:space="preserve">
-    <value>Deletion failed</value>
-    <comment>Title of the dialog displayed when the process/request to delete a node failed - (String as short as possible).</comment>
-  </data>
   <data name="AM_DeleteSettingsFailed" xml:space="preserve">
     <value>Failed to delete settings. Please try again. [{0}]</value>
     <comment>Message of the dialog displayed when the process to delete settings failed.
@@ -1287,5 +1278,21 @@ Preserve the {0} code because is for include the name of the item to be removed 
   <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
     <value>The remaining sessions were successfully closed</value>
     <comment>Message of the dialog displayed when close successfully all the other sessions.</comment>
+  </data>
+  <data name="AM_CacheCleared" xml:space="preserve">
+    <value>Cache has been succesfully cleared</value>
+    <comment>Message of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
+  </data>
+  <data name="AM_CacheCleared_Title" xml:space="preserve">
+    <value>Cache cleared</value>
+    <comment>Title of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
+  </data>
+  <data name="AM_ClearCacheFailed" xml:space="preserve">
+    <value>Failed to clear cache. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to clear cache failed.</comment>
+  </data>
+  <data name="AM_ClearCacheFailed_Title" xml:space="preserve">
+    <value>Clear cache failed</value>
+    <comment>Title of the dialog displayed when the process to clear cache failed - (String as short as possible).</comment>
   </data>
 </root>

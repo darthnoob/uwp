@@ -193,22 +193,25 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="InfoButtonItemTemplate" x:DataType="interfaces:ISetting">
+        <DataTemplate x:Key="InfoButtonItemTemplate" x:DataType="settings:ButtonSettingViewModel">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock
-                    Margin="0,0,0,16"
                     Style="{ThemeResource MegaTitleFontStyle}"
                     Text="{x:Bind Title, Mode=OneTime}"
                     Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}"/>
                 <TextBlock
-                    Margin="0,0,0,24"
                     Style="{ThemeResource MegaBodyFontStyle}"
                     Text="{x:Bind Description, Mode=OneTime}" 
                     Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
+                <TextBlock
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind Value, Mode=OneWay}"
+                    Visibility="{x:Bind Value, Converter={StaticResource StringVisibilityConverter}}" />
                 <Button
+                    Margin="0,24,0,0"
                     MinWidth="136"
                     Command="{x:Bind ActionCommand}"
-                    Content="{x:Bind Value, Mode=OneTime}" />
+                    Content="{x:Bind ButtonLabel, Mode=OneTime}" />
             </StackPanel>
         </DataTemplate>
 

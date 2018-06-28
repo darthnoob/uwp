@@ -363,6 +363,46 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Get the size of the app cache
+        /// </summary>
+        /// <returns>App cache size</returns>
+        public static ulong GetAppCacheSize()
+        {
+            var files = new List<string>();
+
+            try { files.AddRange(Directory.GetFiles(GetThumbnailDirectoryPath())); }
+            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting thumbnails cache.", e); }
+
+            try { files.AddRange(Directory.GetFiles(GetPreviewDirectoryPath())); }
+            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting previews cache.", e); }
+
+            try { files.AddRange(Directory.GetFiles(GetUploadDirectoryPath())); }
+            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting uploads cache.", e); }
+
+            try { files.AddRange(Directory.GetFiles(GetDownloadDirectoryPath())); }
+            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting downloads cache.", e); }
+
+            ulong totalSize = 0;
+            foreach (var file in files)
+            {
+                if (FileService.FileExists(file))
+                {
+                    try
+                    {
+                        var fileInfo = new FileInfo(file);
+                        totalSize += (ulong)fileInfo.Length;
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting app cache size.", e);
+                    }
+                }
+            }
+
+            return totalSize;
+        }
+
+        /// <summary>
         /// Get the path of the temporary folder for the upload
         /// </summary>
         /// <param name="checkIfExists">Check if the folder exists</param>
@@ -431,16 +471,24 @@ namespace MegaApp.Services
                 ResourceService.AppResources.GetString("AR_ThumbnailsDirectory"));
         }
 
-        public static void ClearAppCache(bool includeLocalFolder)
+        /// <summary>
+        /// Clear the app cache
+        /// </summary>
+        /// <param name="includeLocalFolder">Flag to indicate if clear the app local cache.</param>
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearAppCache(bool includeLocalFolder = false)
         {
-            if (includeLocalFolder)
-                ClearLocalCache();
-            ClearThumbnailCache();
-            ClearPreviewCache();
-            ClearDownloadCache();
-            ClearUploadCache();
+            bool result = true;
 
-            ClearAppDatabase();
+            result = result & ClearThumbnailCache();
+            result = result & ClearPreviewCache();
+            result = result & ClearDownloadCache();
+            result = result & ClearUploadCache();
+
+            if (includeLocalFolder)
+                result = result & ClearLocalCache();
+
+            return result;
         }
 
         /// <summary>
@@ -454,66 +502,66 @@ namespace MegaApp.Services
         /// <summary>
         /// Clear the thumbnails cache
         /// </summary>
-        public static void ClearThumbnailCache()
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearThumbnailCache()
         {
             string thumbnailDir = GetThumbnailDirectoryPath();
-            if (!String.IsNullOrWhiteSpace(thumbnailDir) && !FolderService.HasIllegalChars(thumbnailDir) &&
-                Directory.Exists(thumbnailDir))
-            {
-                FileService.ClearFiles(Directory.GetFiles(thumbnailDir));
-            }
+            if (string.IsNullOrWhiteSpace(thumbnailDir) || FolderService.HasIllegalChars(thumbnailDir) ||
+                !Directory.Exists(thumbnailDir)) return false;
+
+            return FileService.ClearFiles(Directory.GetFiles(thumbnailDir));
         }
 
         /// <summary>
         /// Clear the previews cache
         /// </summary>
-        public static void ClearPreviewCache()
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearPreviewCache()
         {
             string previewDir = GetPreviewDirectoryPath();
-            if (!String.IsNullOrWhiteSpace(previewDir) && !FolderService.HasIllegalChars(previewDir) &&
-                Directory.Exists(previewDir))
-            {
-                FileService.ClearFiles(Directory.GetFiles(previewDir));
-            }
+            if (string.IsNullOrWhiteSpace(previewDir) || FolderService.HasIllegalChars(previewDir) ||
+                !Directory.Exists(previewDir)) return false;
+
+            return FileService.ClearFiles(Directory.GetFiles(previewDir));
         }
 
         /// <summary>
         /// Clear the downloads cache
         /// </summary>
-        public static void ClearDownloadCache()
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearDownloadCache()
         {
             string downloadDir = GetDownloadDirectoryPath();
-            if (!String.IsNullOrWhiteSpace(downloadDir) && !FolderService.HasIllegalChars(downloadDir) &&
-                Directory.Exists(downloadDir))
-            {
-                FolderService.Clear(downloadDir);
-            }
+            if (string.IsNullOrWhiteSpace(downloadDir) || FolderService.HasIllegalChars(downloadDir) ||
+                !Directory.Exists(downloadDir)) return false;
+
+            return FolderService.Clear(downloadDir);
         }
 
         /// <summary>
         /// Clear the uploads cache
         /// </summary>
-        public static void ClearUploadCache()
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearUploadCache()
         {
             string uploadDir = GetUploadDirectoryPath();
-            if (!String.IsNullOrWhiteSpace(uploadDir) && !FolderService.HasIllegalChars(uploadDir) &&
-                Directory.Exists(uploadDir))
-            {
-                FileService.ClearFiles(Directory.GetFiles(uploadDir));
-            }
+            if (string.IsNullOrWhiteSpace(uploadDir) || FolderService.HasIllegalChars(uploadDir) ||
+                !Directory.Exists(uploadDir)) return false;
+
+            return FileService.ClearFiles(Directory.GetFiles(uploadDir));
         }
 
         /// <summary>
         /// Clear the app local cache
         /// </summary>
-        public static void ClearLocalCache()
+        /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearLocalCache()
         {
             string localCacheDir = ApplicationData.Current.LocalFolder.Path;
-            if (!String.IsNullOrWhiteSpace(localCacheDir) && !FolderService.HasIllegalChars(localCacheDir) &&
-                Directory.Exists(localCacheDir))
-            {
-                FileService.ClearFiles(Directory.GetFiles(localCacheDir));
-            }
+            if (string.IsNullOrWhiteSpace(localCacheDir) || FolderService.HasIllegalChars(localCacheDir) ||
+                !Directory.Exists(localCacheDir)) return false;
+
+            return FileService.ClearFiles(Directory.GetFiles(localCacheDir));
         }
 
         /// <summary>
@@ -531,7 +579,7 @@ namespace MegaApp.Services
             // Clear settings, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
             SettingsService.RemoveSessionFromLocker();
-            ClearAppCache(false);
+            ClearAppCache(true);
 
             // Clear all the account and user data info
             AccountService.ClearAccountDetails();

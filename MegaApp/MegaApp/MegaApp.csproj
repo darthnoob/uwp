@@ -328,6 +328,7 @@
     <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
     <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
     <Compile Include="ViewModels\Settings\CameraUploadsSelectionSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ClearCacheSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\LegalAndPoliciesViewModel.cs" />
     <Compile Include="ViewModels\Settings\LinkSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SelectionSettingViewModel.cs" />

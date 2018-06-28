@@ -13,7 +13,15 @@ namespace MegaApp.ViewModels
         {
             // General section
             this.GeneralSettingSections = new List<SettingSectionViewModel>();
-                        
+
+            var storageLocationSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_StorageLocation")
+            };
+            storageLocationSettings.Items.Add(new ClearCacheSettingViewModel());
+
+            this.GeneralSettingSections.Add(storageLocationSettings);
+
             var aboutSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_About")
