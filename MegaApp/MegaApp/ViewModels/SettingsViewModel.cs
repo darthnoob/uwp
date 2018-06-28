@@ -19,6 +19,7 @@ namespace MegaApp.ViewModels
                 Header = ResourceService.UiResources.GetString("UI_StorageLocation")
             };
             storageLocationSettings.Items.Add(new ClearCacheSettingViewModel());
+            storageLocationSettings.Items.Add(new ClearOfflineSettingViewModel());
 
             this.GeneralSettingSections.Add(storageLocationSettings);
 

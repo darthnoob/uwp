@@ -21,7 +21,7 @@ namespace MegaApp.ViewModels.Settings
         /// Get the size of the app cache
         /// </summary>
         private async void GetAppCacheSize() =>
-            this.Value = (await AppService.GetAppCacheSizeAsync()).ToStringAndSuffix();
+            this.Value = (await AppService.GetAppCacheSizeAsync()).ToStringAndSuffix(1);
 
         /// <summary>
         /// Clear the app cache

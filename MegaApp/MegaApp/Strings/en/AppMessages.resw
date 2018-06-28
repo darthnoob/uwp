@@ -1295,4 +1295,24 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Clear cache failed</value>
     <comment>Title of the dialog displayed when the process to clear cache failed - (String as short as possible).</comment>
   </data>
+  <data name="AM_ClearOfflineFailed" xml:space="preserve">
+    <value>Failed to remove files saved for offline. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove all the files saved for offline failed.</comment>
+  </data>
+  <data name="AM_ClearOfflineFailed_Title" xml:space="preserve">
+    <value>Clear Offline failed</value>
+    <comment>Title of the dialog displayed when the process to clear offline files failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ClearOfflineQuestion" xml:space="preserve">
+    <value>Are you sure you want to remove all files saved for offline?</value>
+    <comment>Message of the dialog displayed when a user want to remove all files saved for offline, asking for confirmation to do it.</comment>
+  </data>
+  <data name="AM_ClearOfflineSuccess" xml:space="preserve">
+    <value>All the saved for offlilne files have been removed successfully.</value>
+    <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
+  </data>
+  <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
+    <value>Offline cleared</value>
+    <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
+  </data>
 </root>

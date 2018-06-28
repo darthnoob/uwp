@@ -339,5 +339,55 @@ namespace MegaApp.Services
         /// <returns>TRUE if is the root of the offline folder or FALSE in other case</returns>
         public static bool IsOfflineRootFolder(string path) =>
             string.CompareOrdinal(AppService.GetOfflineDirectoryPath(), path) == 0;
+
+        /// <summary>
+        /// Get the size of a folder
+        /// </summary>
+        /// <param name="folderPath">Path of the folder</param>
+        /// <returns>Folder size</returns>
+        public static async Task<ulong> GetFolderSizeAsync(string folderPath)
+        {
+            ulong totalSize = 0;
+
+            if (string.IsNullOrWhiteSpace(folderPath) && !Directory.Exists(folderPath))
+                return totalSize;
+
+            await Task.Run(async() =>
+            {
+                var folders = new List<string>();
+                try { folders.AddRange(Directory.GetDirectories(folderPath)); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        string.Format("Error getting the subfolder list from {0}", folderPath), e);
+                }
+
+                foreach (var folder in folders)
+                    totalSize += await GetFolderSizeAsync(folder);
+
+                var files = new List<string>();                
+                try { files.AddRange(Directory.GetFiles(folderPath)); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, 
+                        string.Format("Error getting the file list from {0}", folderPath), e);
+                }
+
+                foreach (var file in files)
+                {
+                    if (FileService.FileExists(file))
+                    {
+                        try { totalSize += (ulong)(new FileInfo(file).Length); }
+                        catch (Exception e)
+                        {
+                            LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                                string.Format("Error getting file size of {0}", file), e);
+                        }
+                    }
+                }
+            });
+
+            return totalSize;
+        }
     }    
 }

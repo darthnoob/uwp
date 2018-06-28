@@ -407,6 +407,13 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Get the size of the offline content
+        /// </summary>
+        /// <returns>Offline content size</returns>
+        public static async Task<ulong> GetOfflineSizeAsync() =>
+            await FolderService.GetFolderSizeAsync(GetOfflineDirectoryPath());
+
+        /// <summary>
         /// Get the path of the temporary folder for the upload
         /// </summary>
         /// <param name="checkIfExists">Check if the folder exists</param>
@@ -507,7 +514,7 @@ namespace MegaApp.Services
             if (string.IsNullOrWhiteSpace(offlineDir) || FolderService.HasIllegalChars(offlineDir) ||
                 !Directory.Exists(offlineDir)) return false;
 
-            result = FileService.ClearFiles(Directory.GetFiles(offlineDir));
+            result = FolderService.Clear(offlineDir);
 
             // Clear the offline database
             result = result & SavedForOfflineDB.DeleteAllNodes();
