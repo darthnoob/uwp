@@ -492,11 +492,23 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Clear the database cache
+        /// Clear all the offline content of the app
         /// </summary>
-        public static void ClearAppDatabase()
+        /// <returns>TRUE if the offline content was successfully deleted or FALSE otherwise.</returns>
+        public static bool ClearOffline()
         {
-            SavedForOfflineDB.DeleteAllNodes();
+            bool result = true;
+
+            string offlineDir = GetOfflineDirectoryPath();
+            if (string.IsNullOrWhiteSpace(offlineDir) || FolderService.HasIllegalChars(offlineDir) ||
+                !Directory.Exists(offlineDir)) return false;
+
+            result = FileService.ClearFiles(Directory.GetFiles(offlineDir));
+
+            // Clear the offline database
+            result = result & SavedForOfflineDB.DeleteAllNodes();
+
+            return result;
         }
 
         /// <summary>
@@ -576,9 +588,10 @@ namespace MegaApp.Services
                 TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
             }
 
-            // Clear settings, cache, previews, thumbnails, etc.
+            // Clear settings, offline, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
             SettingsService.RemoveSessionFromLocker();
+            ClearOffline();
             ClearAppCache(true);
 
             // Clear all the account and user data info
