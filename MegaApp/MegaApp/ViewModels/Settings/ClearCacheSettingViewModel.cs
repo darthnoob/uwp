@@ -10,12 +10,18 @@ namespace MegaApp.ViewModels.Settings
             ResourceService.UiResources.GetString("UI_ClearCache"))
         {
             this.ButtonAction = this.ClearCache;
-            this.Value = AppService.GetAppCacheSize().ToStringAndSuffix();
+            this.GetAppCacheSize();
         }
 
         #region Methods
 
         public override string GetValue(string defaultValue) => this.Value;
+
+        /// <summary>
+        /// Get the size of the app cache
+        /// </summary>
+        private async void GetAppCacheSize() =>
+            this.Value = (await AppService.GetAppCacheSizeAsync()).ToStringAndSuffix();
 
         /// <summary>
         /// Clear the app cache
@@ -35,7 +41,7 @@ namespace MegaApp.ViewModels.Settings
                     ResourceService.AppMessages.GetString("AM_ClearCacheFailed"));
             }
 
-            this.Value =  AppService.GetAppCacheSize().ToStringAndSuffix();
+            this.GetAppCacheSize();
         }
 
         #endregion

@@ -366,38 +366,42 @@ namespace MegaApp.Services
         /// Get the size of the app cache
         /// </summary>
         /// <returns>App cache size</returns>
-        public static ulong GetAppCacheSize()
+        public static async Task<ulong> GetAppCacheSizeAsync()
         {
-            var files = new List<string>();
-
-            try { files.AddRange(Directory.GetFiles(GetThumbnailDirectoryPath())); }
-            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting thumbnails cache.", e); }
-
-            try { files.AddRange(Directory.GetFiles(GetPreviewDirectoryPath())); }
-            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting previews cache.", e); }
-
-            try { files.AddRange(Directory.GetFiles(GetUploadDirectoryPath())); }
-            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting uploads cache.", e); }
-
-            try { files.AddRange(Directory.GetFiles(GetDownloadDirectoryPath())); }
-            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting downloads cache.", e); }
-
             ulong totalSize = 0;
-            foreach (var file in files)
+
+            await Task.Run(() =>
             {
-                if (FileService.FileExists(file))
+                var files = new List<string>();
+
+                try { files.AddRange(Directory.GetFiles(GetThumbnailDirectoryPath())); }
+                catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting thumbnails cache.", e); }
+
+                try { files.AddRange(Directory.GetFiles(GetPreviewDirectoryPath())); }
+                catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting previews cache.", e); }
+
+                try { files.AddRange(Directory.GetFiles(GetUploadDirectoryPath())); }
+                catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting uploads cache.", e); }
+
+                try { files.AddRange(Directory.GetFiles(GetDownloadDirectoryPath())); }
+                catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting downloads cache.", e); }
+
+                foreach (var file in files)
                 {
-                    try
+                    if (FileService.FileExists(file))
                     {
-                        var fileInfo = new FileInfo(file);
-                        totalSize += (ulong)fileInfo.Length;
-                    }
-                    catch (Exception e)
-                    {
-                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting app cache size.", e);
+                        try
+                        {
+                            var fileInfo = new FileInfo(file);
+                            totalSize += (ulong)fileInfo.Length;
+                        }
+                        catch (Exception e)
+                        {
+                            LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting app cache size.", e);
+                        }
                     }
                 }
-            }
+            });
 
             return totalSize;
         }
