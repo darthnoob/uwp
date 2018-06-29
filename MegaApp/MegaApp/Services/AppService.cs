@@ -487,17 +487,17 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="includeLocalFolder">Flag to indicate if clear the app local cache.</param>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearAppCache(bool includeLocalFolder = false)
+        public static async Task<bool> ClearAppCacheAsync(bool includeLocalFolder = false)
         {
             bool result = true;
 
-            result = result & ClearThumbnailCache();
-            result = result & ClearPreviewCache();
-            result = result & ClearDownloadCache();
-            result = result & ClearUploadCache();
+            result = result & await ClearThumbnailCacheAsync();
+            result = result & await ClearPreviewCacheAsync();
+            result = result & await ClearDownloadCacheAsync();
+            result = result & await ClearUploadCacheAsync();
 
             if (includeLocalFolder)
-                result = result & ClearLocalCache();
+                result = result & await ClearLocalCacheAsync();
 
             return result;
         }
@@ -506,7 +506,7 @@ namespace MegaApp.Services
         /// Clear all the offline content of the app
         /// </summary>
         /// <returns>TRUE if the offline content was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearOffline()
+        public static async Task<bool> ClearOfflineAsync()
         {
             bool result = true;
 
@@ -514,7 +514,7 @@ namespace MegaApp.Services
             if (string.IsNullOrWhiteSpace(offlineDir) || FolderService.HasIllegalChars(offlineDir) ||
                 !Directory.Exists(offlineDir)) return false;
 
-            result = FolderService.Clear(offlineDir);
+            result = await FolderService.ClearAsync(offlineDir);
 
             // Clear the offline database
             result = result & SavedForOfflineDB.DeleteAllNodes();
@@ -526,65 +526,65 @@ namespace MegaApp.Services
         /// Clear the thumbnails cache
         /// </summary>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearThumbnailCache()
+        public static async Task<bool> ClearThumbnailCacheAsync()
         {
             string thumbnailDir = GetThumbnailDirectoryPath();
             if (string.IsNullOrWhiteSpace(thumbnailDir) || FolderService.HasIllegalChars(thumbnailDir) ||
                 !Directory.Exists(thumbnailDir)) return false;
 
-            return FileService.ClearFiles(Directory.GetFiles(thumbnailDir));
+            return await FileService.ClearFilesAsync(Directory.GetFiles(thumbnailDir));
         }
 
         /// <summary>
         /// Clear the previews cache
         /// </summary>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearPreviewCache()
+        public static async Task<bool> ClearPreviewCacheAsync()
         {
             string previewDir = GetPreviewDirectoryPath();
             if (string.IsNullOrWhiteSpace(previewDir) || FolderService.HasIllegalChars(previewDir) ||
                 !Directory.Exists(previewDir)) return false;
 
-            return FileService.ClearFiles(Directory.GetFiles(previewDir));
+            return await FileService.ClearFilesAsync(Directory.GetFiles(previewDir));
         }
 
         /// <summary>
         /// Clear the downloads cache
         /// </summary>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearDownloadCache()
+        public static async Task<bool> ClearDownloadCacheAsync()
         {
             string downloadDir = GetDownloadDirectoryPath();
             if (string.IsNullOrWhiteSpace(downloadDir) || FolderService.HasIllegalChars(downloadDir) ||
                 !Directory.Exists(downloadDir)) return false;
 
-            return FolderService.Clear(downloadDir);
+            return await FolderService.ClearAsync(downloadDir);
         }
 
         /// <summary>
         /// Clear the uploads cache
         /// </summary>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearUploadCache()
+        public static async Task<bool> ClearUploadCacheAsync()
         {
             string uploadDir = GetUploadDirectoryPath();
             if (string.IsNullOrWhiteSpace(uploadDir) || FolderService.HasIllegalChars(uploadDir) ||
                 !Directory.Exists(uploadDir)) return false;
 
-            return FileService.ClearFiles(Directory.GetFiles(uploadDir));
+            return await FileService.ClearFilesAsync(Directory.GetFiles(uploadDir));
         }
 
         /// <summary>
         /// Clear the app local cache
         /// </summary>
         /// <returns>TRUE if the cache was successfully deleted or FALSE otherwise.</returns>
-        public static bool ClearLocalCache()
+        public static async Task<bool> ClearLocalCacheAsync()
         {
             string localCacheDir = ApplicationData.Current.LocalFolder.Path;
             if (string.IsNullOrWhiteSpace(localCacheDir) || FolderService.HasIllegalChars(localCacheDir) ||
                 !Directory.Exists(localCacheDir)) return false;
 
-            return FileService.ClearFiles(Directory.GetFiles(localCacheDir));
+            return await FileService.ClearFilesAsync(Directory.GetFiles(localCacheDir));
         }
 
         /// <summary>
@@ -602,8 +602,8 @@ namespace MegaApp.Services
             // Clear settings, offline, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
             SettingsService.RemoveSessionFromLocker();
-            ClearOffline();
-            ClearAppCache(true);
+            ClearOfflineAsync();
+            ClearAppCacheAsync(true);
 
             // Clear all the account and user data info
             AccountService.ClearAccountDetails();

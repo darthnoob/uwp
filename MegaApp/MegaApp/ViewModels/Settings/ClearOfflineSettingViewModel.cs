@@ -36,7 +36,7 @@ namespace MegaApp.ViewModels.Settings
 
             if (!result) return;
 
-            if (AppService.ClearOffline())
+            if (await AppService.ClearOfflineAsync())
             {
                 ToastService.ShowTextNotification(
                     ResourceService.AppMessages.GetString("AM_ClearOfflineSuccess_Title"),

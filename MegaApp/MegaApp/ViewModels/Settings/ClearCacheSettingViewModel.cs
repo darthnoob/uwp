@@ -28,7 +28,7 @@ namespace MegaApp.ViewModels.Settings
         /// </summary>
         private async void ClearCache()
         {
-            if (AppService.ClearAppCache())
+            if (await AppService.ClearAppCacheAsync())
             {
                 ToastService.ShowTextNotification(
                     ResourceService.AppMessages.GetString("AM_CacheCleared_Title"),

@@ -109,13 +109,16 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="filesToDelete">List of files to delete</param>
         /// <returns>TRUE if the deletion was well or FALSE in other case</returns>
-        public static bool ClearFiles(IEnumerable<string> filesToDelete)
+        public static async Task<bool> ClearFilesAsync(IEnumerable<string> filesToDelete)
         {
             if (filesToDelete == null) return false;
 
             bool result = true;
-            foreach (var file in filesToDelete)
-                result = result & DeleteFile(file);
+            await Task.Run(() =>
+            {
+                foreach (var file in filesToDelete)
+                    result = result & DeleteFile(file);
+            });
 
             return result;
         }
