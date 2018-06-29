@@ -91,6 +91,9 @@ namespace MegaApp.ViewModels.Login
                     // Validate product subscription license on background thread
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
 
+                    // Initialize the DB
+                    AppService.InitializeDatabase();
+
                     // Fetch nodes from MEGA
                     var fetchNodesResult = await this.FetchNodes();
                     if (fetchNodesResult != FetchNodesResult.Success)
