@@ -115,6 +115,7 @@
                 Content="{x:Bind ViewModel.LostAuthDeviceQuestionText, Mode=OneTime}"
                 FontSize="13"
                 HorizontalAlignment="Center"
+                NavigateUri="{x:Bind ViewModel.RecoveryUri, Mode=OneTime}"
                 Style="{StaticResource MegaLinkStyle}"/>
         </StackPanel>
     </Grid>

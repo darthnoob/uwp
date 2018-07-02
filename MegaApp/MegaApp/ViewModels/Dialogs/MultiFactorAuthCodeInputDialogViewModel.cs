@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using MegaApp.Services;
@@ -126,6 +127,12 @@ namespace MegaApp.ViewModels.Dialogs
             this.InputText = string.Format("{0}{1}{2}{3}{4}{5}",
                 this.Digit1, this.Digit2, this.Digit3, this.Digit4, this.Digit5, this.Digit6);
         }
+
+        #endregion
+
+        #region AppResources
+
+        public Uri RecoveryUri => new Uri(ResourceService.AppResources.GetString("AR_RecoveryUri"));
 
         #endregion
 

@@ -293,8 +293,8 @@
     <value>https://mega.nz/takedown</value>
     <comment>URL to the 'Copyright' information web page - (NO-TRANSLATION).</comment>
   </data>
-  <data name="UI_LearnMore" xml:space="preserve">
-    <value>Learn more</value>
-    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  <data name="AR_RecoveryUri" xml:space="preserve">
+    <value>https://mega.nz/recovery</value>
+    <comment>URL to the 'Recovery' web page.</comment>
   </data>
 </root>
