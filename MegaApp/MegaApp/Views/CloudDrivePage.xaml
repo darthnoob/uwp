@@ -163,6 +163,19 @@
                             <AppBarButton
                                 DataContext="{Binding ActiveFolderView}"
                                 Click="OnButtonClick"
+                                Command="{Binding RestoreCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
+                                Label="{Binding RestoreText, Mode=OneTime}"
+                                Style="{StaticResource MegaAppBarButtonStyle}"
+                                ToolTipService.ToolTip="{Binding RestoreText, Mode=OneTime}"
+                                Visibility="{Binding Folder, ConverterParameter='restore', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                                <Viewbox MaxWidth="14" MaxHeight="14">
+                                    <FontIcon Glyph="&#xE777;" />
+                                </Viewbox>
+                            </AppBarButton>
+                            <AppBarButton
+                                DataContext="{Binding ActiveFolderView}"
+                                Click="OnButtonClick"
                                 Command="{Binding RemoveCommand}"
                                 IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                 Label="{Binding RemoveText, Mode=OneTime}"
@@ -461,6 +474,19 @@
                                 VerticalAlignment="Center"
                                 Data="{Binding CopyOrMovePathData, Mode=OneTime}" />
                         </AppBarButton.Icon>
+                    </AppBarButton>
+                    <AppBarButton
+                        DataContext="{Binding ActiveFolderView}"
+                        Click="OnButtonClick"
+                        Command="{Binding RestoreCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
+                        Label="{Binding RestoreText, Mode=OneTime}"
+                        Style="{StaticResource MegaAppBarButtonStyle}"
+                        ToolTipService.ToolTip="{Binding RestoreText, Mode=OneTime}"
+                        Visibility="{Binding Folder, ConverterParameter='restore', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
+                        <Viewbox MaxWidth="14" MaxHeight="14">
+                            <FontIcon Glyph="&#xE777;" />
+                        </Viewbox>
                     </AppBarButton>
                     <AppBarButton
                         DataContext="{Binding ActiveFolderView}"
