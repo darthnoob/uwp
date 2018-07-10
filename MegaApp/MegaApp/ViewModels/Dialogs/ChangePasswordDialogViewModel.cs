@@ -52,28 +52,24 @@ namespace MegaApp.ViewModels.Dialogs
             if (isEnabledMFA.HasValue && isEnabledMFA.Value)
             {
                 this.OnHideDialog();
-                var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
-                    async (string code) =>
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await changePassword.ExecuteAsync(() =>
                     {
-                        result = await changePassword.ExecuteAsync(() =>
-                        {
-                            SdkService.MegaSdk.multiFactorAuthChangePasswordWithoutOld(
-                                this.NewPassword, code, changePassword);
-                        });
-
-                        if (result == ChangePasswordResult.MultiFactorAuth)
-                        {
-                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
-                            return false;
-                        }
-
-                        return true;
+                        SdkService.MegaSdk.multiFactorAuthChangePasswordWithoutOld(
+                            this.NewPassword, code, changePassword);
                     });
 
-                this.OnShowDialog();
+                    if (result == ChangePasswordResult.MultiFactorAuthInvalidCode)
+                    {
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
 
-                if (!mfaResult)
-                    result = ChangePasswordResult.MultiFactorAuth;
+                    return true;
+                });
+
+                this.OnShowDialog();
             }
             else
             {

@@ -33,7 +33,7 @@ namespace MegaApp.UserControls
 
         private void OnHideDialog(object sender, EventArgs e) => this.Hide();
 
-        private void OnShowDialog(object sender, EventArgs e) => this.ShowAsync();
+        private async void OnShowDialog(object sender, EventArgs e) => await this.ShowAsync();
 
         protected void OnClosing(ContentDialog sender, ContentDialogClosingEventArgs args)
         {

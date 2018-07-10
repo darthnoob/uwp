@@ -22,7 +22,7 @@ namespace MegaApp.MegaApi
                         break;
                     case MErrorType.API_EFAILED: // Wrong MFA pin.
                     case MErrorType.API_EEXPIRED: // MFA pin is being re-used and is being denied to prevent a replay attack
-                        Tcs?.TrySetResult(ChangePasswordResult.MultiFactorAuth);
+                        Tcs?.TrySetResult(ChangePasswordResult.MultiFactorAuthInvalidCode);
                         return;
                     default: // Default error processing
                         Tcs?.TrySetResult(ChangePasswordResult.Unknown);

@@ -47,28 +47,24 @@ namespace MegaApp.ViewModels.Dialogs
             if (isEnabledMFA.HasValue && isEnabledMFA.Value)
             {
                 this.OnHideDialog();
-                var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
-                    async (string code) =>
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await changeEmail.ExecuteAsync(() =>
                     {
-                        result = await changeEmail.ExecuteAsync(() =>
-                        {
-                            SdkService.MegaSdk.multiFactorAuthChangeEmail(
-                                this.NewEmail, code, changeEmail);
-                        });
-
-                        if (result == ChangeEmailResult.MultiFactorAuth)
-                        {
-                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
-                            return false;
-                        }
-
-                        return true;
+                        SdkService.MegaSdk.multiFactorAuthChangeEmail(
+                            this.NewEmail, code, changeEmail);
                     });
 
-                this.OnShowDialog();
+                    if (result == ChangeEmailResult.MultiFactorAuthInvalidCode)
+                    {
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
 
-                if (!mfaResult)
-                    result = ChangeEmailResult.MultiFactorAuth;
+                    return true;
+                });
+
+                this.OnShowDialog();
             }
             else
             {
@@ -94,7 +90,7 @@ namespace MegaApp.ViewModels.Dialogs
                     this.WarningText = ResourceService.AppMessages.GetString("AM_UserNotOnline");
                     break;
 
-                case ChangeEmailResult.MultiFactorAuth:
+                case ChangeEmailResult.MultiFactorAuthInvalidCode:
                 case ChangeEmailResult.Unknown:
                     this.WarningText = ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError");
                     break;
