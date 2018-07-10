@@ -79,36 +79,24 @@ namespace MegaApp.ViewModels.Login
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
-            LoginResult result = LoginResult.Unknown;
+            LoginResult result = await login.ExecuteAsync(() =>
+                this.MegaSdk.login(this.Email, this.Password, login));
 
-            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
-            var isEnabledMFA = await multiFactorAuthCheck.ExecuteAsync(() =>
-                SdkService.MegaSdk.multiFactorAuthCheck(this.Email, multiFactorAuthCheck));
-
-            if (isEnabledMFA.HasValue && isEnabledMFA.Value)
+            if (result == LoginResult.MultiFactorAuthRequired)
             {
-                var mfaResult = await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
-                    async (string code) =>
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await login.ExecuteAsync(() =>
+                    this.MegaSdk.multiFactorAuthLogin(this.Email, this.Password, code, login));
+
+                    if (result == LoginResult.MultiFactorAuthInvalidCode)
                     {
-                        result = await login.ExecuteAsync(() =>
-                            this.MegaSdk.multiFactorAuthLogin(this.Email, this.Password, code, login));
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
 
-                        if (result == LoginResult.MultiFactorAuth)
-                        {
-                            DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
-                            return false;
-                        }
-
-                        return true;
-                    });
-
-                if (!mfaResult)
-                    result = LoginResult.MultiFactorAuth;
-            }
-            else
-            {
-                result = await login.ExecuteAsync(() =>
-                    this.MegaSdk.login(this.Email, this.Password, login));
+                    return true;
+                });
             }
 
             // Set default error content
@@ -150,7 +138,8 @@ namespace MegaApp.ViewModels.Login
                     errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
                     break;
 
-                case LoginResult.MultiFactorAuth:
+                case LoginResult.MultiFactorAuthRequired:
+                case LoginResult.MultiFactorAuthInvalidCode:
                 case LoginResult.Unknown:
                     break;
 
