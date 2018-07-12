@@ -41,10 +41,8 @@ namespace MegaApp.ViewModels.Dialogs
             ChangeEmailResult result = ChangeEmailResult.Unknown;
             var changeEmail = new ChangeEmailRequestListenerAsync();
 
-            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
-            var isEnabledMFA = await multiFactorAuthCheck.ExecuteAsync(() =>
-                SdkService.MegaSdk.multiFactorAuthCheck(SdkService.MegaSdk.getMyEmail(), multiFactorAuthCheck));
-            if (isEnabledMFA.HasValue && isEnabledMFA.Value)
+            var mfaStatus = await AccountService.CheckMultiFactorAuthStatusAsync();
+            if (mfaStatus == MultiFactorAuthStatus.Enabled)
             {
                 this.OnHideDialog();
                 await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>

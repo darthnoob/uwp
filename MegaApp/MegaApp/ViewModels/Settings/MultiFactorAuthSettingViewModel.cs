@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Input;
+using MegaApp.Enums;
 using MegaApp.MegaApi;
 using MegaApp.Services;
-using MegaApp.ViewModels.Dialogs;
 
 namespace MegaApp.ViewModels.Settings
 {
@@ -18,30 +17,25 @@ namespace MegaApp.ViewModels.Settings
 
         public override async void Initialize()
         {
-            var result = await this.CheckMultiFactorAuthStatusAsync();
-
             this.ValueChanged -= this.OnValueChanged;
 
-            if (result.HasValue)
-                this.Value = result.Value;
+            var result = await AccountService.CheckMultiFactorAuthStatusAsync();
+            switch (result)
+            {
+                case MultiFactorAuthStatus.Enabled:
+                    this.Value = true;
+                    break;
+
+                case MultiFactorAuthStatus.Disabled:
+                    this.Value = false;
+                    break;
+
+                case MultiFactorAuthStatus.NotAvailable:
+                    this.IsVisible = false;
+                    break;
+            }
 
             this.ValueChanged += this.OnValueChanged;
-        }
-
-        /// <summary>
-        /// Check the status of the Multi-Factor Authentication
-        /// </summary>
-        /// <returns>The current status of the or NULL if something failed</returns>
-        private async Task<bool?> CheckMultiFactorAuthStatusAsync()
-        {
-            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
-            var result = await multiFactorAuthCheck.ExecuteAsync(() =>
-            {
-                SdkService.MegaSdk.multiFactorAuthCheck(
-                    SdkService.MegaSdk.getMyEmail(), multiFactorAuthCheck);
-            });
-
-            return result;            
         }
 
         /// <summary>

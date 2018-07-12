@@ -209,6 +209,7 @@
     <Compile Include="Enums\GetPublicNodeResult.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\LoginToFolderResult.cs" />
+    <Compile Include="Enums\MultiFactorAuthStatus.cs" />
     <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Extensions\DateAndTimeExtension.cs" />
