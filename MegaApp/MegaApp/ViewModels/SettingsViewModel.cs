@@ -112,7 +112,12 @@ namespace MegaApp.ViewModels
                 Header = ResourceService.UiResources.GetString("UI_TwoFactorAuth"),
                 Description = ResourceService.UiResources.GetString("UI_TwoFactorAuthSettingsDescription")
             };
-            multiFactorAuthSettings.Items.Add(new MultiFactorAuthSettingViewModel());
+
+            var multiFactorAuth = new MultiFactorAuthSettingViewModel();
+            multiFactorAuth.IsVisibleChanged += (sender, args) =>
+                multiFactorAuthSettings.IsVisible = multiFactorAuth.IsVisible;
+
+            multiFactorAuthSettings.Items.Add(multiFactorAuth);
 
             this.SecuritySettingSections.Add(multiFactorAuthSettings);
         }

@@ -34,7 +34,7 @@
             Source="{Binding SecuritySettingSections}" />
 
         <DataTemplate x:Key="GroupListHeaderTemplate" x:DataType="settings:SettingSectionViewModel">
-            <StackPanel>
+            <StackPanel Visibility="{x:Bind IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock 
                     Margin="0,0,0,16"
                     Style="{ThemeResource MegaHeaderFontStyle}"
@@ -49,7 +49,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="BooleanItemTemplate" x:DataType="interfaces:ISetting">
-            <StackPanel Margin="0,0,0,28">
+            <StackPanel Margin="0,0,0,28" Visibility="{Binding IsVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                 <TextBlock
                     Style="{ThemeResource MegaTitleFontStyle}"
                     Text="{x:Bind Title, Mode=OneTime}"

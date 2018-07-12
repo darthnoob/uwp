@@ -10,6 +10,7 @@ namespace MegaApp.ViewModels.Settings
     public abstract class SettingViewModel<T> : BaseUiViewModel, ISetting<T>
     {
         public event EventHandler ValueChanged;
+        public event EventHandler IsVisibleChanged;
 
         protected SettingViewModel(string title, string description, string key, T defaultValue = default(T))
         {
@@ -61,7 +62,13 @@ namespace MegaApp.ViewModels.Settings
         public bool IsVisible
         {
             get { return _isVisbible; }
-            set { SetField(ref _isVisbible, value); }
+            set
+            {
+                if (SetField(ref _isVisbible, value))
+                {
+                    OnIsVisibleChanged();
+                }
+            }
         }
 
         private T _value;
@@ -92,6 +99,11 @@ namespace MegaApp.ViewModels.Settings
         protected virtual void OnValueChanged()
         {
             ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnIsVisibleChanged()
+        {
+            IsVisibleChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

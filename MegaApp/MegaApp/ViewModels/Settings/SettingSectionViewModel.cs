@@ -26,6 +26,13 @@ namespace MegaApp.ViewModels.Settings
 
         public IList<ISetting> Items { get; }
 
+        private bool _isVisbible = true;
+        public bool IsVisible
+        {
+            get { return _isVisbible; }
+            set { SetField(ref _isVisbible, value); }
+        }
+
         #endregion
     }
 }
