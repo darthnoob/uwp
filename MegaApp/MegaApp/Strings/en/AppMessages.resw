@@ -1315,4 +1315,8 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <value>Offline cleared</value>
     <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
   </data>
+  <data name="AM_ClearOfflineDescription" xml:space="preserve">
+    <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
+    <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
 </root>

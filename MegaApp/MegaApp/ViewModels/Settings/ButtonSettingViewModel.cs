@@ -4,10 +4,12 @@ namespace MegaApp.ViewModels.Settings
 {
     public class ButtonSettingViewModel : SettingViewModel<string>
     {
-        public ButtonSettingViewModel(string title, string description, 
-            string buttonLabel, Action buttonAction = null) : base(title, description, null)
+        public ButtonSettingViewModel(string title, string description, string buttonLabel, 
+            string buttonDescription = null, Action buttonAction = null)
+            : base(title, description, null)
         {
             this.ButtonLabel = buttonLabel;
+            this.ButtonDescription = buttonDescription;
             this.ButtonAction = buttonAction;
         }
 
@@ -25,6 +27,16 @@ namespace MegaApp.ViewModels.Settings
         {
             get { return _buttonLabel; }
             set { SetField(ref _buttonLabel, value); }
+        }
+
+        private string _buttonDescription;
+        /// <summary>
+        /// Description of the button
+        /// </summary>
+        public string ButtonDescription
+        {
+            get { return _buttonDescription; }
+            set { SetField(ref _buttonDescription, value); }
         }
 
         protected Action ButtonAction;

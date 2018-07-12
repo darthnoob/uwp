@@ -8,7 +8,8 @@ namespace MegaApp.ViewModels.Settings
     {
         public ClearOfflineSettingViewModel() : base(
             ResourceService.UiResources.GetString("UI_UsedOffline"), null,
-            ResourceService.UiResources.GetString("UI_ClearOffline"))
+            ResourceService.UiResources.GetString("UI_ClearOffline"),
+            ResourceService.AppMessages.GetString("AM_ClearOfflineDescription"))
         {
             this.ButtonAction = this.ClearOffline;
             this.GetOfflineSize();

@@ -1756,11 +1756,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearOffline" xml:space="preserve">
-    <value>Clear Offline files</value>
-    <comment>Label for any 'Clear Offline files' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+    <value>Remove offline content</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedOffline" xml:space="preserve">
-    <value>Used Offline</value>
+    <value>Used storage for Offline content</value>
     <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
   </data>
 </root>

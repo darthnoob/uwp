@@ -125,7 +125,7 @@ namespace MegaApp.ViewModels
 
             var closeOtherSessionsSetting = new ButtonSettingViewModel(null,
                 ResourceService.UiResources.GetString("UI_SessionManagementDescription"),
-                ResourceService.UiResources.GetString("UI_CloseOtherSessions"),
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"), null,
                 this.CloseOtherSessions);
             sessionManagementSettings.Items.Add(closeOtherSessionsSetting);
 

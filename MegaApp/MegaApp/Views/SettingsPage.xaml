@@ -212,6 +212,11 @@
                     MinWidth="136"
                     Command="{x:Bind ActionCommand}"
                     Content="{x:Bind ButtonLabel, Mode=OneTime}" />
+                <TextBlock
+                    Margin="0,24,0,0"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind ButtonDescription, Mode=OneTime}" 
+                    Visibility="{x:Bind ButtonDescription, Converter={StaticResource StringVisibilityConverter}}" />
             </StackPanel>
         </DataTemplate>
 
