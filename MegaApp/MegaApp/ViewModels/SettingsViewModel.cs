@@ -13,7 +13,16 @@ namespace MegaApp.ViewModels
         {
             // General section
             this.GeneralSettingSections = new List<SettingSectionViewModel>();
-                        
+
+            var storageLocationSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_StorageLocation")
+            };
+            storageLocationSettings.Items.Add(new ClearCacheSettingViewModel());
+            storageLocationSettings.Items.Add(new ClearOfflineSettingViewModel());
+
+            this.GeneralSettingSections.Add(storageLocationSettings);
+
             var aboutSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_About")
@@ -116,7 +125,7 @@ namespace MegaApp.ViewModels
 
             var closeOtherSessionsSetting = new ButtonSettingViewModel(null,
                 ResourceService.UiResources.GetString("UI_SessionManagementDescription"),
-                ResourceService.UiResources.GetString("UI_CloseOtherSessions"),
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"), null,
                 this.CloseOtherSessions);
             sessionManagementSettings.Items.Add(closeOtherSessionsSetting);
 
