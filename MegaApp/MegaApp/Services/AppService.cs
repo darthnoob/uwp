@@ -388,17 +388,16 @@ namespace MegaApp.Services
 
                 foreach (var file in files)
                 {
-                    if (FileService.FileExists(file))
+                    if (!FileService.FileExists(file)) continue;
+
+                    try
                     {
-                        try
-                        {
-                            var fileInfo = new FileInfo(file);
-                            totalSize += (ulong)fileInfo.Length;
-                        }
-                        catch (Exception e)
-                        {
-                            LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting app cache size.", e);
-                        }
+                        var fileInfo = new FileInfo(file);
+                        totalSize += (ulong)fileInfo.Length;
+                    }
+                    catch (Exception e)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting app cache size.", e);
                     }
                 }
             });
@@ -508,7 +507,7 @@ namespace MegaApp.Services
         /// <returns>TRUE if the offline content was successfully deleted or FALSE otherwise.</returns>
         public static async Task<bool> ClearOfflineAsync()
         {
-            bool result = true;
+            bool result;
 
             string offlineDir = GetOfflineDirectoryPath();
             if (string.IsNullOrWhiteSpace(offlineDir) || FolderService.HasIllegalChars(offlineDir) ||

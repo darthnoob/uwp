@@ -149,17 +149,16 @@ namespace MegaApp.Services
                     {
                         foreach (var folder in foldersToDelete)
                         {
-                            if (folder != null)
-                            {
-                                if (HasIllegalChars(folder))
-                                {
-                                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error deleting folder '{0}'.", path));
-                                    result = false;
-                                    continue;
-                                }
+                            if (folder == null) continue;
 
-                                Directory.Delete(folder, true);
+                            if (HasIllegalChars(folder))
+                            {
+                                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error deleting folder '{0}'.", path));
+                                result = false;
+                                continue;
                             }
+
+                            Directory.Delete(folder, true);
                         }
                     }
 
@@ -379,14 +378,13 @@ namespace MegaApp.Services
 
                 foreach (var file in files)
                 {
-                    if (FileService.FileExists(file))
+                    if (!FileService.FileExists(file)) continue;
+
+                    try { totalSize += (ulong)new FileInfo(file).Length; }
+                    catch (Exception e)
                     {
-                        try { totalSize += (ulong)(new FileInfo(file).Length); }
-                        catch (Exception e)
-                        {
-                            LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
                                 string.Format("Error getting file size of {0}", file), e);
-                        }
                     }
                 }
             });

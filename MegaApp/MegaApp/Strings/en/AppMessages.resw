@@ -1308,7 +1308,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Message of the dialog displayed when a user want to remove all files saved for offline, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess" xml:space="preserve">
-    <value>All the saved for offlilne files have been removed successfully.</value>
+    <value>All the saved for offline files have been removed successfully.</value>
     <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
