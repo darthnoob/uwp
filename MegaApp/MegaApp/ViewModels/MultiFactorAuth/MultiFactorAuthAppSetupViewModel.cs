@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Media.Imaging;
@@ -133,6 +135,17 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         private void SetInputState(InputState verifyCode = InputState.Normal) =>
             OnUiThread(() => this.VerifyCodeInputState = verifyCode);
 
+        private ObservableCollection<string> SplitMultiFactorAuthCode(string str, int chunkSize)
+        {
+            if (string.IsNullOrWhiteSpace(str)) return new ObservableCollection<string>();
+
+            var parts = new ObservableCollection<string>(
+                Enumerable.Range(0, str.Length / chunkSize).Select(i => str.Substring(i * chunkSize, chunkSize)));
+            parts.Insert(10, string.Empty); //For a correct alignment of the three last blocks
+            return parts;
+        }
+            
+
         #region Properties
 
         private WriteableBitmap _qrImage;
@@ -152,8 +165,19 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public string MultiFactorAuthCode
         {
             get { return _multiFactorAuthCode; }
-            set { SetField(ref _multiFactorAuthCode, value); }
+            set
+            {
+                if (!SetField(ref _multiFactorAuthCode, value)) return;
+                OnPropertyChanged(nameof(this.MultiFactorAuthCodeParts));
+            }
         }
+
+        /// <summary>
+        /// Code or seed needed to enable the Multi-Factor Authentication
+        /// divided in 4-digits groups
+        /// </summary>
+        public ObservableCollection<string> MultiFactorAuthCodeParts =>
+            SplitMultiFactorAuthCode(MultiFactorAuthCode, 4);
 
         private string _verifyCode;
         /// <summary>
