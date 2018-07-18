@@ -14,11 +14,13 @@
     BorderBrush="{ThemeResource MegaDialogBorderBrush}"
     CloseButtonVisibility="Collapsed"
     Closing="OnClosing"
+    PrimaryButtonCommand="{x:Bind ViewModel.SaveKeyButtonCommand}"
+    PrimaryButtonText="{x:Bind ViewModel.ExportText, Mode=OneTime}"
     SecondaryButtonCommand="{x:Bind ViewModel.CloseCommand}"
     SecondaryButtonText="{x:Bind ViewModel.CloseText, Mode=OneTime}">
 
     <Grid Margin="24,0,0,0">
-        <StackPanel Margin="24,24,24,0">
+        <StackPanel Margin="0,24,0,0">
             <Image
                 Height="120"
                 Width="120"
@@ -36,6 +38,16 @@
                 Style="{StaticResource MegaDialogContentFontStyle}"
                 Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"
                 TextAlignment="Center"/>
+            <Border 
+                Margin="0,24,0,0"
+                Background="{ThemeResource MegaTextBoxBackgroundBrush}">
+                <TextBlock
+                    Margin="12"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource MegaDialogContentFontStyle}"
+                    Text="{x:Bind ViewModel.RecommendationText, Mode=OneTime}"/>
+            </Border>
+            
         </StackPanel>
     </Grid>
 </local:BaseMultiFactorAuthEnabledDialog>

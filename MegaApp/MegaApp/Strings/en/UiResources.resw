@@ -1775,4 +1775,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>How to upload</value>
     <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
   </data>
+  <data name="UI_Export" xml:space="preserve">
+    <value>Export</value>
+    <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
 </root>
