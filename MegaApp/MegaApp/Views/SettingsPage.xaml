@@ -193,22 +193,30 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="InfoButtonItemTemplate" x:DataType="interfaces:ISetting">
+        <DataTemplate x:Key="InfoButtonItemTemplate" x:DataType="settings:ButtonSettingViewModel">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock
-                    Margin="0,0,0,16"
                     Style="{ThemeResource MegaTitleFontStyle}"
                     Text="{x:Bind Title, Mode=OneTime}"
                     Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}"/>
                 <TextBlock
-                    Margin="0,0,0,24"
                     Style="{ThemeResource MegaBodyFontStyle}"
                     Text="{x:Bind Description, Mode=OneTime}" 
                     Visibility="{x:Bind Description, Converter={StaticResource StringVisibilityConverter}}" />
+                <TextBlock
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind Value, Mode=OneWay}"
+                    Visibility="{x:Bind Value, Converter={StaticResource StringVisibilityConverter}}" />
                 <Button
+                    Margin="0,24,0,0"
                     MinWidth="136"
                     Command="{x:Bind ActionCommand}"
-                    Content="{x:Bind Value, Mode=OneTime}" />
+                    Content="{x:Bind ButtonLabel, Mode=OneTime}" />
+                <TextBlock
+                    Margin="0,24,0,0"
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind ButtonDescription, Mode=OneTime}" 
+                    Visibility="{x:Bind ButtonDescription, Converter={StaticResource StringVisibilityConverter}}" />
             </StackPanel>
         </DataTemplate>
 
@@ -247,34 +255,32 @@
         </ControlTemplate>
 
         <DataTemplate x:Key="LegalAndPoliciesItemTemplate" x:DataType="settings:LegalAndPoliciesSettingViewModel">
-            <Grid
-                x:Name="LegalAndPoliciesGrid"
-                Width="{Binding ViewAreaWidth}"
-                Margin="0,0,0,28">
-                <GridView ItemsSource="{x:Bind Items}" SelectionMode="None">
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="settings:LinkSettingViewModel">
-                            <StackPanel Width="{Binding ElementName=LegalAndPoliciesGrid, Path=DataContext.ColumnWidth}" Padding="0,0,0,24">
-                                <TextBlock
-                                    Style="{ThemeResource MegaTitleFontStyle}"
-                                    Text="{x:Bind Title, Mode=OneTime}"
-                                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
-                                <HyperlinkButton
-                                    Margin="0,-4,0,0"
-                                    Command="{x:Bind ActionCommand}"
-                                    Content="{x:Bind Value, Mode=OneTime}"
-                                    Foreground="{StaticResource MegaRedColorBrush}"
-                                    Style="{StaticResource MegaLinkStyle}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
-            </Grid>
+            <ItemsControl
+                MaxWidth="500"
+                Margin="0,0,0,28"
+                ItemsSource="{x:Bind Items}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid MaximumRowsOrColumns="2" Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="settings:LinkSettingViewModel">
+                        <StackPanel Width="232" Padding="0,0,0,24">
+                            <TextBlock
+                                Style="{ThemeResource MegaTitleFontStyle}"
+                                Text="{x:Bind Title, Mode=OneTime}"
+                                Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
+                            <HyperlinkButton
+                                Margin="0,-4,0,0"
+                                Command="{x:Bind ActionCommand}"
+                                Content="{x:Bind Value, Mode=OneTime}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
+                                Style="{StaticResource MegaLinkStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </DataTemplate>
 
         <classes:SettingTemplateSelector
@@ -291,7 +297,7 @@
             SelectionItemTemplate="{StaticResource SelectionItemTemplate}" />
     </Page.Resources>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" SizeChanged="OnSizeChanged">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="{StaticResource PageHeaderRowHeight}" />
             <RowDefinition Height="Auto" />
@@ -330,8 +336,7 @@
                         <ListView.GroupStyle>
                             <GroupStyle
                                 HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}"
-                                HeaderTemplate="{StaticResource GroupListHeaderTemplate}">
-                            </GroupStyle>
+                                HeaderTemplate="{StaticResource GroupListHeaderTemplate}" />
                         </ListView.GroupStyle>
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -366,15 +371,9 @@
                             ItemsSource="{Binding Source={StaticResource CameraUploadSettingsCollectionSource}}"
                             SelectionMode="None">
                             <ListView.GroupStyle>
-                                <GroupStyle HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}">
-                                    <GroupStyle.HeaderTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="0,0,0,16">
-                                                <TextBlock Style="{ThemeResource MegaHeaderFontStyle}" Text="{Binding Header}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GroupStyle.HeaderTemplate>
-                                </GroupStyle>
+                                <GroupStyle 
+                                    HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}"
+                                    HeaderTemplate="{StaticResource GroupListHeaderTemplate}" />
                             </ListView.GroupStyle>
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource MegaCleanListViewItemStyle}" TargetType="ListViewItem">
@@ -418,8 +417,7 @@
                             <ListView.GroupStyle>
                                 <GroupStyle 
                                     HeaderContainerStyle="{StaticResource MegaGroupListViewHeaderItemStyle}"
-                                    HeaderTemplate="{StaticResource GroupListHeaderTemplate}">
-                                </GroupStyle>
+                                    HeaderTemplate="{StaticResource GroupListHeaderTemplate}" />
                             </ListView.GroupStyle>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>

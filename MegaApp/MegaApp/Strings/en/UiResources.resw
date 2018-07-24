@@ -1779,4 +1779,40 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Export</value>
     <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_CloseOtherSessions" xml:space="preserve">
+    <value>Close other sessions</value>
+    <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagement" xml:space="preserve">
+    <value>Session Management</value>
+    <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagementDescription" xml:space="preserve">
+    <value>This will log you out on all other active sessions except the current one. You will need to re-login to your other devices to continue using MEGA.</value>
+    <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
+  </data>
+  <data name="UI_Warning" xml:space="preserve">
+    <value>Warning</value>
+    <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearCache" xml:space="preserve">
+    <value>Clear cache</value>
+    <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageLocation" xml:space="preserve">
+    <value>Storage location</value>
+    <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedCache" xml:space="preserve">
+    <value>Used cache</value>
+    <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearOffline" xml:space="preserve">
+    <value>Remove offline content</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedOffline" xml:space="preserve">
+    <value>Used storage for Offline content</value>
+    <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
+  </data>
 </root>

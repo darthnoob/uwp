@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using MegaApp.Enums;
+using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.ViewModels.Settings;
 
 namespace MegaApp.ViewModels
@@ -11,7 +13,16 @@ namespace MegaApp.ViewModels
         {
             // General section
             this.GeneralSettingSections = new List<SettingSectionViewModel>();
-                        
+
+            var storageLocationSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_StorageLocation")
+            };
+            storageLocationSettings.Items.Add(new ClearCacheSettingViewModel());
+            storageLocationSettings.Items.Add(new ClearOfflineSettingViewModel());
+
+            this.GeneralSettingSections.Add(storageLocationSettings);
+
             var aboutSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_About")
@@ -120,7 +131,22 @@ namespace MegaApp.ViewModels
             multiFactorAuthSettings.Items.Add(multiFactorAuth);
 
             this.SecuritySettingSections.Add(multiFactorAuthSettings);
+
+            var sessionManagementSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_SessionManagement")
+            };
+
+            var closeOtherSessionsSetting = new ButtonSettingViewModel(null,
+                ResourceService.UiResources.GetString("UI_SessionManagementDescription"),
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"), null,
+                this.CloseOtherSessions);
+            sessionManagementSettings.Items.Add(closeOtherSessionsSetting);
+
+            this.SecuritySettingSections.Add(sessionManagementSettings);
         }
+
+        #region Methods
 
         public void Initialize()
         {
@@ -139,6 +165,34 @@ namespace MegaApp.ViewModels
             base.UpdateNetworkStatus();
             SettingsService.RecoveryKeySetting.UpdateNetworkStatus();
         }
+
+        private async void CloseOtherSessions()
+        {
+            var result = await DialogService.ShowOkCancelAsync(
+                ResourceService.UiResources.GetString("UI_Warning"),
+                ResourceService.AppMessages.GetString("AM_CloseOtherSessionsQuestionMessage"),
+                TwoButtonsDialogType.YesNo);
+
+            if (!result) return;
+
+            var killAllSessions = new KillAllSessionsListenerAsync();
+            result = await killAllSessions.ExecuteAsync(() =>
+                this.MegaSdk.killAllSessions(killAllSessions));
+
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_Warning"),
+                    ResourceService.AppMessages.GetString("AM_CloseOtherSessionsFailed"));
+                return;
+            }
+
+            ToastService.ShowTextNotification(
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"),
+                ResourceService.AppMessages.GetString("AM_CloseOtherSessionsSuccess"));
+        }
+
+        #endregion
 
         #region Properties
 

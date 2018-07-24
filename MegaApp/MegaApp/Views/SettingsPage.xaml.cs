@@ -35,14 +35,5 @@ namespace MegaApp.Views
         {
             DebugService.ChangeStatusAction();
         }
-
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            // For nice looking size on desktop
-            var element = sender as FrameworkElement;
-            if (element == null) return;
-
-            this.ViewModel.LegalAndPoliciesSetting.UpdateWidthOfGUI(element.ActualWidth);
-        }
     }
 }

@@ -109,6 +109,9 @@ namespace MegaApp.ViewModels.Login
                     // Validate product subscription license on background thread
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
 
+                    // Initialize the DB
+                    AppService.InitializeDatabase();
+
                     // Fetch nodes from MEGA
                     var fetchNodesResult = await this.FetchNodes();
                     if (fetchNodesResult != FetchNodesResult.Success)
@@ -273,7 +276,7 @@ namespace MegaApp.ViewModels.Login
             // If is required show the password reminder dialog on background thread
             Task.Run(async () =>
             {
-                if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+                if (await AccountService.ShouldShowPasswordReminderDialogAsync(false))
                     UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(false));
             });
 
