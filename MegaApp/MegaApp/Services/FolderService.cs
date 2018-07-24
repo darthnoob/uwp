@@ -130,30 +130,47 @@ namespace MegaApp.Services
         /// Empties a folder
         /// </summary>
         /// <param name="path">Path of the folder</param>
-        public static void Clear(string path)
+        public static async Task<bool> ClearAsync(string path)
         {
             try
             {
-                IEnumerable<string> foldersToDelete = Directory.GetDirectories(path);
-                if (foldersToDelete != null)
+                if (HasIllegalChars(path))
                 {
-                    foreach (var folder in foldersToDelete)
-                    {
-                        if (folder != null)
-                            Directory.Delete(folder, true);
-                    }
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error cleaning folder '{0}'.", path));
+                    return false;
                 }
 
-                FileService.ClearFiles(Directory.GetFiles(path));
-            }
-            catch (IOException e)
-            {
-                UiService.OnUiThread(async() =>
+                bool result = true;
+
+                await Task.Run(async() =>
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_DeleteNodeFailed_Title"),
-                        string.Format(ResourceService.AppMessages.GetString("AM_DeleteNodeFailed"), e.Message));
+                    IEnumerable<string> foldersToDelete = Directory.GetDirectories(path);
+                    if (foldersToDelete != null)
+                    {
+                        foreach (var folder in foldersToDelete)
+                        {
+                            if (folder == null) continue;
+
+                            if (HasIllegalChars(folder))
+                            {
+                                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, string.Format("Error deleting folder '{0}'.", path));
+                                result = false;
+                                continue;
+                            }
+
+                            Directory.Delete(folder, true);
+                        }
+                    }
+
+                    result = result & await FileService.ClearFilesAsync(Directory.GetFiles(path));
                 });
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error cleaning folder.", e);
+                return false;
             }
         }
 
@@ -325,5 +342,54 @@ namespace MegaApp.Services
         /// <returns>TRUE if is the root of the offline folder or FALSE in other case</returns>
         public static bool IsOfflineRootFolder(string path) =>
             string.CompareOrdinal(AppService.GetOfflineDirectoryPath(), path) == 0;
+
+        /// <summary>
+        /// Get the size of a folder
+        /// </summary>
+        /// <param name="folderPath">Path of the folder</param>
+        /// <returns>Folder size</returns>
+        public static async Task<ulong> GetFolderSizeAsync(string folderPath)
+        {
+            ulong totalSize = 0;
+
+            if (string.IsNullOrWhiteSpace(folderPath) && !Directory.Exists(folderPath))
+                return totalSize;
+
+            await Task.Run(async() =>
+            {
+                var folders = new List<string>();
+                try { folders.AddRange(Directory.GetDirectories(folderPath)); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        string.Format("Error getting the subfolder list from {0}", folderPath), e);
+                }
+
+                foreach (var folder in folders)
+                    totalSize += await GetFolderSizeAsync(folder);
+
+                var files = new List<string>();                
+                try { files.AddRange(Directory.GetFiles(folderPath)); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, 
+                        string.Format("Error getting the file list from {0}", folderPath), e);
+                }
+
+                foreach (var file in files)
+                {
+                    if (!FileService.FileExists(file)) continue;
+
+                    try { totalSize += (ulong)new FileInfo(file).Length; }
+                    catch (Exception e)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                                string.Format("Error getting file size of {0}", file), e);
+                    }
+                }
+            });
+
+            return totalSize;
+        }
     }    
 }

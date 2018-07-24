@@ -60,12 +60,6 @@ namespace MegaApp.ViewModels.Settings
         {
             return null;
         }
-
-        public void UpdateWidthOfGUI(double actualWidth)
-        {
-            this.ViewAreaWidth = actualWidth >= this.viewAreaMaxWidth ?
-                this.viewAreaMaxWidth : actualWidth;
-        }
         
         #endregion
 
@@ -79,22 +73,6 @@ namespace MegaApp.ViewModels.Settings
         public LinkSettingViewModel PrivacyPolicySetting { get; }
         public LinkSettingViewModel TakedownGuidanceSetting { get; }
         public LinkSettingViewModel TermsOfServiceSetting { get; }
-
-        private double viewAreaMaxWidth => 
-            (double)Application.Current.Resources["ViewAreaMaxWidth"];
-
-        private double _viewAreaWidth;
-        public double ViewAreaWidth
-        {
-            get { return _viewAreaWidth; }
-            set
-            {
-                SetField(ref _viewAreaWidth, value);
-                OnPropertyChanged(nameof(this.ColumnWidth));
-            }
-        }
-
-        public double ColumnWidth => (ViewAreaWidth/2) - 8;
 
         #endregion
     }

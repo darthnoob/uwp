@@ -4,27 +4,42 @@ namespace MegaApp.ViewModels.Settings
 {
     public class ButtonSettingViewModel : SettingViewModel<string>
     {
-        public ButtonSettingViewModel(string title, string description, 
-            string buttonLabel, Action buttonAction) : base(title, description, null)
+        public ButtonSettingViewModel(string title, string description, string buttonLabel, 
+            string buttonDescription = null, Action buttonAction = null)
+            : base(title, description, null)
         {
-            this._buttonLabel = buttonLabel;
-            this._buttonAction = buttonAction;
+            this.ButtonLabel = buttonLabel;
+            this.ButtonDescription = buttonDescription;
+            this.ButtonAction = buttonAction;
         }
 
-        protected override void DoAction()
-        {
-            this._buttonAction?.Invoke();
-        }
+        protected override void DoAction() => this.ButtonAction?.Invoke();
 
-        public override string GetValue(string defaultValue)
-        {
-            return this._buttonLabel;
-        }
+        public override string GetValue(string defaultValue) => defaultValue;
 
         #region Properties
 
         private string _buttonLabel;
-        private Action _buttonAction;
+        /// <summary>
+        /// Label of the button
+        /// </summary>
+        public string ButtonLabel
+        {
+            get { return _buttonLabel; }
+            set { SetField(ref _buttonLabel, value); }
+        }
+
+        private string _buttonDescription;
+        /// <summary>
+        /// Description of the button
+        /// </summary>
+        public string ButtonDescription
+        {
+            get { return _buttonDescription; }
+            set { SetField(ref _buttonDescription, value); }
+        }
+
+        protected Action ButtonAction;
 
         #endregion
     }
