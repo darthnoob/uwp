@@ -12,6 +12,9 @@ namespace MegaApp.ViewModels.Dialogs
         {
             this.SaveButtonCommand = new RelayCommand(Save);
             this.CancelButtonCommand = new RelayCommand(Cancel);
+
+            this.TitleText = ResourceService.UiResources.GetString("UI_ChangeEmail");
+            this.MessageText = ResourceService.UiResources.GetString("UI_ChangeEmailDescription");
         }
 
         #region Commands
@@ -138,8 +141,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string TitleText => ResourceService.UiResources.GetString("UI_ChangeEmail");
-        public string DescriptionText => ResourceService.UiResources.GetString("UI_ChangeEmailDescription");
         public string EnterNewEmailText => ResourceService.UiResources.GetString("UI_EnterNewEmail");
         public string SaveText => ResourceService.UiResources.GetString("UI_Save");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");

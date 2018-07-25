@@ -27,7 +27,7 @@
                 x:Name="Description"
                 Margin="0,16,0,24"
                 Style="{StaticResource MegaDialogContentFontStyle}"
-                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"/>
+                Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"/>
             <TextBox
                 x:Name="NewEmailTextBox"
                 Height="{StaticResource InputHeight}"

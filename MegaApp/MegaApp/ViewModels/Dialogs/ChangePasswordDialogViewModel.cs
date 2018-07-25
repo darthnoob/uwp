@@ -13,6 +13,9 @@ namespace MegaApp.ViewModels.Dialogs
         {
             this.SaveButtonCommand = new RelayCommand(Save);
             this.CancelButtonCommand = new RelayCommand(Cancel);
+
+            this.TitleText = ResourceService.UiResources.GetString("UI_ChangePassword");
+            this.MessageText = ResourceService.UiResources.GetString("UI_ChangePasswordDescription");
         }
 
         #region Commands
@@ -278,8 +281,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string TitleText => ResourceService.UiResources.GetString("UI_ChangePassword");
-        public string DescriptionText => ResourceService.UiResources.GetString("UI_ChangePasswordDescription");
         public string NewPasswordText => ResourceService.UiResources.GetString("UI_NewPassword");
         public string ReEnterNewPasswordText => ResourceService.UiResources.GetString("UI_ReEnterNewPassword");
         public string SaveText => ResourceService.UiResources.GetString("UI_Save");

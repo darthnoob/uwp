@@ -36,7 +36,7 @@
             <TextBlock 
                 HorizontalAlignment="Center"
                 Style="{StaticResource MegaDialogContentFontStyle}"
-                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"
+                Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"
                 TextAlignment="Center"/>
             <Border 
                 Margin="0,24,0,0"

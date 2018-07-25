@@ -10,6 +10,9 @@ namespace MegaApp.ViewModels.Dialogs
         public MultiFactorAuthEnabledDialogViewModel() : base()
         {
             this.SaveKeyButtonCommand = new RelayCommand(SaveKey);
+
+            this.TitleText = ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogTitle");
+            this.MessageText = ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogDescription");
         }
 
         #region Commands
@@ -53,8 +56,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region AppMessages
 
-        public string TitleText => ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogTitle");
-        public string DescriptionText => ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogDescription");
         public string RecommendationText => ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogRecommendation");
 
         #endregion

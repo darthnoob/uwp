@@ -21,8 +21,8 @@ namespace MegaApp.Views.Dialogs
         /// Creates an input dialog to type the MFA 6-digit code and also executes an action.
         /// </summary>
         /// <param name="dialogAction">Action to execute by the primary button.</param>
-        /// <param name="title">Title of the input dialog.</param>
-        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="title">Custom title of the input dialog.</param>
+        /// <param name="message">Custom message of the input dialog.</param>
         public MultiFactorAuthCodeInputDialog(Func<string, bool> dialogAction,
             string title = null, string message = null)
         {
@@ -37,8 +37,8 @@ namespace MegaApp.Views.Dialogs
         /// Creates an input dialog to type the MFA 6-digit code and also executes an action.
         /// </summary>
         /// <param name="dialogActionAsync">Async action to execute by the primary button.</param>
-        /// <param name="title">Title of the input dialog.</param>
-        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="title">Custom title of the input dialog.</param>
+        /// <param name="message">Custom message of the input dialog.</param>
         public MultiFactorAuthCodeInputDialog(Func<string, Task<bool>> dialogActionAsync,
             string title = null, string message = null)
         {

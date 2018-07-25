@@ -28,24 +28,27 @@
                 Margin="0,28,0,20"
                 HorizontalAlignment="Center"
                 Style="{StaticResource MegaDialogTitleFontStyle}"
-                Text="{x:Bind ViewModel.TitleText, Mode=OneTime}"
+                Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"
                 TextAlignment="Center"/>
             <TextBlock 
                 HorizontalAlignment="Center"
                 Style="{StaticResource MegaDialogContentFontStyle}"
-                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"
+                Text="{x:Bind ViewModel.MessageText, Mode=OneWay}"
                 TextAlignment="Center"/>
             <Button
-                Margin="0,20,0,24"
+                Margin="0,20,0,0"
                 Command="{x:Bind ViewModel.SetupTwoFactorAuthCommand, Mode=OneTime}"
                 Content="{x:Bind ViewModel.SetupTwoFactorAuthText, Mode=OneTime}"
                 FontSize="13"
                 HorizontalAlignment="Stretch"/>
             <HyperlinkButton
+                Margin="0,24,0,0"
+                Command="{x:Bind ViewModel.HowDoesItWorkCommand, Mode=OneTime}"
                 Content="{x:Bind ViewModel.HowDoesItWorkText, Mode=OneTime}"
                 FontSize="13"
                 HorizontalAlignment="Center"
-                Style="{StaticResource MegaLinkStyle}"/>
+                Style="{StaticResource MegaLinkStyle}"
+                Visibility="{x:Bind ViewModel.HowDoesItWorkLinkVisibility, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </local:BaseMultiFactorAuthSetupDialog>

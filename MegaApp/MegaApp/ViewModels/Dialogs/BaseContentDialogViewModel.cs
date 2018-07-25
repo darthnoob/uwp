@@ -114,6 +114,26 @@ namespace MegaApp.ViewModels.Dialogs
             set { SetField(ref _dialogStyle, value); }
         }
 
+        private string _titleText;
+        /// <summary>
+        /// Title of the dialog
+        /// </summary>
+        public string TitleText
+        {
+            get { return _titleText; }
+            set { SetField(ref _titleText, value); }
+        }
+
+        private string _messageText;
+        /// <summary>
+        /// Message or description text of the dialog
+        /// </summary>
+        public string MessageText
+        {
+            get { return _messageText; }
+            set { SetField(ref _messageText, value); }
+        }
+
         #endregion
 
         #region UiResources
