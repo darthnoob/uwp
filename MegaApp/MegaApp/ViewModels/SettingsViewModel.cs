@@ -126,11 +126,20 @@ namespace MegaApp.ViewModels
 
             var multiFactorAuth = new MultiFactorAuthSettingViewModel();
             multiFactorAuth.IsVisibleChanged += (sender, args) =>
+            {
                 multiFactorAuthSettings.IsVisible = multiFactorAuth.IsVisible;
+                
+                if (!multiFactorAuth.IsVisible)
+                    this.SecuritySettingSections.Remove(multiFactorAuthSettings);
+                else if (!this.SecuritySettingSections.Contains(multiFactorAuthSettings))
+                    this.SecuritySettingSections.Insert(1, multiFactorAuthSettings);
 
+                OnPropertyChanged(nameof(this.SecuritySettingSections));
+            };
             multiFactorAuthSettings.Items.Add(multiFactorAuth);
 
-            this.SecuritySettingSections.Add(multiFactorAuthSettings);
+            if (!this.SecuritySettingSections.Contains(multiFactorAuthSettings))
+                this.SecuritySettingSections.Add(multiFactorAuthSettings);
 
             var sessionManagementSettings = new SettingSectionViewModel
             {
