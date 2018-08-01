@@ -1743,6 +1743,10 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Warning</value>
     <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
   </data>
+  <data name="UI_Restore" xml:space="preserve">
+    <value>Restore</value>
+    <comment>Label for any 'Restore' button, link, text, title, etc. For example for restore files from the rubbish bin - (String as short as possible).</comment>
+  </data>
   <data name="UI_ClearCache" xml:space="preserve">
     <value>Clear cache</value>
     <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
