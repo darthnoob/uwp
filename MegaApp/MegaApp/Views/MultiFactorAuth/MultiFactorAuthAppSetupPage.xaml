@@ -5,6 +5,9 @@
     xmlns:local="using:MegaApp.Views.MultiFactorAuth"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:multiFactorAuthViews="using:MegaApp.Views.MultiFactorAuth"
     mc:Ignorable="d">
 
@@ -51,29 +54,36 @@
                         Width="320"
                         Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
                         HorizontalAlignment="Left">
-                        <CommandBar>
+                        <CommandBar Height="24" Padding="0,-12,0,0">
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
                                     Command="{x:Bind ViewModel.CopySeedCommand}"
-                                    Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"
-                                    ToolTipService.ToolTip="{x:Bind ViewModel.CopySeedText, Mode=OneTime}"/>
+                                    Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}" />
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
                         <Image
-                            Margin="0,0,0,20"
                             Height="148"
                             Width="148"
                             Source="{Binding QRImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            FontSize="13"
-                            Opacity="0.6"
-                            Text="Or enter this code into your authentication app"/>
                         <Border
                             Margin="12"
                             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyout.Items>
+                                        <MenuFlyoutItem
+                                            Command="{Binding CopySeedCommand}"
+                                            Text="{Binding CopyText, Mode=OneTime}" />
+                                    </MenuFlyout.Items>
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="RightTapped">
+                                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
                             <GridView
                                 Margin="8"
                                 FontSize="16"

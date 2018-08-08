@@ -226,6 +226,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         #region UiResources
 
+        public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string CopySeedText => ResourceService.UiResources.GetString("UI_CopySeed");
         public string ManuallySetupStep1Text => ResourceService.UiResources.GetString("UI_MFA_ManuallySetupStep1");
         public string ManuallySetupStep2Text => ResourceService.UiResources.GetString("UI_MFA_ManuallySetupStep2");
