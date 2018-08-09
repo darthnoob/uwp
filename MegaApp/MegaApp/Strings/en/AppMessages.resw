@@ -1268,11 +1268,11 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
   <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
-    <value>Add extra security to you account if you have an authenticator app in one of your devices such as Microsoft Authenticator or Lastpass Authenticator.</value>
+    <value>Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.</value>
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Protect your account with Two-Factor Authentication</value>
+    <value>Why you need two-factor authentication?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
@@ -1284,7 +1284,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
-    <value>Great! Two-Factor Authentication Enabled</value>
+    <value>Two-Factor Authentication Enabled</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
@@ -1316,8 +1316,9 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
-    <value>Consider exporting your Recovery Key in case you lose access to your app or want to disable Two-Factor Authentication in the future.</value>
-    <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
+    <value>If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can't help you gain access to it again.
+Back up your recovery key.</value>
+    <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
     <value>Failed to close the other sessions. Please try again.</value>
@@ -1370,13 +1371,5 @@ Preserve the {0} code because is for include the name of the item to be removed 
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
-  </data>
-  <data name="AM_2FA_HowDoesItWorkDescription" xml:space="preserve">
-    <value>Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.</value>
-    <comment>Description text of the dialog to explain how the Two-Factor Authentication works.</comment>
-  </data>
-  <data name="AM_2FA_HowDoesItWorkTitle" xml:space="preserve">
-    <value>Why you need two-factor authentication?</value>
-    <comment>Title of the dialog displayed to explain how the Two-Factor Authentication works.</comment>
   </data>
 </root>

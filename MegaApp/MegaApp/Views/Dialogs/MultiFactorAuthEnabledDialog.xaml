@@ -45,7 +45,8 @@
                     Margin="12"
                     HorizontalAlignment="Center"
                     Style="{StaticResource MegaDialogContentFontStyle}"
-                    Text="{x:Bind ViewModel.RecommendationText, Mode=OneTime}"/>
+                    Text="{x:Bind ViewModel.RecommendationText, Mode=OneTime}"
+                    TextAlignment="Center"/>
             </Border>
             
         </StackPanel>

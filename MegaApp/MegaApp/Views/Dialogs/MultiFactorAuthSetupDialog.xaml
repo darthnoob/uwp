@@ -41,14 +41,6 @@
                 Content="{x:Bind ViewModel.SetupTwoFactorAuthText, Mode=OneTime}"
                 FontSize="13"
                 HorizontalAlignment="Stretch"/>
-            <HyperlinkButton
-                Margin="0,24,0,0"
-                Command="{x:Bind ViewModel.HowDoesItWorkCommand, Mode=OneTime}"
-                Content="{x:Bind ViewModel.HowDoesItWorkText, Mode=OneTime}"
-                FontSize="13"
-                HorizontalAlignment="Center"
-                Style="{StaticResource MegaLinkStyle}"
-                Visibility="{x:Bind ViewModel.HowDoesItWorkLinkVisibility, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </local:BaseMultiFactorAuthSetupDialog>
