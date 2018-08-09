@@ -59,6 +59,9 @@
                                 <AppBarButton
                                     Command="{x:Bind ViewModel.CopySeedCommand}"
                                     Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}" />
+                                <AppBarButton
+                                    Command="{x:Bind ViewModel.OpenInCommand}"
+                                    Label="{x:Bind ViewModel.OpenInText, Mode=OneTime}" />
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
                         <Image

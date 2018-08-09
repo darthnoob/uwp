@@ -1815,4 +1815,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Used storage for Offline content</value>
     <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
   </data>
+  <data name="UI_OpenIn" xml:space="preserve">
+    <value>Open in...</value>
+    <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
 </root>

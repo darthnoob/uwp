@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
 using Windows.UI.Xaml.Media.Imaging;
 using ZXing;
 using ZXing.QrCode;
@@ -20,6 +21,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public MultiFactorAuthAppSetupViewModel()
         {
             this.CopySeedCommand = new RelayCommand(this.CopySeed);
+            this.OpenInCommand = new RelayCommand(this.OpenIn);
             this.VerifyCommand = new RelayCommand(this.Verify);
 
             this.Initialize();
@@ -28,6 +30,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         #region Commands
 
         public ICommand CopySeedCommand { get; }
+        public ICommand OpenInCommand { get; }
         public ICommand VerifyCommand { get; }
 
         #endregion
@@ -69,6 +72,10 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             }
         }
 
+        private async void OpenIn() =>
+            await Launcher.LaunchUriAsync(new Uri(this.codeURI, UriKind.RelativeOrAbsolute));
+        
+
         /// <summary>
         /// Set the QR code image to set up the Multi-Factor Authentication
         /// </summary>
@@ -85,9 +92,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             BarcodeWriter writer = new BarcodeWriter();
             writer.Format = BarcodeFormat.QR_CODE;
             writer.Options = options;
-            QRImage = writer.Write(
-                string.Format("otpauth://totp/MEGA:{0}?secret={1}&issuer=MEGA",
-                SdkService.MegaSdk.getMyEmail(), this.MultiFactorAuthCode));
+            QRImage = writer.Write(this.codeURI);
         }
 
         /// <summary>
@@ -222,6 +227,9 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             set { SetField(ref _verifyCodeInputState, value); }
         }
 
+        private string codeURI => string.Format("otpauth://totp/MEGA:{0}?secret={1}&issuer=MEGA",
+                SdkService.MegaSdk.getMyEmail(), this.MultiFactorAuthCode);
+
         #endregion
 
         #region UiResources
@@ -234,6 +242,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public string SectionNameText => ResourceService.UiResources.GetString("UI_SecuritySettings");
         public string SixDigitCodeText => ResourceService.UiResources.GetString("UI_SixDigitCode");
         public string TwoFactorAuthText => ResourceService.UiResources.GetString("UI_TwoFactorAuth");
+        public string OpenInText => ResourceService.UiResources.GetString("UI_OpenIn");
         public string VerifyText => ResourceService.UiResources.GetString("UI_Verify");
 
         #endregion
