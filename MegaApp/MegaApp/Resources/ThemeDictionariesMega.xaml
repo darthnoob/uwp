@@ -11,9 +11,11 @@
     <Color x:Key="MegaRedColor">#EB4444</Color>
     <Color x:Key="MegaRedColorBright">#FF7777</Color>
     <Color x:Key="MegaRedDisabledColor">#7DEB4444</Color>
+    <Color x:Key="MegaGreenColor">#00BFA5</Color>
     <SolidColorBrush x:Key="MegaRedColorBrush" Color="{ThemeResource MegaRedColor}" />
     <SolidColorBrush x:Key="MegaRedColorBrightBrush" Color="{ThemeResource MegaRedColorBright}" />
     <SolidColorBrush x:Key="MegaRedDisabledColorBrush" Color="{ThemeResource MegaRedDisabledColor}" />
+    <SolidColorBrush x:Key="MegaGreenColorBrush" Color="{ThemeResource MegaGreenColor}" />
 
     <Color x:Key="MegaFreeAccountColor">#00B294</Color>
     <Color x:Key="MegaProLiteAccountColor">#FFC159</Color>

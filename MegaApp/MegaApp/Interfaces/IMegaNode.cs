@@ -22,23 +22,23 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Move the node from its current location to a new folder destination
         /// </summary>
-        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <param name="newParentNode">The new destination folder</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> MoveAsync(IMegaNode newParentNode);
+        Task<NodeActionResult> MoveAsync(MNode newParentNode);
 
         /// <summary>
         /// Copy the node from its current location to a new folder destination
         /// </summary>
-        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <param name="newParentNode">The new destination folder</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> CopyAsync(IMegaNode newParentNode);
+        Task<NodeActionResult> CopyAsync(MNode newParentNode);
 
         /// <summary>
         /// Import the node from its current location to a new folder destination
         /// </summary>
-        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <param name="newParentNode">The new destination folder</param>
         /// <returns>Result of the action</returns>
-        Task<NodeActionResult> ImportAsync(IMegaNode newParentNode);
+        Task<NodeActionResult> ImportAsync(MNode newParentNode);
 
         /// <summary>
         /// Delete the node permanently
@@ -79,6 +79,16 @@ namespace MegaApp.Interfaces
         /// Unique identifier of the node
         /// </summary>
         ulong Handle { get; set; }
+
+        /// <summary>
+        /// Handle of the previous parent of this node.
+        /// </summary>
+        ulong RestoreHandle { get; set; }
+
+        /// <summary>
+        /// Previous parent of this node.
+        /// </summary>
+        MNode RestoreNode { get; set; }
 
         /// <summary>
         /// Specifies the node type TYPE_UNKNOWN = -1, TYPE_FILE = 0, TYPE_FOLDER = 1, TYPE_ROOT = 2, TYPE_INCOMING = 3, 
