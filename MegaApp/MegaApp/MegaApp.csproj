@@ -226,6 +226,7 @@
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetUserRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\IsMasterKeyExportedRequestListenerAsync.cs" />
     <Compile Include="MegaApi\KillSessionRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthCheckRequestListenerAsync.cs" />

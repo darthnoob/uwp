@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
@@ -13,6 +14,8 @@ namespace MegaApp.ViewModels.Dialogs
 
             this.TitleText = ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogTitle");
             this.MessageText = ResourceService.AppMessages.GetString("AM_2FA_EnabledDialogDescription");
+
+            this.Initialize();
         }
 
         #region Commands
@@ -26,6 +29,13 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Methods
 
+        private async void Initialize()
+        {
+            var isRecoveryKeyExported = new IsMasterKeyExportedRequestListenerAsync();
+            this.IsRecoveryKeyExported = await isRecoveryKeyExported.ExecuteAsync(() =>
+                SdkService.MegaSdk.isMasterKeyExported(isRecoveryKeyExported));
+        }
+
         /// <summary>
         /// Backup the Recovery key
         /// </summary>
@@ -38,6 +48,8 @@ namespace MegaApp.ViewModels.Dialogs
             var recoveryKeySaved = await saveKeyCommand.ExecuteAsync(null);
             if (!recoveryKeySaved) return;
 
+            this.IsRecoveryKeyExported = recoveryKeySaved;
+
             // If the recovery key has been successfully saved close the dialog
             this.OnHideDialog();
         }
@@ -45,6 +57,13 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region Properties
+
+        private bool _isRecoveryKeyExported;
+        public bool IsRecoveryKeyExported
+        {
+            get { return _isRecoveryKeyExported; }
+            set { SetField(ref _isRecoveryKeyExported, value); }
+        }
 
         /// <summary>
         /// Uri image to display in the dialog

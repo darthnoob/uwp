@@ -17,7 +17,8 @@
     PrimaryButtonCommand="{x:Bind ViewModel.SaveKeyButtonCommand}"
     PrimaryButtonText="{x:Bind ViewModel.ExportText, Mode=OneTime}"
     SecondaryButtonCommand="{x:Bind ViewModel.CloseCommand}"
-    SecondaryButtonText="{x:Bind ViewModel.CloseText, Mode=OneTime}">
+    SecondaryButtonText="{x:Bind ViewModel.CloseText, Mode=OneTime}"
+    IsSecondaryButtonEnabled="{x:Bind ViewModel.IsRecoveryKeyExported, Mode=OneWay}">
 
     <Grid Margin="24,0,0,0">
         <StackPanel Margin="0,24,0,0">
