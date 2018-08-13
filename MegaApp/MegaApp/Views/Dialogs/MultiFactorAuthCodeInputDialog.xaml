@@ -105,6 +105,7 @@
                     Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
             </Grid>
             <Button
+                TabIndex="6"
                 Margin="0,20,0,36"
                 Command="{x:Bind ViewModel.PrimaryButtonCommand}"
                 Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"

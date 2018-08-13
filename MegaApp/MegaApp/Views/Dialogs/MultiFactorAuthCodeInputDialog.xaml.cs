@@ -79,18 +79,22 @@ namespace MegaApp.Views.Dialogs
         {
             e.Handled = false;
 
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
+
             if (e.Key == VirtualKey.Tab) return;
 
             if ((e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9) ||
                 (e.Key >= VirtualKey.NumberPad0 && e.Key <= VirtualKey.NumberPad9))
             {
                 FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+                if (textBox.Equals(this.TextBoxDigit6))
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Previous);
                 return;
             }
 
             if (e.Key == VirtualKey.Back)
             {
-                var textBox = sender as TextBox;
                 if (!textBox.Equals(this.TextBoxDigit1))
                     FocusManager.TryMoveFocus(FocusNavigationDirection.Previous);
                 return;
