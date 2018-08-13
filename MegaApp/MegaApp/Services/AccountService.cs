@@ -792,9 +792,9 @@ namespace MegaApp.Services
                 case MultiFactorAuthStatus.Disabled:
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: DISABLED");
                     break;
-
-                case MultiFactorAuthStatus.NotAvailable:
-                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: NOT AVAILABLE");
+                
+                case MultiFactorAuthStatus.Unknown:
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: UNKNOWN (ERROR)");
                     break;
             }
 

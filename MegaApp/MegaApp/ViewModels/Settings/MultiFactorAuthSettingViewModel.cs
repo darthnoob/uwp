@@ -30,8 +30,13 @@ namespace MegaApp.ViewModels.Settings
                     this.Value = false;
                     break;
 
-                case MultiFactorAuthStatus.NotAvailable:
-                    this.IsVisible = false;
+                case MultiFactorAuthStatus.Unknown:
+                    OnUiThread(async () =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.UiResources.GetString("UI_Warning"),
+                            ResourceService.AppMessages.GetString("AM_MFA_CheckStatusFailed"));
+                    });
                     break;
             }
 
