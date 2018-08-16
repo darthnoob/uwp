@@ -71,6 +71,18 @@ namespace MegaApp.ViewModels.Dialogs
         public Uri MultiFactorAuthImageUri =>
             new Uri("ms-appx:///Assets/MultiFactorAuth/multiFactorAuth.png");
 
+        /// <summary>
+        /// Uri image of a text file icon to display in the dialog
+        /// </summary>
+        public Uri TextFileImageUri =>
+            new Uri("ms-appx:///Assets/MultiFactorAuth/textFile.png");
+
+        #endregion
+
+        #region AppResources
+
+        public string RecoveryKeyFileName => ResourceService.AppResources.GetString("AR_RecoveryKeyFileName");
+
         #endregion
 
         #region AppMessages
@@ -81,7 +93,7 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string ExportText => ResourceService.UiResources.GetString("UI_Export");
+        public string ExportRecoveryKeyText => ResourceService.UiResources.GetString("UI_ExportRecoveryKeyText");
 
         #endregion
     }

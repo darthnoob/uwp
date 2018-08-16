@@ -646,6 +646,7 @@
     <Content Include="Assets\Achievements\inviteFriend.png" />
     <Content Include="Assets\Achievements\mobileApp.png" />
     <Content Include="Assets\MultiFactorAuth\multiFactorAuth.png" />
+    <Content Include="Assets\MultiFactorAuth\textFile.png" />
     <Content Include="Assets\ToastLogo.png" />
     <Content Include="Assets\ToastWarning.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
