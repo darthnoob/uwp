@@ -38,7 +38,7 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Text introduced in the input dialog
         /// </summary>
-        public string InputText
+        public virtual string InputText
         {
             get { return _inputText; }
             set

@@ -132,7 +132,20 @@
                         PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
                         Style="{StaticResource MegaTextBoxStyle}"
                         Text="{Binding VerifyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Grid Margin="0,4,0,4">
+                    <Grid
+                        Margin="0,12,0,0"
+                        HorizontalAlignment="Left"
+                        Width="320"
+                        Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <ProgressBar
+                            Width="88"
+                            Foreground="{StaticResource MegaRedColorBrush}"
+                            IsIndeterminate="True"
+                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </Grid>
+                    <Grid
+                        Margin="0,12,0,0"
+                        Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*"/>
@@ -152,12 +165,6 @@
                             Style="{StaticResource MegaDialogErrorFontStyle}"
                             Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
                     </Grid>
-                    <Button
-                        x:Name="VerifyButton"
-                        MinWidth="130"
-                        Command="{x:Bind ViewModel.VerifyCommand, Mode=OneTime}"
-                        Content="{x:Bind ViewModel.VerifyText, Mode=OneTime}"
-                        IsEnabled="{x:Bind ViewModel.VerifyButtonState, Mode=OneWay}"/>
                 </StackPanel>
             </ScrollViewer>
         </Grid>

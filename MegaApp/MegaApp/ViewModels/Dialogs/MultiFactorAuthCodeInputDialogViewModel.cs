@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using MegaApp.Enums;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
@@ -113,6 +114,26 @@ namespace MegaApp.ViewModels.Dialogs
             set { SetField(ref _digitColor, value); }
         }
 
+        /// <summary>
+        /// Text introduced in the input dialog
+        /// </summary>
+        public override string InputText
+        {
+            get { return base.InputText; }
+            set
+            {
+                base.InputText = value;
+                if (!this.IsValidVerifyCode) return;
+                this.PrimaryButtonAction();
+            }
+        }
+
+        /// <summary>
+        /// Indicates if the typed verify code has the right format and can be verified
+        /// </summary>
+        public bool IsValidVerifyCode => !string.IsNullOrWhiteSpace(this.InputText) &&
+            this.InputText.Length == 6 && this.InputState == InputState.Normal;
+
         #endregion
 
         #region Methods
@@ -139,7 +160,6 @@ namespace MegaApp.ViewModels.Dialogs
         #region UiResources
 
         public string LostAuthDeviceQuestionText => ResourceService.UiResources.GetString("UI_LostAuthDeviceQuestion");
-        public string VerifyText => ResourceService.UiResources.GetString("UI_Verify");
 
         #endregion
     }

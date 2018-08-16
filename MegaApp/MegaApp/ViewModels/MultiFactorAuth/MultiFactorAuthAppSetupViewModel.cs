@@ -35,12 +35,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         #endregion
 
-        public override void UpdateNetworkStatus()
-        {
-            base.UpdateNetworkStatus();
-            this.SetVerifyButtonState();
-        }
-
         private async void Initialize()
         {
             var multiFactorAuthGetCode = new MultiFactorAuthGetCodeRequestListenerAsync();
@@ -103,7 +97,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             if (string.IsNullOrWhiteSpace(this.VerifyCode)) return;
 
             this.ControlState = false;
-            this.SetVerifyButtonState();
             this.IsBusy = true;
 
             var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
@@ -111,7 +104,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
                 SdkService.MegaSdk.multiFactorAuthEnable(this.VerifyCode, enableMultiFactorAuth));
 
             this.ControlState = true;
-            this.SetVerifyButtonState();
             this.IsBusy = false;
 
             if (!result)
@@ -128,15 +120,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
                 NavigationActionType.SecuritySettings));
         }
 
-        private void SetVerifyButtonState()
-        {
-            var enabled = this.IsNetworkAvailable && this.ControlState && 
-                !string.IsNullOrWhiteSpace(this.VerifyCode) &&
-                this.VerifyCode.Length == 6;
-
-            OnUiThread(() => this.VerifyButtonState = enabled);
-        }
-
         private void SetInputState(InputState verifyCode = InputState.Normal) =>
             OnUiThread(() => this.VerifyCodeInputState = verifyCode);
 
@@ -149,7 +132,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             parts.Insert(10, string.Empty); //For a correct alignment of the three last blocks
             return parts;
         }
-            
 
         #region Properties
 
@@ -194,9 +176,11 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             set
             {
                 SetField(ref _verifyCode, value);
-                SetVerifyButtonState();
                 SetInputState();
                 this.WarningText = string.Empty;
+
+                if (!this.IsValidVerifyCode) return;
+                this.Verify();
             }
         }
 
@@ -210,15 +194,11 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             set { SetField(ref _warningText, value); }
         }
 
-        private bool _verifyButtonState;
         /// <summary>
-        /// State (enabled/disabled) of the verify button
+        /// Indicates if the typed verify code has the right format and can be verified
         /// </summary>
-        public bool VerifyButtonState
-        {
-            get { return _verifyButtonState; }
-            set { SetField(ref _verifyButtonState, value); }
-        }
+        public bool IsValidVerifyCode => !string.IsNullOrWhiteSpace(this.VerifyCode) && 
+            this.VerifyCode.Length == 6 && this.VerifyCodeInputState == InputState.Normal;
 
         private InputState _verifyCodeInputState;
         public InputState VerifyCodeInputState

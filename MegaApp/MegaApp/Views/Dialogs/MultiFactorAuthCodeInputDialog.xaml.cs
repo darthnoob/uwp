@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using mega;
@@ -87,20 +88,26 @@ namespace MegaApp.Views.Dialogs
             if ((e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9) ||
                 (e.Key >= VirtualKey.NumberPad0 && e.Key <= VirtualKey.NumberPad9))
             {
+                textBox.Text = string.Empty; // First empty it to allow replace the digit
                 FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
-                if (textBox.Equals(this.TextBoxDigit6))
-                    FocusManager.TryMoveFocus(FocusNavigationDirection.Previous);
                 return;
             }
 
-            if (e.Key == VirtualKey.Back)
+            if (e.Key == VirtualKey.Right)
+            {
+                if (!textBox.Equals(this.TextBoxDigit6))
+                    FocusManager.TryMoveFocus(FocusNavigationDirection.Next);
+                return;
+            }
+
+            if (e.Key == VirtualKey.Back || e.Key == VirtualKey.Left)
             {
                 if (!textBox.Equals(this.TextBoxDigit1))
                     FocusManager.TryMoveFocus(FocusNavigationDirection.Previous);
                 return;
             }
 
-            if (this.IsPrimaryButtonEnabled && e.Key == VirtualKey.Enter)
+            if (this.ViewModel?.IsValidVerifyCode == true && e.Key == VirtualKey.Enter)
             {
                 if (this.ViewModel?.PrimaryButtonCommand?.CanExecute(null) == true)
                     this.ViewModel.PrimaryButtonCommand.Execute(null);
