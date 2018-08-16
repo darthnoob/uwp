@@ -383,6 +383,15 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to indicate that the user has successfully disabled the Multi-Factor Authentication
+        /// </summary>
+        public static async void ShowMultiFactorAuthDisabledDialog()
+        {
+            var mfaDisabledDialog = new MultiFactorAuthDisabledDialog();
+            await mfaDisabledDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
         /// Show an input dialog to type the MFA code and execute an action.
         /// </summary>
         /// <param name="dialogAction">Action to do by the primary button.</param>

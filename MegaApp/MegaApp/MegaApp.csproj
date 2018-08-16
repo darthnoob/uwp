@@ -321,6 +321,7 @@
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthCodeInputDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthDisabledDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthEnabledDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthSetupDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
@@ -469,6 +470,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\MultiFactorAuthCodeInputDialog.xaml.cs">
       <DependentUpon>MultiFactorAuthCodeInputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthDisabledDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthDisabledDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\MultiFactorAuthEnabledDialog.xaml.cs">
       <DependentUpon>MultiFactorAuthEnabledDialog.xaml</DependentUpon>
@@ -774,6 +778,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\MultiFactorAuthCodeInputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthDisabledDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

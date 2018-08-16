@@ -61,10 +61,7 @@ namespace MegaApp.ViewModels.Settings
                 ResourceService.AppMessages.GetString("AM_2FA_DisableDialogTitle"));
 
             if (result)
-            {
-                ToastService.ShowTextNotification(
-                    ResourceService.AppMessages.GetString("AM_2FA_DisabledDialogTitle"));
-            }
+                DialogService.ShowMultiFactorAuthDisabledDialog();
 
             return result;
         }
