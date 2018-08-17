@@ -84,7 +84,7 @@
                     KeyDown="OnInputTextBoxKeyDown"
                     Paste="OnInputTextBoxPaste" />
             </StackPanel>
-            <Grid HorizontalAlignment="Center" MinHeight="72">
+            <Grid HorizontalAlignment="Center" MinHeight="{x:Bind ViewModel.VariableGridHeight, Mode=OneWay}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*"/>
@@ -118,15 +118,19 @@
                         Style="{StaticResource MegaDialogErrorFontStyle}"
                         Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
                 </Grid>
-                <HyperlinkButton
+                <Grid
                     Grid.Row="1"
-                    Margin="0,24,0,0"
-                    Content="{x:Bind ViewModel.LostAuthDeviceQuestionText, Mode=OneTime}"
-                    FontSize="13"
-                    HorizontalAlignment="Center"
-                    NavigateUri="{x:Bind ViewModel.RecoveryUri, Mode=OneTime}"
-                    Style="{StaticResource MegaLinkStyle}"
-                    Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                    Visibility="{Binding ShowLostDeviceLink, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <HyperlinkButton
+                        Margin="0,24,0,0"
+                        Content="{x:Bind ViewModel.LostAuthDeviceQuestionText, Mode=OneTime}"
+                        FontSize="13"
+                        HorizontalAlignment="Center"
+                        NavigateUri="{x:Bind ViewModel.RecoveryUri, Mode=OneTime}"
+                        Style="{StaticResource MegaLinkStyle}"
+                        Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
+                </Grid>
+                
             </Grid>
         </StackPanel>
     </Grid>

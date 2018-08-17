@@ -661,7 +661,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>The Recovery Key has been copied to your clipboard.</value>
+    <value>The Recovery Key has been copied to the clipboard. Please store it in a safe place.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -1222,7 +1222,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the test password dialog.</comment>
   </data>
   <data name="AM_RecoveryKeyExported" xml:space="preserve">
-    <value>The Recovery Key has been exported.</value>
+    <value>The Recovery Key has been exported. Please store it in a safe place.</value>
     <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">

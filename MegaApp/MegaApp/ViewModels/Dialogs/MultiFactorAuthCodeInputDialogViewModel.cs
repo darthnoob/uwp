@@ -134,6 +134,26 @@ namespace MegaApp.ViewModels.Dialogs
         public bool IsValidVerifyCode => !string.IsNullOrWhiteSpace(this.InputText) &&
             this.InputText.Length == 6 && this.InputState == InputState.Normal;
 
+        private bool _showLostDeviceLink;
+        /// <summary>
+        /// Indicates if show the lost device link or not.
+        /// </summary>
+        public bool ShowLostDeviceLink
+        {
+            get { return _showLostDeviceLink; }
+            set
+            {
+                SetField(ref _showLostDeviceLink, value);
+                OnPropertyChanged(nameof(this.VariableGridHeight));
+            }
+        }
+
+        /// <summary>
+        /// Sets the height of the dialog dynamically depending on if 
+        /// it shows the lost device link or not.
+        /// </summary>
+        public int VariableGridHeight => this.ShowLostDeviceLink ? 72 : 32;
+
         #endregion
 
         #region Methods

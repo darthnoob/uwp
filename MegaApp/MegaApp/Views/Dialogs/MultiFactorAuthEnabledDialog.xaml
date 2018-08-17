@@ -33,7 +33,7 @@
                     Margin="12"
                     Height="24"
                     Width="24"
-                    Fill="#00E22C"
+                    Fill="#FF00E22C"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
                 <Viewbox
@@ -59,6 +59,7 @@
                 TextAlignment="Center"/>
             <Border
                 Margin="0,16"
+                MinHeight="44"
                 Background="{StaticResource MegaRedColorBrush}"
                 CornerRadius="6"
                 HorizontalAlignment="Center">

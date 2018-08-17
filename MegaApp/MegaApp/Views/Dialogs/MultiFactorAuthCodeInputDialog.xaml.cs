@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using mega;
@@ -24,14 +23,16 @@ namespace MegaApp.Views.Dialogs
         /// <param name="dialogAction">Action to execute by the primary button.</param>
         /// <param name="title">Custom title of the input dialog.</param>
         /// <param name="message">Custom message of the input dialog.</param>
+        /// <param name="showLostDeviceLink">Indicates if show the lost device link or not.</param>
         public MultiFactorAuthCodeInputDialog(Func<string, bool> dialogAction,
-            string title = null, string message = null)
+            string title = null, string message = null, bool showLostDeviceLink = true)
         {
             this.InitializeComponent();
 
             this.ViewModel.DialogAction = dialogAction;
             this.ViewModel.TitleText = title ?? ResourceService.UiResources.GetString("UI_TwoFactorAuth");
             this.ViewModel.MessageText = message ?? ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage");
+            this.ViewModel.ShowLostDeviceLink = showLostDeviceLink;
         }
 
         /// <summary>
@@ -40,14 +41,16 @@ namespace MegaApp.Views.Dialogs
         /// <param name="dialogActionAsync">Async action to execute by the primary button.</param>
         /// <param name="title">Custom title of the input dialog.</param>
         /// <param name="message">Custom message of the input dialog.</param>
+        /// <param name="showLostDeviceLink">Indicates if show the lost device link or not.</param>
         public MultiFactorAuthCodeInputDialog(Func<string, Task<bool>> dialogActionAsync,
-            string title = null, string message = null)
+            string title = null, string message = null, bool showLostDeviceLink = true)
         {
             this.InitializeComponent();
 
             this.ViewModel.DialogActionAsync = dialogActionAsync;
             this.ViewModel.TitleText = title ?? ResourceService.UiResources.GetString("UI_TwoFactorAuth");
             this.ViewModel.MessageText = message ?? ResourceService.AppMessages.GetString("AM_2FA_InputAppCodeDialogMessage");
+            this.ViewModel.ShowLostDeviceLink = showLostDeviceLink;
         }
 
         #region Methods

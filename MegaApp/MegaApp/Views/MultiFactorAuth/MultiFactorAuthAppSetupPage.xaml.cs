@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using Windows.System;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -37,24 +35,6 @@ namespace MegaApp.Views.MultiFactorAuth
                 NavigateService.MainFrame.BackStack.Remove(NavigateService.MainFrame.BackStack.Last());
 
             base.OnNavigatedFrom(e);
-        }
-
-        private void OnVerifyTextBoxKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if ((e.Key >= VirtualKey.Number0 && e.Key <= VirtualKey.Number9) ||
-                (e.Key >= VirtualKey.NumberPad0 && e.Key <= VirtualKey.NumberPad9))
-            {
-                e.Handled = false;
-                return;
-            }
-
-            if (this.ViewModel?.IsValidVerifyCode == true && e.Key == VirtualKey.Enter)
-            {
-                if (this.ViewModel?.VerifyCommand?.CanExecute(null) == true)
-                    this.ViewModel.VerifyCommand.Execute(null);
-            }
-
-            e.Handled = true;
         }
     }
 }

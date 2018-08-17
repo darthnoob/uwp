@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.System;
@@ -21,8 +22,8 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public MultiFactorAuthAppSetupViewModel()
         {
             this.CopySeedCommand = new RelayCommand(this.CopySeed);
-            this.OpenInCommand = new RelayCommand(this.OpenIn);
-            this.VerifyCommand = new RelayCommand(this.Verify);
+            this.NextCommand = new RelayCommand(this.EnableMultiFactorAuth);
+            this.OpenInCommand = new RelayCommand(this.OpenIn);            
 
             this.Initialize();
         }
@@ -30,8 +31,8 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         #region Commands
 
         public ICommand CopySeedCommand { get; }
+        public ICommand NextCommand { get; }
         public ICommand OpenInCommand { get; }
-        public ICommand VerifyCommand { get; }
 
         #endregion
 
@@ -68,7 +69,12 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         private async void OpenIn() =>
             await Launcher.LaunchUriAsync(new Uri(this.codeURI, UriKind.RelativeOrAbsolute));
-        
+
+        private async void EnableMultiFactorAuth()
+        {
+            await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(
+                this.EnableMultiFactorAuthAsync, TwoFactorAuthText, SetupStep2Text, false);
+        }
 
         /// <summary>
         /// Set the QR code image to set up the Multi-Factor Authentication
@@ -79,8 +85,8 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             {
                 DisableECI = true,
                 CharacterSet = "UTF-8",
-                Width = 148,
-                Height = 148
+                Width = 100,
+                Height = 100
             };
 
             BarcodeWriter writer = new BarcodeWriter();
@@ -90,27 +96,20 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         }
 
         /// <summary>
-        /// Verify the 6-digit code typed by the user to set up the Multi-Factor Authentication
+        /// Enable the Multi-Factor Authentication
         /// </summary>
-        private async void Verify()
+        private async Task<bool> EnableMultiFactorAuthAsync(string code)
         {
-            if (string.IsNullOrWhiteSpace(this.VerifyCode)) return;
-
-            this.ControlState = false;
-            this.IsBusy = true;
+            if (string.IsNullOrWhiteSpace(code)) return false;
 
             var enableMultiFactorAuth = new MultiFactorAuthEnableRequestListenerAsync();
             var result = await enableMultiFactorAuth.ExecuteAsync(() =>
-                SdkService.MegaSdk.multiFactorAuthEnable(this.VerifyCode, enableMultiFactorAuth));
-
-            this.ControlState = true;
-            this.IsBusy = false;
+                SdkService.MegaSdk.multiFactorAuthEnable(code, enableMultiFactorAuth));
 
             if (!result)
             {
-                this.SetInputState(InputState.Warning);
-                this.WarningText = ResourceService.AppMessages.GetString("AM_InvalidCode");
-                return;
+                DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                return result;
             }
 
             DialogService.ShowMultiFactorAuthEnabledDialog();
@@ -118,10 +117,9 @@ namespace MegaApp.ViewModels.MultiFactorAuth
             NavigateService.Instance.Navigate(typeof(SettingsPage), false,
                 NavigationObject.Create(typeof(MultiFactorAuthAppSetupViewModel),
                 NavigationActionType.SecuritySettings));
-        }
 
-        private void SetInputState(InputState verifyCode = InputState.Normal) =>
-            OnUiThread(() => this.VerifyCodeInputState = verifyCode);
+            return result;
+        }
 
         private ObservableCollection<string> SplitMultiFactorAuthCode(string str, int chunkSize)
         {
@@ -166,47 +164,6 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public ObservableCollection<string> MultiFactorAuthCodeParts =>
             SplitMultiFactorAuthCode(MultiFactorAuthCode, 4);
 
-        private string _verifyCode;
-        /// <summary>
-        /// Code typed by the user to verify that the Multi-Factor Authentication is working
-        /// </summary>
-        public string VerifyCode
-        {
-            get { return _verifyCode; }
-            set
-            {
-                SetField(ref _verifyCode, value);
-                SetInputState();
-                this.WarningText = string.Empty;
-
-                if (!this.IsValidVerifyCode) return;
-                this.Verify();
-            }
-        }
-
-        private string _warningText;
-        /// <summary>
-        /// Warning message (verification failed)
-        /// </summary>
-        public string WarningText
-        {
-            get { return _warningText; }
-            set { SetField(ref _warningText, value); }
-        }
-
-        /// <summary>
-        /// Indicates if the typed verify code has the right format and can be verified
-        /// </summary>
-        public bool IsValidVerifyCode => !string.IsNullOrWhiteSpace(this.VerifyCode) && 
-            this.VerifyCode.Length == 6 && this.VerifyCodeInputState == InputState.Normal;
-
-        private InputState _verifyCodeInputState;
-        public InputState VerifyCodeInputState
-        {
-            get { return _verifyCodeInputState; }
-            set { SetField(ref _verifyCodeInputState, value); }
-        }
-
         private string codeURI => string.Format("otpauth://totp/MEGA:{0}?secret={1}&issuer=MEGA",
                 SdkService.MegaSdk.getMyEmail(), this.MultiFactorAuthCode);
 
@@ -216,20 +173,12 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string CopySeedText => ResourceService.UiResources.GetString("UI_CopySeed");
-        public string ManuallySetupStep1Text => ResourceService.UiResources.GetString("UI_MFA_ManuallySetupStep1");
-        public string ManuallySetupStep2Text => ResourceService.UiResources.GetString("UI_MFA_ManuallySetupStep2");
-        public string ManuallySetupStep2DescriptionText => ResourceService.UiResources.GetString("UI_MFA_ManuallySetupStep2_Description");
+        public string SetupStep1Text => ResourceService.UiResources.GetString("UI_MFA_SetupStep1");
+        public string SetupStep2Text => ResourceService.UiResources.GetString("UI_MFA_SetupStep2");
+        public string NextText => ResourceService.UiResources.GetString("UI_Next");
         public string SectionNameText => ResourceService.UiResources.GetString("UI_SecuritySettings");
-        public string SixDigitCodeText => ResourceService.UiResources.GetString("UI_SixDigitCode");
         public string TwoFactorAuthText => ResourceService.UiResources.GetString("UI_TwoFactorAuth");
         public string OpenInText => ResourceService.UiResources.GetString("UI_OpenIn");
-        public string VerifyText => ResourceService.UiResources.GetString("UI_Verify");
-
-        #endregion
-
-        #region VisualResources
-
-        public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 
         #endregion
     }

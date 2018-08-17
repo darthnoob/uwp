@@ -45,15 +45,16 @@
                 Style="{ThemeResource MegaHeaderFontStyle}"
                 Text="{x:Bind ViewModel.TwoFactorAuthText, Mode=OneTime}" />
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="0,0,0,20" HorizontalAlignment="Left">
+                <StackPanel Margin="0,0,0,20" MaxWidth="320" HorizontalAlignment="Left">
                     <TextBlock
+                        FontSize="13"
+                        HorizontalAlignment="Stretch"
                         Style="{ThemeResource MegaBodyFontStyle}"
-                        Text="{x:Bind ViewModel.ManuallySetupStep1Text, Mode=OneTime}"/>
+                        Text="{x:Bind ViewModel.SetupStep1Text, Mode=OneTime}" />
                     <StackPanel
-                        Margin="0,24,0,48"
-                        Width="320"
+                        Margin="0,20,0,10"
                         Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Stretch">
                         <CommandBar Height="24" Padding="0,-12,0,0">
                             <CommandBar.SecondaryCommands>
                                 <AppBarButton
@@ -65,20 +66,26 @@
                             </CommandBar.SecondaryCommands>
                         </CommandBar>
                         <Image
-                            Height="148"
-                            Width="148"
+                            Margin="0,4,0,0"
+                            Height="100"
+                            Width="100"
                             Source="{Binding QRImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"/>
-                        <Border
+                        <GridView
                             Margin="12"
-                            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.MultiFactorAuthCodeParts, Mode=OneWay}"
+                            SelectionMode="None"
+                            VerticalAlignment="Center">
                             <FlyoutBase.AttachedFlyout>
                                 <MenuFlyout>
                                     <MenuFlyout.Items>
                                         <MenuFlyoutItem
-                                            Command="{Binding CopySeedCommand}"
-                                            Text="{Binding CopyText, Mode=OneTime}" />
+                                        Command="{Binding CopySeedCommand}"
+                                        Text="{Binding CopyText, Mode=OneTime}" />
                                     </MenuFlyout.Items>
                                 </MenuFlyout>
                             </FlyoutBase.AttachedFlyout>
@@ -87,83 +94,38 @@
                                     <behaviors:OpenFlyoutAction IsEnabled="True" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
-                            <GridView
-                                Margin="8"
-                                FontSize="16"
-                                HorizontalAlignment="Center"
-                                HorizontalContentAlignment="Center"
-                                ItemsSource="{x:Bind ViewModel.MultiFactorAuthCodeParts, Mode=OneWay}"
-                                SelectionMode="None"
-                                VerticalAlignment="Center">
-                                <GridView.ItemContainerStyle>
-                                    <Style TargetType="GridViewItem">
-                                        <Setter Property="Margin" Value="4,-8" />
-                                    </Style>
-                                </GridView.ItemContainerStyle>
-                                <GridView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsWrapGrid 
-                                            HorizontalAlignment="Center" 
-                                            MaximumRowsOrColumns="5"
-                                            Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </GridView.ItemsPanel>
-                            </GridView>
-                        </Border>
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="Margin" Value="4,-8" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid 
+                                        HorizontalAlignment="Center" 
+                                        MaximumRowsOrColumns="5"
+                                        Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
                     </StackPanel>
-                    <TextBlock
-                        Margin="0,0,0,12"
-                        Style="{ThemeResource MegaBodyFontStyle}"
-                        Text="{x:Bind ViewModel.ManuallySetupStep2Text, Mode=OneTime}"/>
-                    <TextBlock
-                        Margin="0,0,0,24"
-                        FontSize="13"
-                        Text="{x:Bind ViewModel.ManuallySetupStep2DescriptionText, Mode=OneTime}"
-                        TextWrapping="WrapWholeWords"/>
-                    <TextBox
-                        Width="320"
-                        BorderBrush="{Binding VerifyCodeInputState, Converter={StaticResource InputStateToColorConverter}}"
-                        FontSize="13"
-                        HorizontalAlignment="Left"
-                        InputScope="NumericPin"
-                        IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
-                        KeyDown="OnVerifyTextBoxKeyDown"
-                        MaxLength="6"
-                        PlaceholderText="{x:Bind ViewModel.SixDigitCodeText, Mode=OneTime}"
-                        Style="{StaticResource MegaTextBoxStyle}"
-                        Text="{Binding VerifyCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Grid
-                        Margin="0,12,0,0"
-                        HorizontalAlignment="Left"
-                        Width="320"
-                        Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <ProgressBar
-                            Width="88"
-                            Foreground="{StaticResource MegaRedColorBrush}"
-                            IsIndeterminate="True"
-                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </Grid>
-                    <Grid
-                        Margin="0,12,0,0"
-                        Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Viewbox
+                        <Button
                             Grid.Column="0"
-                            Margin="0,0,12,0"
-                            MaxWidth="16" MaxHeight="16"
-                            VerticalAlignment="Top"
-                            Visibility="{Binding WarningText, Converter={StaticResource StringVisibilityConverter}}">
-                            <PathIcon 
-                                Data="{x:Bind ViewModel.WarningIconPathData, Mode=OneTime}"
-                                Foreground="{StaticResource MegaRedColorBrush}" />
-                        </Viewbox>
-                        <TextBlock
+                            Margin="0,0,5,0"
+                            Command="{x:Bind ViewModel.OpenInCommand}"
+                            Content="{x:Bind ViewModel.OpenInText, Mode=OneTime}"
+                            HorizontalAlignment="Stretch" />
+                        <Button
                             Grid.Column="1"
-                            Style="{StaticResource MegaDialogErrorFontStyle}"
-                            Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
+                            Margin="5,0,0,0"
+                            Command="{x:Bind ViewModel.NextCommand}"
+                            Content="{x:Bind ViewModel.NextText, Mode=OneTime}"
+                            HorizontalAlignment="Stretch" />
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
