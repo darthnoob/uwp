@@ -22,6 +22,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         public MultiFactorAuthAppSetupViewModel()
         {
             this.CopySeedCommand = new RelayCommand(this.CopySeed);
+            this.FindAppCommand = new RelayCommand(this.FindApp);
             this.NextCommand = new RelayCommand(this.EnableMultiFactorAuth);
             this.OpenInCommand = new RelayCommand(this.OpenIn);            
 
@@ -31,6 +32,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
         #region Commands
 
         public ICommand CopySeedCommand { get; }
+        public ICommand FindAppCommand { get; }
         public ICommand NextCommand { get; }
         public ICommand OpenInCommand { get; }
 
@@ -66,6 +68,9 @@ namespace MegaApp.ViewModels.MultiFactorAuth
                     ResourceService.AppMessages.GetString("AM_MFA_SeedCopiedFailed"));
             }
         }
+
+        private async void FindApp() =>
+            await Launcher.LaunchUriAsync(new Uri("ms-windows-store:search?keyword=authenticator", UriKind.RelativeOrAbsolute));
 
         private async void OpenIn() =>
             await Launcher.LaunchUriAsync(new Uri(this.codeURI, UriKind.RelativeOrAbsolute));
@@ -173,6 +178,7 @@ namespace MegaApp.ViewModels.MultiFactorAuth
 
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
         public string CopySeedText => ResourceService.UiResources.GetString("UI_CopySeed");
+        public string FindAppText => ResourceService.UiResources.GetString("UI_FindApp");
         public string SetupStep1Text => ResourceService.UiResources.GetString("UI_MFA_SetupStep1");
         public string SetupStep2Text => ResourceService.UiResources.GetString("UI_MFA_SetupStep2");
         public string NextText => ResourceService.UiResources.GetString("UI_Next");

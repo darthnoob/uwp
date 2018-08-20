@@ -1815,4 +1815,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Export Recovery Key</value>
     <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
   </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>Find app</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
 </root>
