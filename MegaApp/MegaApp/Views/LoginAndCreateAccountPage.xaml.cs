@@ -50,6 +50,13 @@ namespace MegaApp.Views
 
                 switch (navActionType)
                 {
+                    case NavigationActionType.Login:
+                        this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount_Title"),
+                            ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount"));
+                        break;
+
                     case NavigationActionType.Recovery:
                         this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
                         this.ViewModel.LoginViewModel.Password = navObj.Parameters[NavigationParamType.Password] as string;
