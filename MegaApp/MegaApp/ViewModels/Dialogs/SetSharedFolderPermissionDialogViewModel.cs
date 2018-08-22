@@ -10,6 +10,8 @@ namespace MegaApp.ViewModels.Dialogs
         public SetSharedFolderPermissionDialogViewModel() : base()
         {
             this.SetFolderPermissionCommand = new RelayCommand<MShareType>(SetFolderPermission);
+
+            this.TitleText = ResourceService.UiResources.GetString("UI_SetFolderPermissionLevel");
         }
 
         #region Commands
@@ -36,8 +38,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region UiResources
-
-        public string TitleText => ResourceService.UiResources.GetString("UI_SetFolderPermissionLevel");
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
         public string FolderPermissionText => ResourceService.UiResources.GetString("UI_FolderPermission");

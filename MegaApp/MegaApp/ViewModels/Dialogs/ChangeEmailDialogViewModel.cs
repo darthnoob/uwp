@@ -1,6 +1,7 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MegaApp.Classes;
+using MegaApp.Enums;
+using MegaApp.MegaApi;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Dialogs
@@ -11,6 +12,9 @@ namespace MegaApp.ViewModels.Dialogs
         {
             this.SaveButtonCommand = new RelayCommand(Save);
             this.CancelButtonCommand = new RelayCommand(Cancel);
+
+            this.TitleText = ResourceService.UiResources.GetString("UI_ChangeEmail");
+            this.MessageText = ResourceService.UiResources.GetString("UI_ChangeEmailDescription");
         }
 
         #region Commands
@@ -20,69 +24,81 @@ namespace MegaApp.ViewModels.Dialogs
 
         #endregion
 
-        #region Events
+        #region Methods
 
-        /// <summary>
-        /// Event triggered when the user saves the email change.
-        /// </summary>
-        public event EventHandler Saved;
-
-        /// <summary>
-        /// Event invocator method called when the user saves the email change.
-        /// </summary>
-        protected virtual void OnSaved()
+        private async void Save()
         {
-            this.CanClose = true;
-            this.Saved?.Invoke(this, EventArgs.Empty);
-        }
+            this.WarningText = string.Empty;
+            this.NewEmailInputState = InputState.Normal;
 
-        /// <summary>
-        /// Event triggered when the user cancels the email change.
-        /// </summary>
-        public event EventHandler Canceled;
-
-        /// <summary>
-        /// Event invocator method called when the user cancels the email change.
-        /// </summary>
-        protected virtual void OnCanceled()
-        {
-            this.CanClose = true;
-            this.Canceled?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Event triggered when the email is wrong.
-        /// </summary>
-        public event EventHandler EmailError;
-
-        /// <summary>
-        /// Event invocator method called when the email is wrong.
-        /// </summary>
-        protected virtual void OnEmailError()
-        {
-            this.EmailError?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void Save()
-        {
             if (!ValidationService.IsValidEmail(this.NewEmail))
             {
-                OnEmailError();
-                this.ErrorMessage = ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat");
+                this.WarningText = ResourceService.AppMessages.GetString("AM_IncorrectEmailFormat");
+                this.NewEmailInputState = InputState.Warning;
                 return;
             }
 
-            OnSaved();
+            this.IsBusy = true;
+            this.ControlState = false;
+
+            ChangeEmailResult result = ChangeEmailResult.Unknown;
+            var changeEmail = new ChangeEmailRequestListenerAsync();
+
+            var mfaStatus = await AccountService.CheckMultiFactorAuthStatusAsync();
+            if (mfaStatus == MultiFactorAuthStatus.Enabled)
+            {
+                this.OnHideDialog();
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await changeEmail.ExecuteAsync(() =>
+                    {
+                        SdkService.MegaSdk.multiFactorAuthChangeEmail(
+                            this.NewEmail, code, changeEmail);
+                    });
+
+                    if (result == ChangeEmailResult.MultiFactorAuthInvalidCode)
+                    {
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                this.OnShowDialog();
+            }
+            else
+            {
+                result = await changeEmail.ExecuteAsync(() =>
+                    SdkService.MegaSdk.changeEmail(this.NewEmail, changeEmail));
+            }
+
+            this.IsBusy = false;
+            this.ControlState = true;
+
+            switch (result)
+            {
+                case ChangeEmailResult.Success:
+                    this.OnHideDialog();
+                    DialogService.ShowAwaitEmailConfirmationDialog(this.NewEmail);
+                    break;
+
+                case ChangeEmailResult.AlreadyRequested:
+                    this.WarningText = ResourceService.AppMessages.GetString("AM_ChangeEmailAlreadyRequested");
+                    break;
+
+                case ChangeEmailResult.UserNotLoggedIn:
+                    this.WarningText = ResourceService.AppMessages.GetString("AM_UserNotOnline");
+                    break;
+
+                case ChangeEmailResult.MultiFactorAuthInvalidCode:
+                case ChangeEmailResult.Unknown:
+                    this.WarningText = ResourceService.AppMessages.GetString("AM_ChangeEmailGenericError");
+                    break;
+            }
         }
 
-        private void Cancel()
-        {
-            OnCanceled();
-        }
+        private void Cancel() => this.OnHideDialog();
 
         #endregion
 
@@ -92,22 +108,39 @@ namespace MegaApp.ViewModels.Dialogs
         public string NewEmail
         {
             get { return _newEmail; }
-            set { SetField(ref _newEmail, value); }
+            set
+            {
+                SetField(ref _newEmail, value);
+                OnPropertyChanged(nameof(this.PrimaryButtonState));
+                this.NewEmailInputState = InputState.Normal;
+                this.WarningText = string.Empty;
+            }
         }
 
-        private string _errorMessage;
-        public string ErrorMessage
+        private string _warningText;
+        public string WarningText
         {
-            get { return _errorMessage; }
-            set { SetField(ref _errorMessage, value); }
+            get { return _warningText; }
+            set { SetField(ref _warningText, value); }
         }
+
+        private InputState _newEmailInputState;
+        public InputState NewEmailInputState
+        {
+            get { return _newEmailInputState; }
+            set { SetField(ref _newEmailInputState, value); }
+        }
+
+        /// <summary>
+        /// State of the primary button of the input dialog
+        /// </summary>
+        public bool PrimaryButtonState => this.ControlState &&
+            !string.IsNullOrWhiteSpace(this.NewEmail);
 
         #endregion
 
         #region UiResources
 
-        public string TitleText => ResourceService.UiResources.GetString("UI_ChangeEmail");
-        public string DescriptionText => ResourceService.UiResources.GetString("UI_ChangeEmailDescription");
         public string EnterNewEmailText => ResourceService.UiResources.GetString("UI_EnterNewEmail");
         public string SaveText => ResourceService.UiResources.GetString("UI_Save");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");

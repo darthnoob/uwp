@@ -314,12 +314,14 @@ namespace MegaApp.Services
             }
         }
 
-        public static async Task<StorageFile> SaveFile(KeyValuePair<string, IList<string>> fileTypes)
+        public static async Task<StorageFile> SaveFile(KeyValuePair<string, IList<string>> fileTypes,
+            string suggestedFileName = null)
         {
             try
             {
                 var fileSavePicker = new FileSavePicker()
                 {
+                    SuggestedFileName = suggestedFileName ?? string.Empty,
                     SuggestedStartLocation = PickerLocationId.ComputerFolder,
                 };
                 fileSavePicker.FileTypeChoices.Add(fileTypes);

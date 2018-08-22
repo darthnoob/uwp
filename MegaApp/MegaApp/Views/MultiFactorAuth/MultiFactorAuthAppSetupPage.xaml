@@ -1,0 +1,162 @@
+﻿<multiFactorAuthViews:BaseMultiFactorAuthAppSetupPage
+    x:Class="MegaApp.Views.MultiFactorAuth.MultiFactorAuthAppSetupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MegaApp.Views.MultiFactorAuth"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:MegaApp.Behaviors"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:multiFactorAuthViews="using:MegaApp.Views.MultiFactorAuth"
+    mc:Ignorable="d">
+
+    <Grid x:Name="MainGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="{StaticResource PageHeaderRowHeight}" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="TopRowGrid" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="SectionNameText"
+                Margin="24,14,0,0"
+                FontSize="12"
+                Foreground="{StaticResource MegaRedColorBrush}"
+                Text="{x:Bind ViewModel.SectionNameText, Mode=OneTime}" />
+        </Grid>
+
+        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource OfflineBannerSpace}" />
+
+        <Grid x:Name="ContentGrid" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,28"
+                Style="{ThemeResource MegaHeaderFontStyle}"
+                Text="{x:Bind ViewModel.TwoFactorAuthText, Mode=OneTime}" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,0,20" MaxWidth="320" HorizontalAlignment="Left">
+                    <TextBlock
+                        FontSize="13"
+                        HorizontalAlignment="Stretch"
+                        Style="{ThemeResource MegaBodyFontStyle}"
+                        Text="{x:Bind ViewModel.SetupStep1Text, Mode=OneTime}" />
+                    <StackPanel
+                        Margin="0,20,0,10"
+                        Background="{StaticResource MegaMultiFactorAuthBackgroundBrush}"
+                        HorizontalAlignment="Stretch">
+                        <CommandBar Height="24" Padding="0,-12,0,0">
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton
+                                    Command="{x:Bind ViewModel.CopySeedCommand}"
+                                    Label="{x:Bind ViewModel.CopySeedText, Mode=OneTime}" />
+                                <AppBarButton
+                                    Command="{x:Bind ViewModel.FindAppCommand}"
+                                    Label="{x:Bind ViewModel.FindAppText, Mode=OneTime}" />
+                                <AppBarButton
+                                    Command="{x:Bind ViewModel.OpenInCommand}"
+                                    Label="{x:Bind ViewModel.OpenInText, Mode=OneTime}" />
+                            </CommandBar.SecondaryCommands>
+                        </CommandBar>
+                        <Image
+                            Margin="0,4,0,0"
+                            Height="100"
+                            Width="100"
+                            Source="{Binding QRImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"/>
+                        <GridView
+                            Margin="12"
+                            FontSize="16"
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.MultiFactorAuthCodeParts, Mode=OneWay}"
+                            SelectionMode="None"
+                            VerticalAlignment="Center">
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyout.Items>
+                                        <MenuFlyoutItem
+                                        Command="{Binding CopySeedCommand}"
+                                        Text="{Binding CopyText, Mode=OneTime}" />
+                                    </MenuFlyout.Items>
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="RightTapped">
+                                    <behaviors:OpenFlyoutAction IsEnabled="True" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                            <GridView.ItemContainerStyle>
+                                <Style TargetType="GridViewItem">
+                                    <Setter Property="Margin" Value="4,-8" />
+                                </Style>
+                            </GridView.ItemContainerStyle>
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid 
+                                        HorizontalAlignment="Center" 
+                                        MaximumRowsOrColumns="5"
+                                        Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                        </GridView>
+                    </StackPanel>
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,0,5,0"
+                            Command="{x:Bind ViewModel.OpenInCommand}"
+                            Content="{x:Bind ViewModel.OpenInText, Mode=OneTime}"
+                            HorizontalAlignment="Stretch" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5,0,0,0"
+                            Command="{x:Bind ViewModel.NextCommand}"
+                            Content="{x:Bind ViewModel.NextText, Mode=OneTime}"
+                            HorizontalAlignment="Stretch" />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Small">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="64,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="0,0,0,0" />
+                        <Setter Target="ContentGrid.Margin" Value="12,12,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Normal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="600" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SectionNameText.Margin" Value="24,14,0,0" />
+                        <Setter Target="MainGrid.Margin" Value="12,0,0,0" />
+                        <Setter Target="ContentGrid.Margin" Value="24,12,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</multiFactorAuthViews:BaseMultiFactorAuthAppSetupPage>

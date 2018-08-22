@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -14,6 +13,9 @@ namespace MegaApp.ViewModels.Dialogs
         {
             this.SaveButtonCommand = new RelayCommand(Save);
             this.CancelButtonCommand = new RelayCommand(Cancel);
+
+            this.TitleText = ResourceService.UiResources.GetString("UI_ChangePassword");
+            this.MessageText = ResourceService.UiResources.GetString("UI_ChangePasswordDescription");
         }
 
         #region Commands
@@ -23,47 +25,12 @@ namespace MegaApp.ViewModels.Dialogs
 
         #endregion
 
-        #region Events
-
-        /// <summary>
-        /// Event triggered when the user changes the password successfully.
-        /// </summary>
-        public event EventHandler PasswordChanged;
-
-        /// <summary>
-        /// Event invocator method called when the user changes the password successfully.
-        /// </summary>
-        protected virtual void OnPasswordChanged()
-        {
-            this.CanClose = true;
-            this.PasswordChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Event triggered when the user cancels the password change.
-        /// </summary>
-        public event EventHandler Canceled;
-
-        /// <summary>
-        /// Event invocator method called when the user cancels the password change.
-        /// </summary>
-        protected virtual void OnCanceled()
-        {
-            this.CanClose = true;
-            this.Canceled?.Invoke(this, EventArgs.Empty);
-        }
-
-        #endregion
-
         #region Private Methods
 
         /// <summary>
         /// Cancels the change password process
         /// </summary>
-        private void Cancel()
-        {
-            OnCanceled();
-        }
+        private void Cancel() => this.OnHideDialog();
 
         /// <summary>
         /// Changes the password
@@ -79,21 +46,49 @@ namespace MegaApp.ViewModels.Dialogs
             this.ControlState = false;
             this.SaveButtonState = false;
 
+            ChangePasswordResult result = ChangePasswordResult.Unknown;
             var changePassword = new ChangePasswordRequestListenerAsync();
-            var result = await changePassword.ExecuteAsync(() =>
+
+            var mfaStatus = await AccountService.CheckMultiFactorAuthStatusAsync();
+            if (mfaStatus == MultiFactorAuthStatus.Enabled)
+            {
+                this.OnHideDialog();
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await changePassword.ExecuteAsync(() =>
+                    {
+                        SdkService.MegaSdk.multiFactorAuthChangePasswordWithoutOld(
+                            this.NewPassword, code, changePassword);
+                    });
+
+                    if (result == ChangePasswordResult.MultiFactorAuthInvalidCode)
+                    {
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                this.OnShowDialog();
+            }
+            else
+            {
+                result = await changePassword.ExecuteAsync(() =>
                 SdkService.MegaSdk.changePasswordWithoutOld(this.NewPassword, changePassword));
+            }
 
             this.IsBusy = false;
             this.ControlState = true;
             this.SaveButtonState = true;
 
-            if (!result)
+            if (result != ChangePasswordResult.Success)
             {
                 SetWarning(true, ResourceService.AppMessages.GetString("AM_PasswordChangeFailed"));                
                 return;
             }
 
-            OnPasswordChanged();
+            OnHideDialog();
 
             await DialogService.ShowAlertAsync(
                 ResourceService.AppMessages.GetString("AM_PasswordChanged_Title"),
@@ -286,8 +281,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string TitleText => ResourceService.UiResources.GetString("UI_ChangePassword");
-        public string DescriptionText => ResourceService.UiResources.GetString("UI_ChangePasswordDescription");
         public string NewPasswordText => ResourceService.UiResources.GetString("UI_NewPassword");
         public string ReEnterNewPasswordText => ResourceService.UiResources.GetString("UI_ReEnterNewPassword");
         public string SaveText => ResourceService.UiResources.GetString("UI_Save");

@@ -12,6 +12,8 @@ namespace MegaApp.ViewModels.Dialogs
             this.AddButtonCommand = new RelayCommand(Add);
             this.CancelButtonCommand = new RelayCommand(Cancel);
 
+            this.TitleText = ResourceService.UiResources.GetString("UI_AddContact");
+
             this.EmailContent = ResourceService.UiResources.GetString("UI_AddContactEmailDefaultText");
         }
 
@@ -121,8 +123,6 @@ namespace MegaApp.ViewModels.Dialogs
         #endregion
 
         #region UiResources
-
-        public string TitleText => ResourceService.UiResources.GetString("UI_AddContact");
 
         public string AddText => ResourceService.UiResources.GetString("UI_Add");
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");

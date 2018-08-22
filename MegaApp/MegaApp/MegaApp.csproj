@@ -202,12 +202,14 @@
     <Compile Include="Database\DatabaseHelper.cs" />
     <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
+    <Compile Include="Enums\ChangePasswordResult.cs" />
     <Compile Include="Enums\CameraUploadsFileType.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
     <Compile Include="Enums\InviteContactResult.cs" />
     <Compile Include="Enums\LoginToFolderResult.cs" />
+    <Compile Include="Enums\MultiFactorAuthStatus.cs" />
     <Compile Include="Enums\PanelType.cs" />
     <Compile Include="Enums\SortOrderType.cs" />
     <Compile Include="Extensions\DateAndTimeExtension.cs" />
@@ -224,8 +226,12 @@
     <Compile Include="MegaApi\GetPublicNodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\GetUserRequestListenerAsync.cs" />
     <Compile Include="MegaApi\InviteContactRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\IsMasterKeyExportedRequestListenerAsync.cs" />
     <Compile Include="MegaApi\KillSessionRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MultiFactorAuthCheckRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MultiFactorAuthGetCodeRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\MultiFactorAuthSetRequestListenerAsync.cs" />
     <Compile Include="MegaApi\RemoveContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
@@ -314,11 +320,16 @@
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthCodeInputDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthDisabledDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthEnabledDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\MultiFactorAuthSetupDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\SetSharedFolderPermissionDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ShareFolderToDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\PasswordReminderDialogViewModel.cs" />
     <Compile Include="ViewModels\FileLinkViewModel.cs" />
     <Compile Include="ViewModels\FolderLinkViewModel.cs" />
+    <Compile Include="ViewModels\MultiFactorAuth\MultiFactorAuthAppSetupViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementsViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AwardClassViewModel.cs" />
     <Compile Include="ViewModels\MyAccount\AchievementInvitationsViewModel.cs" />
@@ -327,13 +338,14 @@
     <Compile Include="ViewModels\Offline\OfflineFolderViewModel.cs" />
     <Compile Include="ViewModels\Offline\OfflineNodeViewModel.cs" />
     <Compile Include="ViewModels\SavedForOfflineViewModel.cs" />
+    <Compile Include="ViewModels\Settings\ButtonSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\CameraUploadsSelectionSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\ClearCacheSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\ClearOfflineSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\LegalAndPoliciesViewModel.cs" />
     <Compile Include="ViewModels\Settings\LinkSettingViewModel.cs" />
+    <Compile Include="ViewModels\Settings\MultiFactorAuthSettingViewModel.cs" />
     <Compile Include="ViewModels\Settings\SelectionSettingViewModel.cs" />
-    <Compile Include="ViewModels\Settings\ButtonSettingViewModel.cs" />
     <Compile Include="ViewModels\SharedFoldersViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharedFolderNodeViewModel.cs" />
     <Compile Include="ViewModels\SharedFolders\IncomingSharesViewModel.cs" />
@@ -456,6 +468,18 @@
     <Compile Include="Views\Dialogs\InputDialog.xaml.cs">
       <DependentUpon>InputDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthCodeInputDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthCodeInputDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthDisabledDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthDisabledDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthEnabledDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthEnabledDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\MultiFactorAuthSetupDialog.xaml.cs">
+      <DependentUpon>MultiFactorAuthSetupDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dialogs\TwoButtonsDialog.xaml.cs">
       <DependentUpon>TwoButtonsDialog.xaml</DependentUpon>
     </Compile>
@@ -494,6 +518,9 @@
     </Compile>
     <Compile Include="Views\Login\ForgotPasswordPage.xaml.cs">
       <DependentUpon>ForgotPasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MultiFactorAuth\MultiFactorAuthAppSetupPage.xaml.cs">
+      <DependentUpon>MultiFactorAuthAppSetupPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyAccount\AchievementInvitationsPage.xaml.cs">
       <DependentUpon>AchievementInvitationsPage.xaml</DependentUpon>
@@ -622,6 +649,8 @@
     <Content Include="Assets\Achievements\gettingStarted.png" />
     <Content Include="Assets\Achievements\inviteFriend.png" />
     <Content Include="Assets\Achievements\mobileApp.png" />
+    <Content Include="Assets\MultiFactorAuth\multiFactorAuth.png" />
+    <Content Include="Assets\MultiFactorAuth\textFile.png" />
     <Content Include="Assets\ToastLogo.png" />
     <Content Include="Assets\ToastWarning.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
@@ -748,6 +777,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthCodeInputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthDisabledDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthEnabledDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\MultiFactorAuthSetupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\TwoButtonsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -799,6 +844,10 @@
     <Page Include="Views\Login\ForgotPasswordPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MultiFactorAuth\MultiFactorAuthAppSetupPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MyAccount\AchievementInvitationsPage.xaml">
       <SubType>Designer</SubType>

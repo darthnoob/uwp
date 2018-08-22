@@ -31,26 +31,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region Properties
 
-        private string _titleText;
-        /// <summary>
-        /// Title of the alert dialog
-        /// </summary>
-        public string TitleText
-        {
-            get { return _titleText; }
-            set { SetField(ref _titleText, value); }
-        }
-
-        private string _messageText;
-        /// <summary>
-        /// Message of the alert dialog
-        /// </summary>
-        public string MessageText
-        {
-            get { return _messageText; }
-            set { SetField(ref _messageText, value); }
-        }
-
         private string _buttonLabel;
         /// <summary>
         /// Label of the button of the alert dialog

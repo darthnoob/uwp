@@ -1,8 +1,10 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.UserControls;
+using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Services;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
 
 namespace MegaApp.Views
@@ -22,6 +24,11 @@ namespace MegaApp.Views
         {
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
+
+            var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
+            var navActionType = navObj?.Action ?? NavigationActionType.Default;
+            if (navActionType == NavigationActionType.SecuritySettings)
+                this.MainPivot.SelectedItem = this.SecurityPivot;
         }
 
         private void OnSdkVersionTapped(object sender, TappedRoutedEventArgs e)

@@ -18,9 +18,8 @@
     SecondaryButtonText="{x:Bind ViewModel.CancelText, Mode=OneTime}"
     PrimaryButtonCommand="{x:Bind ViewModel.SaveButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.CancelButtonCommand}"
-    Opened="OnOpened"
-    Closing="OnClosing"
-    Closed="OnClosed">
+    IsPrimaryButtonEnabled="{Binding PrimaryButtonState}"
+    Closing="OnClosing">
 
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>
@@ -28,21 +27,24 @@
                 x:Name="Description"
                 Margin="0,16,0,24"
                 Style="{StaticResource MegaDialogContentFontStyle}"
-                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}"/>
+                Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"/>
             <TextBox
                 x:Name="NewEmailTextBox"
+                Height="{StaticResource InputHeight}"
+                Margin="{StaticResource StackedInputMargin}"
+                BorderBrush="{Binding NewEmailInputState, Converter={StaticResource InputStateToColorConverter}}"
                 FontSize="15"
                 InputScope="EmailNameOrAddress"
+                IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
                 PlaceholderText="{x:Bind ViewModel.EnterNewEmailText, Mode=OneTime}"
-                Text="{x:Bind ViewModel.NewEmail, Mode=TwoWay}"
-                TextChanged="OnNewEmailChanged"
+                Text="{Binding NewEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="NoWrap"
                 Style="{StaticResource MegaTextBoxStyle}"/>
             <TextBlock 
                 x:Name="ErrorMessage"
                 Margin="0,4,0,0"
                 Style="{StaticResource MegaDialogErrorFontStyle}"
-                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"/>
+                Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
         </StackPanel>
     </Grid>
 </dialogViews:BaseChangeEmailDialog>

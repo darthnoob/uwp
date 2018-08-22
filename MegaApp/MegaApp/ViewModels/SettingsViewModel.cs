@@ -118,6 +118,18 @@ namespace MegaApp.ViewModels
 
             this.SecuritySettingSections.Add(recoveryKeySettings);
 
+            if (SdkService.MegaSdk.multiFactorAuthAvailable())
+            {
+                var multiFactorAuthSettings = new SettingSectionViewModel
+                {
+                    Header = ResourceService.UiResources.GetString("UI_TwoFactorAuth"),
+                    Description = ResourceService.UiResources.GetString("UI_TwoFactorAuthSettingsDescription")
+                };
+                multiFactorAuthSettings.Items.Add(new MultiFactorAuthSettingViewModel());
+
+                this.SecuritySettingSections.Add(multiFactorAuthSettings);
+            }
+
             var sessionManagementSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_SessionManagement")
