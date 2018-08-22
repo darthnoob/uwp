@@ -158,16 +158,32 @@ namespace MegaApp.Services
                                     }
                                 }));
                         return true;
+
+                    case SignUpLinkType.AutoConfirmed:
+                        UiService.OnUiThread(() =>
+                            NavigateService.Instance.Navigate(typeof(LoginAndCreateAccountPage), true,
+                                new NavigationObject
+                                {
+                                    Action = NavigationActionType.Login,
+                                    Parameters = new Dictionary<NavigationParamType, object>
+                                    {
+                                        { NavigationParamType.Email, signUp.EmailAddress },
+                                    }
+                                }));
+                        return true;
+
                     case SignUpLinkType.AlreadyConfirmed:
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount_Title"),
                             ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount"));
                         break;
+
                     case SignUpLinkType.Expired:
                         await DialogService.ShowAlertAsync(
                             ResourceService.AppMessages.GetString("AM_SignUpLinkExpired_Title"),
                             ResourceService.AppMessages.GetString("AM_SignUpLinkExpired"));
                         break;
+
                     case SignUpLinkType.Unknown:
                     case SignUpLinkType.Invalid:
                         await DialogService.ShowAlertAsync(

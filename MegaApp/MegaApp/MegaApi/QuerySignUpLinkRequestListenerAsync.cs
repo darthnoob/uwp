@@ -19,11 +19,12 @@ namespace MegaApp.MegaApi
             {
                 switch(e.getErrorCode())
                 {
-                    case MErrorType.API_OK: // Successful reset
+                    case MErrorType.API_OK: // Valid and operative confirmation link.
                         this.EmailAddress = request.getEmail();
-                        Tcs?.TrySetResult(SignUpLinkType.Valid);
+                        Tcs?.TrySetResult(request.getFlag() ? 
+                            SignUpLinkType.AutoConfirmed : SignUpLinkType.Valid);
                         break;
-                    case MErrorType.API_EEXPIRED:
+                    case MErrorType.API_EEXPIRED: // Expired confirmation link.
                         Tcs?.TrySetResult(SignUpLinkType.Expired);
                         break;
                     case MErrorType.API_ENOENT: // Already confirmed account
