@@ -87,6 +87,19 @@ namespace MegaApp.Converters
                             return folder.ItemCollection != null && folder.ItemCollection.HasSelectedItems ?
                                 Visibility.Visible : Visibility.Collapsed;
 
+                        case "restore":
+                            if (folder.ItemCollection == null || !folder.ItemCollection.HasSelectedItems)
+                                return Visibility.Collapsed;
+
+                            foreach (var item in folder.ItemCollection.SelectedItems)
+                            {
+                                var selectedItem = item as NodeViewModel;
+                                if (selectedItem == null || !selectedItem.CanRestore)
+                                    return Visibility.Collapsed;
+                            }
+
+                            return Visibility.Visible;
+
                         default:
                             return Visibility.Collapsed;
                     }

@@ -426,7 +426,14 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding RestoreCommand}"
+                                Foreground="{StaticResource MegaGreenColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RestoreText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='restore', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
@@ -592,7 +599,14 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding RestoreCommand}"
+                                Foreground="{StaticResource MegaGreenColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RestoreText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='restore', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
@@ -737,7 +751,14 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding RestoreCommand}"
+                                Foreground="{StaticResource MegaGreenColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RestoreText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='restore', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
@@ -886,7 +907,14 @@
                                 Text="{Binding CopyOrMoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='copyormove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
                             <MenuFlyoutItem
+                                Command="{Binding RestoreCommand}"
+                                Foreground="{StaticResource MegaGreenColorBrush}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RestoreText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='restore', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />
+                            <MenuFlyoutItem
                                 Command="{Binding RemoveCommand}"
+                                Foreground="{StaticResource MegaRedColorBrush}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RemoveText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='remove', Converter={StaticResource NodeViewStateToVisibilityConverter}}" />

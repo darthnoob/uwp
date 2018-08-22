@@ -78,6 +78,20 @@ namespace MegaApp.Converters
                         case "rename":
                             return parentFolder.ItemCollection.MoreThanOneSelected ?
                                 Visibility.Collapsed : Visibility.Visible;
+
+                        case "restore":
+                            if (parentFolder.ItemCollection == null || !parentFolder.ItemCollection.HasSelectedItems)
+                                return Visibility.Collapsed;
+
+                            foreach (var item in parentFolder.ItemCollection.SelectedItems)
+                            {
+                                var selectedItem = item as NodeViewModel;
+                                if (selectedItem == null || !selectedItem.CanRestore)
+                                    return Visibility.Collapsed;
+                            }
+
+                            return Visibility.Visible;
+
                         default:
                             return Visibility.Collapsed;
                     };
