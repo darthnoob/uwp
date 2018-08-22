@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Empty Cloud drive</value>
+    <value>Keine Daten vorhanden</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
@@ -150,11 +150,11 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>Leerer Ordner</value>
+    <value>Keine Dateien im Ordner</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>This folder doesn't contain any files or folders.</value>
+    <value>This folder doesn’t contain any files or folders.</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
@@ -166,7 +166,7 @@
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>You haven't sent any file or folder to the rubbish bin.</value>
+    <value>You haven’t sent any file or folder to the rubbish bin.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Disque nuagique vide</value>
+    <value>Le disque nuagique est vide</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
-    <value>Aucun transfert terminé</value>
+    <value>Il n’y a aucun transfert terminé</value>
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
@@ -150,11 +150,12 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>Dossier vide</value>
+    <value>Le dossier est vide</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>Si dossier ne contient aucun fichier ni dossier</value>
+    <value>Si dossier ne contient aucun fichier ni dossier
+</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
@@ -162,11 +163,13 @@
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Vider la corbeille</value>
+    <value>Vider la corbeille
+</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>Vous n’avez envoyé aucun fichier ni dossier dans la corbeille.</value>
+    <value>Vous n’avez envoyé aucun fichier ni dossier dans la corbeille.
+</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">

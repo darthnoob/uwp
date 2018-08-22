@@ -122,11 +122,13 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Hesap oluşturuluyor...</value>
+    <value>Hesap oluşturuluyor...
+</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Kaydolma onay bağlantısı gönderilirken lütfen bekleyiniz.</value>
+    <value>Kaydolma onay bağlantısı gönderilirken lütfen bekleyiniz.
+</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -146,7 +148,8 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Giriş yapılıyor...</value>
+    <value>Giriş yapılıyor...
+</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -154,7 +157,8 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>Oturum kapatılıyor...</value>
+    <value>Oturum kapatılıyor...
+</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">

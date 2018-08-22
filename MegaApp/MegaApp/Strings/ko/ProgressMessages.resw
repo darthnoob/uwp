@@ -122,7 +122,8 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>계정 생성 중...</value>
+    <value>계정 생성 중...
+                                </value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
@@ -130,7 +131,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
-    <value>Creating folder…</value>
+    <value>폴더 생성중...</value>
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
@@ -146,7 +147,8 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>로그인 중...</value>
+    <value>로그인 중...
+                                </value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -154,7 +156,8 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>로그아웃 중...</value>
+    <value>로그아웃 중...
+                                </value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
