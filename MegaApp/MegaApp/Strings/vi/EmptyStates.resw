@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Empty Cloud drive</value>
+    <value>Ổ Mây Trống</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Để tải lên tệp tin, click vào biểu tượng tải lên ở thanh công cụ.</value>
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Click the toggle button below to automatically sync your photos and videos to MEGA.</value>
+    <value>Click vào công tắc ở dưới để tự động đồng bộ các hình ảnh và video lên MEGA.</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -138,75 +138,75 @@
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
-    <value>Manage your completed transfers on this panel.</value>
+    <value>Quản lý các truyền tải đã hoàn tất trong panô này.</value>
     <comment>Sub header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsHeader" xml:space="preserve">
-    <value>No active downloads</value>
+    <value>Không có phiên tải xuống</value>
     <comment>Header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsSubHeader" xml:space="preserve">
-    <value>Manage your downloads on this panel.</value>
+    <value>Quản lý các phiên tải xuống trong panô này.</value>
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>Thư mục rỗng</value>
+    <value>Thư Mục Rỗng</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>This folder doesn't contain any files or folders.</value>
+    <value>Thư mục này không có nội dung nào.</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>Để tải lên tệp tin, click vào biểu tượng tải lên ở thanh công cụ.</value>
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Dọn Thùng Rác</value>
+    <value>Thùng Rác Trống</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>You haven't sent any file or folder to the rubbish bin.</value>
+    <value>Không có tệp tin hay thư mục nào trong thùng rác.</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
-    <value>No active uploads</value>
+    <value>Không có phiên tải lên</value>
     <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsSubHeader" xml:space="preserve">
-    <value>Manage your uploads on this panel.</value>
+    <value>Quản lý các phiên lên xuống trong panô này.</value>
     <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsHeader" xml:space="preserve">
-    <value>Welcome to your Contacts manager</value>
+    <value>Trang quản lý các Tên Liên Lạc</value>
     <comment>Header text for the empty state of the contacts list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsSubHeader" xml:space="preserve">
-    <value>You can add and manage your contacts on this panel.</value>
+    <value>Thêm và quản lý sổ danh bạ, tên liên lạc trong panô này.</value>
     <comment>Sub header text for the empty state of the contacts list.</comment>
   </data>
   <data name="ES_IncomingSharesHeader" xml:space="preserve">
-    <value>No incoming shares</value>
+    <value>Không có mục chia sẻ nhận đuợc</value>
     <comment>Header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_IncomingSharesSubHeader" xml:space="preserve">
-    <value>Manage your incoming shares on this panel.</value>
+    <value>Panô này giúp quản lý các mục chia sẻ nhận đuợc.</value>
     <comment>Sub header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesHeader" xml:space="preserve">
-    <value>No outgoing shares</value>
+    <value>Không có mục chia sẻ gửi đi</value>
     <comment>Header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
-    <value>Manage your outgoing shares on this panel.</value>
+    <value>Panô này giúp quản lý các mục chia sẻ gửi đi.</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>No offline files</value>
+    <value>Không có tệp lưu ngoại tuyến</value>
     <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineSubHeader" xml:space="preserve">
-    <value>Save files for offline viewing</value>
+    <value>Lưu tệp về để dùng ngoại tuyến</value>
     <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>

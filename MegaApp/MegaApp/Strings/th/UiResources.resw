@@ -182,11 +182,11 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>ไม่มีไฟล์บนคลาวด์ไดร์ฟ</value>
+    <value>ไม่มีไฟล์ในคลาวด์ไดร์ฟของคุณ</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>โฟลเดอร์ว่าง</value>
+    <value>โฟล์เดอร์ว่าง</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>ข้อตกลงในการใช้งาน</value>
+    <value>เงื่อนไขการให้บริการ</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -758,7 +758,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Free' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InAppPurchasePaymentMethod" xml:space="preserve">
-    <value>In app purchase (Microsoft Store)</value>
+    <value>การซื้อเพิ่มเติมในแอป (Microsoft Store)</value>
     <comment>Label for the button, link, text, title, etc. for this kind of payment method - (String as short as possible).
 Keep 'Microsoft Store' in English because it is a trademark.</comment>
   </data>
@@ -1087,7 +1087,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Remove shared access' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClosePanel" xml:space="preserve">
-    <value>Close panel</value>
+    <value>ปิดแผงนี้</value>
     <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Information" xml:space="preserve">
@@ -1111,7 +1111,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Folder location' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_FolderModified" xml:space="preserve">
-    <value>Folder modified</value>
+    <value>วันที่แก้ไขโฟลเดอร์</value>
     <comment>Label for any 'Folder modified' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Owner" xml:space="preserve">
@@ -1147,7 +1147,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareFolderTo" xml:space="preserve">
-    <value>แชร์ "{0}" กับ</value>
+    <value>แชร์ "{0}" ไปยัง</value>
     <comment>Text placed as title of the dialog used to share a folder with a contact.
 Preserve the {0} code because is for include the folder name in runtime.</comment>
   </data>
@@ -1184,7 +1184,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Due to our end-to-end encryption paradigm, you will not be able to access your data without either your password or a backup of your Recovery Key. You can park your existing account and start a fresh one under the same email address.</value>
+    <value>เนื่องจากกระบวนการเข้ารหัสลับแบบต้นทางถึงปลายของเราคุณจะไม่สามารถเข้าถึงข้อมูลของคุณโดยไม่ใช้รหัสผ่านหรือข้อมูลสำรองของคีย์การกู้คืน คุณสามารถพาร์คบัญชีเดิมของคุณและเริ่มต้นบัญชีใหม่ด้วยที่อยู่อีเมลเดิมได้</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
@@ -1240,11 +1240,11 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed to validate password on parking account.</comment>
   </data>
   <data name="UI_ConfirmEmailDescription" xml:space="preserve">
-    <value>Please check your email and follow the link to confirm your account.</value>
+    <value>กรุณาตรวจสอบอีเมลของคุณและทำตามลิงก์เพื่อยืนยันบัญชีของคุณ</value>
     <comment>Text displayed when user can resend his email address on create account.</comment>
   </data>
   <data name="UI_ConfirmEmailInfo" xml:space="preserve">
-    <value>If you have misspelled your email address, correct it and click ‘resend’.</value>
+    <value>หากคุณสะกดที่อยู่อีเมลผิด ให้แก้ไขและคลิก 'ส่งใหม่'</value>
     <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
   </data>
   <data name="UI_Resend" xml:space="preserve">
@@ -1256,24 +1256,24 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Wait' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_2" xml:space="preserve">
-    <value>You can still export your Recovery Key if you have an active MEGA session in any other browser on this or any other computer.</value>
+    <value>คุณจะยังสามารถส่งออกคีย์การกู้คืนได้ หากคุณมีเซสชัน MEGA ที่ใช้งานอยู่ในเบราว์เซอร์อื่น ๆ หรือคอมพิวเตอร์เครื่องอื่น ๆ</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 2).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_3" xml:space="preserve">
-    <value>If you don’t, you can no longer decrypt your existing account, but you can start a new one under the same email address by selecting NO.</value>
+    <value>ถ้าเลือกไม่ คุณจะไม่สามารถถอดรหัสบัญชีที่มีอยู่ได้ แต่คุณสามารถเริ่มต้นบัญชีใหม่ด้วยที่อยู่อีเมลเดิมได้ เพียงแค่เลือก ไม่</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 3).</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_2" xml:space="preserve">
-    <value>In the event that you recall your parked account's password, please contact support@mega.nz for recovery assistance. Your data will be retained for at least 60 days.</value>
+    <value>ในกรณีที่คุณจำรหัสผ่านบัญชีที่พาร์คไว้ได้ กรุณาติดต่อ support@mega.nz เพื่อขอความช่วยเหลือในการกู้คืน ข้อมูลของคุณจะถูกเก็บไว้อย่างน้อย 60 วัน</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 2).</comment>
   </data>
   <data name="UI_ListSortedByEmail" xml:space="preserve">
-    <value>Email ({0})</value>
+    <value>อีเมล ({0})</value>
     <comment>Label to indicate that a list of items is sorted by email and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByEmailMultiSelect" xml:space="preserve">
-    <value>Email ({0} of {1})</value>
+    <value>อีเมล ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by email and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1286,76 +1286,76 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders, {1} files)</value>
+    <value>วันที่สร้าง ({0} โฟลเดอร์ {1} ไฟล์)</value>
     <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders, {1} files)</value>
+    <value>วันที่แก้ไข ({0} โฟลเดอร์ {1} ไฟล์)</value>
     <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders, {1} files)</value>
+    <value>ประเภท ({0} โฟลเดอร์ {1} ไฟล์)</value>
     <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders, {1} files)</value>
+    <value>ชื่อ ({0} โฟลเดอร์ {1} ไฟล์)</value>
     <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders, {1} files)</value>
+    <value>ขนาด ({0} โฟลเดอร์ {1} ไฟล์)</value>
     <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
 Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
-    <value>Date Created ({0} of {1})</value>
+    <value>วันที่สร้าง ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
-    <value>Date Modified ({0} of {1})</value>
+    <value>วันที่แก้ไข ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByTypeMultiSelect" xml:space="preserve">
-    <value>Type ({0} of {1})</value>
+    <value>ประเภท ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by type and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
-    <value>Size ({0} of {1})</value>
+    <value>ขนาด ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>ตัวเลือกโฟลเดอร์</value>
     <comment>Label for any 'Folder options' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0})</value>
+    <value>วันที่สร้าง ({0})</value>
     <comment>Label to indicate that a list of items is sorted by creation date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0})</value>
+    <value>วันที่แก้ไข ({0})</value>
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByType" xml:space="preserve">
-    <value>Type ({0})</value>
+    <value>ประเภท ({0})</value>
     <comment>Label to indicate that a list of items is sorted by type and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySize" xml:space="preserve">
-    <value>Size ({0})</value>
+    <value>ขนาด ({0})</value>
     <comment>Label to indicate that a list of items is sorted by size and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_SelectOrDeselectAll" xml:space="preserve">
-    <value>Select/deselect all</value>
+    <value>เลือก/ยกเลิกการเลือกทั้งหมด</value>
     <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionType" xml:space="preserve">
@@ -1367,36 +1367,36 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
-    <value>Copy/Move 1 item to</value>
+    <value>คัดลอก/ย้าย 1 รายการไปที่</value>
     <comment>Label to indicate that one item has been selected for copy or move - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveMultipleItemsTo" xml:space="preserve">
-    <value>Copy/Move {0} items to</value>
+    <value>คัดลอก/ย้าย {0} รายการไปที่</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Date Created ({0} folders)</value>
+    <value>วันที่สร้าง ({0} โฟลเดอร์)</value>
     <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Date Modified ({0} folders)</value>
+    <value>วันที่แก้ไข ({0} โฟลเดอร์)</value>
     <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Name ({0} folders)</value>
+    <value>ชื่อ ({0} โฟลเดอร์)</value>
     <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Size ({0} folders)</value>
+    <value>ขนาด ({0} โฟลเดอร์)</value>
     <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Type ({0} folders)</value>
+    <value>ประเภท ({0} โฟลเดอร์)</value>
     <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
 Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
@@ -1405,23 +1405,23 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AllContacts" xml:space="preserve">
-    <value>All contacts</value>
+    <value>รายชื่อทั้งหมด</value>
     <comment>Label for any 'All contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmShare" xml:space="preserve">
-    <value>Confirm share</value>
+    <value>ยืนยันการแชร์</value>
     <comment>Label for any 'Confirm share' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ManageCollaborators" xml:space="preserve">
-    <value>Manage collaborators</value>
+    <value>จัดการผู้ทำงานร่วมกัน</value>
     <comment>Label for any 'Manage collaborators' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareTo" xml:space="preserve">
-    <value>Share to</value>
+    <value>แชร์ไปที่</value>
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageQuota" xml:space="preserve">
-    <value>Storage quota</value>
+    <value>โควต้าเก็บข้อมูล</value>
     <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UnlockedBonuses" xml:space="preserve">
@@ -1437,19 +1437,19 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BaseStorage" xml:space="preserve">
-    <value>Base storage</value>
+    <value>พื้นที่เก็บข้อมูลเริ่มต้น</value>
     <comment>Label for any 'Base storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BaseTransferQuota" xml:space="preserve">
-    <value>Base transfer quota</value>
+    <value>โควต้าโอนถ่ายข้อมูลเริ่มต้น</value>
     <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallDesktopApp" xml:space="preserve">
-    <value>Install desktop app</value>
+    <value>ติดตั้งแอปบนเดสก์ท็อป</value>
     <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallMobileApp" xml:space="preserve">
-    <value>Install mobile app</value>
+    <value>ติดตั้งแอปบนอุปกรณ์เคลื่อนที่</value>
     <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ReferralBonus" xml:space="preserve">
@@ -1461,11 +1461,11 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusStorage" xml:space="preserve">
-    <value>Bonus storage</value>
+    <value>โบนัสพื้นที่จัดเก็บ</value>
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bonus transfer quota</value>
+    <value>โบนัสโควต้าการถ่ายโอน</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1473,7 +1473,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AchievementsText" xml:space="preserve">
-    <value>Your easy route to more storage and transfer quota on MEGA. You can maintain a generous free storage and transfer allowance by completing any of the actions outlined below.</value>
+    <value>เส้นทางที่จะไปสู่การรับโควต้าพื้นที่เก็บข้อมูลและถ่ายโอนของ MEGA มากยิ่งขึ้น โดยที่คุณสามารถสะสมได้ง่าย ๆ เพียงแค่ดำเนินการตามขั้นตอนด้านล่างนี้</value>
     <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_Available" xml:space="preserve">
@@ -1493,20 +1493,20 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
-    <value>1 day remaining</value>
+    <value>เหลืออีก 1 วัน</value>
     <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
-    <value>{0} days remaining</value>
+    <value>เหลืออีก {0} วัน</value>
     <comment>Label to indicate the number of days an award is still valid. - (String as short as possible).
 Keep the {0} code because is for include the number of days in runtime.</comment>
   </data>
   <data name="UI_SendInvites" xml:space="preserve">
-    <value>Send invites</value>
+    <value>ส่งคำเชิญ</value>
     <comment>Label for any 'Send invites' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewStatus" xml:space="preserve">
-    <value>View status</value>
+    <value>ดูสถานะ</value>
     <comment>Label for any 'View status' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Install" xml:space="preserve">
@@ -1514,31 +1514,31 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Install' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AccountRegistrationInformation" xml:space="preserve">
-    <value>Create your free account and get {0} of complimentary storage space, valid for {1} days.</value>
+    <value>สร้างบัญชีฟรีของคุณและรับพื้นที่เก็บข้อมูลฟรี {0} และใช้ได้ภายใน {1} วัน</value>
     <comment>Information about the 'Account registration' achievement option. Preserve the {0}, {1} codes because is for include current storage and expire data.</comment>
   </data>
   <data name="UI_InstallDesktopAppInformation" xml:space="preserve">
-    <value>When you install MEGAsync you get {0} of complimentary storage space plus {1} of transfer quota, both valid for {2} days. MEGAsync is available for Windows, macOS and most Linux distros.</value>
+    <value>เมื่อคุณติดตั้ง MEGAsync คุณจะได้รับพื้นที่เก็บข้อมูลฟรี {0} และโควต้าการถ่ายโอน {1} โดยทั้งสองอย่างจะใช้ได้ {2} วัน MEGAsync มีให้บริการสำหรับ Windows, macOS และ distros Linux เป็นส่วนใหญ่</value>
     <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_InstallMobileAppInformation" xml:space="preserve">
-    <value>When you install our mobile app you get {0} of complimentary storage space plus {1} transfer quota, both valid for {2} days. We provide mobile apps for iOS, Android &amp; Windows Phone</value>
+    <value>เมื่อคุณติดตั้งแอปบนอุปกรณ์เคลื่อนที่คุณจะได้รับพื้นที่เก็บข้อมูลฟรี {0} และ {1} โควต้าการถ่ายโอน โดยทั้งสองอย่างจะใช้ได้ {2} วัน เรามีแอปพลิเคชันมือถือสำหรับ iOS, Android และ Windows Phone</value>
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
-    <value>Achieved on</value>
+    <value>ทำสำเร็จเมื่อ</value>
     <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ExpiresIn" xml:space="preserve">
-    <value>Expires in</value>
+    <value>หมดอายุใน</value>
     <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Day" xml:space="preserve">
-    <value>Day</value>
+    <value>วัน</value>
     <comment>Label for any 'Day' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Days" xml:space="preserve">
-    <value>Days</value>
+    <value>วัน</value>
     <comment>Label for any 'Days' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorks" xml:space="preserve">
@@ -1546,7 +1546,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you will receive bonus storage and transfer quota.</value>
+    <value>เชิญเพื่อนของคุณสร้างบัญชี MEGA ฟรีและติดตั้งแอปบนอุปกรณ์เคลื่อนที่ของเรา สำหรับการลงชื่อสมัครใช้และการติดตั้งแอปทุกครั้งจะมีโบนัสและโควต้าการถ่ายโอนให้</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
   </data>
   <data name="UI_Invite" xml:space="preserve">
@@ -1554,11 +1554,11 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
+    <value>รับพื้นที่เก็บข้อมูลฟรี {0} และโควตาการถ่ายโอนข้อมูล {1} สำหรับเพื่อนแต่ละคนที่ติดตั้งแอป MEGA</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
-    <value>Why it is not working</value>
+    <value>ทำไมมันไม่ทำงาน</value>
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
@@ -1566,7 +1566,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>Invited contacts must install the MEGA mobile app or MEGA desktop app on their devices.</value>
+    <value>ผู้ติดต่อที่ได้รับเชิญจะต้องติดตั้งแอปบนมือถือ MEGA หรือแอปบนเดสก์ท็อป MEGA บนอุปกรณ์ของตน</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
@@ -1580,7 +1580,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
 </comment>
   </data>
   <data name="UI_TypeOrPasteLink" xml:space="preserve">
-    <value>Type or paste link:</value>
+    <value>พิมพ์หรือวางลิงก์:</value>
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
@@ -1588,11 +1588,11 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
-    <value>Import 1 item to</value>
+    <value>นำเข้า 1 รายการไปที่</value>
     <comment>Label to indicate that one item has been selected for import - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportMultipleItemsTo" xml:space="preserve">
-    <value>Import {0} items to</value>
+    <value>นำเข้า {0} รายการไปที่</value>
     <comment>Label to indicate how many items have been selected for import - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
@@ -1614,7 +1614,7 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SavedForOffline" xml:space="preserve">
-    <value>บันทึกแบบออฟไลน์</value>
+    <value>บันทึกออฟไลน์</value>
     <comment>Label for any 'Saved for offline' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveForOffline" xml:space="preserve">
@@ -1622,7 +1622,7 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveFromOffline" xml:space="preserve">
-    <value>Remove from offline</value>
+    <value>นำออกจากออฟไลน์</value>
     <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineFiles" xml:space="preserve">
@@ -1630,21 +1630,21 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineBanner" xml:space="preserve">
-    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <value>อุปกรณ์ของคุณดูเหมือนออฟไลน์ กรุณาลองเชื่อมต่ออีกครั้งหรือไปที่ส่วน "บันทึกออฟไลน์"</value>
     <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
-    <value>Referral status ({0})</value>
+    <value>สถานะการอ้างอิง ({0})</value>
     <comment>Label to indicate that a list of items is sorted by status and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
-    <value>Referral status ({0} of {1})</value>
+    <value>สถานะการอ้างอิง ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Referral status</value>
+    <value>สถานะโบนัสการแนะนำ</value>
     <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
@@ -1652,11 +1652,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EarnedReferralBonus" xml:space="preserve">
-    <value>Earned referral bonus</value>
+    <value>ได้รับโบนัสการแนะนำ</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_OpenBrowser" xml:space="preserve">
-    <value>Open browser</value>
+    <value>เปิดเบราว์เซอร์</value>
     <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
   </data>
   <data name="UI_Ignore" xml:space="preserve">
@@ -1664,7 +1664,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DataProtectionRegulation" xml:space="preserve">
-    <value>Data Protection Regulation</value>
+    <value>หลักคุ้มครองข้อมูลส่วนบุคคล</value>
     <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MEGA_SDK_Version" xml:space="preserve">
@@ -1672,7 +1672,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'MEGA SDK version' button, link, text, title, etc. Preserve the "MEGA SDK" in uppercase - (String as short as possible).</comment>
   </data>
   <data name="UI_PrivacyPolicy" xml:space="preserve">
-    <value>นโยบายความเป็นส่วนตัว</value>
+    <value>นโยบายสิทธิส่วนบุคคล</value>
     <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewTermsOfService" xml:space="preserve">
@@ -1698,5 +1698,109 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_TakedownGuidance" xml:space="preserve">
     <value>คำแนะนำการแจ้งลบเนื้อหา</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
+    <value>เปิดใช้งานการรับรองความถูกต้องด้วยสองปัจจัย</value>
+    <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="UI_TwoFactorAuth" xml:space="preserve">
+    <value>การรับรองความถูกต้องด้วยสองปัจจัย (2FA)</value>
+    <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
+    <value>การรับรองความถูกต้องด้วยสองปัจจัย คือการรักษาความปลอดภัยชั้นที่สองสำหรับบัญชีของคุณ</value>
+    <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
+  </data>
+  <data name="UI_Setup2FA" xml:space="preserve">
+    <value>ตั้งค่าการรับรองความถูกต้องด้วยสองปัจจัย</value>
+    <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopySeed" xml:space="preserve">
+    <value>คัดลอกรหัส</value>
+    <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Disable" xml:space="preserve">
+    <value>ปิดการใช้งาน</value>
+    <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
+  </data>
+  <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
+    <value>อุปกรณ์ตัวรับรองความถูกต้องของคุณหายหรือไม่</value>
+    <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PhotoAndVideo" xml:space="preserve">
+    <value>รูปภาพและวิดีโอ</value>
+    <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_PhotoOnly" xml:space="preserve">
+    <value>เฉพาะรูปภาพ</value>
+    <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_VideoOnly" xml:space="preserve">
+    <value>เฉพาะวิดีโอ</value>
+    <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_AnyConnectionType" xml:space="preserve">
+    <value>ประเภทการเชื่อมต่อ</value>
+    <comment>Label for any 'Any connection type' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_EthernetWifiOnly" xml:space="preserve">
+    <value>เฉพาะอีเทอร์เน็ต/ไวไฟ (ไม่มีการตรวจสอบ)</value>
+    <comment>Label for any 'Ethernet/WiFi only (Unmetered)' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_FileToUpload" xml:space="preserve">
+    <value>ไฟล์ที่จะอัปโหลด</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_HowToUpload" xml:space="preserve">
+    <value>อัปโหลดอย่างไร</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_Export" xml:space="preserve">
+    <value>ส่งออก</value>
+    <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CloseOtherSessions" xml:space="preserve">
+    <value>ปิดเซสชั่นอื่นๆ</value>
+    <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagement" xml:space="preserve">
+    <value>การจัดการเซสชัน</value>
+    <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagementDescription" xml:space="preserve">
+    <value>การดำเนินการนี้จะนำคุณออกจากเซสชันที่มีการใช้งานอื่น ๆ ทั้งหมดยกเว้นในปัจจุบัน คุณจะต้องลงชื่อเข้าใช้อีกครั้งกับอุปกรณ์อื่น ๆ ของคุณเพื่อใช้ MEGA ต่อไป</value>
+    <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
+  </data>
+  <data name="UI_Warning" xml:space="preserve">
+    <value>คำเตือน</value>
+    <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Restore" xml:space="preserve">
+    <value>กู้คืน</value>
+    <comment>Label for any 'Restore' button, link, text, title, etc. For example for restore files from the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearCache" xml:space="preserve">
+    <value>เคลียร์แคช</value>
+    <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageLocation" xml:space="preserve">
+    <value>ตำแหน่งที่เก็บ</value>
+    <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedCache" xml:space="preserve">
+    <value>ใช้แคช</value>
+    <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearOffline" xml:space="preserve">
+    <value>นำเนื้อหาออฟไลน์ออก</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedOffline" xml:space="preserve">
+    <value>พื้นที่เก็บข้อมูลที่ใช้สำหรับเนื้อหาแบบออฟไลน์</value>
+    <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenIn" xml:space="preserve">
+    <value>เปิดด้วย...</value>
+    <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
   </data>
 </root>

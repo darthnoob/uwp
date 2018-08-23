@@ -186,7 +186,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the creation of a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderSuccess" xml:space="preserve">
-    <value>Folder '{0}' created successfully</value>
+    <value>Folder ‘{0}’ created successfully</value>
     <comment>Message of the dialog displayed when create a folder successfully.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
@@ -291,7 +291,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
-    <value>Failed to move '{0}' to rubbish bin. Please try again.</value>
+    <value>Failed to move ‘{0}’ to rubbish bin. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -300,7 +300,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when the process/request to move nodes to the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to move '{0}' to the rubbish bin?</value>
+    <value>Are you sure you want to move ‘{0}’ to the rubbish bin?</value>
     <comment>Message of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the name of the node to be moved in runtime.</comment>
   </data>
@@ -309,7 +309,7 @@ Preserve the {0} code because is for include the name of the node to be moved in
     <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
-    <value>Item '{0}' successfully moved to the rubbish bin.</value>
+    <value>Item ‘{0}’ successfully moved to the rubbish bin.</value>
     <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -338,7 +338,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}'?</value>
+    <value>Are you sure you want to remove ‘{0}’?</value>
     <comment>Message of the dialog displayed when a user want to remove definitely an itemfrom the rubbish bin, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
@@ -347,7 +347,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
-    <value>Failed removing '{0}'. Please try again.</value>
+    <value>Failed removing ‘{0}’. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
@@ -451,7 +451,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
-    <value>Failed to download the file '{0}'. Please try again.</value>
+    <value>Failed to download the file ‘{0}’. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to download a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -468,7 +468,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file '{0}' for upload. Please try again.</value>
+    <value>Failed to prepare file ‘{0}’ for upload. Please try again.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -485,7 +485,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_UploadFileFailed" xml:space="preserve">
-    <value>Failed to upload the file '{0}'. Please try again.</value>
+    <value>Failed to upload the file ‘{0}’. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to upload a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -503,7 +503,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process to select a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess" xml:space="preserve">
-    <value>You don't have access to the selected download path. Please select a different download path and try again.</value>
+    <value>You don’t have access to the selected download path. Please select a different download path and try again.</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder.</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess_Title" xml:space="preserve">
@@ -511,22 +511,22 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
   </data>
   <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
-    <value>You don't have access to the path '{0}'. Please select another one and try again.</value>
+    <value>You don’t have access to the path ‘{0}’. Please select another one and try again.</value>
     <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
   <data name="AM_InvalidFileName" xml:space="preserve">
-    <value>The name of the file '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <value>The name of the file ‘{0}’ is not valid or has illegal characters. Please change it and try again.</value>
     <comment>Message of the dialog displayed in cases that a file name is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_InvalidFolderNameOrPath" xml:space="preserve">
-    <value>The name or path of the folder '{0}' is not valid or has illegal characters. Please change it and try again.</value>
+    <value>The name or path of the folder ‘{0}’ is not valid or has illegal characters. Please change it and try again.</value>
     <comment>Message of the dialog displayed in cases that a folder name or path is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PathTooLong" xml:space="preserve">
-    <value>The path of the file/folder '{0}' is too long. Please change it and try again.</value>
+    <value>The path of the file/folder ‘{0}’ is too long. Please change it and try again.</value>
     <comment>Message of the dialog displayed in cases that the file/folder path is too long.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -583,7 +583,7 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>The download path doesn't exist and an error occurred trying to create it. 
+    <value>The download path doesn’t exist and an error occurred trying to create it. 
 Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
@@ -594,7 +594,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_RenameNodeSuccess" xml:space="preserve">
-    <value>Item '{0}' renamed to '{1}'</value>
+    <value>Item ‘{0}’ renamed to ‘{1}’</value>
     <comment>Message displayed when user has renamed a node with success.
 Preserve the '{0}' and '{1}'codes because are for include the old and new name in runtime.</comment>
   </data>
@@ -651,12 +651,12 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when the process/request to move multiple nodes to the rubbish bin failed.</comment>
   </data>
   <data name="AM_DownloadFolderFailed" xml:space="preserve">
-    <value>Failed to download the folder '{0}'. Please try again.</value>
+    <value>Failed to download the folder ‘{0}’. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to download a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_UploadFolderFailed" xml:space="preserve">
-    <value>Failed to upload the folder '{0}'. Please try again.</value>
+    <value>Failed to upload the folder ‘{0}’. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to upload a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
@@ -677,7 +677,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
-    <value>File '{0}' has been saved.</value>
+    <value>File ‘{0}’ has been saved.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SavedFile_Title" xml:space="preserve">
@@ -685,7 +685,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>Failed to save file '{0}'.</value>
+    <value>Failed to save file ‘{0}’.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">
@@ -915,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder "{0}". Please try again.</value>
+    <value>Failed to leave the shared folder “{0}”. Please try again.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -984,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder "{0}". Please try again.</value>
+    <value>Failed to remove acces to the shared folder “{0}”. Please try again.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1243,7 +1243,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove '{0}' from offline?</value>
+    <value>Are you sure you want to remove ‘{0}’ from offline?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
@@ -1272,7 +1272,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Why you need two-factor authentication?</value>
+    <value>Why do you need two-factor authentication?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
@@ -1288,7 +1288,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
-    <value>This code isn't right, please try again.</value>
+    <value>This code isn’t right, please try again.</value>
     <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
   </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
@@ -1316,8 +1316,8 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
-    <value>If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can't help you gain access to it again.
-Back up your recovery key.</value>
+    <value>If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
+Ensure you back up your recovery key.</value>
     <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
@@ -1329,11 +1329,11 @@ Back up your recovery key.</value>
     <comment>Message of the dialog displayed to ask the user to confirm want to close all the other sessions.</comment>
   </data>
   <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
-    <value>The remaining sessions were successfully closed</value>
+    <value>The remaining sessions were successfully closed.</value>
     <comment>Message of the dialog displayed when close successfully all the other sessions.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed" xml:space="preserve">
-    <value>Failed to restore '{0}' from rubbish bin. Please try again.</value>
+    <value>Failed to restore ‘{0}’ from rubbish bin. Please try again.</value>
     <comment>Message of the dialog displayed when the process/request to restore a node to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -1366,7 +1366,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when the process to remove all the files saved for offline failed.</comment>
   </data>
   <data name="AM_ClearOfflineFailed_Title" xml:space="preserve">
-    <value>Clear Offline failed</value>
+    <value>Clear offline failed</value>
     <comment>Title of the dialog displayed when the process to clear offline files failed - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineQuestion" xml:space="preserve">

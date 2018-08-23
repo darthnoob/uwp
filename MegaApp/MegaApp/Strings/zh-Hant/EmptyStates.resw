@@ -118,11 +118,11 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>Empty Cloud drive</value>
+    <value>空的雲端硬碟</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>欲上傳檔案，請點擊操作列中的上傳圖示。</value>
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
@@ -130,7 +130,7 @@
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
-    <value>Click the toggle button below to automatically sync your photos and videos to MEGA.</value>
+    <value>點擊下方的切換按鈕即可自動將照片和影片同步至MEGA中。</value>
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
@@ -138,27 +138,27 @@
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
-    <value>Manage your completed transfers on this panel.</value>
+    <value>在此面板上管理已完成的傳輸。</value>
     <comment>Sub header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsHeader" xml:space="preserve">
-    <value>No active downloads</value>
+    <value>無進行中之下載</value>
     <comment>Header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_DownloadsSubHeader" xml:space="preserve">
-    <value>Manage your downloads on this panel.</value>
+    <value>在此面板上管理您的下載。</value>
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>清空資料夾</value>
+    <value>文件夾中沒有文件</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
-    <value>This folder doesn't contain any files or folders.</value>
+    <value>此資料夾中沒有任何檔案或子資料夾。</value>
     <comment>Sub header text for the empty state of a folder in the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderSubHeader" xml:space="preserve">
-    <value>To upload files click the upload icon on the action bar.</value>
+    <value>欲上傳檔案，請點擊操作列中的上傳圖示。</value>
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
@@ -166,47 +166,47 @@
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>You haven't sent any file or folder to the rubbish bin.</value>
+    <value>您未將任何檔案或資料夾移至垃圾桶中。</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">
-    <value>No active uploads</value>
+    <value>無進行中之上傳</value>
     <comment>Header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsSubHeader" xml:space="preserve">
-    <value>Manage your uploads on this panel.</value>
+    <value>在此面板上管理您的上傳。</value>
     <comment>Sub header text for the empty state of the uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsHeader" xml:space="preserve">
-    <value>Welcome to your Contacts manager</value>
+    <value>歡迎來到您的聯絡人管理介面</value>
     <comment>Header text for the empty state of the contacts list - (String as short as possible).</comment>
   </data>
   <data name="ES_ContactsSubHeader" xml:space="preserve">
-    <value>You can add and manage your contacts on this panel.</value>
+    <value>您可以在此面板上新增和管理聯絡人。</value>
     <comment>Sub header text for the empty state of the contacts list.</comment>
   </data>
   <data name="ES_IncomingSharesHeader" xml:space="preserve">
-    <value>No incoming shares</value>
+    <value>沒有傳入的分享</value>
     <comment>Header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_IncomingSharesSubHeader" xml:space="preserve">
-    <value>Manage your incoming shares on this panel.</value>
+    <value>在此面板上管理傳入的分享。</value>
     <comment>Sub header text for the empty state of the incoming shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesHeader" xml:space="preserve">
-    <value>No outgoing shares</value>
+    <value>沒有傳出的分享</value>
     <comment>Header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OutgoingSharesSubHeader" xml:space="preserve">
-    <value>Manage your outgoing shares on this panel.</value>
+    <value>在此面板上管理傳出的分享。</value>
     <comment>Sub header text for the empty state of the outgoing shares list - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineHeader" xml:space="preserve">
-    <value>No offline files</value>
+    <value>沒有離線檔案</value>
     <comment>Header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
   <data name="ES_OfflineSubHeader" xml:space="preserve">
-    <value>Save files for offline viewing</value>
+    <value>儲存檔案以供離線時閱覽</value>
     <comment>Sub header text for the empty state of the Saved for offline section - (String as short as possible).</comment>
   </data>
 </root>
