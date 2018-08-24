@@ -753,8 +753,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
-    <value>Не удалось задать срок
-</value>
+    <value>Не удалось задать срок</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
@@ -916,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Не удалось покинуть общую папку «{0}». Попробуйте ещё раз.</value>
+    <value>Не удалось покинуть общую папку "{0}". Попробуйте ещё раз.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -985,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Не удалось закрыть доступ к общей папке «{0}». Попробуйте ещё раз.</value>
+    <value>Не удалось закрыть доступ к общей папке "{0}". Попробуйте ещё раз.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1172,16 +1171,14 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Это может быть вызвано следующими причинами:
 - Файл был удалён из-за нарушения Условий обслуживания/Правил использования.
 - Недействительный адрес — ссылка, по которой вы пытаетесь перейти, не существует.
-- Файл был удалён пользователем.
-</value>
+- Файл был удалён пользователем.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>Это может быть вызвано следующими причинами:
 - Ссылка на папку была удалена из-за нарушения Условий обслуживания/Правил использования.
 - Недействительный адрес — ссылка, по которой вы пытаетесь перейти, не существует.
-- Ссылка на папку была удалена пользователем.
-</value>
+- Ссылка на папку была удалена пользователем.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1241,20 +1238,17 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Действительно удалить элементы ({0}) из локальных?
-</value>
+    <value>Действительно удалить элементы ({0}) из локальных?</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Действительно удалить '{0}' из локальных?
-</value>
+    <value>Действительно удалить '{0}' из локальных?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>Удалить локально?
-</value>
+    <value>Удалить локально?</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">
@@ -1390,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>Это удалит все файлы и папки во вкладке «Локальные»</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

@@ -130,7 +130,7 @@
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
-    <value>Weet u zeker dat u alle bestanden uit de prullenbak definitief wil verwijderen ?</value>
+    <value>Weet u zeker dat u alle bestanden uit de prullenbak definitief wil verwijderen?</value>
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
@@ -915,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Mislukt om de gedeelde map "{0}" te verlaten. Probeer nogmaals.</value>
+    <value>Mislukt om de gedeelde map '{0}' te verlaten. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -984,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Mislukt om toegang tot de gedeelde map "{0}" te verwijderen.</value>
+    <value>Mislukt om toegang van de gedeelde mappen "{0} te verwijderen. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1384,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>Dit verwijderd alle bestanden en mappen gedownload in de Opgeslagen voor Offline tabblad</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

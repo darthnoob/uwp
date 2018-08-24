@@ -661,7 +661,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>Clave de recuperación copiada en el portapapeles. Guárdala en un lugar seguro.</value>
+    <value>Clave de recuperación copiada al portapapeles. Guárdala en un lugar seguro.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -717,7 +717,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
-    <value>El enlace MEGA se copió en el portapapeles</value>
+    <value>El enlace MEGA se ha copiado al portapapeles</value>
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
@@ -1268,11 +1268,11 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
   <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
-    <value>Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.</value>
+    <value>La autenticación de dos factores es una segunda capa de seguridad para tu cuenta. Esto significa que incluso si alguien conoce tu contraseña no va a poder acceder a tu cuenta sin tener acceso al código de seis dígitos al que solo tú tienes acceso.</value>
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Why do you need two-factor authentication?</value>
+    <value>¿Por qué necesitas la autenticación de dos factores?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
@@ -1280,7 +1280,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your authentification app.</value>
+    <value>La próxima vez que inicies sesión en su cuenta, tendrás que introducir un código de 6 dígitos proporcionado por tu aplicación de autenticación.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1288,23 +1288,23 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
-    <value>This code isn’t right, please try again.</value>
+    <value>Este código no es correcto, inténtalo de nuevo.</value>
     <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
   </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
-    <value>The seed has been copied to your clipboard.</value>
+    <value>El código ha sido copiado al portapapeles.</value>
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
-    <value>Failed to copy the seed to your clipboard. Please try again.</value>
+    <value>Error al copiar el código al portapapeles. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
-    <value>Seed copy failed</value>
+    <value>Error al copiar el código</value>
     <comment>Title of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopied_Title" xml:space="preserve">
-    <value>Seed copied</value>
+    <value>Código copiado</value>
     <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
@@ -1312,16 +1312,16 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Please enter the code generated by your authentication app</value>
+    <value>Introduce el código generado por tu aplicación de autenticación</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
-    <value>If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
-Ensure you back up your recovery key.</value>
+    <value>Si pierdes el acceso a tu cuenta después de activar la autenticación de dos factores y no has hecho una copia de seguridad de tu Clave de recuperación, MEGA no podrá ayudarte a recuperar el acceso.
+Asegúrate de guardar tu Clave de recuperación.</value>
     <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
-    <value>Failed to close the other sessions. Please try again.</value>
+    <value>Error al cerrar las otras sesiones. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
   </data>
   <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
@@ -1333,16 +1333,16 @@ Ensure you back up your recovery key.</value>
     <comment>Message of the dialog displayed when close successfully all the other sessions.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed" xml:space="preserve">
-    <value>Failed to restore ‘{0}’ from rubbish bin. Please try again.</value>
+    <value>Error al restaurar '{0}' de la papelera. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to restore a node to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed_Title" xml:space="preserve">
-    <value>Restore from rubbish bin failed</value>
+    <value>Error al restaurar de la papelera</value>
     <comment>Title of the dialog displayed when the process/request to restore nodes from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RestoreMultiFromRubbishBinFailed" xml:space="preserve">
-    <value>Failed to restore items from rubbish bin. Please try again.</value>
+    <value>Error al restaurar elementos de la papelera. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process/request to restore multiple nodes from the rubbish bin failed.</comment>
   </data>
   <data name="AM_CacheCleared" xml:space="preserve">
@@ -1362,27 +1362,31 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when the process to clear cache failed - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineFailed" xml:space="preserve">
-    <value>Failed to remove files saved for offline. Please try again.</value>
+    <value>Error al eliminar los archivos guardados sin conexión. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed when the process to remove all the files saved for offline failed.</comment>
   </data>
   <data name="AM_ClearOfflineFailed_Title" xml:space="preserve">
-    <value>Clear offline failed</value>
+    <value>Error al eliminar los archivos sin conexión</value>
     <comment>Title of the dialog displayed when the process to clear offline files failed - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove all files saved for offline?</value>
+    <value>¿Seguro que quieres eliminar todos los archivos sin conexión?</value>
     <comment>Message of the dialog displayed when a user want to remove all files saved for offline, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess" xml:space="preserve">
-    <value>All the saved for offline files have been removed successfully.</value>
+    <value>Todos los archivos sin conexión se han eliminado correctamente.</value>
     <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
-    <value>Offline cleared</value>
+    <value>Archivos sin conexión eliminados</value>
     <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
-    <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
+    <value>Esto eliminará todos los archivos y carpetas descargados en la pestaña Sin conexión</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

@@ -122,8 +122,7 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Tworzenie konta...
-</value>
+    <value>Tworzenie konta...</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
@@ -147,8 +146,7 @@
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
-    <value>Logowanie...
-</value>
+    <value>Logowanie...</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
@@ -156,8 +154,7 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
-    <value>Wylogowanie...
-</value>
+    <value>Wylogowanie...</value>
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
@@ -189,8 +186,7 @@
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>Tworzenie Twojego konta
-</value>
+    <value>Tworzenie Twojego konta</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">

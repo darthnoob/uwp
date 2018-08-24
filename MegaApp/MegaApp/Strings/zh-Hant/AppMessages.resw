@@ -915,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder “{0}”. Please try again.</value>
+    <value>無法離開"{0}"已分享資料夾。請再試一次。</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -984,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder “{0}”. Please try again.</value>
+    <value>無法移除已分享資料夾"{0}"的存取權。請再試一次。</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1171,16 +1171,14 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>檔案連結不存在之可能原因：
 - 因ToS / AUP違規，故該檔案連結已被刪除。
 - 無效的網址 – 您嘗試存取的連結並不存在。
-- 該使用者已將檔案連結刪除。
-</value>
+- 該使用者已將檔案連結刪除。</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>資料夾連結不存在之可能原因：
 - 因ToS / AUP違規，故該資料夾連結已被刪除。
 - 無效的網址 – 您嘗試存取的連結並不存在。
-- 該使用者已將資料夾連結刪除。
-</value>
+- 該使用者已將資料夾連結刪除。</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1386,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

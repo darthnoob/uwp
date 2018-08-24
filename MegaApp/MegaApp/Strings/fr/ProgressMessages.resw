@@ -122,8 +122,7 @@
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
-    <value>Création du compte…
-</value>
+    <value>Création du compte…</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">

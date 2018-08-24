@@ -915,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder “{0}”. Please try again.</value>
+    <value>Việc rời khỏi thư mục chia sẻ “{0}“ bị thất bại. Xin thử lại.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -984,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder “{0}”. Please try again.</value>
+    <value>Tước bỏ đường chia sẻ tới thư mục {0} bị thất bại. Xin thử lại.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1280,7 +1280,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your authentification app.</value>
+    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator app.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1384,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

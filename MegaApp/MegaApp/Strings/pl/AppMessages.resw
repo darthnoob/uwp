@@ -1171,16 +1171,14 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>Mogło to nastąpić z następujących powodów:
 - Podlinkowany plik został usunięty z powodu naruszenia regulaminu
 - Błędny link - link, który posiadasz nie istnieje
-- Plik został usunięty przez użytkownika.
-</value>
+- Plik został usunięty przez użytkownika.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>Mogło to nastąpić z następujących powodów:
 - Podlinkowany katalog został usunięty z powodu naruszenia regulaminu
 - Błędny link - link, który posiadasz nie istnieje
-- Katalog został usunięty przez użytkownika.
-</value>
+- Katalog został usunięty przez użytkownika.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1282,7 +1280,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o podanie 6-cyfrowego kodu dostarczonego przez aplikację do uwierzytelniania.</value>
+    <value>Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o wprowadzenie 6-cyfrowego kodu podanego przez aplikację autoryzującą.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1386,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>Spowoduje to usunięcie wszystkich plików i folderów pobranych na karcie Zapisane w trybie offline</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

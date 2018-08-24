@@ -749,13 +749,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
-    <value>링크 만료 시간 설정 실패. 다시 시도하세요.
-                                </value>
+    <value>링크 만료 시간 설정 실패. 다시 시도하세요.</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
-    <value>만료 시간 설정 실패
-                                </value>
+    <value>만료 시간 설정 실패</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
@@ -767,7 +765,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>앱 활성화 중 잘못된 링크 탐지됨                                </value>
+    <value>앱 활성화 중 잘못된 링크 탐지됨</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
@@ -917,7 +915,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>공유된 폴더 "{0}"을/를 나가는데에 실패하였습니다. 다시 시도하세요.</value>
+    <value>공유된 폴더 "{0}" 떠나기 실패. 다시 시도하세요.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -986,7 +984,7 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>공유된 폴더 "{0}"에서 접근을 제거하는데에 실패하였습니다. 다시 시도하세요.</value>
+    <value>공유된 폴더 "{0}"의 접근 삭제를 실패하였습니다. 다시 시도하세요.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1173,16 +1171,14 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>다음의 이유로 인해 발생할 수 있습니다:
 - 파일이 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.
 - 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.
-- 파일이 이용자에 의해 삭제되었습니다.
-</value>
+- 파일이 이용자에 의해 삭제되었습니다.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>다음의 이유로 인해 발생할 수 있습니다:
 - 폴더 링크가 이용 약관/이용 목적 제한 방침을 위반하여 삭제되었습니다.
 - 잘못된 URL – 접속하려는 링크가 존재하지 않습니다.
-- 폴더 링크가 이용자에 의해 삭제되었습니다.
-</value>
+- 폴더 링크가 이용자에 의해 삭제되었습니다.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1202,8 +1198,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>MEGA의 암호화 기술로 인하여 데이터 손실 없이 비밀번호를 초기화할 수 없습니다. 비밀번호를 반드시 기억하도록 하세요.
-                                </value>
+    <value>MEGA의 암호화 기술로 인하여 데이터 손실 없이 비밀번호를 초기화할 수 없습니다. 비밀번호를 반드시 기억하도록 하세요.</value>
     <comment>Message to describe the purpose of the password reminder dialog.</comment>
   </data>
   <data name="AM_PasswordReminder_Title" xml:space="preserve">
@@ -1243,20 +1238,17 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>오프라인에서 {0}개의 항목을 삭제할까요?
-</value>
+    <value>오프라인에서 {0}개의 항목을 삭제할까요?</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>오프라인에서 {0}을/를 삭제할까요?
-</value>
+    <value>오프라인에서 {0}을/를 삭제할까요?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>오프라인에서 삭제할까요?
-</value>
+    <value>오프라인에서 삭제할까요?</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">
@@ -1392,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>이것은 오프라인용으로 저장됨 탭의 다운로드된 모든 파일과 폴더를 삭제합니다.</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

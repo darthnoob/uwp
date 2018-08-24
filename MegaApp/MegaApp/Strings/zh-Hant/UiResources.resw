@@ -727,7 +727,7 @@ Preserve the {0} code because is for include the name of the destination folder 
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>儲存 &amp; 傳輸</value>
-    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+    <comment>Title of the 'Storage &amp; Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
     <value>可用的儲存空間</value>
@@ -819,7 +819,7 @@ Don't translate 'Centili' because is the payment method name.</comment>
 Don't translate 'Fortumo' because is the payment method name.</comment>
   </data>
   <data name="UI_EmailAndPassword" xml:space="preserve">
-    <value>電子郵件 &amp; 密碼</value>
+    <value>電子郵件&amp;密碼</value>
     <comment>Label for the 'Email &amp; Password' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_FirstName" xml:space="preserve">
@@ -1147,7 +1147,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareFolderTo" xml:space="preserve">
-    <value>分享“{0}”至</value>
+    <value>將 “{0}“ 分享給</value>
     <comment>Text placed as title of the dialog used to share a folder with a contact.
 Preserve the {0} code because is for include the folder name in runtime.</comment>
   </data>
@@ -1723,20 +1723,28 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>停用</value>
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
+  <data name="UI_MFA_SetupStep1" xml:space="preserve">
+    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="UI_MFA_SetupStep2" xml:space="preserve">
+    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
+  </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
-    <value>遺失了您用於兩階段驗證的設備？</value>
+    <value>Lost your Authenticator device?</value>
     <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
   </data>
   <data name="UI_PhotoAndVideo" xml:space="preserve">
-    <value>照片與影片</value>
+    <value>照片和影片</value>
     <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_PhotoOnly" xml:space="preserve">
-    <value>僅照片</value>
+    <value>只有照片</value>
     <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_VideoOnly" xml:space="preserve">
-    <value>僅影片</value>
+    <value>只有影片</value>
     <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_AnyConnectionType" xml:space="preserve">
@@ -1784,7 +1792,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageLocation" xml:space="preserve">
-    <value>儲存位置</value>
+    <value>檔案管理</value>
     <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedCache" xml:space="preserve">
@@ -1802,5 +1810,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_OpenIn" xml:space="preserve">
     <value>開啟於...</value>
     <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportRecoveryKeyText" xml:space="preserve">
+    <value>匯出還原金鑰</value>
+    <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
+  </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>Find app</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

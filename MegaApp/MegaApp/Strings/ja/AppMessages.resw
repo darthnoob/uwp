@@ -1171,16 +1171,14 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <value>これは、以下の理由による可能性があります：
 －ファイルがToS/AUP違反により削除されました。
 －URLが無効－アクセスしようとしているリンクが存在しません。
-－ファイルがユーザーによって削除されました。
-</value>
+－ファイルがユーザーによって削除されました。</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>これは、以下の理由による可能性があります：
 －フォルダがToS/AUP違反により削除されました。
 －URLが無効－アクセスしようとしているリンクが存在しません。
-－フォルダリンクがユーザーによって削除されました。
-</value>
+－フォルダリンクがユーザーによって削除されました。</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
@@ -1386,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>これにより、「オフライン用に保存」タブのダウンロード済みファイルとフォルダがすべて削除されます</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

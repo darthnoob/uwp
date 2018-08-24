@@ -126,8 +126,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Per favore, attendi mentre ti spediamo un link di conferma dell'iscrizione.
-</value>
+    <value>Per favore, attendi mentre ti spediamo un link di conferma dell'iscrizione.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">

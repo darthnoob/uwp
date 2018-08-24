@@ -118,8 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="UI_AddFolder" xml:space="preserve">
-    <value>Dodaj folder
-</value>
+    <value>Dodaj folder</value>
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
@@ -183,7 +182,7 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>Brak plików na Cloud Drive</value>
+    <value>Brak plików na dysku</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
@@ -232,8 +231,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Multi select' button, link, text, title, etc. for multiple selection - (String as short as possible).</comment>
   </data>
   <data name="UI_MyAccount" xml:space="preserve">
-    <value>Moje konto
-</value>
+    <value>Moje konto</value>
     <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
@@ -729,7 +727,7 @@ Preserve the {0} code because is for include the name of the destination folder 
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>Przechowywanie i przesyłanie</value>
-    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+    <comment>Title of the 'Storage &amp; Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
     <value>Dostępna pamięć</value>
@@ -1149,7 +1147,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for a 'Remove from folder' button to remove a contact from an outgoing shared folder - (String as short as possible).</comment>
   </data>
   <data name="UI_ShareFolderTo" xml:space="preserve">
-    <value>Udostępnij "{0}" do</value>
+    <value>Udostępnij "{0}" dla</value>
     <comment>Text placed as title of the dialog used to share a folder with a contact.
 Preserve the {0} code because is for include the folder name in runtime.</comment>
   </data>
@@ -1725,12 +1723,20 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Zablokuj</value>
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
+  <data name="UI_MFA_SetupStep1" xml:space="preserve">
+    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="UI_MFA_SetupStep2" xml:space="preserve">
+    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
+  </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
-    <value>Zgubiłeś swoje urządzenie uwierzytelniające?</value>
+    <value>Zgubiłeś swoje urządzenie?</value>
     <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
   </data>
   <data name="UI_PhotoAndVideo" xml:space="preserve">
-    <value>Zdjęcie i wideo</value>
+    <value>Zdjęcia i filmy</value>
     <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_PhotoOnly" xml:space="preserve">
@@ -1738,7 +1744,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_VideoOnly" xml:space="preserve">
-    <value>Tylko wideo</value>
+    <value>Tylko filmy</value>
     <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_AnyConnectionType" xml:space="preserve">
@@ -1786,7 +1792,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageLocation" xml:space="preserve">
-    <value>Miejsce przechowywania</value>
+    <value>Zarządzanie plikami</value>
     <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedCache" xml:space="preserve">
@@ -1804,5 +1810,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_OpenIn" xml:space="preserve">
     <value>Otwórz...</value>
     <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportRecoveryKeyText" xml:space="preserve">
+    <value>Eksportowanie klucza</value>
+    <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
+  </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>Find app</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

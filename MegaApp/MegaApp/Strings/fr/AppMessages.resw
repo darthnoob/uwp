@@ -122,8 +122,7 @@
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Veuillez confirmer que vous acceptez les conditions générales d’utilisation.
-</value>
+    <value>Veuillez confirmer que vous acceptez les conditions générales d’utilisation.</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
@@ -162,8 +161,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
     <value>Vous n’avez pas l’autorisation de copier ce type de fichier sur le dossier de destination. Essayez-vous d’enregistrer ou de copier un fichier d’un type non pris en charge sur une carte SD ?
-Veuillez plutôt essayer d’enregistrer ou de copier le fichier sur la mémoire interne de votre appareil.
-</value>
+Veuillez plutôt essayer d’enregistrer ou de copier le fichier sur la mémoire interne de votre appareil.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
@@ -591,8 +589,7 @@ Veuillez ressayer et si vous recevez encore l’erreur, contactez support@mega.n
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>Il existe une erreur inconnue dans le chemin de téléchargement. Veuillez ressayer et si le problème persiste, contacter support@mega.nz. [{0}]
-</value>
+    <value>Il existe une erreur inconnue dans le chemin de téléchargement. Veuillez ressayer et si le problème persiste, contacter support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -668,13 +665,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>Échec de copie de la clé de récupération dans votre presse-papiers. Veuillez ressayer.
-</value>
+    <value>Échec de copie de la clé de récupération dans votre presse-papiers. Veuillez ressayer.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>Échec de copie de la clé de récupération.
-</value>
+    <value>Échec de copie de la clé de récupération.</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
@@ -838,8 +833,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>Un téléchargement a échoué. Veuillez vérifier votre liste de téléchargements et ressayer.                              
-</value>
+    <value>Un téléchargement a échoué. Veuillez vérifier votre liste de téléchargements et ressayer.</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
@@ -859,14 +853,12 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : {0}
-</value>
+    <value>Félicitations, votre nouvelle adresse courriel pour ce compte MEGA est : {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>Le lien que vous utilisez pour changer cette adresse courriel n’est pas valide.
-</value>
+    <value>Le lien que vous utilisez pour changer cette adresse courriel n’est pas valide.</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
@@ -901,8 +893,7 @@ Keep the {0} code because is for include the contact email or name in runtime.</
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>L’accès à tout dossier partagé avec vous par les contacts sélectionnés sera perdu.
-</value>
+    <value>L’accès à tout dossier partagé avec vous par les contacts sélectionnés sera perdu.</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
@@ -989,12 +980,11 @@ Preserve the {0} code because is for include the number of shared folders in run
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Supprimer l’accès aux dossiers partagés
-</value>
+    <value>Supprimer l’accès aux dossiers partagés</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Essai de suppression de l’accès au dossier partagé « {0} » ressayer.</value>
+    <value>Essai de suppression de l’accès au dossier partagé « {0} ». Veuillez ressayer.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1068,8 +1058,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Erreur de réinitialisation du mot de passe
-</value>
+    <value>Erreur de réinitialisation du mot de passe</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
@@ -1193,8 +1182,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Échec d’ouverture du lien du fichier. Veuillez ressayer.
-</value>
+    <value>Échec d’ouverture du lien du fichier. Veuillez ressayer.</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
@@ -1284,7 +1272,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Pourquoi ai-je besoin de l’authentification à deux facteurs ?</value>
+    <value>Pourquoi avez-vous besoin de l’authentification à deux facteurs ?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
@@ -1396,5 +1384,9 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
     <value>Cela supprimera tous les fichiers et dossiers téléchargés dans l’onglet Enregistré Hors ligne</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>
