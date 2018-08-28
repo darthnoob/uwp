@@ -147,6 +147,8 @@ namespace MegaApp.Views.Dialogs
             {
                 if (this.ViewModel?.PrimaryButtonCommand?.CanExecute(null) == true)
                     this.ViewModel.PrimaryButtonCommand.Execute(null);
+
+                e.Handled = true;
             }
         }
 

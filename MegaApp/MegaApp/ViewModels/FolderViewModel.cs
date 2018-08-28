@@ -397,15 +397,9 @@ namespace MegaApp.ViewModels
         {
             if (!await IsUserOnlineAsync()) return;
 
-            var folderName = await DialogService.ShowInputDialogAsync(
-                ResourceService.UiResources.GetString("UI_NewFolder"),
-                ResourceService.UiResources.GetString("UI_TypeFolderName"));
-
-            if (string.IsNullOrEmpty(folderName) || string.IsNullOrWhiteSpace(folderName)) return;
-
             if (this.FolderRootNode == null)
             {
-                OnUiThread(async() =>
+                OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
@@ -414,21 +408,29 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            var createFolder = new CreateFolderRequestListenerAsync();
-            var result = await createFolder.ExecuteAsync(() =>
-            {
-                this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder);
-            });
-
-            if (!result)
-            {
-                OnUiThread(async () =>
+            await DialogService.ShowInputAsyncActionDialogAsync(
+                ResourceService.UiResources.GetString("UI_NewFolder"),
+                ResourceService.UiResources.GetString("UI_TypeFolderName"),
+                async (string folderName) =>
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+                    if (string.IsNullOrWhiteSpace(folderName))
+                        return false;
+
+                    if (SdkService.ExistsNodeByName(this.FolderRootNode.OriginalMNode, folderName, true))
+                    {
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_FolderAlreadyExists"));
+                        return false;
+                    }
+
+                    var createFolder = new CreateFolderRequestListenerAsync();
+                    var result = await createFolder.ExecuteAsync(() =>
+                        this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder));
+
+                    if (!result)
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+
+                    return result;
                 });
-            }
         }
 
         private void CopyOrMove()
