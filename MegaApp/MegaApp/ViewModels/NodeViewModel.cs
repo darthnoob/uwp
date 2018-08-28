@@ -177,29 +177,7 @@ namespace MegaApp.ViewModels
             // User must be online to perform this operation
             if (!await IsUserOnlineAsync()) return;
 
-            var oldName = this.Name;
-
-            var inputName = await DialogService.ShowInputDialogAsync(
-                ResourceService.UiResources.GetString("UI_Rename"),
-                ResourceService.UiResources.GetString("UI_TypeNewName"),
-                null, null,
-                new InputDialogSettings
-                {
-                    InputText = this.Name,
-                    IsTextSelected = true,
-                    IgnoreExtensionInSelection = true
-                });
-            
-            if(string.IsNullOrEmpty(inputName) || string.IsNullOrWhiteSpace(inputName)) return;
-            if (this.Name.Equals(inputName)) return;
-
-            var rename = new RenameNodeRequestListenerAsync();
-            var newName = await rename.ExecuteAsync(() =>
-            {
-                this.MegaSdk.renameNode(this.OriginalMNode, inputName, rename);
-            });
-
-            if (string.IsNullOrEmpty(newName))
+            if (this.Parent?.FolderRootNode == null)
             {
                 OnUiThread(async () =>
                 {
@@ -208,9 +186,44 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
                 });
                 return;
-            };
+            }
 
-            OnUiThread(() => this.Name = newName);
+            await DialogService.ShowInputAsyncActionDialogAsync(
+                ResourceService.UiResources.GetString("UI_Rename"),
+                ResourceService.UiResources.GetString("UI_TypeNewName"),
+                async (string inputName) =>
+                {
+                    if (string.IsNullOrWhiteSpace(inputName)) return false;
+                    if (this.Name.Equals(inputName)) return true;
+
+                    if(SdkService.ExistsNodeByName(this.Parent.FolderRootNode.OriginalMNode, inputName, this.OriginalMNode.isFolder()))
+                    {
+                        DialogService.SetInputDialogWarningMessage(this.OriginalMNode.isFolder() ?
+                            ResourceService.AppMessages.GetString("AM_FolderAlreadyExists") :
+                            ResourceService.AppMessages.GetString("AM_FileAlreadyExists"));
+                        return false;
+                    }
+
+                    var rename = new RenameNodeRequestListenerAsync();
+                    var newName = await rename.ExecuteAsync(() =>
+                        this.MegaSdk.renameNode(this.OriginalMNode, inputName, rename));
+
+                    if (string.IsNullOrEmpty(newName))
+                    {
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                        return false;
+                    }
+
+                    OnUiThread(() => this.Name = newName);
+
+                    return true;
+                },
+                new InputDialogSettings
+                {
+                    InputText = this.Name,
+                    IsTextSelected = true,
+                    IgnoreExtensionInSelection = this.OriginalMNode.isFile()
+                });
         }
 
         private void CopyOrMove()
