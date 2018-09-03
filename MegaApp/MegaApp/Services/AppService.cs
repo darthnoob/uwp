@@ -24,7 +24,8 @@ namespace MegaApp.Services
     class AppService
     {
         /// <summary>
-        /// Check if the user has an active and online session
+        /// Checks if the user has an active and online session and if need to navigate to a page 
+        /// depending on the current state or the active link.
         /// </summary>
         /// <param name="byMainPage">The caller of method</param>
         /// <returns>True if the user has an active and online session or false in other case</returns>
@@ -36,7 +37,6 @@ namespace MegaApp.Services
 
             if (byMainPage)
             {
-
                 if (!hasActiveAndOnlineSession)
                 {
                     UiService.OnUiThread(() =>
@@ -47,8 +47,9 @@ namespace MegaApp.Services
 
                 return hasActiveAndOnlineSession;
             }
-            
-            if (!await CheckSpecialNavigation(hasActiveAndOnlineSession))
+
+            var navigationResult = await CheckSpecialNavigation(hasActiveAndOnlineSession);
+            if (navigationResult.HasValue && !navigationResult.Value)
             {
                 UiService.OnUiThread(() =>
                 {
@@ -65,10 +66,10 @@ namespace MegaApp.Services
         /// <param name="hasActiveAndOnlineSession">
         /// Bool value that indicates if the user has an active and online session.
         /// </param>
-        /// <returns>True if navigates or false in other case.</returns>
-        public static async Task<bool> CheckSpecialNavigation(bool hasActiveAndOnlineSession = true)
+        /// <returns>NULL if no active link, TRUE if navigates or FALSE in other case.</returns>
+        public static async Task<bool?> CheckSpecialNavigation(bool hasActiveAndOnlineSession)
         {
-            if (LinkInformationService.ActiveLink == null) return false;
+            if (string.IsNullOrWhiteSpace(LinkInformationService.ActiveLink)) return null;
 
             if (LinkInformationService.ActiveLink.Contains("#newsignup") ||
                 LinkInformationService.ActiveLink.Contains("#confirm") ||

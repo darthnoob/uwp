@@ -922,9 +922,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\MegaSDK\bindings\wp8\vs2015\mega.vcxproj">
       <Project>{c7220f72-e8d8-472c-91ba-f3e43bceb6d9}</Project>
