@@ -66,8 +66,8 @@ namespace MegaApp.MegaApi
             UiService.OnUiThread(() =>
             {
                 // If is the first error/retry (timer is not running) start the timer
-                if (!apiErrorTimer.IsEnabled)
-                    apiErrorTimer?.Start();
+                if (apiErrorTimer != null && !apiErrorTimer.IsEnabled)
+                    apiErrorTimer.Start();
             });
         }
 
