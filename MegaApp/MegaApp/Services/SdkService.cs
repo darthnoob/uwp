@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.MegaApi;
 
@@ -7,6 +9,22 @@ namespace MegaApp.Services
 {
     public static class SdkService
     {
+        #region Events
+
+        /// <summary>
+        /// Event triggered when the API URL is changed.
+        /// </summary>
+        public static event EventHandler ApiUrlChanged;
+
+        /// <summary>
+        /// Event invocator method called when the API URL is changed.
+        /// </summary>
+        private static void OnApiUrlChanged() => ApiUrlChanged?.Invoke(null, EventArgs.Empty);
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Main MegaSDK instance of the app
         /// </summary>
@@ -34,6 +52,16 @@ namespace MegaApp.Services
                 return _megaSdkFolderLinks;
             }
         }
+
+        // Timer to count the actions needed to change the API URL.
+        private static DispatcherTimer timerChangeApiUrl;
+
+        // Flag to indicate if the app is using the staging server.
+        private static bool useStagingServer = false;
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Initialize all the SDK parameters
@@ -158,5 +186,64 @@ namespace MegaApp.Services
 
             return null;
         }
+
+        /// <summary>
+        /// Method that should be called when an action required for 
+        /// change the API URL is started.
+        /// </summary>
+        public static void ChangeApiUrlActionStarted()
+        {
+            UiService.OnUiThread(() =>
+            {
+                if (timerChangeApiUrl == null)
+                {
+                    timerChangeApiUrl = new DispatcherTimer();
+                    timerChangeApiUrl.Interval = new TimeSpan(0, 0, 5);
+                    timerChangeApiUrl.Tick += (obj, args) => ChangeApiUrl();
+                }
+                timerChangeApiUrl.Start();
+            });
+        }
+
+        /// <summary>
+        /// Method that should be called when an action required for 
+        /// change the API URL is finished.
+        /// </summary>
+        public static void ChangeApiUrlActionFinished() => StopChangeApiUrlTimer();
+
+        /// <summary>
+        /// Change the API URL.
+        /// </summary>
+        private static async void ChangeApiUrl()
+        {
+            StopChangeApiUrlTimer();
+
+            if (!useStagingServer)
+            {
+                var result = await DialogService.ShowOkCancelAsync("Change to a testing server?",
+                    "Are you sure you want to change to a testing server? Your account may run irrecoverable problems.");
+
+                if (!result) return;
+            }
+
+            useStagingServer = !useStagingServer;
+
+            var newApiUrl = useStagingServer ?
+                ResourceService.AppResources.GetString("AR_StagingUrl") :
+                ResourceService.AppResources.GetString("AR_ApiUrl");
+
+            MegaSdk.changeApiUrl(newApiUrl);
+            MegaSdkFolderLinks.changeApiUrl(newApiUrl);
+
+            OnApiUrlChanged();
+        }
+
+        /// <summary>
+        /// Stops the timer to detect an API URL change.
+        /// </summary>
+        private static void StopChangeApiUrlTimer() =>
+            UiService.OnUiThread(() => timerChangeApiUrl?.Stop());
+
+        #endregion
     }
 }

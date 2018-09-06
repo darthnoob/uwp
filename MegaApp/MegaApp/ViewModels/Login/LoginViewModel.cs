@@ -291,6 +291,9 @@ namespace MegaApp.ViewModels.Login
         {
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
 
+            this.ControlState = false;
+            this.IsBusy = true;
+
             var fetchNodes = new FetchNodesRequestListenerAsync();
             fetchNodes.DecryptNodes += OnDecryptNodes;
             fetchNodes.IsWaiting  += OnIsWaiting;

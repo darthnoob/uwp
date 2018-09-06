@@ -31,6 +31,16 @@ namespace MegaApp.Views
                 this.MainPivot.SelectedItem = this.SecurityPivot;
         }
 
+        private void OnSdkVersionPointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionStarted();
+        }
+
+        private void OnSdkVersionPointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionFinished();
+        }
+
         private void OnSdkVersionTapped(object sender, TappedRoutedEventArgs e)
         {
             DebugService.ChangeStatusAction();

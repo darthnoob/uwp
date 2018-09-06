@@ -116,6 +116,16 @@ namespace MegaApp.Views
             e.Handled = true;
         }
 
+        private void OnMegaHeaderLogoPressed(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionStarted();
+        }
+
+        private void OnMegaHeaderLogoReleased(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionFinished();
+        }
+
         private void OnMegaHeaderLogoTapped(object sender, TappedRoutedEventArgs e)
         {
             DebugService.ChangeStatusAction();

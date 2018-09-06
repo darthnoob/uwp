@@ -168,6 +168,8 @@
                     Style="{ThemeResource MegaTitleFontStyle}"
                     Tapped="OnSdkVersionTapped"
                     Text="{x:Bind Title, Mode=OneTime}"
+                    PointerPressed="OnSdkVersionPointerPressed"
+                    PointerReleased="OnSdkVersionPointerReleased"
                     Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
                 <HyperlinkButton
                     Margin="0,-4,0,0"
