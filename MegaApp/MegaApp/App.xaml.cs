@@ -300,6 +300,9 @@ namespace MegaApp
             // Initialize the DB
             AppService.InitializeDatabase();
 
+            // Clear settings values we do no longer use
+            AppService.ClearObsoleteSettings();
+
             // Ensure we don't initialize again
             ApplicationInitialized = true;
         }

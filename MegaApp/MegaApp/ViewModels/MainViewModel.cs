@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Services;
@@ -18,6 +19,8 @@ namespace MegaApp.ViewModels
             
             AccountService.UserData.UserEmailChanged += UserEmailChanged;
             AccountService.UserData.UserNameChanged += UserNameChanged;
+
+            SdkService.ApiUrlChanged += ApiUrlChanged;
 
             this.CloseOfflineBannerCommand = new RelayCommand(CloseOfflineBanner);
         }
@@ -53,6 +56,27 @@ namespace MegaApp.ViewModels
         {
             if (MyAccountMenuItem == null) return;
             OnUiThread(() => MyAccountMenuItem.SubLabel = AccountService.UserData.UserEmail);
+        }
+
+        private async void ApiUrlChanged(object sender, EventArgs e)
+        {
+            // If the user is logged in, do a new fetch nodes
+            if (Convert.ToBoolean(MegaSdk.isLoggedIn()))
+            {
+                this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_Reloading");
+
+                // Fetch nodes from MEGA
+                var fetchNodesResult = await this.FetchNodes();
+                if (fetchNodesResult != FetchNodesResult.Success)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
+                    if (!AccountService.IsAccountBlocked)
+                        this.ShowFetchNodesFailedAlertDialog();
+                    return;
+                }
+            }
+
+            ToastService.ShowTextNotification("API URL changed");
         }
 
         private void CloseOfflineBanner()

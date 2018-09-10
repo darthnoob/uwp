@@ -121,4 +121,8 @@
     <value>{85DBF3E5-51E8-40BB-968C-8857B4FC6EF4}</value>
     <comment>Resource key to store the MEGA session of the user - (NO-TRANSLATION).</comment>
   </data>
+  <data name="SR_UseStagingServer" xml:space="preserve">
+    <value>{BA40B745-D0F5-4AD5-A539-44B1403A9EB8}</value>
+    <comment>Rersource key to store if use the staging server or not - (NO-TRANSLATION).</comment>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using mega;
 using MegaApp.Extensions;
 
 namespace MegaApp.Services
@@ -113,5 +114,29 @@ namespace MegaApp.Services
             return task != null;
         }
 
+        /// <summary>
+        /// Reset the "Camera Uploads" service if is enabled
+        /// </summary>
+        public static void ResetCameraUploadsTask()
+        {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Resetting CAMERA UPLOADS service...");
+
+            if (!IsBackGroundTaskActive(CameraUploadTaskEntryPoint, CameraUploadTaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "CAMERA UPLOADS service is currently disabled");
+                return;
+            }
+
+            try
+            {
+                UnregisterBackgroundTask(CameraUploadTaskEntryPoint, CameraUploadTaskName);
+                RegisterBackgroundTask(CameraUploadTaskEntryPoint, CameraUploadTaskName,
+                    new TimeTrigger(CameraUploadTaskTimeTrigger, false), null);
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error resetting CAMERA UPLOADS service", e);
+            }
+        }
     }
 }

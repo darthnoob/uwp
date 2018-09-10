@@ -30,6 +30,8 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Style="{StaticResource MegaPageHeaderLogoStyle}"
+            PointerPressed="OnMegaHeaderLogoPressed"
+            PointerReleased="OnMegaHeaderLogoReleased"
             Tapped="OnMegaHeaderLogoTapped" />
 
         <Pivot
