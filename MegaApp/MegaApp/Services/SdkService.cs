@@ -56,9 +56,6 @@ namespace MegaApp.Services
         // Timer to count the actions needed to change the API URL.
         private static DispatcherTimer timerChangeApiUrl;
 
-        // Flag to indicate if the app is using the staging server.
-        private static bool useStagingServer = false;
-
         #endregion
 
         #region Methods
@@ -88,7 +85,7 @@ namespace MegaApp.Services
 
             // Set the language code used by the app
             var appLanguageCode = AppService.GetAppLanguageCode();
-            if (!MegaSdk.setLanguage(appLanguageCode))
+            if (!MegaSdk.setLanguage(appLanguageCode) || !MegaSdkFolderLinks.setLanguage(appLanguageCode))
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
                     string.Format("Invalid app language code '{0}'", appLanguageCode));
@@ -218,6 +215,7 @@ namespace MegaApp.Services
         {
             StopChangeApiUrlTimer();
 
+            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
             if (!useStagingServer)
             {
                 var result = await DialogService.ShowOkCancelAsync("Change to a testing server?",
@@ -234,6 +232,11 @@ namespace MegaApp.Services
 
             MegaSdk.changeApiUrl(newApiUrl);
             MegaSdkFolderLinks.changeApiUrl(newApiUrl);
+
+            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), useStagingServer);
+
+            // Reset the "Camera Uploads" service if is enabled
+            TaskService.ResetCameraUploadsTask();
 
             OnApiUrlChanged();
         }

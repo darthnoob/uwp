@@ -648,5 +648,10 @@ namespace MegaApp.Services
                 To = { new EmailRecipient(ResourceService.AppResources.GetString("AR_SupportEmailAddress")) }
             });
         }
+
+        public static void ClearObsoleteSettings()
+        {
+            SettingsService.DeleteSetting(ResourceService.SettingsResources.GetString("SR_UseStagingServer"));
+        }
     }
 }

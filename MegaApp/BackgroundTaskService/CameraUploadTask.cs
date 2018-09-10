@@ -24,6 +24,11 @@ namespace BackgroundTaskService
         {
             _deferral = taskInstance.GetDeferral();
 
+            // Set the API to use depending on the settings
+            SdkService.MegaSdk.changeApiUrl(SettingsService.LoadSetting(
+                ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ?
+                "https://staging.api.mega.co.nz/" : "https://g.api.mega.co.nz/");
+
             // Load the connection upload settings
             CameraUploadsConnectionType cameraUploadsConnectionType = CameraUploadsConnectionType.EthernetWifiOnly;
             try
