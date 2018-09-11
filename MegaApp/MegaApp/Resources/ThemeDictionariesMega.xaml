@@ -157,9 +157,13 @@
                             AutomationProperties.AccessibilityView="Raw"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            ContentTransitions="{TemplateBinding ContentTransitions}" />
+                            ContentTransitions="{TemplateBinding ContentTransitions}">
+                            <TextBlock 
+                                Text="{TemplateBinding Content}"
+                                TextAlignment="Center"
+                                TextWrapping="WrapWholeWords" />
+                        </ContentPresenter>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
@@ -1389,17 +1393,15 @@
                                         </Grid.ColumnDefinitions>
                                         <Border
                                             x:Name="Button1Host"
-                                            Height="{ThemeResource ContentDialogButtonHeight}"
+                                            MinHeight="{ThemeResource ContentDialogButtonMinHeight}"
                                             MinWidth="{ThemeResource ContentDialogButtonMinWidth}"
-                                            MaxWidth="{ThemeResource ContentDialogButtonMaxWidth}"
                                             Margin="{ThemeResource ContentDialogButton1HostMargin}"
                                             HorizontalAlignment="Right" />
                                         <Border
                                             x:Name="Button2Host"
                                             Grid.Column="1"
-                                            Height="{ThemeResource ContentDialogButtonHeight}"
+                                            MinHeight="{ThemeResource ContentDialogButtonMinHeight}"
                                             MinWidth="{ThemeResource ContentDialogButtonMinWidth}"
-                                            MaxWidth="{ThemeResource ContentDialogButtonMaxWidth}"
                                             Margin="{ThemeResource ContentDialogButton2HostMargin}"
                                             HorizontalAlignment="Right" />
                                     </Grid>
@@ -1534,17 +1536,15 @@
                                         </Grid.ColumnDefinitions>
                                         <Border
                                             x:Name="Button1Host"
-                                            Height="{ThemeResource ContentDialogButtonHeight}"
+                                            MinHeight="{ThemeResource ContentDialogButtonMinHeight}"
                                             MinWidth="{ThemeResource ContentDialogButtonMinWidth}"
-                                            MaxWidth="{ThemeResource ContentDialogButtonMaxWidth}"
                                             Margin="{ThemeResource ContentDialogButton1HostMargin}"
                                             HorizontalAlignment="Right" />
                                         <Border
                                             x:Name="Button2Host"
                                             Grid.Column="1"
-                                            Height="{ThemeResource ContentDialogButtonHeight}"
+                                            MinHeight="{ThemeResource ContentDialogButtonMinHeight}"
                                             MinWidth="{ThemeResource ContentDialogButtonMinWidth}"
-                                            MaxWidth="{ThemeResource ContentDialogButtonMaxWidth}"
                                             Margin="{ThemeResource ContentDialogButton2HostMargin}"
                                             HorizontalAlignment="Right">
                                             <Border.Resources>
