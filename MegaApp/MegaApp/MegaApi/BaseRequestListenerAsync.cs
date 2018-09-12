@@ -87,11 +87,11 @@ namespace MegaApp.MegaApi
                     api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
 
                     // Disable the "Camera Uploads" service if is enabled
-                    if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+                    if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
                     {
                         LogService.Log(MLogLevel.LOG_LEVEL_INFO,
                             string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
-                        TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                        TaskService.UnregisterBackgroundTask(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName);
                     }
                     break;
             }

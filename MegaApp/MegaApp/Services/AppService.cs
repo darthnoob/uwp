@@ -609,10 +609,10 @@ namespace MegaApp.Services
         public static void LogoutActions()
         {
             // Disable the "Camera Uploads" service if is enabled
-            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disabling CAMERA UPLOADS service (LOGOUT)");
-                TaskService.UnregisterBackgroundTask(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName);
+                TaskService.UnregisterBackgroundTask(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName);
             }
 
             // Clear settings, offline, cache, previews, thumbnails, etc.

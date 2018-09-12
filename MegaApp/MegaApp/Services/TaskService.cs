@@ -9,10 +9,6 @@ namespace MegaApp.Services
 {
     public static class TaskService
     {
-        public const string CameraUploadTaskEntryPoint = "BackgroundTaskService.CameraUploadTask";
-        public const string CameraUploadTaskName = "CameraUploadTask";
-        public const int CameraUploadTaskTimeTrigger = 15;
-
         /// <summary>
         /// Get the value if background task registration is allowed for this app.
         /// Request is needed before you register any task.
@@ -34,12 +30,12 @@ namespace MegaApp.Services
         /// <param name="taskName">A name for the background task.</param>
         /// <param name="trigger">The trigger for the background task.</param>
         /// <param name="condition">Optional parameter. A conditional event that must be true for the task to fire.</param>
-        /// <returns>Background task registration</returns>
-        public static BackgroundTaskRegistration RegisterBackgroundTask(
+        /// <returns>Background task registration or NULL in case of error.</returns>
+        public static async Task<BackgroundTaskRegistration> RegisterBackgroundTaskAsync(
             string taskEntryPoint,
             string taskName,
             IBackgroundTrigger trigger,
-            IBackgroundCondition condition)
+            IBackgroundCondition condition = null)
         {
             // Check for existing registrations of this background task.
             var task = BackgroundTaskRegistration.AllTasks
@@ -47,7 +43,15 @@ namespace MegaApp.Services
 
             // If the task already exists, first unregister, then register new task
             if (!task.IsNull()) task.Value.Unregister(true);
-            
+
+            // Check if background task registration is allowed
+            if (!await RequestBackgroundAccessAsync())
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                    "Background tasks registration is not allowed");
+                return null;
+            }
+
             // Register the background task.
             var builder = new BackgroundTaskBuilder
             {
@@ -101,7 +105,7 @@ namespace MegaApp.Services
             var task = BackgroundTaskRegistration.AllTasks
                 .FirstOrDefault(t => t.Value.Name.Equals(taskName));
             
-        // Return task if found, else return null
+            // Return task if found, else return null
             if (!task.IsNull()) return (BackgroundTaskRegistration)task.Value;
             return null;
         }
@@ -113,30 +117,60 @@ namespace MegaApp.Services
             var task = GetBackgroundTask(taskEntryPoint, taskName);
             return task != null;
         }
+    }
+
+    /// <summary>
+    /// Class for the Camera Upload background task service.
+    /// </summary>
+    public static class CameraUploadService
+    {
+        /// <summary>
+        /// Entry point of the Camera Upload background task service.
+        /// </summary>
+        public const string TaskEntryPoint = "BackgroundTaskService.CameraUploadTask";
 
         /// <summary>
-        /// Reset the "Camera Uploads" service if is enabled
+        /// Name of the Camera Upload background task service.
         /// </summary>
-        public static void ResetCameraUploadsTask()
+        public const string TaskName = "CameraUploadTask";
+
+        /// <summary>
+        /// Time trigger of the Camera Upload background task service.
+        /// </summary>
+        public const int TaskTimeTrigger = 15;
+
+        /// <summary>
+        /// Activate or deactivate the background task
+        /// </summary>
+        /// <param name="status">TRUE to activate and FALSE to deactivate.</param>
+        /// <returns>TRUE if no error or FALSE in other case.</returns>
+        public static async Task<bool> SetBackgroundTaskAsync(bool status)
         {
-            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Resetting CAMERA UPLOADS service...");
+            if (status)
+            {
+                var task = await TaskService.RegisterBackgroundTaskAsync(
+                    TaskEntryPoint, TaskName, new TimeTrigger(TaskTimeTrigger, false));
 
-            if (!IsBackGroundTaskActive(CameraUploadTaskEntryPoint, CameraUploadTaskName))
-            {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "CAMERA UPLOADS service is currently disabled");
-                return;
+                if (task == null)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        "Can't enable CAMERA UPLOADS service (background tasks not allowed)");
+                    return false;
+                }
+
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Enable CAMERA UPLOADS service");
+                await SdkService.GetCameraUploadRootNodeAsync();
+                return true;
             }
 
-            try
-            {
-                UnregisterBackgroundTask(CameraUploadTaskEntryPoint, CameraUploadTaskName);
-                RegisterBackgroundTask(CameraUploadTaskEntryPoint, CameraUploadTaskName,
-                    new TimeTrigger(CameraUploadTaskTimeTrigger, false), null);
-            }
-            catch (Exception e)
-            {
-                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error resetting CAMERA UPLOADS service", e);
-            }
+            TaskService.UnregisterBackgroundTask(TaskEntryPoint, TaskName);
+
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Disable CAMERA UPLOADS service");
+
+            // Reset the date
+            SettingsService.SaveSettingToFile(SettingsService.ImageDateSetting, DateTime.MinValue);
+
+            return true;
         }
     }
 }
