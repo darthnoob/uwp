@@ -162,7 +162,7 @@
     <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
-    <value>Создать уч. запись</value>
+    <value>Зарегистрироваться</value>
     <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateFolder" xml:space="preserve">
@@ -626,7 +626,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortBy" xml:space="preserve">
-    <value>СОРТИРОВАТЬ ПО</value>
+    <value>Сортировать по</value>
     <comment>Label for any 'Sort by' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ResumeSession" xml:space="preserve">
@@ -1724,11 +1724,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <value>Сканируйте или скопируйте seed-ключ в приложение-аутентификатор. Сохраните seed-ключ в безопасном месте на случай потери телефона.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <value>После ввода seed-ключа в приложение-аутентификатор введите появившийся шестизначный код.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
@@ -1816,7 +1816,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
   </data>
   <data name="UI_FindApp" xml:space="preserve">
-    <value>Find app</value>
+    <value>Найти</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

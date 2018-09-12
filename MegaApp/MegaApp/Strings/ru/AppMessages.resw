@@ -1386,7 +1386,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <value>Не удалось проверить статус двухфакторной аутентификации</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

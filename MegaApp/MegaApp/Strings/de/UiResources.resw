@@ -443,7 +443,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyKey" xml:space="preserve">
-    <value>Copy key</value>
+    <value>Schlüssel kopieren</value>
     <comment>Label for any 'Copy key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SaveKey" xml:space="preserve">
@@ -686,7 +686,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedStorage" xml:space="preserve">
-    <value>Used storage</value>
+    <value>Belegter Speicherplatz</value>
     <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedTransferQuota" xml:space="preserve">
@@ -1457,7 +1457,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Referral bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RegistrationBonus" xml:space="preserve">
-    <value>Registration bonus</value>
+    <value>Anmeldebonus</value>
     <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusStorage" xml:space="preserve">
@@ -1606,11 +1606,11 @@ Keep the {0} code because is for include the number of selected items in runtime
 NOTE: Max. length 20 characters.</comment>
   </data>
   <data name="UI_DoNotShowMeAgain" xml:space="preserve">
-    <value>Don’t show me again</value>
+    <value>Nicht wieder anzeigen</value>
     <comment>Label for a check box included into a dialog to indicate don't show it again.</comment>
   </data>
   <data name="UI_TestPassword" xml:space="preserve">
-    <value>Test Password</value>
+    <value>Passwort prüfen</value>
     <comment>Label for any 'Test Password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SavedForOffline" xml:space="preserve">
@@ -1656,7 +1656,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_OpenBrowser" xml:space="preserve">
-    <value>Open browser</value>
+    <value>Browser öffnen</value>
     <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
   </data>
   <data name="UI_Ignore" xml:space="preserve">
@@ -1724,11 +1724,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <value>Scannen Sie diesen Code mit Ihrer Authentifizierungs-App (oder kopieren Sie Ihn). Für den Fall des Verlusts Ihres Mobilgeräts bewahren Sie bitte eine Kopie an einem sicheren Ort auf.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <value>Geben Sie nach Konfiguration Ihrer Authentifizierungs-App den angezeigten sechsstelligen Code ein.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
@@ -1768,7 +1768,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CloseOtherSessions" xml:space="preserve">
-    <value>Alle anderen Sessions terminieren</value>
+    <value>Alle anderen Sitzungen beenden</value>
     <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
   </data>
   <data name="UI_SessionManagement" xml:space="preserve">

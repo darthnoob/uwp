@@ -130,7 +130,7 @@
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer définitivement tous les fichiers de la corbeille ?</value>
+    <value>Voulez-vous vraiment supprimer définitivement tous les fichiers de la corbeille ?</value>
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
@@ -535,7 +535,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
   <data name="AM_CancelDownloadsQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment annuler les téléchargements en attente ?</value>
+    <value>Voulez-vous vraiment annuler tous les téléchargements en attente ?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending downloads.</comment>
   </data>
   <data name="AM_CancelSingleDownloadQuestion" xml:space="preserve">
@@ -547,7 +547,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when a user wants to cancel a selected upload.</comment>
   </data>
   <data name="AM_CancelUploadsQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment annuler les téléversements en attente ?</value>
+    <value>Voulez-vous vraiment annuler tous les téléversements en attente ?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending uploads.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinQuestion" xml:space="preserve">
@@ -574,7 +574,7 @@ Preserve the {0} code because is for include the number of nodes to be moved in 
     <comment>Title of the dialog displayed when remove successfully multiple nodes definitely from the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_MultiSelectRemoveQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer {0} éléments ?</value>
+    <value>Voulez-vous vraiment supprimer {0} éléments ?</value>
     <comment>Message of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
@@ -906,7 +906,7 @@ Keep the '{0}' code because is for include the number of contacts in runtime.</c
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment quitter {0} dossiers partagés?</value>
+    <value>Voulez-vous vraiment quitter {0} dossiers partagés ?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
@@ -920,7 +920,7 @@ Preserve the {0} code because is for include the number of shared folders in run
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment quitter « {0} »?</value>
+    <value>Voulez-vous vraiment quitter « {0} » ?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -989,7 +989,7 @@ Preserve the {0} code because is for include the number of shared folders in run
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
-    <value>Voulez-vous vraiment supprimer l’accès à « {0} »?</value>
+    <value>Voulez-vous vraiment supprimer l’accès à « {0} » ?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
@@ -1386,7 +1386,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <value>Échec de vérification de l’état de l’identification à deux facteurs.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

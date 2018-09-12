@@ -1280,7 +1280,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>ครั้งต่อไปที่คุณลงชื่อเข้าใช้บัญชีของคุณ คุณจะได้รับแจ้งเตือนให้กรอกรหัส 6 หลักที่ได้รับจากแอปตัวรับรองความถูกต้องของคุณ</value>
+    <value>ครั้งต่อไปที่คุณลงชื่อเข้าใช้บัญชีของคุณ ระบบจะขอให้คุณกรอกรหัส 6 หลักที่ได้รับจากแอปตัวรับรองความถูกต้องของคุณ</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1386,7 +1386,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <value>ไม่สามารถตรวจสอบสถานะการรับรองความถูกต้องด้วยสองปัจจัยได้</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>
