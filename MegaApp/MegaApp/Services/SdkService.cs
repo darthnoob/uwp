@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using mega;
@@ -128,7 +129,7 @@ namespace MegaApp.Services
             if (cameraUploadNode != null) return cameraUploadNode;
 
             // If node not found and the service is enabled, create a new Camera Uploads node
-            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
             {
                 var createFolder = new CreateFolderRequestListenerAsync();
                 var result = await createFolder.ExecuteAsync(() =>
@@ -236,7 +237,13 @@ namespace MegaApp.Services
             SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), useStagingServer);
 
             // Reset the "Camera Uploads" service if is enabled
-            TaskService.ResetCameraUploadsTask();
+            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Resetting CAMERA UPLOADS service (API URL changed)");
+                await TaskService.RegisterBackgroundTaskAsync(
+                    CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName,
+                    new TimeTrigger(CameraUploadService.TaskTimeTrigger, false));
+            }
 
             OnApiUrlChanged();
         }
