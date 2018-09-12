@@ -3,7 +3,10 @@
 //Only debug levels FATAL, ERROR, WARNING and INFO can be shown in Release builds
 //DEBUG and MAX are reserved for Debug builds
 
+using System;
 using System.Diagnostics;
+using System.IO;
+using Windows.Storage;
 using mega;
 
 namespace BackgroundTaskService.MegaApi
@@ -48,7 +51,21 @@ namespace BackgroundTaskService.MegaApi
                 message += " (" + source + ")"; 
             }
 
-            Debug.WriteLine("{0}{1}BACKGROUND TASK SERVICE - {2}", time, logLevelString, message);
+            Debug.WriteLine("{0}{1}CAMERA UPLOADS - {2}", time, logLevelString, message);
+
+            // If the APP log file exists (DEBUG mode enabled) append the "CAMERA UPLOADS" log messages.
+            string logFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "offline", "MEGA_UWP.log");
+            if (File.Exists(logFilePath))
+            {
+                try
+                {
+                    using (StreamWriter sw = File.AppendText(logFilePath))
+                    {
+                        sw.WriteLine("{0}{1}CAMERA UPLOADS - {2}", time, logLevelString, message);
+                    }
+                }
+                catch (Exception) { }
+            }
         }
     }
 }

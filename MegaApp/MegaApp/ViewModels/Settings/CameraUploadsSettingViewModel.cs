@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using mega;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels.Settings
@@ -19,44 +20,18 @@ namespace MegaApp.ViewModels.Settings
         public override bool GetValue(bool defaultValue)
         {
             return TaskService.IsBackGroundTaskActive(
-                TaskService.CameraUploadTaskEntryPoint,
-                TaskService.CameraUploadTaskName);
+                CameraUploadService.TaskEntryPoint,
+                CameraUploadService.TaskName);
         }
 
         public override async Task<bool> StoreValue(string key, bool value)
         {
             // Store true/false also in the local settings
             // On app start up we can check if task should be available and active by reading this value 
-            await base.StoreValue(key, value);
+            var result = await base.StoreValue(key, value);
 
             // Activate or deactivate the background task
-            if(value)
-            {
-                if (!await TaskService.RequestBackgroundAccessAsync()) return false;
-
-                TaskService.UnregisterBackgroundTask(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName);
-
-                TaskService.RegisterBackgroundTask(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName,
-                    new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
-                    null);
-
-                await SdkService.GetCameraUploadRootNodeAsync();
-
-                return true;
-            }
-
-            TaskService.UnregisterBackgroundTask(
-                TaskService.CameraUploadTaskEntryPoint,
-                TaskService.CameraUploadTaskName);
-
-            // Reset the date
-            SettingsService.SaveSettingToFile(SettingsService.ImageDateSetting, DateTime.MinValue);
-
-            return true;
+            return result & await CameraUploadService.SetBackgroundTaskAsync(value);
         }
     }
 }

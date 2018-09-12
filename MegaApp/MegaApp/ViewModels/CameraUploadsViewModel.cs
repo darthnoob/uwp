@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
-using Windows.ApplicationModel.Background;
 using mega;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
@@ -115,35 +114,8 @@ namespace MegaApp.ViewModels
 
         private async void SetBackgroundTask(bool value)
         {
-            if (value)
-            {
-                if (!await TaskService.RequestBackgroundAccessAsync())
-                {
-                    CameraUploadsTaskIsOn = false;
-                    return;
-                }
-
-                TaskService.UnregisterBackgroundTask(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName);
-
-                TaskService.RegisterBackgroundTask(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName,
-                    new TimeTrigger(TaskService.CameraUploadTaskTimeTrigger, false),
-                    null);
-
-                await SdkService.GetCameraUploadRootNodeAsync();
-            }
-            else
-            {
-                TaskService.UnregisterBackgroundTask(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName);
-
-                // Reset the date
-                SettingsService.SaveSettingToFile(SettingsService.ImageDateSetting, DateTime.MinValue);
-            }
+            CameraUploadsTaskIsOn = await CameraUploadService.SetBackgroundTaskAsync(value) ? value :
+                TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName);
         }
 
         public override void UpdateNetworkStatus()
@@ -169,16 +141,16 @@ namespace MegaApp.ViewModels
             get
             {
                 _cameraUploadsTaskIsOn = TaskService.IsBackGroundTaskActive(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName);
+                    CameraUploadService.TaskEntryPoint,
+                    CameraUploadService.TaskName);
                 return _cameraUploadsTaskIsOn;
             }
             set
             {
                 if (!SetField(ref _cameraUploadsTaskIsOn, value)) return;
                 var active = TaskService.IsBackGroundTaskActive(
-                    TaskService.CameraUploadTaskEntryPoint,
-                    TaskService.CameraUploadTaskName);
+                    CameraUploadService.TaskEntryPoint,
+                    CameraUploadService.TaskName);
 
                 if (_cameraUploadsTaskIsOn != active)
                     SetBackgroundTask(_cameraUploadsTaskIsOn);
