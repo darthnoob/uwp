@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
-using Windows.ApplicationModel.Background;
 using mega;
 using MegaApp.Enums;
 using MegaApp.Interfaces;
