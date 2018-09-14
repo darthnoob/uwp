@@ -1214,7 +1214,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>¡Contraseña incorrecta! Hazuna copia de seguridad de la Clave de recuperación lo antes posible.</value>
+    <value>¡Contraseña incorrecta! Guarda tu Clave de recuperación lo antes posible.</value>
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
@@ -1292,19 +1292,19 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
   </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
-    <value>El código ha sido copiado al portapapeles.</value>
+    <value>La clave ha sido copiada al portapapeles.</value>
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
-    <value>Error al copiar el código al portapapeles. Inténtalo de nuevo.</value>
+    <value>No se ha podido copiar la clave al portapapeles. Inténtalo de nuevo.</value>
     <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
-    <value>Error al copiar el código</value>
+    <value>No se ha podido copiar la clave</value>
     <comment>Title of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopied_Title" xml:space="preserve">
-    <value>Código copiado</value>
+    <value>Clave copiada</value>
     <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
@@ -1386,7 +1386,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <value>Error al verificar el estado de la autenticación de dos factores.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

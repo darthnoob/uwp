@@ -619,7 +619,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
-    <value>Account blockiert</value>
+    <value>Account gesperrt</value>
     <comment>Title of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_SessionIDError" xml:space="preserve">
@@ -661,7 +661,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>Der Rettungsschlüssel wurde in die Zwischenablage kopiert</value>
+    <value>Der Rettungsschlüssel wurde in die Zwischenablage kopiert. Bewahren Sie ihn an einem sicheren Ort auf.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -837,7 +837,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
-    <value>Awaiting email confirmation</value>
+    <value>Warte auf E-Mail-Bestätigung</value>
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
@@ -1198,7 +1198,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
+    <value>Aufgrund der sicheren MEGA-Verschlüsselungstechnologie ist ein Zurücksetzen Ihres Passworts ohne Datenverlust nicht möglich. Bitte stellen Sie sicher, dass Sie sich an Ihr Passwort erinnern können.</value>
     <comment>Message to describe the purpose of the password reminder dialog.</comment>
   </data>
   <data name="AM_PasswordReminder_Title" xml:space="preserve">
@@ -1218,7 +1218,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
-    <value>Test Password</value>
+    <value>Passwort prüfen</value>
     <comment>Title of the test password dialog.</comment>
   </data>
   <data name="AM_RecoveryKeyExported" xml:space="preserve">
@@ -1280,7 +1280,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator app.</value>
+    <value>Beim nächsten Login werden Sie nach einem sechsstelligen Code gefragt, den Sie von Ihrer Authentifizierungs-App erhalten.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1386,7 +1386,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the Multi-Factor Authentication status.</value>
+    <value>Failed to check the status of two factor authentication.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

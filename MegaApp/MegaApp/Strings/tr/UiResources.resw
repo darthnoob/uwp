@@ -1716,7 +1716,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
-    <value>Tohumu kopyalayın</value>
+    <value>Kodu kopyala</value>
     <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
   </data>
   <data name="UI_Disable" xml:space="preserve">
@@ -1724,11 +1724,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <value>Kaynak kodunu Kimlik Doğrulama uygulamanıza tarayın veya kopyalayın. Telefonunuzu kaybetme ihtimalinize karşın bu kaynak kodunu güvenli bir yere yedeklediğinizden emin olun.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <value>Kaynak Kodunuzu Kimlik Doğrulama uygulamanızda kurduktan sonra sağlanan 6 haneli kodu girin.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
@@ -1816,7 +1816,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
   </data>
   <data name="UI_FindApp" xml:space="preserve">
-    <value>Find app</value>
+    <value>Uygulama bul</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

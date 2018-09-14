@@ -190,7 +190,7 @@
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
-    <value>Chưa có mục nào đựoc tải về vào mục lưu về ngoại tuyến</value>
+    <value>Không có mục nào lưu về ngoại tuyến</value>
     <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyRubbishBin" xml:space="preserve">
@@ -1708,7 +1708,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
   </data>
   <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
-    <value>Two-factor authentication is a second layer of security for your account.</value>
+    <value>Chức năng xác minh 2-bước là một lớp bảo mật thứ nhì cho tài khoản.</value>
     <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
   </data>
   <data name="UI_Setup2FA" xml:space="preserve">
@@ -1724,11 +1724,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed directly into your authenticator app. Be sure to backup this seed to a safe place in case you lose your phone.</value>
+    <value>Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp mất điện thoại.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your authenticator app enter the 6-digit code provided.</value>
+    <value>Sau khi chủng tử được app Lập Xác Thực nhận vào, điền vào đoạn mã dài 6 chữ số hiện ra.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
@@ -1776,7 +1776,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
   </data>
   <data name="UI_SessionManagementDescription" xml:space="preserve">
-    <value>This will log you out on all other active sessions except the current one. You will need to re-login to your other devices to continue using MEGA.</value>
+    <value>Thao tác này sẽ đăng xuất tài khoản ra khỏi tất cả các thiết bị đang sử dụng, ngoại trừ phiên hiện hành này. Khi muốn tiếp tục  sử dụng MEGA cần phải tự đăng nhập lại.</value>
     <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
   </data>
   <data name="UI_Warning" xml:space="preserve">
@@ -1796,7 +1796,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedCache" xml:space="preserve">
-    <value>Used cache</value>
+    <value>Bộ nhớ tạm đang dùng</value>
     <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearOffline" xml:space="preserve">
@@ -1816,7 +1816,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
   </data>
   <data name="UI_FindApp" xml:space="preserve">
-    <value>Find app</value>
+    <value>Tìm app</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>
