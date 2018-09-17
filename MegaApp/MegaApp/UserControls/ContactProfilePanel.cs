@@ -47,13 +47,23 @@ namespace MegaApp.UserControls
             }
         }
 
+        #region Events
+
+        public event EventHandler CloseEvent;
+
+        #endregion
+
+        #region Controls
+
         private AppBarButton _sortSharedItemsButton;
         private Button _removeContact;
         private ListView _sharedItems;
         private Pivot _pivotControl;
         private PivotItem _sharedItemsPivot;
         private Grid _sharedItemsTopCommandBarArea;
-     
+
+        #endregion
+
         public ContactProfilePanel()
         {
             this.DefaultStyleKey = typeof(ContactProfilePanel);
@@ -90,6 +100,19 @@ namespace MegaApp.UserControls
 
         protected void OnContactChanged(ContactViewModel oldContact, ContactViewModel newContact)
         {
+            if(oldContact?.SharedItems?.ItemCollection != null)
+            {
+                oldContact.SharedItems.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
+                oldContact.SharedItems.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
+                oldContact.SharedItems.ItemCollection.AllSelected -= OnAllSelected;
+            }
+
+            if (newContact == null)
+            {
+                this.CloseEvent?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+
             // If achievements is enabled, retrieve achievement data for the new contact
             if (AccountService.AccountAchievements.IsAchievementsEnabled)
             {
@@ -99,21 +122,14 @@ namespace MegaApp.UserControls
                              model.AchievementClass.Value == MAchievementClass.MEGA_ACHIEVEMENT_INVITE);
 
                 // Find the achievements invite for current contact
-                var referralContact = (ContactViewModel) referralAward?.Contacts.ItemCollection.Items.FirstOrDefault(contact =>
-                    contact.Handle == newContact.Handle);
+                var referralContact = (ContactViewModel)referralAward?.Contacts.ItemCollection.Items.FirstOrDefault(
+                    contact => contact.Handle == newContact.Handle);
 
                 if (referralContact != null)
                 {
                     // Copy achievement information to the new contact
                     newContact.CopyAchievementDetails(referralContact);
                 }
-            }
-            
-            if(oldContact?.SharedItems?.ItemCollection != null)
-            {
-                oldContact.SharedItems.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
-                oldContact.SharedItems.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
-                oldContact.SharedItems.ItemCollection.AllSelected -= OnAllSelected;
             }
 
             if (newContact?.SharedItems?.ItemCollection != null)

@@ -50,10 +50,14 @@ namespace MegaApp.Views
             this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectEnabled += OnMultiSelectEnabled;
             this.ViewModel.OutgoingContactRequests.ItemCollection.MultiSelectDisabled += OnMultiSelectDisabled;
             this.ViewModel.OutgoingContactRequests.ItemCollection.AllSelected += OnAllSelected;
+
+            this.ContactProfilePanelControl.CloseEvent += OnCloseContactProfile;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+            this.ContactProfilePanelControl.CloseEvent -= OnCloseContactProfile;
+
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectEnabled -= OnMultiSelectEnabled;
             this.ViewModel.MegaContacts.ItemCollection.MultiSelectDisabled -= OnMultiSelectDisabled;
             this.ViewModel.MegaContacts.ItemCollection.AllSelected -= OnAllSelected;
