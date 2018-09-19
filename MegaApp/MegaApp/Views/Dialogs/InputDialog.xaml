@@ -19,7 +19,10 @@
     PrimaryButtonCommand="{x:Bind ViewModel.PrimaryButtonCommand}"
     SecondaryButtonCommand="{x:Bind ViewModel.SecondaryButtonCommand}"
     IsPrimaryButtonEnabled="{Binding PrimaryButtonState}"
-    Loaded="OnLoaded">
+    Loaded="OnLoaded"
+    Opened="OnOpened"
+    Closing="OnClosing"
+    Closed="OnClosed">
 
     <Grid Margin="24, 0, 0, 0">
         <StackPanel>
@@ -30,12 +33,37 @@
                 Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"/>
             <TextBox
                 x:Name="InputTextBox"
+                BorderBrush="{Binding InputState, Converter={StaticResource InputStateToColorConverter}}"
                 Height="{StaticResource InputHeight}"
                 Margin="{StaticResource StackedInputMargin}"
+                InputScope="{x:Bind ViewModel.InputScope, Mode=OneTime}"
                 IsEnabled="{x:Bind ViewModel.ControlState, Mode=OneWay}"
+                KeyDown="OnInputTextBoxKeyDown"
+                MaxLength="{x:Bind ViewModel.Settings.MaxLength, Mode=OneTime}"
+                PlaceholderText="{x:Bind ViewModel.Settings.PlaceholderText, Mode=OneTime}"
                 Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Style="{StaticResource MegaTextBoxStyle}"
                 TabIndex="0"/>
+            <Grid Margin="0,4,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox
+                    Grid.Column="0"
+                    Margin="0,0,12,0"
+                    MaxWidth="16" MaxHeight="16"
+                    VerticalAlignment="Top"
+                    Visibility="{Binding WarningText, Converter={StaticResource StringVisibilityConverter}}">
+                    <PathIcon 
+                        Data="{x:Bind ViewModel.WarningIconPathData, Mode=OneTime}"
+                        Foreground="{StaticResource MegaRedColorBrush}" />
+                </Viewbox>
+                <TextBlock
+                    Grid.Column="1"
+                    Style="{StaticResource MegaDialogErrorFontStyle}"
+                    Text="{x:Bind ViewModel.WarningText, Mode=OneWay}"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </dialogViews:BaseInputDialog>

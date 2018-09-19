@@ -7,6 +7,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.Extensions;
+using MegaApp.UserControls;
 using MegaApp.ViewModels;
 using MegaApp.ViewModels.Contacts;
 using MegaApp.ViewModels.Dialogs;
@@ -21,6 +22,27 @@ namespace MegaApp.Services
     /// </summary>
     internal static class DialogService
     {
+        #region Properties
+
+        /// <summary>
+        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// </summary>
+        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+
+        /// <summary>
+        /// Instance of the input dialog displayed
+        /// </summary>
+        private static InputDialog InputDialogInstance;
+
+        /// <summary>
+        /// Instance of the MFA code input dialog displayed
+        /// </summary>
+        private static MultiFactorAuthCodeInputDialog MultiFactorAuthCodeInputDialogInstance;
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Check if there is any dialog visible
         /// </summary>
@@ -129,7 +151,8 @@ namespace MegaApp.Services
         public static async Task<string> ShowInputDialogAsync(string title, string message,
             InputDialogSettings settings = null)
         {
-            var dialog = new InputDialog(title, message, null, null, settings);
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, null, null, settings);
             var result = await dialog.ShowAsyncQueueBool();
             return result ? dialog.ViewModel.InputText : null;
         }
@@ -145,9 +168,91 @@ namespace MegaApp.Services
         public static async Task<string> ShowInputDialogAsync(string title, string message,
             string primaryButton, string secondaryButton, InputDialogSettings settings = null)
         {
-            var dialog = new InputDialog(title, message, primaryButton, secondaryButton, settings);
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, primaryButton, secondaryButton, settings);
             var result = await dialog.ShowAsyncQueueBool();
             return result ? dialog.ViewModel.InputText : null;
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputActionDialogAsync(string title, string message,
+            Func<string, bool> dialogAction, InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogAction, null, null, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputActionDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, Func<string, bool> dialogAction,
+            InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogAction, primaryButton, secondaryButton, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an async action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputAsyncActionDialogAsync(string title, string message,
+            Func<string, Task<bool>> dialogActionAsync, InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance = 
+                new InputDialog(title, message, dialogActionAsync, null, null, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog which also executes an async action.
+        /// </summary>
+        /// <param name="title">Title of the input dialog.</param>
+        /// <param name="message">Message of the input dialog.</param>
+        /// <param name="primaryButton">Label of the primary button of the input dialog.</param>
+        /// <param name="secondaryButton">Label of the secondary button of the input dialog.</param>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <param name="settings">Input dialog behavior/option settings.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowInputAsyncActionDialogAsync(string title, string message,
+            string primaryButton, string secondaryButton, Func<string, Task<bool>> dialogActionAsync,
+            InputDialogSettings settings = null)
+        {
+            var dialog = InputDialogInstance =
+                new InputDialog(title, message, dialogActionAsync, primaryButton, secondaryButton, settings);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Set the warning message of the input dialog displayed
+        /// </summary>
+        /// <param name="warningMessage">Text of the warning message</param>
+        public static void SetInputDialogWarningMessage(string warningMessage)
+        {
+            if (InputDialogInstance?.ViewModel == null) return;
+            InputDialogInstance.ViewModel.WarningText = warningMessage;
+            InputDialogInstance.ViewModel.InputState= InputState.Warning;
         }
 
         /// <summary>
@@ -208,9 +313,13 @@ namespace MegaApp.Services
         }
 
         /// <summary>
-        /// Storage the instance of the <see cref="AwaitEmailConfirmationDialog"/>
+        /// Show a dialog to change the account email
         /// </summary>
-        private static AwaitEmailConfirmationDialog awaitEmailConfirmationDialog;
+        public static async void ShowChangeEmailDialog()
+        {
+            var changeEmailDialog = new ChangeEmailDialog();
+            await changeEmailDialog.ShowAsyncQueue();
+        }
 
         /// <summary>
         /// Show a dialog indicating that is waiting for an email confirmation
@@ -254,12 +363,89 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to setup the Multi-Factor Authentication for the account
+        /// </summary>
+        /// <returns>TRUE if the user continues with the setup process or FALSE in other case</returns>
+        public static async Task<bool> ShowMultiFactorAuthSetupDialogAsync()
+        {
+            var mfaSetupDialog = new MultiFactorAuthSetupDialog();
+            await mfaSetupDialog.ShowAsyncQueue();
+            return mfaSetupDialog.ViewModel.DialogResult;
+        }
+
+        /// <summary>
+        /// Show a dialog to indicate that the user has successfully enabled the Multi-Factor Authentication
+        /// </summary>
+        public static async void ShowMultiFactorAuthEnabledDialog()
+        {
+            var mfaEnabledDialog = new MultiFactorAuthEnabledDialog();
+            await mfaEnabledDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
+        /// Show a dialog to indicate that the user has successfully disabled the Multi-Factor Authentication
+        /// </summary>
+        public static async void ShowMultiFactorAuthDisabledDialog()
+        {
+            var mfaDisabledDialog = new MultiFactorAuthDisabledDialog();
+            await mfaDisabledDialog.ShowAsyncQueue();
+        }
+
+        /// <summary>
+        /// Show an input dialog to type the MFA code and execute an action.
+        /// </summary>
+        /// <param name="dialogAction">Action to do by the primary button.</param>
+        /// <param name="title">Custom title of the input dialog.</param>
+        /// <param name="message">Custom message of the input dialog.</param>
+        /// <param name="showLostDeviceLink">Indicates if show the lost device link or not.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowMultiFactorAuthCodeInputDialogAsync(
+            Func<string, bool> dialogAction,
+            string title = null, string message = null, bool showLostDeviceLink = true)
+        {
+            var dialog = MultiFactorAuthCodeInputDialogInstance =
+                new MultiFactorAuthCodeInputDialog(dialogAction, title, message, showLostDeviceLink);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Show an input dialog to type the MFA code and execute an async action.
+        /// </summary>
+        /// <param name="dialogActionAsync">Async action to do by the primary button.</param>
+        /// <param name="title">Custom title of the input dialog.</param>
+        /// <param name="message">Custom message of the input dialog.</param>
+        /// <param name="showLostDeviceLink">Indicates if show the lost device link or not.</param>
+        /// <returns>The dialog action result as <see cref="bool"/> value.</returns>
+        public static async Task<bool> ShowAsyncMultiFactorAuthCodeInputDialogAsync(
+            Func<string, Task<bool>> dialogActionAsync,
+            string title = null, string message = null, bool showLostDeviceLink = true)
+        {
+            var dialog = MultiFactorAuthCodeInputDialogInstance =
+                new MultiFactorAuthCodeInputDialog(dialogActionAsync, title, message, showLostDeviceLink);
+            return await dialog.ShowAsyncQueueBool();
+        }
+
+        /// <summary>
+        /// Set the warning message of the MFA code input dialog displayed
+        /// </summary>
+        /// <param name="warningMessage">Text of the warning message</param>
+        public static void SetMultiFactorAuthCodeInputDialogWarningMessage(string warningMessage = null)
+        {
+            if (MultiFactorAuthCodeInputDialogInstance?.ViewModel == null) return;
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.InputState = InputState.Warning;
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.DigitColor =
+                (SolidColorBrush)Application.Current.Resources["MegaRedColorBrush"];
+            MultiFactorAuthCodeInputDialogInstance.ViewModel.WarningText = warningMessage ??
+                ResourceService.AppMessages.GetString("AM_InvalidCode");
+        }
+
+        /// <summary>
         /// Shows a dialog to allow copy a node link to the clipboard or share it using other app
         /// </summary>
         /// <param name="node">Node to share the link</param>
         public static async void ShowShareLink(NodeViewModel node)
         {
-            var dialog = new ContentDialog
+            var dialog = new MegaContentDialog
             {
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = true,
@@ -708,5 +894,7 @@ namespace MegaApp.Services
 
             return menuFlyout;
         }
+
+        #endregion
     }
 }

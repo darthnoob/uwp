@@ -4,7 +4,11 @@ namespace MegaApp.ViewModels.Dialogs
 {
     public class AwaitEmailConfirmationDialogViewModel : BaseContentDialogViewModel
     {
-        public AwaitEmailConfirmationDialogViewModel() : base() { }
+        public AwaitEmailConfirmationDialogViewModel() : base()
+        {
+            this.TitleText = ResourceService.AppMessages.GetString("AM_AwaitingEmailConfirmation");
+            this.MessageText = ResourceService.AppMessages.GetString("AM_AwaitingEmailConfirmationDescription");
+    }
 
         #region Properties
 
@@ -22,8 +26,6 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string TitleText => ResourceService.AppMessages.GetString("AM_AwaitingEmailConfirmation");
-        public string DescriptionText => ResourceService.AppMessages.GetString("AM_AwaitingEmailConfirmationDescription");
         public string NewEmailTitleText => ResourceService.UiResources.GetString("UI_NewEmail");
         
         #endregion

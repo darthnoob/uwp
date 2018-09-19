@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ES_CloudDriveHeader" xml:space="preserve">
-    <value>清空云盘</value>
+    <value>空的云盘</value>
     <comment>Header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CloudDriveSubHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>清空文件夹</value>
+    <value>文件夹中没有文件</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">

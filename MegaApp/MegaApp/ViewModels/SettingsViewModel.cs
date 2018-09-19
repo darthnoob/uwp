@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using MegaApp.Enums;
+using MegaApp.MegaApi;
 using MegaApp.Services;
+using MegaApp.ViewModels.Dialogs;
 using MegaApp.ViewModels.Settings;
 
 namespace MegaApp.ViewModels
@@ -10,7 +13,16 @@ namespace MegaApp.ViewModels
         {
             // General section
             this.GeneralSettingSections = new List<SettingSectionViewModel>();
-                        
+
+            var storageLocationSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_StorageLocation")
+            };
+            storageLocationSettings.Items.Add(new ClearCacheSettingViewModel());
+            storageLocationSettings.Items.Add(new ClearOfflineSettingViewModel());
+
+            this.GeneralSettingSections.Add(storageLocationSettings);
+
             var aboutSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_About")
@@ -39,7 +51,59 @@ namespace MegaApp.ViewModels
             {
                 Header = ResourceService.UiResources.GetString("UI_CameraUploads")
             };
-            cameraUploadSettings.Items.Add(new CameraUploadsSettingViewModel());
+
+            var cameraUploads = new CameraUploadsSettingViewModel();
+            cameraUploads.Initialize();
+            cameraUploadSettings.Items.Add(cameraUploads);
+
+            var howCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                ResourceService.UiResources.GetString("UI_HowToUpload"), null, "CameraUploadsSettingsHowKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_EthernetWifiOnly"),
+                                    Value = (int) CameraUploadsConnectionType.EthernetWifiOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_AnyConnectionType"),
+                                    Value = (int) CameraUploadsConnectionType.Any
+                            }
+                    }) {IsVisible = cameraUploads.Value};
+            cameraUploadSettings.Items.Add(howCameraUploads);
+
+            var fileCameraUploads = new CameraUploadsSelectionSettingViewModel(
+                ResourceService.UiResources.GetString("UI_FileToUpload"), null, "CameraUploadsSettingsFileKey",
+                    new[]
+                    {
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoAndVideo"),
+                                    Value = (int) CameraUploadsFileType.PhotoAndVideo
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_PhotoOnly"),
+                                    Value = (int) CameraUploadsFileType.PhotoOnly
+                            },
+                            new SelectionSettingViewModel.SelectionOption
+                            {
+                                    Description = ResourceService.UiResources.GetString("UI_VideoOnly"),
+                                    Value = (int) CameraUploadsFileType.VideoOnly
+                            }
+                    })
+                    { IsVisible = cameraUploads.Value };
+
+            cameraUploadSettings.Items.Add(fileCameraUploads);
+
+            cameraUploads.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName != "Value") return;
+
+                howCameraUploads.IsVisible = cameraUploads.Value;
+                fileCameraUploads.IsVisible = cameraUploads.Value;
+            };
 
             this.CameraUploadSettingSections.Add(cameraUploadSettings);
 
@@ -53,7 +117,34 @@ namespace MegaApp.ViewModels
             recoveryKeySettings.Items.Add(SettingsService.RecoveryKeySetting);
 
             this.SecuritySettingSections.Add(recoveryKeySettings);
+
+            if (SdkService.MegaSdk.multiFactorAuthAvailable())
+            {
+                var multiFactorAuthSettings = new SettingSectionViewModel
+                {
+                    Header = ResourceService.UiResources.GetString("UI_TwoFactorAuth"),
+                    Description = ResourceService.UiResources.GetString("UI_TwoFactorAuthSettingsDescription")
+                };
+                multiFactorAuthSettings.Items.Add(new MultiFactorAuthSettingViewModel());
+
+                this.SecuritySettingSections.Add(multiFactorAuthSettings);
+            }
+
+            var sessionManagementSettings = new SettingSectionViewModel
+            {
+                Header = ResourceService.UiResources.GetString("UI_SessionManagement")
+            };
+
+            var closeOtherSessionsSetting = new ButtonSettingViewModel(null,
+                ResourceService.UiResources.GetString("UI_SessionManagementDescription"),
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"), null,
+                this.CloseOtherSessions);
+            sessionManagementSettings.Items.Add(closeOtherSessionsSetting);
+
+            this.SecuritySettingSections.Add(sessionManagementSettings);
         }
+
+        #region Methods
 
         public void Initialize()
         {
@@ -72,6 +163,34 @@ namespace MegaApp.ViewModels
             base.UpdateNetworkStatus();
             SettingsService.RecoveryKeySetting.UpdateNetworkStatus();
         }
+
+        private async void CloseOtherSessions()
+        {
+            var result = await DialogService.ShowOkCancelAsync(
+                ResourceService.UiResources.GetString("UI_Warning"),
+                ResourceService.AppMessages.GetString("AM_CloseOtherSessionsQuestionMessage"),
+                TwoButtonsDialogType.YesNo);
+
+            if (!result) return;
+
+            var killAllSessions = new KillAllSessionsListenerAsync();
+            result = await killAllSessions.ExecuteAsync(() =>
+                this.MegaSdk.killAllSessions(killAllSessions));
+
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.UiResources.GetString("UI_Warning"),
+                    ResourceService.AppMessages.GetString("AM_CloseOtherSessionsFailed"));
+                return;
+            }
+
+            ToastService.ShowTextNotification(
+                ResourceService.UiResources.GetString("UI_CloseOtherSessions"),
+                ResourceService.AppMessages.GetString("AM_CloseOtherSessionsSuccess"));
+        }
+
+        #endregion
 
         #region Properties
 

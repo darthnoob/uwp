@@ -138,7 +138,7 @@
     <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>クラウドドライブ</value>
+    <value>クラウド・ドライブ</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -182,11 +182,11 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>クラウドドライブにあるファイルなし</value>
+    <value>あなたのクラウドデバイスにはファイルが存在しません。</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>空フォルダ</value>
+    <value>フォルダにファイルなし</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -727,7 +727,7 @@ Preserve the {0} code because is for include the name of the destination folder 
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>ストレージ＆転送</value>
-    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+    <comment>Title of the 'Storage &amp; Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
     <value>利用可能なストレージ</value>
@@ -1554,7 +1554,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>MEGAアプリをインストールされたご友人ごとに、{0}の無料ストレージと{1}の転送容量を取得します</value>
+    <value>MEGAアプリをインストールされたご友人ごとに、{0}の無料ストレージと{1}の転送容量を取得します。</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
@@ -1630,21 +1630,21 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineBanner" xml:space="preserve">
-    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <value>お使いの端末はオフラインのようです。再接続するか、「オフライン用に保存されました」セクションにアクセスしてください。</value>
     <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
-    <value>Referral status ({0})</value>
+    <value>ご紹介ステータス ({0})</value>
     <comment>Label to indicate that a list of items is sorted by status and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
-    <value>Referral status ({0} of {1})</value>
+    <value>ご紹介ステータス ({0}/{1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Referral status</value>
+    <value>ご紹介ボーナスステータス</value>
     <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
@@ -1652,11 +1652,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EarnedReferralBonus" xml:space="preserve">
-    <value>Earned referral bonus</value>
+    <value>獲得されたご紹介ボーナス</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_OpenBrowser" xml:space="preserve">
-    <value>Open browser</value>
+    <value>ブラウザを開く</value>
     <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
   </data>
   <data name="UI_Ignore" xml:space="preserve">
@@ -1698,5 +1698,125 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_TakedownGuidance" xml:space="preserve">
     <value>テイクダウンに関する手引き</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
+    <value>二要素認証を有効にする</value>
+    <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="UI_TwoFactorAuth" xml:space="preserve">
+    <value>二要素認証</value>
+    <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
+    <value>二要素認証は、アカウント用のセキュリティの第2層です。</value>
+    <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
+  </data>
+  <data name="UI_Setup2FA" xml:space="preserve">
+    <value>二要素認証のセットアップ</value>
+    <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopySeed" xml:space="preserve">
+    <value>シードをコピー</value>
+    <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Disable" xml:space="preserve">
+    <value>オフにする</value>
+    <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MFA_SetupStep1" xml:space="preserve">
+    <value>シードをオーセンティケータアプリにスキャンまたはコピーします。携帯電話を失くした場合に備えて、このシードを安全な場所にバックアップしてください。</value>
+    <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="UI_MFA_SetupStep2" xml:space="preserve">
+    <value>オーセンティケータアプリでシードを設定後、提供された6桁のコードを入力します。</value>
+    <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
+  </data>
+  <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
+    <value>オーセンティケータ端末を紛失しましたか？　</value>
+    <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PhotoAndVideo" xml:space="preserve">
+    <value>フォトと動画</value>
+    <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_PhotoOnly" xml:space="preserve">
+    <value>フォトのみ</value>
+    <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_VideoOnly" xml:space="preserve">
+    <value>動画のみ</value>
+    <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_AnyConnectionType" xml:space="preserve">
+    <value>接続タイプ</value>
+    <comment>Label for any 'Any connection type' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_EthernetWifiOnly" xml:space="preserve">
+    <value>イーサネット/WiFiのみ（定額）</value>
+    <comment>Label for any 'Ethernet/WiFi only (Unmetered)' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_FileToUpload" xml:space="preserve">
+    <value>アップロードファイル</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_HowToUpload" xml:space="preserve">
+    <value>アップロードの方法</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_Export" xml:space="preserve">
+    <value>エキスポート</value>
+    <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CloseOtherSessions" xml:space="preserve">
+    <value>他のセッションを閉じる</value>
+    <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagement" xml:space="preserve">
+    <value>セッション管理</value>
+    <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagementDescription" xml:space="preserve">
+    <value>これにより、現在のセッション以外のすべてのアクティブなセッションでログアウトされます。MEGAを引き続きご利用いただくには、お使いの他の端末に再度ログインする必要があります。</value>
+    <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
+  </data>
+  <data name="UI_Warning" xml:space="preserve">
+    <value>警告</value>
+    <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Restore" xml:space="preserve">
+    <value>修復する</value>
+    <comment>Label for any 'Restore' button, link, text, title, etc. For example for restore files from the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearCache" xml:space="preserve">
+    <value>キャッシュをクリア</value>
+    <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageLocation" xml:space="preserve">
+    <value>ファイル管理</value>
+    <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedCache" xml:space="preserve">
+    <value>使用済みキャッシュ</value>
+    <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearOffline" xml:space="preserve">
+    <value>オフラインコンテンツを削除</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedOffline" xml:space="preserve">
+    <value>オフラインコンテンツ用の使用済みストレージ</value>
+    <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenIn" xml:space="preserve">
+    <value>開けるのに使うのは...</value>
+    <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportRecoveryKeyText" xml:space="preserve">
+    <value>回復キーをエクスポート</value>
+    <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
+  </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>アプリを探す</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

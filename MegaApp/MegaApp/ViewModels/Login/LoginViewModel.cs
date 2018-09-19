@@ -79,7 +79,25 @@ namespace MegaApp.ViewModels.Login
             this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_LoginHeader");
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
-            LoginResult result = await login.ExecuteAsync(() => this.MegaSdk.login(this.Email, this.Password, login));
+            LoginResult result = await login.ExecuteAsync(() =>
+                this.MegaSdk.login(this.Email, this.Password, login));
+
+            if (result == LoginResult.MultiFactorAuthRequired)
+            {
+                await DialogService.ShowAsyncMultiFactorAuthCodeInputDialogAsync(async (string code) =>
+                {
+                    result = await login.ExecuteAsync(() =>
+                    this.MegaSdk.multiFactorAuthLogin(this.Email, this.Password, code, login));
+
+                    if (result == LoginResult.MultiFactorAuthInvalidCode)
+                    {
+                        DialogService.SetMultiFactorAuthCodeInputDialogWarningMessage();
+                        return false;
+                    }
+
+                    return true;
+                });
+            }
 
             // Set default error content
             var errorContent = ResourceService.AppMessages.GetString("AM_LoginFailed");
@@ -90,6 +108,9 @@ namespace MegaApp.ViewModels.Login
 
                     // Validate product subscription license on background thread
                     Task.Run(() => LicenseService.ValidateLicensesAsync());
+
+                    // Initialize the DB
+                    AppService.InitializeDatabase();
 
                     // Fetch nodes from MEGA
                     var fetchNodesResult = await this.FetchNodes();
@@ -120,6 +141,8 @@ namespace MegaApp.ViewModels.Login
                     errorContent = ResourceService.AppMessages.GetString("AM_AccountNotConfirmed");
                     break;
 
+                case LoginResult.MultiFactorAuthRequired:
+                case LoginResult.MultiFactorAuthInvalidCode:
                 case LoginResult.Unknown:
                     break;
 
@@ -253,7 +276,7 @@ namespace MegaApp.ViewModels.Login
             // If is required show the password reminder dialog on background thread
             Task.Run(async () =>
             {
-                if (await AccountService.ShouldShowPasswordReminderDialogAsync())
+                if (await AccountService.ShouldShowPasswordReminderDialogAsync(false))
                     UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(false));
             });
 
@@ -267,6 +290,9 @@ namespace MegaApp.ViewModels.Login
         protected virtual async Task<FetchNodesResult> FetchNodes()
         {
             this.ProgressText = ResourceService.ProgressMessages.GetString("PM_FetchNodesSubHeader");
+
+            this.ControlState = false;
+            this.IsBusy = true;
 
             var fetchNodes = new FetchNodesRequestListenerAsync();
             fetchNodes.DecryptNodes += OnDecryptNodes;

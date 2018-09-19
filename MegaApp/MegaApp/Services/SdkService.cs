@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using mega;
 using MegaApp.MegaApi;
 
@@ -7,6 +10,22 @@ namespace MegaApp.Services
 {
     public static class SdkService
     {
+        #region Events
+
+        /// <summary>
+        /// Event triggered when the API URL is changed.
+        /// </summary>
+        public static event EventHandler ApiUrlChanged;
+
+        /// <summary>
+        /// Event invocator method called when the API URL is changed.
+        /// </summary>
+        private static void OnApiUrlChanged() => ApiUrlChanged?.Invoke(null, EventArgs.Empty);
+
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Main MegaSDK instance of the app
         /// </summary>
@@ -35,6 +54,13 @@ namespace MegaApp.Services
             }
         }
 
+        // Timer to count the actions needed to change the API URL.
+        private static DispatcherTimer timerChangeApiUrl;
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Initialize all the SDK parameters
         /// </summary>
@@ -60,7 +86,7 @@ namespace MegaApp.Services
 
             // Set the language code used by the app
             var appLanguageCode = AppService.GetAppLanguageCode();
-            if (!MegaSdk.setLanguage(appLanguageCode))
+            if (!MegaSdk.setLanguage(appLanguageCode) || !MegaSdkFolderLinks.setLanguage(appLanguageCode))
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
                     string.Format("Invalid app language code '{0}'", appLanguageCode));
@@ -103,7 +129,7 @@ namespace MegaApp.Services
             if (cameraUploadNode != null) return cameraUploadNode;
 
             // If node not found and the service is enabled, create a new Camera Uploads node
-            if (TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName))
+            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
             {
                 var createFolder = new CreateFolderRequestListenerAsync();
                 var result = await createFolder.ExecuteAsync(() =>
@@ -114,6 +140,27 @@ namespace MegaApp.Services
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Checks if a node exists by its name.
+        /// </summary>
+        /// <param name="searchNode">The parent node of the tree to explore.</param>
+        /// <param name="name">Name of the node to search.</param>
+        /// <param name="isFolder">True if the node to search is a folder or false in other case.</param>
+        /// <param name="recursive">True if you want to seach recursively in the node tree.</param>
+        /// <returns>True if the node exists or false in other case.</returns>
+        public static bool ExistsNodeByName(MNode searchNode, string name, bool isFolder, bool recursive = false)
+        {
+            var searchResults = MegaSdk.search(searchNode, name, false);
+            for (var i = 0; i < searchResults.size(); i++)
+            {
+                var node = searchResults.get(i);
+                if (node.isFolder() == isFolder && node.getName().ToLower().Equals(name.ToLower()))
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -137,5 +184,76 @@ namespace MegaApp.Services
 
             return null;
         }
+
+        /// <summary>
+        /// Method that should be called when an action required for 
+        /// change the API URL is started.
+        /// </summary>
+        public static void ChangeApiUrlActionStarted()
+        {
+            UiService.OnUiThread(() =>
+            {
+                if (timerChangeApiUrl == null)
+                {
+                    timerChangeApiUrl = new DispatcherTimer();
+                    timerChangeApiUrl.Interval = new TimeSpan(0, 0, 5);
+                    timerChangeApiUrl.Tick += (obj, args) => ChangeApiUrl();
+                }
+                timerChangeApiUrl.Start();
+            });
+        }
+
+        /// <summary>
+        /// Method that should be called when an action required for 
+        /// change the API URL is finished.
+        /// </summary>
+        public static void ChangeApiUrlActionFinished() => StopChangeApiUrlTimer();
+
+        /// <summary>
+        /// Change the API URL.
+        /// </summary>
+        private static async void ChangeApiUrl()
+        {
+            StopChangeApiUrlTimer();
+
+            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
+            if (!useStagingServer)
+            {
+                var result = await DialogService.ShowOkCancelAsync("Change to a testing server?",
+                    "Are you sure you want to change to a testing server? Your account may run irrecoverable problems.");
+
+                if (!result) return;
+            }
+
+            useStagingServer = !useStagingServer;
+
+            var newApiUrl = useStagingServer ?
+                ResourceService.AppResources.GetString("AR_StagingUrl") :
+                ResourceService.AppResources.GetString("AR_ApiUrl");
+
+            MegaSdk.changeApiUrl(newApiUrl);
+            MegaSdkFolderLinks.changeApiUrl(newApiUrl);
+
+            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), useStagingServer);
+
+            // Reset the "Camera Uploads" service if is enabled
+            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Resetting CAMERA UPLOADS service (API URL changed)");
+                await TaskService.RegisterBackgroundTaskAsync(
+                    CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName,
+                    new TimeTrigger(CameraUploadService.TaskTimeTrigger, false));
+            }
+
+            OnApiUrlChanged();
+        }
+
+        /// <summary>
+        /// Stops the timer to detect an API URL change.
+        /// </summary>
+        private static void StopChangeApiUrlTimer() =>
+            UiService.OnUiThread(() => timerChangeApiUrl?.Stop());
+
+        #endregion
     }
 }

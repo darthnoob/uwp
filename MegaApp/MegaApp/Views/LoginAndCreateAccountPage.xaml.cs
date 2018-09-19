@@ -50,6 +50,13 @@ namespace MegaApp.Views
 
                 switch (navActionType)
                 {
+                    case NavigationActionType.Login:
+                        this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount_Title"),
+                            ResourceService.AppMessages.GetString("AM_AlreadyConfirmedAccount"));
+                        break;
+
                     case NavigationActionType.Recovery:
                         this.ViewModel.LoginViewModel.Email = navObj.Parameters[NavigationParamType.Email] as string;
                         this.ViewModel.LoginViewModel.Password = navObj.Parameters[NavigationParamType.Password] as string;
@@ -107,6 +114,16 @@ namespace MegaApp.Views
             this.ViewModel?.LoginViewModel?.Login();
 
             e.Handled = true;
+        }
+
+        private void OnMegaHeaderLogoPressed(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionStarted();
+        }
+
+        private void OnMegaHeaderLogoReleased(object sender, PointerRoutedEventArgs e)
+        {
+            SdkService.ChangeApiUrlActionFinished();
         }
 
         private void OnMegaHeaderLogoTapped(object sender, TappedRoutedEventArgs e)

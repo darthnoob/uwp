@@ -29,17 +29,42 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event triggered when the user closes the dialog using the close
         /// button of the top-right corner of the dialog.
         /// </summary>
-        public event EventHandler CloseDialog;
+        public event EventHandler CloseButtonTapped;
 
         /// <summary>
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected virtual void OnCloseDialog()
+        protected virtual void OnCloseButtonTapped()
         {
             this.CanClose = true;
-            this.CloseDialog?.Invoke(this, EventArgs.Empty);
+            this.CloseButtonTapped?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Event triggered to hide the dialog.
+        /// </summary>
+        public event EventHandler HideDialog;
+
+        /// <summary>
+        /// Event invocator method called to hide the dialog.
+        /// </summary>
+        protected virtual void OnHideDialog()
+        {
+            this.CanClose = true;
+            this.HideDialog?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Event triggered to show the dialog.
+        /// </summary>
+        public event EventHandler ShowDialog;
+
+        /// <summary>
+        /// Event invocator method called to show the dialog.
+        /// </summary>
+        protected virtual void OnShowDialog() =>
+            this.ShowDialog?.Invoke(this, EventArgs.Empty);
 
         #endregion
 
@@ -48,7 +73,7 @@ namespace MegaApp.ViewModels.Dialogs
         /// <summary>
         /// Close the dialog
         /// </summary>
-        private void Close() => this.OnCloseDialog();
+        private void Close() => this.OnCloseButtonTapped();
 
         #endregion
 
@@ -87,6 +112,26 @@ namespace MegaApp.ViewModels.Dialogs
         {
             get { return _dialogStyle; }
             set { SetField(ref _dialogStyle, value); }
+        }
+
+        private string _titleText;
+        /// <summary>
+        /// Title of the dialog
+        /// </summary>
+        public string TitleText
+        {
+            get { return _titleText; }
+            set { SetField(ref _titleText, value); }
+        }
+
+        private string _messageText;
+        /// <summary>
+        /// Message or description text of the dialog
+        /// </summary>
+        public string MessageText
+        {
+            get { return _messageText; }
+            set { SetField(ref _messageText, value); }
         }
 
         #endregion

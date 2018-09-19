@@ -182,11 +182,11 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>클라우드 드라이브에 파일이 없습니다</value>
+    <value>당신의 클라우드 드라이브에 파일이 없습니다</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>빈 폴더</value>
+    <value>폴더에 파일이 없음</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -727,7 +727,7 @@ Preserve the {0} code because is for include the name of the destination folder 
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>저장 공간 &amp; 전송</value>
-    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+    <comment>Title of the 'Storage &amp; Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
     <value>사용 가능한 공간</value>
@@ -1493,7 +1493,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Invite friends' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDay" xml:space="preserve">
-    <value>1 day remaining</value>
+    <value>1일 남음</value>
     <comment>Label to indicate that an award is valid during one day. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemainingDays" xml:space="preserve">
@@ -1526,11 +1526,11 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
-    <value>Achieved on</value>
+    <value>달성일</value>
     <comment>Label for any 'Achieved on' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ExpiresIn" xml:space="preserve">
-    <value>Expires in</value>
+    <value>만료일</value>
     <comment>Label for any 'Expires in' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Day" xml:space="preserve">
@@ -1546,7 +1546,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>Invite your friends to create a free MEGA account and install our mobile apps. For every successful signup and app install you will receive bonus storage and transfer quota.</value>
+    <value>친구에게 무료 MEGA 계정을 만들고 우리의 모바일 앱을 설치하도록 초대하세요. 성공적인 가입과 앱 설치마다 당신은 보너스 공간과 전송 할당량을 받게 됩니다.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
   </data>
   <data name="UI_Invite" xml:space="preserve">
@@ -1554,11 +1554,11 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>Get {0} free storage and {1} of transfers quota for each friend who installs a MEGA app.</value>
+    <value>MEGA 앱을 설치하는 친구가 있을 때마다 {0}의 무료 공간과 {1}의 전송 할당량을 받으세요.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
-    <value>Why it is not working</value>
+    <value>왜 작동하지 않나요</value>
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
@@ -1566,7 +1566,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>Invited contacts must install the MEGA mobile app or MEGA desktop app on their devices.</value>
+    <value>초대된 연락처는 그들의 기기에 반드시 MEGA 모바일 앱이나 데스크톱 앱을 설치해야 합니다.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
@@ -1622,7 +1622,7 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Save for offline' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RemoveFromOffline" xml:space="preserve">
-    <value>Remove from offline</value>
+    <value>오프라인에서 제거</value>
     <comment>Label for a 'Remove from offline' button or flyout menu option to remove a node from offline - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineFiles" xml:space="preserve">
@@ -1630,21 +1630,21 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineBanner" xml:space="preserve">
-    <value>Your device appears to be offline. Please try to reconnect or visit the Saved for offline section.</value>
+    <value>당신의 기기가 연결되지 않은 것으로 보입니다. 재연결을 시도하거나 오프라인으로 저장 섹션을 방문하세요.</value>
     <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
-    <value>Referral status ({0})</value>
+    <value>추천 상황 ({0})</value>
     <comment>Label to indicate that a list of items is sorted by status and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatusMultiSelect" xml:space="preserve">
-    <value>Referral status ({0} of {1})</value>
+    <value>추천 상황 ({1} 중 {0})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by status and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Referral status</value>
+    <value>초대 보너스 상황</value>
     <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
@@ -1652,11 +1652,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Pending' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EarnedReferralBonus" xml:space="preserve">
-    <value>Earned referral bonus</value>
+    <value>획득한 추천 보너스</value>
     <comment>Label for any 'Earned referral bonus' button, link, text, title, etc. (i.e. total space) - (String as short as possible).</comment>
   </data>
   <data name="UI_OpenBrowser" xml:space="preserve">
-    <value>Open browser</value>
+    <value>브라우저 열기</value>
     <comment>Label for the button to allow the user open the default browser - (String as short as possible).</comment>
   </data>
   <data name="UI_Ignore" xml:space="preserve">
@@ -1698,5 +1698,125 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_TakedownGuidance" xml:space="preserve">
     <value>게시 중단 안내</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
+    <value>2단계 인증 활성화</value>
+    <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="UI_TwoFactorAuth" xml:space="preserve">
+    <value>2단계 인증</value>
+    <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
+    <value>2단계 인증은 당신의 계정을 위한 보안의 두번째 층입니다.</value>
+    <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
+  </data>
+  <data name="UI_Setup2FA" xml:space="preserve">
+    <value>2단계 인증 설정</value>
+    <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopySeed" xml:space="preserve">
+    <value>시드 복사</value>
+    <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Disable" xml:space="preserve">
+    <value>비활성화</value>
+    <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MFA_SetupStep1" xml:space="preserve">
+    <value>시드를 인증기 앱에서 스캔하거나 복사하세요. 휴대전화를 잃어버렸을 경우를 대비하여 이 시드를 안전한 곳에 백업하세요.</value>
+    <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="UI_MFA_SetupStep2" xml:space="preserve">
+    <value>인증기 앱에서 시드를 설정한 후 6자리 코드가 나타납니다.</value>
+    <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
+  </data>
+  <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
+    <value>인증기 장치를 잃어버렸나요?</value>
+    <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PhotoAndVideo" xml:space="preserve">
+    <value>사진과 동영상</value>
+    <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_PhotoOnly" xml:space="preserve">
+    <value>사진만</value>
+    <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_VideoOnly" xml:space="preserve">
+    <value>동영상만</value>
+    <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_AnyConnectionType" xml:space="preserve">
+    <value>아무 연결 유형이나</value>
+    <comment>Label for any 'Any connection type' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_EthernetWifiOnly" xml:space="preserve">
+    <value>이더넷/WiFi만 (측정되지 않음)</value>
+    <comment>Label for any 'Ethernet/WiFi only (Unmetered)' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_FileToUpload" xml:space="preserve">
+    <value>업로드할 파일</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_HowToUpload" xml:space="preserve">
+    <value>업로드 방법</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_Export" xml:space="preserve">
+    <value>내보내기</value>
+    <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CloseOtherSessions" xml:space="preserve">
+    <value>다른 세션 닫기</value>
+    <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagement" xml:space="preserve">
+    <value>세션 관리</value>
+    <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagementDescription" xml:space="preserve">
+    <value>이것은 현재 세션을 제외한 모든 세션에서 로그아웃합니다. 다른 기기에서 MEGA를 계속해서 사용하려면 다시 로그인해야 합니다.</value>
+    <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
+  </data>
+  <data name="UI_Warning" xml:space="preserve">
+    <value>경고</value>
+    <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Restore" xml:space="preserve">
+    <value>복구</value>
+    <comment>Label for any 'Restore' button, link, text, title, etc. For example for restore files from the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearCache" xml:space="preserve">
+    <value>캐시 비우기</value>
+    <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageLocation" xml:space="preserve">
+    <value>파일 관리</value>
+    <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedCache" xml:space="preserve">
+    <value>사용한 캐시</value>
+    <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearOffline" xml:space="preserve">
+    <value>오프라인 항목 삭제</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedOffline" xml:space="preserve">
+    <value>오프라인 항목을 위해 사용된 저장소</value>
+    <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenIn" xml:space="preserve">
+    <value>다른 곳에서 열기...</value>
+    <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportRecoveryKeyText" xml:space="preserve">
+    <value>복구 키 내보내기</value>
+    <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
+  </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>앱 찾기</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

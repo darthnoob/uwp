@@ -26,6 +26,10 @@ namespace MegaApp.MegaApi
                     case MErrorType.API_EACCESS: // No user is logged in
                         Tcs?.TrySetResult(ChangeEmailResult.UserNotLoggedIn);
                         return;
+                    case MErrorType.API_EFAILED: // Wrong MFA pin.
+                    case MErrorType.API_EEXPIRED: // MFA pin is being re-used and is being denied to prevent a replay attack
+                        Tcs?.TrySetResult(ChangeEmailResult.MultiFactorAuthInvalidCode);
+                        return;
                     default: // Unknown result, but not successful
                         Tcs?.TrySetResult(ChangeEmailResult.Unknown);
                         return;

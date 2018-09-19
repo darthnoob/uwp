@@ -19,7 +19,7 @@ namespace MegaApp.ViewModels.Dialogs
             this.CloseButtonVisibility = Visibility.Visible;
 
             this.TitleText = ResourceService.AppMessages.GetString("AM_PasswordReminder_Title");
-            this.DescriptionText = ResourceService.AppMessages.GetString("AM_PasswordReminder");
+            this.MessageText = ResourceService.AppMessages.GetString("AM_PasswordReminder");
 
             this.CheckPasswordCommand = new RelayCommand(CheckPassword);
             this.SaveKeyButtonCommand = new RelayCommand(SaveKey);
@@ -59,9 +59,9 @@ namespace MegaApp.ViewModels.Dialogs
         /// Event invocator method called when the user closes the dialog using 
         /// the close button of the top-right corner of the dialog.
         /// </summary>
-        protected override async void OnCloseDialog()
+        protected override async void OnCloseButtonTapped()
         {
-            base.OnCloseDialog();
+            base.OnCloseButtonTapped();
 
             if (this.AtLogout)
             {
@@ -128,8 +128,7 @@ namespace MegaApp.ViewModels.Dialogs
 
                 // I user has exceeded the number of attempts, close 
                 // this dialog and show the "Change password" dialog
-                if (!this.CloseCommand.CanExecute(null))
-                    this.CloseCommand.Execute(null);
+                this.OnHideDialog();
                 DialogService.ShowChangePasswordDialog();
                 return;
             }
@@ -161,8 +160,7 @@ namespace MegaApp.ViewModels.Dialogs
             if (!this.recoveryKeySaved) return;
 
             // If the recovery key has been successfully saved close the dialog
-            if (!this.CloseCommand.CanExecute(null)) return;
-            this.CloseCommand.Execute(null);
+            this.OnHideDialog();
         }
 
         /// <summary>
@@ -182,7 +180,7 @@ namespace MegaApp.ViewModels.Dialogs
             this.DoNotShowAgain = false;
             this.IsTestPasswordSelected = true;
             this.TitleText = ResourceService.AppMessages.GetString("AM_TestPassword_Title");
-            this.DescriptionText = ResourceService.AppMessages.GetString("AM_TestPassword");
+            this.MessageText = ResourceService.AppMessages.GetString("AM_TestPassword");
             this.SecondaryButtonCommand = this.CheckPasswordCommand;
             SetTestPasswordButtonState();
         }
@@ -210,26 +208,6 @@ namespace MegaApp.ViewModels.Dialogs
         /// Indicates if the user has saved the recovery key successfully
         /// </summary>
         private bool recoveryKeySaved = false;
-
-        private string _titleText;
-        /// <summary>
-        /// Title of the dialog
-        /// </summary>
-        public string TitleText
-        {
-            get { return _titleText; }
-            set { SetField(ref _titleText, value); }
-        }
-
-        private string _descriptionText;
-        /// <summary>
-        /// Description of the dialog
-        /// </summary>
-        public string DescriptionText
-        {
-            get { return _descriptionText; }
-            set { SetField(ref _descriptionText, value); }
-        }
 
         private bool _doNotShowAgain;
         /// <summary>

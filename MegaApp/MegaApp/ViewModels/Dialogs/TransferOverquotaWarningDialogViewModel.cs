@@ -13,6 +13,9 @@ namespace MegaApp.ViewModels.Dialogs
             this.UpgradeButtonCommand = new RelayCommand(Upgrade);
             this.WaitButtonCommand = new RelayCommand(Wait);
 
+            this.TitleText = ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title");
+            this.MessageText = ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning");
+
             AccountService.AccountDetails.TimerTransferOverquotaChanged += (sender, args) =>
                 OnPropertyChanged(nameof(this.WaitMessageText));
 
@@ -52,8 +55,6 @@ namespace MegaApp.ViewModels.Dialogs
         
         #region UiResources
 
-        public string TitleText => ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning_Title");
-        public string MessageText => ResourceService.AppMessages.GetString("AM_TransferOverquotaWarning");
         public string UpgradeMessageText => string.Format(ResourceService.AppMessages.GetString("AM_TransferOverquotaWarningUpgrade"),
             AccountService.UpgradeAccount.LiteMonthlyFormattedPrice);
         public string WaitMessageText => string.Format(ResourceService.AppMessages.GetString("AM_TransferOverquotaWarningWaitTime"),

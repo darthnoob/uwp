@@ -126,7 +126,7 @@
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountSubHeader" xml:space="preserve">
-    <value>Please wait while we send you a sign-up confirmation link.</value>
+    <value>Xin chờ để đường liên kết xác thực tài khoản được gửi đi.</value>
     <comment>Progress indicator message when creating a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateFolder" xml:space="preserve">
@@ -134,15 +134,15 @@
     <comment>Progress indicator message when creating a folder - (String as short as possible).</comment>
   </data>
   <data name="PM_Delete" xml:space="preserve">
-    <value>Deleting...</value>
+    <value>Đáng xóa...</value>
     <comment>Progress indicator message when deleting a node - (String as short as possible).</comment>
   </data>
   <data name="PM_FastLoginHeader" xml:space="preserve">
-    <value>Đang khôi phục phiên lần trước...</value>
+    <value>Đang khôi phục phiên...</value>
     <comment>Progress indicator message when resuming a session - (String as short as possible).</comment>
   </data>
   <data name="PM_FetchNodesSubHeader" xml:space="preserve">
-    <value>Requesting account data.</value>
+    <value>Đang yêu cầu thông tin tài khoản</value>
     <comment>Progress indicator message when fetching nodes.</comment>
   </data>
   <data name="PM_LoginHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginSubHeader" xml:space="preserve">
-    <value>Please wait while we log you into your account.</value>
+    <value>Xin chờ để được đăng nhập vào tài khoản.</value>
     <comment>Progress indicator message when logging in - (String as short as possible).</comment>
   </data>
   <data name="PM_Logout" xml:space="preserve">
@@ -178,7 +178,7 @@
     <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
   </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Decrypting nodes.</value>
+    <value>Đang giải mã các nodes.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
@@ -186,15 +186,15 @@
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
-    <value>Creating your account</value>
+    <value>Đang tạo tài khoản</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountSubHeader" xml:space="preserve">
-    <value>Your 2048-bit RSA public / private key pair is now being created. This is a very important step and can take a couple of seconds. Please be patient.</value>
+    <value>Mã RSA 2048-bit công khai / chìa khoá số riêng đang được tạo. Đây là quá trình quan trọng và sẽ mất khoảng vài giây. Xin kiên nhẫn chờ.</value>
     <comment>Progress indicator message when confirming a MEGA account - (String as short as possible).</comment>
   </data>
   <data name="PM_Patient" xml:space="preserve">
-    <value>Please be patient</value>
+    <value>Xin kiên nhẫn chờ</value>
     <comment>Progress indicator message when creating 2048-bit key - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderHeader" xml:space="preserve">
@@ -202,19 +202,19 @@
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_LoginToFolderSubHeader" xml:space="preserve">
-    <value>Please wait while we open the folder link.</value>
+    <value>Xin chờ để đường liên kết tới thư mục được mở</value>
     <comment>Progress indicator message when logging into a folder link - (String as short as possible).</comment>
   </data>
   <data name="PM_ApiLocked" xml:space="preserve">
-    <value>This process is taking longer than expected. Please wait.</value>
+    <value>Quý trình hiện diễn ra lâu hơn dự đoán. Xin chờ.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to an API lock (API error -3) - (String as short as possible).</comment>
   </data>
   <data name="PM_ApiRateLimit" xml:space="preserve">
-    <value>Too many requests. Please wait.</value>
+    <value>Quá nhiều lời yêu cầu. Xin chờ.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
   </data>
   <data name="PM_ConnectivityIssue" xml:space="preserve">
-    <value>Unable to reach MEGA. Please check your connectivity or try again later.</value>
+    <value>Không liên lạc được tới MEGA. Xin kiểm tra kết nối mạng hoặc thử lại sau.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
 </root>

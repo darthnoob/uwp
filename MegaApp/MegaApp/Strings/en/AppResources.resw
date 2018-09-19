@@ -230,11 +230,11 @@
     <comment>Path of the 'uploads' folder of the application - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkLink" xml:space="preserve">
-    <value>https://github.com/meganz/sdk/tree/37a231c3fbbfbea549b8eb87230a5da83f0452d0</value>
+    <value>https://github.com/meganz/sdk/tree/93576558f955d90ed14a48101cbc906bb45ba4cd</value>
     <comment>Link to respository of the current SDK used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_SdkVersion" xml:space="preserve">
-    <value>37a231c</value>
+    <value>9357655</value>
     <comment>Current SDK version used in the app - (NO-TRANSLATION).</comment>
   </data>
   <data name="AR_RefundPolicyUri" xml:space="preserve">
@@ -293,8 +293,20 @@
     <value>https://mega.nz/takedown</value>
     <comment>URL to the 'Copyright' information web page - (NO-TRANSLATION).</comment>
   </data>
-  <data name="UI_LearnMore" xml:space="preserve">
-    <value>Learn more</value>
-    <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
+  <data name="AR_RecoveryUri" xml:space="preserve">
+    <value>https://mega.nz/recovery</value>
+    <comment>URL to the 'Recovery' web page.</comment>
+  </data>
+  <data name="AR_RecoveryKeyFileName" xml:space="preserve">
+    <value>MEGARecoveryKey.txt</value>
+    <comment>Default name for the file to export the Recovery Key - (NO-TRANSLATION)</comment>
+  </data>
+  <data name="AR_ApiUrl" xml:space="preserve">
+    <value>https://g.api.mega.co.nz/</value>
+    <comment>URL of the API server - (NO-TRANSLATION).</comment>
+  </data>
+  <data name="AR_StagingUrl" xml:space="preserve">
+    <value>https://staging.api.mega.co.nz/</value>
+    <comment>URL of the staging API server - (NO-TRANSLATION).</comment>
   </data>
 </root>

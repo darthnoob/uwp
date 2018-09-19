@@ -110,7 +110,7 @@ namespace MegaApp.ViewModels.UserControls
                 var selectedNodes = SelectedNodesService.SelectedNodes.ToList();
 
                 // Store the new parent node to allow close and reset the panel meanwhile the action is being done
-                var newParentNode = this.ActiveFolderView.FolderRootNode;
+                var newParentNode = this.ActiveFolderView.FolderRootNode.OriginalMNode;
 
                 this.OnActionFinished();
 

@@ -37,5 +37,30 @@ namespace MegaApp.Services
                 typeof(MPasswordStrength),
                 SdkService.MegaSdk.getPasswordStrength(value));
         }
+
+        /// <summary>
+        /// Check if a string contains only numeric digits
+        /// </summary>
+        /// <param name="str">String to check</param>
+        /// <returns>TRUE if the string contains only numeric digits, FALSE in other case.</returns>
+        public static bool IsDigitsOnly(string str)
+        {
+            try
+            {
+                foreach (char c in str)
+                {
+                    if (c < '0' || c > '9')
+                        return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, 
+                    "Error checking if the string contains only numeric digits", e);
+                return false;
+            }            
+        }
     }
 }

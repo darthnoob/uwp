@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MegaApp.UserControls;
 
 namespace MegaApp.Extensions
 {
@@ -12,7 +13,7 @@ namespace MegaApp.Extensions
     public static class DialogExtensions
     {
         private static TaskCompletionSource<MessageDialog> _messageDialogShowRequest;        
-        private static TaskCompletionSource<ContentDialog> _contentDialogShowRequest;
+        private static TaskCompletionSource<MegaContentDialog> _contentDialogShowRequest;
 
         /// <summary>
         /// Begins an asynchronous operation showing a <see cref="MessageDialog"/>.
@@ -42,14 +43,14 @@ namespace MegaApp.Extensions
         }
 
         /// <summary>
-        /// Begins an asynchronous operation showing a <see cref="ContentDialog"/>.
-        /// If another <see cref="ContentDialog"/> is already shown using this method, it will wait for that previous dialog
+        /// Begins an asynchronous operation showing a <see cref="MegaContentDialog"/>.
+        /// If another <see cref="MegaContentDialog"/> is already shown using this method, it will wait for that previous dialog
         /// to be dismissed before showing the new one.
         /// </summary>
-        /// <param name="dialog">The <see cref="ContentDialog"/>.</param>
-        /// <returns>The <see cref="ContentDialog"/> result.</returns>
+        /// <param name="dialog">The <see cref="MegaContentDialog"/>.</param>
+        /// <returns>The <see cref="MegaContentDialog"/> result.</returns>
         /// <exception cref="InvalidOperationException">This method can only be invoked from the UI thread.</exception>
-        public static async Task<ContentDialogResult> ShowAsyncQueue(this ContentDialog dialog)
+        public static async Task<ContentDialogResult> ShowAsyncQueue(this MegaContentDialog dialog)
         {
             if (!Window.Current.Dispatcher.HasThreadAccess)
                 throw new InvalidOperationException("This method can only be invoked from UI thread.");
@@ -60,7 +61,7 @@ namespace MegaApp.Extensions
             while (_messageDialogShowRequest != null)
                 await _messageDialogShowRequest.Task;
 
-            var request = _contentDialogShowRequest = new TaskCompletionSource<ContentDialog>();
+            var request = _contentDialogShowRequest = new TaskCompletionSource<MegaContentDialog>();
             var result = await dialog.ShowAsync();
             _contentDialogShowRequest = null;
             request.SetResult(dialog);
@@ -69,17 +70,17 @@ namespace MegaApp.Extensions
         }
 
         /// <summary>
-        /// Begins an asynchronous operation showing a <see cref="ContentDialog"/>.
-        /// If another <see cref="ContentDialog"/> is already shown using this method, it will wait for that previous dialog
+        /// Begins an asynchronous operation showing a <see cref="MegaContentDialog"/>.
+        /// If another <see cref="MegaContentDialog"/> is already shown using this method, it will wait for that previous dialog
         /// to be dismissed before showing the new one.
         /// </summary>
-        /// <param name="dialog">The <see cref="ContentDialog"/>.</param>
-        /// <returns>The <see cref="ContentDialog"/> result as <see cref="bool"/> value.</returns>
+        /// <param name="dialog">The <see cref="MegaContentDialog"/>.</param>
+        /// <returns>The <see cref="MegaContentDialog"/> result as <see cref="bool"/> value.</returns>
         /// <exception cref="InvalidOperationException">This method can only be invoked from the UI thread.</exception>
-        public static async Task<bool> ShowAsyncQueueBool(this ContentDialog dialog)
+        public static async Task<bool> ShowAsyncQueueBool(this MegaContentDialog dialog)
         {
             var result = await ShowAsyncQueue(dialog);
-            return result == ContentDialogResult.Primary;
+            return result == ContentDialogResult.Primary || dialog.DialogResult;
         }
     }
 }

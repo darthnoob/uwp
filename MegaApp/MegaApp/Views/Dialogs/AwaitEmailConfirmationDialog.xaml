@@ -21,7 +21,7 @@
                 x:Name="Description"
                 Margin="0,16,0,20"
                 Style="{StaticResource MegaDialogContentFontStyle}"
-                Text="{x:Bind ViewModel.DescriptionText, Mode=OneTime}" />
+                Text="{x:Bind ViewModel.MessageText, Mode=OneTime}" />
             <TextBlock
                 x:Name="NewEmailTitleText"
                 FontSize="16"

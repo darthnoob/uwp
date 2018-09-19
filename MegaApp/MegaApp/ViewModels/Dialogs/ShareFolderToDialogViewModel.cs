@@ -15,6 +15,8 @@ namespace MegaApp.ViewModels.Dialogs
             this.ShareButtonCommand = new RelayCommand(Share);
             this.CancelButtonCommand = new RelayCommand(Cancel);
             this.SetFolderPermissionCommand = new RelayCommand<MShareType>(SetFolderPermission);
+
+            this.TitleText = this.ShareFolderToText;
         }
 
         #region Commands
@@ -80,7 +82,12 @@ namespace MegaApp.ViewModels.Dialogs
         public string FolderName
         {
             get { return _folderName; }
-            set { SetField(ref _folderName, value); }
+            set
+            {
+                if (!SetField(ref _folderName, value)) return;
+                OnPropertyChanged(nameof(this.ShareFolderToText));
+                this.TitleText = this.ShareFolderToText;
+            }
         }
 
         private MShareType _accessLevel;
@@ -135,7 +142,7 @@ namespace MegaApp.ViewModels.Dialogs
 
         #region UiResources
 
-        public string TitleText => string.Format(
+        public string ShareFolderToText => string.Format(
             ResourceService.UiResources.GetString("UI_ShareFolderTo"), this.FolderName);
 
         public string CancelText => ResourceService.UiResources.GetString("UI_Cancel");
@@ -148,7 +155,7 @@ namespace MegaApp.ViewModels.Dialogs
 
         #endregion
 
-        #region
+        #region VisualResources
 
         public string WarningIconPathData => ResourceService.VisualResources.GetString("VR_WarningIconPathData");
 

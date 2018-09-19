@@ -115,7 +115,7 @@ namespace MegaApp.ViewModels
 
             if (this.ActiveFolderView.Equals(this.CameraUploads))
             {
-                if (!TaskService.IsBackGroundTaskActive(TaskService.CameraUploadTaskEntryPoint, TaskService.CameraUploadTaskName) &&
+                if (!TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName) &&
                     this.CameraUploads?.FolderRootNode == null) return;
 
                 this.CameraUploads.LoadChildNodes();

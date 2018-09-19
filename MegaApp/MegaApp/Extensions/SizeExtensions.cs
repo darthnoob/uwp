@@ -4,11 +4,11 @@ namespace MegaApp.Extensions
 {
     static class SizeExtensions
     {
-        private static readonly string[] SizeSuffixesBytes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+        private static readonly string[] SizeSuffixesBytes = { "Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
 
         public static string ToStringAndSuffix(this ulong value, int numDecimaDigits = 0)
         {
-            if (value == 0) { return "0.0 bytes"; }
+            if (value == 0) { return "0 Bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));
@@ -30,7 +30,7 @@ namespace MegaApp.Extensions
 
         public static string ToReadableUnits(this ulong value)
         {
-            if (value == 0) { return "bytes"; }
+            if (value == 0) { return "Bytes"; }
 
             int mag = (int)Math.Log(value, 1024);
             
@@ -39,7 +39,7 @@ namespace MegaApp.Extensions
 
         public static string ToStringAndSuffixPerSecond(this ulong value)
         {
-            if (value == 0) { return "0.0 bytes/s"; }
+            if (value == 0) { return "0 Bytes/s"; }
 
             int mag = (int)Math.Log(value, 1024);
             decimal adjustedSize = (decimal)value / (1L << (mag * 10));

@@ -138,7 +138,7 @@
     <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Dysk w chmurze</value>
+    <value>Cloud Dysk</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -186,7 +186,7 @@
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>Pusty katalog</value>
+    <value>Brak plików</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -727,7 +727,7 @@ Preserve the {0} code because is for include the name of the destination folder 
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
     <value>Przechowywanie i przesyłanie</value>
-    <comment>Title of the 'Storage &amp;Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
+    <comment>Title of the 'Storage &amp; Transfer' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AvailableStorage" xml:space="preserve">
     <value>Dostępna pamięć</value>
@@ -1554,7 +1554,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Invite' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriendsText" xml:space="preserve">
-    <value>Uzyskaj {0} wolnej pamięci i {1} limitu transferów dla każdego znajomego, który instaluje aplikację MEGA.</value>
+    <value>Uzyskaj {0} wolnej pamięci i {1} limitu transferu dla każdego znajomego, który instaluje aplikację MEGA.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements. Preserve the {0} and {1} codes because is for include of storage and transfer data quota for invitations</comment>
   </data>
   <data name="UI_WhyNotWorking" xml:space="preserve">
@@ -1644,7 +1644,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_SortOptionReferralStatus" xml:space="preserve">
-    <value>Status polecenia</value>
+    <value>Status premii za polecenie</value>
     <comment>Label for the menu sorting option in the achievements invitations section to sort a list of items by referral bonus status - (String as short as possible).</comment>
   </data>
   <data name="UI_Pending" xml:space="preserve">
@@ -1698,5 +1698,125 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_TakedownGuidance" xml:space="preserve">
     <value>Wytyczne dotyczące naruszeń</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
+    <value>Włącz uwierzytelnianie dwuskładnikowe</value>
+    <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="UI_TwoFactorAuth" xml:space="preserve">
+    <value>Uwierzytelnianie dwuetapowe</value>
+    <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
+  </data>
+  <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
+    <value>Uwierzytelnianie dwuskładnikowe to druga warstwa zabezpieczeń Twojego konta.</value>
+    <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
+  </data>
+  <data name="UI_Setup2FA" xml:space="preserve">
+    <value>Skonfiguruj dwuetapowe uwierzytelnianie</value>
+    <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CopySeed" xml:space="preserve">
+    <value>Skopiuj dane</value>
+    <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Disable" xml:space="preserve">
+    <value>Zablokuj</value>
+    <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
+  </data>
+  <data name="UI_MFA_SetupStep1" xml:space="preserve">
+    <value>Zeskanuj lub skopiuj kod do aplikacji do uwierzytelniania. Pamiętaj, aby wykonać kopię zapasową tego materiału w bezpieczne miejsce na wypadek zgubienia telefonu.</value>
+    <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="UI_MFA_SetupStep2" xml:space="preserve">
+    <value>Po skonfigurowaniu w aplikacji do uwierzytelniania wprowadź 6-cyfrowy kod.</value>
+    <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
+  </data>
+  <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
+    <value>Zgubiłeś swoje urządzenie?</value>
+    <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
+  </data>
+  <data name="UI_PhotoAndVideo" xml:space="preserve">
+    <value>Zdjęcia i filmy</value>
+    <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_PhotoOnly" xml:space="preserve">
+    <value>Tylko zdjęcia</value>
+    <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_VideoOnly" xml:space="preserve">
+    <value>Tylko filmy</value>
+    <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_AnyConnectionType" xml:space="preserve">
+    <value>Dowolny typ połączenia</value>
+    <comment>Label for any 'Any connection type' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_EthernetWifiOnly" xml:space="preserve">
+    <value>Tylko Ethernet / WiFi (bez pomiaru)</value>
+    <comment>Label for any 'Ethernet/WiFi only (Unmetered)' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_FileToUpload" xml:space="preserve">
+    <value>Plik do przesłania</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
+  </data>
+  <data name="UI_HowToUpload" xml:space="preserve">
+    <value>Jak wgrywać zdjęcia</value>
+    <comment>Label for any 'How to upload' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine how to upload.</comment>
+  </data>
+  <data name="UI_Export" xml:space="preserve">
+    <value>Eksportuj</value>
+    <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_CloseOtherSessions" xml:space="preserve">
+    <value>Zamknij pozostałe sesje</value>
+    <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagement" xml:space="preserve">
+    <value>Zarządzanie sesją</value>
+    <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SessionManagementDescription" xml:space="preserve">
+    <value>Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego. Aby nadal korzystać z MEGA, musisz ponownie zalogować się na inne urządzenia.</value>
+    <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
+  </data>
+  <data name="UI_Warning" xml:space="preserve">
+    <value>Ostrzeżenie</value>
+    <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_Restore" xml:space="preserve">
+    <value>Odzyskaj</value>
+    <comment>Label for any 'Restore' button, link, text, title, etc. For example for restore files from the rubbish bin - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearCache" xml:space="preserve">
+    <value>Wyczyść pamięć podręczną</value>
+    <comment>Label for any 'Clear cache' button, link, text, title, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_StorageLocation" xml:space="preserve">
+    <value>Zarządzanie plikami</value>
+    <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedCache" xml:space="preserve">
+    <value>Używana pamięć podręczna</value>
+    <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ClearOffline" xml:space="preserve">
+    <value>Usuń treści offline</value>
+    <comment>Label for any 'Remove offline content' button or link to clear all the content saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UsedOffline" xml:space="preserve">
+    <value>Wykorzystano pamięć masową do przechowywania treści offline</value>
+    <comment>Label to indicate the amount of used space by the files saved for offline - (String as short as possible).</comment>
+  </data>
+  <data name="UI_OpenIn" xml:space="preserve">
+    <value>Otwórz...</value>
+    <comment>Label for any 'Open in...' button, link, text, title, etc. to open a file or other kind of resource with a certain app - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ExportRecoveryKeyText" xml:space="preserve">
+    <value>Eksportowanie klucza</value>
+    <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
+  </data>
+  <data name="UI_FindApp" xml:space="preserve">
+    <value>Znajdź aplikację</value>
+    <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
 </root>

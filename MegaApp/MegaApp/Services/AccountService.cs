@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation.Metadata;
@@ -9,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Imaging;
 using mega;
 using MegaApp.Classes;
+using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.MegaApi;
 using MegaApp.ViewModels;
@@ -83,11 +83,12 @@ namespace MegaApp.Services
         /// <summary>
         /// Check if should show the password reminder dialog and show it in that case
         /// </summary>
-        public static async Task<bool> ShouldShowPasswordReminderDialogAsync()
+        /// <param name="atLogout">True if the dialog is being displayed just before a logout</param>
+        public static async Task<bool> ShouldShowPasswordReminderDialogAsync(bool atLogout)
         {
             var passwordReminderDialogListener = new ShouldShowPasswordReminderDialogRequestListenerAsync();
             return await passwordReminderDialogListener.ExecuteAsync(() =>
-                SdkService.MegaSdk.shouldShowPasswordReminderDialog(false, passwordReminderDialogListener));
+                SdkService.MegaSdk.shouldShowPasswordReminderDialog(atLogout, passwordReminderDialogListener));
         }
 
         /// <summary>
@@ -767,6 +768,37 @@ namespace MegaApp.Services
                 ? ResourceService.UiResources.GetString("UI_RemainingDay")
                 : string.Format(ResourceService.UiResources.GetString("UI_RemainingDays"), days);
 
+        }
+
+        /// <summary>
+        /// Check the status of the Multi-Factor Authentication
+        /// </summary>
+        /// <returns>The current status of the Multi-Factor Authentication</returns>
+        public static async Task<MultiFactorAuthStatus> CheckMultiFactorAuthStatusAsync()
+        {
+            var multiFactorAuthCheck = new MultiFactorAuthCheckRequestListenerAsync();
+            var result = await multiFactorAuthCheck.ExecuteAsync(() =>
+            {
+                SdkService.MegaSdk.multiFactorAuthCheck(
+                    SdkService.MegaSdk.getMyEmail(), multiFactorAuthCheck);
+            });
+
+            switch (result)
+            {
+                case MultiFactorAuthStatus.Enabled:
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: ENABLED");
+                    break;
+
+                case MultiFactorAuthStatus.Disabled:
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: DISABLED");
+                    break;
+                
+                case MultiFactorAuthStatus.Unknown:
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Multi-Factor Authentication status: UNKNOWN (ERROR)");
+                    break;
+            }
+
+            return result;
         }
     }
 }

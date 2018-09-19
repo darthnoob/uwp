@@ -36,6 +36,7 @@ namespace MegaApp.ViewModels
             this.GetLinkCommand = new RelayCommand(GetLink);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
+            this.RestoreCommand = new RelayCommand(Restore);
             this.UploadCommand = new RelayCommand(Upload);
             this.ShareCommand = new RelayCommand(Share);
             this.ImportCommand = new RelayCommand(Import);
@@ -302,6 +303,7 @@ namespace MegaApp.ViewModels
         public ICommand GetLinkCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
+        public ICommand RestoreCommand { get; }
         public ICommand UploadCommand { get; }
         public ICommand ShareCommand { get; set; }
         public ICommand ImportCommand { get; }
@@ -395,15 +397,9 @@ namespace MegaApp.ViewModels
         {
             if (!await IsUserOnlineAsync()) return;
 
-            var folderName = await DialogService.ShowInputDialogAsync(
-                ResourceService.UiResources.GetString("UI_NewFolder"),
-                ResourceService.UiResources.GetString("UI_TypeFolderName"));
-
-            if (string.IsNullOrEmpty(folderName) || string.IsNullOrWhiteSpace(folderName)) return;
-
             if (this.FolderRootNode == null)
             {
-                OnUiThread(async() =>
+                OnUiThread(async () =>
                 {
                     await DialogService.ShowAlertAsync(
                         ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
@@ -412,21 +408,29 @@ namespace MegaApp.ViewModels
                 return;
             }
 
-            var createFolder = new CreateFolderRequestListenerAsync();
-            var result = await createFolder.ExecuteAsync(() =>
-            {
-                this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder);
-            });
-
-            if (!result)
-            {
-                OnUiThread(async () =>
+            await DialogService.ShowInputAsyncActionDialogAsync(
+                ResourceService.UiResources.GetString("UI_NewFolder"),
+                ResourceService.UiResources.GetString("UI_TypeFolderName"),
+                async (string folderName) =>
                 {
-                    await DialogService.ShowAlertAsync(
-                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed_Title"),
-                        ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+                    if (string.IsNullOrWhiteSpace(folderName))
+                        return false;
+
+                    if (SdkService.ExistsNodeByName(this.FolderRootNode.OriginalMNode, folderName, true))
+                    {
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_FolderAlreadyExists"));
+                        return false;
+                    }
+
+                    var createFolder = new CreateFolderRequestListenerAsync();
+                    var result = await createFolder.ExecuteAsync(() =>
+                        this.MegaSdk.createFolder(folderName, this.FolderRootNode.OriginalMNode, createFolder));
+
+                    if (!result)
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_CreateFolderFailed"));
+
+                    return result;
                 });
-            }
         }
 
         private void CopyOrMove()
@@ -613,6 +617,36 @@ namespace MegaApp.ViewModels
             var selectedNode = this.ItemCollection.SelectedItems.First() as IMegaNode;
             if (selectedNode == null) return;
             await selectedNode.RenameAsync();
+        }
+
+        private void Restore()
+        {
+            if (this.Type != ContainerType.RubbishBin || !this.ItemCollection.HasSelectedItems) return;
+            
+            // Use a temp variable to avoid InvalidOperationException
+            MultipleRestore(this.ItemCollection.SelectedItems.ToList());
+
+            this.ItemCollection.IsMultiSelectActive = false;
+        }
+
+        private async void MultipleRestore(ICollection<IBaseNode> nodes)
+        {
+            if (nodes == null || nodes.Count < 1) return;
+
+            bool result = true;
+            foreach (var n in nodes)
+            {
+                var node = n as IMegaNode;
+                if (node == null) continue;
+                result = result & (await node.MoveAsync(node.RestoreNode) == NodeActionResult.Succeeded);
+            }
+
+            if (!result)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_RestoreFromRubbishBinFailed_Title"),
+                    ResourceService.AppMessages.GetString("AM_RestoreMultiFromRubbishBinFailed"));
+            }
         }
 
         /// <summary>
@@ -1209,13 +1243,12 @@ namespace MegaApp.ViewModels
         public string AddFolderText => ResourceService.UiResources.GetString("UI_NewFolder");
         public string CopyOrMoveText => this is IncomingSharesViewModel ? CopyText : CopyText + "/" + MoveText;
         public string CopyText => ResourceService.UiResources.GetString("UI_Copy");
-        public string DeselectAllText => ResourceService.UiResources.GetString("UI_DeselectAll");
         public string DownloadText => ResourceService.UiResources.GetString("UI_Download");
         public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
-        public string SelectAllText => ResourceService.UiResources.GetString("UI_SelectAll");
+        public string RestoreText => ResourceService.UiResources.GetString("UI_Restore");
         public string UploadText => ResourceService.UiResources.GetString("UI_Upload");
 
         #endregion

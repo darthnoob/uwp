@@ -42,32 +42,35 @@
                     VerticalAlignment="Center"
                     Source="{Binding ImageUri}"
                     Visibility="{Binding HasImage, Converter={StaticResource BoolToVisibilityConverter}}" />
-                <TextBlock
+                <StackPanel
                     Grid.Row="0"
+                    Grid.RowSpan="2"
                     Grid.Column="1"
-                    Margin="20,0"
-                    VerticalAlignment="Bottom"
-                    FontSize="14"
-                    Opacity="0.9"
-                    Text="{Binding Title, Mode=OneTime}" />
-                <TextBlock
-                    Name="DescriptionText"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="20,0"
-                    VerticalAlignment="Top"
-                    FontSize="13"
-                    Opacity="0.6"
-                    Text="{Binding Description, Mode=OneTime}">
-                    <interactivity:Interaction.Behaviors>
-                        <core:DataTriggerBehavior Binding="{Binding IsExpired}" Value="True">
-                            <core:ChangePropertyAction
-                                PropertyName="Foreground"
-                                TargetObject="{Binding ElementName=DescriptionText}"
-                                Value="{StaticResource MegaRedColorBrush}" />
-                        </core:DataTriggerBehavior>
-                    </interactivity:Interaction.Behaviors>
-                </TextBlock>
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="20,0"
+                        FontSize="14"
+                        MaxLines="2"
+                        Opacity="0.9"
+                        Text="{Binding Title, Mode=OneTime}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="WrapWholeWords" />
+                    <TextBlock
+                        Name="DescriptionText"
+                        Margin="20,0"
+                        FontSize="13"
+                        Opacity="0.6"
+                        Text="{Binding Description, Mode=OneTime}">
+                        <interactivity:Interaction.Behaviors>
+                            <core:DataTriggerBehavior Binding="{Binding IsExpired}" Value="True">
+                                <core:ChangePropertyAction
+                                    PropertyName="Foreground"
+                                    TargetObject="{Binding ElementName=DescriptionText}"
+                                    Value="{StaticResource MegaRedColorBrush}" />
+                            </core:DataTriggerBehavior>
+                        </interactivity:Interaction.Behaviors>
+                    </TextBlock>
+                </StackPanel>
                 <Border
                     Grid.Row="0"
                     Grid.Column="2"

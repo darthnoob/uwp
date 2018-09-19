@@ -194,15 +194,6 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <value>Katalog został utworzony</value>
     <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
   </data>
-  <data name="AM_DeleteNodeFailed" xml:space="preserve">
-    <value>Usuwanie nie powiodło się. Spróbuj ponownie [{0}]</value>
-    <comment>Message of the dialog displayed when the process/request to delete a node failed.
-Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
-  </data>
-  <data name="AM_DeleteNodeFailed_Title" xml:space="preserve">
-    <value>Usuwanie nie powiodło się</value>
-    <comment>Title of the dialog displayed when the process/request to delete a node failed - (String as short as possible).</comment>
-  </data>
   <data name="AM_DeleteSettingsFailed" xml:space="preserve">
     <value>Nie usunięto ustawień. Spróbuj ponownie. [{0}]</value>
     <comment>Message of the dialog displayed when the process to delete settings failed.
@@ -670,7 +661,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>Klucz zapasowy został skopiowany do schowka.</value>
+    <value>Klucz zapasowy został skopiowany do schowka. Przechowuj go w bezpiecznym miejscu.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -1231,7 +1222,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the test password dialog.</comment>
   </data>
   <data name="AM_RecoveryKeyExported" xml:space="preserve">
-    <value>Klucz zapasowy został wyeksportowany.</value>
+    <value>Klucz zapasowy został wyeksportowany. Przechowuj go w bezpiecznym miejscu.</value>
     <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
@@ -1275,5 +1266,127 @@ Preserve the {0} code because is for include the name of the item to be removed 
   <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
     <value>Błąd podczas zmiany hasła</value>
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
+  </data>
+  <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
+    <value>Uwierzytelnianie dwuskładnikowe to druga warstwa zabezpieczeń Twojego konta. Co oznacza, że nawet jeśli ktoś zna twoje hasło, nie może uzyskać do niego dostępu, nie mając dostępu do sześciocyfrowego kodu, do którego masz dostęp.</value>
+    <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
+  </data>
+  <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
+    <value>Dlaczego potrzebujesz uwierzytelniania dwuskładnikowego?</value>
+    <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
+  </data>
+  <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
+    <value>Wyłącz uwierzytelnianie dwuetapowe</value>
+    <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
+  </data>
+  <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
+    <value>Gdy następnym razem zalogujesz się na swoje konto, zostaniesz poproszony o wprowadzenie 6-cyfrowego kodu podanego przez aplikację do uwierzytelniania.</value>
+    <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
+  </data>
+  <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
+    <value>Uwierzytelnianie dwuetapowe włączone</value>
+    <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
+  </data>
+  <data name="AM_InvalidCode" xml:space="preserve">
+    <value>Ten kod jest nieprawidłowy, spróbuj ponownie.</value>
+    <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopied" xml:space="preserve">
+    <value>Element został skopiowany do schowka.</value>
+    <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
+    <value>Nie można skopiować materiału wyjściowego do schowka. Proszę spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
+    <value>Błąd kopiowania</value>
+    <comment>Title of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
+  </data>
+  <data name="AM_MFA_SeedCopied_Title" xml:space="preserve">
+    <value>Skopiowane</value>
+    <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
+  </data>
+  <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
+    <value>Uwierzytelnianie dwuetapowe wyłączone</value>
+    <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
+  </data>
+  <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
+    <value>Wprowadź kod wygenerowany przez aplikację uwierzytelniającą</value>
+    <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
+  </data>
+  <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
+    <value>Jeśli utracisz dostęp do swojego konta po włączeniu 2FA i nie utworzyłeś kopii zapasowej klucza odzyskiwania, MEGA nie pomoże ci uzyskać do niego dostępu. 
+Upewnij się, że wykonałeś kopię zapasową klucza odzyskiwania.</value>
+    <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
+  </data>
+  <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
+    <value>Nie można zamknąć innych sesji. Proszę spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
+  </data>
+  <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
+    <value>Czy chcesz zamknąć wszystkie inne sesje? Spowoduje to wylogowanie wszystkich innych aktywnych sesji oprócz bieżącego.</value>
+    <comment>Message of the dialog displayed to ask the user to confirm want to close all the other sessions.</comment>
+  </data>
+  <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
+    <value>Pozostałe sesje zostały zamknięte.</value>
+    <comment>Message of the dialog displayed when close successfully all the other sessions.</comment>
+  </data>
+  <data name="AM_RestoreFromRubbishBinFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić "{0}" z kosza na śmieci. Proszę spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed when the process/request to restore a node to the rubbish bin failed.
+Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
+  </data>
+  <data name="AM_RestoreFromRubbishBinFailed_Title" xml:space="preserve">
+    <value>Przywracanie z kosza na śmieci nie powiodło się</value>
+    <comment>Title of the dialog displayed when the process/request to restore nodes from the rubbish bin failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RestoreMultiFromRubbishBinFailed" xml:space="preserve">
+    <value>Nie udało się przywrócić elementów z kosza na śmieci. Proszę spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed when the process/request to restore multiple nodes from the rubbish bin failed.</comment>
+  </data>
+  <data name="AM_CacheCleared" xml:space="preserve">
+    <value>Pamięć cache została wyczyszczona</value>
+    <comment>Message of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
+  </data>
+  <data name="AM_CacheCleared_Title" xml:space="preserve">
+    <value>Pamięć cache wyczyszczona</value>
+    <comment>Title of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
+  </data>
+  <data name="AM_ClearCacheFailed" xml:space="preserve">
+    <value>Wyczyszczenie pamięci podręcznej nie powiodło się. Spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed when the process to clear cache failed.</comment>
+  </data>
+  <data name="AM_ClearCacheFailed_Title" xml:space="preserve">
+    <value>Wyczyszczenie pamięci podręcznej nie powiodło się</value>
+    <comment>Title of the dialog displayed when the process to clear cache failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ClearOfflineFailed" xml:space="preserve">
+    <value>Nie udało się usunąć plików zapisanych do trybu offline. Proszę spróbuj ponownie.</value>
+    <comment>Message of the dialog displayed when the process to remove all the files saved for offline failed.</comment>
+  </data>
+  <data name="AM_ClearOfflineFailed_Title" xml:space="preserve">
+    <value>Usunięcie danych offline nie powiodło się</value>
+    <comment>Title of the dialog displayed when the process to clear offline files failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ClearOfflineQuestion" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć wszystkie pliki zapisane w trybie offline?</value>
+    <comment>Message of the dialog displayed when a user want to remove all files saved for offline, asking for confirmation to do it.</comment>
+  </data>
+  <data name="AM_ClearOfflineSuccess" xml:space="preserve">
+    <value>Wszystkie zapisane dla plików trybu offline zostały pomyślnie usunięte.</value>
+    <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
+  </data>
+  <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
+    <value>Wyłączono offline</value>
+    <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
+  </data>
+  <data name="AM_ClearOfflineDescription" xml:space="preserve">
+    <value>Spowoduje to usunięcie wszystkich plików i folderów pobranych na karcie Zapisane w trybie offline</value>
+    <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
+  </data>
+  <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
+    <value>Nie udało się sprawdzić statusu uwierzytelniania dwuskładnikowego.</value>
+    <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
 </root>

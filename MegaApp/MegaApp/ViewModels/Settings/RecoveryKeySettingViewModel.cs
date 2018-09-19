@@ -25,8 +25,8 @@ namespace MegaApp.ViewModels.Settings
         private async Task<bool> SaveKey()
         {
             var file = await FileService.SaveFile(new KeyValuePair<string, IList<string>>(
-                    ResourceService.UiResources.GetString("UI_PlainText"), 
-                    new List<string>() { ".txt" }));
+                ResourceService.UiResources.GetString("UI_PlainText"), new List<string>() { ".txt" }),
+                ResourceService.AppResources.GetString("AR_RecoveryKeyFileName"));
             if (file == null) return false;
             try
             {

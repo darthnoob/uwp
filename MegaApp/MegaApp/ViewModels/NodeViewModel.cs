@@ -46,6 +46,7 @@ namespace MegaApp.ViewModels
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
+            this.RestoreCommand = new RelayCommand(Restore);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
 
             Update(megaNode);
@@ -73,6 +74,7 @@ namespace MegaApp.ViewModels
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
+        public ICommand RestoreCommand { get; }
         public ICommand OpenInformationPanelCommand { get; set; }
 
         #endregion
@@ -175,29 +177,7 @@ namespace MegaApp.ViewModels
             // User must be online to perform this operation
             if (!await IsUserOnlineAsync()) return;
 
-            var oldName = this.Name;
-
-            var inputName = await DialogService.ShowInputDialogAsync(
-                ResourceService.UiResources.GetString("UI_Rename"),
-                ResourceService.UiResources.GetString("UI_TypeNewName"),
-                null, null,
-                new InputDialogSettings
-                {
-                    InputText = this.Name,
-                    IsTextSelected = true,
-                    IgnoreExtensionInSelection = true
-                });
-            
-            if(string.IsNullOrEmpty(inputName) || string.IsNullOrWhiteSpace(inputName)) return;
-            if (this.Name.Equals(inputName)) return;
-
-            var rename = new RenameNodeRequestListenerAsync();
-            var newName = await rename.ExecuteAsync(() =>
-            {
-                this.MegaSdk.renameNode(this.OriginalMNode, inputName, rename);
-            });
-
-            if (string.IsNullOrEmpty(newName))
+            if (this.Parent?.FolderRootNode == null)
             {
                 OnUiThread(async () =>
                 {
@@ -206,9 +186,44 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
                 });
                 return;
-            };
+            }
 
-            OnUiThread(() => this.Name = newName);
+            await DialogService.ShowInputAsyncActionDialogAsync(
+                ResourceService.UiResources.GetString("UI_Rename"),
+                ResourceService.UiResources.GetString("UI_TypeNewName"),
+                async (string inputName) =>
+                {
+                    if (string.IsNullOrWhiteSpace(inputName)) return false;
+                    if (this.Name.Equals(inputName)) return true;
+
+                    if(SdkService.ExistsNodeByName(this.Parent.FolderRootNode.OriginalMNode, inputName, this.OriginalMNode.isFolder()))
+                    {
+                        DialogService.SetInputDialogWarningMessage(this.OriginalMNode.isFolder() ?
+                            ResourceService.AppMessages.GetString("AM_FolderAlreadyExists") :
+                            ResourceService.AppMessages.GetString("AM_FileAlreadyExists"));
+                        return false;
+                    }
+
+                    var rename = new RenameNodeRequestListenerAsync();
+                    var newName = await rename.ExecuteAsync(() =>
+                        this.MegaSdk.renameNode(this.OriginalMNode, inputName, rename));
+
+                    if (string.IsNullOrEmpty(newName))
+                    {
+                        DialogService.SetInputDialogWarningMessage(ResourceService.AppMessages.GetString("AM_RenameNodeFailed"));
+                        return false;
+                    }
+
+                    OnUiThread(() => this.Name = newName);
+
+                    return true;
+                },
+                new InputDialogSettings
+                {
+                    InputText = this.Name,
+                    IsTextSelected = true,
+                    IgnoreExtensionInSelection = this.OriginalMNode.isFile()
+                });
         }
 
         private void CopyOrMove()
@@ -228,48 +243,38 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// Move the node from its current location to a new folder destination
         /// </summary>
-        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <param name="newParentNode">The new destination folder</param>
         /// <returns>Result of the action</returns>
-        public async Task<NodeActionResult> MoveAsync(IMegaNode newParentNode)
+        public async Task<NodeActionResult> MoveAsync(MNode newParentNode)
         {
             // User must be online to perform this operation
             if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
-            if (MegaSdk.checkMove(OriginalMNode, newParentNode.OriginalMNode).getErrorCode() != MErrorType.API_OK)
-            {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_MoveFailed_Title"),
-                    ResourceService.AppMessages.GetString("AM_MoveFailed"));
-
+            if (MegaSdk.checkMove(OriginalMNode, newParentNode).getErrorCode() != MErrorType.API_OK)
                 return NodeActionResult.Failed;
-            }
 
             var moveNode = new MoveNodeRequestListenerAsync();
             var result = await moveNode.ExecuteAsync(() =>
-                MegaSdk.moveNode(OriginalMNode, newParentNode.OriginalMNode, moveNode));
+                MegaSdk.moveNode(OriginalMNode, newParentNode, moveNode));
 
-            if (!result) return NodeActionResult.Failed;
-            
-            return NodeActionResult.Succeeded;
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
         }
 
         /// <summary>
         /// Copy the node from its current location to a new folder destination
         /// </summary>
-        /// <param name="newParentNode">The root node of the destination folder</param>
+        /// <param name="newParentNode">The new destination folder</param>
         /// <returns>Result of the action</returns>
-        public async Task<NodeActionResult> CopyAsync(IMegaNode newParentNode)
+        public async Task<NodeActionResult> CopyAsync(MNode newParentNode)
         {
             // User must be online to perform this operation
             if (!await IsUserOnlineAsync()) return NodeActionResult.NotOnline;
 
             var copyNode = new CopyNodeRequestListenerAsync();
             var result = await copyNode.ExecuteAsync(() =>
-                MegaSdk.copyNode(OriginalMNode, newParentNode.OriginalMNode, copyNode));
+                MegaSdk.copyNode(OriginalMNode, newParentNode, copyNode));
 
-            if (!result) return NodeActionResult.Failed;
-            
-            return NodeActionResult.Succeeded;
+            return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
         }
 
         /// <summary>
@@ -277,7 +282,7 @@ namespace MegaApp.ViewModels
         /// </summary>
         /// <param name="newParentNode">The root node of the destination folder</param>
         /// <returns>Result of the action</returns>
-        public async Task<NodeActionResult> ImportAsync(IMegaNode newParentNode)
+        public async Task<NodeActionResult> ImportAsync(MNode newParentNode)
         {
             // User must be online to perform this operation
             if ((this.Parent?.Type != ContainerType.FolderLink) && !await IsUserOnlineAsync())
@@ -285,8 +290,11 @@ namespace MegaApp.ViewModels
 
             var copyNode = new CopyNodeRequestListenerAsync();
             var result = await copyNode.ExecuteAsync(() =>
-                SdkService.MegaSdk.copyNode(SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
-                newParentNode.OriginalMNode, copyNode));
+            {
+                SdkService.MegaSdk.copyNode(
+                    SdkService.MegaSdkFolderLinks.authorizeNode(OriginalMNode),
+                    newParentNode, copyNode);
+            });
 
             return result ? NodeActionResult.Succeeded : NodeActionResult.Failed;
         }
@@ -402,6 +410,28 @@ namespace MegaApp.ViewModels
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Restore node(s) from the rubbish bin
+        /// </summary>
+        private async void Restore()
+        {
+            if (this.Parent != null && this.Parent.ItemCollection.MoreThanOneSelected)
+            {
+                if (this.Parent.RestoreCommand.CanExecute(null))
+                    this.Parent.RestoreCommand.Execute(null);
+                return;
+            }
+
+            var result = await this.MoveAsync(this.RestoreNode);
+
+            if (result != NodeActionResult.Succeeded)
+            {
+                await DialogService.ShowAlertAsync(
+                    ResourceService.AppMessages.GetString("AM_RestoreFromRubbishBinFailed_Title"),
+                    string.Format(ResourceService.AppMessages.GetString("AM_RestoreFromRubbishBinFailed"), this.Name));
+            }
         }
 
         public async void GetLinkAsync(bool showLinkDialog = true)
@@ -544,6 +574,8 @@ namespace MegaApp.ViewModels
         {
             this.OriginalMNode = megaNode;
             this.Handle = megaNode.getHandle();
+            this.RestoreHandle = megaNode.getRestoreHandle();
+            this.RestoreNode = this.MegaSdk.getNodeByHandle(megaNode.getRestoreHandle());
             this.Base64Handle = megaNode.getBase64Handle();
             this.Type = megaNode.getType();
             this.Name = megaNode.getName();
@@ -690,7 +722,20 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Unique identifier of the node.
+        /// </summary>
         public ulong Handle { get; set; }
+
+        /// <summary>
+        /// Handle of the previous parent of this node.
+        /// </summary>
+        public ulong RestoreHandle { get; set; }
+
+        /// <summary>
+        /// Previous parent of this node.
+        /// </summary>
+        public MNode RestoreNode { get; set; }
 
         private FolderViewModel _parent;
         public FolderViewModel Parent
@@ -789,6 +834,12 @@ namespace MegaApp.ViewModels
 
         public AccountDetailsViewModel AccountDetails => AccountService.AccountDetails;
 
+        /// <summary>
+        /// Indicates if the node can be restored to its previous location
+        /// </summary>
+        public bool CanRestore => this.MegaSdk.isInRubbish(this.OriginalMNode) &&
+            this.RestoreNode != null && this.MegaSdk.isInCloud(this.RestoreNode);
+
         private string _exportLink;
         public string ExportLink
         {
@@ -857,6 +908,7 @@ namespace MegaApp.ViewModels
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
+        public string RestoreText => ResourceService.UiResources.GetString("UI_Restore");
         public string ShareText => ResourceService.UiResources.GetString("UI_Share");
         public string SizeLabelText => ResourceService.UiResources.GetString("UI_Size");
         public string TypeLabelText => ResourceService.UiResources.GetString("UI_Type");

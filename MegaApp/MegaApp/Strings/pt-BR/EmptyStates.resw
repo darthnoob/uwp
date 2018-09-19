@@ -126,7 +126,7 @@
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>Ativar uploads da câmera</value>
+    <value>Ativar Uploads da câmera</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Sub header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersHeader" xml:space="preserve">
-    <value>Sem transferências concluídas</value>
+    <value>Não há transferências concluídas</value>
     <comment>Header text for the empty state of the completed transfers list - (String as short as possible).</comment>
   </data>
   <data name="ES_CompletedTransfersSubHeader" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>Sub header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinHeader" xml:space="preserve">
-    <value>Esvaziar a lixeira</value>
+    <value>Lixeira vazia</value>
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
