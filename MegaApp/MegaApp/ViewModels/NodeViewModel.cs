@@ -41,10 +41,11 @@ namespace MegaApp.ViewModels
 
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.GetLinkCommand = new RelayCommand<bool>(GetLinkAsync);
+            this.GetLinkCommand = new RelayCommandAsync<bool,bool>(GetLinkAsync);
             this.ImportCommand = new RelayCommand(Import);
             this.PreviewCommand = new RelayCommand(Preview);
             this.RemoveCommand = new RelayCommand(Remove);
+            this.RemoveLinkCommand = new RelayCommandAsync<bool>(RemoveLinkAsync);
             this.RenameCommand = new RelayCommand(Rename);
             this.RestoreCommand = new RelayCommand(Restore);
             this.OpenInformationPanelCommand = new RelayCommand(OpenInformationPanel);
@@ -73,6 +74,7 @@ namespace MegaApp.ViewModels
         public ICommand ImportCommand { get; }
         public ICommand PreviewCommand { get; }
         public ICommand RemoveCommand { get; }
+        public ICommand RemoveLinkCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand RestoreCommand { get; }
         public ICommand OpenInformationPanelCommand { get; set; }
@@ -434,10 +436,10 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public async void GetLinkAsync(bool showLinkDialog = true)
+        public async Task<bool> GetLinkAsync(bool showLinkDialog = true)
         {
             // User must be online to perform this operation
-            if (!await IsUserOnlineAsync()) return;
+            if (!await IsUserOnlineAsync()) return false;
 
             if (this.OriginalMNode.isExported())
             {
@@ -459,7 +461,7 @@ namespace MegaApp.ViewModels
                             ResourceService.AppMessages.GetString("AM_GetLinkFailed_Title"),
                             ResourceService.AppMessages.GetString("AM_GetLinkFailed"));
                     });
-                    return;
+                    return false;
                 };
             }
 
@@ -467,6 +469,8 @@ namespace MegaApp.ViewModels
 
             if (showLinkDialog)
                 OnUiThread(() => DialogService.ShowShareLink(this));
+
+            return true;
         }
 
         public async void SetLinkExpirationTime(long expireTime)
@@ -494,10 +498,10 @@ namespace MegaApp.ViewModels
             this.IsExported = true;
         }
 
-        public async void RemoveLink()
+        public async Task<bool> RemoveLinkAsync()
         {
             // User must be online to perform this operation
-            if (!await IsUserOnlineAsync() || !this.OriginalMNode.isExported()) return;
+            if (!await IsUserOnlineAsync() || !this.IsExported) return false;
 
             var disableExportNode = new DisableExportRequestListenerAsync();
             var result = await disableExportNode.ExecuteAsync(() =>
@@ -513,11 +517,13 @@ namespace MegaApp.ViewModels
                         ResourceService.AppMessages.GetString("AM_RemoveLinkFailed_Title"),
                         ResourceService.AppMessages.GetString("AM_RemoveLinkFailed"));
                 });
-                return;
+                return false;
             }
 
             this.IsExported = false;
             this.ExportLink = null;
+
+            return true;
         }
 
         private void Download()
@@ -782,7 +788,8 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _isExported, value);
-                OnPropertyChanged(nameof(this.IsExportedOrSavedForOffline));
+                OnPropertyChanged(nameof(this.NodeBinding), nameof(this.GetLinkText),
+                    nameof(this.IsExportedOrSavedForOffline));
             }
         }
 
@@ -898,7 +905,8 @@ namespace MegaApp.ViewModels
         public string FilesLabelText => ResourceService.UiResources.GetString("UI_Files");
         public string FolderLabelText => ResourceService.UiResources.GetString("UI_Folder");
         public string FoldersLabelText => ResourceService.UiResources.GetString("UI_Folders");
-        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
+        public string GetLinkText => this.IsExported ? ResourceService.UiResources.GetString("UI_ManageLink") : 
+            ResourceService.UiResources.GetString("UI_GetLink");
         public string ImageLabelText => ResourceService.UiResources.GetString("UI_Image");
         public string ImportText => ResourceService.UiResources.GetString("UI_Import");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
@@ -907,6 +915,7 @@ namespace MegaApp.ViewModels
         public string MoveText => ResourceService.UiResources.GetString("UI_Move");
         public string PreviewText => ResourceService.UiResources.GetString("UI_Preview");
         public string RemoveText => ResourceService.UiResources.GetString("UI_Remove");
+        public string RemoveLinkText => ResourceService.UiResources.GetString("UI_RemoveLink");
         public string RenameText => ResourceService.UiResources.GetString("UI_Rename");
         public string RestoreText => ResourceService.UiResources.GetString("UI_Restore");
         public string ShareText => ResourceService.UiResources.GetString("UI_Share");

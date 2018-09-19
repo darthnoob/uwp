@@ -38,12 +38,12 @@ namespace MegaApp.ViewModels.UserControls
 
         #region Methods
 
-        public void EnableLink(bool isOn)
+        public async void EnableLink(bool isOn)
         {
-            if (isOn && !this.Node.OriginalMNode.isExported())
-                this.Node.GetLinkAsync(false);
-            else if (!isOn && this.Node.OriginalMNode.isExported())
-                this.Node.RemoveLink();
+            if (isOn && !this.Node.IsExported)
+                await this.Node.GetLinkAsync(false);
+            else if (!isOn && this.Node.IsExported)
+                await this.Node.RemoveLinkAsync();
         }
 
         private void GetDecryptiontKey()

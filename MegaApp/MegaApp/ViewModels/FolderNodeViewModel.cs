@@ -213,10 +213,10 @@ namespace MegaApp.ViewModels
 
         private string ManageCollaboratorsText => ResourceService.UiResources.GetString("UI_ManageCollaborators");
 
-        private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
-        private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();
-        private string SingleFileString => ResourceService.UiResources.GetString("UI_SingleFile").ToLower();
-        private string MultipleFilesString => ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower();
+        protected string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
+        protected string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();
+        protected string SingleFileString => ResourceService.UiResources.GetString("UI_SingleFile").ToLower();
+        protected string MultipleFilesString => ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower();
 
         #endregion
     }

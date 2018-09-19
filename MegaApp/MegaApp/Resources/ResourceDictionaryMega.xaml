@@ -416,6 +416,15 @@
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
@@ -589,6 +598,15 @@
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
                                 Command="{Binding RenameCommand}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding RenameText}"
@@ -731,6 +749,15 @@
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
                                     <x:Boolean>True</x:Boolean>
                                 </MenuFlyoutItem.CommandParameter>
@@ -892,6 +919,15 @@
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding SharingText}"
@@ -1023,6 +1059,15 @@
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
                                     <x:Boolean>True</x:Boolean>
                                 </MenuFlyoutItem.CommandParameter>
@@ -1161,6 +1206,15 @@
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding GetLinkText}"
                                 Visibility="{Binding NodeBinding, ConverterParameter='getlink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
                                 <MenuFlyoutItem.CommandParameter>
                                     <x:Boolean>True</x:Boolean>
                                 </MenuFlyoutItem.CommandParameter>
@@ -1903,6 +1957,15 @@
                                 </MenuFlyoutItem.CommandParameter>
                             </MenuFlyoutItem>
                             <MenuFlyoutItem
+                                Command="{Binding RemoveLinkCommand}"
+                                IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
+                                Text="{Binding RemoveLinkText}"
+                                Visibility="{Binding NodeBinding, ConverterParameter='removelink', Converter={StaticResource NodeViewStateToVisibilityConverter}}">
+                                <MenuFlyoutItem.CommandParameter>
+                                    <x:Boolean>True</x:Boolean>
+                                </MenuFlyoutItem.CommandParameter>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem
                                 Command="{Binding ShareCommand}"
                                 IsEnabled="{Binding IsNetworkAvailable, Mode=OneWay}"
                                 Text="{Binding SharingText}"
@@ -1932,6 +1995,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="{Binding ContentsColumnWidth}" />
                 </Grid.ColumnDefinitions>
                 <Path
                     Grid.Column="0"
@@ -1959,29 +2025,48 @@
                         Text="{Binding Name}"
                         TextTrimming="CharacterEllipsis"
                         TextWrapping="NoWrap" />
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="13"
-                            Opacity="0.5"
-                            Text="{Binding ContactsText}"
-                            TextWrapping="NoWrap" />
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            FontSize="13"
-                            Opacity="0.5"
-                            Text="{Binding Contents}"
-                            TextWrapping="NoWrap" />
-                    </Grid>
+                    <TextBlock
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="13"
+                        Opacity="0.5"
+                        Text="{Binding ContactsText}"
+                        TextWrapping="NoWrap" />
                 </Grid>
+                <Viewbox
+                    Grid.Column="2"
+                    Width="10"
+                    Height="10"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsSavedForOffline, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <FontIcon Foreground="{ThemeResource MegaRedColorBrush}" Glyph="&#xE896;" />
+                </Viewbox>
+                <Path
+                    Grid.Column="3"
+                    Width="10"
+                    Height="6"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Data="{Binding LinkPathData}"
+                    Stretch="Uniform"
+                    Visibility="{Binding IsExported, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Path.Fill>
+                        <SolidColorBrush Color="{ThemeResource MegaRedColor}" />
+                    </Path.Fill>
+                </Path>
+                <TextBlock
+                    Grid.Column="4"
+                    Margin="12,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    Opacity="0.5"
+                    Text="{Binding Contents}"
+                    TextWrapping="NoWrap" />
             </Grid>
         </Border>
     </DataTemplate>

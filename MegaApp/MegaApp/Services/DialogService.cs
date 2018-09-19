@@ -447,21 +447,27 @@ namespace MegaApp.Services
         {
             var dialog = new MegaContentDialog
             {
+                Background = (Brush)Application.Current.Resources["MegaAppBackgroundBrush"],
+                BorderBrush = (Brush)Application.Current.Resources["MegaDialogBorderBrush"],
+                CloseButtonVisibility = Visibility.Visible,
                 IsPrimaryButtonEnabled = true,
                 IsSecondaryButtonEnabled = true,
+                Margin = new Thickness(0, 0, 24, 24),
                 PrimaryButtonText = ResourceService.UiResources.GetString("UI_Copy"),
                 SecondaryButtonText = ResourceService.UiResources.GetString("UI_Share"),
+                Style = (Style)Application.Current.Resources["MegaAlertDialogStyle"],
                 Title = ResourceService.UiResources.GetString("UI_ExportLink")
             };
+            dialog.CloseButtonCommand = new RelayCommand(() => dialog.Hide());
 
             var stackPanel = new StackPanel
             {
-                Margin = new Thickness(0, 20, 0, 0)
+                Margin = new Thickness(24, 24, 0, 0)
             };
 
             var messageText = new TextBlock
             {
-                Text = node.OriginalMNode.getPublicLink(true),
+                Text = node.ExportLink,
                 Margin = new Thickness(0, 20, 0, 12),
                 TextWrapping = TextWrapping.WrapWholeWords,
                 HorizontalAlignment = HorizontalAlignment.Stretch,

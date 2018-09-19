@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 using MegaApp.Enums;
@@ -201,6 +202,15 @@ namespace MegaApp.Converters
                         case "share":
                             return folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem ?
                                 Visibility.Visible : Visibility.Collapsed;
+                            
+                        case "removelink":
+                            if (folder.ItemCollection != null && folder.ItemCollection.OnlyOneSelectedItem)
+                            {
+                                var selectedNode = folder.ItemCollection.SelectedItems.First() as OutgoingSharedFolderNodeViewModel;
+                                return selectedNode != null && selectedNode.IsExported ?
+                                    Visibility.Visible : Visibility.Collapsed;
+                            }
+                            return Visibility.Collapsed;
 
                         case "removeshare":
                             return folder is SharedFoldersListViewModel &&

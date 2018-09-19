@@ -536,20 +536,18 @@
                                     Grid.Column="0"
                                     Margin="0,0,6,0"
                                     Command="{x:Bind ViewModel.CopyLinkCommand}"
+                                    Content="{x:Bind ViewModel.CopyText, Mode=OneTime}"
                                     HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center">
-                                    <TextBlock Text="{x:Bind ViewModel.CopyText, Mode=OneTime}" />
-                                </Button>
+                                    HorizontalContentAlignment="Center" />
                                 <Button
                                     x:Name="ShareLinkButton"
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Margin="6,0,0,0"
                                     Command="{x:Bind ViewModel.ShareLinkCommand}"
+                                    Content="{x:Bind ViewModel.ShareText, Mode=OneTime}"
                                     HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Center">
-                                    <TextBlock Text="{x:Bind ViewModel.ShareText, Mode=OneTime}" />
-                                </Button>
+                                    HorizontalContentAlignment="Center" />
                             </Grid>
                         </Grid>
                     </ScrollViewer>

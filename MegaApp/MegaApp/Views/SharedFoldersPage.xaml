@@ -165,7 +165,7 @@
                                 </AppBarButton>
                                 <AppBarButton
                                     IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
-                                    Label="{Binding GetLinkText, Mode=OneTime}"
+                                    Label="{Binding GetLinkText, Mode=OneWay}"
                                     ToolTipService.ToolTip="{Binding GetLinkText, Mode=OneTime}"
                                     Command="{Binding GetLinkCommand}"
                                     Visibility="{Binding SharedFolders, ConverterParameter='getlink', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
@@ -176,6 +176,12 @@
                                             Data="{Binding LinkPathData, Mode=OneTime}" />
                                     </AppBarButton.Icon>
                                 </AppBarButton>
+                                <AppBarButton
+                                    IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
+                                    Label="{Binding RemoveLinkText, Mode=OneTime}"
+                                    ToolTipService.ToolTip="{Binding RemoveLinkText, Mode=OneTime}"
+                                    Command="{Binding RemoveLinkCommand}"
+                                    Visibility="{Binding SharedFolders, ConverterParameter='removelink', Converter={StaticResource FolderViewStateToVisibilityConverter}}" />
                                 <AppBarButton
                                     IsEnabled="{x:Bind ViewModel.IsNetworkAvailable, Mode=OneWay}"
                                     Label="{Binding ManageCollaboratorsText, Mode=OneTime}"

@@ -51,12 +51,14 @@ namespace MegaApp.Interfaces
         /// Get the node link from the Mega SDK to share the node with others 
         /// </summary>
         /// <param name="showLinkDialog">True to show a dialog with the link and options</param>
-        void GetLinkAsync(bool showLinkDialog = true);
+        /// <returns>Result of the action</returns>
+        Task<bool> GetLinkAsync(bool showLinkDialog = true);
 
         /// <summary>
         /// Remove node link from the Mega SDK
         /// </summary>
-        void RemoveLink();
+        /// <returns>Result of the action</returns>
+        Task <bool> RemoveLinkAsync();
 
         /// <summary>
         /// Dowload the node to a specified download destionation
