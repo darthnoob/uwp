@@ -218,8 +218,9 @@ namespace MegaApp.ViewModels.Login
         /// <summary>
         /// Log in to a MEGA account using a session key and show an alert if something went wrong.
         /// </summary>
+        /// <param name="progressHeaderText">Customized header text to display during the process (optional).</param>
         /// <returns>TRUE if all was well or FALSE in other case.</returns>
-        public async Task<bool> FastLoginAsync()
+        public async Task<bool> FastLoginAsync(string progressHeaderText = null)
         {
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;
@@ -233,7 +234,7 @@ namespace MegaApp.ViewModels.Login
                 this.ControlState = false;
                 this.IsBusy = true;
 
-                this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
+                this.ProgressHeaderText = progressHeaderText ?? ResourceService.ProgressMessages.GetString("PM_FastLoginHeader");
                 this.ProgressText = ResourceService.ProgressMessages.GetString("PM_LoginSubHeader");
 
                 fastLoginResult = await fastLogin.ExecuteAsync(async () =>
