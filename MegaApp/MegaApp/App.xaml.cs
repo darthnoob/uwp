@@ -303,6 +303,9 @@ namespace MegaApp
             // Clear settings values we do no longer use
             AppService.ClearObsoleteSettings();
 
+            // Save the app information for future use (like deleting settings)
+            AppService.SaveAppInformation();
+
             // Ensure we don't initialize again
             ApplicationInitialized = true;
         }

@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using MegaApp.Classes;
@@ -20,15 +20,29 @@ namespace MegaApp.Views
             this.InitializeComponent();
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            SettingsService.ReloadSettingsRequested -= OnReloadSettingsRequested;
+
+            base.OnNavigatedFrom(e);
+        }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             this.ViewModel.Initialize();
 
+            SettingsService.ReloadSettingsRequested += OnReloadSettingsRequested;
+
             var navObj = NavigateService.GetNavigationObject(e.Parameter) as NavigationObject;
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
             if (navActionType == NavigationActionType.SecuritySettings)
                 this.MainPivot.SelectedItem = this.SecurityPivot;
+        }
+
+        private void OnReloadSettingsRequested(object sender, EventArgs e)
+        {
+            this.ViewModel.ReloadSettings();
         }
 
         private void OnSdkVersionPointerPressed(object sender, PointerRoutedEventArgs e)

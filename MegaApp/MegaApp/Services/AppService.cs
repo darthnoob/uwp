@@ -259,6 +259,14 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Save the app information for future use (like deleting settings).
+        /// </summary>
+        public static void SaveAppInformation()
+        {
+            SettingsService.Save(ResourceService.AppResources.GetString("SR_LastAppVersion"), GetAppVersion());
+        }
+
+        /// <summary>
         /// Get the app name
         /// </summary>
         /// <returns>App name</returns>
@@ -604,6 +612,16 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Clear settings values we do no longer use.
+        /// </summary>
+        public static void ClearObsoleteSettings()
+        {
+            var lastAppVersion = SettingsService.Load<string>(
+                ResourceService.SettingsResources.GetString("SR_LastAppVersion"), null);
+            if (lastAppVersion == null) return;
+        }
+
+        /// <summary>
         /// Method that executes the actions needed for a logout
         /// </summary>
         public static void LogoutActions()
@@ -647,11 +665,6 @@ namespace MegaApp.Services
             {
                 To = { new EmailRecipient(ResourceService.AppResources.GetString("AR_SupportEmailAddress")) }
             });
-        }
-
-        public static void ClearObsoleteSettings()
-        {
-            SettingsService.DeleteSetting(ResourceService.SettingsResources.GetString("SR_UseStagingServer"));
         }
     }
 }

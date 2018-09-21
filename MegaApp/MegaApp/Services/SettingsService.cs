@@ -30,6 +30,22 @@ namespace MegaApp.Services
             }
         }
 
+        #region Events
+
+        /// <summary>
+        /// Event triggered when a settings reload is requested.
+        /// </summary>
+        public static event EventHandler ReloadSettingsRequested;
+
+        /// <summary>
+        /// Event invocator method called when a settings reload is requested.
+        /// </summary>
+        public static void ReloadSettings() => ReloadSettingsRequested?.Invoke(null, EventArgs.Empty);
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Save a value to the app local settings container
         /// </summary>
@@ -479,5 +495,7 @@ namespace MegaApp.Services
 
             DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_UserMegaSession"));
         }
+
+        #endregion
     }
 }

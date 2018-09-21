@@ -10,7 +10,8 @@ namespace MegaApp.ViewModels.Settings
 
         public override string GetValue(string defaultValue)
         {
-            return AppService.GetAppVersion();
+            return SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ? 
+                string.Format("{0} (staging)", AppService.GetAppVersion()) : AppService.GetAppVersion();
         }
     }
 }

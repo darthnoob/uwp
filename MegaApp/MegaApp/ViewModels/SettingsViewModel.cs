@@ -13,7 +13,57 @@ namespace MegaApp.ViewModels
         {
             // General section
             this.GeneralSettingSections = new List<SettingSectionViewModel>();
+            this.AddGeneralSettingSections();
 
+            // Camera uploads section
+            this.CameraUploadSettingSections = new List<SettingSectionViewModel>();
+            this.AddCameraUploadSettingSections();
+
+            // Security section
+            this.SecuritySettingSections = new List<SettingSectionViewModel>();
+            this.AddSecuritySettingSections();
+        }
+
+        #region Methods
+
+        public void Initialize()
+        {
+            foreach (var settingSection in this.GeneralSettingSections)
+                settingSection.Initialize();
+
+            foreach (var settingSection in this.CameraUploadSettingSections)
+                settingSection.Initialize();
+
+            foreach (var settingSection in this.SecuritySettingSections)
+                settingSection.Initialize();
+        }
+
+        public void ReloadSettings()
+        {
+            this.GeneralSettingSections.Clear();
+            this.AddGeneralSettingSections();
+
+            this.CameraUploadSettingSections.Clear();
+            this.AddCameraUploadSettingSections();
+
+            this.SecuritySettingSections.Clear();
+            this.AddSecuritySettingSections();
+
+            this.Initialize();
+
+            OnPropertyChanged(nameof(this.GeneralSettingSections),
+                nameof(this.CameraUploadSettingSections),
+                nameof(this.SecuritySettingSections));
+        }
+
+        public override void UpdateNetworkStatus()
+        {
+            base.UpdateNetworkStatus();
+            SettingsService.RecoveryKeySetting.UpdateNetworkStatus();
+        }
+
+        private void AddGeneralSettingSections()
+        {
             var storageLocationSettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_StorageLocation")
@@ -39,14 +89,14 @@ namespace MegaApp.ViewModels
             {
                 Header = ResourceService.UiResources.GetString("UI_LegalAndPolicies")
             };
-            this.LegalAndPoliciesSetting = new LegalAndPoliciesSettingViewModel();
-            legalSettings.Items.Add(this.LegalAndPoliciesSetting);
+            var legalAndPoliciesSetting = new LegalAndPoliciesSettingViewModel();
+            legalSettings.Items.Add(legalAndPoliciesSetting);
 
             this.GeneralSettingSections.Add(legalSettings);
+        }
 
-            // Camera uploads section
-            this.CameraUploadSettingSections = new List<SettingSectionViewModel>();
-
+        private void AddCameraUploadSettingSections()
+        {
             var cameraUploadSettings = new SettingSectionViewModel()
             {
                 Header = ResourceService.UiResources.GetString("UI_CameraUploads")
@@ -58,42 +108,43 @@ namespace MegaApp.ViewModels
 
             var howCameraUploads = new CameraUploadsSelectionSettingViewModel(
                 ResourceService.UiResources.GetString("UI_HowToUpload"), null, "CameraUploadsSettingsHowKey",
-                    new[]
+                new[]
+                {
+                    new SelectionSettingViewModel.SelectionOption
                     {
-                            new SelectionSettingViewModel.SelectionOption
-                            {
-                                    Description = ResourceService.UiResources.GetString("UI_EthernetWifiOnly"),
-                                    Value = (int) CameraUploadsConnectionType.EthernetWifiOnly
-                            },
-                            new SelectionSettingViewModel.SelectionOption
-                            {
-                                    Description = ResourceService.UiResources.GetString("UI_AnyConnectionType"),
-                                    Value = (int) CameraUploadsConnectionType.Any
-                            }
-                    }) {IsVisible = cameraUploads.Value};
+                        Description = ResourceService.UiResources.GetString("UI_EthernetWifiOnly"),
+                        Value = (int) CameraUploadsConnectionType.EthernetWifiOnly
+                    },
+                    new SelectionSettingViewModel.SelectionOption
+                    {
+                        Description = ResourceService.UiResources.GetString("UI_AnyConnectionType"),
+                        Value = (int) CameraUploadsConnectionType.Any
+                    }
+                })
+            { IsVisible = cameraUploads.Value };
             cameraUploadSettings.Items.Add(howCameraUploads);
 
             var fileCameraUploads = new CameraUploadsSelectionSettingViewModel(
                 ResourceService.UiResources.GetString("UI_FileToUpload"), null, "CameraUploadsSettingsFileKey",
-                    new[]
+                new[]
+                {
+                    new SelectionSettingViewModel.SelectionOption
                     {
-                            new SelectionSettingViewModel.SelectionOption
-                            {
-                                    Description = ResourceService.UiResources.GetString("UI_PhotoAndVideo"),
-                                    Value = (int) CameraUploadsFileType.PhotoAndVideo
-                            },
-                            new SelectionSettingViewModel.SelectionOption
-                            {
-                                    Description = ResourceService.UiResources.GetString("UI_PhotoOnly"),
-                                    Value = (int) CameraUploadsFileType.PhotoOnly
-                            },
-                            new SelectionSettingViewModel.SelectionOption
-                            {
-                                    Description = ResourceService.UiResources.GetString("UI_VideoOnly"),
-                                    Value = (int) CameraUploadsFileType.VideoOnly
-                            }
-                    })
-                    { IsVisible = cameraUploads.Value };
+                        Description = ResourceService.UiResources.GetString("UI_PhotoAndVideo"),
+                        Value = (int) CameraUploadsFileType.PhotoAndVideo
+                    },
+                    new SelectionSettingViewModel.SelectionOption
+                    {
+                        Description = ResourceService.UiResources.GetString("UI_PhotoOnly"),
+                        Value = (int) CameraUploadsFileType.PhotoOnly
+                    },
+                    new SelectionSettingViewModel.SelectionOption
+                    {
+                        Description = ResourceService.UiResources.GetString("UI_VideoOnly"),
+                        Value = (int) CameraUploadsFileType.VideoOnly
+                    }
+                })
+            { IsVisible = cameraUploads.Value };
 
             cameraUploadSettings.Items.Add(fileCameraUploads);
 
@@ -106,10 +157,10 @@ namespace MegaApp.ViewModels
             };
 
             this.CameraUploadSettingSections.Add(cameraUploadSettings);
+        }
 
-            // Security section
-            this.SecuritySettingSections = new List<SettingSectionViewModel>();
-
+        private void AddSecuritySettingSections()
+        {
             var recoveryKeySettings = new SettingSectionViewModel
             {
                 Header = ResourceService.UiResources.GetString("UI_RecoveryKey")
@@ -142,26 +193,6 @@ namespace MegaApp.ViewModels
             sessionManagementSettings.Items.Add(closeOtherSessionsSetting);
 
             this.SecuritySettingSections.Add(sessionManagementSettings);
-        }
-
-        #region Methods
-
-        public void Initialize()
-        {
-            foreach (var settingSection in this.GeneralSettingSections)
-                settingSection.Initialize();
-
-            foreach (var settingSection in this.CameraUploadSettingSections)
-                settingSection.Initialize();
-
-            foreach (var settingSection in this.SecuritySettingSections)
-                settingSection.Initialize();
-        }
-
-        public override void UpdateNetworkStatus()
-        {
-            base.UpdateNetworkStatus();
-            SettingsService.RecoveryKeySetting.UpdateNetworkStatus();
         }
 
         private async void CloseOtherSessions()
@@ -197,8 +228,6 @@ namespace MegaApp.ViewModels
         public List<SettingSectionViewModel> GeneralSettingSections { get; }
         public List<SettingSectionViewModel> CameraUploadSettingSections { get; }
         public List<SettingSectionViewModel> SecuritySettingSections { get; }
-
-        public LegalAndPoliciesSettingViewModel LegalAndPoliciesSetting { get; }
 
         #endregion
 
