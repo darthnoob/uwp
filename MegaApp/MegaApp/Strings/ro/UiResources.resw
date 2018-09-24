@@ -133,9 +133,9 @@
     <value>Anulează</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanRubbishBin" xml:space="preserve">
-    <value>Goleşte coşul de gunoi</value>
-    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+  <data name="UI_ClearRubbishBin" xml:space="preserve">
+    <value>Clear Rubbish Bin</value>
+    <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>Unitate cloud</value>
@@ -194,7 +194,7 @@
     <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyRubbishBin" xml:space="preserve">
-    <value>Goleşte coşul de gunoi</value>
+    <value>Coş de gunoi gol</value>
     <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptySharedFolders" xml:space="preserve">
@@ -1818,5 +1818,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_FindApp" xml:space="preserve">
     <value>Find app</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageLink" xml:space="preserve">
+    <value>Gestionează linkul</value>
+    <comment>Label for any 'Manage link' button, link, text, title, etc., to manage a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveLink" xml:space="preserve">
+    <value>Elimină linkul</value>
+    <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
 </root>

@@ -133,9 +133,9 @@
     <value>취소</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanRubbishBin" xml:space="preserve">
+  <data name="UI_ClearRubbishBin" xml:space="preserve">
     <value>휴지통 비우기</value>
-    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+    <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>클라우드 드라이브</value>
@@ -1818,5 +1818,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_FindApp" xml:space="preserve">
     <value>앱 찾기</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageLink" xml:space="preserve">
+    <value>링크 관리</value>
+    <comment>Label for any 'Manage link' button, link, text, title, etc., to manage a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveLink" xml:space="preserve">
+    <value>링크 제거</value>
+    <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
 </root>

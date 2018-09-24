@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PM_CleanRubbishBin" xml:space="preserve">
-    <value>清空垃圾桶中...</value>
+    <value>正在清空垃圾桶…</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
@@ -216,5 +216,9 @@
   <data name="PM_ConnectivityIssue" xml:space="preserve">
     <value>无法连接MEGA。请检查您的连接或稍后再试。</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Reloading" xml:space="preserve">
+    <value>正在重新读取…</value>
+    <comment>Progress indicator message when reloading an account or any content - (String as short as possible).</comment>
   </data>
 </root>

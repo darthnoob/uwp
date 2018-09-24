@@ -178,7 +178,7 @@
     <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
   </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
-    <value>Déchiffrement des noeuds.</value>
+    <value>Déchiffrement des nœuds.</value>
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
@@ -216,5 +216,9 @@
   <data name="PM_ConnectivityIssue" xml:space="preserve">
     <value>Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer plus tard.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
+  </data>
+  <data name="PM_Reloading" xml:space="preserve">
+    <value>Rechargement…</value>
+    <comment>Progress indicator message when reloading an account or any content - (String as short as possible).</comment>
   </data>
 </root>
