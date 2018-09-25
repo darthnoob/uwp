@@ -3601,8 +3601,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 Text="{Binding DisplayNameStorage, Mode=OneTime}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="NoWrap" />
+                TextWrapping="WrapWholeWords" />
             <TextBlock
                 Grid.Column="2"
                 HorizontalAlignment="Right"
@@ -3647,8 +3646,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 Text="{Binding DisplayNameTransfer, Mode=OneTime}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="NoWrap" />
+                TextWrapping="WrapWholeWords" />
             <TextBlock
                 Grid.Column="2"
                 HorizontalAlignment="Right"
