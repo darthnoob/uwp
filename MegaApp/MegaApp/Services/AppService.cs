@@ -263,7 +263,7 @@ namespace MegaApp.Services
         /// </summary>
         public static void SaveAppInformation()
         {
-            SettingsService.Save(ResourceService.AppResources.GetString("SR_LastAppVersion"), GetAppVersion());
+            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_LastAppVersion"), GetAppVersion());
         }
 
         /// <summary>
