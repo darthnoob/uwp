@@ -22,7 +22,7 @@ This document will guide you to build the application on a Windows machine with 
 1. Get the source code. Clone or donwload this repository.
 
 2. Download the required third party libraries from this link: 
-https://mega.nz/#!d0ETSL4T!UaCbxtjPLCy5NsQpait7qnH7JZICF1hC2e-hcJM8u8o
+https://mega.nz/#!cwFTHQ7Q!Wz00uYeny6n3uYCQYoOITyK4UBhVgQ7O_3l1f47lc3Y
 
 3. Uncompress that file into `uwp\MegaSDK\bindings\wp8`
 
@@ -50,4 +50,4 @@ https://mega.nz/#!d0ETSL4T!UaCbxtjPLCy5NsQpait7qnH7JZICF1hC2e-hcJM8u8o
 9. Enjoy!
 
 If you want to build the third party dependencies by yourself, you can download the source code from this link:
-https://mega.nz/#!JxVnwTKR!RvNh-dTGmVShoeHigqQHrQGVEZg73LDmRqYw1rJ0of8
+https://mega.nz/#!EpNXUQZa!zeQ9_YIuDC1gXmHnQwONNv7Otm-hMMerkugeR2piFi0
