@@ -785,7 +785,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>Votre compte a été mis à jour. Souhaitez-vous vérifier les nouvelles informations de compte ?</value>
+    <value>Votre compte a été mis à jour. Souhaitez-vous vérifier les nouvelles informations de compte ?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
