@@ -133,9 +133,9 @@
     <value>Отмена</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanRubbishBin" xml:space="preserve">
+  <data name="UI_ClearRubbishBin" xml:space="preserve">
     <value>Очистить корзину</value>
-    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+    <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>Облачный диск</value>
@@ -194,7 +194,7 @@
     <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyRubbishBin" xml:space="preserve">
-    <value>Очистить корзину</value>
+    <value>Корзина пуста</value>
     <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptySharedFolders" xml:space="preserve">
@@ -1818,5 +1818,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_FindApp" xml:space="preserve">
     <value>Найти</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageLink" xml:space="preserve">
+    <value>Управление ссылкой</value>
+    <comment>Label for any 'Manage link' button, link, text, title, etc., to manage a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveLink" xml:space="preserve">
+    <value>Удалить ссылку</value>
+    <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
 </root>

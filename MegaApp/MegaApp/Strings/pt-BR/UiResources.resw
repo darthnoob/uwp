@@ -133,9 +133,9 @@
     <value>Cancelar</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanRubbishBin" xml:space="preserve">
-    <value>Lixeira vazia</value>
-    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+  <data name="UI_ClearRubbishBin" xml:space="preserve">
+    <value>Esvaziar a lixeira</value>
+    <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>Nuvem de arquivos</value>
@@ -1818,5 +1818,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_FindApp" xml:space="preserve">
     <value>Buscar app</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageLink" xml:space="preserve">
+    <value>Administrar link</value>
+    <comment>Label for any 'Manage link' button, link, text, title, etc., to manage a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveLink" xml:space="preserve">
+    <value>Remover link</value>
+    <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
 </root>
