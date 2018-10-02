@@ -191,11 +191,11 @@
                             </AppBarButton>
                             <AppBarButton
                                 Click="OnButtonClick"
-                                Command="{Binding CleanRubbishBinCommand}"
-                                IsEnabled="{x:Bind ViewModel.IsCleanRubbishBinEnabled, Mode=OneWay}"
-                                Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                                Command="{Binding ClearRubbishBinCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsClearRubbishBinEnabled, Mode=OneWay}"
+                                Label="{Binding ClearRubbishBinText, Mode=OneTime}"
                                 Style="{StaticResource MegaAppBarButtonStyle}"
-                                ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                                ToolTipService.ToolTip="{Binding ClearRubbishBinText, Mode=OneTime}"
                                 Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='clean', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                                 <AppBarButton.Icon>
                                     <PathIcon
@@ -506,11 +506,11 @@
                     </AppBarButton>
                     <AppBarButton
                         Click="OnButtonClick"
-                        Command="{Binding CleanRubbishBinCommand}"
-                        IsEnabled="{x:Bind ViewModel.IsCleanRubbishBinEnabled, Mode=OneWay}"
-                        Label="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                        Command="{Binding ClearRubbishBinCommand}"
+                        IsEnabled="{x:Bind ViewModel.IsClearRubbishBinEnabled, Mode=OneWay}"
+                        Label="{Binding ClearRubbishBinText, Mode=OneTime}"
                         Style="{StaticResource MegaAppBarButtonStyle}"
-                        ToolTipService.ToolTip="{Binding EmptyRubbishBinText, Mode=OneTime}"
+                        ToolTipService.ToolTip="{Binding ClearRubbishBinText, Mode=OneTime}"
                         Visibility="{Binding ActiveFolderView.Folder, ConverterParameter='clean', Converter={StaticResource FolderViewStateToVisibilityConverter}}">
                         <AppBarButton.Icon>
                             <PathIcon

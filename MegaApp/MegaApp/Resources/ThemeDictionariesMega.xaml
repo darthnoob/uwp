@@ -157,13 +157,10 @@
                             AutomationProperties.AccessibilityView="Raw"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                            ContentTransitions="{TemplateBinding ContentTransitions}">
-                            <TextBlock 
-                                Text="{TemplateBinding Content}"
-                                TextAlignment="Center"
-                                TextWrapping="WrapWholeWords" />
-                        </ContentPresenter>
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            TextWrapping="WrapWholeWords"/>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">

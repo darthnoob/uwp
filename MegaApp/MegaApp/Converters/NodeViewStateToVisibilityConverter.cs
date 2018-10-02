@@ -50,6 +50,10 @@ namespace MegaApp.Converters
                             return parentFolder.ItemCollection.MoreThanOneSelected ? 
                                 Visibility.Collapsed : Visibility.Visible;
 
+                        case "removelink":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsExported ?
+                                Visibility.Visible : Visibility.Collapsed;
+
                         case "share":
                             return parentFolder.ItemCollection.MoreThanOneSelected || !node.IsFolder ?
                                 Visibility.Collapsed : Visibility.Visible;
@@ -142,6 +146,10 @@ namespace MegaApp.Converters
                         case "getlink":
                         case "rename":
                             return parentFolder.ItemCollection.OnlyOneSelectedItem ?
+                                Visibility.Visible : Visibility.Collapsed;
+
+                        case "removelink":
+                            return parentFolder.ItemCollection.OnlyOneSelectedItem && node.IsExported ?
                                 Visibility.Visible : Visibility.Collapsed;
 
                         default:

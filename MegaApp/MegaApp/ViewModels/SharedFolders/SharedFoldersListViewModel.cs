@@ -252,7 +252,6 @@ namespace MegaApp.ViewModels.SharedFolders
 
         #region UiResources
 
-        public string GetLinkText => ResourceService.UiResources.GetString("UI_GetLink");
         public string InformationText => ResourceService.UiResources.GetString("UI_Information");
         public string LeaveShareText => ResourceService.UiResources.GetString("UI_LeaveShare");
         public string OpenText => ResourceService.UiResources.GetString("UI_Open");

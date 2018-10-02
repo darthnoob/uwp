@@ -137,9 +137,9 @@
     <value>Il Cestino è stato svuotato con successo.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
-  <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
+  <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
     <value>Svuota Cestino</value>
-    <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
+    <comment>Title for any 'Clear Rubbish Bin' dialog - (String as short as possible).</comment>
   </data>
   <data name="AM_ConfirmEmail" xml:space="preserve">
     <value>Abbiamo inviato un link di conferma all'indirizzo email che hai inserito: {0}.</value>
@@ -1388,5 +1388,13 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
     <value>Controllo dello stato dell'autenticazione a due fattori fallito.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
+  </data>
+  <data name="AM_FolderAlreadyExists" xml:space="preserve">
+    <value>C'è già una cartella con lo stesso nome</value>
+    <comment>Message which is shown when a folder name is duplicated during renaming or creation.</comment>
+  </data>
+  <data name="AM_FileAlreadyExists" xml:space="preserve">
+    <value>C'è già un file con lo stesso nome</value>
+    <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
 </root>

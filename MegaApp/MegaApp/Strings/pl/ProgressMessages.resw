@@ -217,4 +217,8 @@
     <value>Brak połączenia z MEGA. Sprawdź swoje połączenie do sieci i spróbuj ponownie.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
+  <data name="PM_Reloading" xml:space="preserve">
+    <value>Ponowne ładowanie...</value>
+    <comment>Progress indicator message when reloading an account or any content - (String as short as possible).</comment>
+  </data>
 </root>

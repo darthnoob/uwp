@@ -173,4 +173,8 @@
     <value>{BA40B745-D0F5-4AD5-A539-44B1403A9EB8}</value>
     <comment>Rersource key to store if use the staging server or not - (NO-TRANSLATION).</comment>
   </data>
+  <data name="SR_LastAppVersion" xml:space="preserve">
+    <value>{13C908CC-E5A1-4D3F-80F2-D18BF2075619}</value>
+    <comment>Resource key to store the last app version - (NO-TRANSLATION).</comment>
+  </data>
 </root>

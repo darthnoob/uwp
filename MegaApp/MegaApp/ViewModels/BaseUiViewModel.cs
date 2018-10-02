@@ -38,7 +38,7 @@ namespace MegaApp.ViewModels
         /// <param name="action">Action to invoke on the user interface thread</param>
         /// <param name="priority">The priority of the dispatcher</param>
         /// <returns>Result of the action</returns>
-        public static async Task OnUiThreadAsync(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
+        public async Task OnUiThreadAsync(Action action, CoreDispatcherPriority priority = CoreDispatcherPriority.Normal)
         {
             // If no action defined then do nothing and return to save time
             if (action == null) return;

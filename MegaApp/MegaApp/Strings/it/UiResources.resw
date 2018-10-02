@@ -133,9 +133,9 @@
     <value>Cancella</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_CleanRubbishBin" xml:space="preserve">
+  <data name="UI_ClearRubbishBin" xml:space="preserve">
     <value>Svuota Cestino</value>
-    <comment>Label for any 'Empty rubbish' button, link, text, etc. to clean the rubbish bin - (String as short as possible).</comment>
+    <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
     <value>Partizione Cloud</value>
@@ -194,7 +194,7 @@
     <comment>Label for the background of an empty transfers page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyRubbishBin" xml:space="preserve">
-    <value>Svuota Cestino</value>
+    <value>Svuota il Cestino</value>
     <comment>Label for the background of an empty rubbish bin page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptySharedFolders" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
   </data>
   <data name="UI_Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>Invia</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
@@ -1818,5 +1818,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_FindApp" xml:space="preserve">
     <value>Trova app</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ManageLink" xml:space="preserve">
+    <value>Gestisci link</value>
+    <comment>Label for any 'Manage link' button, link, text, title, etc., to manage a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_RemoveLink" xml:space="preserve">
+    <value>Rimuovi link</value>
+    <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
 </root>

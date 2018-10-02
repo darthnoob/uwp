@@ -1,4 +1,7 @@
-﻿using mega;
+﻿using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using mega;
 using MegaApp.Classes;
 using MegaApp.Interfaces;
 using MegaApp.MegaApi;
@@ -107,6 +110,24 @@ namespace MegaApp.ViewModels.SharedFolders
         {
             get { return _contactsText; }
             set { SetField(ref _contactsText, value); }
+        }
+
+        /// <summary>
+        /// Specifies the minimum width for the "contents" column of the folder node
+        /// </summary>
+        public GridLength ContentsColumnWidth
+        {
+            get
+            {
+                var tb = new TextBlock
+                {
+                    Text = "000 " + this.MultipleFordersString + " 000 " + this.MultipleFilesString,
+                    FontSize = 13
+                };
+                tb.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+
+                return new GridLength(tb.DesiredSize.Width);
+            }
         }
 
         #endregion

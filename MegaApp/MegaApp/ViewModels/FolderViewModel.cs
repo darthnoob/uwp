@@ -33,7 +33,8 @@ namespace MegaApp.ViewModels
             this.AddFolderCommand = new RelayCommand(AddFolder);
             this.CopyOrMoveCommand = new RelayCommand(CopyOrMove);
             this.DownloadCommand = new RelayCommand(Download);
-            this.GetLinkCommand = new RelayCommand(GetLink);
+            this.GetLinkCommand = new RelayCommandAsync<bool>(GetLinkAsync);
+            this.RemoveLinkCommand = new RelayCommandAsync<bool>(RemoveLinkAsync);
             this.RemoveCommand = new RelayCommand(Remove);
             this.RenameCommand = new RelayCommand(Rename);
             this.RestoreCommand = new RelayCommand(Restore);
@@ -301,6 +302,7 @@ namespace MegaApp.ViewModels
         public ICommand CopyOrMoveCommand { get; }        
         public ICommand DownloadCommand { get; private set; }
         public ICommand GetLinkCommand { get; }
+        public ICommand RemoveLinkCommand { get; }
         public ICommand RemoveCommand { get; }
         public ICommand RenameCommand { get; }
         public ICommand RestoreCommand { get; }
@@ -497,10 +499,16 @@ namespace MegaApp.ViewModels
             }
         }
 
-        private void GetLink()
+        protected virtual async Task<bool> GetLinkAsync()
         {
-            if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return;
-            (this.ItemCollection.FocusedItem as IMegaNode)?.GetLinkAsync();
+            if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return false;
+            return await (this.ItemCollection.FocusedItem as IMegaNode)?.GetLinkAsync();
+        }
+
+        protected virtual async Task<bool> RemoveLinkAsync()
+        {
+            if (!(bool)this.ItemCollection?.OnlyOneSelectedItem) return false;
+            return await (this.ItemCollection.FocusedItem as IMegaNode)?.RemoveLinkAsync();
         }
 
         private void Import()

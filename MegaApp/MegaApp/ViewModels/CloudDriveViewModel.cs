@@ -14,7 +14,7 @@ namespace MegaApp.ViewModels
         {
             InitializeModel();
 
-            this.CleanRubbishBinCommand = new RelayCommand(CleanRubbishBin);
+            this.ClearRubbishBinCommand = new RelayCommand(ClearRubbishBin);
             this.OpenLinkCommand = new RelayCommand(OpenLink);
         }
 
@@ -35,7 +35,7 @@ namespace MegaApp.ViewModels
 
         #region Commands
 
-        public ICommand CleanRubbishBinCommand { get; }
+        public ICommand ClearRubbishBinCommand { get; }
         public ICommand OpenLinkCommand { get; }
 
         #endregion
@@ -125,7 +125,7 @@ namespace MegaApp.ViewModels
         public override void UpdateNetworkStatus()
         {
             base.UpdateNetworkStatus();
-            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsClearRubbishBinEnabled)));
             this.CameraUploads.UpdateNetworkStatus();
         }
 
@@ -133,12 +133,12 @@ namespace MegaApp.ViewModels
 
         #region Private Methods
 
-        private async void CleanRubbishBin()
+        private async void ClearRubbishBin()
         {
-            if (this.ActiveFolderView.Type != ContainerType.RubbishBin || !this.IsCleanRubbishBinEnabled) return;
+            if (this.ActiveFolderView.Type != ContainerType.RubbishBin || !this.IsClearRubbishBinEnabled) return;
 
             var dialogResult = await DialogService.ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                ResourceService.AppMessages.GetString("AM_ClearRubbishBin_Title"),
                 ResourceService.AppMessages.GetString("AM_CleanRubbishBinQuestion"));
 
             if (!dialogResult) return;
@@ -155,16 +155,16 @@ namespace MegaApp.ViewModels
             if (!result)
             {
                 await DialogService.ShowAlertAsync(
-                    ResourceService.AppMessages.GetString("AM_CleanRubbishBin_Title"),
+                    ResourceService.AppMessages.GetString("AM_ClearRubbishBin_Title"),
                     ResourceService.AppMessages.GetString("AM_CleanRubbishBinFailed"));
                 return;
             }
 
-            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsClearRubbishBinEnabled)));
         }
 
         private void OnRubbishBinChildNodesCollectionChanged(object sender, EventArgs e) =>
-            OnUiThread(() => OnPropertyChanged(nameof(this.IsCleanRubbishBinEnabled)));
+            OnUiThread(() => OnPropertyChanged(nameof(this.IsClearRubbishBinEnabled)));
 
         private async void OpenLink()
         {
@@ -216,7 +216,7 @@ namespace MegaApp.ViewModels
 
         #region Properties
 
-        public bool IsCleanRubbishBinEnabled => this.IsNetworkAvailable && 
+        public bool IsClearRubbishBinEnabled => this.IsNetworkAvailable && 
             (this.MegaSdk.getNumChildren(this.MegaSdk.getRubbishNode()) != 0);
 
         private FolderViewModel _cloudDrive;
@@ -252,8 +252,8 @@ namespace MegaApp.ViewModels
         #region UiResources
 
         public string CameraUploadsNameText => ResourceService.UiResources.GetString("UI_CameraUploads");
+        public string ClearRubbishBinText => ResourceService.UiResources.GetString("UI_ClearRubbishBin");
         public string CloudDriveNameText => ResourceService.UiResources.GetString("UI_CloudDriveName");
-        public string EmptyRubbishBinText => ResourceService.UiResources.GetString("UI_EmptyRubbishBin");
         public string RubbishBinNameText => ResourceService.UiResources.GetString("UI_RubbishBinName");
         public string OpenLinkText => ResourceService.UiResources.GetString("UI_OpenLink");
 

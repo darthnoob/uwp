@@ -137,9 +137,9 @@
     <value>The rubbish bin has been cleaned successfully.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
-  <data name="AM_CleanRubbishBin_Title" xml:space="preserve">
-    <value>Empty rubbish bin</value>
-    <comment>Title for any 'Empty rubbish bin' dialog - (String as short as possible).</comment>
+  <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
+    <value>Clear Rubbish Bin</value>
+    <comment>Title for any 'Clear Rubbish Bin' dialog - (String as short as possible).</comment>
   </data>
   <data name="AM_ConfirmEmail" xml:space="preserve">
     <value>We have sent you a confirmation link to your selected email address: {0}.</value>

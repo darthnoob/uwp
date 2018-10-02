@@ -117,6 +117,20 @@ namespace MegaApp.ViewModels.SharedFolders
             OnUiThread(() => this.ItemCollection.EnableCollectionChangedDetection());
         }
 
+        protected override async Task<bool> GetLinkAsync()
+        {
+            var result = await base.GetLinkAsync();
+            OnUiThread(() => OnPropertyChanged(nameof(this.SharedFolders), nameof(this.GetLinkText)));
+            return result;
+        }
+
+        protected override async Task<bool> RemoveLinkAsync()
+        {
+            var result = await base.RemoveLinkAsync();
+            OnUiThread(() => OnPropertyChanged(nameof(this.SharedFolders), nameof(this.GetLinkText)));
+            return result;
+        }
+
         private void OnItemCollectionChanged(object sender, EventArgs args)
         {
             OnUiThread(() =>
@@ -187,6 +201,22 @@ namespace MegaApp.ViewModels.SharedFolders
         }
 
         public ContainerType ContainerType => ContainerType.OutShares;
+
+        #endregion
+
+        #region UiResources
+
+        public string GetLinkText
+        {
+            get
+            {
+                var selecteItem = ItemCollection.SelectedItems.First() as OutgoingSharedFolderNodeViewModel;
+                return selecteItem?.IsExported == true ? ResourceService.UiResources.GetString("UI_ManageLink") :
+                    ResourceService.UiResources.GetString("UI_GetLink");
+            }
+        }
+            
+        public string RemoveLinkText => ResourceService.UiResources.GetString("UI_RemoveLink");
 
         #endregion
     }

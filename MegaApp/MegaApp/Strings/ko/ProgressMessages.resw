@@ -217,4 +217,8 @@
     <value>MEGA에 접속할 수 없습니다. 연결을 확인하거나 나중에 다시 시도하세요.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
+  <data name="PM_Reloading" xml:space="preserve">
+    <value>다시 불러오는 중...</value>
+    <comment>Progress indicator message when reloading an account or any content - (String as short as possible).</comment>
+  </data>
 </root>

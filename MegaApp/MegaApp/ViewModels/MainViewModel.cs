@@ -60,21 +60,11 @@ namespace MegaApp.ViewModels
 
         private async void ApiUrlChanged(object sender, EventArgs e)
         {
-            // If the user is logged in, do a new fetch nodes
+            // If the user is logged in, do a new login with the current session
             if (Convert.ToBoolean(MegaSdk.isLoggedIn()))
-            {
-                this.ProgressHeaderText = ResourceService.ProgressMessages.GetString("PM_Reloading");
+                await this.FastLoginAsync(ResourceService.ProgressMessages.GetString("PM_Reloading"));
 
-                // Fetch nodes from MEGA
-                var fetchNodesResult = await this.FetchNodes();
-                if (fetchNodesResult != FetchNodesResult.Success)
-                {
-                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Fetch nodes failed.");
-                    if (!AccountService.IsAccountBlocked)
-                        this.ShowFetchNodesFailedAlertDialog();
-                    return;
-                }
-            }
+            SettingsService.ReloadSettings();
 
             ToastService.ShowTextNotification("API URL changed");
         }
