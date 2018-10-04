@@ -22,6 +22,11 @@ namespace BackgroundTaskService.MegaApi
             // Users update
         }
 
+        public void onUserAlertsUpdate(MegaSDK api, MUserAlertList alerts)
+        {
+            // User alert update
+        }
+
         public void onNodesUpdate(MegaSDK api, MNodeList nodes)
         {
             // If the SDK has resumed the possible pending transfers
