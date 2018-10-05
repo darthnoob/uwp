@@ -1397,4 +1397,17 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <value>There is already a file with the same name</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
+  <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
+    <value>Failed removing ‘{0}’ from offline. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
+    <value>Remove from offline failed</value>
+    <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
+    <value>Failed removing items from offline. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
 </root>

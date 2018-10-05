@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using mega;
 using MegaApp.Database;
@@ -73,35 +74,59 @@ namespace MegaApp.Services
         /// Removes a folder recursively from the offline DB
         /// </summary>
         /// <param name="folderPath">Path of the folder</param>
-        public static void RemoveFolderFromOfflineDB(string folderPath)
+        /// <returns>TRUE if all went weel or FALSE in other case.</returns>
+        public static bool RemoveFolderFromOfflineDB(string folderPath)
         {
+            if (string.IsNullOrWhiteSpace(folderPath)) return false;
+
+            bool result = true;
             if (FolderService.FolderExists(folderPath))
             {
-                IEnumerable<string> childFolders = Directory.GetDirectories(folderPath);
-                if (childFolders != null)
+                try
                 {
-                    foreach (var folder in childFolders)
+                    IEnumerable<string> childFolders = Directory.GetDirectories(folderPath);
+                    if (childFolders != null)
                     {
-                        if (folder != null)
+                        foreach (var folder in childFolders)
                         {
-                            RemoveFolderFromOfflineDB(folder);
-                            SavedForOfflineDB.DeleteNodeByLocalPath(folder);
+                            if (folder != null)
+                            {
+                                result &= RemoveFolderFromOfflineDB(folder);
+                                result &= SavedForOfflineDB.DeleteNodeByLocalPath(folder);
+                            }
                         }
                     }
                 }
-
-                IEnumerable<string> childFiles = Directory.GetFiles(folderPath);
-                if (childFiles != null)
+                catch (Exception e)
                 {
-                    foreach (var file in childFiles)
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, 
+                        string.Format("Error removing from the offline DB the subfolders of '{0}'", folderPath), e);
+                    result = false;
+                }
+
+                try
+                {
+                    IEnumerable<string> childFiles = Directory.GetFiles(folderPath);
+                    if (childFiles != null)
                     {
-                        if (file != null)
-                            SavedForOfflineDB.DeleteNodeByLocalPath(file);
+                        foreach (var file in childFiles)
+                        {
+                            if (file != null)
+                                result &= SavedForOfflineDB.DeleteNodeByLocalPath(file);
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                        string.Format("Error removing from the offline DB the files of '{0}'", folderPath), e);
+                    result = false;
                 }
             }
 
-            SavedForOfflineDB.DeleteNodeByLocalPath(folderPath);
+            result &= SavedForOfflineDB.DeleteNodeByLocalPath(folderPath);
+
+            return result;
         }
 
         /// <summary>
@@ -134,20 +159,37 @@ namespace MegaApp.Services
         /// and removes them from the offline folder and the DB on this case.
         /// </summary>
         /// <param name="folderNodePath">Path of the folder node</param>
-        public static void CleanOfflineFolderNodePath(string folderNodePath)
+        /// <returns>TRUE if the process finished successfully or FALSE in other case.</returns>
+        public static bool CleanOfflineFolderNodePath(string folderNodePath)
         {
+            if (string.IsNullOrWhiteSpace(folderNodePath)) return false;
+
+            var result = true;
             while (string.CompareOrdinal(folderNodePath, AppService.GetOfflineDirectoryPath()) != 0)
             {
-                var folderPathToRemove = folderNodePath;
-                if (!FolderService.IsEmptyFolder(folderPathToRemove)) return;
+                try
+                {
+                    if (!FolderService.FolderExists(folderNodePath)) return false;
 
-                var directoryInfo = new DirectoryInfo(folderNodePath).Parent;
-                if (directoryInfo == null) return;
-                folderNodePath = directoryInfo.FullName;
+                    var folderPathToRemove = folderNodePath;
+                    if (!FolderService.IsEmptyFolder(folderPathToRemove)) return true;
 
-                if (FolderService.DeleteFolder(folderPathToRemove))
-                    SavedForOfflineDB.DeleteNodeByLocalPath(folderPathToRemove);
+                    var directoryInfo = new DirectoryInfo(folderNodePath).Parent;
+                    if (directoryInfo == null) return true;
+                    folderNodePath = directoryInfo.FullName;
+
+                    result &= FolderService.DeleteFolder(folderPathToRemove);
+                    result &= SavedForOfflineDB.DeleteNodeByLocalPath(folderPathToRemove);
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                        string.Format("Error cleaning offline node path '{0}'", folderNodePath), e);
+                    return false;
+                }
             }
+
+            return result;
         }
     }
 }

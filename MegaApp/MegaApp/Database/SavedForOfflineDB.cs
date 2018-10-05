@@ -186,7 +186,8 @@ namespace MegaApp.Database
         /// Delete the first node found with the specified local path.
         /// </summary>
         /// <param name="localPath">Local path of the node to delete.</param>
-        public static void DeleteNodeByLocalPath(string localPath) =>
+        /// <returns>TRUE if the transaction finished successfully or FALSE in other case.</returns>
+        public static bool DeleteNodeByLocalPath(string localPath) =>
             DeleteItem(DB_TABLE_NAME, FIELD_LOCAL_PATH, localPath);
 
         /// <summary>

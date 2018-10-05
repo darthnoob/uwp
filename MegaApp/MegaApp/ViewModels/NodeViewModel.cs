@@ -660,7 +660,11 @@ namespace MegaApp.ViewModels
             OfflineService.CheckOfflineNodePath(this.OriginalMNode);
         }
 
-        public void RemoveFromOffline()
+        /// <summary>
+        /// Remove the node from the offline section.
+        /// </summary>
+        /// <returns>TRUE if the node was successfully removed or FALSE in other case.</returns>
+        public bool RemoveFromOffline()
         {
             var nodePath = OfflineService.GetOfflineNodePath(this.OriginalMNode);
             var parentNodePath = OfflineService.GetOfflineParentNodePath(this.OriginalMNode);
@@ -668,19 +672,22 @@ namespace MegaApp.ViewModels
             // Search if the file has a pending transfer for offline and cancel it on this case                
             TransferService.CancelPendingNodeOfflineTransfers(this);
 
+            bool result = true;
             if (this.IsFolder)
             {
-                OfflineService.RemoveFolderFromOfflineDB(nodePath);
-                FolderService.DeleteFolder(nodePath, true);
+                result &= OfflineService.RemoveFolderFromOfflineDB(nodePath);
+                result &= FolderService.DeleteFolder(nodePath, true);
             }
             else
             {
-                SavedForOfflineDB.DeleteNodeByLocalPath(nodePath);
-                FileService.DeleteFile(nodePath);
+                result &= SavedForOfflineDB.DeleteNodeByLocalPath(nodePath);
+                result &= FileService.DeleteFile(nodePath);
             }
 
-            this.IsSavedForOffline = false;
-            OfflineService.CleanOfflineFolderNodePath(parentNodePath);
+            result &= OfflineService.CleanOfflineFolderNodePath(parentNodePath);
+            this.IsSavedForOffline = !result;
+
+            return result;
         }
 
         private string GetTypeText()
