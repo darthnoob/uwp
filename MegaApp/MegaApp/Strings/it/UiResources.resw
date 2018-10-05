@@ -767,7 +767,7 @@ Keep 'Microsoft Store' in English because it is a trademark.</comment>
     <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Storage" xml:space="preserve">
-    <value>di spazio d'archiviazione</value>
+    <value>Archivio</value>
     <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UpgradeStep1" xml:space="preserve">

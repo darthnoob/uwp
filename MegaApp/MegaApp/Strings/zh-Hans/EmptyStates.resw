@@ -166,7 +166,7 @@
     <comment>Header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_RubbishBinSubHeader" xml:space="preserve">
-    <value>您尚未将任何文件或文件夹发送到垃圾箱。</value>
+    <value>您尚未将任何文件或文件夹发送到垃圾桶。</value>
     <comment>Sub header text for the empty state of the Rubbish Bin - (String as short as possible).</comment>
   </data>
   <data name="ES_UploadsHeader" xml:space="preserve">

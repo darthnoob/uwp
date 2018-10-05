@@ -615,7 +615,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Hesabınız Mega'nın Hizmet Koşullarını ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</value>
+    <value>Hesabınız Mega'nın Hizmet Koşulları'nı ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -1164,7 +1164,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
-    <value>Bu linki oluşturan hesap Hizmet Koşullarını bir çok kez ihlal etmesi sonucu kaldırıldı.</value>
+    <value>Bu linki oluşturan hesap Hizmet Koşulları'nı bir çok kez ihlal etmesi sonucu kaldırıldı.</value>
     <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
   </data>
   <data name="AM_FileLinkUnavailable" xml:space="preserve">
@@ -1194,7 +1194,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Hesabınız Mega'nın Hizmet Koşullarının tekrarlı ihlalinden dolayı askıya alındı. Lütfen epostanızı kontrol edin.</value>
+    <value>Hesabınız Mega'nın Hizmet Koşulları'nın tekrarlı ihlalinden dolayı askıya alındı. Lütfen epostanızı kontrol edin.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
