@@ -122,7 +122,7 @@
     <comment>Label for any 'Add folder' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AgreeCreateAccount" xml:space="preserve">
-    <value>Hizmet koşullarını kabul ediyorum.</value>
+    <value>Hizmet Koşulları'nı kabul ediyorum.</value>
     <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>hizmet şartları</value>
+    <value>Hizmet Koşulları</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -1676,7 +1676,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Privacy policy' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewTermsOfService" xml:space="preserve">
-    <value>Hizmet Koşullarını görüntüle.</value>
+    <value>Hizmet Koşulları'nı görüntüle.</value>
     <comment>Label for any 'View Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Acknowledgements" xml:space="preserve">
