@@ -222,7 +222,11 @@ namespace MegaApp.UserControls
             var toggle = sender as ToggleSwitch;
             if (toggle == null) return;
 
-            this.ViewModel.SaveForOffline(toggle.IsOn);
+            var result = this.ViewModel.SaveForOffline(toggle.IsOn);
+
+            toggle.Toggled -= OnSaveForOfflineSwitchToggled;
+            if (!result) toggle.IsOn = !toggle.IsOn;
+            toggle.Toggled += OnSaveForOfflineSwitchToggled;
         }
 
         private void OnPivotSelectionChanged(object sender, SelectionChangedEventArgs e) => ChangeCommandBar();

@@ -22,7 +22,7 @@ namespace MegaApp.Interfaces
         /// <summary>
         /// Delete the node from offline
         /// </summary>        
-        Task RemoveFromOfflineAsync(bool isMultiRemove);
+        Task<bool?> RemoveFromOfflineAsync(bool isMultiRemove);
 
         /// <summary>
         /// Open the file that is represented by this node

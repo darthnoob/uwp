@@ -334,26 +334,38 @@ namespace MegaApp.ViewModels.Offline
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion"), this.ItemCollection.SelectedItems.First().Name) :
                 string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveFromOfflineQuestion"), count);
 
-            var result = await DialogService.ShowOkCancelAsync(title, message);
+            var userSelection = await DialogService.ShowOkCancelAsync(title, message);
 
-            if (!result) return;
-
-            // Use a temp variable to avoid InvalidOperationException
-            MultipleRemoveFromOffline(this.ItemCollection.SelectedItems.ToList());
+            if (!userSelection) return;
 
             this.ItemCollection.IsMultiSelectActive = false;
+
+            // Use a temp variable to avoid InvalidOperationException
+            var result = await MultipleRemoveFromOfflineAsync(this.ItemCollection.SelectedItems.ToList());
+            if (result.HasValue && !result.Value)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveFromOfflineFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFromOfflineFailed")));
+                });
+            }
         }
 
-        private async void MultipleRemoveFromOffline(ICollection<IBaseNode> nodes)
+        private async Task<bool?> MultipleRemoveFromOfflineAsync(ICollection<IBaseNode> nodes)
         {
-            if (nodes == null || nodes.Count < 1) return;
+            if (nodes == null || nodes.Count < 1) return null;
 
+            bool? result = true;
             foreach (var n in nodes)
             {
                 var node = n as IOfflineNode;
                 if (node == null) continue;
-                await node.RemoveFromOfflineAsync(true);
+                result &= await node.RemoveFromOfflineAsync(true);
             }
+
+            return result;
         }
 
         private void SetEmptyContent(bool isLoading)

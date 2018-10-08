@@ -75,15 +75,22 @@ namespace MegaApp.ViewModels.Offline
 
         #region Methods
 
-        public async Task RemoveFromOfflineAsync(bool isMultiSelect = false)
+        /// <summary>
+        /// Remove the node from the offline section.
+        /// </summary>
+        /// <param name="isMultiSelect">Indicate if is removing multiple nodes.</param>
+        /// <returns>NULL if the user cancel the action, TRUE if the node was successfully removed or FALSE in other case.</returns>
+        public async Task<bool?> RemoveFromOfflineAsync(bool isMultiSelect = false)
         {
+            bool? result = true;
+
             if (!isMultiSelect)
             {
-                var result = await DialogService.ShowOkCancelAsync(
+                var userSelection = await DialogService.ShowOkCancelAsync(
                     ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion_Title"),
                     string.Format(ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion"), this.Name));
 
-                if (!result) return;
+                if (!userSelection) return null;
             }
 
             // Search if the node has pending transfers for offline and cancel them on this case                
@@ -96,19 +103,21 @@ namespace MegaApp.ViewModels.Offline
 
                 if (this.IsFolder)
                 {
-                    OfflineService.RemoveFolderFromOfflineDB(this.NodePath);
-                    FolderService.DeleteFolder(this.NodePath, true);
+                    result &= OfflineService.RemoveFolderFromOfflineDB(this.NodePath);
+                    result &= FolderService.DeleteFolder(this.NodePath, true);
                 }
                 else
                 {
-                    SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
-                    FileService.DeleteFile(this.NodePath);
+                    result &= SavedForOfflineDB.DeleteNodeByLocalPath(this.NodePath);
+                    result &= FileService.DeleteFile(this.NodePath);
                 }
 
-                OfflineService.CleanOfflineFolderNodePath(parentFolderPath);
+                result &= OfflineService.CleanOfflineFolderNodePath(parentFolderPath);
             }
 
-            this.Parent?.ItemCollection?.Items?.Remove(this);
+            result &= this.Parent?.ItemCollection?.Items?.Remove(this);
+
+            return result;
         }
 
         public virtual void Open()
@@ -178,7 +187,16 @@ namespace MegaApp.ViewModels.Offline
                 return;
             }
 
-            await this.RemoveFromOfflineAsync();
+            var result = await this.RemoveFromOfflineAsync();
+            if (result.HasValue && !result.Value)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveFromOfflineFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveNodeFromOfflineFailed"), this.Name));
+                });
+            }
         }
 
         private void ParentOnPropertyChanged(object sender, PropertyChangedEventArgs e)

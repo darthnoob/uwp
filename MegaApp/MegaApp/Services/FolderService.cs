@@ -108,7 +108,12 @@ namespace MegaApp.Services
                     Directory.Delete(path, recursive);
                 return true;
             }
-            catch (Exception) { return false; }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                    string.Format("Error deleting folder '{0}'", path), e);
+                return false;
+            }
         }
 
         /// <summary>

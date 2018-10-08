@@ -222,10 +222,17 @@ namespace MegaApp.UserControls
         {
             if (!(bool)((PivotItem)(this._pivotControl?.SelectedItem))?.Equals(this._sharedItemsPivot)) return;
 
-            if (value)
-                this._sharedItems?.SelectAll();
-            else
+            if (!value)
+            {
                 this._sharedItems?.SelectedItems.Clear();
+                return;
+            }
+
+            if (this._sharedItems?.SelectionMode == ListViewSelectionMode.Extended || 
+                this._sharedItems?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this._sharedItems?.SelectAll();
+            }
         }
     }
 }
