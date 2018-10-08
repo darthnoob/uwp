@@ -407,7 +407,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'New folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Logout" xml:space="preserve">
-    <value>登出</value>
+    <value>注销</value>
     <comment>Label for any 'Logout' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsDescription" xml:space="preserve">
@@ -419,7 +419,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKey" xml:space="preserve">
-    <value>还原金钥</value>
+    <value>恢复密钥</value>
     <comment>Label for any 'Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKeyDescription" xml:space="preserve">
@@ -1176,7 +1176,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Contact support' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ForgotMyPasswordDescription_Part_1" xml:space="preserve">
-    <value>如果您备份了还原金钥，则可以通过选择是重置密码。没有数据将丢失。</value>
+    <value>如果您备份了恢复密钥，则可以通过选择是重置密码。没有数据将丢失。</value>
     <comment>Text displayed in the 'Forgot my password' section when the user has forgotten his/her password (Part 1).</comment>
   </data>
   <data name="UI_RecoveryKeyQuestion" xml:space="preserve">
@@ -1601,7 +1601,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>备份还原秘钥</value>
+    <value>备份恢复密钥</value>
     <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
 NOTE: Max. length 20 characters.</comment>
   </data>
@@ -1768,7 +1768,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Export' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CloseOtherSessions" xml:space="preserve">
-    <value>从其他设备中登出账户</value>
+    <value>关闭其他会话</value>
     <comment>Label for any 'Close other sessions' button, link, etc., to close all other active sessions except the current one - (String as short as possible).</comment>
   </data>
   <data name="UI_SessionManagement" xml:space="preserve">
