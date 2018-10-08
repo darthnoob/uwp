@@ -120,10 +120,17 @@ namespace MegaApp.UserControls
 
         private void OnAllSelected(object sender, bool value)
         {
-            if (value)
-                this.ListViewContacts?.SelectAll();
-            else
+            if (!value)
+            {
                 this.ListViewContacts?.SelectedItems.Clear();
+                return;
+            }
+
+            if (this.ListViewContacts?.SelectionMode == ListViewSelectionMode.Extended ||
+                this.ListViewContacts?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this.ListViewContacts?.SelectAll();
+            }
         }
 
         #endregion

@@ -217,10 +217,17 @@ namespace MegaApp.Views
         {
             var listView = this.GetSelectedListView();
 
-            if (value)
-                listView?.SelectAll();
-            else
+            if (!value)
+            {
                 listView?.SelectedItems.Clear();
+                return;
+            }
+
+            if (listView?.SelectionMode == ListViewSelectionMode.Extended ||
+                listView?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                listView?.SelectAll();
+            }
         }
 
         private ListView GetSelectedListView()
