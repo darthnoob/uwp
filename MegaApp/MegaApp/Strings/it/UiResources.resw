@@ -162,7 +162,7 @@
     <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
-    <value>Nuovo conto</value>
+    <value>Crea account</value>
     <comment>Label for any 'Create account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateFolder" xml:space="preserve">
@@ -219,7 +219,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
-    <value>Files</value>
+    <value>File</value>
     <comment>Label for any 'Files' (multiple files) button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFolders" xml:space="preserve">
@@ -347,7 +347,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
-    <value>Uploads</value>
+    <value>Upload</value>
     <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Yes" xml:space="preserve">
@@ -539,7 +539,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Added' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Files" xml:space="preserve">
-    <value>Files</value>
+    <value>File</value>
     <comment>Label for any 'Files' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Aggiorna account</value>
+    <value>Passa a PRO</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -654,7 +654,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>Hai superato il limite del tuo spazio di archiviazione. Non potrai caricare o ricevere altre condivisioni finché non avrai altro spazio. Per favore, aggiorna il tuo account o elimina qualche file o cartella per liberare un po' di spazio.</value>
+    <value>Hai superato il limite del tuo spazio di archiviazione. Non potrai caricare o ricevere altre condivisioni finché non avrai altro spazio. Per favore, passa a PRO o elimina qualche file o cartella per liberare un po' di spazio.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>Hai superato il limite della tua banda di trasferimento. Non potrai scaricare finché non avrai altra banda di trasferimento. Per favore, aggiorna il tuo account o attendi finché la tua banda di trasferimento si resetta.</value>
+    <value>Hai superato il limite della tua banda di trasferimento. Non potrai scaricare finché non avrai altra banda di trasferimento. Per favore, passa a PRO o attendi finché la tua banda di trasferimento si resetta.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
