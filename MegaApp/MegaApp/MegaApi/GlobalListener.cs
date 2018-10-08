@@ -26,6 +26,47 @@ namespace MegaApp.MegaApi
 
         #region MGlobalListenerInterface
 
+        public async void onUsersUpdate(MegaSDK api, MUserList users)
+        {
+            // Exit methods when users list is incorrect
+            if (users == null || users.size() < 1) return;
+
+            // Retrieve the listsize for performance reasons and store local
+            int listSize = users.size();
+
+            for (int i = 0; i < listSize; i++)
+            {
+                MUser user = users.get(i);
+                if (user == null) continue;
+
+                // If the change is on the current user                
+                if (user.getHandle().Equals(api.getMyUser().getHandle()) && !Convert.ToBoolean(user.isOwnChange()))
+                {
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_AVATAR) &&
+                        !string.IsNullOrWhiteSpace(AccountService.UserData.AvatarPath))
+                        AccountService.GetUserAvatar();
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_EMAIL))
+                        await AccountService.GetUserEmail();
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_FIRSTNAME))
+                        AccountService.GetUserFirstname();
+
+                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_LASTNAME))
+                        AccountService.GetUserLastname();
+                }
+                else // If the change is on a contact
+                {
+                    OnContactUpdated(user);
+                }
+            }
+        }
+
+        public void onUserAlertsUpdate(MegaSDK api, MUserAlertList alerts)
+        {
+            // User alert update
+        }
+
         public void onNodesUpdate(MegaSDK api, MNodeList nodes)
         {
             // Exit methods when node list is incorrect
@@ -71,11 +112,6 @@ namespace MegaApp.MegaApi
                 }
                 catch (Exception) { /* Dummy catch, suppress possible exception */ }
             }
-        }
-
-        public void onReloadNeeded(MegaSDK api)
-        {
-           // throw new NotImplementedException();
         }
 
         public void onAccountUpdate(MegaSDK api)
@@ -128,40 +164,9 @@ namespace MegaApp.MegaApi
             catch (Exception) { /* Dummy catch, suppress possible exception */ }
         }
 
-        public async void onUsersUpdate(MegaSDK api, MUserList users)
+        public void onReloadNeeded(MegaSDK api)
         {
-            // Exit methods when users list is incorrect
-            if (users == null || users.size() < 1) return;
-
-            // Retrieve the listsize for performance reasons and store local
-            int listSize = users.size();
-
-            for (int i = 0; i < listSize; i++)
-            {
-                MUser user = users.get(i);
-                if (user == null) continue;
-
-                // If the change is on the current user                
-                if (user.getHandle().Equals(api.getMyUser().getHandle()) && !Convert.ToBoolean(user.isOwnChange()))
-                {
-                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_AVATAR) &&
-                        !string.IsNullOrWhiteSpace(AccountService.UserData.AvatarPath))
-                        AccountService.GetUserAvatar();
-
-                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_EMAIL))
-                        await AccountService.GetUserEmail();
-
-                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_FIRSTNAME))
-                        AccountService.GetUserFirstname();
-
-                    if (user.hasChanged((int)MUserChangeType.CHANGE_TYPE_LASTNAME))
-                        AccountService.GetUserLastname();
-                }
-                else // If the change is on a contact
-                {
-                    OnContactUpdated(user);
-                }
-            }
+            // throw new NotImplementedException();
         }
 
         public void onEvent(MegaSDK api, MEvent ev)
