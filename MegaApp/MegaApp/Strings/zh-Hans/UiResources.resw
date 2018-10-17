@@ -622,7 +622,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListView" xml:space="preserve">
-    <value>显示列表</value>
+    <value>列表视图</value>
     <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortBy" xml:space="preserve">

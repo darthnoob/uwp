@@ -467,7 +467,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionNewest" xml:space="preserve">
-    <value>Más nuevo</value>
+    <value>Más reciente</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOldest" xml:space="preserve">
@@ -907,7 +907,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Header of the text displayed to verify an email address. - String as short as possible).</comment>
   </data>
   <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
-    <value>Introduce tu contraseña para verificar tu dirección de correo electrónico</value>
+    <value>Introduce la contraseña para verificar tu dirección de correo electrónico</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
   <data name="UI_Add" xml:space="preserve">
@@ -1512,7 +1512,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
-    <value>No recibirás el bono si invitas a alguien que ya haya utilizado MEGA anteriormente y no se te notificará dicho rechazo.</value>
+    <value>Si invitas a alguien que ya haya utilizado MEGA anteriormente no recibirás el bono y no se te notificará.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">

@@ -1208,7 +1208,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoverDescription" xml:space="preserve">
-    <value>이전에 내보냈던 복구 키를 입력하세요. 아직 열려있는 다른 브라우저나 컴퓨터에 접속된 MEGA 세션이 있다면 내보낼 수 있습니다.</value>
+    <value>이전에 저장하셨던 복구 키를 입력하세요. 만약 없으시다면, 아직 열려있는 다른 브라우저나 컴퓨터에 접속된 MEGA 세션을 통해 저장하실 수 있습니다.</value>
     <comment>Text displayed in recover section on password reset</comment>
   </data>
   <data name="UI_RecoverHeader" xml:space="preserve">
