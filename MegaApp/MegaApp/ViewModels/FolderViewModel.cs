@@ -1183,64 +1183,10 @@ namespace MegaApp.ViewModels
                 var megaSdk = this.Type == ContainerType.FolderLink ?
                     SdkService.MegaSdkFolderLinks : SdkService.MegaSdk;
 
-                var numChildFolders = megaSdk.getNumChildFolders(this.FolderRootNode.OriginalMNode);
-                var numChildFiles = megaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode);
+                this.numChildFolders = megaSdk.getNumChildFolders(this.FolderRootNode.OriginalMNode);
+                this.numChildFiles = megaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode);
 
-                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
-                {
-                    case MSortOrderType.ORDER_DEFAULT_ASC:
-                    case MSortOrderType.ORDER_DEFAULT_DESC:
-                        if (this.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), numChildFiles);
-                        else if (this.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByType"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        if (this.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), numChildFiles);
-                        else if (this.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByName"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_CREATION_ASC:
-                    case MSortOrderType.ORDER_CREATION_DESC:
-                        if (this.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), numChildFiles);
-                        else if (this.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateCreated"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_MODIFICATION_ASC:
-                    case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        if (this.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), numChildFiles);
-                        else if (this.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedByDateModified"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_SIZE_ASC:
-                    case MSortOrderType.ORDER_SIZE_DESC:
-                        if (this.Type == ContainerType.CameraUploads)
-                            return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), numChildFiles);
-                        else if (this.IsForSelectFolder)
-                            return string.Format(ResourceService.UiResources.GetString("UI_FolderListSortedBySize"), numChildFolders);
-
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
-                            numChildFolders, numChildFiles);
-
-                    default:
-                        return string.Empty;
-                }
+                return base.OrderTypeAndNumberOfItems;
             }
         }
 

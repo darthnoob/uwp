@@ -190,6 +190,51 @@ namespace MegaApp.ViewModels
             BrowseToFolder((IBaseNode)e.Item);
         }
 
+        /// <summary>
+        /// Gets a string with the content of the folder, adapted to the scenario, 
+        /// type of folder and number of files and folders.
+        /// </summary>
+        /// <seealso cref="Type"/>
+        /// <seealso cref="IsForSelectFolder"/>
+        /// <seealso cref="numChildFiles"/>
+        /// <seealso cref="numChildFolders"/>
+        /// <returns>Formated string with the content of the folder</returns>
+        private string GetFolderContentInfo()
+        {
+            if (this.Type == ContainerType.CameraUploads)
+            {
+                return string.Format("{0} {1}", this.numChildFiles,
+                    this.numChildFiles == 1 ? this.SingleFileString : this.MultipleFilesString);
+            }
+
+            if (this.IsForSelectFolder)
+            {
+                return string.Format("{0} {1}", this.numChildFolders,
+                    this.numChildFolders == 1 ? this.SingleForderString : this.MultipleFordersString);
+            }
+
+            if (numChildFolders > 0 && this.numChildFiles > 0)
+            {
+                return string.Format("{0} {1}, {2} {3}",
+                    this.numChildFolders, this.numChildFolders == 1 ? this.SingleForderString : this.MultipleFordersString,
+                    this.numChildFiles, this.numChildFiles == 1 ? this.SingleFileString : this.MultipleFilesString);
+            }
+
+            if (numChildFolders > 0)
+            {
+                return string.Format("{0} {1}", this.numChildFolders,
+                    this.numChildFolders == 1 ? this.SingleForderString : this.MultipleFordersString);
+            }
+
+            if (numChildFiles > 0)
+            {
+                return string.Format("{0} {1}", this.numChildFiles,
+                    this.numChildFiles == 1 ? this.SingleFileString : this.MultipleFilesString);
+            }
+
+            return ResourceService.UiResources.GetString("UI_EmptyFolder");
+        }
+
         #endregion
 
         #region Properties
@@ -301,7 +346,41 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public virtual string OrderTypeAndNumberOfItems => string.Empty;
+        public virtual string OrderTypeAndNumberOfItems
+        {
+            get
+            {
+                if (this.FolderRootNode == null) return string.Empty;
+
+                var infoString = this.GetFolderContentInfo();
+
+                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
+                {
+                    case MSortOrderType.ORDER_DEFAULT_ASC:
+                    case MSortOrderType.ORDER_DEFAULT_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByType"), infoString);
+
+                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
+                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByName"), infoString);
+
+                    case MSortOrderType.ORDER_CREATION_ASC:
+                    case MSortOrderType.ORDER_CREATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateCreated"), infoString);
+
+                    case MSortOrderType.ORDER_MODIFICATION_ASC:
+                    case MSortOrderType.ORDER_MODIFICATION_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), infoString);
+
+                    case MSortOrderType.ORDER_SIZE_ASC:
+                    case MSortOrderType.ORDER_SIZE_DESC:
+                        return string.Format(ResourceService.UiResources.GetString("UI_ListSortedBySize"), infoString);
+
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
 
         public virtual string OrderTypeAndNumberOfSelectedItems
         {
@@ -342,6 +421,16 @@ namespace MegaApp.ViewModels
             }
         }
 
+        /// <summary>
+        /// Number of child folders.
+        /// </summary>
+        protected int numChildFolders;
+
+        /// <summary>
+        /// Number of child files.
+        /// </summary>
+        protected int numChildFiles;
+
         #endregion
 
         #region UiResources
@@ -352,6 +441,11 @@ namespace MegaApp.ViewModels
         public string ListViewText => ResourceService.UiResources.GetString("UI_ListView");
         public string MultiSelectText => ResourceService.UiResources.GetString("UI_MultiSelect");
         public string SortByText => ResourceService.UiResources.GetString("UI_SortBy");
+
+        private string SingleForderString => ResourceService.UiResources.GetString("UI_SingleFolder").ToLower();
+        private string MultipleFordersString => ResourceService.UiResources.GetString("UI_MultipleFolders").ToLower();
+        private string SingleFileString => ResourceService.UiResources.GetString("UI_SingleFile").ToLower();
+        private string MultipleFilesString => ResourceService.UiResources.GetString("UI_MultipleFiles").ToLower();
 
         #endregion
 
