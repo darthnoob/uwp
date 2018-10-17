@@ -1777,4 +1777,12 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>링크 제거</value>
     <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
   </data>
+  <data name="UI_ReceivedRequests" xml:space="preserve">
+    <value>받은 요청</value>
+    <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SentRequests" xml:space="preserve">
+    <value>보낸 요청</value>
+    <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
 </root>
