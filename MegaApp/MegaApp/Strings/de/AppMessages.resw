@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>Ihr Account ist bereits bestätigt. Loggen Sie sich bitte ein.</value>
+    <value>Ihr Account wurde bereits aktiviert. Bitte melden Sie sich an.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
@@ -1396,5 +1396,18 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_FileAlreadyExists" xml:space="preserve">
     <value>Eine Datei dieses Namens existiert bereits</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
+  </data>
+  <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
+    <value>Failed removing ‘{0}’ from offline storage. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
+    <value>Remove from offline storage failed</value>
+    <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
+    <value>Failed removing items from offline storage. Please try again.</value>
+    <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
 </root>

@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>Esta conta já está confirmada. Você pode fazer o login.</value>
+    <value>A sua conta está ativa. Por favor, faça o login.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
@@ -1214,7 +1214,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>Senha incorreta! Salve a sua chave de recuperação o mais rápido possível!</value>
+    <value>Senha incorreta! Salve a sua chave de recuperação o mais rápido possível.</value>
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
@@ -1238,17 +1238,17 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Você tem certeza de que quer remover {0} itens da seção offline?</value>
+    <value>Você tem certeza de que quer remover {0} itens de Offline?</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Você tem certeza de que quer remover '{0}' itens da seção offline?</value>
+    <value>Você tem certeza de que quer remover '{0}' itens de Offline?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>Remover da seção offline?</value>
+    <value>Remover de Offline?</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">
@@ -1284,7 +1284,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
-    <value>Autenticação de dois fatores ativa</value>
+    <value>Autenticação de dois fatores ativada</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
@@ -1325,7 +1325,7 @@ Confirme que você salvou a sua chave de recuperação.</value>
     <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
   </data>
   <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
-    <value>Você quer fechar todas as outras sessões? Essa ação fará logout de todas as outras sessões ativas, exceto a atual.</value>
+    <value>Você quer fechar as demais sessões? Essa ação fará logout de todas as outras sessões ativas, exceto a atual.</value>
     <comment>Message of the dialog displayed to ask the user to confirm want to close all the other sessions.</comment>
   </data>
   <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
@@ -1338,11 +1338,11 @@ Confirme que você salvou a sua chave de recuperação.</value>
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed_Title" xml:space="preserve">
-    <value>Erro ao restaurar da Lixeira</value>
+    <value>Erro ao restaurar itens da Lixeira</value>
     <comment>Title of the dialog displayed when the process/request to restore nodes from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RestoreMultiFromRubbishBinFailed" xml:space="preserve">
-    <value>Não foi possível restaurar os itens da Lixeira. Tente novamente.</value>
+    <value>Não foi possível restaurar os itens da lixeira. Tente novamente.</value>
     <comment>Message of the dialog displayed when the process/request to restore multiple nodes from the rubbish bin failed.</comment>
   </data>
   <data name="AM_CacheCleared" xml:space="preserve">
@@ -1396,5 +1396,18 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_FileAlreadyExists" xml:space="preserve">
     <value>Já existe um arquivo com o mesmo nome</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
+  </data>
+  <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
+    <value>Não foi possível remover ‘{0}’ do armazenamento offline. Tente novamente.</value>
+    <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
+    <value>Erro ao remover do armazenamento offline</value>
+    <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
+    <value>Não foi possível remover items do armazenamento offline. Tente novamente.</value>
+    <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
 </root>

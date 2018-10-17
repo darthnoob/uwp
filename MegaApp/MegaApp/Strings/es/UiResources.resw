@@ -467,7 +467,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionNewest" xml:space="preserve">
-    <value>Más nuevo</value>
+    <value>Más reciente</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOldest" xml:space="preserve">
@@ -907,7 +907,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Header of the text displayed to verify an email address. - String as short as possible).</comment>
   </data>
   <data name="UI_VerifyEmailSubHeader" xml:space="preserve">
-    <value>Introduce tu contraseña para verificar tu dirección de correo electrónico</value>
+    <value>Introduce la contraseña para verificar tu dirección de correo electrónico</value>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
   <data name="UI_Add" xml:space="preserve">
@@ -1032,7 +1032,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByAccessLevelMultiSelect" xml:space="preserve">
     <value>Permiso ({0} de {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
@@ -1285,31 +1285,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Abrir</value>
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Fecha de creación ({0} carpetas, {1} archivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Fecha de modificación ({0} carpetas, {1} archivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Tipo ({0} carpetas, {1} archivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Nombre ({0} carpetas, {1} archivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Tamaño ({0} carpetas, {1} archivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
     <value>Fecha de creación ({0} de {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
@@ -1374,31 +1349,6 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <value>Copiar/Mover {0} elementos a</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Fecha de creación ({0} carpetas)</value>
-    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Fecha de modificación ({0} carpetas)</value>
-    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Nombre ({0} carpetas)</value>
-    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Tamaño ({0} carpetas)</value>
-    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Tipo ({0} carpetas)</value>
-    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_Sharing" xml:space="preserve">
     <value>Compartir</value>
@@ -1562,7 +1512,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
-    <value>No recibirás el bono si invitas a alguien que ya haya utilizado MEGA anteriormente y no se te notificará dicho rechazo.</value>
+    <value>Si invitas a alguien que ya haya utilizado MEGA anteriormente no recibirás el bono y no se te notificará.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
@@ -1826,5 +1776,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_RemoveLink" xml:space="preserve">
     <value>Eliminar enlace</value>
     <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReceivedRequests" xml:space="preserve">
+    <value>Solicitudes recibidas</value>
+    <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SentRequests" xml:space="preserve">
+    <value>Solicitudes enviadas</value>
+    <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
 </root>

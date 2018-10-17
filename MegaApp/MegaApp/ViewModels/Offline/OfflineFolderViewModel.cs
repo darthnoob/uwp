@@ -51,39 +51,10 @@ namespace MegaApp.ViewModels.Offline
             {
                 if (this.FolderRootNode == null) return string.Empty;
 
-                var numChildFolders = FolderService.GetNumChildFolders(this.FolderRootNode.NodePath);
-                var numChildFiles = FolderService.GetNumChildFiles(this.FolderRootNode.NodePath, true);
+                this.numChildFolders = FolderService.GetNumChildFolders(this.FolderRootNode.NodePath);
+                this.numChildFiles = FolderService.GetNumChildFiles(this.FolderRootNode.NodePath, true);
 
-                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
-                {
-                    case MSortOrderType.ORDER_DEFAULT_ASC:
-                    case MSortOrderType.ORDER_DEFAULT_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_CREATION_ASC:
-                    case MSortOrderType.ORDER_CREATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_MODIFICATION_ASC:
-                    case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_SIZE_ASC:
-                    case MSortOrderType.ORDER_SIZE_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
-                            numChildFolders, numChildFiles);
-
-                    default:
-                        return string.Empty;
-                }
+                return base.OrderTypeAndNumberOfItems;
             }
         }
 

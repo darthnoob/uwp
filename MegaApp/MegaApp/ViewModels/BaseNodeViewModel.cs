@@ -43,6 +43,8 @@ namespace MegaApp.ViewModels
 
         public bool IsImage => ImageService.IsImage(this.Name);
 
+        public bool IsVideo => VideoService.IsVideo(this.Name);
+
         private bool _isMultiSelected;
         public bool IsMultiSelected
         {

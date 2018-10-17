@@ -54,6 +54,12 @@ namespace MegaApp.Interfaces
         bool IsImage { get; }
 
         /// <summary>
+        /// Returns if a node is a video. Based on its file extension.
+        /// Not 100% proof because file extensions can be wrong
+        /// </summary>
+        bool IsVideo { get; }
+
+        /// <summary>
         /// The uniform resource identifier of the current thumbnail for this node
         /// Could be a default file/folder type image or a thumbnail preview of the real picture
         /// </summary>
