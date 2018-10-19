@@ -104,6 +104,8 @@ namespace MegaApp.ViewModels
             switch(fetchNodesResult)
             {
                 case FetchNodesResult.Success:
+                    // Save the handle of the last public node accessed (Task #10801)
+                    SettingsService.SaveLastPublicNodeHandle(this.FolderLink.FolderRootNode.Handle);
                     return true;
 
                 case FetchNodesResult.InvalidHandleOrDecryptionKey:
@@ -174,7 +176,20 @@ namespace MegaApp.ViewModels
         private FolderViewModel _folderLink;
         public FolderViewModel FolderLink
         {
-            get { return _folderLink; }
+            get
+            {
+                if (_folderLink == null)
+                    _folderLink = new FolderViewModel(this.MegaSdk, ContainerType.FolderLink);
+
+                if (_folderLink.FolderRootNode == null)
+                {
+                    _folderLink.FolderRootNode = NodeService.CreateNew(this.MegaSdk,
+                        App.AppInformation,this.MegaSdk.getRootNode(), _folderLink);
+                }
+
+                return _folderLink;
+            }
+
             private set { SetField(ref _folderLink, value); }
         }
 
