@@ -98,6 +98,26 @@ namespace MegaApp.ViewModels
             });
         }
 
+        /// <summary>
+        /// Log out from the folder
+        /// </summary>
+        public async void LogoutFromFolder()
+        {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Logging out from folder");
+
+            var logoutFromFolder = new LogOutRequestListenerAsync();
+            var result = await logoutFromFolder.ExecuteAsync(() =>
+                this.MegaSdk.logout(logoutFromFolder));
+
+            if (!result)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error logging out from folder");
+                return;
+            }
+                
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Logged out from folder");
+        }
+
         private async Task<bool> FetchNodesFromFolder()
         {
             var fetchNodesResult = await this.FetchNodes();

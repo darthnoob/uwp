@@ -86,6 +86,8 @@ namespace MegaApp.Views
             this.ImportPanelControl.ViewModel.ActionFinished -= OnImportFinished;
             this.ImportPanelControl.ViewModel.ActionCanceled -= OnImportCanceled;
 
+            this.ViewModel.LogoutFromFolder();
+
             base.OnNavigatedFrom(e);
         }
 
