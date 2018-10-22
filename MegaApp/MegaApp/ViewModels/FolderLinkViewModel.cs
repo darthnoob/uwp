@@ -98,12 +98,34 @@ namespace MegaApp.ViewModels
             });
         }
 
+        /// <summary>
+        /// Log out from the folder
+        /// </summary>
+        public async void LogoutFromFolder()
+        {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Logging out from folder");
+
+            var logoutFromFolder = new LogOutRequestListenerAsync();
+            var result = await logoutFromFolder.ExecuteAsync(() =>
+                this.MegaSdk.logout(logoutFromFolder));
+
+            if (!result)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error logging out from folder");
+                return;
+            }
+                
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Logged out from folder");
+        }
+
         private async Task<bool> FetchNodesFromFolder()
         {
             var fetchNodesResult = await this.FetchNodes();
             switch(fetchNodesResult)
             {
                 case FetchNodesResult.Success:
+                    // Save the handle of the last public node accessed (Task #10801)
+                    SettingsService.SaveLastPublicNodeHandle(this.FolderLink.FolderRootNode.Handle);
                     return true;
 
                 case FetchNodesResult.InvalidHandleOrDecryptionKey:
@@ -174,7 +196,20 @@ namespace MegaApp.ViewModels
         private FolderViewModel _folderLink;
         public FolderViewModel FolderLink
         {
-            get { return _folderLink; }
+            get
+            {
+                if (_folderLink == null)
+                    _folderLink = new FolderViewModel(this.MegaSdk, ContainerType.FolderLink);
+
+                if (_folderLink.FolderRootNode == null)
+                {
+                    _folderLink.FolderRootNode = NodeService.CreateNew(this.MegaSdk,
+                        App.AppInformation,this.MegaSdk.getRootNode(), _folderLink);
+                }
+
+                return _folderLink;
+            }
+
             private set { SetField(ref _folderLink, value); }
         }
 

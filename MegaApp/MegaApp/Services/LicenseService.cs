@@ -222,14 +222,23 @@ namespace MegaApp.Services
         {
             if (string.IsNullOrEmpty(receipt)) return false;
 
+            // Validate and activate the MEGA Windows Store (int 13) subscription on the MEGA license server
             var submitPurchaseReceipt = new SubmitPurchaseReceiptRequestListenerAsync();
             var result = await submitPurchaseReceipt.ExecuteAsync(() =>
             {
-                // Validate and activate the MEGA Windows Store (int 13) subscription on the MEGA license server
+                // If user has accessed a public node in the last 24 hours, also send the node handle (Task #10801)
+                var lastPublicNodeHandle = SettingsService.GetLastPublicNodeHandle();
+                if (lastPublicNodeHandle.HasValue)
+                {
+                    SdkService.MegaSdk.submitPurchaseReceiptWithLastPublicHandle(
+                        (int)MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE,
+                        receipt, lastPublicNodeHandle.Value, submitPurchaseReceipt);
+                    return;
+                }
+
                 SdkService.MegaSdk.submitPurchaseReceipt(
                     (int) MPaymentMethod.PAYMENT_METHOD_WINDOWS_STORE,
-                    receipt,
-                    submitPurchaseReceipt);
+                    receipt, submitPurchaseReceipt);
             });
 
             // If succeeded, save the receipt Id for later checks

@@ -51,6 +51,10 @@ namespace MegaApp.ViewModels
             {
                 case GetPublicNodeResult.Success:
                     LinkInformationService.PublicNode = _getPublicNode.PublicNode;
+
+                    // Save the handle of the last public node accessed (Task #10801)
+                    SettingsService.SaveLastPublicNodeHandle(_getPublicNode.PublicNode.getHandle());
+
                     this.Node = NodeService.CreateNew(this.MegaSdk, App.AppInformation,
                         LinkInformationService.PublicNode, null);
                     if (this.Node is ImageNodeViewModel)
