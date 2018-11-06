@@ -39,6 +39,16 @@ namespace MegaApp.Services
         /// </summary>
         private static MultiFactorAuthCodeInputDialog MultiFactorAuthCodeInputDialogInstance;
 
+        /// <summary>
+        /// Avoid show multiple storage overquota alerts
+        /// </summary>
+        private static bool StorageOverquotaAlertDisplayed = false;
+
+        /// <summary>
+        /// Avoid show multiple transfer overquota warnings
+        /// </summary>
+        private static bool TransferOverquotaWarningDisplayed = false;
+
         #endregion
 
         #region Methods
@@ -273,12 +283,17 @@ namespace MegaApp.Services
             return await dialog.ShowAsyncQueue();
         }
 
-        public static async void ShowOverquotaAlert()
+        public static async void ShowStorageOverquotaAlert()
         {
+            if (StorageOverquotaAlertDisplayed) return;
+            StorageOverquotaAlertDisplayed = true;
+
             var result = await ShowOkCancelAsync(
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
                 ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
                 TwoButtonsDialogType.YesNo);
+
+            StorageOverquotaAlertDisplayed = false;
 
             if (!result) return;
 
@@ -291,8 +306,13 @@ namespace MegaApp.Services
 
         public static async void ShowTransferOverquotaWarning()
         {
+            if (TransferOverquotaWarningDisplayed) return;
+            TransferOverquotaWarningDisplayed = true;
+
             var dialog = new TransferOverquotaWarningDialog();
             await dialog.ShowAsyncQueue();
+
+            TransferOverquotaWarningDisplayed = false;
         }
 
         /// <summary>

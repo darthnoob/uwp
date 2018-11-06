@@ -2,7 +2,6 @@
 using System.IO;
 using mega;
 using MegaApp.Database;
-using MegaApp.Enums;
 using MegaApp.Extensions;
 using MegaApp.Services;
 using MegaApp.ViewModels;
@@ -45,11 +44,6 @@ namespace MegaApp.MegaApi
                         if (!await megaTransfer.FinishDownload(megaTransfer.TransferPath, megaTransfer.SelectedNode.Name))
                             UiService.OnUiThread(() => megaTransfer.TransferState = MTransferState.STATE_FAILED);
                     }
-                    break;
-
-                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
-                case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:
@@ -127,11 +121,6 @@ namespace MegaApp.MegaApi
                     UiService.OnUiThread(() => TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));
                     break;
 
-                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
-                case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    ProcessOverquotaError(api, e);
-                    break;
-
                 case MErrorType.API_EINCOMPLETE:
                     if (megaTransfer.IsSaveForOfflineTransfer)
                         this.RemoveOfflineNodeFromTransfer(megaTransfer);
@@ -185,20 +174,25 @@ namespace MegaApp.MegaApi
         /// <param name="e">Error information</param>
         private void ProcessOverquotaError(MegaSDK api, MError e)
         {
-            UiService.OnUiThread(DialogService.ShowOverquotaAlert);
-
-            // Stop all upload transfers
-            LogService.Log(MLogLevel.LOG_LEVEL_INFO,
-                string.Format("Storage quota exceeded ({0}) - Canceling uploads", e.getErrorCode().ToString()));
-            api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
-
-            // Disable the "Camera Uploads" service if is enabled
-            if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
+            // TRANSFER OVERQUOTA ERROR
+            if (e.getValue() != 0)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
-                    string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
-                TaskService.UnregisterBackgroundTask(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName);
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                    string.Format("Transfer quota exceeded ({0})", e.getErrorCode().ToString()));
+
+                UiService.OnUiThread(() =>
+                {
+                    AccountService.AccountDetails.IsInTransferOverquota = true;
+                    DialogService.ShowTransferOverquotaWarning();
+                });
+
+                return;
             }
+
+            // STORAGE OVERQUOTA ERROR
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                string.Format("Storage quota exceeded ({0})", e.getErrorCode().ToString()));
+            UiService.OnUiThread(DialogService.ShowStorageOverquotaAlert);
         }
 
         /// <summary>
@@ -279,14 +273,12 @@ namespace MegaApp.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
-            // Transfer overquota error
-            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            switch(e.getErrorCode())
             {
-                UiService.OnUiThread(() =>
-                {
-                    AccountService.AccountDetails.IsInTransferOverquota = true;
-                    DialogService.ShowTransferOverquotaWarning();
-                });
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
+                case MErrorType.API_EOVERQUOTA: // Overquota error
+                    ProcessOverquotaError(api, e);
+                    break;
             }
 
             // Extra checking to avoid NullReferenceException

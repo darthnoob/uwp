@@ -10,13 +10,9 @@ namespace BackgroundTaskService.MegaApi
     {
         // Helper Timer
         private Timer _timer;
-        // Event raised so that the task agent can abort itself when storage quota is exceeded
-        public event EventHandler StorageQuotaExceeded;
-        // Event raised so that the task agent can abort itself when transfer quota is exceeded
-        public event EventHandler TransferQuotaExceeded;
 
         private TaskCompletionSource<string> _tcs;
-        private string _dateSetting;
+        private string _dateSetting = TaskService.ImageDateSetting;
 
         public async Task<string> ExecuteAsync(Action action, string dateSetting)
         {
@@ -28,16 +24,6 @@ namespace BackgroundTaskService.MegaApi
             return await _tcs.Task;
         }
 
-        protected virtual void OnStorageQuotaExceeded(EventArgs e)
-        {
-            StorageQuotaExceeded?.Invoke(this, e);
-        }
-
-        protected virtual void OnTransferQuotaExceeded(EventArgs e)
-        {
-            TransferQuotaExceeded?.Invoke(this, e);
-        }
-
         public bool onTransferData(MegaSDK api, MTransfer transfer, byte[] data)
         {
             return false;
@@ -47,44 +33,30 @@ namespace BackgroundTaskService.MegaApi
         {
             _timer?.Dispose();
 
-            //Storage overquota error
-            if (e.getErrorCode() == MErrorType.API_EGOINGOVERQUOTA || e.getErrorCode() == MErrorType.API_EOVERQUOTA)
-            {
-                //Stop the Camera Upload Service
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
-                    string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
-                OnStorageQuotaExceeded(EventArgs.Empty);
-                _tcs.TrySetResult(e.getErrorString());
-                return;
-            }
-
             try
             {
-                if (e.getErrorCode() == MErrorType.API_OK)
+                switch (e.getErrorCode())
                 {
-                    ulong mtime = api.getNodeByHandle(transfer.getNodeHandle()).getModificationTime();
-                    var fileDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(mtime));
-                    await SettingsService.SaveSettingToFileAsync(_dateSetting, fileDate.ToLocalTime());
+                    case MErrorType.API_OK:
+                        ulong mtime = api.getNodeByHandle(transfer.getNodeHandle()).getModificationTime();
+                        var fileDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).AddSeconds(Convert.ToDouble(mtime));
+                        await SettingsService.SaveSettingToFileAsync(_dateSetting, fileDate.ToLocalTime());
+                        _tcs.TrySetResult(null);
+                        break;
 
-                    _tcs.TrySetResult(null);
-                }
-                else
-                {
                     // An error occured. Log and process it.
-                    switch (e.getErrorCode())
-                    {
-                        case MErrorType.API_EFAILED:
-                        case MErrorType.API_EEXIST:
-                        case MErrorType.API_EARGS:
-                        case MErrorType.API_EREAD:
-                        case MErrorType.API_EWRITE:
-                            {
-                                // Error will be loggend by caller
-                                _tcs.TrySetResult(e.getErrorString());
-                                break;
-                            }
-                    }
-                    _tcs.TrySetResult(null);
+                    case MErrorType.API_EFAILED:
+                    case MErrorType.API_EEXIST:
+                    case MErrorType.API_EARGS:
+                    case MErrorType.API_EREAD:
+                    case MErrorType.API_EWRITE:
+                        // Error will be loggend by caller
+                        _tcs.TrySetResult(e.getErrorString());
+                        break;
+
+                    default:
+                        _tcs.TrySetResult(null);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -104,12 +76,21 @@ namespace BackgroundTaskService.MegaApi
 
         public void onTransferTemporaryError(MegaSDK api, MTransfer transfer, MError e)
         {
-            // Transfer overquota error
-            if (e.getErrorCode() == MErrorType.API_EOVERQUOTA)
+            switch (e.getErrorCode())
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer quota exceeded (API_EOVERQUOTA)");
-                OnTransferQuotaExceeded(EventArgs.Empty);
-                _tcs.TrySetResult(e.getErrorString());
+                case MErrorType.API_EGOINGOVERQUOTA:
+                case MErrorType.API_EOVERQUOTA:
+                    if (e.getValue() != 0) // TRANSFER OVERQUOTA ERROR
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Transfer quota exceeded ({0})", e.getErrorCode().ToString()));
+                    }
+                    else // STORAGE OVERQUOTA ERROR
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Storage quota exceeded ({0})", e.getErrorCode().ToString()));
+                    }
+                    break;
             }
         }
 

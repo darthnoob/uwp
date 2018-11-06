@@ -46,7 +46,7 @@ namespace MegaApp.MegaApi
 
                 case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
                 case MErrorType.API_EOVERQUOTA: //Storage overquota error
-                    UiService.OnUiThread(DialogService.ShowOverquotaAlert);
+                    UiService.OnUiThread(DialogService.ShowStorageOverquotaAlert);
 
                     // Stop all upload transfers
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO,

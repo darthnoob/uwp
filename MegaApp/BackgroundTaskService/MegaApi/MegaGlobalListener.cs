@@ -29,14 +29,14 @@ namespace BackgroundTaskService.MegaApi
 
         public void onNodesUpdate(MegaSDK api, MNodeList nodes)
         {
-            // If the SDK has resumed the possible pending transfers
+            // If the SDK has not resumed the possible pending transfers
             if (nodes != null) return;
             
             // If no pending transfers to resume start a new upload
             // Else it will start when finish the current transfer
-            if (api.getTransferData().getNumDownloads() == 0)
+            if (api.getTransferData().getNumUploads() == 0)
             {
-                _tcs.TrySetResult(null);
+                _tcs?.TrySetResult(null);
             }
         }
 
