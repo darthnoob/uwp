@@ -618,7 +618,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_GridView" xml:space="preserve">
-    <value>Vista de miniaturas</value>
+    <value>Vista en miniatura</value>
     <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListView" xml:space="preserve">
@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Hazte Pro</value>
+    <value>Hazte PRO</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -1184,7 +1184,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Debido a nuestro paradigma de criptografía depunta a punta, no podrás acceder a tus datos sin tu contraseña o una copia de tu Clave de recuperación. Puedes aparcar tu cuenta actual e iniciar una nueva con la misma dirección de correo electrónico.</value>
+    <value>Debido a nuestro cifrado punto a punto, no podrás acceder a tus datos si no tienes la contraseña o la Clave de recuperación. Puede aparcar tu cuenta existente e iniciar una nueva con la misma dirección de correo electrónico.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
@@ -1208,7 +1208,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoverDescription" xml:space="preserve">
-    <value>Por favor, facilítanos tu Clave de recuperación previamente exportada. Aún puedes exportarla desde cualquier sesión MEGA que tengas abierta en otro navegador yo en otro equipo.</value>
+    <value>Por favor, facilítanos tu Clave de recuperación previamente exportada. Aún puedes exportarla desde cualquier sesión MEGA que tengas abierta en otro navegador u otro equipo.</value>
     <comment>Text displayed in recover section on password reset</comment>
   </data>
   <data name="UI_RecoverHeader" xml:space="preserve">
@@ -1726,7 +1726,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the "Settings" option to manage sessions - (String as short as possible).</comment>
   </data>
   <data name="UI_SessionManagementDescription" xml:space="preserve">
-    <value>Esto te desconectará de todas las demás sesiones activas, excepto la actual. Tendrás que volver a iniciar sesión en tus otros dispositivos para continuar usando MEGA.</value>
+    <value>Se cerrarán todas las demás sesiones activas, excepto la actual. Tendrás que volver a iniciar sesión en tus otros dispositivos para continuar usando MEGA.</value>
     <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
   </data>
   <data name="UI_Warning" xml:space="preserve">

@@ -1312,7 +1312,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>กรุณากรอกรหัสที่สร้างโดยแอปตัวรับรองความถูกต้องของคุณ</value>
+    <value>กรุณากรอกรหัส 6 หลักที่สร้างโดยแอปตัวรับรองความถูกต้องของคุณ</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">

@@ -146,7 +146,7 @@
     <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmAccount" xml:space="preserve">
-    <value>confirmar conta</value>
+    <value>Confirmar conta</value>
     <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
@@ -1395,7 +1395,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallDesktopApp" xml:space="preserve">
-    <value>Instale o aplicativo de desktop</value>
+    <value>Instale o aplicativo para desktop</value>
     <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallMobileApp" xml:space="preserve">

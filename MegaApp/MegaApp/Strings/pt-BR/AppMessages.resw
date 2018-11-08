@@ -204,7 +204,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process to delete settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_EmailAlreadyRegistered" xml:space="preserve">
-    <value>Já existe uma conta no MEGA associada a este endereço de email.</value>
+    <value>Já existe uma conta no MEGA com esse email.</value>
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
@@ -1312,7 +1312,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Digite o código gerado pelo seu aplicativo de autenticação</value>
+    <value>Por favor, digite o código de 6 dígitos gerado pelo seu aplicativo de autenticação.</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
@@ -1325,7 +1325,7 @@ Confirme que você salvou a sua chave de recuperação.</value>
     <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
   </data>
   <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
-    <value>Você quer fechar as demais sessões? Essa ação fará logout de todas as outras sessões ativas, exceto a atual.</value>
+    <value>Você quer fechar as demais sessões? Essa ação faráo  logout de todas as outras sessões ativas, exceto a atual.</value>
     <comment>Message of the dialog displayed to ask the user to confirm want to close all the other sessions.</comment>
   </data>
   <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
