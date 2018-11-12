@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>L'account è già confermato. È ora possibile effettuare il login.</value>
+    <value>Il tuo account è già stato attivato. Per favore, effettua il login.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
@@ -460,7 +460,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
   <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi aggiornare il tuo account?</value>
+    <value>Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi passare a PRO?</value>
     <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_OverquotaAlert_Title" xml:space="preserve">
@@ -1118,7 +1118,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Aggiorna ad un account PRO a soli {0} per continuare il download.</value>
+    <value>Passa a PRO a soli {0} per continuare il download.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
@@ -1312,7 +1312,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Per favore, inserisci il codice generato dalla tua app di autenticazione.</value>
+    <value>Per favore, inserisci il codice di 6 cifre generato dalla tua app di autenticazione.</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
@@ -1396,5 +1396,18 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_FileAlreadyExists" xml:space="preserve">
     <value>C'è già un file con lo stesso nome</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
+  </data>
+  <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
+    <value>Rimozione di ‘{0}’ dell'archiviazione offline fallita. Per favore, riprova.</value>
+    <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
+    <value>Rimozione dall'archiviazione offline fallita</value>
+    <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
+    <value>Rimozione degli oggetti dall'archiviazione offline fallita. Per favore, riprova.</value>
+    <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
 </root>

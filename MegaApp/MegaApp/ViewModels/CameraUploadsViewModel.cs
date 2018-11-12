@@ -34,7 +34,7 @@ namespace MegaApp.ViewModels
                     {
                         var node = newItem as IMegaNode;
                         if(node == null) continue;
-                        if(!node.IsImage) continue;
+                        if(!node.IsImage && !node.IsVideo) continue;
                         var date = Convert.ToDateTime(node.ModificationTime, CultureInfo.CurrentCulture);
                         var group = Items.FirstOrDefault(i => i.Date.Date == date.Date);
 
@@ -58,7 +58,7 @@ namespace MegaApp.ViewModels
                     {
                         var node = oldItem as IMegaNode;
                         if (node == null) continue;
-                        if (!node.IsImage) continue;
+                        if (!node.IsImage && !node.IsVideo) continue;
                         for(int i = Items.Count-1; i >= 0; i--)
                         {
                             var deleteItem = Items[i].ItemCollection.Items.FirstOrDefault(
@@ -157,13 +157,15 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public override string OrderTypeAndNumberOfItems => this.FolderRootNode != null ? 
-            string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModified"), 
-                this.MegaSdk.getNumChildFiles(this.FolderRootNode.OriginalMNode)) : string.Empty;
-
-        public override string OrderTypeAndNumberOfSelectedItems => this.FolderRootNode != null ?
-            string.Format(ResourceService.UiResources.GetString("UI_ListSortedByDateModifiedMultiSelect"),
-                this.ItemCollection.SelectedItems.Count, this.ItemCollection.Items.Count) : string.Empty;
+        public override string OrderTypeAndNumberOfItems
+        {
+            get
+            {
+                this.numChildFolders = 0;
+                this.numChildFiles = this.ItemCollection.Items.Count;
+                return base.OrderTypeAndNumberOfItems;
+            }
+        }
 
         #endregion
 

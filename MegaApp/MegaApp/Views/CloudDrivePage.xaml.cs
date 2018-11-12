@@ -207,8 +207,13 @@ namespace MegaApp.Views
             // Needed on every UI interaction
             SdkService.MegaSdk.retryPendingConnections();
 
-            if (MainPivot.SelectedItem.Equals(CameraUploadsPivot))
-                GridViewCameraUploads.SelectAll();
+            if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
+
+            if (this.GridViewCameraUploads?.SelectionMode == ListViewSelectionMode.Extended ||
+                this.GridViewCameraUploads?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this.GridViewCameraUploads?.SelectAll();
+            }
         }
 
         private void OnDeselectAllClick(object sender, RoutedEventArgs e)
@@ -344,10 +349,17 @@ namespace MegaApp.Views
         {
             if (!MainPivot.SelectedItem.Equals(CameraUploadsPivot)) return;
 
-            if (value)
-                this.GridViewCameraUploads?.SelectAll();
-            else
+            if (!value)
+            {
                 this.GridViewCameraUploads?.SelectedItems.Clear();
+                return;
+            }
+
+            if (this.GridViewCameraUploads?.SelectionMode == ListViewSelectionMode.Extended ||
+                this.GridViewCameraUploads?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this.GridViewCameraUploads?.SelectAll();
+            }
         }
 
         private void OnSortClick(object sender, RoutedEventArgs e)

@@ -20,9 +20,12 @@ namespace MegaApp.MegaApi
                     case MErrorType.API_OK: // Valid and operative confirmation link
                         Tcs?.TrySetResult(ConfirmAccountResult.Success);
                         break;
+
                     case MErrorType.API_ENOENT: // Wrong password
+                    case MErrorType.API_EKEY:   // Wrong password
                         Tcs?.TrySetResult(ConfirmAccountResult.WrongPassword);
                         break;
+
                     default: // failed confirm
                         Tcs?.TrySetResult(ConfirmAccountResult.Unknown);
                         break;

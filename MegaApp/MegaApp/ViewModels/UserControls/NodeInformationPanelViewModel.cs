@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using MegaApp.Classes;
 using MegaApp.Enums;
@@ -116,12 +117,33 @@ namespace MegaApp.ViewModels.UserControls
                 folderNode.ContactsList.AddContactToFolderCommand.Execute(null);
         }
 
-        public void SaveForOffline(bool isOn)
+        /// <summary>
+        /// Save to or remove from the offline section the selected node.
+        /// </summary>
+        /// <param name="isOn">TRUE to save and FALSE to remove.</param>
+        /// <returns>TRUE if the action finished successfully or FALSE in other case.</returns>
+        public bool SaveForOffline(bool isOn)
         {
             if (isOn && !this.Node.IsSavedForOffline)
+            {
                 this.Node.SaveForOffline();
+            }
             else if (!isOn && this.Node.IsSavedForOffline)
-                this.Node.RemoveFromOffline();
+            {
+                if (!this.Node.RemoveFromOffline())
+                {
+                    OnUiThread(async() =>
+                    {
+                        await DialogService.ShowAlertAsync(
+                            ResourceService.AppMessages.GetString("AM_RemoveFromOfflineFailed_Title"),
+                            string.Format(ResourceService.AppMessages.GetString("AM_RemoveNodeFromOfflineFailed"), this.Node.Name));
+                    });
+                    
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion

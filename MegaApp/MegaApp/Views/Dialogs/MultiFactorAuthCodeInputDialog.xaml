@@ -24,14 +24,18 @@
         <StackPanel>
             <TextBlock 
                 x:Name="Message"
-                Margin="0,16,0,16"
+                Margin="{x:Bind ViewModel.MessageMargin, Mode=OneTime}"
                 Style="{StaticResource MegaDialogContentFontStyle}"
                 Text="{x:Bind ViewModel.MessageText, Mode=OneTime}"/>
-            <StackPanel Margin="0,0,0,16" HorizontalAlignment="Center" Orientation="Horizontal">
+            <StackPanel 
+                Margin="{x:Bind ViewModel.DigitsPanelMargin, Mode=OneTime}"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
                 <TextBox 
                     x:Name="TextBoxDigit1"
                     TabIndex="0"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit1, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -41,6 +45,7 @@
                     x:Name="TextBoxDigit2"
                     TabIndex="1"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit2, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -50,6 +55,7 @@
                     x:Name="TextBoxDigit3"
                     TabIndex="2"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit3, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -60,6 +66,7 @@
                     TabIndex="3"
                     Margin="16,0,0,0"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit4, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -69,6 +76,7 @@
                     x:Name="TextBoxDigit5"
                     TabIndex="4"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit5, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -78,6 +86,7 @@
                     x:Name="TextBoxDigit6"
                     TabIndex="5"
                     Foreground="{x:Bind ViewModel.DigitColor, Mode=OneWay}"
+                    InputScope="NumericPin"
                     IsReadOnly="{x:Bind ViewModel.ControlState, Converter={StaticResource InverseBoolConverter}, Mode=OneWay}"
                     Text="{x:Bind ViewModel.Digit6, Mode=TwoWay}"
                     Style="{StaticResource MegaMFA_DigitStyle}"
@@ -122,7 +131,7 @@
                     Grid.Row="1"
                     Visibility="{Binding ShowLostDeviceLink, Converter={StaticResource BoolToVisibilityConverter}}">
                     <HyperlinkButton
-                        Margin="0,24,0,0"
+                        Margin="{x:Bind ViewModel.LostAuthDeviceLinkMargin, Mode=OneTime}"
                         Content="{x:Bind ViewModel.LostAuthDeviceQuestionText, Mode=OneTime}"
                         FontSize="13"
                         HorizontalAlignment="Center"
@@ -130,7 +139,6 @@
                         Style="{StaticResource MegaLinkStyle}"
                         Visibility="{Binding IsBusy, Converter={StaticResource InverseBoolToVisibilityConverter}}"/>
                 </Grid>
-                
             </Grid>
         </StackPanel>
     </Grid>

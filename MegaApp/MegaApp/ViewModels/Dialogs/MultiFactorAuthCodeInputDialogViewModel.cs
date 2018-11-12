@@ -144,7 +144,9 @@ namespace MegaApp.ViewModels.Dialogs
             set
             {
                 SetField(ref _showLostDeviceLink, value);
-                OnPropertyChanged(nameof(this.VariableGridHeight));
+                OnPropertyChanged(nameof(this.VariableGridHeight),
+                    nameof(this.MessageMargin), nameof(this.DigitsPanelMargin),
+                    nameof(this.LostAuthDeviceLinkMargin));
             }
         }
 
@@ -152,7 +154,26 @@ namespace MegaApp.ViewModels.Dialogs
         /// Sets the height of the dialog dynamically depending on if 
         /// it shows the lost device link or not.
         /// </summary>
-        public int VariableGridHeight => this.ShowLostDeviceLink ? 72 : 32;
+        public int VariableGridHeight => this.ShowLostDeviceLink ?
+            (DeviceService.IsPhoneDevice() ? 48 : 72) : 32;
+
+        /// <summary>
+        /// Margins of the message of the dialog depending on the device type
+        /// </summary>
+        public Thickness MessageMargin => DeviceService.IsPhoneDevice() && this.ShowLostDeviceLink ?
+            new Thickness(0, 12, 0, 12) : new Thickness(0, 16, 0, 16);
+
+        /// <summary>
+        /// Margins of the digits panel of the dialog depending on the device type
+        /// </summary>
+        public Thickness DigitsPanelMargin => DeviceService.IsPhoneDevice() && this.ShowLostDeviceLink ?
+            new Thickness(0, 0, 0, 12) : new Thickness(0, 0, 0, 16);
+
+        /// <summary>
+        /// Margins of the "lost authentication device" link of the dialog depending on the device type
+        /// </summary>
+        public Thickness LostAuthDeviceLinkMargin => DeviceService.IsPhoneDevice() && this.ShowLostDeviceLink ?
+            new Thickness(0, 12, 0, 0) : new Thickness(0, 16, 0, 0);
 
         #endregion
 

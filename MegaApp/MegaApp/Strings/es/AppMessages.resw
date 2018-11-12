@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>La cuenta ya está confirmada. Ahora puedes iniciar sesión.</value>
+    <value>Tu cuenta está activa. Por favor, inicia sesión.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
@@ -447,7 +447,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the warning dialog shown when you try to confirm an account but you are logged in with another one.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
-    <value>Hay iniciada una sesión con otra cuenta</value>
+    <value>Tienes una sesión abierta con otra cuenta</value>
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
@@ -866,7 +866,7 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
-    <value>Ya tienes un contacto con ese email</value>
+    <value>Ya tienes un contacto con ese correo electrónico</value>
     <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
   </data>
   <data name="AM_InviteContactFailed" xml:space="preserve">
@@ -942,7 +942,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_DisableDebugMode_Title" xml:space="preserve">
-    <value>Desactivar el modo depuración</value>
+    <value>Desactivar modo depuración</value>
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
@@ -951,7 +951,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_EnableDebugMode_Title" xml:space="preserve">
-    <value>Activar el modo depuración</value>
+    <value>Activar modo depuración</value>
     <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
   </data>
   <data name="AM_SaveLogFile" xml:space="preserve">
@@ -1312,7 +1312,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Introduce el código generado por tu aplicación de autenticación</value>
+    <value>Introduce el código de 6 dígitos generado por tu aplicación de autenticación.</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
@@ -1396,5 +1396,18 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
   <data name="AM_FileAlreadyExists" xml:space="preserve">
     <value>Ya existe un archivo con el mismo nombre</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
+  </data>
+  <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
+    <value>No se ha podido eliminar ‘{0}’ desde el almacenamiento sin conexión. Inténtalo de nuevo.</value>
+    <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
+Preserve the {0} code because is for include the name of the node in runtime.</comment>
+  </data>
+  <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
+    <value>No se ha podido eliminar desde el almacenamiento sin conexión</value>
+    <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
+  </data>
+  <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
+    <value>No se han podido eliminar elementos desde el almacenamiento sin conexión. Inténtalo de nuevo.</value>
+    <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
 </root>

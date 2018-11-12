@@ -93,8 +93,8 @@ namespace MegaApp.ViewModels
 
         public string SectionNameText => ResourceService.UiResources.GetString("UI_Contacts");
         public string ContactsTitle => ResourceService.UiResources.GetString("UI_Contacts");
-        public string IncomingTitle => ResourceService.UiResources.GetString("UI_Incoming");
-        public string OutgoingTitle => ResourceService.UiResources.GetString("UI_Outgoing");
+        public string IncomingTitle => ResourceService.UiResources.GetString("UI_ReceivedRequests");
+        public string OutgoingTitle => ResourceService.UiResources.GetString("UI_SentRequests");
         public string ClosePanelText => ResourceService.UiResources.GetString("UI_ClosePanel");
 
         #endregion

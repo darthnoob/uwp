@@ -51,39 +51,10 @@ namespace MegaApp.ViewModels.Offline
             {
                 if (this.FolderRootNode == null) return string.Empty;
 
-                var numChildFolders = FolderService.GetNumChildFolders(this.FolderRootNode.NodePath);
-                var numChildFiles = FolderService.GetNumChildFiles(this.FolderRootNode.NodePath, true);
+                this.numChildFolders = FolderService.GetNumChildFolders(this.FolderRootNode.NodePath);
+                this.numChildFiles = FolderService.GetNumChildFiles(this.FolderRootNode.NodePath, true);
 
-                switch (UiService.GetSortOrder(this.FolderRootNode.Base64Handle, this.FolderRootNode.Name))
-                {
-                    case MSortOrderType.ORDER_DEFAULT_ASC:
-                    case MSortOrderType.ORDER_DEFAULT_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByType"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_ALPHABETICAL_ASC:
-                    case MSortOrderType.ORDER_ALPHABETICAL_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByName"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_CREATION_ASC:
-                    case MSortOrderType.ORDER_CREATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateCreated"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_MODIFICATION_ASC:
-                    case MSortOrderType.ORDER_MODIFICATION_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedByDateModified"),
-                            numChildFolders, numChildFiles);
-
-                    case MSortOrderType.ORDER_SIZE_ASC:
-                    case MSortOrderType.ORDER_SIZE_DESC:
-                        return string.Format(ResourceService.UiResources.GetString("UI_NodeListSortedBySize"),
-                            numChildFolders, numChildFiles);
-
-                    default:
-                        return string.Empty;
-                }
+                return base.OrderTypeAndNumberOfItems;
             }
         }
 
@@ -334,26 +305,38 @@ namespace MegaApp.ViewModels.Offline
                 string.Format(ResourceService.AppMessages.GetString("AM_RemoveFromOfflineQuestion"), this.ItemCollection.SelectedItems.First().Name) :
                 string.Format(ResourceService.AppMessages.GetString("AM_MultiSelectRemoveFromOfflineQuestion"), count);
 
-            var result = await DialogService.ShowOkCancelAsync(title, message);
+            var userSelection = await DialogService.ShowOkCancelAsync(title, message);
 
-            if (!result) return;
-
-            // Use a temp variable to avoid InvalidOperationException
-            MultipleRemoveFromOffline(this.ItemCollection.SelectedItems.ToList());
+            if (!userSelection) return;
 
             this.ItemCollection.IsMultiSelectActive = false;
+
+            // Use a temp variable to avoid InvalidOperationException
+            var result = await MultipleRemoveFromOfflineAsync(this.ItemCollection.SelectedItems.ToList());
+            if (result.HasValue && !result.Value)
+            {
+                OnUiThread(async () =>
+                {
+                    await DialogService.ShowAlertAsync(
+                        ResourceService.AppMessages.GetString("AM_RemoveFromOfflineFailed_Title"),
+                        string.Format(ResourceService.AppMessages.GetString("AM_RemoveMultipleNodesFromOfflineFailed")));
+                });
+            }
         }
 
-        private async void MultipleRemoveFromOffline(ICollection<IBaseNode> nodes)
+        private async Task<bool?> MultipleRemoveFromOfflineAsync(ICollection<IBaseNode> nodes)
         {
-            if (nodes == null || nodes.Count < 1) return;
+            if (nodes == null || nodes.Count < 1) return null;
 
+            bool? result = true;
             foreach (var n in nodes)
             {
                 var node = n as IOfflineNode;
                 if (node == null) continue;
-                await node.RemoveFromOfflineAsync(true);
+                result &= await node.RemoveFromOfflineAsync(true);
             }
+
+            return result;
         }
 
         private void SetEmptyContent(bool isLoading)

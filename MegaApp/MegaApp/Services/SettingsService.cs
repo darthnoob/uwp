@@ -81,7 +81,7 @@ namespace MegaApp.Services
             }
         }
 
-        public static T Load<T>(string key, T defaultValue)
+        public static T Load<T>(string key, T defaultValue = default(T))
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
@@ -398,6 +398,31 @@ namespace MegaApp.Services
             DeleteSetting(ResourceService.SettingsResources.GetString("SR_UserPinLock"));
 
             DeleteFileSetting(ResourceService.SettingsResources.GetString("SR_LastUploadDate"));
+        }
+
+        /// <summary>
+        /// Save the handle of the last public node accesed (file or folder).
+        /// </summary>
+        /// <param name="handle">Handle of the last public node accessed.</param>
+        public static void SaveLastPublicNodeHandle(ulong handle)
+        {
+            Save(ResourceService.SettingsResources.GetString("SR_LastPublicNodeHandle"), handle);
+            Save(ResourceService.SettingsResources.GetString("SR_LastPublicNodeHandleTimestamp"),
+                DateTime.Now.Subtract(DateTime.MinValue).TotalHours);
+        }
+
+        /// <summary>
+        /// Get the handle of the last public node accessed (file or folder).
+        /// </summary>
+        /// <returns>Handle of the node if was access in the last 24 hours or NULL in other case.</returns>
+        public static ulong? GetLastPublicNodeHandle()
+        {
+            var handle = Load<ulong>(ResourceService.SettingsResources.GetString("SR_LastPublicNodeHandle"));
+            var timestamp = Load<double>(ResourceService.SettingsResources.GetString("SR_LastPublicNodeHandleTimestamp"));
+
+            var period = DateTime.Now.Subtract(DateTime.MinValue).TotalHours - timestamp;
+            if (period < 24) return handle;
+            return null;
         }
 
         /// <summary>

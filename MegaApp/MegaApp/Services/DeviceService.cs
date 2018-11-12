@@ -124,5 +124,29 @@ namespace MegaApp.Services
             var retrivedProperties = await local.Properties.RetrievePropertiesAsync(new string[] { "System.FreeSpace" });
             return (ulong)retrivedProperties["System.FreeSpace"];
         }
+
+        /// <summary>
+        /// Gets if the current device is a Desktop or Laptop computer.
+        /// </summary>
+        /// <returns>Result of the query.</returns>
+        public static bool IsDesktopDevice() => GetDeviceType() == DeviceFormFactorType.Desktop;
+
+        /// <summary>
+        /// Gets if the current device is a Phone.
+        /// </summary>
+        /// <returns>Result of the query.</returns>
+        public static bool IsPhoneDevice() => GetDeviceType() == DeviceFormFactorType.Phone;
+
+        /// <summary>
+        /// Gets if the current device is a Surface Hub.
+        /// </summary>
+        /// <returns>Result of the query.</returns>
+        public static bool IsSurfaceHubDevice() => GetDeviceType() == DeviceFormFactorType.SurfaceHub;
+
+        /// <summary>
+        /// Gets if the current device is a Tablet.
+        /// </summary>
+        /// <returns>Result of the query.</returns>
+        public static bool IsTabletDevice() => GetDeviceType() == DeviceFormFactorType.Tablet;
     }
 }

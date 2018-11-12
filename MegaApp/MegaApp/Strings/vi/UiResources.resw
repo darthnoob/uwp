@@ -134,7 +134,7 @@
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearRubbishBin" xml:space="preserve">
-    <value>Clear Rubbish Bin</value>
+    <value>Dọn Thùng Rác</value>
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
@@ -1032,7 +1032,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByAccessLevelMultiSelect" xml:space="preserve">
     <value>Quyền ({0} trong tổng {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
@@ -1285,31 +1285,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Mở</value>
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Ngày Tạo ({0} thư mục, {1} tệp)</value>
-    <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Ngày Sửa ({0} thư mục, {1} tệp)</value>
-    <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Dạng ({0} thư mục, {1} tệp)</value>
-    <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Tên ({0} thư mục, {1} tệp)</value>
-    <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Kích Cỡ ({0} thư mục, {1} tệp)</value>
-    <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
     <value>Ngày Tạo ({0} trong tổng {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
@@ -1374,31 +1349,6 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <value>Sao chép / Di dời {0} mục tới</value>
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Ngày Tạo ({0} thư mục)</value>
-    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Ngày Sửa ({0} thư mục)</value>
-    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Tên ({0} thư mục)</value>
-    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Kích Cỡ ({0} thư mục)</value>
-    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Dạng ({0} thư mục)</value>
-    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
   </data>
   <data name="UI_Sharing" xml:space="preserve">
     <value>Chia sẻ</value>
@@ -1724,7 +1674,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp mất điện thoại.</value>
+    <value>Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
@@ -1826,5 +1776,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_RemoveLink" xml:space="preserve">
     <value>Xóa đường dẫn liên kết</value>
     <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReceivedRequests" xml:space="preserve">
+    <value>Yêu cầu đã nhận</value>
+    <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SentRequests" xml:space="preserve">
+    <value>Yêu cầu đã gửi</value>
+    <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
 </root>

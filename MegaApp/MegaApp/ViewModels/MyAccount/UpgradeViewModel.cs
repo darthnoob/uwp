@@ -75,7 +75,18 @@ namespace MegaApp.ViewModels.MyAccount
                 case MPaymentMethod.PAYMENT_METHOD_FORTUMO:
                     var paymentUrlRequestListener = new GetPaymentUrlRequestListenerAsync();
                     var paymentUrl = await paymentUrlRequestListener.ExecuteAsync(() =>
-                        SdkService.MegaSdk.getPaymentId(SelectedProduct.Handle, paymentUrlRequestListener));
+                    {
+                        // If user has accessed a public node in the last 24 hours, also send the node handle (Task #10801)
+                        var lastPublicNodeHandle = SettingsService.GetLastPublicNodeHandle();
+                        if (lastPublicNodeHandle.HasValue)
+                        {
+                            SdkService.MegaSdk.getPaymentIdWithLastPublicHandle(SelectedProduct.Handle, 
+                                lastPublicNodeHandle.Value, paymentUrlRequestListener);
+                            return;
+                        }
+
+                        SdkService.MegaSdk.getPaymentId(SelectedProduct.Handle, paymentUrlRequestListener);
+                    });
 
                     if (this.SelectedPaymentMethod == MPaymentMethod.PAYMENT_METHOD_CENTILI)
                         paymentUrl = ResourceService.AppResources.GetString("AR_CentiliUrl") + paymentUrl;

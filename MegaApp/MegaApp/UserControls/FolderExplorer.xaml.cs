@@ -318,8 +318,17 @@ namespace MegaApp.UserControls
                 return;
             }
 
-            this.ListView?.SelectAll();
-            this.GridView?.SelectAll();
+            if (this.ListView?.SelectionMode == ListViewSelectionMode.Extended ||
+                this.ListView?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this.ListView?.SelectAll();
+            }
+
+            if (this.GridView?.SelectionMode == ListViewSelectionMode.Extended ||
+                this.GridView?.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                this.GridView?.SelectAll();
+            }
         }
 
         private void OnItemTapped(object sender, TappedRoutedEventArgs e)

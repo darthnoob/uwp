@@ -193,8 +193,10 @@ namespace MegaApp.Database
         /// <param name="tableName">Name of the database table.</param>
         /// <param name="fieldName">Field by which to search the database.</param>
         /// <param name="fieldValue">Field value to search in the database table.</param>
-        public static void DeleteItem(string tableName, string fieldName, string fieldValue)
+        /// <returns>TRUE if the transaction finished successfully or FALSE in other case.</returns>
+        public static bool DeleteItem(string tableName, string fieldName, string fieldValue)
         {
+            var result = true;
             try
             {
                 using (var db = new SQLiteConnection(Database.SQLitePlatform, Database.DatabasePath))
@@ -205,7 +207,11 @@ namespace MegaApp.Database
                         db.RunInTransaction(() =>
                         {
                             try { db.Delete(existingItem); }
-                            catch (Exception e) { LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error deleting item from the DB", e); }
+                            catch (Exception e)
+                            {
+                                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error deleting item from the DB", e);
+                                result = false;
+                            }
                         });
                     }
                 }
@@ -213,7 +219,10 @@ namespace MegaApp.Database
             catch (Exception e)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error deleting item from the DB", e);
+                result = false;
             }
+
+            return result;
         }
 
         /// <summary>

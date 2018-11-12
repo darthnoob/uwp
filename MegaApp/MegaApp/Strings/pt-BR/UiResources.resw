@@ -146,7 +146,7 @@
     <comment>Label for any 'Confirm' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmAccount" xml:space="preserve">
-    <value>confirmar conta</value>
+    <value>Confirmar conta</value>
     <comment>Label for any 'Confirm account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ConfirmPasswordWatermark" xml:space="preserve">
@@ -439,7 +439,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AboutDescription" xml:space="preserve">
-    <value>Informações sobre o aplicativo MEGA</value>
+    <value>Informações sobre o aplicativo do MEGA</value>
     <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyKey" xml:space="preserve">
@@ -503,7 +503,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Tentando de novo...</value>
+    <value>Tentando novamente...</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -658,7 +658,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
-    <value>A cota de transferência é usada para baixar arquivos. Se você exceder sua cota de transferência, será necessário esperar até ter cota disponível.</value>
+    <value>A cota de transferência é usada para baixar arquivos. Se você exceder a sua cota de transferência, será necessário esperar até ter cota disponível.</value>
     <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_PaymentMethod" xml:space="preserve">
@@ -871,7 +871,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Placeholder text to re-enter the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicy" xml:space="preserve">
-    <value>Politica de reembolso</value>
+    <value>Política de reembolso</value>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
@@ -1032,7 +1032,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByAccessLevelMultiSelect" xml:space="preserve">
     <value>Permissão ({0} de {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
@@ -1285,31 +1285,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>Abrir</value>
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>Data de criação ({0} pastas, {1} arquivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>Data de modificação ({0} pastas, {1} arquivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>Tipo ({0} pastas, {1} arquivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>Nome ({0} pastas, {1} arquivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>Tamanho ({0} pastas, {1} arquivos)</value>
-    <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
     <value>Data de criação ({0} de {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
@@ -1375,31 +1350,6 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
-  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>Data de criação ({0} pastas)</value>
-    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>Data de modificação ({0} pastas)</value>
-    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>Nome ({0} pastas)</value>
-    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>Tamanho ({0} pastas)</value>
-    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>Tipo ({0} pastas)</value>
-    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
   <data name="UI_Sharing" xml:space="preserve">
     <value>Compartilhar</value>
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
@@ -1445,7 +1395,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Base transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallDesktopApp" xml:space="preserve">
-    <value>Instale o aplicativo de desktop</value>
+    <value>Instale o aplicativo para desktop</value>
     <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallMobileApp" xml:space="preserve">
@@ -1700,7 +1650,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
-    <value>Desativar a autenticação de dois fatores</value>
+    <value>Ativar a autenticação de dois fatores</value>
     <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
   </data>
   <data name="UI_TwoFactorAuth" xml:space="preserve">
@@ -1712,7 +1662,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
   </data>
   <data name="UI_Setup2FA" xml:space="preserve">
-    <value>Configurar autenticação de dois fatores</value>
+    <value>Configurar a autenticação de dois fatores</value>
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
@@ -1826,5 +1776,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_RemoveLink" xml:space="preserve">
     <value>Remover link</value>
     <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReceivedRequests" xml:space="preserve">
+    <value>solicitações recebidas</value>
+    <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SentRequests" xml:space="preserve">
+    <value>solicitações enviadas</value>
+    <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
 </root>

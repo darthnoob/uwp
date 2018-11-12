@@ -1032,7 +1032,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to indicate that a list of items is sorted by access level and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
-  <data name="UI_ListSortedByAccessLeveMultiSelect" xml:space="preserve">
+  <data name="UI_ListSortedByAccessLevelMultiSelect" xml:space="preserve">
     <value>การเข้าถึง ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list of items is sorted by access level and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
@@ -1285,31 +1285,6 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <value>เปิด</value>
     <comment>Label for any 'Open' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
-  <data name="UI_NodeListSortedByDateCreated" xml:space="preserve">
-    <value>วันที่สร้าง ({0} โฟลเดอร์ {1} ไฟล์)</value>
-    <comment>Label to indicate that a list of nodes is sorted by creation date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByDateModified" xml:space="preserve">
-    <value>วันที่แก้ไข ({0} โฟลเดอร์ {1} ไฟล์)</value>
-    <comment>Label to indicate that a list of nodes is sorted by modification date and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByType" xml:space="preserve">
-    <value>ประเภท ({0} โฟลเดอร์ {1} ไฟล์)</value>
-    <comment>Label to indicate that a list of nodes is sorted by type and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedByName" xml:space="preserve">
-    <value>ชื่อ ({0} โฟลเดอร์ {1} ไฟล์)</value>
-    <comment>Label to indicate that a list of nodes is sorted by name and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
-  <data name="UI_NodeListSortedBySize" xml:space="preserve">
-    <value>ขนาด ({0} โฟลเดอร์ {1} ไฟล์)</value>
-    <comment>Label to indicate that a list of nodes is sorted by size and the total number of files and folders - (String as short as possible).
-Keep the {0} and {1} codes because are for include the total number of folders and files in runtime.</comment>
-  </data>
   <data name="UI_ListSortedByDateCreatedMultiSelect" xml:space="preserve">
     <value>วันที่สร้าง ({0} จาก {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by creation date and the number of selected items over the total number of items.
@@ -1375,31 +1350,6 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label to indicate how many items have been selected for copy or move - (String as short as possible).
 Keep the {0} code because is for include the number of selected items in runtime.</comment>
   </data>
-  <data name="UI_FolderListSortedByDateCreated" xml:space="preserve">
-    <value>วันที่สร้าง ({0} โฟลเดอร์)</value>
-    <comment>Label to indicate that a list of folders is sorted by creation date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByDateModified" xml:space="preserve">
-    <value>วันที่แก้ไข ({0} โฟลเดอร์)</value>
-    <comment>Label to indicate that a list of folders is sorted by modification date and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByName" xml:space="preserve">
-    <value>ชื่อ ({0} โฟลเดอร์)</value>
-    <comment>Label to indicate that a list of folders is sorted by name and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedBySize" xml:space="preserve">
-    <value>ขนาด ({0} โฟลเดอร์)</value>
-    <comment>Label to indicate that a list of folders is sorted by size and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
-  <data name="UI_FolderListSortedByType" xml:space="preserve">
-    <value>ประเภท ({0} โฟลเดอร์)</value>
-    <comment>Label to indicate that a list of folders is sorted by type and the total number of folders - (String as short as possible).
-Keep the {0} code because are for include the total number of folders in runtime.</comment>
-  </data>
   <data name="UI_Sharing" xml:space="preserve">
     <value>แชร์</value>
     <comment>Label for any 'Sharing' button, link, etc. - (String as short as possible).</comment>
@@ -1449,7 +1399,7 @@ Keep the {0} code because are for include the total number of folders in runtime
     <comment>Label for any 'Install desktop app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InstallMobileApp" xml:space="preserve">
-    <value>ติดตั้งแอปบนอุปกรณ์เคลื่อนที่</value>
+    <value>ติดตั้งแอปบนมือถือ</value>
     <comment>Label for any 'Install mobile app' quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ReferralBonus" xml:space="preserve">
@@ -1522,7 +1472,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Information about the 'Install desktop app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_InstallMobileAppInformation" xml:space="preserve">
-    <value>เมื่อคุณติดตั้งแอปบนอุปกรณ์เคลื่อนที่คุณจะได้รับพื้นที่เก็บข้อมูลฟรี {0} และ {1} โควต้าการถ่ายโอน โดยทั้งสองอย่างจะใช้ได้ {2} วัน เรามีแอปพลิเคชันมือถือสำหรับ iOS, Android และ Windows Phone</value>
+    <value>เมื่อคุณติดตั้งแอปบนมือถือคุณจะได้รับพื้นที่เก็บข้อมูลฟรี {0} และ {1} โควต้าการถ่ายโอน โดยทั้งสองอย่างจะใช้ได้ {2} วัน เรามีแอปบนมือถือสำหรับ iOS, Android และ Windows Phone</value>
     <comment>Information about the 'Install mobile app' achievement option. Preserve the {0}, {1} and {2} codes because is for include current storage, tranfer and expire data.</comment>
   </data>
   <data name="UI_AchievedOn" xml:space="preserve">
@@ -1546,7 +1496,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'How it works' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_HowItWorksText" xml:space="preserve">
-    <value>เชิญเพื่อนของคุณสร้างบัญชี MEGA ฟรีและติดตั้งแอปบนอุปกรณ์เคลื่อนที่ของเรา สำหรับการลงชื่อสมัครใช้และการติดตั้งแอปทุกครั้งจะมีโบนัสและโควต้าการถ่ายโอนให้</value>
+    <value>เชิญเพื่อนของคุณสร้างบัญชี MEGA ฟรีและติดตั้งแอปของเราบนมือถือ สำหรับการลงชื่อสมัครใช้และการติดตั้งแอปทุกครั้งจะมีโบนัสและโควต้าการถ่ายโอนให้</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains this invitation achievement.</comment>
   </data>
   <data name="UI_Invite" xml:space="preserve">
@@ -1566,7 +1516,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
-    <value>ผู้ติดต่อที่ได้รับเชิญจะต้องติดตั้งแอปบนมือถือ MEGA หรือแอปบนเดสก์ท็อป MEGA บนอุปกรณ์ของตน</value>
+    <value>ผู้ติดต่อที่ได้รับเชิญจะต้องติดตั้งแอป MEGA บนมือถือหรือแอป MEGA เดสก์ท็อปบนอุปกรณ์ของตน</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 2</comment>
   </data>
   <data name="UI_FolderLink" xml:space="preserve">
@@ -1724,7 +1674,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>สแกนหรือคัดลอกรหัสไปยังแอปตัวรับรองความถูกต้องของคุณ อย่าลืมสำรองรหัสนี้ไว้ในที่ปลอดภัยในกรณีที่คุณทำโทรศัพท์หาย</value>
+    <value>สแกนหรือคัดลอกรหัสไปยังแอปตัวรับรองความถูกต้องของคุณ อย่าลืมสำรองรหัสนี้ไว้ในที่ปลอดภัยในกรณีที่คุณทำอุปกรณ์หาย</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
@@ -1826,5 +1776,13 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_RemoveLink" xml:space="preserve">
     <value>เอาลิงก์ออก</value>
     <comment>Label for any 'Remove link' button, link, text, title, etc., to remove a link of a node - (String as short as possible).</comment>
+  </data>
+  <data name="UI_ReceivedRequests" xml:space="preserve">
+    <value>รับคำขอ</value>
+    <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_SentRequests" xml:space="preserve">
+    <value>ส่งคำขอ</value>
+    <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
 </root>

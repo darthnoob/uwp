@@ -229,6 +229,7 @@
     <Compile Include="MegaApi\IsMasterKeyExportedRequestListenerAsync.cs" />
     <Compile Include="MegaApi\KillSessionRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LoginToFolderRequestListenerAsync.cs" />
+    <Compile Include="MegaApi\LogOutRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthCheckRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthGetCodeRequestListenerAsync.cs" />
     <Compile Include="MegaApi\MultiFactorAuthSetRequestListenerAsync.cs" />
