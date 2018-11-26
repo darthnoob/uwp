@@ -179,12 +179,8 @@ namespace MegaApp.MegaApi
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_INFO,
                     string.Format("Transfer quota exceeded ({0})", e.getErrorCode().ToString()));
-
-                UiService.OnUiThread(() =>
-                {
-                    AccountService.AccountDetails.IsInTransferOverquota = true;
-                    DialogService.ShowTransferOverquotaWarning();
-                });
+                AccountService.AccountDetails.IsInTransferOverquota = true;
+                UiService.OnUiThread(DialogService.ShowTransferOverquotaWarning);
 
                 return;
             }
@@ -192,6 +188,7 @@ namespace MegaApp.MegaApi
             // STORAGE OVERQUOTA ERROR
             LogService.Log(MLogLevel.LOG_LEVEL_INFO,
                 string.Format("Storage quota exceeded ({0})", e.getErrorCode().ToString()));
+            AccountService.AccountDetails.IsInStorageOverquota = true;
             UiService.OnUiThread(DialogService.ShowStorageOverquotaAlert);
         }
 

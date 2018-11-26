@@ -164,7 +164,16 @@ namespace MegaApp.ViewModels
         public ulong FreeSpace => UsedSpace < TotalSpace ? TotalSpace - UsedSpace : 0;
         public string FreeSpaceText => FreeSpace.ToStringAndSuffix(1);
 
-        public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
+        private bool _isInStorageOverquota;
+        public bool IsInStorageOverquota
+        {
+            get { return _isInStorageOverquota || (UsedSpace > TotalSpace); }
+            set
+            {
+                SetField(ref _isInStorageOverquota, value);
+                OnPropertyChanged(nameof(IsInOverquota), nameof(StorageProgressBarColor));
+            }
+        }
 
         private ulong _cloudDriveUsedSpace;
         public ulong CloudDriveUsedSpace

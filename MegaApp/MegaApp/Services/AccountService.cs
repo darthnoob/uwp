@@ -714,6 +714,7 @@ namespace MegaApp.Services
                 AccountDetails.RubbishBinUsedSpace = 0;
                 AccountDetails.TransferQuota = 0;
                 AccountDetails.UsedTransferQuota = 0;
+                AccountDetails.IsInStorageOverquota = false;
                 AccountDetails.IsInTransferOverquota = false;
                 AccountDetails.PaymentMethod = string.Empty;
                 AccountDetails.SubscriptionRenewDate = string.Empty;
