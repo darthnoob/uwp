@@ -1674,7 +1674,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Lisez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr au cas où vous perdriez votre téléphone.</value>
+    <value>Balayez ou copiez la graine vers votre appli d’authentification. Assurez-vous de sauvegarder cette graine en lieu sûr, au cas où vous perdriez votre appareil.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
