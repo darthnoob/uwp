@@ -211,7 +211,7 @@ namespace MegaApp.MegaApi
                         case MStorageState.STORAGE_STATE_RED:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE RED");
                             AccountService.AccountDetails.IsInStorageOverquota = true;
-                            UiService.OnUiThread(DialogService.ShowStorageOverquotaAlert);
+                            UiService.OnUiThread(() => DialogService.ShowStorageOverquotaAlert(false));
                             break;
                     }
                     break;
