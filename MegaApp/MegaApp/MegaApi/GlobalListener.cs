@@ -200,18 +200,21 @@ namespace MegaApp.MegaApi
                     {
                         case MStorageState.STORAGE_STATE_GREEN:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE GREEN");
-                            AccountService.AccountDetails.IsInStorageOverquota = false;
+                            UiService.OnUiThread(() => AccountService.AccountDetails.IsInStorageOverquota = false);
                             break;
 
                         case MStorageState.STORAGE_STATE_ORANGE:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE ORANGE");
-                            AccountService.AccountDetails.IsInStorageOverquota = false;
+                            UiService.OnUiThread(() => AccountService.AccountDetails.IsInStorageOverquota = false);
                             break;
 
                         case MStorageState.STORAGE_STATE_RED:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE RED");
-                            AccountService.AccountDetails.IsInStorageOverquota = true;
-                            UiService.OnUiThread(() => DialogService.ShowStorageOverquotaAlert(false));
+                            UiService.OnUiThread(() =>
+                            {
+                                AccountService.AccountDetails.IsInStorageOverquota = true;
+                                DialogService.ShowStorageOverquotaAlert(false);
+                            });
                             break;
                     }
                     break;

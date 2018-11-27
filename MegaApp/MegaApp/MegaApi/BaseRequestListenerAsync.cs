@@ -86,8 +86,11 @@ namespace MegaApp.MegaApi
                 case MErrorType.API_EOVERQUOTA: // Storage overquota error
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO,
                         string.Format("Storage quota exceeded ({0})", e.getErrorCode().ToString()));
-                    AccountService.AccountDetails.IsInStorageOverquota = true;
-                    UiService.OnUiThread(() => DialogService.ShowStorageOverquotaAlert(false));
+                    UiService.OnUiThread(() =>
+                    {
+                        AccountService.AccountDetails.IsInStorageOverquota = true;
+                        DialogService.ShowStorageOverquotaAlert(false);
+                    });
                     break;
             }
         }
