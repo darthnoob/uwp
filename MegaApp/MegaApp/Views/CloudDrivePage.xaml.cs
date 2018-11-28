@@ -91,7 +91,7 @@ namespace MegaApp.Views
 
         public override void GoBack()
         {
-            if(CloudDriveSplitView.IsPaneOpen)
+            if(this.ViewModel.ActiveFolderView.IsPanelOpen)
             {
                 this.ViewModel.ActiveFolderView.ClosePanels();
             }
@@ -374,6 +374,11 @@ namespace MegaApp.Views
 
             menuFlyout.Placement = FlyoutPlacementMode.Bottom;
             menuFlyout.ShowAt(sortButton);
+        }
+
+        private void OnPaneClosed(SplitView sender, object args)
+        {
+            this.ViewModel.ActiveFolderView.VisiblePanel = PanelType.None;
         }
     }
 }

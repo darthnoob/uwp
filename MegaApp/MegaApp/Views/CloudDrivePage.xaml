@@ -28,7 +28,8 @@
     <SplitView
         x:Name="CloudDriveSplitView"
         DisplayMode="Inline"
-        IsPaneOpen="{Binding ActiveFolderView.IsPanelOpen}"
+        IsPaneOpen="{x:Bind ViewModel.ActiveFolderView.IsPanelOpen, Mode=OneWay}"
+        PaneClosed="OnPaneClosed"
         PanePlacement="Right">
         <SplitView.Pane>
             <Grid>
