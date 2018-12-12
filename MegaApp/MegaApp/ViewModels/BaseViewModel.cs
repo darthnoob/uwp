@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using mega;
 using MegaApp.Services;
 
 namespace MegaApp.ViewModels
@@ -52,13 +53,22 @@ namespace MegaApp.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            if (string.IsNullOrWhiteSpace(name)) return;
+
+            try { PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name)); }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                    string.Format("Error notifying that the property \"{0}\" has changed ", name), e);
+            }
         }
 
         protected void OnPropertyChanged(params string[] propertyNames)
         {
+            if (propertyNames == null || propertyNames.Length == 0) return;
+
             foreach (string name in propertyNames)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+                OnPropertyChanged(name);
         }
 
         protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
