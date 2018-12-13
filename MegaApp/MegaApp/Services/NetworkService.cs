@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Windows.Networking.Connectivity;
+using DnsClient;
 using mega;
 
 namespace MegaApp.Services
@@ -18,9 +19,14 @@ namespace MegaApp.Services
         public static bool IsNetworkAvailable;
 
         /// <summary>
-        /// DNS servers used
+        /// MEGA DNS servers
         /// </summary>
-        public static string DnsServers;
+        private static string MegaDnsServers;
+
+        /// <summary>
+        /// System DNS servers
+        /// </summary>
+        private static string SystemDnsServers;
 
         #endregion
 
@@ -148,6 +154,55 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Gets the system DNS servers IP addresses.
+        /// </summary>
+        /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
+        /// <returns>String with the system DNS servers IP addresses separated by commas.</returns>
+        public static async Task<string> GetSystemDnsServers(bool refresh = false)
+        {
+            try
+            {
+                if (!refresh && !string.IsNullOrWhiteSpace(SystemDnsServers))
+                    return SystemDnsServers;
+
+                if (!await IsNetworkAvailableAsync()) return null;
+
+                string dnsServers = string.Empty;
+
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting system DNS servers...");
+
+                var lookup = new LookupClient();
+                if (lookup != null)
+                {
+                    foreach (var server in lookup.NameServers)
+                    {
+                        if (server == null) continue;
+
+                        if (dnsServers.Length > 0)
+                            dnsServers = string.Concat(dnsServers, ",");
+
+                        dnsServers = string.Concat(dnsServers, server.Endpoint.Address.ToString());
+                    }
+                }
+
+                if (string.IsNullOrWhiteSpace(dnsServers))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "No system DNS servers.");
+                    return dnsServers;
+                }
+
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, $"System DNS servers: {dnsServers}");
+                SystemDnsServers = dnsServers;
+                return SystemDnsServers;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error getting System DNS servers.", e);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets the MEGA DNS servers IP addresses.
         /// </summary>
         /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
@@ -156,28 +211,25 @@ namespace MegaApp.Services
         {
             try
             {
-                if (!refresh && !string.IsNullOrWhiteSpace(DnsServers))
-                    return DnsServers;
+                if (!refresh && !string.IsNullOrWhiteSpace(MegaDnsServers))
+                    return MegaDnsServers;
 
                 if (!await IsNetworkAvailableAsync()) return null;
 
                 string dnsServers = string.Empty;
 
                 LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting MEGA DNS servers...");
+
                 IPHostEntry host = await Dns.GetHostEntryAsync("ns.mega.co.nz");
-
-                if (host == null)
+                if (host != null)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "No MEGA DNS servers.");
-                    return dnsServers;
-                }
+                    foreach (IPAddress address in host.AddressList)
+                    {
+                        if (dnsServers.Length > 0)
+                            dnsServers = string.Concat(dnsServers, ",");
 
-                foreach (IPAddress address in host.AddressList)
-                {
-                    if (dnsServers.Length > 0)
-                        dnsServers = string.Concat(dnsServers, ",");
-
-                    dnsServers = string.Concat(dnsServers, address.ToString());
+                        dnsServers = string.Concat(dnsServers, address.ToString());
+                    }
                 }
 
                 if (string.IsNullOrWhiteSpace(dnsServers))
@@ -187,8 +239,8 @@ namespace MegaApp.Services
                 }
 
                 LogService.Log(MLogLevel.LOG_LEVEL_INFO, $"MEGA DNS servers: {dnsServers}");
-                DnsServers = dnsServers;
-                return dnsServers;
+                MegaDnsServers = dnsServers;
+                return MegaDnsServers;
             }
             catch (Exception e)
             {
