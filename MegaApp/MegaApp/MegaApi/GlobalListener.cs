@@ -195,7 +195,6 @@ namespace MegaApp.MegaApi
                     break;
 
                 case MEventType.EVENT_STORAGE:
-                    AccountService.GetAccountDetails();
                     switch ((MStorageState)ev.getNumber())
                     {
                         case MStorageState.STORAGE_STATE_GREEN:
@@ -215,6 +214,11 @@ namespace MegaApp.MegaApi
                                 AccountService.AccountDetails.IsInStorageOverquota = true;
                                 DialogService.ShowStorageOverquotaAlert(false);
                             });
+                            break;
+
+                        case MStorageState.STORAGE_STATE_CHANGE:
+                            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE CHANGE");
+                            AccountService.GetAccountDetails();
                             break;
                     }
                     break;
