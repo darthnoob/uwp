@@ -195,16 +195,25 @@ namespace MegaApp.MegaApi
                     break;
 
                 case MEventType.EVENT_STORAGE:
-                    switch ((MStorageState)ev.getNumber())
+                    var storageState = (MStorageState)ev.getNumber();
+                    switch (storageState)
                     {
                         case MStorageState.STORAGE_STATE_GREEN:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE GREEN");
-                            UiService.OnUiThread(() => AccountService.AccountDetails.IsInStorageOverquota = false);
+                            UiService.OnUiThread(() =>
+                            {
+                                AccountService.AccountDetails.IsInStorageOverquota = false;
+                                AccountService.AccountDetails.StorageState = storageState;
+                            });
                             break;
 
                         case MStorageState.STORAGE_STATE_ORANGE:
                             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "STORAGE STATE ORANGE");
-                            UiService.OnUiThread(() => AccountService.AccountDetails.IsInStorageOverquota = false);
+                            UiService.OnUiThread(() =>
+                            {
+                                AccountService.AccountDetails.IsInStorageOverquota = false;
+                                AccountService.AccountDetails.StorageState = storageState;
+                            });
                             break;
 
                         case MStorageState.STORAGE_STATE_RED:
@@ -212,7 +221,9 @@ namespace MegaApp.MegaApi
                             UiService.OnUiThread(() =>
                             {
                                 AccountService.AccountDetails.IsInStorageOverquota = true;
-                                DialogService.ShowStorageOverquotaAlert(false);
+                                if (storageState > AccountService.AccountDetails.StorageState)
+                                    DialogService.ShowStorageOverquotaAlert(false);
+                                AccountService.AccountDetails.StorageState = storageState;
                             });
                             break;
 

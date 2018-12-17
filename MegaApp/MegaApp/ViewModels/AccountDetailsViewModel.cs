@@ -123,6 +123,13 @@ namespace MegaApp.ViewModels
 
         public bool IsProAccount => AccountType != MAccountType.ACCOUNT_TYPE_FREE;
 
+        private MStorageState _storageState = MStorageState.STORAGE_STATE_GREEN;
+        public MStorageState StorageState
+        {
+            get { return _storageState; }
+            set { SetField(ref _storageState, value); }
+        }
+
         private ulong _totalSpace;
         public ulong TotalSpace
         {
