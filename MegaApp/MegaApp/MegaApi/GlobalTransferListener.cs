@@ -46,6 +46,11 @@ namespace MegaApp.MegaApi
                     }
                     break;
 
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough storage quota	
+                case MErrorType.API_EOVERQUOTA: // Storage overquota error	
+                    ProcessOverquotaError(api, e);
+                    break;
+
                 case MErrorType.API_EINCOMPLETE:
                     if (megaTransfer.IsSaveForOfflineTransfer)
                         this.RemoveOfflineNodeFromTransfer(megaTransfer);
@@ -119,6 +124,11 @@ namespace MegaApp.MegaApi
                     }
 
                     UiService.OnUiThread(() => TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, megaTransfer));
+                    break;
+
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough storage quota	
+                case MErrorType.API_EOVERQUOTA: // Storage overquota error	
+                    ProcessOverquotaError(api, e);
                     break;
 
                 case MErrorType.API_EINCOMPLETE:

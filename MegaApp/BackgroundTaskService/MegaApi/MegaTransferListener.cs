@@ -11,6 +11,9 @@ namespace BackgroundTaskService.MegaApi
         // Helper Timer
         private Timer _timer;
 
+        // Event raised when an upload fails definitively because storage quota is exceeded
+        public event EventHandler StorageQuotaExceeded;
+        
         private TaskCompletionSource<string> _tcs;
         private string _dateSetting = TaskService.ImageDateSetting;
 
@@ -22,6 +25,11 @@ namespace BackgroundTaskService.MegaApi
             action.Invoke();
 
             return await _tcs.Task;
+        }
+
+        protected virtual void OnStorageQuotaExceeded(EventArgs e)
+        {
+            StorageQuotaExceeded?.Invoke(this, e);
         }
 
         public bool onTransferData(MegaSDK api, MTransfer transfer, byte[] data)
@@ -44,13 +52,22 @@ namespace BackgroundTaskService.MegaApi
                         _tcs.TrySetResult(null);
                         break;
 
+                    case MErrorType.API_EGOINGOVERQUOTA: // Not enough storage quota	
+                    case MErrorType.API_EOVERQUOTA: // Storage overquota error
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Storage quota exceeded ({0}) - Stopping CAMERA UPLOADS service",
+                            e.getErrorCode().ToString()));
+                        OnStorageQuotaExceeded(EventArgs.Empty);
+                        _tcs.TrySetResult(e.getErrorString());
+                        break;
+
                     // An error occured. Log and process it.
                     case MErrorType.API_EFAILED:
                     case MErrorType.API_EEXIST:
                     case MErrorType.API_EARGS:
                     case MErrorType.API_EREAD:
                     case MErrorType.API_EWRITE:
-                        // Error will be loggend by caller
+                        // Error will be logged by caller
                         _tcs.TrySetResult(e.getErrorString());
                         break;
 

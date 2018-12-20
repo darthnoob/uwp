@@ -18,7 +18,7 @@ namespace BackgroundTaskService
         // If you don't use a deferral, then the background task process can terminate unexpectedly
         // if the Run method completes before your asynchronous method call has completed.
         // Note: defined at class scope so we can mark it complete inside the OnCancel() callback if we choose to support cancellation
-        BackgroundTaskDeferral _deferral;
+        private static BackgroundTaskDeferral _deferral;
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -230,11 +230,19 @@ namespace BackgroundTaskService
                 await fs.FlushAsync();
             }
 
-            // Init the upload
+            // Notify complete when storage quota exceeded error is raised in the transferlistener	
+            // Notify complete will retry in the next task run
             var transfer = new MegaTransferListener();
+            transfer.StorageQuotaExceeded += (sender, args) =>
+            {
+                _deferral.Complete();
+            };
+
+            // Init the upload
             var result = await transfer.ExecuteAsync(
                 () => SdkService.MegaSdk.startUploadWithMtimeTempSource(tempFilePath, rootNode, mTime, true, transfer),
                 TaskService.ImageDateSetting);
+
             if (!string.IsNullOrEmpty(result)) throw new Exception(result);
         }
     }
