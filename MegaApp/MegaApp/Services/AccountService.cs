@@ -708,6 +708,7 @@ namespace MegaApp.Services
             UiService.OnUiThread(() =>
             {
                 AccountDetails.AccountType = MAccountType.ACCOUNT_TYPE_FREE;
+                AccountDetails.StorageState = MStorageState.STORAGE_STATE_GREEN;
                 AccountDetails.TotalSpace = 0;
                 AccountDetails.UsedSpace = 0;
                 AccountDetails.CloudDriveUsedSpace = 0;
