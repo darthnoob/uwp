@@ -19,7 +19,13 @@ namespace MegaApp.ViewModels
         public ulong CurrentStorageQuota
         {
             get { return _currentStorageQuota; }
-            set { SetField(ref _currentStorageQuota, value); }
+            set
+            {
+                SetField(ref _currentStorageQuota, value);
+                OnPropertyChanged(nameof(CurrentStorageQuotaReadableSize),
+                    nameof(CurrentStorageQuotaText),
+                    nameof(CurrentStorageQuotaReadableUnits));
+            }
         }
 
         public ulong CurrentStorageQuotaReadableSize => CurrentStorageQuota.ToReadableSize();
@@ -36,9 +42,14 @@ namespace MegaApp.ViewModels
         public ulong CurrentTransferQuota
         {
             get { return _currentTransferQuota; }
-            set { SetField(ref _currentTransferQuota, value); }
+            set
+            {
+                SetField(ref _currentTransferQuota, value);
+                OnPropertyChanged(nameof(CurrentTransferQuotaReadableSize),
+                    nameof(CurrentTransferQuotaText),
+                    nameof(CurrentTransferQuotaReadableUnits));
+            }
         }
-
 
         public ulong CurrentTransferQuotaReadableSize => CurrentTransferQuota.ToReadableSize();
 

@@ -77,22 +77,20 @@ namespace MegaApp.MegaApi
 
             switch(e.getErrorCode())
             {
-                case MErrorType.API_EGOINGOVERQUOTA: // Not enough quota
-                case MErrorType.API_EOVERQUOTA: // Storage overquota error
-                    UiService.OnUiThread(DialogService.ShowOverquotaAlert);
-
-                    // Stop all upload transfers
+                case MErrorType.API_EGOINGOVERQUOTA: // Not enough storage quota
                     LogService.Log(MLogLevel.LOG_LEVEL_INFO,
-                        string.Format("Storage quota exceeded ({0}) - Canceling uploads", e.getErrorCode().ToString()));
-                    api.cancelTransfers((int)MTransferType.TYPE_UPLOAD);
+                        string.Format("Not enough storage quota ({0})", e.getErrorCode().ToString()));
+                    UiService.OnUiThread(() => DialogService.ShowStorageOverquotaAlert(true));
+                    break;
 
-                    // Disable the "Camera Uploads" service if is enabled
-                    if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))
+                case MErrorType.API_EOVERQUOTA: // Storage overquota error
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                        string.Format("Storage quota exceeded ({0})", e.getErrorCode().ToString()));
+                    UiService.OnUiThread(() =>
                     {
-                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
-                            string.Format("Storage quota exceeded ({0}) - Disabling CAMERA UPLOADS service", e.getErrorCode().ToString()));
-                        TaskService.UnregisterBackgroundTask(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName);
-                    }
+                        AccountService.AccountDetails.IsInStorageOverquota = true;
+                        DialogService.ShowStorageOverquotaAlert(false);
+                    });
                     break;
             }
         }

@@ -123,6 +123,13 @@ namespace MegaApp.ViewModels
 
         public bool IsProAccount => AccountType != MAccountType.ACCOUNT_TYPE_FREE;
 
+        private MStorageState _storageState = MStorageState.STORAGE_STATE_GREEN;
+        public MStorageState StorageState
+        {
+            get { return _storageState; }
+            set { SetField(ref _storageState, value); }
+        }
+
         private ulong _totalSpace;
         public ulong TotalSpace
         {
@@ -164,7 +171,16 @@ namespace MegaApp.ViewModels
         public ulong FreeSpace => UsedSpace < TotalSpace ? TotalSpace - UsedSpace : 0;
         public string FreeSpaceText => FreeSpace.ToStringAndSuffix(1);
 
-        public bool IsInStorageOverquota => (UsedSpace > TotalSpace);
+        private bool _isInStorageOverquota;
+        public bool IsInStorageOverquota
+        {
+            get { return _isInStorageOverquota || (UsedSpace > TotalSpace); }
+            set
+            {
+                SetField(ref _isInStorageOverquota, value);
+                OnPropertyChanged(nameof(IsInOverquota), nameof(StorageProgressBarColor));
+            }
+        }
 
         private ulong _cloudDriveUsedSpace;
         public ulong CloudDriveUsedSpace

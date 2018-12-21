@@ -138,34 +138,8 @@ namespace BackgroundTaskService.Services
 
             // If node not found, create a new Camera Uploads node
             var folder = new MegaRequestListener<bool>();
-            var result = await folder.ExecuteAsync(() => SdkService.MegaSdk.createFolder("Camera Uploads", rootNode, folder));
+            var result = await folder.ExecuteAsync(() => MegaSdk.createFolder("Camera Uploads", rootNode, folder));
             return result ? FindCameraUploadNode(rootNode) : null;
-        }
-
-        public static async Task UploadAsync(StorageFile fileToUpload, Stream fileStream, MNode rootNode, ulong mTime)
-        {
-            MegaSdk.retryPendingConnections();
-
-            // Make sure the stream pointer is at the start of the stream
-            fileStream.Position = 0;
-
-            // Create a temporary local path to save the picture for upload
-            string tempFilePath = Path.Combine(TaskService.GetTemporaryUploadFolder(), fileToUpload.Name);
-
-            // Copy file to local storage to be able to upload
-            using (var fs = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
-            {
-                // Set buffersize to avoid copy failure of large files
-                await fileStream.CopyToAsync(fs, 8192);
-                await fs.FlushAsync();
-            }
-
-            // Init the upload
-            var transfer = new MegaTransferListener();
-            var result = await transfer.ExecuteAsync(
-                () => MegaSdk.startUploadWithMtimeTempSource(tempFilePath, rootNode, mTime, true, transfer),
-                TaskService.ImageDateSetting);
-            if(!string.IsNullOrEmpty(result)) throw new Exception(result);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace BackgroundTaskService
         // If you don't use a deferral, then the background task process can terminate unexpectedly
         // if the Run method completes before your asynchronous method call has completed.
         // Note: defined at class scope so we can mark it complete inside the OnCancel() callback if we choose to support cancellation
-        BackgroundTaskDeferral _deferral;
+        private static BackgroundTaskDeferral _deferral;
 
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
@@ -29,6 +29,9 @@ namespace BackgroundTaskService
                 ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ?
                 "https://staging.api.mega.co.nz/" : "https://g.api.mega.co.nz/");
 
+            // Log message to indicate that the service is invoked
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Service invoked.");
+
             // Load the connection upload settings
             CameraUploadsConnectionType cameraUploadsConnectionType = CameraUploadsConnectionType.EthernetWifiOnly;
             try
@@ -38,11 +41,11 @@ namespace BackgroundTaskService
             catch (Exception e)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Could not load settings", e);
-            }
-            
+            }            
 
             if (!CheckNetWork(cameraUploadsConnectionType))
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Task finished: connection type");
                 _deferral.Complete();
                 return;
             }
@@ -56,11 +59,11 @@ namespace BackgroundTaskService
                 var fetched = await FetchNodesAsync();
                 if (fetched)
                 {
-                    // Enable the transfers resumption for the Camera Uploads service
-                    SdkService.MegaSdk.enableTransferResumption();
-
+                    // Add notifications listener
                     var megaGlobalListener = new MegaGlobalListener();
                     SdkService.MegaSdk.addGlobalListener(megaGlobalListener);
+
+                    // Enable the transfers resumption for the Camera Uploads service
                     await megaGlobalListener.ExecuteAsync(() => SdkService.MegaSdk.enableTransferResumption());
 
                     var cameraUploadRootNode = await SdkService.GetCameraUploadRootNodeAsync();
@@ -127,7 +130,7 @@ namespace BackgroundTaskService
                                     await TaskService.SaveLastUploadDateAsync(storageFile, TaskService.ImageDateSetting);
                                     continue;
                                 }
-                                await SdkService.UploadAsync(storageFile, fs, cameraUploadRootNode, mtime);
+                                await UploadAsync(storageFile, fs, cameraUploadRootNode, mtime);
                                 // No error, clear error storage
                                 await ErrorHandlingService.ClearAsync(ErrorHandlingService.ImageErrorFileSetting,
                                     ErrorHandlingService.ImageErrorCountSetting);
@@ -207,6 +210,40 @@ namespace BackgroundTaskService
                     return true;
                 default: return false;
             }
+        }
+
+        private static async Task UploadAsync(StorageFile fileToUpload, Stream fileStream, MNode rootNode, ulong mTime)
+        {
+            SdkService.MegaSdk.retryPendingConnections();
+
+            // Make sure the stream pointer is at the start of the stream
+            fileStream.Position = 0;
+
+            // Create a temporary local path to save the picture for upload
+            string tempFilePath = Path.Combine(TaskService.GetTemporaryUploadFolder(), fileToUpload.Name);
+
+            // Copy file to local storage to be able to upload
+            using (var fs = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
+            {
+                // Set buffersize to avoid copy failure of large files
+                await fileStream.CopyToAsync(fs, 8192);
+                await fs.FlushAsync();
+            }
+
+            // Notify complete when storage quota exceeded error is raised in the transferlistener	
+            // Notify complete will retry in the next task run
+            var transfer = new MegaTransferListener();
+            transfer.StorageQuotaExceeded += (sender, args) =>
+            {
+                _deferral.Complete();
+            };
+
+            // Init the upload
+            var result = await transfer.ExecuteAsync(
+                () => SdkService.MegaSdk.startUploadWithMtimeTempSource(tempFilePath, rootNode, mTime, true, transfer),
+                TaskService.ImageDateSetting);
+
+            if (!string.IsNullOrEmpty(result)) throw new Exception(result);
         }
     }
 }

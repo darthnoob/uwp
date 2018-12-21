@@ -331,7 +331,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
-    <value>Téléversement...</value>
+    <value>Téléversement…</value>
     <comment>Label for the status of a transfer when is being uploading - (String as short as possible).</comment>
   </data>
   <data name="UI_TypeFolderName" xml:space="preserve">
@@ -479,7 +479,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
-    <value>Préparation...</value>
+    <value>Préparation…</value>
     <comment>Label for the status of a transfer when is being preparing - (String as short as possible).</comment>
   </data>
   <data name="UI_Completed" xml:space="preserve">
@@ -499,11 +499,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Retry' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusCompleting" xml:space="preserve">
-    <value>Finalisation...</value>
+    <value>Finalisation…</value>
     <comment>Label for the status of a transfer when is being completing - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusRetrying" xml:space="preserve">
-    <value>Nouvel essai...</value>
+    <value>Nouvel essai…</value>
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
@@ -614,7 +614,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label to indicate that a feature is only available for PRO users. Keep between parentheses and capital letters  - (String as short as possible).</comment>
   </data>
   <data name="UI_SetExpirationDate" xml:space="preserve">
-    <value>Définir une date d'expiration</value>
+    <value>Définir une date d’expiration</value>
     <comment>Label for any 'Set expiry date' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_GridView" xml:space="preserve">
@@ -1383,7 +1383,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_GetMoreBonuses" xml:space="preserve">
-    <value>Obtenir d'autres primes</value>
+    <value>Obtenir d’autres primes</value>
     <comment>Label for any 'Get more bonuses' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BaseStorage" xml:space="preserve">
@@ -1634,7 +1634,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copyright" xml:space="preserve">
-    <value>Droits d’auteur</value>
+    <value>Droit d’auteur</value>
     <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LearnMore" xml:space="preserve">

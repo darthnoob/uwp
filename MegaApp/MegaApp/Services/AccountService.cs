@@ -708,12 +708,14 @@ namespace MegaApp.Services
             UiService.OnUiThread(() =>
             {
                 AccountDetails.AccountType = MAccountType.ACCOUNT_TYPE_FREE;
+                AccountDetails.StorageState = MStorageState.STORAGE_STATE_GREEN;
                 AccountDetails.TotalSpace = 0;
                 AccountDetails.UsedSpace = 0;
                 AccountDetails.CloudDriveUsedSpace = 0;
                 AccountDetails.RubbishBinUsedSpace = 0;
                 AccountDetails.TransferQuota = 0;
                 AccountDetails.UsedTransferQuota = 0;
+                AccountDetails.IsInStorageOverquota = false;
                 AccountDetails.IsInTransferOverquota = false;
                 AccountDetails.PaymentMethod = string.Empty;
                 AccountDetails.SubscriptionRenewDate = string.Empty;
