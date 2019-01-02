@@ -99,14 +99,32 @@ namespace MegaApp.MegaApi
                         {
                             var imageNode = megaTransfer.SelectedNode as ImageNodeViewModel;
 
-                            UiService.OnUiThread(() => imageNode.ImageUri = new Uri(megaTransfer.TransferPath));
+                            UiService.OnUiThread(() =>
+                            {
+                                if (string.IsNullOrWhiteSpace(megaTransfer.TransferPath)) return;
+
+                                try { imageNode.ImageUri = new Uri(megaTransfer.TransferPath); }
+                                catch (Exception ex)
+                                {
+                                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error setting the image node URI", ex);
+                                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "URI string: " + megaTransfer.TransferPath);
+                                }
+                            });
 
                             if (megaTransfer.AutoLoadImageOnFinish)
                             {
                                 UiService.OnUiThread(() =>
                                 {
                                     if (imageNode.OriginalMNode.hasPreview()) return;
-                                    imageNode.PreviewImageUri = new Uri(imageNode.PreviewPath);
+                                    if (string.IsNullOrWhiteSpace(imageNode.PreviewPath)) return;
+
+                                    try { imageNode.PreviewImageUri = new Uri(imageNode.PreviewPath); }
+                                    catch (Exception ex)
+                                    {
+                                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error setting the image node preview URI", ex);
+                                        LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "URI string: " + imageNode.PreviewPath);
+                                    }
+
                                     imageNode.IsBusy = false;
                                 });
                             }
