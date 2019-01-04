@@ -458,14 +458,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <value>ההורדה נכשלה</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>פעולה לא מאושרת, תעבור את מכסת הזכרון של חשבונך. האם אתה רוצה לשדרג את החשבון שלך?</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>אזהרת זכרון!</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
-  </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>Failed to prepare file ‘{0}’ for upload. Please try again.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
@@ -1408,5 +1400,21 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
     <value>Failed removing items from offline storage. Please try again.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>You have exceeded your storage limit. Would you like to upgrade your account?</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>חריגה מהזכרון</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>פעולה לא מאושרת, תעבור את מכסת הזכרון של חשבונך. האם אתה רוצה לשדרג את החשבון שלך?</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>אזהרת זכרון!</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>

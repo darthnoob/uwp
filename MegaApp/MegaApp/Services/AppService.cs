@@ -616,6 +616,13 @@ namespace MegaApp.Services
         /// </summary>
         public static void ClearObsoleteSettings()
         {
+            // If is the first run of the app, remove a possible session of a previous installation
+            if (SettingsService.Load(ResourceService.SettingsResources.GetString("SR_AppFirstRun"), true))
+            {
+                SettingsService.RemoveSessionFromLocker();
+                SettingsService.Save(ResourceService.SettingsResources.GetString("SR_AppFirstRun"), false);
+            }
+
             var lastAppVersion = SettingsService.Load<string>(
                 ResourceService.SettingsResources.GetString("SR_LastAppVersion"), null);
             if (lastAppVersion == null) return;

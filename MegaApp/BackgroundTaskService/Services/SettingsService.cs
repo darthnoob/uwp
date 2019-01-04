@@ -43,7 +43,7 @@ namespace BackgroundTaskService.Services
         {
             try
             {
-                //FileSettingMutex.WaitOne();
+                FileSettingMutex.WaitOne();
 
                 var settings = ApplicationData.Current.LocalFolder;
 
@@ -55,17 +55,24 @@ namespace BackgroundTaskService.Services
                     dataContractSerializer.WriteObject(stream, value);
                 }
             }
+            catch (Exception e)
+            {
+                // Do nothing. Write a log entry and release the mutex
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error saving setting to file", e);
+            }
             finally
             {
-                //FileSettingMutex.ReleaseMutex();
+                FileSettingMutex.ReleaseMutex();
             }
         }
 
         public static async Task<T> LoadSettingFromFileAsync<T>(string key)
         {
+            var returnValue = default(T);
+
             try
             {
-                //FileSettingMutex.WaitOne();
+                FileSettingMutex.WaitOne();
 
                 var settings = ApplicationData.Current.LocalFolder;
 
@@ -74,17 +81,20 @@ namespace BackgroundTaskService.Services
                 using (var stream = await file.OpenStreamForReadAsync())
                 {
                     var dataContractSerializer = new DataContractSerializer(typeof(T));
-                    return (T) dataContractSerializer.ReadObject(stream);
+                    returnValue = (T) dataContractSerializer.ReadObject(stream);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return default(T);
+                // Do nothing. Write a log entry and release the mutex
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error loading setting from file", e);
             }
             finally
             {
-                //FileSettingMutex.ReleaseMutex();
+                FileSettingMutex.ReleaseMutex();
             }
+
+            return returnValue;
         }
 
         /// <summary>

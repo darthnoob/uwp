@@ -706,7 +706,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Annual' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AnnualRecurring" xml:space="preserve">
-    <value>Recurrente anual</value>
+    <value>Renovación automática anual</value>
     <comment>Label for a 'Annual recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_General" xml:space="preserve">
@@ -718,7 +718,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
-    <value>Recurrente mensual</value>
+    <value>Renovación automática mensual</value>
     <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_Profile" xml:space="preserve">
@@ -875,7 +875,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
-    <value>Haz clic aquí para más información sobre la suscripción periódica, nuestra política de devoluciones o la cancelación de tu suscripción.</value>
+    <value>Haz clic aquí para más información sobre la suscripción con renovación automática, nuestra política de devoluciones o la cancelación de tu suscripción.</value>
     <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
   </data>
   <data name="UI_SeeMoreInfo" xml:space="preserve">

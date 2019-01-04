@@ -19,6 +19,9 @@ namespace MegaApp.Views
         public MyAccountPage()
         {
             this.InitializeComponent();
+
+            if (!AccountService.AccountAchievements.IsAchievementsEnabled)
+                MyAccountPivot.Items?.Remove(AchievementsPivot);
         }
 
         public override bool CanGoBack
@@ -51,9 +54,6 @@ namespace MegaApp.Views
             var navActionType = navObj?.Action ?? NavigationActionType.Default;
             if (navActionType == NavigationActionType.Upgrade)
                 this.MyAccountPivot.SelectedItem = this.UpgradePivot;
-
-            if (!AccountService.AccountAchievements.IsAchievementsEnabled)
-                MyAccountPivot.Items?.Remove(AchievementsPivot);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

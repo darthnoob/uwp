@@ -459,14 +459,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <value>Downloaden mislukt</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Handeling niet toegestaan, u zult het opslag limiet van van uw rekening overschrijden. Wilt u uw account upgraden?</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>Over tegoed Waarschuwing!</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
-  </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>Mislukt om bestand '{0}' voor te bereiden voor uploaden.  Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
@@ -1409,5 +1401,21 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
     <value>Mislukt om items te verwijderen van offline opslag. Probeer nogmaals.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>U heeft uw opslag limiet overschreden. Wilt u uw account upgraden?</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>Tegoed overschreden</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>Handeling niet toegestaan, u zult het opslag limiet van van uw rekening overschrijden. Wilt u uw account upgraden?</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>Over tegoed Waarschuwing!</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>

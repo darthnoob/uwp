@@ -459,14 +459,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <value>Scaricamento Fallito</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi passare a PRO?</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>Messaggio di superamento quota!</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
-  </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>Preparazione del file '{0}' per l'upload fallita. Per favore, riprova.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
@@ -661,7 +653,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>La Chiave di Recupero è stata copiata negli appunti. Per favore, archiviala in una posizione sicura.</value>
+    <value>La Chiave di Recupero è stata copiata negli appunti. Per favore, archiviala in un posto sicuro.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
@@ -1409,5 +1401,21 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
     <value>Rimozione degli oggetti dall'archiviazione offline fallita. Per favore, riprova.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>Hai superato il limite del tuo spazio di archiviazione. Vuoi passare a PRO?</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>Quota superata</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>Operazione non consentita, supererai il limite del tuo account di archiviazione. Vuoi passare a PRO?</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>Messaggio di superamento quota!</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>

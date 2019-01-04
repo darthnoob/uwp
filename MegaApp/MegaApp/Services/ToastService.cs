@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications;
+using mega;
 
 namespace MegaApp.Services
 {
@@ -61,7 +62,12 @@ namespace MegaApp.Services
             if (duration > 0)
                 toast.ExpirationTime = new DateTimeOffset(DateTime.Now.AddSeconds(duration));
 
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
+            try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
+                UiService.OnUiThread(async() => await DialogService.ShowAlertAsync(title, text));
+            }
         }
 
         /// <summary>
@@ -104,7 +110,12 @@ namespace MegaApp.Services
 
             var toast = new ToastNotification(toastContent.GetXml());
 
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
+            try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
+                UiService.OnUiThread(async () => await DialogService.ShowAlertAsync(title, text));
+            }
         }
     }
 }

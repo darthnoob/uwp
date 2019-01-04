@@ -459,14 +459,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <value>Pobieranie nie powiodło się</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Ta operacje jest nie dozwolona, ponieważ zostanie przekroczony limit dostępnej pamięci. Czy chcesz wykupić wyższe konto?</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>Alaram przekroczenia dostępnej pamięci!</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
-  </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>Przygotowanie pliku '{0}' nie powiodło się. Spróbuj ponownie.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
@@ -1409,5 +1401,21 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
     <value>Nie udało się usunąć elementów z offline. Proszę spróbuj ponownie.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>Przekroczyłeś dostępny limit na pliki. Czy chcesz zmienić rodzaj swojego konta?</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>Dostępny limit został przekroczony</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>Ta operacje jest nie dozwolona, ponieważ zostanie przekroczony limit dostępnej pamięci. Czy chcesz wykupić wyższe konto?</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>Alaram przekroczenia dostępnej pamięci!</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>

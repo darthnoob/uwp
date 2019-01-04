@@ -423,7 +423,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>Akun anda telah aktif. Mohon masuk.</value>
+    <value>Akun anda telah di-aktifasi. Silahkan masuk akun anda</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
@@ -458,14 +458,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
   <data name="AM_DownloadFailed_Title" xml:space="preserve">
     <value>Download gagal</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
-  </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>Operasi tidak diizinkan, anda akan melebih batas storage akun anda. Apakah anda ingin upgrade akun anda?</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>Waspada overquota!</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>Gagal menyiapkan file ‘{0}’ untuk diunggah. Silakan coba lagi.</value>
@@ -1398,16 +1390,32 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
   <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing ‘{0}’ from offline storage. Please try again.</value>
+    <value>Gagal menghapus ‘{0}’ dari penyimpanan offline. Silakan coba lagi.</value>
     <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
-    <value>Remove from offline storage failed</value>
+    <value>Hapus dari penyimpanan offline gagal</value>
     <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing items from offline storage. Please try again.</value>
+    <value>Gagal menghapus item dari penyimpanan offline. Silakan coba lagi.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>Anda telah melampaui batas penyimpanan Anda. Apakah Anda ingin meningkatkan akun Anda?</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>Quota terlewati</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>Operasi tidak diizinkan, anda akan melebih batas storage akun anda. Apakah anda ingin upgrade akun anda?</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>Waspada overquota!</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>
