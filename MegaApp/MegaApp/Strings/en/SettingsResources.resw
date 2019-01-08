@@ -185,4 +185,8 @@
     <value>{D77F6E2F-6702-4EC1-A903-00A982729EFB}</value>
     <comment>Resource key to store the timestamp when the user accessed to the last public handle - (NO-TRANSLATION).</comment>
   </data>
+  <data name="SR_AppFirstRun" xml:space="preserve">
+    <value>{A2497A9A-C3FF-4FF2-97FF-27A9DDC87EEC}</value>
+    <comment>Resource key to store if is the first run after the app installation - (NO-TRANSLATION).</comment>
+  </data>
 </root>

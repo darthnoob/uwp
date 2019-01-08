@@ -1004,7 +1004,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
-    <value>เข้าถึงได้เต็มรูปแบบ</value>
+    <value>เข้าถึงแบบเต็มที่</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">

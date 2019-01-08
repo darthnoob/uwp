@@ -274,8 +274,11 @@ namespace MegaApp
         {
             if (ApplicationInitialized) return;
 
+            // Clear settings values we do no longer use
+            AppService.ClearObsoleteSettings();
+
             // Initialize the application information
-            if(AppInformation == null)
+            if (AppInformation == null)
                 AppInformation = new AppInformation();
 
             // Initialize the links information
@@ -299,9 +302,6 @@ namespace MegaApp
 
             // Initialize the DB
             AppService.InitializeDatabase();
-
-            // Clear settings values we do no longer use
-            AppService.ClearObsoleteSettings();
 
             // Save the app information for future use (like deleting settings)
             AppService.SaveAppInformation();

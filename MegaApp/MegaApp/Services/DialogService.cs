@@ -39,6 +39,16 @@ namespace MegaApp.Services
         /// </summary>
         private static MultiFactorAuthCodeInputDialog MultiFactorAuthCodeInputDialogInstance;
 
+        /// <summary>
+        /// Avoid show multiple storage overquota alerts
+        /// </summary>
+        private static bool StorageOverquotaAlertDisplayed = false;
+
+        /// <summary>
+        /// Avoid show multiple transfer overquota warnings
+        /// </summary>
+        private static bool TransferOverquotaWarningDisplayed = false;
+
         #endregion
 
         #region Methods
@@ -273,12 +283,24 @@ namespace MegaApp.Services
             return await dialog.ShowAsyncQueue();
         }
 
-        public static async void ShowOverquotaAlert()
+        /// <summary>
+        /// Display an alert dialog to notify that the user has exceeded or will exceed during 
+        /// the current operation (pre alert) the storage limit of the account.
+        /// </summary>
+        /// <param name="isPreAlert">Parameter to indicate if is a pre alert situation.</param>
+        public static async void ShowStorageOverquotaAlert(bool isPreAlert)
         {
-            var result = await ShowOkCancelAsync(
-                ResourceService.AppMessages.GetString("AM_OverquotaAlert_Title"),
-                ResourceService.AppMessages.GetString("AM_OverquotaAlert"),
-                TwoButtonsDialogType.YesNo);
+            if (StorageOverquotaAlertDisplayed) return;
+            StorageOverquotaAlertDisplayed = true;
+
+            var title = isPreAlert ? ResourceService.AppMessages.GetString("AM_StorageOverquotaPreAlert_Title") :
+                ResourceService.AppMessages.GetString("AM_StorageOverquotaAlert_Title");
+            var message = isPreAlert ? ResourceService.AppMessages.GetString("AM_StorageOverquotaPreAlert") :
+                ResourceService.AppMessages.GetString("AM_StorageOverquotaAlert");
+
+            var result = await ShowOkCancelAsync(title, message, TwoButtonsDialogType.YesNo);
+
+            StorageOverquotaAlertDisplayed = false;
 
             if (!result) return;
 
@@ -291,8 +313,13 @@ namespace MegaApp.Services
 
         public static async void ShowTransferOverquotaWarning()
         {
+            if (TransferOverquotaWarningDisplayed) return;
+            TransferOverquotaWarningDisplayed = true;
+
             var dialog = new TransferOverquotaWarningDialog();
             await dialog.ShowAsyncQueue();
+
+            TransferOverquotaWarningDisplayed = false;
         }
 
         /// <summary>

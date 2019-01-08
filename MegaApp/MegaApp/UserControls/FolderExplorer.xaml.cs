@@ -363,7 +363,7 @@ namespace MegaApp.UserControls
 
         private void OnRightItemTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (this.ViewModel.Folder.IsPanelOpen || DeviceService.GetDeviceType() != DeviceFormFactorType.Desktop)
+            if (this.ViewModel.Folder.IsPanelOpen)
                 return;
 
             IBaseNode itemTapped = ((FrameworkElement)e.OriginalSource)?.DataContext as IBaseNode;

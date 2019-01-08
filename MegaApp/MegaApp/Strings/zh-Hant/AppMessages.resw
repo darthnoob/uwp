@@ -459,14 +459,6 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <value>下載失敗</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
-  <data name="AM_OverquotaAlert" xml:space="preserve">
-    <value>操作被禁，您將超過您的賬戶儲存限額。您要升級賬戶嗎？</value>
-    <comment>Message of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type.</comment>
-  </data>
-  <data name="AM_OverquotaAlert_Title" xml:space="preserve">
-    <value>超過配額警告！</value>
-    <comment>Title of the dialog displayed when a user makes and operation that exceeds the storage space limits of the account (overquota error). Asks if user wants to upgrade the account type - (String as short as possible).</comment>
-  </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
     <value>準備上傳檔案‘{0}’失敗。請再試一次。</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
@@ -1409,5 +1401,21 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
     <value>Failed removing items from offline storage. Please try again.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert" xml:space="preserve">
+    <value>您已經超出了您的儲存限制。請問要升級您的帳戶嗎？</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
+  </data>
+  <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
+    <value>超出配額</value>
+    <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
+    <value>操作被禁，您將超過您的賬戶儲存限額。您要升級賬戶嗎？</value>
+    <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
+  </data>
+  <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
+    <value>超過配額警告！</value>
+    <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
 </root>

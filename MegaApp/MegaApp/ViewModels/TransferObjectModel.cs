@@ -283,7 +283,7 @@ namespace MegaApp.ViewModels
             {
                 SetField(ref _type, value);
                 this.TypeAndState[0] = value;
-                OnPropertyChanged("TypeAndState");
+                OnPropertyChanged(nameof(this.TypeAndState));
             }
         }
 
@@ -330,8 +330,8 @@ namespace MegaApp.ViewModels
                 this.IsBusy = (value == MTransferState.STATE_ACTIVE) ? true : false;
                 this.TypeAndState[1] = value;
 
-                OnPropertyChanged("TypeAndState");
-                OnPropertyChanged("IsAliveTransfer");
+                OnPropertyChanged(nameof(this.TypeAndState),
+                    nameof(this.IsAliveTransfer));
             }
         }
 
@@ -390,7 +390,7 @@ namespace MegaApp.ViewModels
             set
             {
                 SetField(ref _transferMeanSpeed, value);
-                OnPropertyChanged("EstimatedTime");
+                OnPropertyChanged(nameof(this.EstimatedTime));
             }
         }
 

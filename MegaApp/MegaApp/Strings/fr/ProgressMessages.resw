@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PM_CleanRubbishBin" xml:space="preserve">
-    <value>Vidage de la corbeille...</value>
+    <value>Vidage de la corbeille…</value>
     <comment>Progress indicator message when emptying the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_CreateAccountHeader" xml:space="preserve">
@@ -158,23 +158,23 @@
     <comment>Progress indicator message when logging out - (String as short as possible).</comment>
   </data>
   <data name="PM_Move" xml:space="preserve">
-    <value>Déplacement...</value>
+    <value>Déplacement…</value>
     <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
   </data>
   <data name="PM_MoveToRubbishBin" xml:space="preserve">
-    <value>Déplacement vers la corbeille...</value>
+    <value>Déplacement vers la corbeille…</value>
     <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_Remove" xml:space="preserve">
-    <value>Suppression...</value>
+    <value>Suppression…</value>
     <comment>Progress indicator message when removing a node - (String as short as possible).</comment>
   </data>
   <data name="PM_Rename" xml:space="preserve">
-    <value>Renommage...</value>
+    <value>Renommage…</value>
     <comment>Progress indicator message when renaming a node - (String as short as possible).</comment>
   </data>
   <data name="PM_ServersBusy" xml:space="preserve">
-    <value>Les serveurs sont trop occupés. Veuillez patienter.</value>
+    <value>Les serveurs sont trop occupés. Veuillez patienter…</value>
     <comment>Progress indicator message when servers are too busy. SDK is waiting for the server to complete a request due to a HTTP error 500  - (String as short as possible).</comment>
   </data>
   <data name="PM_DecryptNodesSubHeader" xml:space="preserve">
@@ -182,7 +182,7 @@
     <comment>Progress indicator message when decrypting nodes - (String as short as possible).</comment>
   </data>
   <data name="PM_LoadingPreview" xml:space="preserve">
-    <value>Chargement de l’aperçu...</value>
+    <value>Chargement de l’aperçu…</value>
     <comment>Progress indicator message when the app is loading a preview - (String as short as possible).</comment>
   </data>
   <data name="PM_ConfirmAccountHeader" xml:space="preserve">
