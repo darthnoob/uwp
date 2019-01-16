@@ -1,7 +1,11 @@
 ﻿using System;
 using Windows.Networking.Connectivity;
 
+#if CAMERA_UPLOADS_SERVICE
 namespace BackgroundTaskService.Network
+#else
+namespace MegaApp.Network
+#endif
 {
     /// <summary>
     /// This class exposes functionality of NetworkInformation through a singleton.

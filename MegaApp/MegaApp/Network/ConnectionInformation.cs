@@ -1,8 +1,17 @@
 ﻿using System.Collections.Generic;
 using Windows.Networking.Connectivity;
-using BackgroundTaskService.Enums;
 
+#if CAMERA_UPLOADS_SERVICE
+using BackgroundTaskService.Enums;
+#else
+using MegaApp.Enums;
+#endif
+
+#if CAMERA_UPLOADS_SERVICE
 namespace BackgroundTaskService.Network
+#else
+namespace MegaApp.Network
+#endif
 {
     /// <summary>
     /// This class exposes information about the network connectivity.
