@@ -127,19 +127,19 @@ namespace MegaApp.Network
         /// <summary>
         /// Gets connection cost for the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="NetworkConnectivityLevel"/></returns>
+        /// <returns>value of <see cref="ConnectionCost"/></returns>
         public ConnectionCost ConnectionCost { get; private set; }
 
         /// <summary>
         /// Gets signal strength for the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="NetworkConnectivityLevel"/></returns>
+        /// <returns>An integer value within a range of 0-5 that corresponds to the number of signal bars displayed by the UI</returns>
         public byte? SignalStrength { get; private set; }
 
         /// <summary>
-        /// Gets signal strength for the current Internet Connection Profile.
+        /// Gets names used to identify the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="NetworkConnectivityLevel"/></returns>
+        /// <returns>An array of string values representing friendly names used to identify the network.</returns>
         public IReadOnlyList<string> NetworkNames
         {
             get
