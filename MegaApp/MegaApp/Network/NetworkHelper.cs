@@ -2,6 +2,12 @@
 using Windows.Networking.Connectivity;
 
 #if CAMERA_UPLOADS_SERVICE
+using BackgroundTaskService.Services;
+#else
+using MegaApp.Services;
+#endif
+
+#if CAMERA_UPLOADS_SERVICE
 namespace BackgroundTaskService.Network
 #else
 namespace MegaApp.Network
@@ -71,6 +77,7 @@ namespace MegaApp.Network
 
         private void OnNetworkStatusChanged(object sender)
         {
+            NetworkService.CheckNetworkChange();
             UpdateConnectionInformation();
         }
     }

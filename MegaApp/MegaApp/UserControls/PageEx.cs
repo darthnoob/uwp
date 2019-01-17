@@ -26,14 +26,13 @@ namespace MegaApp.UserControls
         /// </summary>
         public T ViewModel { get; }
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             // Register for network connection changed events
             NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
 
-            await NetworkService.IsNetworkAvailableAsync();
             this.ViewModel.UpdateNetworkStatus();
         }
 
@@ -49,9 +48,8 @@ namespace MegaApp.UserControls
         /// Method called when a network status changed event is triggered
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
-        protected virtual async void OnNetworkStatusChanged(object sender)
+        protected virtual void OnNetworkStatusChanged(object sender)
         {
-            await NetworkService.IsNetworkAvailableAsync();
             this.ViewModel.UpdateNetworkStatus();
         }
     }

@@ -124,6 +124,9 @@
     <Compile Include="..\MegaApp\Network\NetworkHelper.cs">
       <Link>Network\NetworkHelper.cs</Link>
     </Compile>
+    <Compile Include="..\MegaApp\Services\NetworkService.cs">
+      <Link>Services\NetworkService.cs</Link>
+    </Compile>
     <Compile Include="CameraUploadTask.cs" />
     <Compile Include="MegaApi\MegaGlobalListener.cs" />
     <Compile Include="MegaApi\MegaInputStream.cs" />

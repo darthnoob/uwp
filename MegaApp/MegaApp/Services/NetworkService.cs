@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
@@ -7,16 +7,21 @@ using Windows.Networking.Connectivity;
 using DnsClient;
 using mega;
 
+#if CAMERA_UPLOADS_SERVICE
+using BackgroundTaskService.Network;
+#else
+using MegaApp.Network;
+#endif
+
+#if CAMERA_UPLOADS_SERVICE
+namespace BackgroundTaskService.Services
+#else
 namespace MegaApp.Services
+#endif
 {
     static class NetworkService
     {
         #region Properties
-
-        /// <summary>
-        /// State of the network connection
-        /// </summary>
-        public static bool IsNetworkAvailable;
 
         /// <summary>
         /// MEGA DNS servers
@@ -33,32 +38,26 @@ namespace MegaApp.Services
         #region Methods
 
         /// <summary>
-        /// Returns if there is an available network connection.
+        /// Returns if there is an available internet connection.
         /// </summary>        
         /// <param name="showMessageDialog">Boolean parameter to indicate if show a message if no Intenert connection</param>
         /// <returns>True if there is an available network connection., False in other case.</returns>
-        public static async Task<bool> IsNetworkAvailableAsync(bool showMessageDialog = false)
+        public static bool HasInternetAccess(bool showMessageDialog = false)
         {
-            if (NetworkInterface.GetIsNetworkAvailable())
+            if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
-                var connectionProfile = NetworkInformation.GetInternetConnectionProfile();
-                if (connectionProfile?.GetNetworkConnectivityLevel() == NetworkConnectivityLevel.InternetAccess)
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "No Internet connection available.");
+#if !CAMERA_UPLOADS_SERVICE
+                if (showMessageDialog)
                 {
-                    IsNetworkAvailable = true;
-                    return IsNetworkAvailable;
+                    var task = DialogService.ShowAlertAsync(
+                        ResourceService.UiResources.GetString("UI_NoInternetConnection"),
+                        ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"));
                 }
+#endif
             }
 
-            if (showMessageDialog)
-            {
-                await DialogService.ShowAlertAsync(
-                    ResourceService.UiResources.GetString("UI_NoInternetConnection"),
-                    ResourceService.AppMessages.GetString("AM_NoInternetConnectionMessage"));
-            }
-
-            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "No network available.");
-            IsNetworkAvailable = false;
-            return IsNetworkAvailable;
+            return NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable;            
         }
 
         /// <summary>
@@ -117,40 +116,50 @@ namespace MegaApp.Services
             return "None";
         }
 
-        // Code to detect if the IP has changed and refresh all open connections on this case
-        public static void CheckChangesIp()
+        /// <summary>
+        /// Code to detect if the network has changed and refresh all open connections on this case
+        /// </summary>
+        public static void CheckNetworkChange()
         {
-            List<string> ipAddresses;
+            var ipAddressChanged = HasChangedIP();
+            var networkNameChanged = HasChangedNetworkName();
 
-            // Find the IP of all network devices
-            try
-            {
-                ipAddresses = new List<string>();
-                var hostnames = NetworkInformation.GetHostNames();
-                foreach (var hn in hostnames)
-                {
-                    if (hn.IPInformation != null)// && hn.Type == Windows.Networking.HostNameType.Ipv4)
-                    {
-                        string ipAddress = hn.DisplayName;
-                        ipAddresses.Add(ipAddress);
-                    }
-                }
-            }
-            catch (ArgumentException) { return; }
+            if (ipAddressChanged || networkNameChanged)
+                SdkService.SetDnsServers();
+        }
 
-            // If no network device is connected, do nothing
-            if ((ipAddresses.Count < 1))
-            {
-                App.IpAddress = null;
-                return;
-            }
+        /// <summary>
+        /// Code to detect if the IP has changed
+        /// </summary>
+        /// <returns>TRUE if the IP has changed or FALSE in other case.</returns>
+        private static bool HasChangedIP()
+        {
+            var profile = NetworkInformation.GetInternetConnectionProfile();
+            if (profile?.NetworkAdapter == null) return false;
 
-            // If the primary IP has changed
-            if (ipAddresses[0] != App.IpAddress)
-            {
-                SdkService.MegaSdk.reconnect(); // Refresh all open connections
-                App.IpAddress = ipAddresses[0]; // Storage the new primary IP address
-            }
+            var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn =>
+                hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
+
+            if (string.IsNullOrWhiteSpace(hostname?.CanonicalName) ||
+                hostname?.CanonicalName == NetworkHelper.Instance.ConnectionInformation.IpAddress)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Code to detect if the network profile name has changed
+        /// </summary>
+        /// <returns>TRUE if the has changed or FALSE in other case.</returns>
+        private static bool HasChangedNetworkName()
+        {
+            var profile = NetworkInformation.GetInternetConnectionProfile();
+            if (profile == null) return false;
+
+            if (profile.ProfileName == NetworkHelper.Instance.ConnectionInformation.NetworkName)
+                return false;
+            
+            return true;
         }
 
         /// <summary>
@@ -158,14 +167,14 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
         /// <returns>String with the system DNS servers IP addresses separated by commas.</returns>
-        public static async Task<string> GetSystemDnsServers(bool refresh = false)
+        public static string GetSystemDnsServers(bool refresh = true)
         {
             try
             {
                 if (!refresh && !string.IsNullOrWhiteSpace(SystemDnsServers))
                     return SystemDnsServers;
 
-                if (!await IsNetworkAvailableAsync()) return null;
+                if (!HasInternetAccess()) return null;
 
                 string dnsServers = string.Empty;
 
@@ -207,14 +216,14 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
         /// <returns>String with the MEGA DNS servers IP addresses separated by commas.</returns>
-        public static async Task<string> GetMegaDnsServersAsync(bool refresh = false)
+        public static async Task<string> GetMegaDnsServersAsync(bool refresh = true)
         {
             try
             {
                 if (!refresh && !string.IsNullOrWhiteSpace(MegaDnsServers))
                     return MegaDnsServers;
 
-                if (!await IsNetworkAvailableAsync()) return null;
+                if (!HasInternetAccess()) return null;
 
                 string dnsServers = string.Empty;
 
@@ -248,7 +257,7 @@ namespace MegaApp.Services
                 return null;
             }
         }
-
+        
         #endregion
     }
 }

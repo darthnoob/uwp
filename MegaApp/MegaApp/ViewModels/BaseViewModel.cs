@@ -44,7 +44,7 @@ namespace MegaApp.ViewModels
         /// <summary>
         /// State of the network connection
         /// </summary>
-        public bool IsNetworkAvailable => NetworkService.IsNetworkAvailable;
+        public bool IsNetworkAvailable => NetworkService.HasInternetAccess();
 
         #endregion
 

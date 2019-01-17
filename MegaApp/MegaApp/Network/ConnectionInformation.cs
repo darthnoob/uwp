@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using Windows.Networking.Connectivity;
 
 #if CAMERA_UPLOADS_SERVICE
@@ -18,8 +18,6 @@ namespace MegaApp.Network
     /// </summary>
     public sealed class ConnectionInformation
     {
-        private readonly List<string> networkNames = new List<string>();
-
         /// <summary>
         /// Updates  the current object based on profile passed.
         /// </summary>
@@ -32,8 +30,6 @@ namespace MegaApp.Network
 
                 return;
             }
-
-            networkNames.Clear();
 
             uint ianaInterfaceType = profile.NetworkAdapter?.IanaInterfaceType ?? 0;
 
@@ -57,10 +53,16 @@ namespace MegaApp.Network
                     break;
             }
 
-            var names = profile.GetNetworkNames();
-            if (names?.Count > 0)
+            NetworkName = profile.ProfileName;
+
+            // Update the IP address
+            if (profile?.NetworkAdapter != null)
             {
-                networkNames.AddRange(names);
+                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn => 
+                    hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
+
+                if (hostname != null)
+                    IpAddress = hostname.CanonicalName;
             }
 
             ConnectivityLevel = profile.GetNetworkConnectivityLevel();
@@ -72,6 +74,8 @@ namespace MegaApp.Network
                     IsInternetAvailable = false;
                     break;
 
+                case NetworkConnectivityLevel.InternetAccess:
+                case NetworkConnectivityLevel.ConstrainedInternetAccess:
                 default:
                     IsInternetAvailable = true;
                     break;
@@ -86,8 +90,7 @@ namespace MegaApp.Network
         /// </summary>
         internal void Reset()
         {
-            networkNames.Clear();
-
+            NetworkName = null;
             ConnectionType = ConnectionType.Unknown;
             ConnectivityLevel = NetworkConnectivityLevel.None;
             IsInternetAvailable = false;
@@ -96,56 +99,45 @@ namespace MegaApp.Network
         }
 
         /// <summary>
-        /// Gets a value indicating whether if the current internet connection is metered.
+        /// Value indicating whether if the current internet connection is metered.
         /// </summary>
-        public bool IsInternetOnMeteredConnection
-        {
-            get
-            {
-                return ConnectionCost != null && ConnectionCost.NetworkCostType != NetworkCostType.Unrestricted;
-            }
-        }
+        public bool IsInternetOnMeteredConnection =>
+            ConnectionCost != null && ConnectionCost.NetworkCostType != NetworkCostType.Unrestricted;
 
         /// <summary>
-        /// Gets a value indicating whether internet is available across all connections.
+        /// Value indicating whether internet is available across all connections.
         /// </summary>
-        /// <returns>True if internet can be reached.</returns>
         public bool IsInternetAvailable { get; private set; }
 
         /// <summary>
-        /// Gets connection type for the current Internet Connection Profile.
+        /// Connection type for the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="ConnectionType"/></returns>
         public ConnectionType ConnectionType { get; private set; }
 
         /// <summary>
-        /// Gets connectivity level for the current Internet Connection Profile.
+        /// Connectivity level for the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="NetworkConnectivityLevel"/></returns>
         public NetworkConnectivityLevel ConnectivityLevel { get; private set; }
 
         /// <summary>
-        /// Gets connection cost for the current Internet Connection Profile.
+        /// Connection cost for the current Internet Connection Profile.
         /// </summary>
-        /// <returns>value of <see cref="ConnectionCost"/></returns>
         public ConnectionCost ConnectionCost { get; private set; }
 
         /// <summary>
-        /// Gets signal strength for the current Internet Connection Profile.
+        /// Signal strength for the current Internet Connection Profile.
+        /// An integer value within a range of 0-5 that corresponds to the number of signal bars displayed by the UI.
         /// </summary>
-        /// <returns>An integer value within a range of 0-5 that corresponds to the number of signal bars displayed by the UI</returns>
         public byte? SignalStrength { get; private set; }
 
         /// <summary>
-        /// Gets names used to identify the current Internet Connection Profile.
+        /// Name used to identify the current Internet Connection Profile.
         /// </summary>
-        /// <returns>An array of string values representing friendly names used to identify the network.</returns>
-        public IReadOnlyList<string> NetworkNames
-        {
-            get
-            {
-                return networkNames.AsReadOnly();
-            }
-        }
+        public string NetworkName { get; private set; }
+
+        /// <summary>
+        /// IP address of the current Internet Connection Profile.
+        /// </summary>
+        public string IpAddress { get; private set; }
     }
 }
