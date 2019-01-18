@@ -199,7 +199,7 @@ namespace BackgroundTaskService.Services
 
         private static string GetTaskVersion()
         {
-            return "1.0.0";
+            return "4.0.0";
         }
 
         private static string GetDeviceId()
