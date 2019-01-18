@@ -643,8 +643,8 @@ namespace MegaApp.Services
             // Clear settings, offline, cache, previews, thumbnails, etc.
             SettingsService.ClearSettings();
             SettingsService.RemoveSessionFromLocker();
-            ClearOfflineAsync();
-            ClearAppCacheAsync(true);
+            var task = ClearOfflineAsync();
+            task = ClearAppCacheAsync(true);
 
             // Clear all the account and user data info
             AccountService.ClearAccountDetails();

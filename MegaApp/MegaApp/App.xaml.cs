@@ -149,7 +149,7 @@ namespace MegaApp
                 await AppService.CheckActiveAndOnlineSessionAsync();
 
                 // Validate product subscription license on background thread
-                Task.Run(() => LicenseService.ValidateLicensesAsync());
+                var task = Task.Run(() => LicenseService.ValidateLicensesAsync());
             }
         }
 

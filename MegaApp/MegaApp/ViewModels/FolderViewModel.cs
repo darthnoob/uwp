@@ -378,7 +378,7 @@ namespace MegaApp.ViewModels
             CreateLoadCancelOption();
 
             // Load and create the childnodes for the folder
-            Task.Factory.StartNew(() =>
+            var task = Task.Factory.StartNew(() =>
             {
                 try
                 {
