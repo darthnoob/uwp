@@ -1,5 +1,6 @@
 ﻿{
   "dependencies": {
+    "DnsClient": "1.2.0",
     "GoedWare.Controls.Breadcrumb": "1.0.2",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.3",
     "Microsoft.Toolkit.Uwp": "1.4.1",

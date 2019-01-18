@@ -24,6 +24,9 @@ namespace BackgroundTaskService
         {
             _deferral = taskInstance.GetDeferral();
 
+            // Check for network changes
+            NetworkService.CheckNetworkChange();
+
             // Set the API to use depending on the settings
             SdkService.MegaSdk.changeApiUrl(SettingsService.LoadSetting(
                 ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ?

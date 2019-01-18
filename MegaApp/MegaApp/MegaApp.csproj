@@ -204,6 +204,7 @@
     <Compile Include="Enums\AccountBlockedReason.cs" />
     <Compile Include="Enums\ChangePasswordResult.cs" />
     <Compile Include="Enums\CameraUploadsFileType.cs" />
+    <Compile Include="Enums\ConnectionType.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
@@ -237,6 +238,8 @@
     <Compile Include="MegaApi\ReplyContactRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShareRequestListenerAsync.cs" />
     <Compile Include="MegaApi\ShouldShowPasswordReminderDialogRequestListenerAsync.cs" />
+    <Compile Include="Network\ConnectionInformation.cs" />
+    <Compile Include="Network\NetworkHelper.cs" />
     <Compile Include="Services\ContactsService.cs" />
     <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />

@@ -21,7 +21,7 @@ namespace MegaApp.ViewModels.Login
             SetWarning(false, string.Empty);
             this.EmailInputState = InputState.Normal;
 
-            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
+            if (!NetworkService.HasInternetAccess(true)) return;
 
             if (!CheckInputParameters()) return;
 

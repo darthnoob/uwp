@@ -32,7 +32,7 @@ namespace MegaApp.ViewModels
         /// <returns>True if the user is online. False in other case.</returns>
         public async Task<bool> IsUserOnlineAsync(bool showMessageDialog = false)
         {
-            if (!await NetworkService.IsNetworkAvailableAsync(showMessageDialog)) return false;
+            if (!NetworkService.HasInternetAccess(showMessageDialog)) return false;
 
             bool isOnline = Convert.ToBoolean(this.MegaSdk.isLoggedIn());
             if (!isOnline)

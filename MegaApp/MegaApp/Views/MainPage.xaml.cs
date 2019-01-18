@@ -44,7 +44,7 @@ namespace MegaApp.Views
             if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;
 
             // Check if the user has an active internet connection
-            if (!await NetworkService.IsNetworkAvailableAsync())
+            if (!NetworkService.HasInternetAccess())
             {
                 // If not active internet connection, navigate to the offline section
                 NavigateService.Instance.Navigate(typeof(SavedForOfflinePage));
@@ -156,7 +156,7 @@ namespace MegaApp.Views
             this.ViewModel?.ContentViewModel?.UpdateNetworkStatus();
 
             // If no network connection, nothing to do
-            if (!await NetworkService.IsNetworkAvailableAsync()) return;
+            if (!NetworkService.HasInternetAccess()) return;
 
             // Check if the user has an active and online session
             if (!await AppService.CheckActiveAndOnlineSessionAsync(true)) return;

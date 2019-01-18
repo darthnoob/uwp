@@ -1,4 +1,8 @@
-﻿namespace BackgroundTaskService.Enums
+﻿#if CAMERA_UPLOADS_SERVICE
+namespace BackgroundTaskService.Enums
+#else
+namespace MegaApp.Enums
+#endif
 {
     /// <summary>
     /// Enumeration denoting connection type.
@@ -23,6 +27,6 @@
         /// <summary>
         /// Connection type not identified
         /// </summary>
-        Unknown,
+        Unknown
     }
 }

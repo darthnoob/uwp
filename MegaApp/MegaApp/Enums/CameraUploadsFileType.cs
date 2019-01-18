@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿#if CAMERA_UPLOADS_SERVICE
+namespace BackgroundTaskService.Enums
+#else
 namespace MegaApp.Enums
+#endif
 {
     public enum CameraUploadsFileType
     {
-        PhotoAndVideo = 0,
-        PhotoOnly = 1,
-        VideoOnly = 2,
+        PhotoAndVideo   = 0,
+        PhotoOnly       = 1,
+        VideoOnly       = 2
     }
 }

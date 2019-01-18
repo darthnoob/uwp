@@ -75,6 +75,18 @@ Apache License 2.0\
 https://github.com/micjahn/ZXing.Net/blob/master/COPYING
 <hr>
 
+### DnsClient.NET (The DNS Resolver for .NET)
+https://github.com/MichaCo/DnsClient.NET \
+Copyright (c) Michael Conrad
+
+**Description**\
+DnsClient.NET is a simple yet very powerful and high performant open source library for the .NET Framework to do DNS lookups.
+
+**License**\
+Apache License 2.0\
+https://github.com/MichaCo/DnsClient.NET/blob/master/LICENSE
+<hr>
+
 ### MEGA C++ SDK
 https://github.com/meganz/sdk \
 © 2013-2016 by Mega Limited, Auckland, New Zealand.

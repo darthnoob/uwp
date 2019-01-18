@@ -37,9 +37,8 @@ namespace MegaApp.UserControls
         /// Checks the availability of the network connection 
         /// and update the GUI using the binded view model
         /// </summary>
-        private async void CheckNetworkAvailability()
+        private void CheckNetworkAvailability()
         {
-            await NetworkService.IsNetworkAvailableAsync();
             this.ViewModel.UpdateNetworkStatus();
         }
     }
