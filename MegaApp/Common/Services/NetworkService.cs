@@ -134,17 +134,25 @@ namespace MegaApp.Services
         /// <returns>TRUE if the IP has changed or FALSE in other case.</returns>
         private static bool HasChangedIP()
         {
-            var profile = NetworkInformation.GetInternetConnectionProfile();
-            if (profile?.NetworkAdapter == null) return false;
+            try
+            {
+                var profile = NetworkInformation.GetInternetConnectionProfile();
+                if (profile?.NetworkAdapter == null) return false;
 
-            var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn =>
-                hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
+                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn =>
+                    hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
 
-            if (string.IsNullOrWhiteSpace(hostname?.CanonicalName) ||
-                hostname?.CanonicalName == NetworkHelper.Instance.ConnectionInformation.IpAddress)
+                if (string.IsNullOrWhiteSpace(hostname?.CanonicalName) ||
+                    hostname?.CanonicalName == NetworkHelper.Instance.ConnectionInformation.IpAddress)
+                    return false;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error checking a possible IP address change", e);
                 return false;
-
-            return true;
+            }
         }
 
         /// <summary>
@@ -153,13 +161,21 @@ namespace MegaApp.Services
         /// <returns>TRUE if the has changed or FALSE in other case.</returns>
         private static bool HasChangedNetworkName()
         {
-            var profile = NetworkInformation.GetInternetConnectionProfile();
-            if (profile == null) return false;
+            try
+            {
+                var profile = NetworkInformation.GetInternetConnectionProfile();
+                if (profile == null) return false;
 
-            if (profile.ProfileName == NetworkHelper.Instance.ConnectionInformation.NetworkName)
+                if (profile.ProfileName == NetworkHelper.Instance.ConnectionInformation.NetworkName)
+                    return false;
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error checking a possible network name change", e);
                 return false;
-            
-            return true;
+            }
         }
 
         /// <summary>
