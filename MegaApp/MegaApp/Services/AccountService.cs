@@ -110,10 +110,16 @@ namespace MegaApp.Services
                 AccountDetails.TotalSpace = accountDetails.getStorageMax();
                 AccountDetails.UsedSpace = accountDetails.getStorageUsed();
 
-                AccountDetails.CloudDriveUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRootNode().getHandle());
-                AccountDetails.IncomingSharesUsedSpace = GetIncomingSharesUsedSpace();
-                AccountDetails.RubbishBinUsedSpace = accountDetails.getStorageUsed(SdkService.MegaSdk.getRubbishNode().getHandle());
+                var rootNode = SdkService.MegaSdk.getRootNode();
+                if (rootNode != null)
+                    AccountDetails.CloudDriveUsedSpace = accountDetails.getStorageUsed(rootNode.getHandle());
                 
+                var rubbishNode = SdkService.MegaSdk.getRubbishNode();
+                if (rubbishNode != null)
+                    AccountDetails.RubbishBinUsedSpace = accountDetails.getStorageUsed(rubbishNode.getHandle());
+
+                AccountDetails.IncomingSharesUsedSpace = GetIncomingSharesUsedSpace();
+
                 AccountDetails.TransferQuota = accountDetails.getTransferMax();
                 AccountDetails.UsedTransferQuota = accountDetails.getTransferOwnUsed();
 
