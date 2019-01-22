@@ -233,12 +233,15 @@ namespace MegaApp
                 string message = string.Format("{0}{1}{1}{2}", ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph1"),
                         Environment.NewLine, ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph2"));
 
-                var result = await DialogService.ShowOkCancelAsync(
-                    ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                    TwoButtonsDialogType.YesNo);
+                await UiService.OnUiThreadAsync(async () =>
+                {
+                    var result = await DialogService.ShowOkCancelAsync(
+                        ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
+                        TwoButtonsDialogType.YesNo);
 
-                if (result)
-                    await DebugService.ComposeErrorReportEmailAsync(exception);
+                    if (result)
+                        await DebugService.ComposeErrorReportEmailAsync(exception);
+                });
             }
             catch (Exception ex)
             {
