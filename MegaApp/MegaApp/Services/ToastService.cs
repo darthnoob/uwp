@@ -34,39 +34,47 @@ namespace MegaApp.Services
         /// </param>
         public static void ShowTextNotification(string title, string text, int duration = 5)
         {
-            var visual = new ToastVisual
+            try
             {
-                BindingGeneric = new ToastBindingGeneric
+                var visual = new ToastVisual
                 {
-                    Children =
+                    BindingGeneric = new ToastBindingGeneric
+                    {
+                        Children =
                     {
                         new AdaptiveText { Text = title },
                         new AdaptiveText { Text = text }
                     },
 
-                    AppLogoOverride = new ToastGenericAppLogo
-                    {
-                        Source = LogoUri,
-                        HintCrop = ToastGenericAppLogoCrop.Circle
+                        AppLogoOverride = new ToastGenericAppLogo
+                        {
+                            Source = LogoUri,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        }
                     }
+                };
+
+                var toastContent = new ToastContent
+                {
+                    Visual = visual,
+                    Audio = new ToastAudio() { Silent = true },
+                };
+
+                var toast = new ToastNotification(toastContent.GetXml());
+                if (duration > 0)
+                    toast.ExpirationTime = new DateTimeOffset(DateTime.Now.AddSeconds(duration));
+
+                try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
+                    UiService.OnUiThread(async () => await DialogService.ShowAlertAsync(title, text));
                 }
-            };
-
-            var toastContent = new ToastContent
-            {
-                Visual = visual,
-                Audio = new ToastAudio() { Silent = true },
-            };
-
-            var toast = new ToastNotification(toastContent.GetXml());
-            if (duration > 0)
-                toast.ExpirationTime = new DateTimeOffset(DateTime.Now.AddSeconds(duration));
-
-            try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+            }
             catch (Exception e)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
-                UiService.OnUiThread(async() => await DialogService.ShowAlertAsync(title, text));
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error creating toast notification", e);
+                UiService.OnUiThread(async () => await DialogService.ShowAlertAsync(title, text));
             }
         }
 
@@ -84,36 +92,44 @@ namespace MegaApp.Services
         /// <param name="text">Text to show in the notification.</param>
         public static void ShowAlertNotification(string title, string text)
         {
-            var visual = new ToastVisual
+            try
             {
-                BindingGeneric = new ToastBindingGeneric
+                var visual = new ToastVisual
                 {
-                    Children =
+                    BindingGeneric = new ToastBindingGeneric
+                    {
+                        Children =
                     {
                         new AdaptiveText { Text = title },
                         new AdaptiveText { Text = text }
                     },
 
-                    AppLogoOverride = new ToastGenericAppLogo
-                    {
-                        Source = WarningUri,
-                        HintCrop = ToastGenericAppLogoCrop.Circle
+                        AppLogoOverride = new ToastGenericAppLogo
+                        {
+                            Source = WarningUri,
+                            HintCrop = ToastGenericAppLogoCrop.Circle
+                        }
                     }
+                };
+
+                var toastContent = new ToastContent
+                {
+                    Visual = visual,
+                    Audio = new ToastAudio() { Silent = false },
+                };
+
+                var toast = new ToastNotification(toastContent.GetXml());
+
+                try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
+                    UiService.OnUiThread(async () => await DialogService.ShowAlertAsync(title, text));
                 }
-            };
-
-            var toastContent = new ToastContent
-            {
-                Visual = visual,
-                Audio = new ToastAudio() { Silent = false },
-            };
-
-            var toast = new ToastNotification(toastContent.GetXml());
-
-            try { ToastNotificationManager.CreateToastNotifier().Show(toast); }
+            }
             catch (Exception e)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error showing toast notification", e);
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error creating toast notification", e);
                 UiService.OnUiThread(async () => await DialogService.ShowAlertAsync(title, text));
             }
         }
