@@ -695,7 +695,8 @@ namespace MegaApp.ViewModels
                 }
                 catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + file.Name, e);
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                        string.Format("Transfer (UPLOAD) failed: '{0}'", file.Name), e);
 
                     OnUiThread(async () =>
                     {
@@ -720,6 +721,19 @@ namespace MegaApp.ViewModels
                     // If the upload isn´t already cancelled then copy the file to the temporary upload folder
                     if(uploadTransfer?.PreparingUploadCancelToken?.Token.IsCancellationRequested == false)
                     {
+                        // Try to get the modified date of the original file
+                        DateTime modifiedDate = new DateTime();
+                        await Task.Run(() =>
+                        {
+                            try { modifiedDate = File.GetLastWriteTime(upload.Key.Path); }
+                            catch (Exception e)
+                            {
+                                LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                                    string.Format("Error getting the date modified of '{0}'", upload.Key.Name), e);
+                            }
+                        });
+
+                        // Copy the original file to the upload cache folder
                         using (var fs = new FileStream(Path.Combine(uploadDir, upload.Key.Name), FileMode.Create))
                         {
                             // Set buffersize to avoid copy failure of large files
@@ -728,11 +742,60 @@ namespace MegaApp.ViewModels
                             await fs.FlushAsync(uploadTransfer.PreparingUploadCancelToken.Token);
                         }
 
-                        uploadTransfer.StartTransfer();
+                        // If have the original modified date, try to set it in the file copied in the upload cache
+                        if (!modifiedDate.Equals(default(DateTime)))
+                        {
+                            await Task.Run(() =>
+                            {
+                                try { File.SetLastWriteTime(Path.Combine(uploadDir, upload.Key.Name), modifiedDate); }
+                                catch (Exception e)
+                                {
+                                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                                        string.Format("Error setting the date modified of '{0}'", upload.Key.Name), e);
+                                }
+                            });
+                        }
+
+                        // Check by fingerprint if the node is already uploaded to MEGA
+                        var fileToUploadAction = await UploadService.CheckFileToUpload(
+                            await StorageFile.GetFileFromPathAsync(Path.Combine(uploadDir, upload.Key.Name)),
+                            FolderRootNode.OriginalMNode);
+                        if (fileToUploadAction == UploadService.FileToUploadAction.UPLOAD)
+                        {
+                            uploadTransfer.StartTransfer();
+                        }
+                        else
+                        {
+                            switch (fileToUploadAction)
+                            {
+                                case UploadService.FileToUploadAction.COPY:
+                                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, 
+                                        string.Format("UPLOAD: Remote copy of node '{0}'", upload.Key.Name));
+                                    break;
+
+                                case UploadService.FileToUploadAction.COPY_AND_RENAME:
+                                    LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                                        string.Format("UPLOAD: Remote copy and rename of node '{0}'", upload.Key.Name));
+                                    break;
+
+                                case UploadService.FileToUploadAction.SAME_FILE_IN_FOLDER:
+                                    LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                                        string.Format("UPLOAD: '{0}' already exists in folder", upload.Key.Name));
+                                    ToastService.ShowTextNotification(
+                                        string.Format(ResourceService.AppMessages.GetString("AM_FileAlreadyUploaded"),
+                                        upload.Key.Name));
+                                    break;
+                            }
+
+                            uploadTransfer.TransferedBytes = uploadTransfer.TotalBytes;
+                            uploadTransfer.TransferState = MTransferState.STATE_COMPLETED;
+                            TransferService.MoveMegaTransferToCompleted(TransferService.MegaTransfers, uploadTransfer);
+                        }
                     }
                     else
                     {
-                        LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                        LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                            string.Format("Transfer (UPLOAD) canceled: '{0}'", upload.Key.Name));
                         OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                     }
                 }
@@ -740,13 +803,15 @@ namespace MegaApp.ViewModels
                 // changes the status and delete the corresponding temporary file
                 catch (TaskCanceledException)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Transfer (UPLOAD) canceled: " + upload.Key.Name);
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO,
+                        string.Format("Transfer (UPLOAD) canceled: '{0}'", upload.Key.Name));
                     FileService.DeleteFile(uploadTransfer.TransferPath);
                     OnUiThread(() => uploadTransfer.TransferState = MTransferState.STATE_CANCELLED);
                 }
                 catch (Exception e)
                 {
-                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Transfer (UPLOAD) failed: " + upload.Key.Name, e);
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR,
+                        string.Format("Transfer (UPLOAD) failed: '{0}'", upload.Key.Name), e);
                     OnUiThread(async () =>
                     {
                         uploadTransfer.TransferState = MTransferState.STATE_FAILED;
