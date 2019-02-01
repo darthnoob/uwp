@@ -49,7 +49,7 @@ namespace MegaApp.Services
             }
 
             var navigationResult = await CheckSpecialNavigation(hasActiveAndOnlineSession);
-            if (navigationResult.HasValue && !navigationResult.Value)
+            if (!hasActiveAndOnlineSession && navigationResult.HasValue && !navigationResult.Value)
             {
                 UiService.OnUiThread(() =>
                 {
