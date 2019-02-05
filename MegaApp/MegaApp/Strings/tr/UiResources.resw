@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Parola değiştir</value>
+    <value>Parola Değiştir</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1291,7 +1291,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModifiedMultiSelect" xml:space="preserve">
-    <value>Değiştirme Tarihi</value>
+    <value>Değiştirme Tarihi  ({0} / {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by modification date and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1315,7 +1315,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedByDateModified" xml:space="preserve">
-    <value>Değiştirme Tarihi</value>
+    <value>Değiştirildiği tarih ({0})</value>
     <comment>Label to indicate that a list of items is sorted by modification date and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>

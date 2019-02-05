@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Wijzig wachtwoord</value>
+    <value>Wijzig Wachtwoord</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1666,7 +1666,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
-    <value>Copy seed</value>
+    <value>Seed kopiëren</value>
     <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
   </data>
   <data name="UI_Disable" xml:space="preserve">
@@ -1674,11 +1674,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.</value>
+    <value>Scan of kopieer de seed naar uw Authenticator Applicatie. Zorg ervoor dat u een reservekopie maakt op een veilige plek voor het geval u uw apparaat verliest.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your Authenticator app enter the 6-digit code provided.</value>
+    <value>Nadat u uw seed heeft ingesteld op uw Authenticator Applicatie voer de 6-cijferige bijgevoegde code in.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">

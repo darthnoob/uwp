@@ -126,7 +126,7 @@
     <comment>Text placed just before a link labeled 'View Term of Service' into the 'create account' page.</comment>
   </data>
   <data name="UI_CameraUploads" xml:space="preserve">
-    <value>Téléversement de la caméra</value>
+    <value>Téléversements de l’appareil photo</value>
     <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
@@ -211,7 +211,7 @@
 Preserve the {0} code because is for include the name of the destination folder in runtime.</comment>
   </data>
   <data name="UI_LastNameWatermark" xml:space="preserve">
-    <value>Nom</value>
+    <value>Nom de famille</value>
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
@@ -239,7 +239,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'No' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NoInternetConnection" xml:space="preserve">
-    <value>Aucune connexion Internet</value>
+    <value>Il n’y a pas de connexion à Internet</value>
     <comment>Label for the background of an empty state when no internet connection - (String as short as possible).</comment>
   </data>
   <data name="UI_Off" xml:space="preserve">
@@ -827,7 +827,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'First name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LastName" xml:space="preserve">
-    <value>Nom</value>
+    <value>Nom de famille</value>
     <comment>Label for any 'Last name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PersonalInformation" xml:space="preserve">
@@ -983,7 +983,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_Name" xml:space="preserve">
-    <value>Nom</value>
+    <value>Prénom</value>
     <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewProfile" xml:space="preserve">
@@ -1075,7 +1075,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionName" xml:space="preserve">
-    <value>Nom</value>
+    <value>Prénom</value>
     <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOwner" xml:space="preserve">
@@ -1099,7 +1099,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Created" xml:space="preserve">
-    <value>Créé</value>
+    <value>Créé le</value>
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
@@ -1232,7 +1232,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed to validate password on account recovery.</comment>
   </data>
   <data name="UI_ValidatePasswordHeader" xml:space="preserve">
-    <value>Très bien !</value>
+    <value>Très bien !</value>
     <comment>Header of the text displayed to validate password on account recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccountDescription" xml:space="preserve">

@@ -186,7 +186,7 @@
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>文件夹中没有文件</value>
+    <value>空的文件夹</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -319,7 +319,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is ready but not started for some reason - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPaused" xml:space="preserve">
-    <value>暂停</value>
+    <value>已暂停</value>
     <comment>Label for the status of a paused transfer - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusQueued" xml:space="preserve">
@@ -467,15 +467,15 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by size (from bigger to smaller) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionNewest" xml:space="preserve">
-    <value>由新到旧</value>
+    <value>从新到旧</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in descending order by date (from newer to older) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOldest" xml:space="preserve">
-    <value>由旧至新</value>
+    <value>从旧到新</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSmallest" xml:space="preserve">
-    <value>由小至大</value>
+    <value>从小到大</value>
     <comment>Label for the menu option to sort the nodes of the cloud drive in ascending order by size (from smaller to bigger) - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusPreparing" xml:space="preserve">
@@ -507,7 +507,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>取得链接</value>
+    <value>获得链接</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
@@ -559,7 +559,7 @@ Preserve the {0} code because is for include the name of the destination folder 
 </comment>
   </data>
   <data name="UI_Audio" xml:space="preserve">
-    <value>音频</value>
+    <value>语音</value>
     <comment>Label for any 'Audio' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -574,7 +574,7 @@ Preserve the {0} code because is for include the name of the destination folder 
 </comment>
   </data>
   <data name="UI_Image" xml:space="preserve">
-    <value>图像</value>
+    <value>图片</value>
     <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Type" xml:space="preserve">
@@ -586,7 +586,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Unknown' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Video" xml:space="preserve">
-    <value>影片</value>
+    <value>视频</value>
     <comment>Label for any 'Video' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableOfflineView" xml:space="preserve">
@@ -622,7 +622,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any `Grid view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ListView" xml:space="preserve">
-    <value>列表视图</value>
+    <value>列表显示</value>
     <comment>Label for any 'List view' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortBy" xml:space="preserve">
@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>付费升级</value>
+    <value>升级</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -738,7 +738,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Available transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferQuota" xml:space="preserve">
-    <value>传输配额(频宽)</value>
+    <value>传输流量</value>
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
@@ -843,7 +843,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Price (monthly)' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Save" xml:space="preserve">
-    <value>储存</value>
+    <value>保存</value>
     <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmail" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>变更密码</value>
+    <value>更改密码</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1004,7 +1004,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
-    <value>全权使用</value>
+    <value>完全访问权限</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
@@ -1099,7 +1099,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Created" xml:space="preserve">
-    <value>建立</value>
+    <value>创建于</value>
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
@@ -1192,11 +1192,11 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'I don't have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ParkAccount" xml:space="preserve">
-    <value>封存账号</value>
+    <value>封存账户</value>
     <comment>Label for any 'Park account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryDescription" xml:space="preserve">
-    <value>请于下方输入您的电子邮件地址。您将收到一个还原链接，让您可以提交您的还原金钥并重置密码。</value>
+    <value>请在下面输入您的邮箱地址。您将收到一个恢复链接，您可通过此链接提交您的恢复密钥并重置密码。</value>
     <comment>Text displayed in the 'Recovery' section when the user does have a recovery key.</comment>
   </data>
   <data name="UI_RecoveryKeyHeader" xml:space="preserve">
@@ -1204,7 +1204,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Label for any 'I have my Recovery key' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Send" xml:space="preserve">
-    <value>送出</value>
+    <value>发送</value>
     <comment>Label for any 'Send' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoverDescription" xml:space="preserve">
@@ -1212,7 +1212,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in recover section on password reset</comment>
   </data>
   <data name="UI_RecoverHeader" xml:space="preserve">
-    <value>密码重设</value>
+    <value>密码重置</value>
     <comment>Header of the text displayed to reset password on recovery. - String as short as possible).</comment>
   </data>
   <data name="UI_UploadKey" xml:space="preserve">
@@ -1427,7 +1427,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Text displayed in the 'Achievements' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_Available" xml:space="preserve">
-    <value>可使用的</value>
+    <value>可用</value>
     <comment>Label for any 'Available' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UnlockedRewards" xml:space="preserve">
@@ -1435,7 +1435,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Expired" xml:space="preserve">
-    <value>过期</value>
+    <value>已过期</value>
     <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriends" xml:space="preserve">
@@ -1686,15 +1686,15 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
   </data>
   <data name="UI_PhotoAndVideo" xml:space="preserve">
-    <value>照片和影片</value>
+    <value>照片和视频</value>
     <comment>Label for any 'Photo and video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_PhotoOnly" xml:space="preserve">
-    <value>只有照片</value>
+    <value>仅照片</value>
     <comment>Label for any 'Only photo' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_VideoOnly" xml:space="preserve">
-    <value>只有影片</value>
+    <value>仅视频</value>
     <comment>Label for any 'Only video' button, link, text, title, etc. - (String as short as possible). Used in the camera uploads settings to determine what to upload.</comment>
   </data>
   <data name="UI_AnyConnectionType" xml:space="preserve">

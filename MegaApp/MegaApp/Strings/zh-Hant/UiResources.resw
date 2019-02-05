@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>變更密碼</value>
+    <value>更改密碼</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1614,7 +1614,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Ignore' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DataProtectionRegulation" xml:space="preserve">
-    <value>Data Protection Regulation</value>
+    <value>資料保護條例</value>
     <comment>Label for any 'Data Protection Regulation' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MEGA_SDK_Version" xml:space="preserve">

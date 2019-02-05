@@ -657,7 +657,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>复制还原金钥至剪贴簿失败，请重试。</value>
+    <value>复制恢复密钥到剪贴板失败。请再试一次。</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
@@ -665,7 +665,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>已复制还原金钥</value>
+    <value>恢复密钥已复制</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -677,7 +677,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>无法保存文件“{​​0}”</value>
+    <value>无法保存文件‘{0}’。</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">
@@ -713,7 +713,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
-    <value>已复制到剪贴簿</value>
+    <value>已复制到剪贴板</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
@@ -1042,7 +1042,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
-    <value>无效电子邮件信箱</value>
+    <value>无效的邮箱地址</value>
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
@@ -1062,7 +1062,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
-    <value>这个恢复链接已失效，请再试一次。</value>
+    <value>这个恢复链接已过期，请再试一次。</value>
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
@@ -1411,7 +1411,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
-    <value>操作被禁，您将超过您的账户储存限额。您要升级账户吗？</value>
+    <value>操作未允许，您将超过您的账户存储限额。您是否想要升级帐户？</value>
     <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
