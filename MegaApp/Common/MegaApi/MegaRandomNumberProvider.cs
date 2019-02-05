@@ -3,7 +3,11 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Security.Cryptography;
 using mega;
 
+#if CAMERA_UPLOADS_SERVICE
+namespace BackgroundTaskService.MegaApi
+#else
 namespace MegaApp.MegaApi
+#endif
 {
     class MegaRandomNumberProvider : MRandomNumberProvider
     {

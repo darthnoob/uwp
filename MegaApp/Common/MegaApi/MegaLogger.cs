@@ -7,9 +7,18 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using mega;
-using MegaApp.Services;
 
+#if CAMERA_UPLOADS_SERVICE
+using Windows.Storage;
+#else
+using MegaApp.Services;
+#endif
+
+#if CAMERA_UPLOADS_SERVICE
+namespace BackgroundTaskService.MegaApi
+#else
 namespace MegaApp.MegaApi
+#endif
 {
     class MegaLogger : MLoggerInterface
     {
@@ -51,6 +60,23 @@ namespace MegaApp.MegaApi
                 message += " (" + source + ")"; 
             }
 
+#if CAMERA_UPLOADS_SERVICE
+            Debug.WriteLine("{0}{1}CAMERA UPLOADS - {2}", time, logLevelString, message);
+
+            // If the APP log file exists (DEBUG mode enabled) append the "CAMERA UPLOADS" log messages.
+            string logFilePath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "offline", "MEGA_UWP.log");
+            if (File.Exists(logFilePath))
+            {
+                try
+                {
+                    using (StreamWriter sw = File.AppendText(logFilePath))
+                    {
+                        sw.WriteLine("{0}{1}CAMERA UPLOADS - {2}", time, logLevelString, message);
+                    }
+                }
+                catch (Exception) { }
+            }
+#else
             Debug.WriteLine("{0}{1}{2}", time, logLevelString, message);
 
             if (DebugService.DebugSettings != null && DebugService.DebugSettings.IsDebugMode)
@@ -65,6 +91,7 @@ namespace MegaApp.MegaApi
                 }
                 catch (Exception) { }
             }
+#endif
         }
     }
 }

@@ -109,34 +109,40 @@
     <PRIResource Include="Resources\SettingsResources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MegaApp\Enums\CameraUploadsConnectionType.cs">
+    <Compile Include="..\Common\Enums\CameraUploadsConnectionType.cs">
       <Link>Enums\CameraUploadsConnectionType.cs</Link>
     </Compile>
-    <Compile Include="..\MegaApp\Enums\CameraUploadsFileType.cs">
+    <Compile Include="..\Common\Enums\CameraUploadsFileType.cs">
       <Link>Enums\CameraUploadsFileType.cs</Link>
     </Compile>
-    <Compile Include="..\MegaApp\Enums\ConnectionType.cs">
+    <Compile Include="..\Common\Enums\ConnectionType.cs">
       <Link>Enums\ConnectionType.cs</Link>
     </Compile>
-    <Compile Include="..\MegaApp\Network\ConnectionInformation.cs">
+    <Compile Include="..\Common\MegaApi\MegaLogger.cs">
+      <Link>MegaApi\MegaLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MegaApi\MegaRandomNumberProvider.cs">
+      <Link>MegaApi\MegaRandomNumberProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Network\ConnectionInformation.cs">
       <Link>Network\ConnectionInformation.cs</Link>
     </Compile>
-    <Compile Include="..\MegaApp\Network\NetworkHelper.cs">
+    <Compile Include="..\Common\Network\NetworkHelper.cs">
       <Link>Network\NetworkHelper.cs</Link>
     </Compile>
-    <Compile Include="..\MegaApp\Services\NetworkService.cs">
+    <Compile Include="..\Common\Services\LogService.cs">
+      <Link>Services\LogService.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Services\NetworkService.cs">
       <Link>Services\NetworkService.cs</Link>
     </Compile>
     <Compile Include="CameraUploadTask.cs" />
     <Compile Include="MegaApi\MegaGlobalListener.cs" />
     <Compile Include="MegaApi\MegaInputStream.cs" />
-    <Compile Include="MegaApi\MegaLogger.cs" />
-    <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\MegaRequestListener.cs" />
     <Compile Include="MegaApi\MegaTransferListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ErrorHandlingService.cs" />
-    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\SettingsService.cs" />
