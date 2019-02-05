@@ -267,6 +267,7 @@
     <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
+    <Compile Include="Services\UploadService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
     <Compile Include="UserControls\CopyMoveImportPanel.xaml.cs">
