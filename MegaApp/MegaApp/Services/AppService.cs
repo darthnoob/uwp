@@ -8,6 +8,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Email;
 using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.Core;
 using mega;
 using MegaApp.Classes;
@@ -119,6 +120,19 @@ namespace MegaApp.Services
                     ResourceService.UiResources.GetString("UI_FileLink"),
                     ResourceService.AppMessages.GetString("AM_UserNotOnline"));
             }
+
+            LogService.Log(MLogLevel.LOG_LEVEL_WARNING,
+                string.Format("Unsupported link: {0}", LinkInformationService.ActiveLink));
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Opening using the default Internet browser...");
+
+            // Set the option to ignore app URI handlers 
+            var options = new LauncherOptions();
+            options.IgnoreAppUriHandlers = true;
+
+            // Open the URI with the default Internet browser
+            await Launcher.LaunchUriAsync(
+                new Uri(LinkInformationService.ActiveLink, UriKind.RelativeOrAbsolute),
+                options);
 
             return false;
         }
