@@ -222,6 +222,9 @@ namespace MegaApp.Services
         {
             if (string.IsNullOrEmpty(receipt)) return false;
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Activating license on the MEGA License Server...");
+            LogService.Log(MLogLevel.LOG_LEVEL_DEBUG, "License info: " + receipt);
+
             // Validate and activate the MEGA Windows Store (int 13) subscription on the MEGA license server
             var submitPurchaseReceipt = new SubmitPurchaseReceiptRequestListenerAsync();
             var result = await submitPurchaseReceipt.ExecuteAsync(() =>
@@ -252,16 +255,26 @@ namespace MegaApp.Services
         /// </summary>
         public static async Task ValidateLicensesAsync()
         {
-            // If no Internet connection, stop the check
-            if(!NetworkService.HasInternetAccess()) return;
-            // If the Windows Store product listing is not available, stop the check
-            var available = await GetIsAvailableAsync();
-            if (!available) return;
-
-            foreach (var productLicense in CurrentLicenseInformation.ProductLicenses)
+            try
             {
-                if(!productLicense.Value.IsActive) continue;
-                await CheckLicenseAsync(productLicense.Key);
+                // If no Internet connection, stop the check
+                if (!NetworkService.HasInternetAccess()) return;
+                // If the Windows Store product listing is not available, stop the check
+                var available = await GetIsAvailableAsync();
+                if (!available) return;
+
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Validating licenses...");
+
+                foreach (var productLicense in CurrentLicenseInformation.ProductLicenses)
+                {
+                    if (!productLicense.Value.IsActive) continue;
+                    await CheckLicenseAsync(productLicense.Key);
+                }
+            }
+            catch (Exception e)
+            {
+                // If an error occurs, ignore. App will try again on restart
+                LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error validating licenses", e);
             }
         }
 
@@ -281,6 +294,9 @@ namespace MegaApp.Services
 #endif
                 if (string.IsNullOrEmpty(receipt)) return;
 
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Checking product license...");
+                LogService.Log(MLogLevel.LOG_LEVEL_DEBUG, "License info: " + receipt);
+
                 if (!CheckReceiptIdStatus(receipt))
                 {
                     await ActivateMegaLicenseAsync(receipt);
@@ -288,8 +304,8 @@ namespace MegaApp.Services
             }
             catch (Exception e)
             {
+                // If an error occurs, ignore. App will try again on restart
                 LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error (re-)checking licenses", e);
-                // if an error occurs, ignore. App will try again on restart
             }
         }
 
@@ -301,6 +317,8 @@ namespace MegaApp.Services
         public static string GetUniqueReceiptId(string receipt)
         {
             if (string.IsNullOrEmpty(receipt)) return null;
+
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Retrieving unique receipt ID...");
 
             try
             {
@@ -323,6 +341,8 @@ namespace MegaApp.Services
         {
             try
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Saving receipt ID...");
+
                 var key = ResourceService.SettingsResources.GetString("SR_Receipts");
                 var currentIds = SettingsService.Load(key, string.Empty);
                 var id = GetUniqueReceiptId(receipt);
@@ -350,6 +370,8 @@ namespace MegaApp.Services
         {
             try
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Checking receipt ID status...");
+
                 var uniqueId = GetUniqueReceiptId(receipt);
                 // return true to stop activation of receipt
                 if (uniqueId == null) return true;
