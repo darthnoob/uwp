@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MegaApp_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>138D5F99F522E00E934BDF46CDE71BE0373DCED7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>C91B80FEEC278A7AA16F19D8781D75C1EF005E0A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
