@@ -28,9 +28,12 @@ namespace BackgroundTaskService
             NetworkService.CheckNetworkChange();
 
             // Set the API to use depending on the settings
-            SdkService.MegaSdk.changeApiUrl(SettingsService.LoadSetting(
-                ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ?
-                "https://staging.api.mega.co.nz/" : "https://g.api.mega.co.nz/");
+            if (SettingsService.LoadSetting(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false))
+                SdkService.MegaSdk.changeApiUrl("https://staging.api.mega.co.nz/");
+            else if (SettingsService.LoadSetting(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false))
+                SdkService.MegaSdk.changeApiUrl("https://staging.api.mega.co.nz:444/", true);
+            else
+                SdkService.MegaSdk.changeApiUrl("https://g.api.mega.co.nz/");
 
             // Log message to indicate that the service is invoked
             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Service invoked.");

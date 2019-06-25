@@ -1423,4 +1423,12 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Message shown when trying to upload a file that is already uploaded.
 Preserve the {0} code because is for include the file name in runtime.</comment>
   </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>Are you sure you want to change to a test server? Your account may suffer irrecoverable problems.</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>Change to a test server?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
 </root>

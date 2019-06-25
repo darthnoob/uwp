@@ -98,6 +98,11 @@ namespace MegaApp.Services
                 MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrl"));
                 MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrl"));
             }
+            else if (SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false))
+            {
+                MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrlPort444"), true);
+                MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrlPort444"), true);
+            }
         }
 
         /// <summary>
@@ -257,25 +262,21 @@ namespace MegaApp.Services
         {
             StopChangeApiUrlTimer();
 
-            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
+            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ||
+                SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false);
+
             if (!useStagingServer)
             {
-                var result = await DialogService.ShowOkCancelAsync("Change to a testing server?",
-                    "Are you sure you want to change to a testing server? Your account may run irrecoverable problems.");
-
+                var result = await DialogService.ShowChangeToStagingServerDialog();
                 if (!result) return;
             }
-
-            useStagingServer = !useStagingServer;
-
-            var newApiUrl = useStagingServer ?
-                ResourceService.AppResources.GetString("AR_StagingUrl") :
-                ResourceService.AppResources.GetString("AR_ApiUrl");
-
-            MegaSdk.changeApiUrl(newApiUrl);
-            MegaSdkFolderLinks.changeApiUrl(newApiUrl);
-
-            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), useStagingServer);
+            else
+            {
+                SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
+                SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false);
+                MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_ApiUrl"));
+                MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_ApiUrl"));
+            }
 
             // Reset the "Camera Uploads" service if is enabled
             if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))

@@ -347,6 +347,7 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangeToStagingServerDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthCodeInputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthDisabledDialogViewModel.cs" />
@@ -504,6 +505,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\MultiFactorAuthSetupDialog.xaml.cs">
       <DependentUpon>MultiFactorAuthSetupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ChangeToStagingServerDialog.xaml.cs">
+      <DependentUpon>ChangeToStagingServerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TwoButtonsDialog.xaml.cs">
       <DependentUpon>TwoButtonsDialog.xaml</DependentUpon>
@@ -813,6 +817,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\MultiFactorAuthSetupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ChangeToStagingServerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
