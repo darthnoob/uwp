@@ -1790,4 +1790,8 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>App version</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
+  </data>
 </root>

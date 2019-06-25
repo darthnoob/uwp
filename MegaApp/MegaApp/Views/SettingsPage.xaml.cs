@@ -45,17 +45,17 @@ namespace MegaApp.Views
             this.ViewModel.ReloadSettings();
         }
 
-        private void OnSdkVersionPointerPressed(object sender, PointerRoutedEventArgs e)
+        private void OnAppVersionPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             SdkService.ChangeApiUrlActionStarted();
         }
 
-        private void OnSdkVersionPointerReleased(object sender, PointerRoutedEventArgs e)
+        private void OnAppVersionPointerReleased(object sender, PointerRoutedEventArgs e)
         {
             SdkService.ChangeApiUrlActionFinished();
         }
 
-        private void OnSdkVersionTapped(object sender, TappedRoutedEventArgs e)
+        private void OnAppVersionTapped(object sender, TappedRoutedEventArgs e)
         {
             DebugService.ChangeStatusAction();
         }
