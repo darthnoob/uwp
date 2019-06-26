@@ -111,10 +111,6 @@
     <PRIResource Include="Strings\uk\ProgressMessages.resw" />
     <PRIResource Include="Strings\uk\EmptyStates.resw" />
     <PRIResource Include="Strings\uk\AppMessages.resw" />
-    <PRIResource Include="Strings\tr\UiResources.resw" />
-    <PRIResource Include="Strings\tr\ProgressMessages.resw" />
-    <PRIResource Include="Strings\tr\EmptyStates.resw" />
-    <PRIResource Include="Strings\tr\AppMessages.resw" />
     <PRIResource Include="Strings\th\UiResources.resw" />
     <PRIResource Include="Strings\th\ProgressMessages.resw" />
     <PRIResource Include="Strings\th\EmptyStates.resw" />
@@ -155,10 +151,6 @@
     <PRIResource Include="Strings\id\ProgressMessages.resw" />
     <PRIResource Include="Strings\id\EmptyStates.resw" />
     <PRIResource Include="Strings\id\AppMessages.resw" />
-    <PRIResource Include="Strings\he\UiResources.resw" />
-    <PRIResource Include="Strings\he\ProgressMessages.resw" />
-    <PRIResource Include="Strings\he\EmptyStates.resw" />
-    <PRIResource Include="Strings\he\AppMessages.resw" />
     <PRIResource Include="Strings\fr\UiResources.resw" />
     <PRIResource Include="Strings\fr\ProgressMessages.resw" />
     <PRIResource Include="Strings\fr\EmptyStates.resw" />
