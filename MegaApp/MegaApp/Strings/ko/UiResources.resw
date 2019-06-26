@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>읽기 &amp; 쓰기</value>
+    <value>읽기와 쓰기</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1379,7 +1379,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_UnlockedBonusesText" xml:space="preserve">
-    <value>우리 제품을 써서 무료 저장소와 전송 할당량을 해제하세요. 간단하고, 쉽습니다.</value>
+    <value>우리 제품들을 써서 무료 저장소와 전송 할당량을 해제하세요. 간단하고, 쉽습니다</value>
     <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_GetMoreBonuses" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>보너스 전송 할당량</value>
+    <value>보너스 전송량</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1512,7 +1512,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Label for any 'Why it is not working' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_1" xml:space="preserve">
-    <value>MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이러한 거부는 통보되지 않습니다.</value>
+    <value>MEGA를 이전에 사용했던 사람을 초대하는 것은 인정되지 않으며 이렇게 거부된 사항에 대해서 통보하지 않습니다.</value>
     <comment>Text displayed in the 'Invite friends' section of the achievements that explains why this invitation could not be working. Part 1</comment>
   </data>
   <data name="UI_WhyNotWorkingText_Part_2" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>보낸 요청</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>앱 버전</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

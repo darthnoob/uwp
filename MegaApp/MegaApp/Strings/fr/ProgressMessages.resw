@@ -214,7 +214,7 @@
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</comment>
   </data>
   <data name="PM_ConnectivityIssue" xml:space="preserve">
-    <value>Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer plus tard.</value>
+    <value>Impossible d’atteindre MEGA. Veuillez vérifier votre connectivité ou ressayer ultérieurement.</value>
     <comment>Progress indicator message when the SDK is waiting for the server to complete a request due to connectivity issue - (String as short as possible).</comment>
   </data>
   <data name="PM_Reloading" xml:space="preserve">

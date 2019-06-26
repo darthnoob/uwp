@@ -170,7 +170,7 @@
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Download</value>
+    <value>Fazer download</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
@@ -507,7 +507,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>Obter link</value>
+    <value>Obter Link</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
@@ -915,7 +915,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContact" xml:space="preserve">
-    <value>Adicionar contato</value>
+    <value>Adicionar novo contato</value>
     <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contacts" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Leitura &amp; escrita</value>
+    <value>Leitura e escrita</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bônus de cota de transferência</value>
+    <value>Bônus de transferência</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>solicitações enviadas</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Versão do aplicativo</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>
