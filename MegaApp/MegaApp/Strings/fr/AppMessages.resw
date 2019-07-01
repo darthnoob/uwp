@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>La corbeille été vidée avec succès.</value>
+    <value>La corbeille a été vidée avec succès.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -208,7 +208,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
-    <value>Impossible de récupérer les données du compte de MEGA. Veuillez fermer l’appli et ressayer plus tard.</value>
+    <value>Impossible de récupérer les données du compte de MEGA. Veuillez fermer l’appli et ressayer ultérieurement.</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
   </data>
   <data name="AM_FetchNodesFailed_Title" xml:space="preserve">
@@ -388,7 +388,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
-    <value>Échec d'enregistrement des paramètres. Veuillez ressayer [{0}]</value>
+    <value>Échec d’enregistrement des paramètres. Veuillez ressayer [{0}]</value>
     <comment>Message of the dialog displayed when the process to save settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -486,7 +486,7 @@ Preserve the '{0}' code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed when the process/request to upload a node failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFolderFailed" xml:space="preserve">
-    <value>Échec de sélection du dossier. Veuillez ressayer ou sélectionner un autre dossier : [{0}</value>
+    <value>Échec de sélection du dossier. Veuillez ressayer ou sélectionner un autre dossier : [{0}]</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -576,7 +576,7 @@ Preserve the {0} code because is for include the number of nodes to be removed i
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
     <value>Le chemin de téléchargement n’existe pas et une erreur est survenue en tentant de le créer. 
-Veuillez ressayer et si vous recevez encore l’erreur, contactez support@mega.nz. [{0}]</value>
+Veuillez ressayer et si vous recevez encore l’erreur, contactez-nous à l’adresse support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -615,7 +615,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_SessionIDError" xml:space="preserve">
-    <value>Vous avez été déconnecté de cet appareil à partir d'un autre endroit</value>
+    <value>Vous avez été déconnecté de cet appareil d’un autre endroit</value>
     <comment>Message of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error).</comment>
   </data>
   <data name="AM_SessionIDError_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>Erreur de certificat SSL</value>
+    <value>Erreur de clé SSL</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -713,7 +713,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
-    <value>Copié dans le presse-papiers</value>
+    <value>Copié dans le presse-papier</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
@@ -765,7 +765,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
-    <value>Échec de reprise de votre session. Veuillez fermer l’appli et ressayer plus tard.</value>
+    <value>Échec de reprise de votre session. Veuillez fermer l’appli et ressayer ultérieurement.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
@@ -777,7 +777,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>Votre compte a été mis à jour. Souhaitez-vous vérifier les nouvelles informations de compte ?</value>
+    <value>Votre compte a été mis à jour. Souhaitez-vous vérifier les nouveaux renseignements de compte ?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
@@ -871,7 +871,7 @@ Preserve the {0} code because is for include the email address in runtime.</comm
 Preserve the [{0}] code because is for include the contact email in runtime.</comment>
   </data>
   <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
-    <value>Vous tentez d'ajouter votre propre adresse courriel comme contact.</value>
+    <value>Vous essayez d’ajouter votre propre adresse courriel comme contact.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
@@ -934,7 +934,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_DisableDebugMode_Title" xml:space="preserve">
-    <value>Désactiver le mode DÉBOGAGE</value>
+    <value>Désactiver le mode de DÉBOGAGE</value>
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
@@ -943,11 +943,11 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_EnableDebugMode_Title" xml:space="preserve">
-    <value>Activer le mode DÉBOGAGE</value>
+    <value>Activer le mode de DÉBOGAGE</value>
     <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
   </data>
   <data name="AM_SaveLogFile" xml:space="preserve">
-    <value>Voulez-vous enregistrer le fichier journal dans un emplacement externe pour l'utiliser plus tard ?</value>
+    <value>Voulez-vous enregistrer le fichier journal dans un emplacement externe pour l’utiliser ultérieurement ?</value>
     <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
   </data>
   <data name="AM_SaveLogFile_Title" xml:space="preserve">
@@ -955,11 +955,11 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
   </data>
   <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
-    <value>Le mode débogage est activé. Voulez-vous le désactiver ?</value>
+    <value>Le mode de débogage est activé. Voulez-vous le désactiver ?</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable. This alert is to try to avoid that the user forget disable the DEBUG mode and the log file size grows a lot in the offline section.</comment>
   </data>
   <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
-    <value>Mode débogage</value>
+    <value>Mode de débogage</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
@@ -1066,7 +1066,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
-    <value>Lien de récupération expiré</value>
+    <value>Le lien de récupération est expiré</value>
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
@@ -1098,11 +1098,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_SignUpLinkExpired" xml:space="preserve">
-    <value>Le lien d’inscription a expiré, veuillez ressayer.</value>
+    <value>Le lien d’inscription est expiré, veuillez ressayer.</value>
     <comment>Message of the dialog displayed when the sign-up is expired.</comment>
   </data>
   <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
-    <value>Lien d’inscription expiré</value>
+    <value>Le lien d’inscription est expiré</value>
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
@@ -1156,7 +1156,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
-    <value>Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos conditions générales d'utilisation.</value>
+    <value>Le compte qui a créé ce lien a été annulé en raison du non-respect répété de nos conditions générales d’utilisation.</value>
     <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
   </data>
   <data name="AM_FileLinkUnavailable" xml:space="preserve">
@@ -1260,7 +1260,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
   <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
-    <value>L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte. Cela signifie que même si quelqu’un connaissait votre mot de passe, il ne pourrait pas y accéder sans avoir aussi le code à 6 chiffres que seul vous aurez.</value>
+    <value>L’authentification à deux facteurs est un niveau supplémentaire de sécurité pour votre compte. Cela signifie que même si quelqu’un connaissait votre mot de passe, cette personne ne pourrait pas y accéder sans avoir aussi le code à 6 chiffres auquel vous seul pourrez accéder.</value>
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
@@ -1288,7 +1288,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
-    <value>Échec de copie de la graine dans le presse-papiers ? Veuillez ressayer.</value>
+    <value>Échec de copie de la graine dans le presse-papiers. Veuillez ressayer.</value>
     <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>Alerte de dépassement de quota !</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} a déjà été téléversé</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>Voulez-vous vraiment changer pour un serveur de test ? Votre compte pourrait subir des problèmes irrécupérables</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>Changer pour un serveur de test ?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

@@ -267,7 +267,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
-    <value>Rubbish bin</value>
+    <value>Rubbish Bin</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Settings" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Incoming shares</value>
+    <value>Incoming Shares</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Read &amp; write</value>
+    <value>Read and write</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bonus transfer quota</value>
+    <value>Bonus transfer</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Sent requests</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>App version</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

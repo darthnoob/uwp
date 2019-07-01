@@ -2,14 +2,23 @@
 using System.IO;
 using System.Runtime.CompilerServices;
 using mega;
-using BackgroundTaskService.MegaApi;
 
+#if CAMERA_UPLOADS_SERVICE
+using BackgroundTaskService.MegaApi;
+#else
+using MegaApp.MegaApi;
+#endif
+
+#if CAMERA_UPLOADS_SERVICE
 namespace BackgroundTaskService.Services
+#else
+namespace MegaApp.Services
+#endif
 {
     /// <summary>
     /// Helper service to send logs to the loggin system
     /// </summary>
-    internal static class LogService
+    static class LogService
     {
         /// <summary>
         /// Main MegaLogger instance
@@ -77,8 +86,15 @@ namespace BackgroundTaskService.Services
         public static void Log(MLogLevel logLevel, string message, Exception e,
             [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
         {
-            MegaSDK.log(logLevel, string.Format("{0} [{1} - {2}] ({3}:{4})",
-                message, e.GetType(), e.Message, Path.GetFileName(file), line));
+            if (e == null)
+            {
+                Log(logLevel, message, file, line);
+                return;
+            }                
+
+            MegaSDK.log(logLevel, string.Format("{0} [{1} - {2}] ({3}:{4})", message, 
+                e.GetType().ToString(), e.Message.Replace(Environment.NewLine, " "), 
+                Path.GetFileName(file), line));
         }
     }
 }

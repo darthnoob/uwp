@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>无法清理垃圾桶。请再试一次。</value>
+    <value>清空垃圾桶失败，请再试一次。</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>垃圾桶已成功清理。</value>
+    <value>已成功清空垃圾桶。</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>SSL证书错误</value>
+    <value>SSL密钥错误</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -657,7 +657,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>复制还原金钥至剪贴簿失败，请重试。</value>
+    <value>复制恢复密钥到剪贴板失败。请再试一次。</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
@@ -665,7 +665,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
-    <value>已复制还原金钥</value>
+    <value>恢复密钥已复制</value>
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
@@ -677,7 +677,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>无法保存文件“{​​0}”</value>
+    <value>无法保存文件‘{0}’。</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">
@@ -713,7 +713,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
-    <value>已复制到剪贴簿</value>
+    <value>已复制到剪贴板</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
@@ -1042,7 +1042,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
-    <value>无效电子邮件信箱</value>
+    <value>无效的邮箱地址</value>
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
@@ -1062,7 +1062,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
-    <value>这个恢复链接已失效，请再试一次。</value>
+    <value>这个恢复链接已过期，请再试一次。</value>
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
@@ -1411,11 +1411,24 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
-    <value>操作被禁，您将超过您的账户储存限额。您要升级账户吗？</value>
+    <value>操作未允许，您将超过您的账户存储限额。您是否想要升级帐户？</value>
     <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>超过配额警告！</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} 已被上传</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>您确定要更改为测试服务器吗？ 您的帐户可能会遇到无法解决的问题</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>更改为测试服务器？</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

@@ -381,6 +381,16 @@ namespace MegaApp.Services
         }
 
         /// <summary>
+        /// Show a dialog to change the API URL to staging server
+        /// </summary>
+        public static async Task<bool> ShowChangeToStagingServerDialog()
+        {
+            var dialog = new ChangeToStagingServerDialog();
+            await dialog.ShowAsyncQueue();
+            return dialog.ViewModel.DialogResult;
+        }
+
+        /// <summary>
         /// Show a dialog to change the account password
         /// </summary>
         public static async void ShowChangePasswordDialog()

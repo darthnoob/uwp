@@ -162,21 +162,17 @@
             </StackPanel>
         </DataTemplate>
 
-        <DataTemplate x:Key="SdkInfoActionItemTemplate" x:DataType="interfaces:ISetting">
+        <DataTemplate x:Key="AppVersionInfoItemTemplate" x:DataType="interfaces:ISetting">
             <StackPanel Margin="0,0,0,28">
                 <TextBlock
                     Style="{ThemeResource MegaTitleFontStyle}"
-                    Tapped="OnSdkVersionTapped"
+                    Tapped="OnAppVersionTapped"
                     Text="{x:Bind Title, Mode=OneTime}"
-                    PointerPressed="OnSdkVersionPointerPressed"
-                    PointerReleased="OnSdkVersionPointerReleased"
-                    Visibility="{x:Bind Title, Converter={StaticResource StringVisibilityConverter}}" />
-                <HyperlinkButton
-                    Margin="0,-4,0,0"
-                    Command="{x:Bind ActionCommand}"
-                    Content="{x:Bind Value, Mode=OneTime}"
-                    Foreground="{StaticResource MegaRedColorBrush}"
-                    Style="{StaticResource MegaLinkStyle}" />
+                    PointerPressed="OnAppVersionPointerPressed"
+                    PointerReleased="OnAppVersionPointerReleased" />
+                <TextBlock
+                    Style="{ThemeResource MegaBodyFontStyle}"
+                    Text="{x:Bind Value, Mode=OneTime}" />
             </StackPanel>
         </DataTemplate>
 
@@ -287,6 +283,7 @@
 
         <classes:SettingTemplateSelector
             x:Key="SettingTemplateSelector"
+            AppVersionInfoItemTemplate="{StaticResource AppVersionInfoItemTemplate}"
             AcknowledgementsItemTemplate="{StaticResource AcknowledgementsItemTemplate}"
             BooleanItemTemplate="{StaticResource BooleanItemTemplate}"
             DescriptionItemTemplate="{StaticResource DescriptionItemTemplate}"
@@ -295,7 +292,6 @@
             InformationItemTemplate="{StaticResource InformationItemTemplate}"
             LegalAndPoliciesItemTemplate="{StaticResource LegalAndPoliciesItemTemplate}"
             RecoveryKeyItemTemplate="{StaticResource RecoveryKeyItemTemplate}"
-            SdkInfoActionItemTemplate="{StaticResource SdkInfoActionItemTemplate}"
             SelectionItemTemplate="{StaticResource SelectionItemTemplate}" />
     </Page.Resources>
 

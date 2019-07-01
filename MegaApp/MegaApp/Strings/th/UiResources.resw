@@ -138,7 +138,7 @@
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>คลาวด์ไดร์ฟ</value>
+    <value>คลาวด์ไดรฟ์</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -182,11 +182,11 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>ไม่มีไฟล์ใดๆ</value>
+    <value>ไม่มีไฟล์ในคลาวด์ไดรฟ์ของคุณ</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
-    <value>โฟล์เดอร์ว่าง</value>
+    <value>โฟลเดอร์ว่างเปล่า</value>
     <comment>Label for the background of an empty forder page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyOffline" xml:space="preserve">
@@ -511,7 +511,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>ถัดไป</value>
+    <value>ต่อไป</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
@@ -767,7 +767,7 @@ Keep 'Microsoft Store' in English because it is a trademark.</comment>
     <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Storage" xml:space="preserve">
-    <value>พื้นที่จัดเก็บข้อมูล</value>
+    <value>ที่เก็บข้อมูล</value>
     <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UpgradeStep1" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>เปลี่ยนรหัส</value>
+    <value>เปลี่ยนรหัสผ่าน</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1371,7 +1371,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Share to' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageQuota" xml:space="preserve">
-    <value>โควต้าเก็บข้อมูล</value>
+    <value>โควต้าที่เก็บข้อมูล</value>
     <comment>Label for any 'Storage quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UnlockedBonuses" xml:space="preserve">
@@ -1411,11 +1411,11 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Registration bonus' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusStorage" xml:space="preserve">
-    <value>โบนัสพื้นที่จัดเก็บ</value>
+    <value>โบนัสที่เก็บข้อมูล</value>
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>โบนัสโควต้าการถ่ายโอน</value>
+    <value>โบนัสถ่ายโอน</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>ส่งคำขอ</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>เวอร์ชันแอป</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

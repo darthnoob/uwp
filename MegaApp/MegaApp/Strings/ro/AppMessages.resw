@@ -122,46 +122,46 @@
     <comment>Message of the dialog shown when the user is trying to login and the account has not been confirmed yet.</comment>
   </data>
   <data name="AM_AgreeTermsOfService" xml:space="preserve">
-    <value>Please confirm you agree with the Terms of Service.</value>
+    <value>Te rugăm să confirmi faptul că ești de acord cu Termenii de utilizare a serviciului.</value>
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>Failed to clean the rubbish bin. Please try again.</value>
+    <value>Eșec la golirea coșului de gunoi. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
-    <value>Sigur vrei să ştergi definitiv toate fişierele din coşul de gunoi?</value>
+    <value>Sigur vrei să ștergi definitiv toate fișierele din coșul de gunoi?</value>
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>The rubbish bin has been cleaned successfully.</value>
+    <value>Coșul de gunoi a fost golit cu succes.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
-    <value>Clear Rubbish Bin</value>
+    <value>Golește coșul de gunoi</value>
     <comment>Title for any 'Clear Rubbish Bin' dialog - (String as short as possible).</comment>
   </data>
   <data name="AM_ConfirmEmail" xml:space="preserve">
-    <value>We have sent you a confirmation link to your selected email address: {0}.</value>
+    <value>Ți-am trimis un link de confirmare la adresa de e-mail selectată: {0}.</value>
     <comment>Message of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ConfirmEmail_Title" xml:space="preserve">
-    <value>Confirm your email</value>
+    <value>Confirmă-ți e-mailul</value>
     <comment>Title of the dialog displayed when a user create a new MEGA account successfully, informing that will receive an email with a link to confirm account - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileFailed" xml:space="preserve">
-    <value>Eşec la copierea fişierului selectat: [{0}]</value>
+    <value>Eșec la copierea fișierului selectat: [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed by a non specific cause.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_CopyFileFailed_Title" xml:space="preserve">
-    <value>Eroare la copierea fişierului</value>
+    <value>Eroare la copierea fișierului</value>
     <comment>Title of the dialog displayed when the process/request to copy a file failed by a non specific cause - (String as short as possible).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException" xml:space="preserve">
-    <value>Nu ai permisiunea de a copia acest tip de fişiere în dosarul de destinaţie. Încerci să salvezi/copiezi un fişier de un tip nesuportat pe un card SD?
-Te rugăm să încerci să salvezi/copiezi fişierul în memoria internă a dispozitivului în schimb.</value>
+    <value>Nu ai permisiunea de a copia acest tip de fișiere în folderul de destinație. Încerci să salvezi/copiezi un fișier de un tip nesuportat pe un card SD?
+Te rugăm să încerci în schimb să salvezi/copiezi fișierul în memoria internă a dispozitivului.</value>
     <comment>Message of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type).</comment>
   </data>
   <data name="AM_CopyFileUnauthorizedAccessException_Title" xml:space="preserve">
@@ -169,24 +169,24 @@ Te rugăm să încerci să salvezi/copiezi fişierul în memoria internă a disp
     <comment>Title of the dialog displayed when the process/request to copy a file failed because the app or the user don't have write permission to copy into the destination (i.e. copy into a SD card an unsupported file type) - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateAccountFailed" xml:space="preserve">
-    <value>Crearea contului MEGA a unităţii cloud a eşuat. Te rugăm să încerci din nou. [{0}]</value>
+    <value>Crearea contului MEGA a unității cloud a eșuat. Te rugăm să încerci din nou. [{0}]</value>
     <comment>Message of the dialog displayed when the creation of a MEGA account failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_CreateAccountFailed_Title" xml:space="preserve">
-    <value>Crearea contului a eşuat</value>
+    <value>Crearea contului a eșuat</value>
     <comment>Title of the dialog displayed when the creation of a MEGA account failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderFailed" xml:space="preserve">
-    <value>Eşec la crearea folderului</value>
+    <value>Eșec la crearea folderului</value>
     <comment>Message of the dialog displayed when the creation of a folder failed.</comment>
   </data>
   <data name="AM_CreateFolderFailed_Title" xml:space="preserve">
-    <value>Crearea folderului a eşuat</value>
+    <value>Crearea folderului a eșuat</value>
     <comment>Title of the dialog displayed when the creation of a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateFolderSuccess" xml:space="preserve">
-    <value>Folder ‘{0}’ created successfully</value>
+    <value>Folder ‘{0}’ creat cu succes</value>
     <comment>Message of the dialog displayed when create a folder successfully.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
@@ -195,41 +195,41 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when create a folder successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_DeleteSettingsFailed" xml:space="preserve">
-    <value>Eşec la ştergerea setărilor. Te rugăm să încerci din nou. [{0}]</value>
+    <value>Eșec la ștergerea setărilor. Te rugăm să încerci din nou. [{0}]</value>
     <comment>Message of the dialog displayed when the process to delete settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DeleteSettingsFailed_Title" xml:space="preserve">
-    <value>Eroare la ştergerea setărilor</value>
+    <value>Eroare la ștergerea setărilor</value>
     <comment>Title of the dialog displayed when the process to delete settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_EmailAlreadyRegistered" xml:space="preserve">
-    <value>This email address has already registered an account with MEGA.</value>
+    <value>Această adresă de e-mail a înregistrat deja un cont cu MEGA.</value>
     <comment>Message of the dialog shown when the users tries to create an account with an email already in use.</comment>
   </data>
   <data name="AM_FetchNodesFailed" xml:space="preserve">
-    <value>Could not retrieve the account data from MEGA. Please, close the app and try again later.</value>
+    <value>Nu s-au putut prelua datele contului din MEGA. Te rugăm să închizi aplicația și să încerci din nou mai târziu.</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed.</comment>
   </data>
   <data name="AM_FetchNodesFailed_Title" xml:space="preserve">
-    <value>Requesting account data failed</value>
+    <value>Solicitarea datelor contului a eșuat</value>
     <comment>Message of the dialog displayed when the process/request to fetch nodes from the MEGA cloud service failed - (String as short as possible).</comment>
   </data>
   <data name="AM_FileNotFound" xml:space="preserve">
-    <value>Nu se poate găsi fişierul selectat</value>
+    <value>Nu se poate găsi fișierul selectat</value>
     <comment>Message of the dialog displayed when a user try to open a file that can't be found and the process failed.</comment>
   </data>
   <data name="AM_FileNotFound_Title" xml:space="preserve">
-    <value>Fişier negăsit</value>
+    <value>Fișier negăsit</value>
     <comment>Title of the dialog displayed when a user try to open a file that can't be found and the process failed - (String as short as possible).</comment>
   </data>
   <data name="AM_GetThumbnailFailed" xml:space="preserve">
-    <value>Eşec la preluarea miniaturii [{0}]</value>
+    <value>Eșec la preluarea miniaturii [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to get a image thumbnail failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_GetThumbnailFailed_Title" xml:space="preserve">
-    <value>Obţinerea miniaturii a eşuat</value>
+    <value>Obținerea miniaturii a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to get a image thumbnail failed - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidLink" xml:space="preserve">
@@ -237,15 +237,15 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Message of the dialog displayed when the user is trying to open an invliad link.</comment>
   </data>
   <data name="AM_LoadNodesFailed" xml:space="preserve">
-    <value>Could not load files and folders from MEGA. Please try again.</value>
+    <value>Nu s-au putut încărca fișierele și folderele din MEGA. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service.</comment>
   </data>
   <data name="AM_LoadNodesFailed_Title" xml:space="preserve">
-    <value>Eşec la încărcare</value>
+    <value>Eșec la încărcare</value>
     <comment>Title of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service - (String as short as possible).</comment>
   </data>
   <data name="AM_LoadSettingsFailed" xml:space="preserve">
-    <value>Eşec la încărcarea setărilor. Te rugăm să încerci din nou . [{0}]</value>
+    <value>Eșec la încărcarea setărilor. Te rugăm să încerci din nou . [{0}]</value>
     <comment>Message of the dialog displayed when the process to load settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -262,28 +262,28 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when a user logged out successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginFailed" xml:space="preserve">
-    <value>MEGA Cloud Drive login failed. Please try again.</value>
+    <value>Autentificarea MEGA a unității cloud a eșuat. Te rugăm să încerci din nou. [{0}]</value>
     <comment>Message of the dialog displayed when the login to the MEGA cloud service api fails.</comment>
   </data>
   <data name="AM_LoginFailed_Title" xml:space="preserve">
-    <value>Autentificare eşuată</value>
+    <value>Autentificare eșuată</value>
     <comment>Title of the dialog displayed when the login to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LogoutFailed" xml:space="preserve">
-    <value>Eşec la deconectare. Te rugăm să încerci din nou. [{0}]</value>
+    <value>Eșec la deconectare. Te rugăm să încerci din nou. [{0}]</value>
     <comment>Message of the dialog displayed when the logout to the MEGA cloud service api fails. 
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_LogoutFailed_Title" xml:space="preserve">
-    <value>Deconectare eşuată</value>
+    <value>Deconectare eșuată</value>
     <comment>Title of the dialog displayed when the logout to the MEGA cloud service api fails - (String as short as possible).</comment>
   </data>
   <data name="AM_IncorrectEmailFormat" xml:space="preserve">
-    <value>Invalid email format. Please try again.</value>
+    <value>Format de e-mail nevalid. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the user types an email address with an incorrect format.</comment>
   </data>
   <data name="AM_MemoryLimitError" xml:space="preserve">
-    <value>Spaţiu liber insuficient pentru a încheia această operaţie. Aplicaţia se va închide acum</value>
+    <value>Spațiu liber insuficient pentru a încheia această operație. Aplicația se va închide acum</value>
     <comment>Message of the dialog displayed when the app exceeds the memory limit quota of the device.</comment>
   </data>
   <data name="AM_MemoryLimitError_Title" xml:space="preserve">
@@ -291,25 +291,25 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the app exceeds the memory limit quota of the device - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed" xml:space="preserve">
-    <value>Failed to move ‘{0}’ to rubbish bin. Please try again.</value>
+    <value>Eșec la mutarea ‘{0}’ în coșul de gunoi. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to move nodes to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_MoveToRubbishBinFailed_Title" xml:space="preserve">
-    <value>Mutarea în coşul de gunoi a eşuat</value>
+    <value>Mutarea în coșul de gunoi a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to move nodes to the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Are you sure you want to move ‘{0}’ to the rubbish bin?</value>
+    <value>Sigur vrei să muți '{0}' în coșul de gunoi?</value>
     <comment>Message of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the name of the node to be moved in runtime.</comment>
   </data>
   <data name="AM_MoveToRubbishBinQuestion_Title" xml:space="preserve">
-    <value>Muţi în coşul de gunoi?</value>
+    <value>Muți în coșul de gunoi?</value>
     <comment>Title of the dialog displayed when a user want to move a single node to the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveToRubbishBinSuccess" xml:space="preserve">
-    <value>Item ‘{0}’ successfully moved to the rubbish bin.</value>
+    <value>Elementul ‘{0}’ mutat cu succes în coșul de gunoi.</value>
     <comment>Message of the dialog displayed when move successfully one single node to the rubbish bin.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
@@ -318,19 +318,19 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Title of the dialog displayed when move successfully one single node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_NewSignUpInvalidLink" xml:space="preserve">
-    <value>Linkul pe care îl foloseşti pentru o înregistrare nouă nu este valid.</value>
+    <value>Linkul pe care îl folosești pentru o înregistrare nouă nu este valid.</value>
     <comment>Message of the warning dialog shown when the user tries to make a new sign up using an invalid link (#newsignup).</comment>
   </data>
   <data name="AM_NoInternetConnectionMessage" xml:space="preserve">
-    <value>Nu poţi efectua această acţiune. Te rugăm să te conectezi la internet şi să reîncerci.</value>
+    <value>Nu poți efectua această acțiune. Te rugăm să te conectezi la internet și să reîncerci.</value>
     <comment>Message of the dialog displayed when the user is trying to perform any online action without an active Internet connection.</comment>
   </data>
   <data name="AM_OpenFileFailed" xml:space="preserve">
-    <value>Eşec la deschiderea fişierului selectat</value>
+    <value>Eșec la deschiderea fișierului selectat</value>
     <comment>Message of the dialog displayed when the process to open a file failed.</comment>
   </data>
   <data name="AM_OpenFileFailed_Title" xml:space="preserve">
-    <value>Deschiderea fişierului a eşuat</value>
+    <value>Deschiderea fișierului a eșuat</value>
     <comment>Title of the dialog displayed when the process to open a file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordsDoNotMatch" xml:space="preserve">
@@ -338,7 +338,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when two typed passwords don't match.</comment>
   </data>
   <data name="AM_RemoveItemQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove ‘{0}’?</value>
+    <value>Sigur vrei să elimini '{0}'?</value>
     <comment>Message of the dialog displayed when a user want to remove definitely an itemfrom the rubbish bin, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
@@ -347,12 +347,12 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when a user want to remove definitely an item from the rubbish bin failed, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeFailed" xml:space="preserve">
-    <value>Failed removing ‘{0}’. Please try again.</value>
+    <value>Eșec la eliminarea ‘{0}’. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveNodeFailed_Title" xml:space="preserve">
-    <value>Eliminare eşuată</value>
+    <value>Eliminare eșuată</value>
     <comment>Title of the dialog displayed when the process/request remove definitely an item from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveNodeSuccess" xml:space="preserve">
@@ -364,19 +364,19 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when remove successfully a node definitely from the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="AM_RenameNodeFailed" xml:space="preserve">
-    <value>Redenumirea elementului a eşuat</value>
+    <value>Redenumirea elementului a eșuat</value>
     <comment>Message of the dialog displayed when the process/request to rename a node failed.</comment>
   </data>
   <data name="AM_RenameNodeFailed_Title" xml:space="preserve">
-    <value>Redenumire eşuată</value>
+    <value>Redenumire eșuată</value>
     <comment>Title of the dialog displayed when the process/request to remove definitely an item node from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RequiredFieldsCreateAccount" xml:space="preserve">
-    <value>Completează numele, adresa de e-mail şi parola</value>
+    <value>Completează numele, adresa de e-mail și parola</value>
     <comment>Message of the dialog displayed when required fields for create account are not filled in.</comment>
   </data>
   <data name="AM_RequiredFieldsLogin" xml:space="preserve">
-    <value>Te rugăm să completezi adresa de e-mail şi parola MEGA.</value>
+    <value>Te rugăm să completezi adresa de e-mail și parola MEGA.</value>
     <comment>Message of the dialog displayed when required fields for login are not filled in.</comment>
   </data>
   <data name="AM_RequiredFields_Title" xml:space="preserve">
@@ -384,11 +384,11 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when any required field is not filled in - (String as short as possible).</comment>
   </data>
   <data name="AM_EmptyRequiredFields" xml:space="preserve">
-    <value>Fill the required fields and try again.</value>
+    <value>Completează câmpurile obligatorii și încearcă din nou.</value>
     <comment>Message of the dialog displayed when required fields are empty.</comment>
   </data>
   <data name="AM_SaveSettingsFailed" xml:space="preserve">
-    <value>Eşec la salvarea setărilor. Te rugăm să reîncerci [{0}]</value>
+    <value>Eșec la salvarea setărilor. Te rugăm să reîncerci [{0}]</value>
     <comment>Message of the dialog displayed when the process to save settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -397,21 +397,21 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process to save settings failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFileFailed" xml:space="preserve">
-    <value>Eşec la selectarea fişierului(elor). Te rugăm să reîncerci [{0}]</value>
+    <value>Eșec la selectarea fișierului(elor). Te rugăm să reîncerci [{0}]</value>
     <comment>Message of the dialog displayed when the process to select files failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_SelectFileFailed_Title" xml:space="preserve">
-    <value>Selectarea fişierului a eşuat</value>
+    <value>Selectarea fișierului a eșuat</value>
     <comment>Title of the dialog displayed when the process to select files failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TooManyFailedLoginAttempts" xml:space="preserve">
-    <value>Ai încercat să te autentifici de prea multe ori. Te rugăm să aştepţi până la {0} şi să încerci din nou.</value>
+    <value>Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la {0} și să încerci din nou.</value>
     <comment>Message of the dialog shown when the user is trying to login and has made several failed attempts.
 Preserve the {0} code because is for include the exact time until the user has to wait.</comment>
   </data>
   <data name="AM_UserNotOnline" xml:space="preserve">
-    <value>Nu eşti autentificat pe MEGA. Te rugăm să te reautentifici.</value>
+    <value>Nu ești autentificat pe MEGA. Te rugăm să te reautentifici.</value>
     <comment>Message of the dialog displayed when the user is not online and is trying to do any operation that requires connection.</comment>
   </data>
   <data name="AM_UserNotOnline_Title" xml:space="preserve">
@@ -419,83 +419,83 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
-    <value>Incorrect email and/or password. Please try again.</value>
+    <value>E-mail și/sau parolă incorecte. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when a user is trying to login with an email that is not associated with a MEGA account or type a wrong password. Preserve the MEGA word in uppercase.</comment>
   </data>
   <data name="AM_AlreadyConfirmedAccount" xml:space="preserve">
-    <value>Contul tău a fost activat deja. Te rugăm să te autentifici.</value>
+    <value>Contul tău a fost activat. Te rugăm să te autentifici.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account that has been already confirmed previously.</comment>
   </data>
   <data name="AM_ConfirmAccountFailed" xml:space="preserve">
-    <value>Failed to confirm account. Please try again.</value>
+    <value>Eșec la confirmarea contului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the confirmation of a MEGA account failed.</comment>
   </data>
   <data name="AM_ConfirmAccountSucces" xml:space="preserve">
-    <value>Contul tău a fost creat, confirmat şi activat. Vei fi automat autentificat.</value>
+    <value>Contul tău a fost creat, confirmat și activat. Vei fi automat autentificat.</value>
     <comment>Message of the dialog displayed when confirm a MEGA account succesfully.</comment>
   </data>
   <data name="AM_IncompleteConfirmationLink" xml:space="preserve">
-    <value>Linkul de confirmare a contului pe care îl foloseşti este incomplet. Te rugăm să verifici lungimea linkului şi să te asiguri că ai copiat întregul linkul, apoi încearcă din nou.</value>
+    <value>Linkul de confirmare a contului pe care îl folosești este incomplet. Te rugăm să verifici lungimea linkului și să te asiguri că ai copiat întregul linkul, apoi încearcă din nou.</value>
     <comment>Message of the dialog displayed when a user try to confirm a MEGA account but the confirm link is incomplete because it has less characters than it should (probably because the user hasn't copied and pasted the entire link).</comment>
   </data>
   <data name="AM_WrongPassword" xml:space="preserve">
-    <value>Incorrect password. Please try again.</value>
+    <value>Parolă incorectă. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
-    <value>Dacă eşti de acord, contul actual va fi deconectat şi toate datele offline vor fi şterse. Doreşti să continui?</value>
+    <value>Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Dorești să continui?</value>
     <comment>Message of the warning dialog shown when you try to confirm an account but you are logged in with another one.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
-    <value>Eşti autentificat cu un alt cont</value>
+    <value>Ești autentificat cu un alt cont</value>
     <comment>Title of the warning dialog shown when you try to confirm an account but you are logged in with another one - (String as short as possible).</comment>
   </data>
   <data name="AM_DownloadFileFailed" xml:space="preserve">
-    <value>Failed to download the file ‘{0}’. Please try again.</value>
+    <value>Eșec la descărcarea fișierului ‘{0}’. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to download a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_DownloadFailed_Title" xml:space="preserve">
-    <value>Descărcare eşuată</value>
+    <value>Descărcare eșuată</value>
     <comment>Title of the dialog displayed when download process/request failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed" xml:space="preserve">
-    <value>Failed to prepare file ‘{0}’ for upload. Please try again.</value>
+    <value>Eșec la pregătirea fișierului '{0}' pentru încărcare. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to prepare a file for upload failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PrepareFileForUploadFailed_Title" xml:space="preserve">
-    <value>Pregătirea fişierului a eşuat</value>
+    <value>Pregătirea fișierului a eșuat</value>
     <comment>Title of the dialog displayed when the process to prepare a file for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PrepareFilesForUploadFailed" xml:space="preserve">
-    <value>Eşec la pregătirea fişierului(elor) pentru încărcare. Te rugăm să încerci din nou.</value>
+    <value>Eșec la pregătirea fișierului(elor) pentru încărcare. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to prepare a file(s) for upload failed.</comment>
   </data>
   <data name="AM_PrepareFilesForUploadFailed_Title" xml:space="preserve">
-    <value>Eroare la pregătirea fişierului(elor)</value>
+    <value>Eroare la pregătirea fișierului(elor)</value>
     <comment>Title of the dialog displayed when the process to prepare file(s) for upload failed - (String as short as possible).</comment>
   </data>
   <data name="AM_UploadFileFailed" xml:space="preserve">
-    <value>Failed to upload the file ‘{0}’. Please try again.</value>
+    <value>Eșec la încărcarea fișierului '{0}'. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to upload a file failed.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_UploadFailed_Title" xml:space="preserve">
-    <value>Încărcare eşuată</value>
+    <value>Încărcare eșuată</value>
     <comment>Title of the dialog displayed when the process/request to upload a node failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SelectFolderFailed" xml:space="preserve">
-    <value>Failed to select folder. Please, try again or select another folder: [{0}]</value>
+    <value>Eșec la selectarea folderului. Te rugăm să încerci din nou sau selectează alt folder: [{0}]</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_SelectFolderFailed_Title" xml:space="preserve">
-    <value>Selectarea folderului a eşuat</value>
+    <value>Selectarea folderului a eșuat</value>
     <comment>Title of the dialog displayed when the process to select a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess" xml:space="preserve">
-    <value>Nu ai acces la calea de descărcare selectată. Te rugăm să selectezi o cale de descărcare diferită şi să încerci din nou.</value>
+    <value>Nu ai acces la calea de descărcare selectată. Te rugăm să selectezi o cale de descărcare diferită și să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder.</comment>
   </data>
   <data name="AM_DowloadPathUnauthorizedAccess_Title" xml:space="preserve">
@@ -503,52 +503,52 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when the process/request to download a file/folder failed because the app or the user don't have access permission to the destination folder</comment>
   </data>
   <data name="AM_FolderUnauthorizedAccess" xml:space="preserve">
-    <value>You don’t have access to the path ‘{0}’. Please select another one and try again.</value>
+    <value>Nu ai acces la calea ‘{0}’. Te rugăm să selectezi alta și încearcă din nou.</value>
     <comment>Message of the dialog displayed in cases that the app or the user doesn't have access to a folder path in the device memory. For example to download a file/folder, create a new folder, etc.
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
   <data name="AM_InvalidFileName" xml:space="preserve">
-    <value>Numele fişierului '{0}' nu este valid sau are caractere ilegale. Te rugăm să îl schimbi şi să încerci din nou.</value>
+    <value>Numele fișierului '{0}' nu este valid sau are caractere ilegale. Te rugăm să îl schimbi și să încerci din nou.</value>
     <comment>Message of the dialog displayed in cases that a file name is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_InvalidFolderNameOrPath" xml:space="preserve">
-    <value>Numele căii sau folderului '{0}' nu este valid sau are caractere ilegale. Te rugăm să îl schimbi şi să încerci din nou.</value>
+    <value>Numele căii sau folderului '{0}' nu este valid sau are caractere ilegale. Te rugăm să îl schimbi și să încerci din nou.</value>
     <comment>Message of the dialog displayed in cases that a folder name or path is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_PathTooLong" xml:space="preserve">
-    <value>Calea fişierului/folderului '{0}' este prea lungă. Te rugăm să o schimbi şi să încerci din nou.</value>
+    <value>Calea fișierului/folderului '{0}' este prea lungă. Te rugăm să o schimbi și să încerci din nou.</value>
     <comment>Message of the dialog displayed in cases that the file/folder path is too long.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_SelectFolderFailedNoErrorCode" xml:space="preserve">
-    <value>Eşec la selectarea folderului. Te rugăm să încerci din nou sau să selectezi un alt folder.</value>
+    <value>Eșec la selectarea folderului. Te rugăm să încerci din nou sau să selectezi un alt folder.</value>
     <comment>Message of the dialog displayed when the process to select a folder failed.</comment>
   </data>
   <data name="AM_CancelDownloadsQuestion" xml:space="preserve">
-    <value>Sigur vrei să anulezi toate descărcările în aşteptare?</value>
+    <value>Sigur vrei să anulezi toate descărcările în așteptare?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending downloads.</comment>
   </data>
   <data name="AM_CancelSingleDownloadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected download?</value>
+    <value>Sigur vrei să anulezi descărcarea selectată?</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected download.</comment>
   </data>
   <data name="AM_CancelSingleUploadQuestion" xml:space="preserve">
-    <value>Are you sure you want to cancel the selected upload?</value>
+    <value>Sigur vrei să anulezi încărcarea selectată?</value>
     <comment>Message of the dialog displayed when a user wants to cancel a selected upload.</comment>
   </data>
   <data name="AM_CancelUploadsQuestion" xml:space="preserve">
-    <value>Sigur vrei să anulezi toate încărcările în aşteptare?</value>
+    <value>Sigur vrei să anulezi toate încărcările în așteptare?</value>
     <comment>Message of the dialog displayed when a user wants to cancel all the pending uploads.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinQuestion" xml:space="preserve">
-    <value>Sigur vrei să muţi {0} elemente în coşul de gunoi?</value>
+    <value>Sigur vrei să muți {0} elemente în coșul de gunoi?</value>
     <comment>Message of the dialog displayed when a user want to move multiple nodes to the rubbish bin, asking for confirmation to make the movement.
 Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
   </data>
   <data name="AM_MultiMoveToRubbishBinSucces" xml:space="preserve">
-    <value>{0} elemente mutate în coşul de gunoi</value>
+    <value>{0} elemente mutate în coșul de gunoi</value>
     <comment>Message of the dialog displayed when move successfully multiple nodes to the rubbish bin.
 Preserve the {0} code because is for include the number of nodes to be moved in runtime.</comment>
   </data>
@@ -575,39 +575,39 @@ Preserve the {0} code because is for include the number of nodes to be removed i
     <comment>Title of the dialog displayed when a user want to remove multiple nodes definitely from the rubbish bin, asking for confirmation to make the movement - (String as short as possible).</comment>
   </data>
   <data name="AM_CreateDownloadPathError" xml:space="preserve">
-    <value>The download path doesn’t exist and an error occurred trying to create it. 
-Please try again and if you continue getting the error contact us at support@mega.nz. [{0}]</value>
+    <value>Calea de descărcare nu există și a apărut o eroare în încercarea de a o crea. 
+Te rugăm să încerci din nou, iar dacă continui să primești eroarea, contactează-ne la adresa support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because the download path doesn't exist and any error occurred trying create it.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_DownloadPathUnknownError" xml:space="preserve">
-    <value>Unknown error in the download path. Please try again and if the problem persists contact support@mega.nz. [{0}]</value>
+    <value>Eroare necunoscută în calea de descărcare. Te rugăm să încerci din nou, iar dacă problema persistă, contactează support@mega.nz. [{0}]</value>
     <comment>Message of the dialog displayed when the process/request to download a file/folder failed because an unknown error in the download path.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
   <data name="AM_RenameNodeSuccess" xml:space="preserve">
-    <value>Item ‘{0}’ renamed to ‘{1}’</value>
+    <value>Elementul ‘{0}’ redenumit în ‘{1}’</value>
     <comment>Message displayed when user has renamed a node with success.
 Preserve the '{0}' and '{1}'codes because are for include the old and new name in runtime.</comment>
   </data>
   <data name="AM_CopyFailed" xml:space="preserve">
-    <value>Failed copying nodes. Please try again.</value>
+    <value>Eșec la copierea nodurilor. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to copy node(s) failed.</comment>
   </data>
   <data name="AM_CopyFailed_Title" xml:space="preserve">
-    <value>Copiere eşuată</value>
+    <value>Copiere eșuată</value>
     <comment>Title of the dialog displayed when the process/request to copy node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_MoveFailed" xml:space="preserve">
-    <value>Failed moving nodes. Please try again.</value>
+    <value>Eșec la mutarea nodurilor. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to move node(s) failed.</comment>
   </data>
   <data name="AM_MoveFailed_Title" xml:space="preserve">
-    <value>Mutare eşuată</value>
+    <value>Mutare eșuată</value>
     <comment>Title of the dialog displayed when the process/request to move a node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlocked" xml:space="preserve">
-    <value>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</value>
+    <value>Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, cum ar fi abuzul drepturilor altora; partajarea și/sau importarea de date ilegale; ori abuzul de sistem.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_AccountBlocked_Title" xml:space="preserve">
@@ -615,7 +615,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog shown when the user is trying to login and the account has been blocked.</comment>
   </data>
   <data name="AM_SessionIDError" xml:space="preserve">
-    <value>Ai fost deconectat de pe acest dispozitiv dintr-o altă locaţie</value>
+    <value>Ai fost deconectat de pe acest dispozitiv dintr-o altă locație</value>
     <comment>Message of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error).</comment>
   </data>
   <data name="AM_SessionIDError_Title" xml:space="preserve">
@@ -623,45 +623,45 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Title of the dialog displayed when the user is logged out from another location and is trying to do any operation that requires a valid session (API_ESID Error) - (String as short as possible).</comment>
   </data>
   <data name="AM_SSLKeyError" xml:space="preserve">
-    <value>Cheia SSL a serverului nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle.</value>
+    <value>MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe WiFi public cu cerințe suplimentare.</value>
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>SSL certificate error</value>
+    <value>Eroare privind cheia SSL</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
-    <value>Eliminare eşuată</value>
+    <value>Eliminare eșuată</value>
     <comment>Title of the dialog displayed when the process/request to remove node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFailed" xml:space="preserve">
-    <value>Failed removing files or folders. Please try again.</value>
+    <value>Eșec la eliminarea fișierelor sau folderelor. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple nodes failed.</comment>
   </data>
   <data name="AM_MoveToRubbishBinMultipleNodesFailed" xml:space="preserve">
-    <value>Failed moving files or folders to the rubbish bin. Please try again.</value>
+    <value>Eșec la mutarea fișierelor sau folderelor în coșul de gunoi. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to move multiple nodes to the rubbish bin failed.</comment>
   </data>
   <data name="AM_DownloadFolderFailed" xml:space="preserve">
-    <value>Failed to download the folder ‘{0}’. Please try again.</value>
+    <value>Eșec la descărcarea folderului ‘{0}’. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to download a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_UploadFolderFailed" xml:space="preserve">
-    <value>Failed to upload the folder ‘{0}’. Please try again.</value>
+    <value>Eșec la încărcarea folderului ‘{0}’. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to upload a folder failed.
 Preserve the '{0}' code because is for include the folder name in runtime.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied" xml:space="preserve">
-    <value>Cheie de recuperare copiată în clipboard</value>
+    <value>Cheia de recuperare a fost copiată în clipboard. Te rugăm să o stochezi într-un loc sigur.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed" xml:space="preserve">
-    <value>Eşec la copierea cheii de recuperare în clipboard. Te rugăm să încerci din nou.</value>
+    <value>Eșec la copierea cheii de recuperare în clipboard. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopiedFailed_Title" xml:space="preserve">
-    <value>Recovery Key copy failed</value>
+    <value>Copierea cheii de recuperare a eșuat</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_RecoveryKeyCopied_Title" xml:space="preserve">
@@ -669,31 +669,31 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed in cases that the app has succesful copied the recovery key to the clipboard.</comment>
   </data>
   <data name="AM_SavedFile" xml:space="preserve">
-    <value>File ‘{0}’ has been saved.</value>
+    <value>Fișierul ‘{0}’ a fost salvat.</value>
     <comment>Message of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SavedFile_Title" xml:space="preserve">
-    <value>File saved</value>
+    <value>Fișier salvat</value>
     <comment>Title of the dialog displayed in cases that the app has succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed" xml:space="preserve">
-    <value>Failed to save file ‘{0}’.</value>
+    <value>Eșec la salvarea fișierului ‘{0}’.</value>
     <comment>Message of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_SaveFileFailed_Title" xml:space="preserve">
-    <value>Save file failed</value>
+    <value>Salvarea fișierului a eșuat</value>
     <comment>Title of the dialog displayed in cases that the app has not succesful saved a file.</comment>
   </data>
   <data name="AM_PreviewImageFailed_Title" xml:space="preserve">
-    <value>Image preview failed</value>
+    <value>Previzualizarea imaginii a eșuat</value>
     <comment>Title of the dialog displayed when the process to show a preview of an image file failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PreviewImageInitFailed" xml:space="preserve">
-    <value>Failed to initialize the previews of image files. Please try again.</value>
+    <value>Eșec la inițializarea previzualizărilor fișierelor imagine. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to initialize the previews of image files failed.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed" xml:space="preserve">
-    <value>Eşec la copierea linkului MEGA în clipboard.</value>
+    <value>Eșec la copierea linkului MEGA în clipboard.</value>
     <comment>Message of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard.</comment>
   </data>
   <data name="AM_CopyLinkToClipboardFailed_Title" xml:space="preserve">
@@ -701,11 +701,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard - (String as short as possible).</comment>
   </data>
   <data name="AM_GetLinkFailed" xml:space="preserve">
-    <value>Failed getting the link. Please try again.</value>
+    <value>Eșec la obținerea linkului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) failed.</comment>
   </data>
   <data name="AM_GetLinkFailed_Title" xml:space="preserve">
-    <value>Get link failed</value>
+    <value>Obținerea linkului a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard" xml:space="preserve">
@@ -717,11 +717,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
-    <value>Link shared by the UWP MEGA app.</value>
+    <value>Link partajat de aplicația UWP MEGA.</value>
     <comment>Message or description for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed" xml:space="preserve">
-    <value>Failed to share link from MEGA. Please try again.</value>
+    <value>Eșec la partajarea fișierului de pe MEGA. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to share a link from MEGA with other app fails.</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed_Title" xml:space="preserve">
@@ -729,27 +729,27 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the process to share a link from MEGA with other app fails - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega_Title" xml:space="preserve">
-    <value>Link shared from MEGA</value>
+    <value>Link partajat de pe MEGA</value>
     <comment>Title for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveLinkFailed" xml:space="preserve">
-    <value>Failed removing the link. Please try again.</value>
+    <value>Eșec la eliminarea linkului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to disable export node (remove link) failed.</comment>
   </data>
   <data name="AM_RemoveLinkFailed_Title" xml:space="preserve">
-    <value>Remove link failed</value>
+    <value>Eliminarea linkului a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to disable export node (remove link) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed" xml:space="preserve">
-    <value>Failed setting the link expiry date. Please try again.</value>
+    <value>Eșec la setarea datei de expirare a linkului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to export node (get link) with expiration time failed.</comment>
   </data>
   <data name="AM_SetLinkExpirationTimeFailed_Title" xml:space="preserve">
-    <value>Set expiry date failed</value>
+    <value>Setarea datei de expirare a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to export node (get link) with expiration time failed - (String as short as possible).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning" xml:space="preserve">
-    <value>Transferul în coadă depăşeşte cota de transfer actuală disponibilă pentru contul tău şi, prin urmare, poate fi întreruptă.</value>
+    <value>Transferul în coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error).</comment>
   </data>
   <data name="AM_TransferOverquotaWarning_Title" xml:space="preserve">
@@ -757,7 +757,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error) - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidUri" xml:space="preserve">
-    <value>Invalid link detected during app activation.</value>
+    <value>Link nevalid detectat în timpul activării aplicației.</value>
     <comment>Message of the dialog displayed when an invalid URI is detected during app activation.</comment>
   </data>
   <data name="AM_InvalidUri_Title" xml:space="preserve">
@@ -765,19 +765,19 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when an invalid URI is detected during app activation - (String as short as possible).</comment>
   </data>
   <data name="AM_ResumeSessionFailed" xml:space="preserve">
-    <value>Failed to resume your session. Please, close the app and try again later.</value>
+    <value>Eșec la reluarea sesiunii. Te rugăm să închizi aplicația și încearcă din nou mai târziu.</value>
     <comment>Message of the dialog displayed when the process to resume a session failed.</comment>
   </data>
   <data name="AM_PasswordChanged" xml:space="preserve">
-    <value>We have sent you an email confirming your password change.</value>
+    <value>Ți-am trimis un e-mail care confirmă modificarea parolei.</value>
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_PasswordChanged_Title" xml:space="preserve">
-    <value>Password changed</value>
+    <value>Parolă schimbată</value>
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>Contul tău a fost actualizat. Doreşti să verifici detaliile noi ale contului?</value>
+    <value>Contul tău a fost actualizat. Dorești să verifici detaliile noi ale contului?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
@@ -785,55 +785,55 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AlreadyPurchased" xml:space="preserve">
-    <value>Achiziţia unui abonament MEGA a eşuat deoarece ai achiziţionat deja acest element.</value>
+    <value>Achiziția unui abonament MEGA a eșuat deoarece ai achiziționat deja acest element.</value>
     <comment>Message of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_AlreadyPurchased_Title" xml:space="preserve">
-    <value>Achiziţionat deja</value>
+    <value>Achiziționat deja</value>
     <comment>Title of the dialog displayed when a user already has purchased an item from the store</comment>
   </data>
   <data name="AM_ProductUnAvailable" xml:space="preserve">
-    <value>The selected MEGA subscription is temporarily unavailable. Please try again or contact Microsoft Store support.</value>
+    <value>Abonamentul MEGA selectat este indisponibil temporar. Te rugăm să încerci din nou sau contactează asistența Microsoft Store.</value>
     <comment>Message of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_ProductUnAvailable_Title" xml:space="preserve">
-    <value>Product unavailable</value>
+    <value>Produs indisponibil</value>
     <comment>Title of the dialog displayed when an user try to purchase an unavailable product in the Microsof Store.</comment>
   </data>
   <data name="AM_PurchaseFailed" xml:space="preserve">
-    <value>Achiziţionarea unui abonament MEGA a eşuat sau a fost anulată. Te rugăm să încerci din nou sau să contactezi asistenţa Windows Store.</value>
+    <value>Achiziționarea unui abonament MEGA a eșuat sau a fost anulată. Te rugăm să încerci din nou sau să contactezi asistența Windows Store.</value>
     <comment>Message of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
   </data>
   <data name="AM_PurchaseFailed_Title" xml:space="preserve">
-    <value>Achiziţia a eşuat sau a fost anulată</value>
+    <value>Achiziția a eșuat sau a fost anulată</value>
     <comment>Title of the dialog displayed when a user tries to purchase an item from the store and it failed</comment>
   </data>
   <data name="AM_PurchaseSucceeded" xml:space="preserve">
-    <value>Achiziţia abonamentului MEGA a reuşit.</value>
+    <value>Achiziția abonamentului MEGA a reușit.</value>
     <comment>Message of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_PurchaseSucceeded_Title" xml:space="preserve">
-    <value>Achiziţie reuşită</value>
+    <value>Achiziție reușită</value>
     <comment>Title of the dialog displayed when a user has purchased an item from the store</comment>
   </data>
   <data name="AM_UpdateProfileFailed" xml:space="preserve">
-    <value>Failed to update your profile. Please try again.</value>
+    <value>Eșec la actualizarea profilului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_UpdateProfileFailed_Title" xml:space="preserve">
-    <value>Update profile failed</value>
+    <value>Actualizarea profilului a eșuat</value>
     <comment>Title of the dialog displayed when the process to update the user profile fails.</comment>
   </data>
   <data name="AM_DownloadFailed" xml:space="preserve">
-    <value>One download has failed. Please review your download list and try again.</value>
+    <value>O descărcare a eșuat. Te rugăm să revezi lista de descărcare și încearcă din nou.</value>
     <comment>Message of the dialog displayed when the process/request to download failed and can't specify if is a file or a folder and its name.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmation" xml:space="preserve">
-    <value>Se aşteaptă confirmarea e-mailului</value>
+    <value>Se așteaptă confirmarea e-mailului</value>
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
-    <value>Please go to your inbox and click the link to confirm your new email address.</value>
+    <value>Te rugăm să accesezi e-mailul și să dai clic pe link pentru a confirma adresa nouă de e-mail.</value>
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
@@ -841,20 +841,20 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
   </data>
   <data name="AM_ChangeEmailGenericError" xml:space="preserve">
-    <value>Failed to change your email. Please try again later.</value>
+    <value>Eșec la schimbarea e-mailului. Te rugăm să încerci din nou mai târziu.</value>
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Congratulations, your new email address for this MEGA account is: {0}</value>
+    <value>Felicitări, adresa de e-mail nouă pentru acest cont MEGA este: {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>The link you are using for changing the email is not valid.</value>
+    <value>Linkul pe care îl folosești pentru schimbarea e-mailului nu este valid.</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
-    <value>Incorrect account. Please login into the right account and try again.</value>
+    <value>Cont incorect. Te rugăm să te autentifici în contul potrivit și încearcă din nou.</value>
     <comment>Message displayed if the user is logged into an incorrect account, for example if is logged into an account different of which is trying to change the email.</comment>
   </data>
   <data name="AM_ContactAlreadyExists" xml:space="preserve">
@@ -862,74 +862,74 @@ Preserve the {0} code because is for include the email address in runtime.</comm
     <comment>Message displayed when the user is trying to invite an email address of an already existing contact.</comment>
   </data>
   <data name="AM_InviteContactFailed" xml:space="preserve">
-    <value>Invitaţia de contact nu a putut fi trimisă. Te rugăm să reîncerci.</value>
+    <value>Invitația de contact nu a putut fi trimisă. Te rugăm să reîncerci.</value>
     <comment>Message of the dialog displayed when the process to send a contact invitation fails by an unknown reason.</comment>
   </data>
   <data name="AM_InviteContactSuccessfully" xml:space="preserve">
-    <value>Utilizatorul {0} a fost invitat şi va apărea în lista de contacte de îndată ce va accepta invitaţia.</value>
+    <value>Utilizatorul {0} a fost invitat și va apărea în lista de contacte de îndată ce va accepta invitația.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact finished successfully - (String as short as possible).
 Preserve the [{0}] code because is for include the contact email in runtime.</comment>
   </data>
   <data name="AM_InviteContactFailedOwnEmail" xml:space="preserve">
-    <value>Încerci să îţi adaugi propriul e-mail ca contact.</value>
+    <value>Încerci să îți adaugi propriul e-mail ca contact.</value>
     <comment>Message of the dialog displayed when the process/request to invite a contact failed because the user is trying to his/her own e-mail.</comment>
   </data>
   <data name="AM_RemoveContactFailed" xml:space="preserve">
-    <value>Failed to remove the contact {0}. Please try again.</value>
+    <value>Eșec la eliminarea contactului {0}. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to remove a contact failed. 
 Keep the {0} code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} from your contact list?</value>
+    <value>Sigur vrei să elimini pe {0} din lista de contacte?</value>
     <comment>Question of the dialog displayed when the user is trying to remove one contact.
 Keep the '{0}' code because is for include the contact email or name in runtime.</comment>
   </data>
   <data name="AM_RemoveContactWarning" xml:space="preserve">
-    <value>Access to any folders shared with you by the selected contacts will be lost.</value>
+    <value>Accesul la orice folder partajat cu tine prin contactele selectate va fi pierdut.</value>
     <comment>Warning text of the dialog displayed when the user is trying to remove one or multiple contacts.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} users from your contact list?</value>
+    <value>Sigur vrei să elimini {0} utilizatori din lista de contacte?</value>
     <comment>Question of the dialog displayed when the user is trying to remove multiple contacts.
 Keep the '{0}' code because is for include the number of contacts in runtime.</comment>
   </data>
   <data name="AM_RemoveMultipleContactsFailed" xml:space="preserve">
-    <value>Failed removing contacts. Please try again.</value>
+    <value>Eșec la eliminarea contactelor. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to remove multiple contacts failed.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave {0} shared folders?</value>
+    <value>Sigur vrei să părăsești {0} foldere partajate?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_LeaveMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Leave shared folders</value>
+    <value>Părăsește folderele partajate</value>
     <comment>Title of the dialog displayed when the user is trying to leave multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedFolderFailed" xml:space="preserve">
-    <value>Failed to leave the shared folder “{0}”. Please try again.</value>
+    <value>Eșec la părăsirea folderului partajat „{0}”. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to leave a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to leave “{0}”?</value>
+    <value>Sigur vrei să părăsești „{0}”?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to leave a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_LeaveSharedFolderWarning" xml:space="preserve">
-    <value>Access to shared folder content will be lost.</value>
+    <value>Accesul la conținutul folderului partajat va fi pierdut.</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one or multiple shared folders.</comment>
   </data>
   <data name="AM_LeaveSharedFolder_Title" xml:space="preserve">
-    <value>Leave shared folder</value>
+    <value>Părăsește folderul partajat</value>
     <comment>Title of the dialog displayed when the user is trying to leave a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_LeaveSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to leave multiple shared folders. Please try again.</value>
+    <value>Eșec la părăsirea mai multor foldere partajate. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to leave multiple shared folder fails.</comment>
   </data>
   <data name="AM_DisableDebugMode_Message" xml:space="preserve">
-    <value>The log ({0}) will be deleted.</value>
+    <value>Jurnalul ({0}) va fi șters.</value>
     <comment>Alert message shown when the DEBUG mode is disabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -938,7 +938,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is disabled - (String as short as possible).</comment>
   </data>
   <data name="AM_EnableDebugMode_Message" xml:space="preserve">
-    <value>A log will be created ({0}).</value>
+    <value>Un fișier log va fi creat ({0}).</value>
     <comment>Alert message shown when the DEBUG mode is enabled.
 Preserve the ({0}) code because is for include the file name in runtime.</comment>
   </data>
@@ -947,15 +947,15 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
   </data>
   <data name="AM_SaveLogFile" xml:space="preserve">
-    <value>Doreşti să salvezi fişierul log într-o locaţie externă pentru a-l folosi mai târziu?</value>
+    <value>Dorești să salvezi fișierul log într-o locație externă pentru a-l folosi mai târziu?</value>
     <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
   </data>
   <data name="AM_SaveLogFile_Title" xml:space="preserve">
-    <value>Salvează fişierul log</value>
+    <value>Salvează fișierul log</value>
     <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
   </data>
   <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
-    <value>Modul de depanare este activat. Doreşti să-l dezactivezi?</value>
+    <value>Modul de depanare este activat. Dorești să-l dezactivezi?</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable. This alert is to try to avoid that the user forget disable the DEBUG mode and the log file size grows a lot in the offline section.</comment>
   </data>
   <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
@@ -963,82 +963,82 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to {0} shared folders?</value>
+    <value>Sigur vrei să elimini accesul la {0} foldere partajate?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to multiple shared folders.
 Preserve the {0} code because is for include the number of shared folders in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFoldersWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access these folders.</value>
+    <value>Contactele nu vor mai putea accesa aceste foldere.</value>
     <comment>Warning message of the dialog displayed when the user is trying to remove access to multiple shared folders.</comment>
   </data>
   <data name="AM_RemoveAccessMultipleSharedFolders_Title" xml:space="preserve">
-    <value>Remove access to shared folders</value>
+    <value>Elimină accesul la folderele partajate</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to multiple shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderFailed" xml:space="preserve">
-    <value>Failed to remove acces to the shared folder “{0}”. Please try again.</value>
+    <value>Eșec la eliminarea accesului către folderul partajat „{0}”. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to remove acces to a single shared folder fails.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove access to “{0}”?</value>
+    <value>Sigur vrei să elimini accesul la „{0}”?</value>
     <comment>Message of the dialog displayed asking confirmation when the user is trying to remove access to a shared folder.
 Preserve the "{0}" code because is for include the shared folder name in runtime.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolderWarning" xml:space="preserve">
-    <value>Contacts will no longer be able to access this folder.</value>
+    <value>Contactele nu vor mai putea accesa acest folder.</value>
     <comment>Warning message of the dialog displayed when the user is trying to leave one shared folder.</comment>
   </data>
   <data name="AM_RemoveAccessSharedFolder_Title" xml:space="preserve">
-    <value>Remove shared folder access</value>
+    <value>Elimină accesul la folderul partajat</value>
     <comment>Title of the dialog displayed when the user is trying to remove access to a shared folder - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveAccessSharedMultipleSharedFailed" xml:space="preserve">
-    <value>Failed to remove access to multiple shared folders. Please try again.</value>
+    <value>Eșec la eliminarea accesului către multiple foldere partajate. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to remove access to multiple shared folder fails.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph1" xml:space="preserve">
-    <value>The application has encountered a problem. We are sorry for the inconvenience. If you were in the middle of something, the information you were working on might be lost.</value>
+    <value>Aplicația a întâmpinat o problemă. Ne cerem scuze pentru inconveniență. Dacă ai fost în mijlocul a ceva, informațiile la care ai lucrat pot fi pierdute.</value>
     <comment>First paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationErrorParagraph2" xml:space="preserve">
-    <value>Would you like to notify the application developers and send the prepared error report? This will help with resolving the problem faster.</value>
+    <value>Dorești să notifici dezvoltatorii aplicației și să trimiți raportul de eroare pregătit? Acest lucru va ajuta la rezolvarea problemei mai repede.</value>
     <comment>Second paragraph of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem.</comment>
   </data>
   <data name="AM_ApplicationError_Title" xml:space="preserve">
-    <value>Application Error</value>
+    <value>Eroare privind aplicația</value>
     <comment>Title of the dialog displayed when the app crashes by an unhandled exception, unknown error or other reason. This dialog informs the user about the problem and offer the possibility to send a prepared error report to the developers to help resolv the problem - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareFolderFailed" xml:space="preserve">
-    <value>Failed to share the folder. Please try again.</value>
+    <value>Eșec la partajarea folderului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_ShareFolderFailedOwnEmail" xml:space="preserve">
-    <value>You are trying to share the folder to yourself.</value>
+    <value>Încerci să partajezi folderul cu tine însuți.</value>
     <comment>Message of the dialog displayed when the process/request to share a folder failed because the user is trying to share the folder to his/her own e-mail.</comment>
   </data>
   <data name="AM_ShareFolderFailed_Title" xml:space="preserve">
-    <value>Error sharing folder</value>
+    <value>Eroare la partajarea folderului</value>
     <comment>Title of the dialog displayed when the process to share a folder fails by an unknown reason.</comment>
   </data>
   <data name="AM_InvalidKeyFile" xml:space="preserve">
-    <value>The file you selected is too large/small. Please make sure you select the file containing your 22-character Recovery Key.</value>
+    <value>Fișierul selectat este prea mare/mic. Te rugăm să te asiguri că selectezi fișierul care conține cheia de recuperare de 22 de caractere.</value>
     <comment>Message of the dialog displayed when the entered recovery is not valid.</comment>
   </data>
   <data name="AM_InvalidKeyFile_Title" xml:space="preserve">
-    <value>Fişierul cheii nevalid</value>
+    <value>Fișierul cheii nevalid</value>
     <comment>Title of the dialog displayed when the entered recovery is not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_CheckEmail" xml:space="preserve">
-    <value>If you can’t access your email account, you will need to contact support@mega.nz.</value>
+    <value>Dacă nu îți poți accesa contul de e-mail, va trebui să contactezi support@mega.nz.</value>
     <comment>Message of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_CheckEmail_Title" xml:space="preserve">
-    <value>Please check your email</value>
+    <value>Te rugăm să îți verifici e-mailul.</value>
     <comment>Title of the dialog displayed when a recovery link has been send.</comment>
   </data>
   <data name="AM_InvalidEmail" xml:space="preserve">
-    <value>Please check the email address and try again.</value>
+    <value>Te rugăm să verifici adresa de e-mail și să încerci din nou.</value>
     <comment>Message of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_InvalidEmail_Title" xml:space="preserve">
@@ -1046,19 +1046,19 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user entered an invalid email address for recovery</comment>
   </data>
   <data name="AM_PasswordResetFailed" xml:space="preserve">
-    <value>Your password has not been reset. Please try again or contact support.</value>
+    <value>Parola nu ți-a fost resetată. Te rugăm să încerci din nou sau contactează asistența.</value>
     <comment>Message of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetFailed_Title" xml:space="preserve">
-    <value>Error on password reset</value>
+    <value>Eroare la resetarea parolei</value>
     <comment>Title of the dialog displayed when the user has failed to reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordResetSuccess" xml:space="preserve">
-    <value>Parola ta a fost resetată cu succes.  Te rugăm să te autentifici în contul tău acum.</value>
+    <value>Parola ta a fost resetată cu succes. Te rugăm să te autentifici în contul tău acum.</value>
     <comment>Message of the dialog displayed when the user has successful reset his password on recovery.</comment>
   </data>
   <data name="AM_PasswordResetSuccess_Title" xml:space="preserve">
-    <value>Successful password reset</value>
+    <value>Resetare cu succes a parolei</value>
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
@@ -1066,7 +1066,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">
-    <value>Recovery link expired</value>
+    <value>Linkul de recuperare a expirat</value>
     <comment>Title of the dialog displayed when the recovery is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink" xml:space="preserve">
@@ -1074,11 +1074,11 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidRecoveryLink_Title" xml:space="preserve">
-    <value>Invalid recovery link</value>
+    <value>Link de recuperare nevalid</value>
     <comment>Title of the dialog displayed when the user opens an invalid recovery link - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountParked" xml:space="preserve">
-    <value>Contul tău vechi a fost parcat cu succes. Poţi acum să te autentifici în contul tău nou.</value>
+    <value>Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul tău nou.</value>
     <comment>Message of the dialog displayed when the user has succesful parked account.</comment>
   </data>
   <data name="AM_AccountParked_Title" xml:space="preserve">
@@ -1094,15 +1094,15 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_InvalidSignUpLink_Title" xml:space="preserve">
-    <value>Invalid sign-up link</value>
+    <value>Link de înregistrare nevalid</value>
     <comment>Title of the dialog displayed when the user opens an invalid sign-up link - (String as short as possible).</comment>
   </data>
   <data name="AM_SignUpLinkExpired" xml:space="preserve">
-    <value>This sign-up link has expired, please try again.</value>
+    <value>Acest link de înregistrare a expirat, te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the sign-up is expired.</comment>
   </data>
   <data name="AM_SignUpLinkExpired_Title" xml:space="preserve">
-    <value>Sign-up link expired</value>
+    <value>Link de înregistrare expirat</value>
     <comment>Title of the dialog displayed when the sign-up is expired - (String as short as possible).</comment>
   </data>
   <data name="AM_VeryWeakPassword" xml:space="preserve">
@@ -1110,17 +1110,17 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Upgrade to a PRO account for only {0} to continue downloading.</value>
+    <value>Upgradează la un cont PRO la numai {0} pentru a continua descărcarea.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningWaitTime" xml:space="preserve">
-    <value>Wait {0} for your transfer quota to reset.</value>
+    <value>Așteaptă {0} pentru resetarea cotei de transfer.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of wait during some time.
 Preserve the {0} code because is for include the time to wait in runtime.</comment>
   </data>
   <data name="AM_DecryptionKeyAlertMessage" xml:space="preserve">
-    <value>Pentru a accesa acest folder/fişier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.</value>
+    <value>Pentru a accesa acest folder/fișier, vei avea nevoie de cheia de decriptare a acestuia. Dacă nu ai cheia, contactează creatorul linkului.</value>
     <comment>Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents.</comment>
   </data>
   <data name="AM_DecryptionKeyAlertTitle" xml:space="preserve">
@@ -1132,53 +1132,53 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Alert title shown when you have written a decryption key not valid - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenLinkFailed" xml:space="preserve">
-    <value>Failed to open link. No valid format.</value>
+    <value>Eșec la deschiderea linkului. Niciun format valid.</value>
     <comment>Message of the dialog displayed when failed to open a link.</comment>
   </data>
   <data name="AM_OpenLinkFailed_Title" xml:space="preserve">
-    <value>Deschiderea linkului a eşuat</value>
+    <value>Deschiderea linkului a eșuat</value>
     <comment>Title of the dialog displayed when failed to open a link - (String as short as possible).</comment>
   </data>
   <data name="AM_ImportFailed" xml:space="preserve">
-    <value>Failed importing nodes. Please try again.</value>
+    <value>Eșec la importarea nodurilor. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to import node(s) failed.</comment>
   </data>
   <data name="AM_ImportFailed_Title" xml:space="preserve">
-    <value>Importare eşuată</value>
+    <value>Importare eșuată</value>
     <comment>Title of the dialog displayed when the process/request to import node(s) failed - (String as short as possible).</comment>
   </data>
   <data name="AM_LoginToFolderFailed" xml:space="preserve">
-    <value>Failed to open the folder link. Please try again.</value>
+    <value>Eșec la deschiderea linkului folderului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to login into a folder link fails.</comment>
   </data>
   <data name="AM_LoginToFolderFailed_Title" xml:space="preserve">
-    <value>Open folder link failed</value>
+    <value>Deschiderea linkului folderului a eșuat</value>
     <comment>Title of the dialog displayed when the process to login into a folder link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_AssociatedUserAccountTerminated" xml:space="preserve">
-    <value>Contul care a creat acest link a fost desfiinţat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului nostru.</value>
+    <value>Contul care a creat acest link a fost desființat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului nostru.</value>
     <comment>Error message shown when you open a file/folder link (or other shared resource) and it's no longer available because the the associated user account has been terminated due to multiple violations of our Terms of Service.</comment>
   </data>
   <data name="AM_FileLinkUnavailable" xml:space="preserve">
     <value>Acest lucru ar putea fi din cauza următoarelor motive:
-- Fişierul a fost eliminat din cauza unei încălcări a ToS/AUP.
+- Fișierul a fost eliminat din cauza unei încălcări a ToS/AUP.
 - URL nevalid – linkul pe care încerci să-l accesezi nu există.
-- Fişierul a fost şters de către utilizator.</value>
+- Fișierul a fost șters de către utilizator.</value>
     <comment>Error message shown when you open a file link and it's no longer available. It explains the reasons that could be causing it. Keep "\n"</comment>
   </data>
   <data name="AM_FolderLinkUnavailable" xml:space="preserve">
     <value>Acest lucru ar putea fi din cauza următoarelor motive:
 - Linkul folderului a fost eliminat din cauza unei încălcări a ToS/AUP.
 - URL nevalid – linkul pe care încerci să-l accesezi nu există.
-- Linkul folderului a fost şters de către utilizator.</value>
+- Linkul folderului a fost șters de către utilizator.</value>
     <comment>Error message shown when a folder link doesn't exist. Keep "\n"</comment>
   </data>
   <data name="AM_GetPublicNodeFailed" xml:space="preserve">
-    <value>Failed to open the file link. Please try again.</value>
+    <value>Eșec la deschiderea linkului fișierului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to get a public node from a file link fails.</comment>
   </data>
   <data name="AM_GetPublicNodeFailed_Title" xml:space="preserve">
-    <value>Open file link failed</value>
+    <value>Deschiderea linkului fișierului a eșuat</value>
     <comment>Title of the dialog displayed when the process to get a public node from a file link fails - (String as short as possible).</comment>
   </data>
   <data name="AM_LinkUnavailableTitle" xml:space="preserve">
@@ -1186,35 +1186,35 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Your account has been suspended due to multiple breaches of Mega’s Terms of Service. Please check your email inbox.</value>
+    <value>Contul tău a fost suspendat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului MEGA. Te rugăm să verifici mesajele primite de pe e-mail.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
-    <value>Due to MEGA’s encryption technology you are unable to reset your password without data loss. Please make sure you remember your password.</value>
+    <value>Datorită tehnologiei de criptare MEGA, nu poți să îți resetezi parola fără pierderea datelor. Te rugăm să te asiguri că ții minte parola.</value>
     <comment>Message to describe the purpose of the password reminder dialog.</comment>
   </data>
   <data name="AM_PasswordReminder_Title" xml:space="preserve">
-    <value>Îţi mai aduci aminte parola?</value>
+    <value>Îți mai aduci aminte parola?</value>
     <comment>Title of the password reminder dialog.</comment>
   </data>
   <data name="AM_TestPassword" xml:space="preserve">
-    <value>Please test your password below to ensure you remember it. If you lose your password, you will lose access to your data.</value>
+    <value>Te rugăm să îți testezi parola mai jos pentru a te asigura că ți-o aduci aminte. Dacă îți pierzi parola, vei pierde accesul la datele tale.</value>
     <comment>Message to describe the purpose of the dialog to test the password.</comment>
   </data>
   <data name="AM_TestPasswordSuccess" xml:space="preserve">
-    <value>Password accepted, we still recommend you back up your Recovery Key.</value>
+    <value>Parolă acceptată, în continuare îți recomandăm să faci un backup cheii de recuperare.</value>
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>Wrong password! Backup your Recovery Key as soon as possible!</value>
+    <value>Parolă greșită! Fă un backup al cheii de recuperare cât mai curând posibil!</value>
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
-    <value>Test Password</value>
+    <value>Testează parola</value>
     <comment>Title of the test password dialog.</comment>
   </data>
   <data name="AM_RecoveryKeyExported" xml:space="preserve">
-    <value>The Recovery Key has been exported. Please store it in a safe place.</value>
+    <value>Cheia de recuperare a fost exportată. Te rugăm să o stochezi într-un loc sigur.</value>
     <comment>Message of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExported_Title" xml:space="preserve">
@@ -1222,102 +1222,102 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Title of the dialog or notification displayed in cases that the app has succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExportFailed" xml:space="preserve">
-    <value>Failed to export the Recovery Key. Please try again.</value>
+    <value>Eșec la exportarea cheii de recuperare. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_RecoveryKeyExportFailed_Title" xml:space="preserve">
-    <value>Recovery Key export failed</value>
+    <value>Eșec la exportarea cheii principale</value>
     <comment>Title of the dialog or notification displayed in cases that the app has not succesful exported the recovery key.</comment>
   </data>
   <data name="AM_MultiSelectRemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove {0} items from offline?</value>
+    <value>Sigur vrei să elimini {0} elemente din Offline?</value>
     <comment>Message of the dialog displayed when a user wants to remove multiple nodes from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the number of nodes to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove ‘{0}’ from offline?</value>
+    <value>Sigur vrei să elimini {0} din Offline?</value>
     <comment>Message of the dialog displayed when a user wants to remove an item from offline, asking for confirmation to do it.
 Preserve the {0} code because is for include the name of the item to be removed in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineQuestion_Title" xml:space="preserve">
-    <value>Remove from offline?</value>
+    <value>Elimini din Offline?</value>
     <comment>Title of the dialog displayed when a user wants to remove one or multiple items from offline, asking for confirmation to do it - (String as short as possible).</comment>
   </data>
   <data name="AM_OpenFolderFailed" xml:space="preserve">
-    <value>Failed to open the selected folder</value>
+    <value>Eșec la deschiderea fișierului selectat</value>
     <comment>Message of the dialog displayed when the process to open a folder failed.</comment>
   </data>
   <data name="AM_OpenFolderFailed_Title" xml:space="preserve">
-    <value>Folder failed to open</value>
+    <value>Deschiderea folderului a eșuat</value>
     <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordChangeFailed" xml:space="preserve">
-    <value>Failed to change your password. Please try again.</value>
+    <value>Eșec la schimbarea parolei. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the user has failed to change his password</comment>
   </data>
   <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
-    <value>Error changing password</value>
+    <value>Eroare la schimbarea parolei</value>
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
   <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
-    <value>Two-factor authentication is a second layer of security for your account. Which means that even if someone knows your password they cannot access it, without also having access to the six digit code only you have access to.</value>
+    <value>Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.</value>
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Why do you need two-factor authentication?</value>
+    <value>De ce ai nevoie de autentificarea în doi factori?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
-    <value>Disable Two-Factor Authentication</value>
+    <value>Dezactivează autentificarea în doi factori</value>
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Next time you login to your account you will be asked to enter a 6-digit code provided by your Authenticator App.</value>
+    <value>Data viitoare când te autentifici în contul ți se va cere să introduci un cod din 6 cifre furnizat de aplicația de autentificare.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
-    <value>Two-Factor Authentication Enabled</value>
+    <value>Autentificarea în doi factori activată</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
-    <value>This code isn’t right, please try again.</value>
+    <value>Acest cod nu este corect, te rugăm să încerci din nou.</value>
     <comment>Message displayed when the user is trying to insert and invalid code, for example the 6-digit code of the Multi-Factor Authentication.</comment>
   </data>
   <data name="AM_MFA_SeedCopied" xml:space="preserve">
-    <value>The seed has been copied to your clipboard.</value>
+    <value>Sămânța a fost copiată în clipboard.</value>
     <comment>Message of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed" xml:space="preserve">
-    <value>Failed to copy the seed to your clipboard. Please try again.</value>
+    <value>Eșec la copierea sămânței în clipboard. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopiedFailed_Title" xml:space="preserve">
-    <value>Seed copy failed</value>
+    <value>Copierea sămânei a eșuat</value>
     <comment>Title of the dialog displayed if fails the process to copy the seed needed to enable the Multi-Factor Authentication to the clipboard.</comment>
   </data>
   <data name="AM_MFA_SeedCopied_Title" xml:space="preserve">
-    <value>Seed copied</value>
+    <value>Sămânță copiată</value>
     <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
-    <value>Two-Factor Authentication Disabled</value>
+    <value>Autentificarea în doi factori dezactivată</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Please enter the 6-digit code generated by your Authenticator App.</value>
+    <value>Te rugăm să introduci codul din 6 cifre generat de aplicația de autentificare.</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
-    <value>If you lose access to your account after enabling 2FA and you have not backed up your Recovery Key, MEGA can’t help you gain access to it again.
-Ensure you back up your recovery key.</value>
+    <value>Dacă pierzi accesul la contul tău după ce ai activat 2FA și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.
+Asigură-te că faci un backup al cheii de recuperare.</value>
     <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
-    <value>Failed to close the other sessions. Please try again.</value>
+    <value>Eșec la închiderea celorlalte sesiunii. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
   </data>
   <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
-    <value>Do you want to close all other sessions? This will log you out on all other active sessions except the current one.</value>
+    <value>Vrei să închizi toate celelalte sesiuni? Acest lucru te va deconecta din toate celelalte sesiuni active, cu excepția celei actuale.</value>
     <comment>Message of the dialog displayed to ask the user to confirm want to close all the other sessions.</comment>
   </data>
   <data name="AM_CloseOtherSessionsSuccess" xml:space="preserve">
@@ -1325,97 +1325,110 @@ Ensure you back up your recovery key.</value>
     <comment>Message of the dialog displayed when close successfully all the other sessions.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed" xml:space="preserve">
-    <value>Failed to restore ‘{0}’ from rubbish bin. Please try again.</value>
+    <value>Eșec la restaurarea '{0}' din coșul de gunoi. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to restore a node to the rubbish bin failed.
 Preserve the '{0}' code because is for include the file/folder name in runtime.</comment>
   </data>
   <data name="AM_RestoreFromRubbishBinFailed_Title" xml:space="preserve">
-    <value>Restore from rubbish bin failed</value>
+    <value>Restaurarea din coșul de gunoi a eșuat</value>
     <comment>Title of the dialog displayed when the process/request to restore nodes from the rubbish bin failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RestoreMultiFromRubbishBinFailed" xml:space="preserve">
-    <value>Failed to restore items from rubbish bin. Please try again.</value>
+    <value>Eșec la restaurarea elementelor din coșul de gunoi. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process/request to restore multiple nodes from the rubbish bin failed.</comment>
   </data>
   <data name="AM_CacheCleared" xml:space="preserve">
-    <value>Cache-ul a fost şters cu succes</value>
+    <value>Cache-ul a fost șters cu succes</value>
     <comment>Message of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
   </data>
   <data name="AM_CacheCleared_Title" xml:space="preserve">
-    <value>Cache şters</value>
+    <value>Cache șters</value>
     <comment>Title of the dialog displayed when the cache memory is successfully cleared by user request.</comment>
   </data>
   <data name="AM_ClearCacheFailed" xml:space="preserve">
-    <value>Eşec la ştergerea cache-ului. Te rugăm să încerci din nou.</value>
+    <value>Eșec la ștergerea cache-ului. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to clear cache failed.</comment>
   </data>
   <data name="AM_ClearCacheFailed_Title" xml:space="preserve">
-    <value>Ştergerea cache-ului a eşuat</value>
+    <value>Ștergerea cache-ului a eșuat</value>
     <comment>Title of the dialog displayed when the process to clear cache failed - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineFailed" xml:space="preserve">
-    <value>Failed to remove files saved for offline. Please try again.</value>
+    <value>Eșec la eliminarea fișierelor salvate pentru offline. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to remove all the files saved for offline failed.</comment>
   </data>
   <data name="AM_ClearOfflineFailed_Title" xml:space="preserve">
-    <value>Clear offline failed</value>
+    <value>Golirea fișierelor din offline a eșuat</value>
     <comment>Title of the dialog displayed when the process to clear offline files failed - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineQuestion" xml:space="preserve">
-    <value>Are you sure you want to remove all files saved for offline?</value>
+    <value>Sigur vrei să elimini toate fișierele salvate pentru offline?</value>
     <comment>Message of the dialog displayed when a user want to remove all files saved for offline, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess" xml:space="preserve">
-    <value>All the saved for offline files have been removed successfully.</value>
+    <value>Toate fișierele salvate pentru offline au fost eliminate cu succes.</value>
     <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
-    <value>Offline cleared</value>
+    <value>Offline golit</value>
     <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
-    <value>This will remove all files and folders downloaded in the Saved for Offline tab</value>
+    <value>Acest lucru va elimina toate fișierele și folderele descărcate în fila Salvate pentru offline</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Failed to check the status of two factor authentication.</value>
+    <value>Nu s-a putut verifica starea autentificării în doi factori.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
   <data name="AM_FolderAlreadyExists" xml:space="preserve">
-    <value>There is already a folder with the same name</value>
+    <value>Există deja un folder cu același nume</value>
     <comment>Message which is shown when a folder name is duplicated during renaming or creation.</comment>
   </data>
   <data name="AM_FileAlreadyExists" xml:space="preserve">
-    <value>Există deja un fişier cu acelaşi nume</value>
+    <value>Există deja un fișier cu același nume</value>
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
   <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing ‘{0}’ from offline storage. Please try again.</value>
+    <value>Eșec la eliminarea '{0}' din spațiul de stocare offline. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
-    <value>Remove from offline storage failed</value>
+    <value>Eliminarea din spațiul de stocare offline a eșuat</value>
     <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing items from offline storage. Please try again.</value>
+    <value>Eșec la eliminarea elementelor din spațiul de stocare offline. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
   <data name="AM_StorageOverquotaAlert" xml:space="preserve">
-    <value>You have exceeded your storage limit. Would you like to upgrade your account?</value>
+    <value>Ai depășit limita de stocare. Dorești să upgradezi contul?</value>
     <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account.</comment>
   </data>
   <data name="AM_StorageOverquotaAlert_Title" xml:space="preserve">
-    <value>Cota de stocare depăşită</value>
+    <value>Cota de stocare depășită</value>
     <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
-    <value>Operaţie nepermisă, vei depăşi limita de stocare a contului. Doreşti să upgradezi contul?</value>
+    <value>Operație nepermisă, vei depăși limita de stocare a contului. Dorești să upgradezi contul?</value>
     <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
-    <value>Alertă de depăşire cotă!</value>
+    <value>Alertă de depășire cotă!</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} a fost încărcat deja</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>Schimbi pe un server de test?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

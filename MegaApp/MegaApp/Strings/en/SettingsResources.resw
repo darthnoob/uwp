@@ -189,4 +189,8 @@
     <value>{A2497A9A-C3FF-4FF2-97FF-27A9DDC87EEC}</value>
     <comment>Resource key to store if is the first run after the app installation - (NO-TRANSLATION).</comment>
   </data>
+  <data name="SR_UseStagingServerPort444" xml:space="preserve">
+    <value>{E53E24D2-5CD9-410C-BC3A-6DD2A88C81EE}</value>
+    <comment>Rersource key to store if use the staging server port 444 or not - (NO-TRANSLATION).</comment>
+  </data>
 </root>

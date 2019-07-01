@@ -130,7 +130,7 @@
     <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
-    <value>Cancella</value>
+    <value>Annulla</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearRubbishBin" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Partizione Cloud</value>
+    <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -215,7 +215,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
-    <value>Accedi</value>
+    <value>Login</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
@@ -259,7 +259,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_Remove" xml:space="preserve">
-    <value>Rimuovi</value>
+    <value>Elimina</value>
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Rename" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>Termini di Servizio</value>
+    <value>termini di servizio</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
   </data>
   <data name="UI_Upload" xml:space="preserve">
-    <value>Invia</value>
+    <value>Carica</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
@@ -351,7 +351,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Yes" xml:space="preserve">
-    <value>Sì</value>
+    <value>Si</value>
     <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Pause" xml:space="preserve">
@@ -511,7 +511,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>Seguente</value>
+    <value>Avanti</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
@@ -554,7 +554,7 @@ Preserve the {0} code because is for include the name of the destination folder 
 </comment>
   </data>
   <data name="UI_Size" xml:space="preserve">
-    <value>Grandezza</value>
+    <value>Dimensione</value>
     <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -686,7 +686,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Total transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedStorage" xml:space="preserve">
-    <value>Spazio di archiviazione utilizzato</value>
+    <value>Spazio utilizzato</value>
     <comment>Label for any 'Used storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedTransferQuota" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Cambia password</value>
+    <value>Modifica password</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1338,7 +1338,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">
-    <value>Grandezza</value>
+    <value>Dimensione</value>
     <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Banda di trasferimento bonus</value>
+    <value>Banda bonus</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Richieste inviate</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Versione</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>Không dọn được thùng rác. Xin thử lại.</value>
+    <value>Dọn thùng rác không thành công. Xin thử lại.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>Thùng rác đã được dọn sạch.</value>
+    <value>Đã dọn sạch thùng rác thành công.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>Chứng từ SSL bị lỗi</value>
+    <value>SSL key bị lỗi</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -717,7 +717,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
-    <value>Liên kết được chia sẻ qua UWP MEGA app.</value>
+    <value>Liên kết được chia sẻ qua app Windows Đa Nền Tảng.</value>
     <comment>Message or description for the shared resource or the dialog displayed when the user is sharing one file or folder link from MEGA with other app - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMegaFailed" xml:space="preserve">
@@ -1264,7 +1264,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>Tại sao cần sử dụng xác thực 2-bước?</value>
+    <value>Tại sao cần sử dụng xác minh 2-bước?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
@@ -1272,7 +1272,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
-    <value>Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.</value>
+    <value>Vào những lần đăng nhập tiếp theo, hệ thống sẽ yêu cầu nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Minh.</value>
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
@@ -1304,7 +1304,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
-    <value>Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Thực.</value>
+    <value>Xin nhập một đoạn mã dài 6 chữ số lấy từ App Lập Xác Minh.</value>
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
@@ -1313,7 +1313,7 @@ Xin luôn kiểm tra và đảm bảo mã phục hồi đã được lưu giữ 
     <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
-    <value>Failed to close the other sessions. Please try again.</value>
+    <value>Không đóng được các phiên hoạt động khác lại. Xin thử lần nữa.</value>
     <comment>Message of the dialog displayed when the process to close other sessions failed.</comment>
   </data>
   <data name="AM_CloseOtherSessionsQuestionMessage" xml:space="preserve">
@@ -1370,15 +1370,15 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message of the dialog displayed when remove succesfully all files saved for offline.</comment>
   </data>
   <data name="AM_ClearOfflineSuccess_Title" xml:space="preserve">
-    <value>Đã dọn lưu về ngoại tuyến</value>
+    <value>Đã dọn mục ngoại tuyến</value>
     <comment>Title of the dialog displayed when the all the files saved for offline are successfully cleared by user request - (String as short as possible).</comment>
   </data>
   <data name="AM_ClearOfflineDescription" xml:space="preserve">
-    <value>Việc này sẽ xoá các tệp tin và thư mục đã được tải về trong phần Lưu về Ngoại Tuyến</value>
+    <value>Việc này sẽ xoá các tệp tin và thư mục đã được tải về trong mục Lưu Ngoại Tuyến</value>
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Không kiểm tra được tình trạng của chức năng xác minh 2-bước.</value>
+    <value>Không kiểm tra được tình trạng của chức năng xác thực 2-bước.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
   <data name="AM_FolderAlreadyExists" xml:space="preserve">
@@ -1390,16 +1390,16 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
   <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing ‘{0}’ from offline storage. Please try again.</value>
+    <value>Xóa bỏ ‘{0}’ khỏi mục ngoại tuyến bị thất bại. Xin thử lại.</value>
     <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
-    <value>Remove from offline storage failed</value>
+    <value>Xóa khỏi lưu ngoại tuyến bị thất bại</value>
     <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing items from offline storage. Please try again.</value>
+    <value>Xóa bỏ mục ra khỏi lưu ngoại tuyến bị thât bại. Xin thử lai.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
   <data name="AM_StorageOverquotaAlert" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>Cảnh báo, Quá mức!</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} đã được tải lên rồi</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>Bạn có chắc muốn chuyển sang máy chủ thử nghiệm? Tài khoản có thể sẽ gặp các vấn đề không thể phục hồi</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>Đổi sang máy chủ thử nghiệm?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

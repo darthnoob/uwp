@@ -65,7 +65,7 @@ namespace BackgroundTaskService.Services
             var deviceInfo = new EasClientDeviceInformation();
 
             // Initialize a MegaSDK instance
-            return new MegaSDK(
+            var newMegaSDK = new MegaSDK(
                 "Z5dGhQhL",
                 string.Format("{0}/{1}/{2}",
                     string.Format("MEGA_UWP/UploadService/{0}", GetTaskVersion()),
@@ -73,6 +73,39 @@ namespace BackgroundTaskService.Services
                     deviceInfo.SystemProductName),
                 CameraUploadsServiceFolder,
                 new MegaRandomNumberProvider());
+
+            // Use custom DNS servers in the new SDK instance
+            SetDnsServers(newMegaSDK, false);
+
+            return newMegaSDK;
+        }
+
+        /// <summary>
+        /// Use custom DNS servers in the selected SDK instance.
+        /// </summary>
+        /// <param name="megaSdk">SDK instance to set the custom DNS servers.</param>
+        /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
+        private static async void SetDnsServers(MegaSDK megaSdk, bool refresh = true)
+        {
+            var dnsServers = NetworkService.GetSystemDnsServers(refresh);
+            if (string.IsNullOrWhiteSpace(dnsServers))
+                dnsServers = await NetworkService.GetMegaDnsServersAsync(refresh);
+            if (!string.IsNullOrWhiteSpace(dnsServers))
+                megaSdk.setDnsServers(dnsServers);
+        }
+
+        /// <summary>
+        /// Use custom DNS servers in all the SDK instances.
+        /// </summary>
+        /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
+        public static async void SetDnsServers(bool refresh = true)
+        {
+            var dnsServers = NetworkService.GetSystemDnsServers(refresh);
+            if (string.IsNullOrWhiteSpace(dnsServers))
+                dnsServers = await NetworkService.GetMegaDnsServersAsync(refresh);
+
+            if (!string.IsNullOrWhiteSpace(dnsServers))
+                MegaSdk.setDnsServers(dnsServers);
         }
 
         /// <summary>
@@ -166,7 +199,7 @@ namespace BackgroundTaskService.Services
 
         private static string GetTaskVersion()
         {
-            return "1.0.0";
+            return "4.0.0";
         }
 
         private static string GetDeviceId()

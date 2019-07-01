@@ -215,7 +215,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
-    <value>Iniciar Sesión</value>
+    <value>Iniciar sesión</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
@@ -654,7 +654,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>Has excedido tu espacio de almacenamiento disponible. No podrás subir datos ni recibir más elementos compartidos hasta que tengas más espacio. Actualiza tu cuenta a PRO o elimina algunos archivos/carpetas para liberar espacio.</value>
+    <value>Has agotado tu espacio de almacenamiento disponible. No podrás subir datos ni recibir más elementos compartidos hasta que tengas más espacio. Actualiza tu cuenta a PRO o elimina algunos archivos/carpetas para liberar espacio.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>Has excedido tu cuota de transferencia disponible. No podrás descargar hasta que se renueve tu cuota de transferencia. Actualiza tu cuenta a PRO o espera hasta que se restablezca tu cuota de transferencia.</value>
+    <value>Has agotado tu cuota de transferencia disponible. No podrás descargar hasta que se renueve tu cuota de transferencia. Actualiza tu cuenta a PRO o espera hasta que se restablezca tu cuota de transferencia.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
@@ -714,7 +714,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_Monthly" xml:space="preserve">
-    <value>Mensual</value>
+    <value>Mensualmente</value>
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bono de cuota de transferencia</value>
+    <value>Bono de transferencia</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1551,7 +1551,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>Guarda tu Clave de recuperación</value>
+    <value>Guardar Clave de recuperación</value>
     <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
 NOTE: Max. length 20 characters.</comment>
   </data>
@@ -1634,7 +1634,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Acknowledgements' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copyright" xml:space="preserve">
-    <value>Derechos de autor</value>
+    <value>Copyright</value>
     <comment>Label for any 'Copyright' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LearnMore" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Solicitudes enviadas</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Versión de la aplicación</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

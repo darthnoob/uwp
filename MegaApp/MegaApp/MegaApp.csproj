@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MegaApp_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>138D5F99F522E00E934BDF46CDE71BE0373DCED7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>C91B80FEEC278A7AA16F19D8781D75C1EF005E0A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
@@ -111,10 +111,6 @@
     <PRIResource Include="Strings\uk\ProgressMessages.resw" />
     <PRIResource Include="Strings\uk\EmptyStates.resw" />
     <PRIResource Include="Strings\uk\AppMessages.resw" />
-    <PRIResource Include="Strings\tr\UiResources.resw" />
-    <PRIResource Include="Strings\tr\ProgressMessages.resw" />
-    <PRIResource Include="Strings\tr\EmptyStates.resw" />
-    <PRIResource Include="Strings\tr\AppMessages.resw" />
     <PRIResource Include="Strings\th\UiResources.resw" />
     <PRIResource Include="Strings\th\ProgressMessages.resw" />
     <PRIResource Include="Strings\th\EmptyStates.resw" />
@@ -155,10 +151,6 @@
     <PRIResource Include="Strings\id\ProgressMessages.resw" />
     <PRIResource Include="Strings\id\EmptyStates.resw" />
     <PRIResource Include="Strings\id\AppMessages.resw" />
-    <PRIResource Include="Strings\he\UiResources.resw" />
-    <PRIResource Include="Strings\he\ProgressMessages.resw" />
-    <PRIResource Include="Strings\he\EmptyStates.resw" />
-    <PRIResource Include="Strings\he\AppMessages.resw" />
     <PRIResource Include="Strings\fr\UiResources.resw" />
     <PRIResource Include="Strings\fr\ProgressMessages.resw" />
     <PRIResource Include="Strings\fr\EmptyStates.resw" />
@@ -190,6 +182,33 @@
     </PRIResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Common\Enums\CameraUploadsConnectionType.cs">
+      <Link>Enums\CameraUploadsConnectionType.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Enums\CameraUploadsFileType.cs">
+      <Link>Enums\CameraUploadsFileType.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Enums\ConnectionType.cs">
+      <Link>Enums\ConnectionType.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MegaApi\MegaLogger.cs">
+      <Link>MegaApi\MegaLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\MegaApi\MegaRandomNumberProvider.cs">
+      <Link>MegaApi\MegaRandomNumberProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Network\ConnectionInformation.cs">
+      <Link>Network\ConnectionInformation.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Network\NetworkHelper.cs">
+      <Link>Network\NetworkHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Services\LogService.cs">
+      <Link>Services\LogService.cs</Link>
+    </Compile>
+    <Compile Include="..\Common\Services\NetworkService.cs">
+      <Link>Services\NetworkService.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -203,7 +222,6 @@
     <Compile Include="Database\SavedForOfflineDB.cs" />
     <Compile Include="Enums\AccountBlockedReason.cs" />
     <Compile Include="Enums\ChangePasswordResult.cs" />
-    <Compile Include="Enums\CameraUploadsFileType.cs" />
     <Compile Include="Enums\ContactsContentType.cs" />
     <Compile Include="Enums\FetchNodesResult.cs" />
     <Compile Include="Enums\GetPublicNodeResult.cs" />
@@ -241,6 +259,7 @@
     <Compile Include="Services\OfflineService.cs" />
     <Compile Include="Services\PublicLinkService.cs" />
     <Compile Include="Services\SelectedNodesService.cs" />
+    <Compile Include="Services\UploadService.cs" />
     <Compile Include="UserControls\ButtonPanel.cs" />
     <Compile Include="UserControls\ContactProfilePanel.cs" />
     <Compile Include="UserControls\CopyMoveImportPanel.xaml.cs">
@@ -320,6 +339,7 @@
     <Compile Include="ViewModels\Dialogs\ChangeEmailDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\ChangePasswordDialogViewModel.cs" />
     <Compile Include="ViewModels\ConfirmChangeEmailViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\ChangeToStagingServerDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\InputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthCodeInputDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\MultiFactorAuthDisabledDialogViewModel.cs" />
@@ -396,7 +416,6 @@
     <Compile Include="Views\Dialogs\ChangePasswordDialog.xaml.cs">
       <DependentUpon>ChangePasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Enums\CameraUploadsConnectionType.cs" />
     <Compile Include="Enums\ChangeEmailResult.cs" />
     <Compile Include="Enums\ContainerType.cs" />
     <Compile Include="Enums\CountryCodes.cs" />
@@ -455,8 +474,6 @@
     <Compile Include="MegaApi\GlobalTransferListener.cs" />
     <Compile Include="MegaApi\LoginRequestListenerAsync.cs" />
     <Compile Include="MegaApi\LogOutRequestListener.cs" />
-    <Compile Include="MegaApi\MegaLogger.cs" />
-    <Compile Include="MegaApi\MegaRandomNumberProvider.cs" />
     <Compile Include="MegaApi\PauseTransfersRequestListenerAsync.cs" />
     <Compile Include="MegaApi\SetUserAttributeRequestListenerAsync.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -480,6 +497,9 @@
     </Compile>
     <Compile Include="Views\Dialogs\MultiFactorAuthSetupDialog.xaml.cs">
       <DependentUpon>MultiFactorAuthSetupDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\ChangeToStagingServerDialog.xaml.cs">
+      <DependentUpon>ChangeToStagingServerDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Dialogs\TwoButtonsDialog.xaml.cs">
       <DependentUpon>TwoButtonsDialog.xaml</DependentUpon>
@@ -565,7 +585,6 @@
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\ImageService.cs" />
-    <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\NavigateService.cs" />
     <Compile Include="Services\SdkService.cs" />
     <Compile Include="Services\NodeService.cs" />
@@ -614,7 +633,6 @@
     <Compile Include="Services\ResourceService.cs" />
     <Compile Include="Services\AppService.cs" />
     <Compile Include="Services\FileService.cs" />
-    <Compile Include="Services\NetworkService.cs" />
     <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\ValidationService.cs" />
     <Compile Include="Views\MyAccountPage.xaml.cs">
@@ -794,6 +812,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Dialogs\ChangeToStagingServerDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Dialogs\TwoButtonsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -938,7 +960,7 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.26.0">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.28.0">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsDesktop, Version=10.0.14393.0">

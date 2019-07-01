@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>ごみ箱をきれいにすることができませんでした。もう一度やり直してください。</value>
+    <value>ゴミ箱をクリア失敗。もう一度やり直してください。</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>ごみ箱は正常にきれいになりました。</value>
+    <value>ゴミ箱がクリア成功です。</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -245,7 +245,7 @@ Preserve the [{0}] code because is for include the error code or the error messa
     <comment>Title of the dialog displayed when fails the process/request to load the nodes of the MEGA cloud service - (String as short as possible).</comment>
   </data>
   <data name="AM_LoadSettingsFailed" xml:space="preserve">
-    <value>設定をロードエラー。もう一度やり直してください。</value>
+    <value>設定を読み込めませんでした。もう一度やり直してください。 [{0}]</value>
     <comment>Message of the dialog displayed when the process to load settings failed.
 Preserve the [{0}] code because is for include the error code or the error message in runtime.</comment>
   </data>
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>SSL証明書エラー</value>
+    <value>SSL鍵エラー</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>クォータ超過！</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0}はすでにアップロードされています</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>テストサーバーに変更してもよろしいですか？　アカウントに回復不能な問題が発生する可能性があります</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>テストサーバーに変更しますか？　</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

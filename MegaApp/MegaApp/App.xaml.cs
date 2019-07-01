@@ -12,6 +12,7 @@ using mega;
 using MegaApp.Classes;
 using MegaApp.Enums;
 using MegaApp.MegaApi;
+using MegaApp.Network;
 using MegaApp.Services;
 using MegaApp.Views;
 using MegaApp.ViewModels;
@@ -28,8 +29,7 @@ namespace MegaApp
         /// Provides easy access to usefull application information
         /// </summary>
         public static AppInformation AppInformation { get; private set; }
-        public static string IpAddress { get; set; }
-
+        
         /// <summary>
         /// Global notifications listener
         /// </summary>
@@ -59,6 +59,8 @@ namespace MegaApp
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
+            NetworkService.CheckNetworkChange();
+
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -92,6 +94,8 @@ namespace MegaApp
         /// <param name="e">Details about the activate request and process.</param>
         protected override async void OnActivated(IActivatedEventArgs e)
         {
+            NetworkService.CheckNetworkChange();
+
             if (e.Kind == ActivationKind.Protocol)
             {
                 // Handle URI activation
@@ -145,7 +149,7 @@ namespace MegaApp
                 await AppService.CheckActiveAndOnlineSessionAsync();
 
                 // Validate product subscription license on background thread
-                Task.Run(() => LicenseService.ValidateLicensesAsync());
+                var task = Task.Run(() => LicenseService.ValidateLicensesAsync());
             }
         }
 
@@ -229,12 +233,15 @@ namespace MegaApp
                 string message = string.Format("{0}{1}{1}{2}", ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph1"),
                         Environment.NewLine, ResourceService.AppMessages.GetString("AM_ApplicationErrorParagraph2"));
 
-                var result = await DialogService.ShowOkCancelAsync(
-                    ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
-                    TwoButtonsDialogType.YesNo);
+                await UiService.OnUiThreadAsync(async () =>
+                {
+                    var result = await DialogService.ShowOkCancelAsync(
+                        ResourceService.AppMessages.GetString("AM_ApplicationError_Title"), message,
+                        TwoButtonsDialogType.YesNo);
 
-                if (result)
-                    await DebugService.ComposeErrorReportEmailAsync(exception);
+                    if (result)
+                        await DebugService.ComposeErrorReportEmailAsync(exception);
+                });
             }
             catch (Exception ex)
             {

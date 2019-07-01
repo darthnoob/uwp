@@ -98,6 +98,11 @@ namespace MegaApp.Services
                 MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrl"));
                 MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrl"));
             }
+            else if (SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false))
+            {
+                MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrlPort444"), true);
+                MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_StagingUrlPort444"), true);
+            }
         }
 
         /// <summary>
@@ -113,10 +118,44 @@ namespace MegaApp.Services
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
 
+            // Use custom DNS servers in the new SDK instance
+            SetDnsServers(newMegaSDK, false);
+
             // Enable retrying when public key pinning fails
             newMegaSDK.retrySSLerrors(true);
 
             return newMegaSDK;
+        }
+
+        /// <summary>
+        /// Use custom DNS servers in the selected SDK instance.
+        /// </summary>
+        /// <param name="megaSdk">SDK instance to set the custom DNS servers.</param>
+        /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
+        private static async void SetDnsServers(MegaSDK megaSdk, bool refresh = true)
+        {
+            var dnsServers = NetworkService.GetSystemDnsServers(refresh);
+            if (string.IsNullOrWhiteSpace(dnsServers))
+                dnsServers = await NetworkService.GetMegaDnsServersAsync(refresh);
+            if (!string.IsNullOrWhiteSpace(dnsServers))
+                megaSdk.setDnsServers(dnsServers);
+        }
+
+        /// <summary>
+        /// Use custom DNS servers in all the SDK instances.
+        /// </summary>
+        /// <param name="refresh">Indicates if should refresh the previously stored addresses.</param>
+        public static async void SetDnsServers(bool refresh = true)
+        {
+            var dnsServers = NetworkService.GetSystemDnsServers(refresh);
+            if (string.IsNullOrWhiteSpace(dnsServers))
+                dnsServers = await NetworkService.GetMegaDnsServersAsync(refresh);
+
+            if (!string.IsNullOrWhiteSpace(dnsServers))
+            {
+                MegaSdk.setDnsServers(dnsServers);
+                MegaSdkFolderLinks.setDnsServers(dnsServers);
+            }
         }
 
         /// <summary>
@@ -223,25 +262,21 @@ namespace MegaApp.Services
         {
             StopChangeApiUrlTimer();
 
-            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
+            var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ||
+                SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false);
+
             if (!useStagingServer)
             {
-                var result = await DialogService.ShowOkCancelAsync("Change to a testing server?",
-                    "Are you sure you want to change to a testing server? Your account may run irrecoverable problems.");
-
+                var result = await DialogService.ShowChangeToStagingServerDialog();
                 if (!result) return;
             }
-
-            useStagingServer = !useStagingServer;
-
-            var newApiUrl = useStagingServer ?
-                ResourceService.AppResources.GetString("AR_StagingUrl") :
-                ResourceService.AppResources.GetString("AR_ApiUrl");
-
-            MegaSdk.changeApiUrl(newApiUrl);
-            MegaSdkFolderLinks.changeApiUrl(newApiUrl);
-
-            SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), useStagingServer);
+            else
+            {
+                SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false);
+                SettingsService.Save(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false);
+                MegaSdk.changeApiUrl(ResourceService.AppResources.GetString("AR_ApiUrl"));
+                MegaSdkFolderLinks.changeApiUrl(ResourceService.AppResources.GetString("AR_ApiUrl"));
+            }
 
             // Reset the "Camera Uploads" service if is enabled
             if (TaskService.IsBackGroundTaskActive(CameraUploadService.TaskEntryPoint, CameraUploadService.TaskName))

@@ -126,7 +126,7 @@
     <comment>Sub header text for the empty state of the Cloud Drive - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsHeader" xml:space="preserve">
-    <value>允许从相机上传</value>
+    <value>启用相机上传</value>
     <comment>Header text for the empty state of the camera uploads list - (String as short as possible).</comment>
   </data>
   <data name="ES_CameraUploadsSubHeader" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>文件夹中没有文件</value>
+    <value>空的文件夹</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">

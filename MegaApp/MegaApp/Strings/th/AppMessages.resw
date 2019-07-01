@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>ไม่สามารถทำความสะอาดถังขยะได้ กรุณาลองอีกครั้ง</value>
+    <value>ไม่สามารถเคลียร์ถังขยะได้ กรุณาลองใหม่อีกครั้ง</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>ทำความสะอาดถังขยะเรียบร้อยแล้ว</value>
+    <value>เคลียร์ถังขยะเรียบร้อยแล้ว</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>ข้อผิดพลาดของใบรับรอง SSL</value>
+    <value>ข้อผิดพลาดคีย์ SSL</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>แจ้งเตือนโควต้าใกล้จะเต็ม</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} ถูกอัปโหลดไปแล้ว</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>คุณแน่ใจหรือไม่ว่าต้องการเปลี่ยนไปใช้เซิร์ฟเวอร์ทดสอบ บัญชีของคุณอาจประสบปัญหาไม่สามารถกู้คืนได้</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>เปลี่ยนเป็นเซิร์ฟเวอร์ทดสอบหรือไม่</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

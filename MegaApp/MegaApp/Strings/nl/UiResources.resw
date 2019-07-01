@@ -259,11 +259,11 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Watermark label for the user's password field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_Remove" xml:space="preserve">
-    <value>Verwijder</value>
+    <value>Verwijderen</value>
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Rename" xml:space="preserve">
-    <value>Hernoemen</value>
+    <value>Naam wijzigen</value>
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
@@ -455,7 +455,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copy" xml:space="preserve">
-    <value>Kopiëren</value>
+    <value>Kopieer</value>
     <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Move" xml:space="preserve">
@@ -531,7 +531,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Preview' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Close" xml:space="preserve">
-    <value>Sluiten</value>
+    <value>Sluit</value>
     <comment>Label for any 'Close' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Added" xml:space="preserve">
@@ -578,7 +578,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Type" xml:space="preserve">
-    <value>Soort</value>
+    <value>Type</value>
     <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Unknown" xml:space="preserve">
@@ -662,7 +662,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text displayed in the 'Overall usage' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_PaymentMethod" xml:space="preserve">
-    <value>Betaal methode</value>
+    <value>Betaalmethode</value>
     <comment>Label for any 'Payment method' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PlanType" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Binnenkomende delen</value>
+    <value>Binnenkomende Gedeeld</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -911,7 +911,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Subheader of the text displayed to verify an email address.</comment>
   </data>
   <data name="UI_Add" xml:space="preserve">
-    <value>Toevoegen</value>
+    <value>Voeg toe</value>
     <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContact" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Lezen &amp; Schrijven</value>
+    <value>Lezen en schrijven</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1184,7 +1184,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed in the 'Forgot my password' section to ask the user if he/she has a copy of the recovery key.</comment>
   </data>
   <data name="UI_NoRecoveryKeyDescription_Part_1" xml:space="preserve">
-    <value>Door onze eind-tot-eind codering paradigma, heeft u geen toegang tot u gegevens zonder uw wachtwoord of een reservekopie van uw Herstelsleutel. U kunt uw bestaande account parkeren en een nieuwe opstarten onder hetzelfde e-mailadres.</value>
+    <value>Door onze eind-tot-eind coderingsparadigma, heeft u geen toegang tot u gegevens zonder uw wachtwoord of een backup van uw Herstelsleutel. U kunt uw bestaande account parkeren en een nieuwe opstarten onder hetzelfde e-mailadres.</value>
     <comment>Text displayed in the 'Park account' section when the user does not have a recovery key (Part 1).</comment>
   </data>
   <data name="UI_NoRecoveryKeyHeader" xml:space="preserve">
@@ -1334,7 +1334,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionType" xml:space="preserve">
-    <value>Soort</value>
+    <value>Type</value>
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bonus overdracht tegoed</value>
+    <value>Bonus overdracht</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Importeer</value>
+    <value>Importeren</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1666,7 +1666,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
-    <value>Copy seed</value>
+    <value>Seed kopiëren</value>
     <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
   </data>
   <data name="UI_Disable" xml:space="preserve">
@@ -1674,11 +1674,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.</value>
+    <value>Scan of kopieer de seed naar uw Authenticator Applicatie. Zorg ervoor dat u een backup maakt op een veilige plek voor het geval u uw apparaat verliest.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your Authenticator app enter the 6-digit code provided.</value>
+    <value>Nadat u uw seed heeft ingesteld op uw Authenticator Applicatie voer de 6-cijferige bijgevoegde code in.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Verstuur aanvragen</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Applicatie versie</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

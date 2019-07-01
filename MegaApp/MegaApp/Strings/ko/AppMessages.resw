@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>휴지통 비우기를 실패하였습니다. 다시 시도하세요.</value>
+    <value>휴지통 비우기 실패. 다시 시도하세요.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>휴지통을 성공적으로 비웠습니다.</value>
+    <value>휴지통이 성공적으로 비워졌습니다.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>SSL 인증서 오류</value>
+    <value>SSL 키 오류</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -1202,7 +1202,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message to describe the purpose of the dialog to test the password.</comment>
   </data>
   <data name="AM_TestPasswordSuccess" xml:space="preserve">
-    <value>비밀번호가 확인되었습니다, 그래도 복구 키를 백업할 것을 권장합니다.</value>
+    <value>비밀번호가 확인되었습니다만, 그래도 복구 키를 백업할 것을 권장합니다.</value>
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>할당량 초과 경고!</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} 은/는 이미 업로드되었습니다</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>테스트 서버로 변경하시겠습니까? 당신의 계정이 복구할 수 없는 문제를 겪을 수 있습니다.</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>테스트 서버로 변경할까요?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

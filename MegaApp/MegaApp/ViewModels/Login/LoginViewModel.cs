@@ -59,7 +59,7 @@ namespace MegaApp.ViewModels.Login
         /// </summary>
         public async void Login()
         {
-            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
+            if (!NetworkService.HasInternetAccess(true)) return;
 
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;
@@ -107,7 +107,7 @@ namespace MegaApp.ViewModels.Login
                     SettingsService.SaveSessionToLocker(this.Email, this.MegaSdk.dumpSession());
 
                     // Validate product subscription license on background thread
-                    Task.Run(() => LicenseService.ValidateLicensesAsync());
+                    var task = Task.Run(() => LicenseService.ValidateLicensesAsync());
 
                     // Initialize the DB
                     AppService.InitializeDatabase();
@@ -262,7 +262,7 @@ namespace MegaApp.ViewModels.Login
             }
 
             // Validate product subscription license on background thread
-            Task.Run(() => LicenseService.ValidateLicensesAsync());
+            var task = Task.Run(() => LicenseService.ValidateLicensesAsync());
 
             // Fetch nodes from MEGA
             var fetchNodesResult = await this.FetchNodes();
@@ -275,7 +275,7 @@ namespace MegaApp.ViewModels.Login
             }
 
             // If is required show the password reminder dialog on background thread
-            Task.Run(async () =>
+            task = Task.Run(async () =>
             {
                 if (await AccountService.ShouldShowPasswordReminderDialogAsync(false))
                     UiService.OnUiThread(() => DialogService.ShowPasswordReminderDialog(false));

@@ -199,8 +199,11 @@ namespace MegaApp.UserControls
 
             // If there is only one selected item save it to restore it after disable the multi select mode
             IBaseNode selectedItem = null;
-            if (this.ViewModel.Folder.ItemCollection.OnlyOneSelectedItem)
-                selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First();
+            if (this.ViewModel?.Folder?.ItemCollection?.OnlyOneSelectedItem == true)
+            {
+                try { selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First(); }
+                catch (Exception ex) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error saving the only selected item", ex); }
+            }
 
             if (DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
             {
@@ -231,8 +234,11 @@ namespace MegaApp.UserControls
 
             // First save the current selected item to restore it after enable/disable the single select mode
             IBaseNode selectedItem = null;
-            if (this.ViewModel.Folder.ItemCollection.OnlyOneSelectedItem)
-                selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First();
+            if (this.ViewModel?.Folder?.ItemCollection?.OnlyOneSelectedItem == true)
+            {
+                try { selectedItem = this.ViewModel.Folder.ItemCollection.SelectedItems.First(); }
+                catch (Exception ex) { LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error saving the only selected item", ex); }
+            }
 
             if (!isEnabled && DeviceService.GetDeviceType() == DeviceFormFactorType.Desktop)
             {

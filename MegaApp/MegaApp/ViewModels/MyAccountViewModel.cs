@@ -32,7 +32,7 @@ namespace MegaApp.ViewModels
 
         private async void LogOut()
         {
-            if (!await NetworkService.IsNetworkAvailableAsync(true)) return;
+            if (!NetworkService.HasInternetAccess(true)) return;
 
             if (await AccountService.ShouldShowPasswordReminderDialogAsync(true))
             {

@@ -138,7 +138,7 @@
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Cloud Dysk</value>
+    <value>Dysk</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Ściągnij</value>
+    <value>Pobierz</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>Warunki korzystania z Serwisu</value>
+    <value>Regulamin serwisu</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
   </data>
   <data name="UI_Upload" xml:space="preserve">
-    <value>Załaduj</value>
+    <value>Wgrywane</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
@@ -455,7 +455,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copy" xml:space="preserve">
-    <value>Kopiuj</value>
+    <value>Skopiuj</value>
     <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Move" xml:space="preserve">
@@ -511,7 +511,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>Następny</value>
+    <value>Dalej</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
@@ -578,7 +578,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Image' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Type" xml:space="preserve">
-    <value>Typ</value>
+    <value>Rodzaj</value>
     <comment>Label for any 'Type' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Unknown" xml:space="preserve">
@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Zakup</value>
+    <value>Zmień</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Przychodzące udostępnienia</value>
+    <value>Nadchodzące udostępnienia</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Odczyt &amp; Zapis</value>
+    <value>Oczyt i zapis</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1334,7 +1334,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for any 'Select/deselect all' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionType" xml:space="preserve">
-    <value>Typ</value>
+    <value>Rodzaj</value>
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Dodatkowy limit</value>
+    <value>Bonus transfer</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Zaimportuj</value>
+    <value>Importuj</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Wysłane zgłoszenia</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Wersja aplikacji</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

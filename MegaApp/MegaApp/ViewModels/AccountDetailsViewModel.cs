@@ -307,9 +307,21 @@ namespace MegaApp.ViewModels
             }
         }
 
-        public string TransferOverquotaDelayText =>
-            TimeSpan.FromSeconds(TransferOverquotaDelay).ToString();
-            
+        public string TransferOverquotaDelayText
+        {
+            get
+            {
+                try
+                {
+                    return TimeSpan.FromSeconds(TransferOverquotaDelay).ToString();
+                }
+                catch (Exception e)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting the transfer overquota delay", e);
+                    return ResourceService.UiResources.GetString("UI_NotAvailable");
+                }
+            }
+        }
 
         public Color TransferQuotaProgressBarColor => IsInStorageOverquota ? (Color)Application.Current.Resources["MegaRedColor"] :
             (Color)Application.Current.Resources["UsedTransferQuotaColor"];

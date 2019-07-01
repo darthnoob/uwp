@@ -138,7 +138,7 @@
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Cakram Penyimpanan Awan</value>
+    <value>Cloud Drive</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Unduh</value>
+    <value>Download</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
@@ -267,7 +267,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
-    <value>Sampah</value>
+    <value>Tempat Sampah</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Settings" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>Ketentuan Penggunaan</value>
+    <value>persyaratan layanan</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Ubah kata sandi</value>
+    <value>Ganti password</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Impor</value>
+    <value>Import</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1746,7 +1746,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedCache" xml:space="preserve">
-    <value>Gunakan cache</value>
+    <value>Cache terpakai</value>
     <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearOffline" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Mengirim request</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Versi App</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

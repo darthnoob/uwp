@@ -125,4 +125,8 @@
     <value>{BA40B745-D0F5-4AD5-A539-44B1403A9EB8}</value>
     <comment>Rersource key to store if use the staging server or not - (NO-TRANSLATION).</comment>
   </data>
+  <data name="SR_UseStagingServerPort444" xml:space="preserve">
+    <value>{E53E24D2-5CD9-410C-BC3A-6DD2A88C81EE}</value>
+    <comment>Rersource key to store if use the staging server port 444 or not - (NO-TRANSLATION).</comment>
+  </data>
 </root>

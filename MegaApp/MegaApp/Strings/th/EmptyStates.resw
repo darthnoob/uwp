@@ -150,7 +150,7 @@
     <comment>Sub header text for the empty state of the downloads list - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderHeader" xml:space="preserve">
-    <value>โฟล์เดอร์ว่าง</value>
+    <value>โฟลเดอร์ว่างเปล่า</value>
     <comment>Header text for the empty state of a folder - (String as short as possible).</comment>
   </data>
   <data name="ES_FolderRubbishBinSubHeader" xml:space="preserve">
