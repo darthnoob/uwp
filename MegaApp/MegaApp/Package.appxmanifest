@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package
-  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2"
-  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
-  IgnorableNamespaces="uap uap2 uap3 mp">
-  <Identity Name="MegaLimited.7475E04196F8" Publisher="CN=78B72E51-6188-4F93-9245-24D5C79F8840" Version="4.1.7.0" />
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap2="http://schemas.microsoft.com/appx/manifest/uap/windows10/2" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap uap2 uap3 mp">
+  <Identity Name="MegaLimited.7475E04196F8" Publisher="CN=78B72E51-6188-4F93-9245-24D5C79F8840" Version="4.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="7d8d3817-2eb5-416a-9147-ed5e83dee03e" PhonePublisherId="78b72e51-6188-4f93-9245-24d5c79f8840" />
   <Properties>
     <DisplayName>MEGA Privacy</DisplayName>
@@ -32,21 +26,21 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#EB4444" />
       </uap:VisualElements>
       <Extensions>
-        <uap3:Extension Category="windows.appUriHandler">
-          <uap3:AppUriHandler>
-            <uap3:Host Name="mega.nz" />
-          </uap3:AppUriHandler>
-        </uap3:Extension>
-        <uap:Extension Category="windows.protocol">
-          <uap:Protocol Name="mega">
-            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
-          </uap:Protocol>
-        </uap:Extension>
         <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTaskService.CameraUploadTask">
           <BackgroundTasks>
             <Task Type="timer" />
           </BackgroundTasks>
         </Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mega">
+            <uap:DisplayName>MEGA Privacy</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+        <uap3:Extension Category="windows.appUriHandler">
+          <uap3:AppUriHandler>
+            <uap3:Host Name="mega.nz" />
+          </uap3:AppUriHandler>
+        </uap3:Extension>
       </Extensions>
     </Application>
   </Applications>

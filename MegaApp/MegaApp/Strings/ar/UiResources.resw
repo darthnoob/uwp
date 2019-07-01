@@ -267,7 +267,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
-    <value>سلة المهملات</value>
+    <value>سلة المحذوفات</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Settings" xml:space="preserve">
@@ -507,7 +507,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>الحصول على الرابط</value>
+    <value>الحصول على الرّابط</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>المشاركات القادمة</value>
+    <value>المشاركات الواردة</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -915,7 +915,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Add' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AddContact" xml:space="preserve">
-    <value>إضافة جهة اتصال</value>
+    <value>إضافة متصّل</value>
     <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contacts" xml:space="preserve">
@@ -983,7 +983,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_Name" xml:space="preserve">
-    <value>الاسم</value>
+    <value>الإسم</value>
     <comment>Label for any 'Name' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ViewProfile" xml:space="preserve">
@@ -1004,7 +1004,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
-    <value>الوصول الكامل</value>
+    <value>وصول كامل</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
@@ -1075,7 +1075,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for the menu option to sort a list of items by modification date - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionName" xml:space="preserve">
-    <value>الاسم</value>
+    <value>الإسم</value>
     <comment>Label for the menu option to sort a list of items by name - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionOwner" xml:space="preserve">
@@ -1119,7 +1119,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Owner' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Permissions" xml:space="preserve">
-    <value>صلاحيات</value>
+    <value>الرّخص</value>
     <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedOn" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>الطلبات المرسلة</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>نسخة التطبيق</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

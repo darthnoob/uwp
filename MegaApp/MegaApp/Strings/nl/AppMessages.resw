@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>Mislukt om de prullenbak te legen. Probeer nogmaals.</value>
+    <value>Het legen van de prullenbak is mislukt. Probeer alstublieft opnieuw.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>De prullenbak was succesvol geleegd.</value>
+    <value>De prullenbak is met succes geleegd.</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>SSL certificatie fout</value>
+    <value>SSL sleutel fout</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -713,7 +713,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to copy a MEGA link to the clipboard finished successfully.</comment>
   </data>
   <data name="AM_LinkCopiedToClipboard_Title" xml:space="preserve">
-    <value>Gekopieërd naar het klembord</value>
+    <value>Gekopiëerd naar klembord</value>
     <comment>Title of the dialog displayed when fails the process/request to copy a MEGA link to the clipboard finished successfully - (String as short as possible).</comment>
   </data>
   <data name="AM_ShareLinkFromMega" xml:space="preserve">
@@ -1202,11 +1202,11 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Message to describe the purpose of the dialog to test the password.</comment>
   </data>
   <data name="AM_TestPasswordSuccess" xml:space="preserve">
-    <value>Wachtwoord geaccepteerd, we raden het aan dat u een reservekopie maakt van uw Herstelsleutel.</value>
+    <value>Wachtwoord geaccepteerd, we raden het aan dat u een backup maakt van uw Herstelsleutel.</value>
     <comment>Message displayed when the password test result is ok.</comment>
   </data>
   <data name="AM_TestPasswordWarning" xml:space="preserve">
-    <value>Onjuist wachtwoord! Maak zo snel mogelijk een reservekopie van uw Herstelsleutel.</value>
+    <value>Onjuist wachtwoord! Maak zo snel mogelijk een backup van uw Herstelsleutel.</value>
     <comment>Warning message displayed when the password test fails.</comment>
   </data>
   <data name="AM_TestPassword_Title" xml:space="preserve">
@@ -1308,8 +1308,8 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to introduce the 6-digit code for the MFA.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogRecommendation" xml:space="preserve">
-    <value>Als u toegang verliest tot uw account nadat u 2FA heeft ingeschakeld en niet een reservekopie heeft van uw Herstelsleutel, kan MEGA u niet helpen toegang weer te terug te krijgen.
-Zorg ervoor dat u een reservekopie maakt van uw herstelsleutel.</value>
+    <value>Als u toegang verliest tot uw account nadat u 2FA heeft ingeschakeld en niet een backup heeft van uw Herstelsleutel, kan MEGA u niet helpen toegang weer te terug te krijgen. 
+Zorg ervoor dat u een backup maakt van uw herstelsleutel.</value>
     <comment>Text recommending export the Recovery Key in the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication. KEEP the multi-line format.</comment>
   </data>
   <data name="AM_CloseOtherSessionsFailed" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>Over tegoed Waarschuwing!</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} is al geüpload</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>Weet u zeker dat u wilt wijzigen naar een test server? Uw account kan onherstelbare problemen krijgen</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>naar een test server?</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

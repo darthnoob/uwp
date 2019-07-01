@@ -126,7 +126,7 @@
     <comment>Message of the dialog displayed when a user try to create a new MEGA account without accept previously the 'Terms of Service'.</comment>
   </data>
   <data name="AM_CleanRubbishBinFailed" xml:space="preserve">
-    <value>فشل عملية افراغ سلة المحذوفات. من فضلك اعد المحاولة.</value>
+    <value>فشل في إفراغ سلة المحذوفات. الرجاء المحاولة ثانية.</value>
     <comment>Message of the dialog displayed when the process/request to empty the rubbish bin failed.</comment>
   </data>
   <data name="AM_CleanRubbishBinQuestion" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Message of the dialog displayed when a user want to empty the rubbish bin, asking for confirmation to do it.</comment>
   </data>
   <data name="AM_CleanRubbishBinSuccess" xml:space="preserve">
-    <value>تم افراغ سلة المحذوفات بنجاح.</value>
+    <value>تم إفراغ سلة المحذوفات بنجاح</value>
     <comment>Message of the dialog displayed when empty the rubbish bin succesfully.</comment>
   </data>
   <data name="AM_ClearRubbishBin_Title" xml:space="preserve">
@@ -627,7 +627,7 @@ Preserve the '{0}' and '{1}'codes because are for include the old and new name i
     <comment>Message of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_SSLKeyError_Title" xml:space="preserve">
-    <value>خطأ بشهادة SSL</value>
+    <value>خطأ بمفتاح SSL</value>
     <comment>Title of the dialog displayed when MEGA SSL key can't be verified (API_ESSL Error).</comment>
   </data>
   <data name="AM_RemoveFailed_Title" xml:space="preserve">
@@ -1390,16 +1390,16 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Message which shows when a file name is duplicated during renaming.</comment>
   </data>
   <data name="AM_RemoveNodeFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing ‘{0}’ from offline storage. Please try again.</value>
+    <value>فشل عملية حذف ‘{0}’ من التخزين دون اتصال بالانترنت. يرجى اعادة المحاولة.</value>
     <comment>Message of the dialog displayed when the process to remove a node from the offline section failed.
 Preserve the {0} code because is for include the name of the node in runtime.</comment>
   </data>
   <data name="AM_RemoveFromOfflineFailed_Title" xml:space="preserve">
-    <value>Remove from offline storage failed</value>
+    <value>فشل الحذف من التخزين دون اتصال</value>
     <comment>Title of the dialog displayed when the process to remove one or multiple nodes from the offline section failed - (String as short as possible).</comment>
   </data>
   <data name="AM_RemoveMultipleNodesFromOfflineFailed" xml:space="preserve">
-    <value>Failed removing items from offline storage. Please try again.</value>
+    <value>فشل الحذف من التخزين دون اتصال. يرجى اعادة المحاولة لاحقاً.</value>
     <comment>Message of the dialog displayed when the process to remove multiple nodes from the offline section failed.</comment>
   </data>
   <data name="AM_StorageOverquotaAlert" xml:space="preserve">
@@ -1417,5 +1417,18 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
     <value>تنبية تجاوزحصة البيانات!</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
+  </data>
+  <data name="AM_FileAlreadyUploaded" xml:space="preserve">
+    <value>{0} has already been uploaded</value>
+    <comment>Message shown when trying to upload a file that is already uploaded.
+Preserve the {0} code because is for include the file name in runtime.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer" xml:space="preserve">
+    <value>هل أنت متأكد من رغبتك بالانتقال الى المخدم التجريبي؟ من الممكن ان يتعرض حسابك لمشاكل غير قابلة للإصلاح.</value>
+    <comment>Message of the alert dialog when the user is changing the API URL to staging.</comment>
+  </data>
+  <data name="AM_ChangeToStagingServer_Title" xml:space="preserve">
+    <value>التغيير الى مخدم الاختبارات؟</value>
+    <comment>Title of the alert dialog when the user is changing the API URL to staging.</comment>
   </data>
 </root>

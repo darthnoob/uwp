@@ -17,7 +17,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>MegaApp_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>138D5F99F522E00E934BDF46CDE71BE0373DCED7</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>C91B80FEEC278A7AA16F19D8781D75C1EF005E0A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
@@ -111,10 +111,6 @@
     <PRIResource Include="Strings\uk\ProgressMessages.resw" />
     <PRIResource Include="Strings\uk\EmptyStates.resw" />
     <PRIResource Include="Strings\uk\AppMessages.resw" />
-    <PRIResource Include="Strings\tr\UiResources.resw" />
-    <PRIResource Include="Strings\tr\ProgressMessages.resw" />
-    <PRIResource Include="Strings\tr\EmptyStates.resw" />
-    <PRIResource Include="Strings\tr\AppMessages.resw" />
     <PRIResource Include="Strings\th\UiResources.resw" />
     <PRIResource Include="Strings\th\ProgressMessages.resw" />
     <PRIResource Include="Strings\th\EmptyStates.resw" />
@@ -155,10 +151,6 @@
     <PRIResource Include="Strings\id\ProgressMessages.resw" />
     <PRIResource Include="Strings\id\EmptyStates.resw" />
     <PRIResource Include="Strings\id\AppMessages.resw" />
-    <PRIResource Include="Strings\he\UiResources.resw" />
-    <PRIResource Include="Strings\he\ProgressMessages.resw" />
-    <PRIResource Include="Strings\he\EmptyStates.resw" />
-    <PRIResource Include="Strings\he\AppMessages.resw" />
     <PRIResource Include="Strings\fr\UiResources.resw" />
     <PRIResource Include="Strings\fr\ProgressMessages.resw" />
     <PRIResource Include="Strings\fr\EmptyStates.resw" />
@@ -968,7 +960,7 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.26.0">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.28.0">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
     <SDKReference Include="WindowsDesktop, Version=10.0.14393.0">

@@ -415,7 +415,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Camera Upload' description button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CameraUploadsTitle" xml:space="preserve">
-    <value>Activer le téléversement automatique de la caméra</value>
+    <value>Activer les téléversements automatiques de l’appareil photo</value>
     <comment>Label for any 'Camera Upload' on/off button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RecoveryKey" xml:space="preserve">
@@ -439,7 +439,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'About' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_AboutDescription" xml:space="preserve">
-    <value>Informations au sujet de l’application MEGA</value>
+    <value>Renseignements au sujet de l’application MEGA</value>
     <comment>Label for any 'About description' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyKey" xml:space="preserve">
@@ -698,7 +698,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
-    <value>Informations de paiement</value>
+    <value>Renseignements de paiement</value>
     <comment>Label for the 'Payment information' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_Annual" xml:space="preserve">
@@ -875,7 +875,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
-    <value>Cliquez ici pour de plus amples informations concernant les paiements récurrents, notre politique de remboursement et comment annuler votre abonnement.</value>
+    <value>Cliquez ici pour de plus amples renseignements sur les paiements récurrents, notre politique de remboursement et comment annuler votre abonnement.</value>
     <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
   </data>
   <data name="UI_SeeMoreInfo" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Lecture-écriture</value>
+    <value>Lecture et écriture</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1091,7 +1091,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Close panel' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Information" xml:space="preserve">
-    <value>Informations</value>
+    <value>Renseignements</value>
     <comment>Label for any 'Information' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contents" xml:space="preserve">
@@ -1379,7 +1379,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for the 'Unlocked bonuses' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_UnlockedBonusesText" xml:space="preserve">
-    <value>Vous pouvez déverrouiller plus d'espace de stockage et de quota de transfert gratuits en utilisant nos produits. Simple. Facile.</value>
+    <value>Vous pouvez déverrouiller plus d’espace de stockage et de quota de transfert gratuits en utilisant nos produits. Simple. Facile.</value>
     <comment>Text displayed in the 'Unlocked bonuses' section of My account in a normal situation.</comment>
   </data>
   <data name="UI_GetMoreBonuses" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Quota de transfert en prime</value>
+    <value>Transfert en prime</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1646,7 +1646,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TakedownGuidance" xml:space="preserve">
-    <value>Informations sur les retraits</value>
+    <value>Conseils sur les retraits</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Demandes envoyées</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Version de l’appli</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

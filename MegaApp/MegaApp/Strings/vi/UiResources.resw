@@ -130,7 +130,7 @@
     <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
-    <value>Hủy bỏ</value>
+    <value>Hủy</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearRubbishBin" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Tải về</value>
+    <value>Tải xuống</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
@@ -511,7 +511,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>Kế tiếp</value>
+    <value>Tiếp</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Mục chia sẻ nhận được</value>
+    <value>Mục chia sẻ Nhận Được</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Đổi Mật Khẩu</value>
+    <value>Đổi mật khẩu</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -875,7 +875,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for the 'Refund policy' title of the profile section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_RefundPolicyDescription" xml:space="preserve">
-    <value>Click vào đây để hiểu rõ hơn về việc thu tiền tự động, cách hoàn tiền, hoặc cách hủy bỏ hạng thành viên.</value>
+    <value>Clíck vào đây để hiểu rõ hơn về việc thu tiền tự động, cách hoàn tiền, hoặc cách hủy bỏ hạng thành viên.</value>
     <comment>Description of the 'Refund policy' of the profile section of My Account</comment>
   </data>
   <data name="UI_SeeMoreInfo" xml:space="preserve">
@@ -919,7 +919,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Add contact' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Contacts" xml:space="preserve">
-    <value>Danh bạ</value>
+    <value>Danh Bạ</value>
     <comment>Label for any 'Contacts' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Incoming" xml:space="preserve">
@@ -1008,7 +1008,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>Xem &amp; sửa</value>
+    <value>Cho xem và sửa</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1244,7 +1244,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed when user can resend his email address on create account.</comment>
   </data>
   <data name="UI_ConfirmEmailInfo" xml:space="preserve">
-    <value>Nếu địa chỉ email bị viết sai, xin sửa lại rồi click 'gửi lại'.</value>
+    <value>Nếu bạn có điền sai địa chỉ email của mình, vui lòng sửa cho chính xác rồi clíck nút 'gửi lại'.</value>
     <comment>Text displayed as extra informationwhen user can resend his email address on create account.</comment>
   </data>
   <data name="UI_Resend" xml:space="preserve">
@@ -1415,11 +1415,11 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Băng thông thưởng thêm</value>
+    <value>Băng thông tặng thêm</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
-    <value>Trang Thành Tích</value>
+    <value>Phần Thưởng Thành Tích</value>
     <comment>Title of the 'Achievements' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_AchievementsText" xml:space="preserve">
@@ -1435,7 +1435,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Unlocked rewards' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Expired" xml:space="preserve">
-    <value>Hết thời hạn</value>
+    <value>Hết</value>
     <comment>Label for any 'Expired' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_InviteFriends" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Lấy nội dung</value>
+    <value>Chuyển nhập</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1551,7 +1551,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'File link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BackupRecoveryKey" xml:space="preserve">
-    <value>Sao lưu Mã Khóa Phục Hồi</value>
+    <value>Sao lưu Mã Phục Hồi</value>
     <comment>Label for any 'Backup Recovery key' button, link, text, title, etc. - (String as short as possible).
 NOTE: Max. length 20 characters.</comment>
   </data>
@@ -1580,7 +1580,7 @@ NOTE: Max. length 20 characters.</comment>
     <comment>Label for any 'Offline files' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_OfflineBanner" xml:space="preserve">
-    <value>Thiết bị hiện đang sử dụng không có kết nối mạng. Xin kiểm tra tình trạng trực tuyến hoặc vào phần Lưu về Ngoại Tuyến.</value>
+    <value>Thiết bị hiện đang sử dụng không có kết nối mạng. Xin kiểm tra tình trạng trực tuyến hoặc vào mục Lưu Ngoại Tuyến.</value>
     <comment>Label of the banner displayed on the main window when the app detects that the device is offline.</comment>
   </data>
   <data name="UI_ListSortedByReferralStatus" xml:space="preserve">
@@ -1646,11 +1646,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TakedownGuidance" xml:space="preserve">
-    <value>Xử Lý Tranh Chấp Bản Quyền</value>
+    <value>Xử Lý Tranh Chấp Quyền Sở Hữu</value>
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
-    <value>Bật Lập Xác Minh 2-Bước</value>
+    <value>Bật Xác Minh 2-Bước</value>
     <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
   </data>
   <data name="UI_TwoFactorAuth" xml:space="preserve">
@@ -1674,15 +1674,15 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Thực muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.</value>
+    <value>Quét hay sao chép đoạn chủng tử nằm dưới đây vào app Lập Xác Minh muốn sử dụng. Cũng nên lưu lại mã này ở nơi an toàn trong trường hợp bị mất máy.</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>Sau khi chủng tử được app Lập Xác Thực nhận vào, điền vào đoạn mã dài 6 chữ số hiện ra.</value>
+    <value>Sau khi chủng tử được app Lập Xác Minh nhận vào, điền vào đoạn mã dài 6 chữ số hiện ra.</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
-    <value>Thiết bị có cài app Lập Xác Thực đã bị mất?</value>
+    <value>Thiết bị có cài app Lập Xác Minh đã bị mất?</value>
     <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
   </data>
   <data name="UI_PhotoAndVideo" xml:space="preserve">
@@ -1730,7 +1730,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
   </data>
   <data name="UI_Warning" xml:space="preserve">
-    <value>Cảnh báo</value>
+    <value>Chú Ý</value>
     <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Restore" xml:space="preserve">
@@ -1782,7 +1782,16 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Received requests' text, title, etc. for received contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_SentRequests" xml:space="preserve">
-    <value>Yêu cầu đã gửi</value>
+    <value>Yêu cầu gửi đi</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Phiên bản ứng dụng</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

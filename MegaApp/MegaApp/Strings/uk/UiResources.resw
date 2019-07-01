@@ -130,7 +130,7 @@
     <comment>Label for any 'Camera Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Cancel" xml:space="preserve">
-    <value>Відмінити</value>
+    <value>Скасувати</value>
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearRubbishBin" xml:space="preserve">
@@ -138,7 +138,7 @@
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
-    <value>Хмарний Диск</value>
+    <value>Хмарний диск</value>
     <comment>Label for any 'Cloud Drive' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Confirm" xml:space="preserve">
@@ -170,7 +170,7 @@
     <comment>Label for any 'Create folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Download" xml:space="preserve">
-    <value>Скачати</value>
+    <value>Завантажити</value>
     <comment>Label for any 'Download' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Downloads" xml:space="preserve">
@@ -267,7 +267,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
-    <value>Кошик</value>
+    <value>Корзина</value>
     <comment>Label for any 'Rubbish bin' button, link, text, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Settings" xml:space="preserve">
@@ -283,7 +283,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Folder' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TermsOfService" xml:space="preserve">
-    <value>Умови Надання Послуг</value>
+    <value>умови надання послуг</value>
     <comment>Label for any 'Terms of Service' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Transfer" xml:space="preserve">
@@ -343,7 +343,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Text placed into the dialog to type the new name when the user wants to rename a file or folder.</comment>
   </data>
   <data name="UI_Upload" xml:space="preserve">
-    <value>Завантажити</value>
+    <value>Відвантажити</value>
     <comment>Label for any 'Upload' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Uploads" xml:space="preserve">
@@ -455,7 +455,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Plain text' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Copy" xml:space="preserve">
-    <value>Скопіювати</value>
+    <value>Копіювати</value>
     <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Move" xml:space="preserve">
@@ -507,7 +507,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>Отримати посилання</value>
+    <value>Отримати ланку</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Підняти</value>
+    <value>Покращити</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -714,7 +714,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_Monthly" xml:space="preserve">
-    <value>Щомісячне</value>
+    <value>Щомісяця</value>
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>Incoming shares</value>
+    <value>Incoming Shares</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -767,7 +767,7 @@ Keep 'Microsoft Store' in English because it is a trademark.</comment>
     <comment>Label for any 'Month' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Storage" xml:space="preserve">
-    <value>Місце</value>
+    <value>Сховище</value>
     <comment>Label for any 'Storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_UpgradeStep1" xml:space="preserve">
@@ -851,7 +851,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Change Password</value>
+    <value>Change password</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -1415,7 +1415,7 @@ Keep the {0} code because is for include the number of selected items in runtime
     <comment>Label for any 'Bonus storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_BonusTransferQuota" xml:space="preserve">
-    <value>Bonus transfer quota</value>
+    <value>Bonus transfer</value>
     <comment>Label for any 'Bonus transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Achievements" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>Імпорт</value>
+    <value>Імпортувати</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>Надіслані запити</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>Версія програми</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>

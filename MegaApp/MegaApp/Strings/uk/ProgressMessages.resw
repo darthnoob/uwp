@@ -162,7 +162,7 @@
     <comment>Progress indicator message when moving a node to a different parent - (String as short as possible).</comment>
   </data>
   <data name="PM_MoveToRubbishBin" xml:space="preserve">
-    <value>Перенесення у кошик…</value>
+    <value>Перенесення у кошик для сміття…</value>
     <comment>Progress indicator message when moving a node to the rubbish bin - (String as short as possible).</comment>
   </data>
   <data name="PM_Remove" xml:space="preserve">

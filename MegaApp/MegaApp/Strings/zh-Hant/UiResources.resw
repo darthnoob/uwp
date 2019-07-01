@@ -134,7 +134,7 @@
     <comment>Label for any 'Cancel' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearRubbishBin" xml:space="preserve">
-    <value>Clear Rubbish Bin</value>
+    <value>清空垃圾桶</value>
     <comment>Label for a 'Clear Rubbish Bin' button to clear the rubbish bin content - (String as short as possible).</comment>
   </data>
   <data name="UI_CloudDriveName" xml:space="preserve">
@@ -158,7 +158,7 @@
     <comment>Text for the confirmation page with the instructions to follow.</comment>
   </data>
   <data name="UI_ConfirmYourAccountTitle" xml:space="preserve">
-    <value>確認您的帳號</value>
+    <value>確認您的帳戶</value>
     <comment>Label for any 'Confirm your account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CreateAccount" xml:space="preserve">
@@ -182,7 +182,7 @@
     <comment>Watermark label for the email address field when create/confirm account and login - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyCloudDrive" xml:space="preserve">
-    <value>您的雲端硬碟中沒有檔案</value>
+    <value>您的雲端硬盤沒有檔案</value>
     <comment>Label for the background of an empty cloud drive page - (String as short as possible).</comment>
   </data>
   <data name="UI_EmptyFolder" xml:space="preserve">
@@ -215,7 +215,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Watermark label for the user's last name field when create account - (String as short as possible).</comment>
   </data>
   <data name="UI_Login" xml:space="preserve">
-    <value>登錄</value>
+    <value>登入</value>
     <comment>Label for any 'Login' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MultipleFiles" xml:space="preserve">
@@ -235,7 +235,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'My account' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_No" xml:space="preserve">
-    <value>不是</value>
+    <value>否</value>
     <comment>Label for any 'No' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NoInternetConnection" xml:space="preserve">
@@ -263,7 +263,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Remove' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Rename" xml:space="preserve">
-    <value>重新命名</value>
+    <value>重命名</value>
     <comment>Label for any 'Rename' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_RubbishBinName" xml:space="preserve">
@@ -327,7 +327,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is queued - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploaded" xml:space="preserve">
-    <value>已上傳</value>
+    <value>上載於</value>
     <comment>Label for the status of an upload transfer when is finished - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferStatusUploading" xml:space="preserve">
@@ -351,7 +351,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Uploads' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Yes" xml:space="preserve">
-    <value>是的</value>
+    <value>是</value>
     <comment>Label for any 'Yes' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Pause" xml:space="preserve">
@@ -507,7 +507,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the status of a transfer when is being retrying - (String as short as possible).</comment>
   </data>
   <data name="UI_GetLink" xml:space="preserve">
-    <value>取得連結</value>
+    <value>取得鏈接</value>
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
@@ -714,7 +714,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Title of the 'General' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_Monthly" xml:space="preserve">
-    <value>月付</value>
+    <value>月付費</value>
     <comment>Label for any 'Monthly' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_MonthlyRecurring" xml:space="preserve">
@@ -742,7 +742,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_IncomingShares" xml:space="preserve">
-    <value>我收到的分享</value>
+    <value>收到的分享</value>
     <comment>Label for any 'Incoming shares' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PleaseWait" xml:space="preserve">
@@ -1004,11 +1004,11 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_PermissionFullAccess" xml:space="preserve">
-    <value>全權使用</value>
+    <value>全權訪問</value>
     <comment>Label for the 'Full access' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadAndWrite" xml:space="preserve">
-    <value>可讀 &amp; 可編輯</value>
+    <value>讀取與編輯</value>
     <comment>Label for the 'Read &amp; write' permission for shared items.</comment>
   </data>
   <data name="UI_PermissionReadOnly" xml:space="preserve">
@@ -1099,7 +1099,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Contents' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Created" xml:space="preserve">
-    <value>建立</value>
+    <value>創建於</value>
     <comment>Label for any 'Created' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_DateModified" xml:space="preserve">
@@ -1119,7 +1119,7 @@ Keep the {0} code because is for include the number of shared folders in runtime
     <comment>Label for any 'Owner' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Permissions" xml:space="preserve">
-    <value>允許</value>
+    <value>權限</value>
     <comment>Label for any 'Permissions' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SharedOn" xml:space="preserve">
@@ -1534,7 +1534,7 @@ Keep the {0} code because is for include the number of days in runtime.</comment
     <comment>Text displayed in a dialog to allow the user type or paste the link that wants to open.</comment>
   </data>
   <data name="UI_Import" xml:space="preserve">
-    <value>輸入</value>
+    <value>匯入</value>
     <comment>Label for any 'Import' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ImportItemTo" xml:space="preserve">
@@ -1666,7 +1666,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
-    <value>Copy seed</value>
+    <value>複製種子</value>
     <comment>Label of the button to copy the seed to enable the Multi-Factor Authentication - (String as short as possible).</comment>
   </data>
   <data name="UI_Disable" xml:space="preserve">
@@ -1674,15 +1674,15 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Disable' button or link to disable any option or setting - (String as short as possible).</comment>
   </data>
   <data name="UI_MFA_SetupStep1" xml:space="preserve">
-    <value>Scan or copy the seed to your Authenticator App. Be sure to backup this seed to a safe place in case you lose your device.</value>
+    <value>請掃描或複製種子到您的身份驗證App中。請務必將此種子備份於安全之處，以防設備遺失所帶來的風險。</value>
     <comment>Label for the step 1 to setup the Multi-Factor Authentication.</comment>
   </data>
   <data name="UI_MFA_SetupStep2" xml:space="preserve">
-    <value>After setting up your seed on your Authenticator app enter the 6-digit code provided.</value>
+    <value>在驗證app中設定種子後，請輸入提供的6位碼。</value>
     <comment>Label for the step 2 to setup the Muti-Factor Authentication.</comment>
   </data>
   <data name="UI_LostAuthDeviceQuestion" xml:space="preserve">
-    <value>Lost your Authenticator device?</value>
+    <value>您的驗證設備不見了？</value>
     <comment>Label for any link/button to help the user in case lost the authentication device for MFA - (String as short as possible).</comment>
   </data>
   <data name="UI_PhotoAndVideo" xml:space="preserve">
@@ -1746,7 +1746,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Storage location' button, link, text, title, etc. For example is used as title of the "Storage location" settings section which include all the storage configurations - (String as short as possible).</comment>
   </data>
   <data name="UI_UsedCache" xml:space="preserve">
-    <value>Used cache</value>
+    <value>已使用快取</value>
     <comment>Label to indicate the amount of used cache - (String as short as possible).</comment>
   </data>
   <data name="UI_ClearOffline" xml:space="preserve">
@@ -1766,7 +1766,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Text 'Export Recovery Key' placed just before two buttons into the 'settings' page to allow see (copy/paste) and export the Recovery Key.</comment>
   </data>
   <data name="UI_FindApp" xml:space="preserve">
-    <value>Find app</value>
+    <value>使用App</value>
     <comment>Label for any 'Find app' button, link, text, title, etc, to find an app to open a file, resource, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ManageLink" xml:space="preserve">
@@ -1784,5 +1784,14 @@ Keep the {0} and {1} codes because are for include the number of selected items 
   <data name="UI_SentRequests" xml:space="preserve">
     <value>送出邀請</value>
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
+  </data>
+  <data name="UI_UseSpecificPort" xml:space="preserve">
+    <value>Use port {0}</value>
+    <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
+Keep the {0} code because is for include the port number in runtime.</comment>
+  </data>
+  <data name="UI_AppVersion" xml:space="preserve">
+    <value>App 版本</value>
+    <comment>Text placed just before app version number into the 'about' page.</comment>
   </data>
 </root>
