@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.Networking.Connectivity;
+using mega;
 
 #if CAMERA_UPLOADS_SERVICE
 using BackgroundTaskService.Services;
@@ -68,8 +69,9 @@ namespace MegaApp.Network
 
                     NetworkChanged?.Invoke(this, EventArgs.Empty);
                 }
-                catch
+                catch (Exception e)
                 {
+                    LogService.Log(MLogLevel.LOG_LEVEL_ERROR, "Error updating connection info", e);
                     ConnectionInformation.Reset();
                 }
             }
@@ -77,6 +79,7 @@ namespace MegaApp.Network
 
         private void OnNetworkStatusChanged(object sender)
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Network status has changed.");
             NetworkService.CheckNetworkChange();
             UpdateConnectionInformation();
         }

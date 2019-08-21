@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using Windows.Networking.Connectivity;
+using mega;
 
 #if CAMERA_UPLOADS_SERVICE
 using BackgroundTaskService.Enums;
+using BackgroundTaskService.Services;
 #else
 using MegaApp.Enums;
+using MegaApp.Services;
 #endif
 
 #if CAMERA_UPLOADS_SERVICE
@@ -26,8 +29,8 @@ namespace MegaApp.Network
         {
             if (profile == null)
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Connection Profile is NULL");
                 Reset();
-
                 return;
             }
 
@@ -83,6 +86,9 @@ namespace MegaApp.Network
 
             ConnectionCost = profile.GetConnectionCost();
             SignalStrength = profile.GetSignalBars();
+
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Connection Type: " + ConnectionType + ", Network Type: " + NetworkService.GetNetworkType() + 
+                ", Connectivity Level: " + ConnectivityLevel + ", IP address: " + IpAddress);
         }
 
         /// <summary>
@@ -90,6 +96,7 @@ namespace MegaApp.Network
         /// </summary>
         internal void Reset()
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Reset connection information.");
             NetworkName = null;
             ConnectionType = ConnectionType.Unknown;
             ConnectivityLevel = NetworkConnectivityLevel.None;
