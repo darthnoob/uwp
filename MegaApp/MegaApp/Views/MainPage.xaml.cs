@@ -150,9 +150,10 @@ namespace MegaApp.Views
         /// Method called when a network status changed event is triggered
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
-        protected override async void OnNetworkStatusChanged(object sender)
+        /// <param name="args">Event arguments</param>
+        protected override async void OnNetworkStatusChanged(object sender, object args)
         {
-            base.OnNetworkStatusChanged(sender);
+            base.OnNetworkStatusChanged(sender, args);
             this.ViewModel?.ContentViewModel?.UpdateNetworkStatus();
 
             // If no network connection, nothing to do

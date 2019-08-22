@@ -46,10 +46,8 @@ namespace MegaApp.Services
         {
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "No Internet connection available.");
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Connection Type: " + NetworkHelper.Instance.ConnectionInformation.ConnectionType +
-                    ", Network Type: " + GetNetworkType() + ", Connectivity Level: " + NetworkHelper.Instance.ConnectionInformation.ConnectivityLevel +
-                    ", IP address: " + NetworkHelper.Instance.ConnectionInformation.IpAddress);
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "NO INTERNET CONNECTION AVAILABLE.");
+                NetworkHelper.LogConnectivityInfo();
 
 #if !CAMERA_UPLOADS_SERVICE
                 if (showMessageDialog)

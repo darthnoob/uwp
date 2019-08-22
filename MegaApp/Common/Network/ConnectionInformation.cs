@@ -29,7 +29,7 @@ namespace MegaApp.Network
         {
             if (profile == null)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Connection Profile is NULL");
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "There is no connection profile");
                 Reset();
                 return;
             }
@@ -87,8 +87,7 @@ namespace MegaApp.Network
             ConnectionCost = profile.GetConnectionCost();
             SignalStrength = profile.GetSignalBars();
 
-            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Connection Type: " + ConnectionType + ", Network Type: " + NetworkService.GetNetworkType() + 
-                ", Connectivity Level: " + ConnectivityLevel + ", IP address: " + IpAddress);
+            NetworkHelper.LogConnectivityInfo();
         }
 
         /// <summary>
@@ -103,6 +102,9 @@ namespace MegaApp.Network
             IsInternetAvailable = false;
             ConnectionCost = null;
             SignalStrength = null;
+            IpAddress = null;
+
+            NetworkHelper.LogConnectivityInfo();
         }
 
         /// <summary>

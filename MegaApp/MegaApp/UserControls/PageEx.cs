@@ -1,8 +1,7 @@
 ﻿using System;
-using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using MegaApp.Services;
+using MegaApp.Network;
 using MegaApp.ViewModels;
 
 namespace MegaApp.UserControls
@@ -31,7 +30,7 @@ namespace MegaApp.UserControls
             base.OnNavigatedTo(e);
 
             // Register for network connection changed events
-            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+            NetworkHelper.Instance.NetworkStatusChanged += OnNetworkStatusChanged;
 
             this.ViewModel.UpdateNetworkStatus();
         }
@@ -39,7 +38,7 @@ namespace MegaApp.UserControls
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             // Unregister for network connection changed events
-            NetworkInformation.NetworkStatusChanged -= OnNetworkStatusChanged;
+            NetworkHelper.Instance.NetworkStatusChanged -= OnNetworkStatusChanged;
 
             base.OnNavigatedFrom(e);
         }
@@ -48,7 +47,8 @@ namespace MegaApp.UserControls
         /// Method called when a network status changed event is triggered
         /// </summary>
         /// <param name="sender">Object that sent the event</param>
-        protected virtual void OnNetworkStatusChanged(object sender)
+        /// <param name="args">Event arguments</param>
+        protected virtual void OnNetworkStatusChanged(object sender, object args)
         {
             this.ViewModel.UpdateNetworkStatus();
         }
@@ -63,5 +63,4 @@ namespace MegaApp.UserControls
 
         public virtual void GoBack() {}
     }
-
 }

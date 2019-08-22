@@ -81,6 +81,9 @@ namespace MegaApp.Services
             //in the active logger
             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
 
+            // Use custom DNS servers
+            SetDnsServers();
+
             // Set the ID for statistics
             MegaSDK.setStatsID(DeviceService.GetDeviceId());
 
@@ -117,9 +120,6 @@ namespace MegaApp.Services
                 AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
-
-            // Use custom DNS servers in the new SDK instance
-            SetDnsServers(newMegaSDK, false);
 
             // Enable retrying when public key pinning fails
             newMegaSDK.retrySSLerrors(true);
