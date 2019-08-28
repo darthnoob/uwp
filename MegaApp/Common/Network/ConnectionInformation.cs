@@ -27,6 +27,8 @@ namespace MegaApp.Network
         /// <param name="profile">instance of <see cref="ConnectionProfile"/></param>
         public void UpdateConnectionInformation(ConnectionProfile profile)
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Updating connection info...");
+
             if (profile == null)
             {
                 LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "There is no connection profile");
@@ -34,8 +36,8 @@ namespace MegaApp.Network
                 return;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting interface type...");
             uint ianaInterfaceType = profile.NetworkAdapter?.IanaInterfaceType ?? 0;
-
             switch (ianaInterfaceType)
             {
                 case 6:
@@ -56,9 +58,11 @@ namespace MegaApp.Network
                     break;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting netework name...");
             NetworkName = profile.ProfileName;
 
             // Update the IP address
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting IP address...");
             if (profile?.NetworkAdapter != null)
             {
                 var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn => 
@@ -68,8 +72,8 @@ namespace MegaApp.Network
                     IpAddress = hostname.CanonicalName;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting connectivity level...");
             ConnectivityLevel = profile.GetNetworkConnectivityLevel();
-
             switch (ConnectivityLevel)
             {
                 case NetworkConnectivityLevel.None:
