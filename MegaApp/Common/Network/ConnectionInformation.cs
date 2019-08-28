@@ -65,7 +65,7 @@ namespace MegaApp.Network
             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting IP address...");
             if (profile?.NetworkAdapter != null)
             {
-                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn => 
+                var hostname = NetworkInformation.GetHostNames().FirstOrDefault(hn => 
                     hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
 
                 if (hostname != null)

@@ -144,7 +144,7 @@ namespace MegaApp.Services
                 var profile = NetworkInformation.GetInternetConnectionProfile();
                 if (profile?.NetworkAdapter == null) return false;
 
-                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn =>
+                var hostname = NetworkInformation.GetHostNames().FirstOrDefault(hn =>
                     hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
 
                 if (string.IsNullOrWhiteSpace(hostname?.CanonicalName) ||
