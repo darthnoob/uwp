@@ -22,10 +22,18 @@ namespace MegaApp.ViewModels.Contacts
             this.MegaUser = contact;
             this.ContactList = contactList;
             
-            this.Handle = contact.getHandle();
-            this.Email = contact.getEmail();
-            this.Timestamp = contact.getTimestamp();
-            this.Visibility = contact.getVisibility();
+            if(contact != null)
+            {
+                this.Handle = contact.getHandle();
+                this.Email = contact.getEmail();
+                this.Timestamp = contact.getTimestamp();
+                this.Visibility = contact.getVisibility();
+            }
+            else
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "'MUser' of contact is NULL");
+            }
+            
             this.AvatarColor = UiService.GetColorFromHex(this.MegaSdk.getUserAvatarColor(contact));
             this.SharedItems = new ContactSharedItemsViewModel(contact);
 

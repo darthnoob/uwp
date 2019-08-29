@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows.Input;
 using mega;
 using MegaApp.Classes;
@@ -70,7 +69,7 @@ namespace MegaApp.ViewModels.MyAccount
 
         }
 
-        private async void DoAction()
+        private void DoAction()
         {
             if (!AchievementClass.HasValue) return;
             switch (AchievementClass)
@@ -78,11 +77,12 @@ namespace MegaApp.ViewModels.MyAccount
                 case MAchievementClass.MEGA_ACHIEVEMENT_WELCOME:
                 case MAchievementClass.MEGA_ACHIEVEMENT_DESKTOP_INSTALL:
                 case MAchievementClass.MEGA_ACHIEVEMENT_MOBILE_INSTALL:
-                {
-                    var achievementInformationDialog = new AchievementInformationDialog(this);
-                    await achievementInformationDialog.ShowAsync();
+                    UiService.OnUiThread(async() =>
+                    {
+                        var achievementInformationDialog = new AchievementInformationDialog(this);
+                        await achievementInformationDialog.ShowAsync();
+                    });
                     break;
-                }
                 case MAchievementClass.MEGA_ACHIEVEMENT_INVITE:
                     AchievementInvitationsViewModel.InvitationAward = this;
                     NavigateService.Instance.Navigate(typeof(AchievementInvitationsPage));
