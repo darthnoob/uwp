@@ -449,7 +449,7 @@ namespace MegaApp.Services
             var userAvatarResult = await userAvatarRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAvatar(UserData.AvatarPath, userAvatarRequestListener));
 
-            if (userAvatarResult)
+            if (userAvatarResult && UserData?.AvatarPath != null)
             {
                 UiService.OnUiThread(() =>
                 {
@@ -463,6 +463,7 @@ namespace MegaApp.Services
             }
             else
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting user avatar");
                 UiService.OnUiThread(() => UserData.AvatarUri = null);
             }
         }
