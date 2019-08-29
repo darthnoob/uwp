@@ -158,7 +158,12 @@ namespace MegaApp.ViewModels.Contacts
             {
                 for (int i = 0; i < outSharesListSize; i++)
                 {
-                    var contact = SdkService.MegaSdk.getContact(outSharesList.get(i).getUser());
+                    var contact = SdkService.MegaSdk.getContact(outSharesList.get(i)?.getUser());
+                    if (contact == null)
+                    {
+                        LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Contact is NULL");
+                        continue;
+                    }
 
                     var existingContact = this.ItemCollection.Items.FirstOrDefault(
                         c => c.Handle.Equals(contact.getHandle()));

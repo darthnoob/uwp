@@ -236,6 +236,12 @@ namespace MegaApp.ViewModels.Contacts
 
         protected void OnContactUpdated(object sender, MUser user)
         {
+            if (user == null)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "'MUser' is NULL");
+                return;
+            }
+
             var existingContact = (ContactViewModel)this.ItemCollection.Items.FirstOrDefault(
                 contact => contact.Handle.Equals(user.getHandle()));
 
