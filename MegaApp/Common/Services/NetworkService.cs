@@ -46,7 +46,9 @@ namespace MegaApp.Services
         {
             if (!NetworkHelper.Instance.ConnectionInformation.IsInternetAvailable)
             {
-                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "No Internet connection available.");
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "NO INTERNET CONNECTION AVAILABLE.");
+                NetworkHelper.LogConnectivityInfo();
+
 #if !CAMERA_UPLOADS_SERVICE
                 if (showMessageDialog)
                 {
@@ -125,7 +127,10 @@ namespace MegaApp.Services
             var networkNameChanged = HasChangedNetworkName();
 
             if (ipAddressChanged || networkNameChanged)
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Network or IP address changed.");
                 SdkService.SetDnsServers();
+            }
         }
 
         /// <summary>
@@ -139,13 +144,14 @@ namespace MegaApp.Services
                 var profile = NetworkInformation.GetInternetConnectionProfile();
                 if (profile?.NetworkAdapter == null) return false;
 
-                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn =>
+                var hostname = NetworkInformation.GetHostNames().FirstOrDefault(hn =>
                     hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
 
                 if (string.IsNullOrWhiteSpace(hostname?.CanonicalName) ||
                     hostname?.CanonicalName == NetworkHelper.Instance.ConnectionInformation.IpAddress)
                     return false;
 
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "IP address has changed. New IP: " + hostname?.CanonicalName);
                 return true;
             }
             catch (Exception e)
@@ -169,6 +175,7 @@ namespace MegaApp.Services
                 if (profile.ProfileName == NetworkHelper.Instance.ConnectionInformation.NetworkName)
                     return false;
 
+                LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Network name has changed.");
                 return true;
             }
             catch (Exception e)
@@ -188,7 +195,10 @@ namespace MegaApp.Services
             try
             {
                 if (!refresh && !string.IsNullOrWhiteSpace(SystemDnsServers))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, $"System DNS servers (cached): {SystemDnsServers}");
                     return SystemDnsServers;
+                }
 
                 if (!HasInternetAccess()) return null;
 
@@ -237,7 +247,10 @@ namespace MegaApp.Services
             try
             {
                 if (!refresh && !string.IsNullOrWhiteSpace(MegaDnsServers))
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_INFO, $"MEGA DNS servers (cached): {MegaDnsServers}");
                     return MegaDnsServers;
+                }
 
                 if (!HasInternetAccess()) return null;
 

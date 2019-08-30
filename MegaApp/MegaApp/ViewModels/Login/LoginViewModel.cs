@@ -59,7 +59,13 @@ namespace MegaApp.ViewModels.Login
         /// </summary>
         public async void Login()
         {
-            if (!NetworkService.HasInternetAccess(true)) return;
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Logging in...");
+            
+            if (!NetworkService.HasInternetAccess(true))
+            {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Can't login. No Internet connection available.");
+                return;
+            }
 
             // Reset the flag to store if the account has been blocked
             AccountService.IsAccountBlocked = false;

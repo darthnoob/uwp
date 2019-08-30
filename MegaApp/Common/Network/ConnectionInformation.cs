@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using Windows.Networking.Connectivity;
+using mega;
 
 #if CAMERA_UPLOADS_SERVICE
 using BackgroundTaskService.Enums;
+using BackgroundTaskService.Services;
 #else
 using MegaApp.Enums;
+using MegaApp.Services;
 #endif
 
 #if CAMERA_UPLOADS_SERVICE
@@ -24,15 +27,17 @@ namespace MegaApp.Network
         /// <param name="profile">instance of <see cref="ConnectionProfile"/></param>
         public void UpdateConnectionInformation(ConnectionProfile profile)
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Updating connection info...");
+
             if (profile == null)
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "There is no connection profile");
                 Reset();
-
                 return;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting interface type...");
             uint ianaInterfaceType = profile.NetworkAdapter?.IanaInterfaceType ?? 0;
-
             switch (ianaInterfaceType)
             {
                 case 6:
@@ -53,20 +58,22 @@ namespace MegaApp.Network
                     break;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting netework name...");
             NetworkName = profile.ProfileName;
 
             // Update the IP address
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting IP address...");
             if (profile?.NetworkAdapter != null)
             {
-                var hostname = NetworkInformation.GetHostNames().SingleOrDefault(hn => 
+                var hostname = NetworkInformation.GetHostNames().FirstOrDefault(hn => 
                     hn?.IPInformation?.NetworkAdapter?.NetworkAdapterId == profile.NetworkAdapter.NetworkAdapterId);
 
                 if (hostname != null)
                     IpAddress = hostname.CanonicalName;
             }
 
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Getting connectivity level...");
             ConnectivityLevel = profile.GetNetworkConnectivityLevel();
-
             switch (ConnectivityLevel)
             {
                 case NetworkConnectivityLevel.None:
@@ -83,6 +90,8 @@ namespace MegaApp.Network
 
             ConnectionCost = profile.GetConnectionCost();
             SignalStrength = profile.GetSignalBars();
+
+            NetworkHelper.LogConnectivityInfo();
         }
 
         /// <summary>
@@ -90,12 +99,16 @@ namespace MegaApp.Network
         /// </summary>
         internal void Reset()
         {
+            LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Reset connection information.");
             NetworkName = null;
             ConnectionType = ConnectionType.Unknown;
             ConnectivityLevel = NetworkConnectivityLevel.None;
             IsInternetAvailable = false;
             ConnectionCost = null;
             SignalStrength = null;
+            IpAddress = null;
+
+            NetworkHelper.LogConnectivityInfo();
         }
 
         /// <summary>

@@ -55,6 +55,9 @@ namespace MegaApp.Services
             {
                 StopDebugModeTimer();
                 DebugSettings.IsDebugMode = !DebugSettings.IsDebugMode;
+
+                // To avoid change API URL accidentally
+                SdkService.ChangeApiUrlActionFinished(true);
             }
         }
 

@@ -66,13 +66,14 @@ namespace MegaApp.Services
         /// </summary>
         /// <param name="logLevel">Log level for this message</param>
         /// <param name="message">Message for the logging system</param>
-        /// <param name="file">Origin of the log message</param>
+        /// <param name="member">Method or property that generated the log message</param>
+        /// <param name="file">File origin of the log message</param>
         /// <param name="line">Line of code where this message was generated</param>
         public static void Log(MLogLevel logLevel, string message,
-            [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
+            [CallerMemberName] string member = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
         {
-            MegaSDK.log(logLevel, string.Format("{0} ({1}:{2})",
-                message, Path.GetFileName(file), line));
+            MegaSDK.log(logLevel, string.Format("[clientApp] {0} ({1} - {2}:{3})",
+                message, member, Path.GetFileName(file), line));
         }
 
         /// <summary>
@@ -81,20 +82,21 @@ namespace MegaApp.Services
         /// <param name="logLevel">Log level for this message</param>
         /// <param name="message">Message for the logging system</param>
         /// <param name="e">Exception which produced the error</param>
-        /// <param name="file">Origin of the log message</param>
+        /// <param name="member">Method or property that generated the log message</param>
+        /// <param name="file">File origin of the log message</param>
         /// <param name="line">Line of code where this message was generated</param>
         public static void Log(MLogLevel logLevel, string message, Exception e,
-            [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
+            [CallerMemberName] string member = "", [CallerFilePath] string file = "", [CallerLineNumber] int line = 0)
         {
             if (e == null)
             {
-                Log(logLevel, message, file, line);
+                Log(logLevel, message, member, file, line);
                 return;
             }                
 
-            MegaSDK.log(logLevel, string.Format("{0} [{1} - {2}] ({3}:{4})", message, 
+            MegaSDK.log(logLevel, string.Format("[clientApp] {0} [{1} - {2}] ({3} - {4}:{5})", message, 
                 e.GetType().ToString(), e.Message.Replace(Environment.NewLine, " "), 
-                Path.GetFileName(file), line));
+                member, Path.GetFileName(file), line));
         }
     }
 }

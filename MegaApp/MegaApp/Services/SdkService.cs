@@ -57,6 +57,9 @@ namespace MegaApp.Services
         // Timer to count the actions needed to change the API URL.
         private static DispatcherTimer timerChangeApiUrl;
 
+        // Flag to avoid change API URL accidentally
+        private static bool _enablingDebugMode = false;
+
         #endregion
 
         #region Methods
@@ -80,6 +83,9 @@ namespace MegaApp.Services
             //You can send messages to the logger using MEGASDK.log(), those messages will be received
             //in the active logger
             LogService.Log(MLogLevel.LOG_LEVEL_INFO, "Example log message");
+
+            // Use custom DNS servers
+            SetDnsServers();
 
             // Set the ID for statistics
             MegaSDK.setStatsID(DeviceService.GetDeviceId());
@@ -117,9 +123,6 @@ namespace MegaApp.Services
                 AppService.GetAppUserAgent(),
                 ApplicationData.Current.LocalFolder.Path,
                 new MegaRandomNumberProvider());
-
-            // Use custom DNS servers in the new SDK instance
-            SetDnsServers(newMegaSDK, false);
 
             // Enable retrying when public key pinning fails
             newMegaSDK.retrySSLerrors(true);
@@ -253,7 +256,12 @@ namespace MegaApp.Services
         /// Method that should be called when an action required for 
         /// change the API URL is finished.
         /// </summary>
-        public static void ChangeApiUrlActionFinished() => StopChangeApiUrlTimer();
+        /// <param name="enablingDebugMode">Flag to avoid change API URL accidentally</param>
+        public static void ChangeApiUrlActionFinished(bool enablingDebugMode = false)
+        {
+            _enablingDebugMode = enablingDebugMode;
+            StopChangeApiUrlTimer();
+        }
 
         /// <summary>
         /// Change the API URL.
@@ -261,6 +269,13 @@ namespace MegaApp.Services
         private static async void ChangeApiUrl()
         {
             StopChangeApiUrlTimer();
+
+            // If user was enabling the Debug Mode, abort the API URL change to avoid do it accidentally
+            if (_enablingDebugMode)
+            {
+                _enablingDebugMode = false;
+                return;
+            }
 
             var useStagingServer = SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServer"), false) ||
                 SettingsService.Load(ResourceService.SettingsResources.GetString("SR_UseStagingServerPort444"), false);
