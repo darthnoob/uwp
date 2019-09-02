@@ -1415,7 +1415,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">
-    <value>超过配额警告！</value>
+    <value>超出配额提醒！</value>
     <comment>Title of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error) - (String as short as possible).</comment>
   </data>
   <data name="AM_FileAlreadyUploaded" xml:space="preserve">

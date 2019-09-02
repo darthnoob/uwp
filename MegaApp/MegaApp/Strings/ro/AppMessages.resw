@@ -443,7 +443,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed in cases that the app requires that the user type the password and the user types a wrong password.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert" xml:space="preserve">
-    <value>Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Dorești să continui?</value>
+    <value>Dacă ești de acord, contul actual va fi deconectat și toate datele offline vor fi șterse. Vrei să continui?</value>
     <comment>Message of the warning dialog shown when you try to confirm an account but you are logged in with another one.</comment>
   </data>
   <data name="AM_AlreadyLoggedInAlert_Title" xml:space="preserve">
@@ -773,11 +773,11 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_PasswordChanged_Title" xml:space="preserve">
-    <value>Parolă schimbată</value>
+    <value>Parolă modificată</value>
     <comment>Title of the dialog displayed when the change password process finish successful.</comment>
   </data>
   <data name="AM_AccountUpdate" xml:space="preserve">
-    <value>Contul tău a fost actualizat. Dorești să verifici detaliile noi ale contului?</value>
+    <value>Contul tău a fost actualizat. Vrei să verifici detaliile noi ale contului?</value>
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
@@ -833,7 +833,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Title of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_AwaitingEmailConfirmationDescription" xml:space="preserve">
-    <value>Te rugăm să accesezi e-mailul și să dai clic pe link pentru a confirma adresa nouă de e-mail.</value>
+    <value>Te rugăm să accesezi e-mailul și să dai clic pe link pentru a-ți confirma noua adresă de e-mail.</value>
     <comment>Message of the dialog displayed when the app is waiting for an email confirmation after an user email change.</comment>
   </data>
   <data name="AM_ChangeEmailAlreadyRequested" xml:space="preserve">
@@ -841,7 +841,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when a user requests twice change to the same email.</comment>
   </data>
   <data name="AM_ChangeEmailGenericError" xml:space="preserve">
-    <value>Eșec la schimbarea e-mailului. Te rugăm să încerci din nou mai târziu.</value>
+    <value>Eșec la modificarea e-mailului. Te rugăm să încerci din nou mai târziu.</value>
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
@@ -850,7 +850,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
   <data name="AM_ChangeEmailInvalidLink" xml:space="preserve">
-    <value>Linkul pe care îl folosești pentru schimbarea e-mailului nu este valid.</value>
+    <value>Linkul pe care îl folosești pentru modificarea e-mailului nu este valid.</value>
     <comment>Message of the warning dialog shown when the user tries to change the email using an invalid link (#verify).</comment>
   </data>
   <data name="AM_WrongAccount" xml:space="preserve">
@@ -947,7 +947,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Alert title shown when the DEBUG mode is enabled - (String as short as possible).</comment>
   </data>
   <data name="AM_SaveLogFile" xml:space="preserve">
-    <value>Dorești să salvezi fișierul log într-o locație externă pentru a-l folosi mai târziu?</value>
+    <value>Vrei să salvezi fișierul log într-o locație externă pentru a-l folosi mai târziu?</value>
     <comment>Message of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app.</comment>
   </data>
   <data name="AM_SaveLogFile_Title" xml:space="preserve">
@@ -955,7 +955,7 @@ Preserve the ({0}) code because is for include the file name in runtime.</commen
     <comment>Title of the dialog displayed to ask the user if wants to save the generated log file in an external location of the app - (String as short as possible).</comment>
   </data>
   <data name="AM_DebugModeEnabled_Message" xml:space="preserve">
-    <value>Modul de depanare este activat. Dorești să-l dezactivezi?</value>
+    <value>Modul de depanare este activat. Vrei să-l dezactivezi?</value>
     <comment>Message of the alert dialog displayed when the app starts and the DEBUG mode is enable. This alert is to try to avoid that the user forget disable the DEBUG mode and the log file size grows a lot in the offline section.</comment>
   </data>
   <data name="AM_DebugModeEnabled_Title" xml:space="preserve">
@@ -1186,7 +1186,7 @@ Preserve the {0} code because is for include the time to wait in runtime.</comme
     <comment>Error title shown when you open a file or folder link and it's no longer available - (String as short as possible).</comment>
   </data>
   <data name="AM_AccountBlockedCopyright" xml:space="preserve">
-    <value>Contul tău a fost suspendat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului MEGA. Te rugăm să verifici mesajele primite de pe e-mail.</value>
+    <value>Contul tău a fost suspendat din cauza mai multor încălcări ale Termenilor de utilizare a serviciului MEGA. Te rugăm să-ți verifici căsuța de e-mail.</value>
     <comment>Message of the dialog shown when the user is trying to login and the account has been blocked for multiple copyright violation.</comment>
   </data>
   <data name="AM_PasswordReminder" xml:space="preserve">
@@ -1252,23 +1252,23 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when the process to open a folder failed - (String as short as possible).</comment>
   </data>
   <data name="AM_PasswordChangeFailed" xml:space="preserve">
-    <value>Eșec la schimbarea parolei. Te rugăm să încerci din nou.</value>
+    <value>Eșec la modificarea parolei. Te rugăm să încerci din nou.</value>
     <comment>Message of the dialog displayed when the user has failed to change his password</comment>
   </data>
   <data name="AM_PasswordChangeFailed_Title" xml:space="preserve">
-    <value>Eroare la schimbarea parolei</value>
+    <value>Eroare la modificarea parolei</value>
     <comment>Title of the dialog displayed when the user has failed to change his password - (String as short as possible).</comment>
   </data>
   <data name="AM_2FA_SetupDialogDescription" xml:space="preserve">
-    <value>Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.</value>
+    <value>Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.</value>
     <comment>Description text of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_SetupDialogTitle" xml:space="preserve">
-    <value>De ce ai nevoie de autentificarea în doi factori?</value>
+    <value>De ce ai nevoie de autentificarea cu doi factori?</value>
     <comment>Title of the dialog displayed to start setup the Two-Factor Authentication</comment>
   </data>
   <data name="AM_2FA_DisableDialogTitle" xml:space="preserve">
-    <value>Dezactivează autentificarea în doi factori</value>
+    <value>Dezactivează autentificarea cu doi factori</value>
     <comment>Title of the dialog displayed to disable the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogDescription" xml:space="preserve">
@@ -1276,7 +1276,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Description text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_EnabledDialogTitle" xml:space="preserve">
-    <value>Autentificarea în doi factori activată</value>
+    <value>Autentificarea cu doi factori activată</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully enabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_InvalidCode" xml:space="preserve">
@@ -1300,7 +1300,7 @@ Preserve the {0} code because is for include the name of the item to be removed 
     <comment>Title of the dialog displayed when the seed needed to enable the Multi-Factor Authentication has been copied successfully to the clipboard.</comment>
   </data>
   <data name="AM_2FA_DisabledDialogTitle" xml:space="preserve">
-    <value>Autentificarea în doi factori dezactivată</value>
+    <value>Autentificarea cu doi factori dezactivată</value>
     <comment>Title text of the dialog displayed to indicate that the user has successfully disabled the Two-Factor Authentication.</comment>
   </data>
   <data name="AM_2FA_InputAppCodeDialogMessage" xml:space="preserve">
@@ -1378,7 +1378,7 @@ Preserve the '{0}' code because is for include the file/folder name in runtime.<
     <comment>Label to describe the 'Remove offline content' button of settings to clear all the content saved for offline.</comment>
   </data>
   <data name="AM_MFA_CheckStatusFailed" xml:space="preserve">
-    <value>Nu s-a putut verifica starea autentificării în doi factori.</value>
+    <value>Nu s-a putut verifica starea autentificării cu doi factori.</value>
     <comment>Message of the dialog displayed if fails the process to check the Multi-Factor Authentication status.</comment>
   </data>
   <data name="AM_FolderAlreadyExists" xml:space="preserve">
@@ -1411,7 +1411,7 @@ Preserve the {0} code because is for include the name of the node in runtime.</c
     <comment>Title of the dialog displayed when a user exceeds the storage space limits of the account - (String as short as possible).</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert" xml:space="preserve">
-    <value>Operație nepermisă, vei depăși limita de stocare a contului. Dorești să upgradezi contul?</value>
+    <value>Operație nepermisă, vei depăși limita de stocare a contului. Vrei să upgradezi contul?</value>
     <comment>Message of the dialog displayed when a user tries to make an operation that will exceed the storage space limits of the account (API_EGOINGOVERQUOTA error). Asks if user wants to upgrade the account type.</comment>
   </data>
   <data name="AM_StorageOverquotaPreAlert_Title" xml:space="preserve">

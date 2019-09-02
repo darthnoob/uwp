@@ -415,7 +415,7 @@ Preserve the {0} code because is for include the exact time until the user has t
     <comment>Message of the dialog displayed when the user is not online and is trying to do any operation that requires connection.</comment>
   </data>
   <data name="AM_UserNotOnline_Title" xml:space="preserve">
-    <value>N'est pas en ligne</value>
+    <value>N’est pas en ligne</value>
     <comment>Title of the dialog displayed when the user is not online and is trying to do any operation that requires connection - (String as short as possible).</comment>
   </data>
   <data name="AM_WrongEmailPasswordLogin" xml:space="preserve">
@@ -508,12 +508,12 @@ Preserve the [{0}] code because is for include the error code or the error messa
 Preserve the '{0}' code because is for include the file/folder path in runtime.</comment>
   </data>
   <data name="AM_InvalidFileName" xml:space="preserve">
-    <value>Le nom du fichier '{0}' est invalide ou comprend des caractères non autorisés. Veuillez le changer et ressayer.</value>
+    <value>Le nom du fichier '{0}' est invalide ou comporte des caractères non autorisés. Veuillez le changer et ressayer.</value>
     <comment>Message of the dialog displayed in cases that a file name is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
   <data name="AM_InvalidFolderNameOrPath" xml:space="preserve">
-    <value>Le nom ou le chemin du dossier '{0}' est invalide ou comprend des caractères non autorisés. Veuillez le changer et ressayer.</value>
+    <value>Le nom ou le chemin du dossier '{0}' est invalide ou comporte des caractères non autorisés. Veuillez le changer et ressayer.</value>
     <comment>Message of the dialog displayed in cases that a folder name or path is not valid or has illegal characters.
 Preserve the '{0}' code because is for include the file name in runtime.</comment>
   </data>
@@ -1062,7 +1062,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Title of the dialog displayed when the user has successful reset his password on recovery - (String as short as possible).</comment>
   </data>
   <data name="AM_RecoveryLinkExpired" xml:space="preserve">
-    <value>Le lien de récupération a expiré. Veuillez ressayer.</value>
+    <value>Le lien de récupération est expiré. Veuillez ressayer.</value>
     <comment>Message of the dialog displayed when the recovery is expired.</comment>
   </data>
   <data name="AM_RecoveryLinkExpired_Title" xml:space="preserve">

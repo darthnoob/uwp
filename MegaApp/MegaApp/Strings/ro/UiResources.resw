@@ -459,7 +459,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Copy' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Move" xml:space="preserve">
-    <value>Mutare</value>
+    <value>Mută</value>
     <comment>Label for any 'Move' button, link, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionLargest" xml:space="preserve">
@@ -554,7 +554,7 @@ Preserve the {0} code because is for include the name of the destination folder 
 </comment>
   </data>
   <data name="UI_Size" xml:space="preserve">
-    <value>Mărime</value>
+    <value>Dimensiune</value>
     <comment>Label for any 'Size' button, link, text, title, etc. - (String as short as possible).
 </comment>
   </data>
@@ -678,7 +678,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Subscription renews' title/text of the My account section - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalStorage" xml:space="preserve">
-    <value>Stocare totală</value>
+    <value>Spațiul total de stocare</value>
     <comment>Label for any 'Total storage' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TotalTransferQuota" xml:space="preserve">
@@ -847,11 +847,11 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Save' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmail" xml:space="preserve">
-    <value>Schimbă e-mailul</value>
+    <value>Modifică e-mailul</value>
     <comment>Label for any 'Change email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePassword" xml:space="preserve">
-    <value>Schimbă parola</value>
+    <value>Modifică parola</value>
     <comment>Label for any 'Change password' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangePasswordDescription" xml:space="preserve">
@@ -863,7 +863,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Placeholder text to insert the current password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_NewPassword" xml:space="preserve">
-    <value>Parola nouă</value>
+    <value>Parolă nouă</value>
     <comment>Placeholder text to insert the new password during the process to change the password - (String as short as possible).</comment>
   </data>
   <data name="UI_ReEnterNewPassword" xml:space="preserve">
@@ -883,7 +883,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'See more info' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_ChangeEmailDescription" xml:space="preserve">
-    <value>Introdu noua adresă de e-mail în câmpul de mai sus și dă clic pe Salvează. După aceea, te rugăm să accesezi e-mailul și confirmă această modificare de e-mail.</value>
+    <value>Introdu noua adresă de e-mail în câmpul de mai sus și dă clic pe Salvează. După aceea, te rugăm să accesezi căsuța de e-mail și să confirmi această modificare a e-mailului.</value>
     <comment>Text to describe the change email process.</comment>
   </data>
   <data name="UI_NewEmail" xml:space="preserve">
@@ -1240,7 +1240,7 @@ Preserve the {0} code because is for include the folder name in runtime.</commen
     <comment>Text displayed to validate password on parking account.</comment>
   </data>
   <data name="UI_ConfirmEmailDescription" xml:space="preserve">
-    <value>Te rugăm să verifici e-mailul și să urmărești linkul pentru a confirma contul.</value>
+    <value>Te rugăm să verifici e-mailul și să urmezi linkul pentru a confirma contul.</value>
     <comment>Text displayed when user can resend his email address on create account.</comment>
   </data>
   <data name="UI_ConfirmEmailInfo" xml:space="preserve">
@@ -1301,7 +1301,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySizeMultiSelect" xml:space="preserve">
-    <value>Mărime ({0} din {1})</value>
+    <value>Dimensiune ({0} din {1})</value>
     <comment>Label to indicate in a multi select scenario that a list is sorted by size and the number of selected items over the total number of items.
 Keep the {0} and {1} codes because are for include the number of selected items and the total number of items in runtime.</comment>
   </data>
@@ -1325,7 +1325,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
   <data name="UI_ListSortedBySize" xml:space="preserve">
-    <value>Mărime ({0})</value>
+    <value>Dimensiune ({0})</value>
     <comment>Label to indicate that a list of items is sorted by size and the total number of items.
 Keep the {0} code because is for include the total number of items in runtime.</comment>
   </data>
@@ -1338,7 +1338,7 @@ Keep the {0} code because is for include the total number of items in runtime.</
     <comment>Label for the menu option to sort by type - (String as short as possible).</comment>
   </data>
   <data name="UI_SortOptionSize" xml:space="preserve">
-    <value>Mărime</value>
+    <value>Dimensiune</value>
     <comment>Label for the menu option to sort by size - (String as short as possible).</comment>
   </data>
   <data name="UI_CopyOrMoveItemTo" xml:space="preserve">
@@ -1642,7 +1642,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Learn more' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_LegalAndPolicies" xml:space="preserve">
-    <value>Aspecte juridice și politici</value>
+    <value>Solicitări de natură juridică și politici</value>
     <comment>Label for the title of the "Legal and Policies" section which include links to the Terms of Service, Privacy Policy, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TakedownGuidance" xml:space="preserve">
@@ -1650,19 +1650,19 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for any 'Takedown Guidance' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EnableTwoFactorAuth" xml:space="preserve">
-    <value>Activează autentificarea în doi factori</value>
+    <value>Activează autentificarea cu doi factori</value>
     <comment>Label for the "toggle" or "switch" button to enable/disable the Two-Factor Authentication.</comment>
   </data>
   <data name="UI_TwoFactorAuth" xml:space="preserve">
-    <value>Autentificarea în doi factori</value>
+    <value>Autentificarea cu doi factori</value>
     <comment>Label for the 'Two-Factor Authentication' section of the security settings.</comment>
   </data>
   <data name="UI_TwoFactorAuthSettingsDescription" xml:space="preserve">
-    <value>Autentificarea în doi factori reprezintă un al doilea strat de securitate pentru contul tău</value>
+    <value>Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău</value>
     <comment>Description for the 'Two-Factor Authentication' in the security settings section.</comment>
   </data>
   <data name="UI_Setup2FA" xml:space="preserve">
-    <value>Configurează autentificarea în doi factori</value>
+    <value>Configurează autentificarea cu doi factori</value>
     <comment>Label for any 'Setup Two-Factor Authentication' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_CopySeed" xml:space="preserve">
@@ -1786,7 +1786,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_UseSpecificPort" xml:space="preserve">
-    <value>Use port {0}</value>
+    <value>Folosește portul {0}</value>
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>
