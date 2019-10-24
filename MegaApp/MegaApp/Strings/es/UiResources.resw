@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Hazte PRO</value>
+    <value>Ampliar</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -654,7 +654,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>Has agotado tu espacio de almacenamiento disponible. No podrás subir datos ni recibir más elementos compartidos hasta que tengas más espacio. Actualiza tu cuenta a PRO o elimina algunos archivos/carpetas para liberar espacio.</value>
+    <value>Has agotado tu espacio de almacenamiento disponible. No podrás subir datos ni recibir más elementos compartidos hasta que tengas más espacio. Amplía tu cuenta o elimina algunos archivos/carpetas para liberar espacio.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>Has agotado tu cuota de transferencia disponible. No podrás descargar hasta que se renueve tu cuota de transferencia. Actualiza tu cuenta a PRO o espera hasta que se restablezca tu cuota de transferencia.</value>
+    <value>Has agotado tu cuota de transferencia disponible. No podrás descargar hasta que se renueve tu cuota de transferencia. Amplía tu cuenta o espera hasta que se restablezca tu cuota de transferencia.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
@@ -899,7 +899,7 @@ Don't translate 'Fortumo' because is the payment method name.</comment>
     <comment>Label for any 'Confirm email' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_EmailChangedSuccessful" xml:space="preserve">
-    <value>Enhorabuena, tu nueva dirección de correo electrónico para esta cuenta MEGA es</value>
+    <value>Enhorabuena, tu nueva dirección de correo electrónico para esta cuenta de MEGA es</value>
     <comment>Text displayed to inform that the email was successfully changed.</comment>
   </data>
   <data name="UI_VerifyEmailHeader" xml:space="preserve">
@@ -1786,7 +1786,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_UseSpecificPort" xml:space="preserve">
-    <value>Use port {0}</value>
+    <value>Usar puerto {0}</value>
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>

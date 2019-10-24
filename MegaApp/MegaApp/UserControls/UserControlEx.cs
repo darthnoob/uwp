@@ -1,7 +1,6 @@
 ﻿using System;
-using Windows.Networking.Connectivity;
 using Windows.UI.Xaml.Controls;
-using MegaApp.Services;
+using MegaApp.Network;
 using MegaApp.ViewModels;
 
 namespace MegaApp.UserControls
@@ -20,7 +19,7 @@ namespace MegaApp.UserControls
             this.DataContext = this.ViewModel;
 
             // Register for network connection changed events
-            NetworkInformation.NetworkStatusChanged += OnNetworkStatusChanged;
+            NetworkHelper.Instance.NetworkStatusChanged += OnNetworkStatusChanged;
 
             this.CheckNetworkAvailability();
         }
@@ -30,7 +29,12 @@ namespace MegaApp.UserControls
         /// </summary>
         public T ViewModel { get; }
 
-        protected virtual void OnNetworkStatusChanged(object sender) =>
+        /// <summary>
+        /// Method called when a network status changed event is triggered
+        /// </summary>
+        /// <param name="sender">Object that sent the event</param>
+        /// <param name="args">Event arguments</param>
+        protected virtual void OnNetworkStatusChanged(object sender, object args) =>
             this.CheckNetworkAvailability();
 
         /// <summary>

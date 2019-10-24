@@ -104,7 +104,11 @@ namespace MegaApp.ViewModels
             for (int i = 0; i < contactsListSize; i++)
             {
                 // To avoid null values
-                if (contactsList.get(i) == null) continue;
+                if (contactsList.get(i) == null || contactsList.get(i).getUser() == null)
+                {
+                    LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Contact is NULL");
+                    continue;
+                }
 
                 var megaContact = new ContactOutgoingSharedFolderViewModel(contactsList.get(i), this.ContactsList);
 

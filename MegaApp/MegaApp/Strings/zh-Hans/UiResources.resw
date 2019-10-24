@@ -511,7 +511,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Get link' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Next" xml:space="preserve">
-    <value>次一</value>
+    <value>下一步</value>
     <comment>Label for any 'Next' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Previous" xml:space="preserve">
@@ -722,7 +722,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for a 'Monthly recurring' subscription - (String as short as possible).</comment>
   </data>
   <data name="UI_Profile" xml:space="preserve">
-    <value>文件</value>
+    <value>资料</value>
     <comment>Title of the 'Profile' sub-section of 'My account'. - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageAndTransfer" xml:space="preserve">
@@ -1730,7 +1730,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label to describe the "Session Management" option of the "Settings" section.</comment>
   </data>
   <data name="UI_Warning" xml:space="preserve">
-    <value>警告</value>
+    <value>注意</value>
     <comment>Label for any 'Warning' title, message, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Restore" xml:space="preserve">
@@ -1786,7 +1786,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_UseSpecificPort" xml:space="preserve">
-    <value>Use port {0}</value>
+    <value>使用端口{0}</value>
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>

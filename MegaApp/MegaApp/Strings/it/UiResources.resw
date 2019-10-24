@@ -638,7 +638,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Dynamic' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_Upgrade" xml:space="preserve">
-    <value>Passa a PRO</value>
+    <value>Fai l'upgrade</value>
     <comment>Label for any 'Upgrade' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_NotAvailable" xml:space="preserve">
@@ -654,7 +654,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for the 'Overall usage' title of the general section of My Account - (String as short as possible).</comment>
   </data>
   <data name="UI_StorageOverquotaWarningText" xml:space="preserve">
-    <value>Hai superato il limite del tuo spazio di archiviazione. Non potrai caricare o ricevere altre condivisioni finché non avrai altro spazio. Per favore, passa a PRO o elimina qualche file o cartella per liberare un po' di spazio.</value>
+    <value>Hai superato il limite del tuo spazio di archiviazione. Non potrai caricare o ricevere altre condivisioni finché non avrai altro spazio. Per favore, fai l'upgrade a PRO o elimina qualche file o cartella per liberare un po' di spazio.</value>
     <comment>Text displayed in the 'My account' section when the user is in an storage overquota situation.</comment>
   </data>
   <data name="UI_OverallUsageText" xml:space="preserve">
@@ -694,7 +694,7 @@ Preserve the {0} code because is for include the name of the destination folder 
     <comment>Label for any 'Used transfer quota' button, link, text, title, etc. - (String as short as possible).</comment>
   </data>
   <data name="UI_TransferOverquotaWarningText" xml:space="preserve">
-    <value>Hai superato il limite della tua banda di trasferimento. Non potrai scaricare finché non avrai altra banda di trasferimento. Per favore, passa a PRO o attendi finché la tua banda di trasferimento si resetta.</value>
+    <value>Hai superato il limite della tua banda di trasferimento. Non potrai scaricare finché non avrai altra banda di trasferimento. Per favore, fai l'upgrade a PRO o attendi finché la tua banda di trasferimento si resetta.</value>
     <comment>Text displayed in the 'My account' section when the user is in a transfer overquota situation.</comment>
   </data>
   <data name="UI_PaymentInformation" xml:space="preserve">
@@ -1786,7 +1786,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_UseSpecificPort" xml:space="preserve">
-    <value>Use port {0}</value>
+    <value>Usa la porta {0}</value>
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>

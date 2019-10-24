@@ -1786,7 +1786,7 @@ Keep the {0} and {1} codes because are for include the number of selected items 
     <comment>Label for 'Sent requests' text, title, etc. for sent contact requests - (String as short as possible).</comment>
   </data>
   <data name="UI_UseSpecificPort" xml:space="preserve">
-    <value>Use port {0}</value>
+    <value>Использовать порт {0}</value>
     <comment>Label for the checkbox of the dialog displayed to confirm change to staging server using a specific port.
 Keep the {0} code because is for include the port number in runtime.</comment>
   </data>

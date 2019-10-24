@@ -781,7 +781,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AccountUpdated_Title" xml:space="preserve">
-    <value>Cuenta actualizada</value>
+    <value>Cuenta ampliada</value>
     <comment>Title of the dialog displayed when the account is updated (upgraded or downgraded).</comment>
   </data>
   <data name="AM_AlreadyPurchased" xml:space="preserve">
@@ -845,7 +845,7 @@ Preserve the '{0}' code because is for include the folder name in runtime.</comm
     <comment>Message of the dialog displayed when the process/request to change the user email failed. Generic error message.</comment>
   </data>
   <data name="AM_ConfirmationChangeEmailSuccess" xml:space="preserve">
-    <value>Enhorabuena, tu nueva dirección de correo electrónico para esta cuenta MEGA es: {0}</value>
+    <value>Enhorabuena, tu nueva dirección de correo electrónico para esta cuenta de MEGA es: {0}</value>
     <comment>Message of the dialog displayed when a user changes the email successfully.
 Preserve the {0} code because is for include the email address in runtime.</comment>
   </data>
@@ -1110,7 +1110,7 @@ Preserve the "{0}" code because is for include the shared folder name in runtime
     <comment>Message of the dialog displayed when the user has chosen a very weak password.</comment>
   </data>
   <data name="AM_TransferOverquotaWarningUpgrade" xml:space="preserve">
-    <value>Hazte PRO por solo {0} para continuar con la descarga.</value>
+    <value>Amplía tu cuenta por solo {0} para continuar con la descarga.</value>
     <comment>Message of the dialog displayed when a user exceeds the transfer quota limits of the account (transfer overquota error), indicating the possibility of upgrade the account.
 Preserve the {0} code because is for include the price in runtime.</comment>
   </data>

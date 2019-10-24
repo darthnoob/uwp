@@ -220,8 +220,14 @@ namespace MegaApp.Services
                     var mailSize = mails.size();
                     for (int m = 0; m < mailSize; m++)
                     {
-                        var contact = new ContactViewModel(
-                            SdkService.MegaSdk.getContact(mails.get(m)), awardedClass.Contacts)
+                        var megaUser = SdkService.MegaSdk.getContact(mails.get(m));
+                        if (megaUser == null)
+                        {
+                            LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "'MUser' of contact is NULL");
+                            continue;
+                        }
+
+                        var contact = new ContactViewModel(megaUser, awardedClass.Contacts)
                         {
                             StorageAmount = storageReward,
                             TransferAmount = transferReward,
@@ -443,7 +449,7 @@ namespace MegaApp.Services
             var userAvatarResult = await userAvatarRequestListener.ExecuteAsync(() =>
                 SdkService.MegaSdk.getOwnUserAvatar(UserData.AvatarPath, userAvatarRequestListener));
 
-            if (userAvatarResult)
+            if (userAvatarResult && UserData?.AvatarPath != null)
             {
                 UiService.OnUiThread(() =>
                 {
@@ -457,6 +463,7 @@ namespace MegaApp.Services
             }
             else
             {
+                LogService.Log(MLogLevel.LOG_LEVEL_WARNING, "Error getting user avatar");
                 UiService.OnUiThread(() => UserData.AvatarUri = null);
             }
         }
